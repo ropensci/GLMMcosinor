@@ -1,0 +1,22 @@
+Package: GLMMcosinor
+Type: Package
+Title: Estimate and fit the cosinor (generalised mixed) model 
+Version: 0.0.9000
+Date: 2022-05-23
+Author: Rex Parsons <Rex.Parsons94@gmail.com>
+Maintainer: Rex Parsons <Rex.Parsons94@gmail.com>
+Description: Fit the cosinor model using the glmmTMB framework, allowing for a
+    wide range of family functions and a lme4-style for specifying 
+    hierarchical structure in the models formula.
+URL: https://github.com/RWParsons/GLMMcosinor
+Imports:
+    ggplot2
+Suggests:
+    knitr,
+    testthat (>= 3.0.0)
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 7.2.1
+Config/testthat/edition: 3
