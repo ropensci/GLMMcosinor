@@ -12,15 +12,33 @@
 #'
 #' @export
 #'
-simulate_cosinor <- function(n, beta.mean = 2, beta.amp = 0, beta.acro = 0) {
-  ttt <- stats::runif(n, 0, 12)
-  X <- stats::rbinom(n, 1, .3)
+simulate_cosinor <- function(n,
+                             mesor = 5,
+                             amp = 10,
+                             acro = 0,
+                             beta.mesor = 2,
+                             beta.amp = 0,
+                             beta.acro = 0,
+                             period = 12,
+                             dist = c("gaussian", "poisson")) {
 
-  ## tranformations
-  rrr <- cos(2 * pi * ttt / 12)
-  sss <- sin(2 * pi * ttt / 12)
+  ttt <- runif(n, 0, period)
+  X <- rbinom(n, 1, 0.3)
+  rrr <- cos(2 * pi * ttt/period)
+  sss <- sin(2 * pi * ttt/period)
 
-  ## generate data
-  Y <- 30 + beta.mean * X + beta.amp * X * rrr + beta.acro * X * sss + rrr + 6 * sss + stats::rnorm(n, sd = .1)
+  B1 <- amp*cos(acro)
+  G1 <- -amp*sin(acro)
+
+  B2 <- (amp + beta.amp)*cos(acro + beta.acro)
+  G2 <- -(amp + beta.amp)*sin(acro + beta.acro)
+
+  Y <- mesor + beta.mesor * X + ifelse(X == 0, B1, B2)*rrr + ifelse(X == 0, G1, G2)*sss
+  if (dist[1] == "gaussian") {
+    Y <- Y + stats::rnorm(n, sd = .1)
+  } else if (dist[1] == "poisson") {
+    # Y <- exp(Y)
+    Y <- rpois(n=length(Y), lambda = Y)
+  }
   data.frame(X = X, Y = Y, time = ttt)
 }

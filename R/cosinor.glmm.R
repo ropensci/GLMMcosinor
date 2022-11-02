@@ -1,4 +1,4 @@
-#' Fit cosinor model
+#' Fit cosinor model with \code{{glmmTMB}}
 #'
 #' Given an outcome and time variable, fit the cosinor model with optional
 #' covariate effects.
@@ -8,8 +8,8 @@
 #'   \code{amp.acro()}. See details for more information.
 #' @param period Length of time for a complete period of the sine curve.
 #' @param data Data frame where variable can be found
-#' @param na.action What to do with missing data
-#'
+#' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
+#' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
 #' @details This defines special functions that are used in the formula to
 #'   indicate the time variable and which covariates effect the amplitude. To
 #'   indicate the time variable wrap the name of it in the function
@@ -29,8 +29,11 @@
 
 
 
-cosinor.glmm <- function(formula, period = 12,
-                         data, na.action = stats::na.omit) {
+cosinor.glmm <- function(formula,
+                         period = 12,
+                         data,
+                         family = gaussian(),
+                         ...) {
 
   # build time transformations
 
@@ -51,17 +54,24 @@ cosinor.glmm <- function(formula, period = 12,
     sep = " ~ "
   ))
 
-  fit <- stats::lm(newformula, data, na.action = na.action)
+  fit <- glmmTMB::glmmTMB(
+    formula = newformula,
+    data = data,
+    family = family,
+    ...
+  )
 
   mf <- fit
 
-  r.coef <- c(FALSE, as.logical(attr(mf$terms, "factors")["rrr", ]))
-  s.coef <- c(FALSE, as.logical(attr(mf$terms, "factors")["sss", ]))
-  mu.coef <- c(TRUE, !(as.logical(attr(mf$terms, "factors")["sss", ]) |
-    as.logical(attr(mf$terms, "factors")["rrr", ])))
+  r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
+  s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
+  mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
+                         as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
 
-  beta.s <- mf$coefficients[s.coef]
-  beta.r <- mf$coefficients[r.coef]
+  coefs <- fixef(mf)$cond
+
+  beta.s <- coefs[s.coef]
+  beta.r <- coefs[r.coef]
 
   groups.r <- c(beta.r["rrr"], beta.r["rrr"] + beta.r[which(names(beta.r) != "rrr")])
   groups.s <- c(beta.s["sss"], beta.s["sss"] + beta.s[which(names(beta.s) != "sss")])
@@ -71,9 +81,15 @@ cosinor.glmm <- function(formula, period = 12,
 
   acr <- atan(groups.s / groups.r)
   names(acr) <- gsub("sss", "acr", names(beta.s))
-  coef <- c(mf$coefficients[mu.coef], amp, acr)
+  new_coefs <- c(coefs[mu.coef], amp, acr)
 
-  structure(list(fit = fit, Call = match.call(), Terms = Terms, coefficients = coef, period = period), class = "cosinor.glmm")
+  structure(list(fit = fit,
+                 Call = match.call(),
+                 Terms = Terms,
+                 coefficients = new_coefs,
+                 raw_coefficients = coefs,
+                 period = period),
+            class = "cosinor.glmm")
 }
 
 #' Print cosinor model
@@ -92,7 +108,7 @@ print.cosinor.glmm <- function(x, ...) {
   cat("Call: \n")
   print(x$Call)
   cat("\n Raw Coefficients: \n")
-  print(x$fit$coefficients)
+  print(x$raw_coefficients)
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
   names(t.x) <- update_covnames(names(t.x))

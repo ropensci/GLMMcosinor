@@ -10,7 +10,8 @@ Description: Fit the cosinor model using the glmmTMB framework, allowing for a
     hierarchical structure in the models formula.
 URL: https://github.com/RWParsons/GLMMcosinor
 Imports:
-    ggplot2
+    ggplot2,
+    glmmTMB
 Suggests:
     knitr,
     testthat (>= 3.0.0)

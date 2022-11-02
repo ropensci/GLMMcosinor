@@ -2,9 +2,9 @@
 % Please edit documentation in R/cosinor.glmm.R
 \name{cosinor.glmm}
 \alias{cosinor.glmm}
-\title{Fit cosinor model}
+\title{Fit cosinor model with \code{{glmmTMB}}}
 \usage{
-cosinor.glmm(formula, period = 12, data, na.action = stats::na.omit)
+cosinor.glmm(formula, period = 12, data, family = gaussian(), ...)
 }
 \arguments{
 \item{formula}{Formula specifying the model. Indicate the time variable with
@@ -15,7 +15,9 @@ cosinor.glmm(formula, period = 12, data, na.action = stats::na.omit)
 
 \item{data}{Data frame where variable can be found}
 
-\item{na.action}{What to do with missing data}
+\item{family}{a family function, see \code{?family} and \code{?glmmTMB::nbinom2}}
+
+\item{...}{optional additional arguments passed to glmmTMB::glmmTMB()}
 }
 \description{
 Given an outcome and time variable, fit the cosinor model with optional
