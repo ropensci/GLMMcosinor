@@ -23,13 +23,17 @@
 summary.cosinor.glmm <- function(object, ...) {
   mf <- object$fit
 
-  r.coef <- c(FALSE, as.logical(attr(mf$terms, "factors")["rrr", ]))
-  s.coef <- c(FALSE, as.logical(attr(mf$terms, "factors")["sss", ]))
-  mu.coef <- c(TRUE, !(as.logical(attr(mf$terms, "factors")["sss", ]) |
-    as.logical(attr(mf$terms, "factors")["rrr", ])))
+  r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
+  s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
+  mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
+    as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
 
-  beta.s <- mf$coefficients[s.coef]
-  beta.r <- mf$coefficients[r.coef]
+  coefs <- glmmTMB::fixef(mf)$cond
+
+  beta.s <- coefs[s.coef]
+  beta.r <- coefs[r.coef]
+  # beta.s <- mf$coefficients[s.coef]
+  # beta.r <- mf$coefficients[r.coef]
 
   groups.r <- c(beta.r["rrr"], beta.r["rrr"] + beta.r[which(names(beta.r) != "rrr")])
   groups.s <- c(beta.s["sss"], beta.s["sss"] + beta.s[which(names(beta.s) != "sss")])
@@ -42,7 +46,7 @@ summary.cosinor.glmm <- function(object, ...) {
 
   ## delta method to get variance
 
-  vmat <- stats::vcov(mf)[c(which(r.coef), which(s.coef)), c(which(r.coef), which(s.coef))]
+  vmat <- vcov(mf)$cond[c(which(r.coef), which(s.coef)), c(which(r.coef), which(s.coef))]
 
   ## transform to get group coefficients
 
@@ -77,17 +81,16 @@ summary.cosinor.glmm <- function(object, ...) {
   se.trans <- sqrt(diag(cov.trans))
 
   ## assemble summary matrix
-
-  coef <- c(mf$coefficients[mu.coef], amp, acr)
-  se <- c(sqrt(diag(stats::vcov(mf)))[mu.coef], se.trans)
+  coef <- c(coefs[mu.coef], amp, acr)
+  se <- c(sqrt(diag(vcov(mf)$cond))[mu.coef], se.trans)
 
   zt <- stats::qnorm((1 - .95) / 2, lower.tail = F)
-  raw.se <- sqrt(diag(stats::vcov(mf)))
+  raw.se <- sqrt(diag(vcov(mf)$cond))
 
   rawmat <- cbind(
-    estimate = mf$coefficients, standard.error = raw.se,
-    lower.CI = mf$coefficients - zt * raw.se, upper.CI = mf$coefficients + zt * raw.se,
-    p.value = 2 * stats::pnorm(-abs(mf$coefficients / raw.se))
+    estimate = coefs, standard.error = raw.se,
+    lower.CI = coefs - zt * raw.se, upper.CI = coefs + zt * raw.se,
+    p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
   )
 
   smat <- cbind(estimate = coef, standard.error = se, lower.CI = coef - zt * se, upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se)))
