@@ -4,16 +4,26 @@
 \alias{simulate_cosinor}
 \title{Simulate data from a cosinor model}
 \usage{
-simulate_cosinor(n, beta.mean = 2, beta.amp = 0, beta.acro = 0)
+simulate_cosinor(
+  n,
+  mesor = 5,
+  amp = 10,
+  acro = 0,
+  beta.mesor = 2,
+  beta.amp = 0,
+  beta.acro = 0,
+  period = 12,
+  dist = c("gaussian", "poisson")
+)
 }
 \arguments{
 \item{n}{Sample size}
 
-\item{beta.mean}{Effect on the mean (intercept)}
-
 \item{beta.amp}{Effect on the amplitude}
 
 \item{beta.acro}{Effect on the acrophase}
+
+\item{beta.mean}{Effect on the mean (intercept)}
 }
 \description{
 This function simulates data from a cosinor model with a single covariate,

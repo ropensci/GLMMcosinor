@@ -68,7 +68,7 @@ cosinor.glmm <- function(formula,
   mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
                          as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
 
-  coefs <- fixef(mf)$cond
+  coefs <- glmmTMB::fixef(mf)$cond
 
   beta.s <- coefs[s.coef]
   beta.r <- coefs[r.coef]
@@ -79,7 +79,9 @@ cosinor.glmm <- function(formula,
   amp <- sqrt(groups.r^2 + groups.s^2)
   names(amp) <- gsub("rrr", "amp", names(beta.r))
 
-  acr <- atan(groups.s / groups.r)
+  # acr <- atan(groups.s / groups.r)
+  # browser()
+  acr <- -atan2(groups.s, groups.r)
   names(acr) <- gsub("sss", "acr", names(beta.s))
   new_coefs <- c(coefs[mu.coef], amp, acr)
 

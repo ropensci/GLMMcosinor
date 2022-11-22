@@ -21,6 +21,7 @@
 #'
 
 summary.cosinor.glmm <- function(object, ...) {
+
   mf <- object$fit
 
   r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
@@ -41,7 +42,8 @@ summary.cosinor.glmm <- function(object, ...) {
   amp <- sqrt(groups.r^2 + groups.s^2)
   names(amp) <- gsub("rrr", "amp", names(beta.r))
 
-  acr <- atan(groups.s / groups.r)
+  acr <- -atan2(groups.s, groups.r)
+
   names(acr) <- gsub("sss", "acr", names(beta.s))
 
   ## delta method to get variance
@@ -122,3 +124,6 @@ print.summary.cosinor.glmm <- function(x, ...) {
   cat("Transformed coefficients:\n")
   print(round(x$transformed.table, 4))
 }
+
+
+
