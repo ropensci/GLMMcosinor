@@ -80,8 +80,9 @@ cosinor.glmm <- function(formula,
   names(amp) <- gsub("rrr", "amp", names(beta.r))
 
   # acr <- atan(groups.s / groups.r)
-  # browser()
   acr <- -atan2(groups.s, groups.r)
+
+
   names(acr) <- gsub("sss", "acr", names(beta.s))
   new_coefs <- c(coefs[mu.coef], amp, acr)
 

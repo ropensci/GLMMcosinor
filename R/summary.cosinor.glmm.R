@@ -21,7 +21,7 @@
 #'
 
 summary.cosinor.glmm <- function(object, ...) {
-
+  library(circular)
   mf <- object$fit
 
   r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
@@ -95,7 +95,29 @@ summary.cosinor.glmm <- function(object, ...) {
     p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
   )
 
-  smat <- cbind(estimate = coef, standard.error = se, lower.CI = coef - zt * se, upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se)))
+  smat <- cbind(estimate = coef, standard.error = se, lower.CI = coef - zt * se,
+                upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se)))
+
+  ###
+  smat_circ <- circular(c(smat[5,1],smat[5,3],smat[5,4]),type = 'angles', units = 'radians',
+           modulo = '2pi',
+           zero = '-pi',
+           rotation = 'counter')
+  smat[5,1]<- smat_circ[1]
+  if (smat[5,1]>pi) {
+    smat[5,1] <- smat[5,1]-2*pi
+  }
+
+  smat[5,3]<- smat_circ[2]
+  if (smat[5,3]>pi) {
+    smat[5,3] <- smat[5,3]-2*pi
+  }
+
+  smat[5,4]<- smat_circ[3]
+  if (smat[5,4]>pi) {
+    smat[5,4] <- smat[5,4]-2*pi
+  }
+  ###
 
   rownames(smat) <- update_covnames(rownames(smat))
 
