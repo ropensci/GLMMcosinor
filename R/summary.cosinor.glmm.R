@@ -21,7 +21,6 @@
 #'
 
 summary.cosinor.glmm <- function(object, ...) {
-  library(circular)
   mf <- object$fit
 
   r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
@@ -33,8 +32,6 @@ summary.cosinor.glmm <- function(object, ...) {
 
   beta.s <- coefs[s.coef]
   beta.r <- coefs[r.coef]
-  # beta.s <- mf$coefficients[s.coef]
-  # beta.r <- mf$coefficients[r.coef]
 
   groups.r <- c(beta.r["rrr"], beta.r["rrr"] + beta.r[which(names(beta.r) != "rrr")])
   groups.s <- c(beta.s["sss"], beta.s["sss"] + beta.s[which(names(beta.s) != "sss")])
@@ -47,7 +44,6 @@ summary.cosinor.glmm <- function(object, ...) {
   names(acr) <- gsub("sss", "acr", names(beta.s))
 
   ## delta method to get variance
-
   vmat <- vcov(mf)$cond[c(which(r.coef), which(s.coef)), c(which(r.coef), which(s.coef))]
 
   ## transform to get group coefficients
@@ -97,27 +93,6 @@ summary.cosinor.glmm <- function(object, ...) {
 
   smat <- cbind(estimate = coef, standard.error = se, lower.CI = coef - zt * se,
                 upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se)))
-
-  ###
-  smat_circ <- circular(c(smat[5,1],smat[5,3],smat[5,4]),type = 'angles', units = 'radians',
-           modulo = '2pi',
-           zero = '-pi',
-           rotation = 'counter')
-  smat[5,1]<- smat_circ[1]
-  if (smat[5,1]>pi) {
-    smat[5,1] <- smat[5,1]-2*pi
-  }
-
-  smat[5,3]<- smat_circ[2]
-  if (smat[5,3]>pi) {
-    smat[5,3] <- smat[5,3]-2*pi
-  }
-
-  smat[5,4]<- smat_circ[3]
-  if (smat[5,4]>pi) {
-    smat[5,4] <- smat[5,4]-2*pi
-  }
-  ###
 
   rownames(smat) <- update_covnames(rownames(smat))
 
