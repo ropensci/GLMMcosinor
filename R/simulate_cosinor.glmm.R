@@ -12,16 +12,15 @@
 #'
 #' @export
 #'
-simulate_cosinor <- function(n,
-                             mesor = 5,
-                             amp = 10,
-                             acro = 0,
-                             beta.mesor = 2,
-                             beta.amp = 0,
-                             beta.acro = 0,
-                             period = 12,
-                             dist = c("poisson")) {
-
+simulate_cosinor.glmm <- function (n,
+                                   amp = 5,
+                                   acro = 10,
+                                   mesor = 0,
+                                   beta.amp = 2,
+                                   beta.acr = 0,
+                                   beta.mesor = 0,
+                                   period = 12,
+                                   dist = c("poisson","binomial","gamma","gaussian")) {
   ttt <- runif(n,min = 0, period)
   cLevel=0.95
 
@@ -89,23 +88,30 @@ simulate_cosinor <- function(n,
   if (dist=="poisson") {
     get_dataset <- get_dataset_poisson
   }
+
+
   if (dist=="binomial") {
     get_dataset <- get_dataset_bin
   }
+
+
   if (dist=="gamma") {
     get_dataset <- get_dataset_gamma
   }
+
   if (dist=="gaussian") {
     get_dataset <- get_dataset_gaussian
   }
 
+
+
   data_A <- get_dataset(amp,acro,mesor)
-  data_B <- get_dataset(beta.amp,beta.acro,beta.mesor)
+  data_B <- get_dataset(beta.amp,beta.acr,beta.mesor)
   data_A$group <- "A"
   data_B$group <- "B"
   df <- rbind(data_A, data_B)
   df$group = as.numeric(as.factor(df$group))-1
 
-  colnames(df) <- c("Y","x","z","times","group")
+  colnames(df) <- c("Y","rrr","sss","times","group")
   return(df)
 }
