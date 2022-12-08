@@ -13,12 +13,12 @@
 #' @export
 #'
 simulate_cosinor <- function(n,
-                             mesor = 5,
-                             amp = 10,
-                             acro = 0,
-                             beta.mesor = 2,
-                             beta.amp = 0,
-                             beta.acro = 0,
+                             mesor = 1,
+                             amp = 2,
+                             acro = 1.2,
+                             beta.mesor = 0.4,
+                             beta.amp = 0.5,
+                             beta.acro = 0.2,
                              period = 12,
                              dist = c("poisson")) {
 

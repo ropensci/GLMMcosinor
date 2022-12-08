@@ -23,12 +23,39 @@
 summary.cosinor.glmm <- function(object, ...) {
   mf <- object$fit
 
+#  ###
+#  int = object$Call$int
+#  if (int == 0) {
+#    r.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
+#    s.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
+#    mu.coef <- c(!(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
+#                     as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+#  }
+#
+#  if (int == 1) {
+#
+#    r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
+#    s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
+#    mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
+#                           as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+#
+#  }
+  ###
+
   r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
   s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
   mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-    as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+                         as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+
+
 
   coefs <- glmmTMB::fixef(mf)$cond
+
+
+  ##
+  coefs["group"]<- coefs[1]+coefs["group"]
+  ##
+
 
   beta.s <- coefs[s.coef]
   beta.r <- coefs[r.coef]

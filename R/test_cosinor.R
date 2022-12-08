@@ -25,7 +25,7 @@ test_cosinor <- function(object, x_str, param = "amp") {
   stopifnot(is.character(x_str))
   stopifnot(length(grep(x_str, names(object$coefficients))) > 0)
 
-  summary.fit <- summary(object)
+  summary.fit <- summary.cosinor.glmm(object)
 
   index <- matrix(0, ncol = length(object$coefficients), nrow = length(x_str))
   colnames(index) <- names(object$coefficients)
