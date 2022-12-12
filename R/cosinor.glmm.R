@@ -19,7 +19,7 @@
 #'
 #' @examples
 #'
-#' cosinor.glmm(Y ~ time(time) + X + amp.acro(X), data = vitamind)
+#' cosinor.glmm(Y ~ X + amp.acro(time,  n_components = 3, group = "X", period = c(12,8,9)), data=vitamind)
 #'
 #' @references Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.
 #'
@@ -27,33 +27,20 @@
 #' @export
 #'
 
-
-
 cosinor.glmm <- function(formula,
                          period = 12,
                          data,
                          family = gaussian(),
                          ...) {
 
-  # build time transformations
-  # browser()
-  Terms <- stats::terms(formula, specials = c("time", "amp.acro"))
+ ## build time transformations
+ Terms <- stats::terms(formula, specials = c("time", "amp.acro"))
 
-  stopifnot(attr(Terms, "specials")$time != 1)
-  varnames <- get_varnames(Terms)
-  timevar <- varnames[attr(Terms, "specials")$time - 1]
-  # timevar <- varnames[attr(Terms, "specials")$time]
-
-  data$rrr <- cos(2 * pi * data[[timevar]] / period)
-  data$sss <- sin(2 * pi * data[[timevar]] / period)
-
-  spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 1
-  mainpart <- c(varnames[c(-spec_dex, -(attr(Terms, "special")$time - 1))], "rrr", "sss")
-  acpart <- paste(sort(rep(varnames[spec_dex], 2)), rep(c("rrr", "sss"), length(spec_dex)), sep = ":")
-  newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
-                                        paste(c(attr(terms(formula), "intercept"), mainpart, acpart), collapse = " + "),
-                                        sep = " ~ "
-  ))
+  f_output <- f(formula,data,period)
+  data <- f_output[[1]]
+  newformula <- f_output[[2]]
+  vec_rrr <- f_output[[3]]
+  vec_sss <- f_output[[4]]
 
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
@@ -62,58 +49,61 @@ cosinor.glmm <- function(formula,
     ...
   )
 
-  mf <- fit
-###
-#  if (int == 0) {
-#  r.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
-#  s.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
-#  mu.coef <- c(!(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-#                         as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
-#  }
-#
-#  if (int ==1) {
-#    r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
-#    s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
-#    mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-#                           as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
-#
-#  }
-###
+#Get a truth array for the coefficients
+mf <- fit
+r.coef <- NULL
+s.coef <- NULL
+mu.coef <- NULL
+for (jj in 1:length(vec_rrr)) {
+  r.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_rrr[jj], ]))
+  s.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_sss[jj], ]))
+}
 
-r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
-s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
-mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-                       as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
-  coefs <- glmmTMB::fixef(mf)$cond
+mu_inv <- rep(0,length(s.coef[[1]]))
+for (jj in 1:length(vec_sss)) {
+  mu_inv_carry <- r.coef[[jj]]+s.coef[[jj]]
+  mu_inv <- mu_inv_carry+mu_inv
+}
 
+mu.coef <- c(!mu_inv)
+s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
+r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
+coefs <- glmmTMB::fixef(mf)$cond
 
-  ##
-  # coefs["group"]<- coefs[1]+coefs["group"]
-  ##
-  # browser()
-  beta.s <- coefs[s.coef]
-  beta.r <- coefs[r.coef]
+#calculate the parameter estimates
+amp <- NULL
+acr <- NULL
+for (jj in 1:length(vec_rrr)) {
+beta.s <- coefs[s.coef[jj,]]
+beta.r <- coefs[r.coef[jj,]]
 
-  groups.r <- c(beta.r["rrr"], beta.r["rrr"] + beta.r[which(names(beta.r) != "rrr")])
-  groups.s <- c(beta.s["sss"], beta.s["sss"] + beta.s[which(names(beta.s) != "sss")])
+groups.r <- c(beta.r[vec_rrr[jj]], beta.r[vec_rrr[jj]] + beta.r[which(names(beta.r) != vec_rrr[jj])])
+groups.s <- c(beta.s[vec_sss[jj]], beta.s[vec_sss[jj]] + beta.s[which(names(beta.s) != vec_sss[jj])])
 
-  amp <- sqrt(groups.r^2 + groups.s^2)
-  names(amp) <- gsub("rrr", "amp", names(beta.r))
+amp[[jj]] <- sqrt(groups.r^2 + groups.s^2)
+names(amp[[jj]]) <- gsub(vec_rrr[jj], paste0("amp",jj), names(beta.r))
 
-  # acr <- atan(groups.s / groups.r)
-  acr <- -atan2(groups.s, groups.r)
+acr[[jj]] <- -atan2(groups.s, groups.r)
+names(acr[[jj]]) <- gsub(vec_sss[jj], paste0("acr",jj), names(beta.s))
 
+}
+new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
 
-  names(acr) <- gsub("sss", "acr", names(beta.s))
-  new_coefs <- c(coefs[mu.coef], amp, acr)
+#if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
+if (length(vec_rrr)==1) {
+  names(amp[[1]]) <- gsub(vec_rrr[1], "amp", names(beta.r))
+  names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
+  new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
+}
 
-  structure(list(fit = fit,
-                 Call = match.call(),
-                 Terms = Terms,
-                 coefficients = new_coefs,
-                 raw_coefficients = coefs,
-                 period = period),
-            class = "cosinor.glmm")
+#Arrange and display the output
+structure(list(fit = fit,
+               Call = match.call(),
+               Terms = Terms,
+               coefficients = new_coefs,
+               raw_coefficients = coefs,
+               period = period),
+               class = "cosinor.glmm")
 }
 
 #' Print cosinor model
@@ -135,7 +125,7 @@ print.cosinor.glmm <- function(x, ...) {
   print(x$raw_coefficients)
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
-  names(t.x) <- update_covnames(names(t.x))
+  #names(t.x) <- update_covnames(names(t.x))
   print(t.x)
 }
 
@@ -210,3 +200,72 @@ update_covnames <- function(names) {
   }
   lack
 }
+
+
+amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12) {
+  ttt <- eval(substitute(time_col), env=.data) # extract vector of "time" values from .data
+  #browser()
+  # if n_components = 1, generate a vector of rrr and sss
+  i = 1
+  if (n_components ==1) {
+    .data$rrr <- cos(2 * pi * ttt/ period[i])
+    .data$sss <- sin(2 * pi * ttt/ period[i])
+    vec_rrr <- "rrr"
+    vec_sss <- "sss"
+  }
+  #
+
+  #if n_components > 1, generate n_components number of rrr and sss vectors
+  if (n_components != 1) {
+    n_count = 1:n_components
+    vec_rrr <- (paste0("rrr",n_count))
+    vec_sss <- (paste0("sss",n_count))
+
+    #adding the rrr and sss columns to the dataframe
+    i = 1
+    for (i in 1:n_components){
+      rrr_names <- eval(vec_rrr[i])
+      sss_names <- eval(vec_sss[i])
+      .data[[rrr_names]] <- cos(2 * pi * ttt/ period[i])
+      .data[[sss_names]] <- sin(2 * pi * ttt/ period[i])
+    }
+
+  }
+
+  #update the formula
+  Terms <- stats::terms(.formula, specials = c("time", "amp.acro"))
+  varnames <- get_varnames(Terms)
+  spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 2
+  mainpart <- c(varnames[c(-2,0)],vec_rrr,vec_sss)
+  #mainpart <- c(vec_rrr, vec_sss)
+  acpart <- paste(sort(rep(varnames[spec_dex],2)),c(vec_rrr,vec_sss),sep = ":")
+  newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
+                                        paste(c(attr(terms(.formula), "intercept"), mainpart, acpart), collapse = " + "),
+                                        sep = " ~ "
+  ))
+
+  # time_col is the name of the column in .data which should be used to calculate rrr and sss
+  # create multiple rrr and sss columns (1 for each of 1:n_components)
+  # add interactions with the group column
+  # update .formula and return
+
+  return(list(.data, newformula,vec_rrr,vec_sss))
+}
+
+
+f <- function(formula, data, period) {
+  Terms <- stats::terms(formula, specials = c("time", "amp.acro"))
+
+  get_varnames(Terms)
+  attr(Terms, "special")$amp.acro
+  special_text <- attr(Terms,"term.labels")[attr(Terms, "special")$amp.acro - 1]
+
+  e <- str2lang(special_text)
+  e$.data <- data # add data to call to amp.acro()
+  e$.formula <- formula # add formula to call to amp.acro()
+
+
+  updated_df_and_formula <- eval(e) # evaluate amp.acro call
+  updated_df_and_formula
+}
+
