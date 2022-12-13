@@ -69,7 +69,6 @@ cosinor.glmm <- function(formula,
   )
 
   # Get a truth array for the coefficients
-  browser()
   mf <- fit
   r.coef <- NULL
   s.coef <- NULL
@@ -257,15 +256,28 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # (3) adds to the vec_rrr and vec_sss
   # ... for each additional component
 
+####
+#####
+Terms <- stats::terms(.formula)
+varnames <- get_varnames(Terms)
 
-
-  # if n_components = 1, generate a vector of rrr and sss
+newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
+                                      paste(c(attr(terms(.formula), "intercept"),group), collapse = " + "),
+                                      sep = " ~ "
+))
+browser()
+# if n_components = 1, generate a vector of rrr and sss
   i <- 1
   if (n_components == 1) {
     .data$rrr <- cos(2 * pi * ttt / period[i])
     .data$sss <- sin(2 * pi * ttt / period[i])
     vec_rrr <- "rrr"
     vec_sss <- "sss"
+    acpart <- paste((rep(group[i], 2)), c(vec_rrr, vec_sss), sep = ":")
+    acpart_comb <- paste(acpart[1],acpart[2], sep = " + ")
+    form_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +",vec_rrr,"+", vec_sss,
+                                              "+",acpart_comb,")")))
+    newformula = eval(form_expr)
   }
   #
 
@@ -282,36 +294,39 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
       sss_names <- eval(vec_sss[i])
       .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
       .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
+      acpart <- paste((rep(group[i], 2)), c(rrr_names, sss_names), sep = ":")
+      acpart_comb <- paste(acpart[1],acpart[2], sep = " + ")
+      form_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +",rrr_names,"+", sss_names,
+                                                "+",acpart_comb,")")))
+      newformula = eval(form_expr)
+
     }
+    newformula = update.formula(newformula, ~.)
   }
 
   # update the formula
   # browser()
   # Terms <- stats::terms(.formula, specials = c("time", "amp.acro"))
-  Terms <- stats::terms(.formula, specials = c("amp.acro"))
-  varnames <- get_varnames(Terms)
+# Terms <- stats::terms(.formula, specials = c("amp.acro"))
+# varnames <- get_varnames(Terms)
 
-  # spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 2
-  spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 1
+# # spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 2
+# spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 1
 
-  # mainpart <- c(varnames[c(-2, 0)], vec_rrr, vec_sss)
-  # mainpart <- c(vec_rrr, vec_sss)
-  mainpart <- c(varnames[-spec_dex], vec_rrr, vec_sss)
+# # mainpart <- c(varnames[c(-2, 0)], vec_rrr, vec_sss)
+# # mainpart <- c(vec_rrr, vec_sss)
+# mainpart <- c(varnames[-spec_dex], vec_rrr, vec_sss)
 
-  # acpart <- paste(sort(rep(varnames[spec_dex], 2)), c(vec_rrr, vec_sss), sep = ":")
-  acpart <- paste(sort(rep(group, 2)), c(vec_rrr, vec_sss), sep = ":")
+# # acpart <- paste(sort(rep(varnames[spec_dex], 2)), c(vec_rrr, vec_sss), sep = ":")
+# acpart <- paste(sort(rep(group, 2)), c(vec_rrr, vec_sss), sep = ":")
 
 
-  newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
-    paste(c(attr(terms(.formula), "intercept"), mainpart, acpart), collapse = " + "),
-    sep = " ~ "
-  ))
-
-  # time_col is the name of the column in .data which should be used to calculate rrr and sss
-  # create multiple rrr and sss columns (1 for each of 1:n_components)
-  # add interactions with the group column
-  # update .formula and return
-
+# newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
+#   paste(c(attr(terms(.formula), "intercept"), mainpart, acpart), collapse = " + "),
+#   sep = " ~ "
+# ))
+#####
+####
   return(list(data=.data, formula=newformula, vec_rrr=vec_rrr, vec_sss=vec_sss))
 }
 
