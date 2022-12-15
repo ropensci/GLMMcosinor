@@ -26,6 +26,15 @@
 #'
 #' @export
 #'
+#Examples for meeting: 15/12/2022
+#Evidence that the multi-component estimation works. In this example, amp2 = amp1 + 2, acr2 = acr1-1.
+  #comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.1,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
+  #cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+#
+#You can now have different groups assigned to different components. For example:
+  #vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
+  #cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind)
+
 
 cosinor.glmm <- function(formula,
                          period = 12,
@@ -51,7 +60,7 @@ cosinor.glmm <- function(formula,
   newformula <- updated_df_and_formula$formula
   vec_rrr <- updated_df_and_formula$vec_rrr
   vec_sss <- updated_df_and_formula$vec_sss
-
+  data <- stats::model.frame(newformula, data)
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = data,
@@ -104,6 +113,7 @@ cosinor.glmm <- function(formula,
     names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
+  browser()
 
   # Arrange and display the output
   structure(

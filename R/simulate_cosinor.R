@@ -86,6 +86,26 @@ simulate_cosinor <- function(n,
 
   }
 
+  get_dataset_combined_guassian <- function(amp,acr,mesor) {
+    B1 <- amp*cos(acr)
+    G1 <- -amp*sin(acr)
+    rrr1 <- cos(2*pi*(ttt)/12)
+    sss1 <- sin(2*pi*(ttt)/12)
+
+    B2 <- (amp+2)*cos(acr-1)
+    G2 <- -(amp+2)*sin(acr-1)
+    rrr2 <- cos(2*pi*(ttt)/8)
+    sss2 <- sin(2*pi*(ttt)/8)
+
+    lambda1 <- (mesor+B1*rrr1+G1*sss1)
+    lambda2 <- (B2*rrr2+G2*sss2)
+    nsize <- length(ttt)
+
+    y <-  rnorm(nsize,lambda1,1)+rnorm(nsize,lambda2,1)
+    df <- data.frame(y,rrr1,sss1,ttt)
+    return(df)
+  }
+
   if (dist=="poisson") {
     get_dataset <- get_dataset_poisson
   }
@@ -99,6 +119,10 @@ simulate_cosinor <- function(n,
     get_dataset <- get_dataset_gaussian
   }
 
+  if (dist =="2_component") {
+    get_dataset <-get_dataset_combined_guassian
+  }
+
   data_A <- get_dataset(amp,acro,mesor)
   data_B <- get_dataset(beta.amp,beta.acro,beta.mesor)
   data_A$group <- "A"
@@ -107,5 +131,6 @@ simulate_cosinor <- function(n,
   df$group = as.numeric(as.factor(df$group))-1
 
   colnames(df) <- c("Y","x","z","times","group")
+
   return(df)
 }
