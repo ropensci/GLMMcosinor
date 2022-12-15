@@ -60,7 +60,6 @@ cosinor.glmm <- function(formula,
   newformula <- updated_df_and_formula$formula
   vec_rrr <- updated_df_and_formula$vec_rrr
   vec_sss <- updated_df_and_formula$vec_sss
-  data <- stats::model.frame(newformula, data)
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = data,
@@ -113,7 +112,6 @@ cosinor.glmm <- function(formula,
     names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
-  browser()
 
   # Arrange and display the output
   structure(
