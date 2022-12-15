@@ -33,55 +33,52 @@ cosinor.glmm <- function(formula,
                          data,
                          family = gaussian(),
                          ...) {
-  ## build time transformations
+
+  #Extract only the amp.acro function from the call
   Terms <- stats::terms(formula, specials = c("amp.acro"))
   special_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro - 1]
-
   e <- str2lang(special_text)
   e$.data <- data # add data to call to amp.acro()
   e$.formula <- formula # add formula to call to amp.acro()
-
-
   updated_df_and_formula <- eval(e) # evaluate amp.acro call
 
-
-
-  # update these to come from updated_df_and_formula
+  #Extract the data and updated formula from amp.acro()
   data <- updated_df_and_formula$data
   newformula <- updated_df_and_formula$formula
-  vec_rrr <- updated_df_and_formula$vec_rrr
-  vec_sss <- updated_df_and_formula$vec_sss
+  vec_rrr <- updated_df_and_formula$vec_rrr #vector of rrr names for each component
+  vec_sss <- updated_df_and_formula$vec_sss #vector of sss names for each component
+
+  #Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = data,
     family = family,
     ...
   )
-  # Get a truth array for the coefficients
+
+  #Retrieve the fit, coefficients from the model and priming vectors
+  #in preparation for transforming the raw coefficients
   mf <- fit
   coefs <- glmmTMB::fixef(mf)$cond
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
+  mu_inv <- rep(0, length(names(coefs)))
+
+  #Get a Boolean vector for rrr, sss, and mu. This will be used to extract
+  #the relevant raw parameters from the raw coefficient model output
   for (jj in 1:length(vec_rrr)) {
-    #r.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_rrr[jj], ]))
     r.coef[[jj]] <- !is.na(str_extract(names(coefs),vec_rrr[jj]))
-    #s.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_sss[jj], ]))
     s.coef[[jj]] <- !is.na(str_extract(names(coefs),vec_sss[jj]))
-
+    mu_inv_carry <- r.coef[[jj]] + s.coef[[jj]] #Keep track of non-mesor terms
+    mu_inv <- mu_inv_carry + mu_inv #Ultimately,every non-mesor term will be true
   }
 
-  mu_inv <- rep(0, length(s.coef[[1]]))
-  for (jj in 1:length(vec_sss)) {
-    mu_inv_carry <- r.coef[[jj]] + s.coef[[jj]]
-    mu_inv <- mu_inv_carry + mu_inv
-  }
+  mu.coef <- c(!mu_inv) #get a boolean vector for mesor
+  r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) #a matrix of rrr coefficients
+  s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) #a matrix of sss coefficients
 
-  mu.coef <- c(!mu_inv)
-  s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
-  r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
-
-  # calculate the parameter estimates
+  # Calculate the parameter estimates for all components
   amp <- NULL
   acr <- NULL
   for (jj in 1:length(vec_rrr)) {
@@ -244,12 +241,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     period = period
   )
 
-  # replace everything below here to occur within a for loop which iteratively
-  # (1) adds on columns to the .data
-  # (2) adds covariates to the formula
-  # (3) adds to the vec_rrr and vec_sss
-  # ... for each additional component
-
   ####
   #####
   # i <- 1
@@ -266,24 +257,8 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     paste(c(attr(terms(.formula), "intercept"), group_names), collapse = " + "),
     sep = " ~ "
   ))
-  # if n_components = 1, generate a vector of rrr and sss
-  # i <- 1
-#  if (n_components == 1) {
-#    .data$rrr <- cos(2 * pi * ttt / period[i])
-#    .data$sss <- sin(2 * pi * ttt / period[i])
-#    vec_rrr <- "rrr"
-#    vec_sss <- "sss"
-#    acpart <- paste((rep(group[i], 2)), c(vec_rrr, vec_sss), sep = ":")
-#    acpart_comb <- paste(acpart[1], acpart[2], sep = " + ")
-#    form_expr <- str2expression(noquote(paste(
-#      "update.formula(newformula, .~. +", vec_rrr, "+", vec_sss,
-#      "+", acpart_comb, ")"
-#    )))
-#    newformula <- eval(form_expr)
-#  }
-#  #
 
-  # if n_components > 1, generate n_components number of rrr and sss vectors
+  # generate 'n_components' number of rrr and sss vectors
     n_count <- 1:n_components
     vec_rrr <- (paste0("rrr", n_count))
     vec_sss <- (paste0("sss", n_count))
