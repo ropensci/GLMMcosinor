@@ -1,103 +1,38 @@
 # working out space
-library(matlib)
-library(car)
-library(tidyverse)
-library(devtools)
-load_all()
+comod = simulate_cosinor(1000,mesor = 50,amp = 7,acro = 1,beta.mesor = 0.1,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
+m <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 12)), data = comod)
+comod$pred <- predict(m$fit, type="response")
 
-n <- 100
-times <- runif(n,min = 0, max =24)
-tau <- 12
-cLevel=0.95
-
-
-TrueAmp=runif(1,0,2)
-TrueAcr=runif(1,-pi,pi)
-TrueMesor=runif(1,0,2)
-
-Amp_change = runif(1,-TrueAmp,2)
-Acr_change = runif(1,-pi,pi)
-Mesor_change = runif(1,-2,2)
-
-totalreps=100
-
-get_dataset <- function(amp,acr,mesor) {
-  B <- amp*cos(acr)
-  G <- -amp*sin(acr)
-  x <- cos(2*pi*(times)/tau)
-  z <- sin(2*pi*(times)/tau)
-  M <- mesor
-  lambda <- exp(M+B*x+G*z)
-  nsize <- length(times)
-  y <- rpois(nsize,lambda=lambda)
-  df <- data.frame(y,x,z,times)
-  return(df)
-}
-
-combine_dataset <- function (TrueAmp,TrueAcr,TrueMesor, Amp_change, Acr_change, Mesor_change) {
-  actualdata <- get_dataset(TrueAmp,TrueAcr,TrueMesor)
-  actualdata2 <- get_dataset(TrueAmp+Amp_change,TrueAcr+Acr_change,TrueMesor+Mesor_change)
-  actualdata$group <- "A"
-  actualdata2$group <- "B"
-  combined_data <- rbind(actualdata, actualdata2)
+ggplot() +
+  geom_point(data=comod, aes(times, Y, col=as.factor(group)), alpha=0.1) +
+  geom_line(data=comod, aes(times, pred, col=as.factor(group)))
+# test when you put a browser() in at the simulate data stage with multicomponent (above)
+data.frame(l1=lambda1, l2=lambda2, y=y, time=ttt) %>%
+  mutate(lsum = l1+l2) %>%
+  pivot_longer(!time) %>%
+  ggplot(aes(time, value, col=name)) +
+  geom_point()
 
 
-  combined_data2 <- combined_data
-  combined_data2$group = as.numeric(as.factor(combined_data2$group))-1
-  return(combined_data2)
-}
+#Example showing how cosinor.glmm works with a group of multiple levels
+newgroup <-
+  vitamind %>%
+  filter(X==1) %>%
+  mutate(X=2, time = time + 4)
 
-combined_data_analysis = combine_dataset(TrueAmp,TrueAcr,TrueMesor, Amp_change, Acr_change, Mesor_change)
+dat <- rbind(vitamind, newgroup) %>%
+  mutate(X = as.factor(X))
 
-assess_glmm <- function(combined_data_analysis) {
-  cosinor_glmm_model <- cosinor.glmm(y~time(times) + group + amp.acro(group), period=tau, family=poisson, data=combined_data_analysis)
-  #browser()
-  model.glmm_coverage <- summary.cosinor.glmm(cosinor_glmm_model)
+dat %>%
+  ggplot(aes(time, Y, col=X)) + geom_point()
 
-  lower_CI <- model.glmm_coverage$transformed.table$lower.CI
-  names(lower_CI) <- c('msr.A', 'msr.B_change','amp.A','amp.B_change','acr.A','acr.B_change')
-  upper_CI <- model.glmm_coverage$transformed.table$upper.CI
-  names(upper_CI) <- c('msr.A', 'msr.B_change','amp.A','amp.B_change','acr.A','acr.B_change')
+m <- cosinor.glmm(Y ~ group+amp.acro(time, n_components = 1, group = "X"), data = dat)
 
-
-  c(
-    "ll_acr" = unname(lower_CI['acr.A']),
-    "ul_acr" = unname(upper_CI['acr.A']),
-    "ll_amp" = unname(lower_CI['amp.A']),
-    "ul_amp" = unname(upper_CI['amp.A']),
-    "ll_msr" = unname(lower_CI['msr.A']),
-    "ul_msr" = unname(upper_CI['msr.A'])
-  )
-}
-
-f <- function(...) assess_glmm(combine_dataset(TrueAmp,TrueAcr,TrueMesor, Amp_change, Acr_change, Mesor_change))
-
-library(parallel)
-cl <- makeCluster(detectCores())
-
-
-clusterEvalQ(cl, {
-  library(matlib)
-  library(car)
-  library(tidyverse)
-}
-)
-
-clusterExport(cl, c('Amp_change','Acr_change','Mesor_change','get_varnames','cosinor.glmm','update_covnames','combine_dataset','summary.cosinor.glmm',"assess_glmm", "get_dataset", "times", "tau", "cLevel","TrueAmp","TrueAcr","TrueMesor"))
-
-res <- parLapply(
-  cl,
-  1:totalreps,
-  f
-)
-
-res <- do.call("rbind", res)
-res <- as.data.frame(res)
-
-res %>%
-  dplyr::summarize(
-    msr_coverage = simMetric::coverage(TrueMesor, ll=ll_msr, ul=ul_msr, get="coverage"),
-    acr_coverage = simMetric::coverage(TrueAcr, ll=ll_acr, ul=ul_acr, get="coverage"),
-    amp_coverage = simMetric::coverage(TrueAmp, ll=ll_amp, ul=ul_amp, get="coverage")
-  )
-
+# Examples for meeting: 15/12/2022
+# Evidence that the multi-component estimation works. In this example, amp2 = amp1 + 2, acr2 = acr1-1.
+# comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.1,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
+# cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+#
+# You can now have different groups assigned to different components. For example:
+# vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
+# cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind)

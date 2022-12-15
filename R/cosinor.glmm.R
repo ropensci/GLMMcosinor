@@ -26,14 +26,6 @@
 #'
 #' @export
 #'
-#Examples for meeting: 15/12/2022
-#Evidence that the multi-component estimation works. In this example, amp2 = amp1 + 2, acr2 = acr1-1.
-  #comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.1,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
-  #cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
-#
-#You can now have different groups assigned to different components. For example:
-  #vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
-  #cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind)
 
 
 cosinor.glmm <- function(formula,
@@ -54,8 +46,7 @@ cosinor.glmm <- function(formula,
 
 
 
-
-  # update these to comef rom updated_df_and_formula
+  # update these to come from updated_df_and_formula
   data <- updated_df_and_formula$data
   newformula <- updated_df_and_formula$formula
   vec_rrr <- updated_df_and_formula$vec_rrr
@@ -66,15 +57,18 @@ cosinor.glmm <- function(formula,
     family = family,
     ...
   )
-
   # Get a truth array for the coefficients
   mf <- fit
+  coefs <- glmmTMB::fixef(mf)$cond
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
   for (jj in 1:length(vec_rrr)) {
-    r.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_rrr[jj], ]))
-    s.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_sss[jj], ]))
+    #r.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_rrr[jj], ]))
+    r.coef[[jj]] <- !is.na(str_extract(names(coefs),vec_rrr[jj]))
+    #s.coef[[jj]] <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")[vec_sss[jj], ]))
+    s.coef[[jj]] <- !is.na(str_extract(names(coefs),vec_sss[jj]))
+
   }
 
   mu_inv <- rep(0, length(s.coef[[1]]))
@@ -86,7 +80,6 @@ cosinor.glmm <- function(formula,
   mu.coef <- c(!mu_inv)
   s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
   r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
-  coefs <- glmmTMB::fixef(mf)$cond
 
   # calculate the parameter estimates
   amp <- NULL
@@ -230,16 +223,16 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
   # browser()
 
-  if(length(group) != n_components){
-    if(length(group) == 1) {
+  if (length(group) != n_components) {
+    if (length(group) == 1) {
       group <- rep(group, n_components)
     } else {
       stop("grouping variable in amp.acro() must be of length 1 or the same as n_components.")
     }
   }
 
-  if(length(period) != n_components){
-    if(length(period) == 1) {
+  if (length(period) != n_components) {
+    if (length(period) == 1) {
       period <- rep(period, n_components)
     } else {
       stop("period value(s) in amp.acro() must be of length 1 or the same as n_components.")
@@ -257,37 +250,40 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # (3) adds to the vec_rrr and vec_sss
   # ... for each additional component
 
-####
-#####
-i=1
-for (i in 1:length(group)) {
-  if (is.na(group[i]) == TRUE)
-    group[i] = 0
-}
-group_names <- group[group != 0]
-
-Terms <- stats::terms(.formula)
-varnames <- get_varnames(Terms)
-newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
-                                      paste(c(attr(terms(.formula), "intercept"),group_names), collapse = " + "),
-                                      sep = " ~ "))
-# if n_components = 1, generate a vector of rrr and sss
-  i <- 1
-  if (n_components == 1) {
-    .data$rrr <- cos(2 * pi * ttt / period[i])
-    .data$sss <- sin(2 * pi * ttt / period[i])
-    vec_rrr <- "rrr"
-    vec_sss <- "sss"
-    acpart <- paste((rep(group[i], 2)), c(vec_rrr, vec_sss), sep = ":")
-    acpart_comb <- paste(acpart[1],acpart[2], sep = " + ")
-    form_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +",vec_rrr,"+", vec_sss,
-                                              "+",acpart_comb,")")))
-    newformula = eval(form_expr)
+  ####
+  #####
+  # i <- 1
+  for (i in 1:length(group)) { # for(i in seq_along(length(group))) {
+    if (is.na(group[i]) == TRUE) {
+      group[i] <- 0
+    }
   }
-  #
+  group_names <- group[group != 0]
+
+  Terms <- stats::terms(.formula)
+  varnames <- get_varnames(Terms)
+  newformula <- stats::as.formula(paste(all.vars(.formula, max.names=1), #rownames(attr(Terms, "factors"))[1],
+    paste(c(attr(terms(.formula), "intercept"), group_names), collapse = " + "),
+    sep = " ~ "
+  ))
+  # if n_components = 1, generate a vector of rrr and sss
+  # i <- 1
+#  if (n_components == 1) {
+#    .data$rrr <- cos(2 * pi * ttt / period[i])
+#    .data$sss <- sin(2 * pi * ttt / period[i])
+#    vec_rrr <- "rrr"
+#    vec_sss <- "sss"
+#    acpart <- paste((rep(group[i], 2)), c(vec_rrr, vec_sss), sep = ":")
+#    acpart_comb <- paste(acpart[1], acpart[2], sep = " + ")
+#    form_expr <- str2expression(noquote(paste(
+#      "update.formula(newformula, .~. +", vec_rrr, "+", vec_sss,
+#      "+", acpart_comb, ")"
+#    )))
+#    newformula <- eval(form_expr)
+#  }
+#  #
 
   # if n_components > 1, generate n_components number of rrr and sss vectors
-  if (n_components != 1) {
     n_count <- 1:n_components
     vec_rrr <- (paste0("rrr", n_count))
     vec_sss <- (paste0("sss", n_count))
@@ -299,25 +295,26 @@ newformula <- stats::as.formula(paste(rownames(attr(Terms, "factors"))[1],
       sss_names <- eval(vec_sss[i])
       .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
       .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
-        if (group[i] != 0) {
+      if (group[i] != 0) {
         acpart <- paste((rep(group[i], 2)), c(rrr_names, sss_names), sep = ":")
-        acpart_comb <- paste(acpart[1],acpart[2], sep = " + ")
-        form_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +",rrr_names,"+", sss_names,
-                                                  "+",acpart_comb,")")))
-        }
+        acpart_comb <- paste(acpart[1], acpart[2], sep = " + ")
+        form_expr <- str2expression(noquote(paste(
+          "update.formula(newformula, .~. +", rrr_names, "+", sss_names,
+          "+", acpart_comb, ")"
+        )))
+      }
 
-        if (group[i] == 0) {
-          acpart_comb <- NULL
-          form_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +",rrr_names,"+", sss_names,")")))
-        }
+      if (group[i] == 0) {
+        acpart_comb <- NULL
+        form_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +", rrr_names, "+", sss_names, ")")))
+      }
 
-      newformula = eval(form_expr)
-
+      newformula <- eval(form_expr)
     }
-    newformula = update.formula(newformula, ~.)
-  }
-#update the formula
-#####
-####
-  return(list(data=.data, formula=newformula, vec_rrr=vec_rrr, vec_sss=vec_sss))
+    newformula <- update.formula(newformula, ~.)
+
+  # update the formula
+  #####
+  ####
+  return(list(data = .data, formula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss))
 }

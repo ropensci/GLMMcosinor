@@ -92,16 +92,17 @@ simulate_cosinor <- function(n,
     rrr1 <- cos(2*pi*(ttt)/12)
     sss1 <- sin(2*pi*(ttt)/12)
 
-    B2 <- (amp+2)*cos(acr-1)
-    G2 <- -(amp+2)*sin(acr-1)
+    B2 <- (amp+3)*cos(acr-1)
+    G2 <- -(amp+3)*sin(acr-1)
     rrr2 <- cos(2*pi*(ttt)/8)
     sss2 <- sin(2*pi*(ttt)/8)
 
     lambda1 <- (mesor+B1*rrr1+G1*sss1)
     lambda2 <- (B2*rrr2+G2*sss2)
     nsize <- length(ttt)
-
-    y <-  rnorm(nsize,lambda1,1)+rnorm(nsize,lambda2,1)
+    # browser()
+    # y <-  rnorm(nsize,lambda1,1)+rnorm(nsize,lambda2,1)
+    y <- rnorm(nsize, lambda1 + lambda2, 1)
     df <- data.frame(y,rrr1,sss1,ttt)
     return(df)
   }
