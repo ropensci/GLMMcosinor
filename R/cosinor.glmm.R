@@ -33,22 +33,17 @@ cosinor.glmm <- function(formula,
                          data,
                          family = gaussian(),
                          ...) {
-
-  #Extract only the amp.acro function from the call
-  Terms <- stats::terms(formula, specials = c("amp.acro"))
-  amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro - 1]
-  e <- str2lang(amp.acro_text)
-  e$.data <- data # add data that will be called to amp.acro()
-  e$.formula <- formula # add formula that will be called to amp.acro()
-  updated_df_and_formula <- eval(e) # evaluate amp.acro call
-
+  updated_df_and_formula <- update_formula_and_data(data = data, formula = formula)
   #Extract the data and updated formula from amp.acro()
   data <- updated_df_and_formula$data
   newformula <- updated_df_and_formula$formula
   vec_rrr <- updated_df_and_formula$vec_rrr #vector of rrr names for each component
   vec_sss <- updated_df_and_formula$vec_sss #vector of sss names for each component
   n_components <- updated_df_and_formula$n_components
-
+  group_names <- updated_df_and_formula$group_names
+  group_levels <- updated_df_and_formula$group_levels
+  group_levels_total <- updated_df_and_formula$group_levels_total
+  group_check <- updated_df_and_formula$group_check
   #Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
@@ -65,12 +60,13 @@ cosinor.glmm <- function(formula,
   s.coef <- NULL
   mu.coef <- NULL
   mu_inv <- rep(0, length(names(coefs)))
-
   #Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   #the relevant raw parameters from the raw coefficient model output
   for (i in 1:n_components) {
-    r.coef[[i]] <- !is.na(str_extract(names(coefs),vec_rrr[i]))
-    s.coef[[i]] <- !is.na(str_extract(names(coefs),vec_sss[i]))
+    # browser()
+    r.coef[[i]] <- grepl(paste0(vec_rrr[i], "$"), names(coefs))
+    s.coef[[i]] <- grepl(paste0(vec_sss[i], "$"), names(coefs))
+
     mu_inv_carry <- r.coef[[i]] + s.coef[[i]] #Keep track of non-mesor terms
     mu_inv <- mu_inv_carry + mu_inv #Ultimately,every non-mesor term will be true
   }
@@ -110,10 +106,14 @@ cosinor.glmm <- function(formula,
       formula = newformula,
       fit = fit,
       Call = match.call(),
-      Terms = Terms,
+      Terms = updated_df_and_formula$Terms,
       coefficients = new_coefs,
       raw_coefficients = coefs,
-      period = period
+      period = period,
+      group_names = group_names,
+      group_levels = group_levels,
+      group_levels_total = group_levels_total,
+      group_check = group_check
     ),
     class = "cosinor.glmm"
   )
@@ -140,7 +140,11 @@ print.cosinor.glmm <- function(x, ...) {
   print(x$raw_coefficients)
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
-  # names(t.x) <- update_covnames(names(t.x))
+  if (x$group_check == TRUE) {
+  names(t.x) <- update_covnames(names(t.x), group_names = x$group_names,
+                                group_levels = x$group_levels,
+                                group_levels_total = x$group_levels_total)
+  }
   print(t.x)
 }
 
@@ -148,7 +152,7 @@ print.cosinor.glmm <- function(x, ...) {
 #'
 #' Given an outcome and time variable, fit the cosinor model with optional covariate effects.
 #'
-#' @param formula Forumla specifying the model. Indicate the time variable with \code{time()} and covariate effects on the
+#' @param formula Formula specifying the model. Indicate the time variable with \code{time()} and covariate effects on the
 #' amplitude and acrophase with \code{amp.acro()}. See details.
 #' @param ... other arguments
 #'
@@ -203,110 +207,16 @@ get_varnames <- function(Terms) {
 #' @export
 #'
 
-update_covnames <- function(names) {
+update_covnames <- function(names, group_names, group_levels, group_levels_total) {
+  #Present the covariate names with descriptive text
   covnames <- grep("(amp|acr|Intercept)", names, invert = TRUE, value = TRUE)
-
+  group_names_2 = c(rep(group_names,noquote(group_levels_total)))
   lack <- names
-  for (n in covnames) {
-    lack <- gsub(paste0(n, ":"), paste0("[", n, " = 1]:"), lack)
-    lack <- gsub(paste0("^", n, "$"), paste0("[", n, " = 1]"), lack)
-  }
+    for (i in 1:length(covnames)) {
+      lack <- gsub(paste0(covnames[i], ":"), paste0("[",group_names_2[i], "=",group_levels[i],"]:"), lack)
+      lack <- gsub(paste0("^", covnames[i], "$"), paste0("[", group_names_2[i], "=",group_levels[i],"]"), lack)
+      }
   lack
 }
 
 
-amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12) {
-  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
-  #Test for whether n_components is an integer greater than 0
-  if (n_components %% 1 != 0| n_components < 1) {
-      stop("Number of components (n_components) must be an integer greater than 0")
-  }
-
-  #Test for whether the length of the grouping variable matches the value of n_components.
-  #If one grouping variable is supplied but n_components > 1, then the one grouping
-  #variable is repeated to match the value of n_components
-  #match the length of n_components
-  if (length(group) != n_components) {
-    if (length(group) == 1) {
-      group <- rep(group, n_components)
-    } else {
-      stop("grouping variable in amp.acro() must be of length 1 or the same as n_components.")
-    }
-  }
-
-  #Test for whether the length of the period matches the value of n_components
-  #If one period is supplied but n_components > 1, then the period is repeated to
-  #match the value of n_components
-  if (length(period) != n_components) {
-    if (length(period) == 1) {
-      period <- rep(period, n_components)
-    } else {
-      stop("period value(s) in amp.acro() must be of length 1 or the same as n_components.")
-    }
-  }
-
-  ###
-  #iter_df <- data.frame(
-  #  component = 1:n_components,
-  #  group = group,
-  #  period = period
-  #)
-  ###
-
-  #Checks for NA group values supplied by the user and replaces with zeroes.
-  #This is important when creating the formula: 'newformula'.
-  for (i in seq_along(length(group))) {
-    if (is.na(group[i]) == TRUE) {
-      group[i] <- 0
-    }
-  }
-  #Create a vector with just the named groups, disregarding 'zero'/NA elements
-  group_names <- group[group != 0]
-
-  #Get the terms and variable names from the amp.acro call
-  Terms <- stats::terms(.formula)
-  varnames <- get_varnames(Terms)
-
-  #Create the initial formula string
-  newformula <- stats::as.formula(paste(all.vars(.formula, max.names=1), #rownames(attr(Terms, "factors"))[1],
-    paste(c(attr(terms(.formula), "intercept"), group_names), collapse = " + "),
-    sep = " ~ "
-  ))
-
-  # generate 'n_components' number of rrr and sss vectors
-    n_count <- 1:n_components
-    vec_rrr <- (paste0("rrr", n_count)) #vector of rrr names
-    vec_sss <- (paste0("sss", n_count)) #vector of sss names
-
-    # adding the rrr and sss columns to the dataframe
-    for (i in 1:n_components) {
-      rrr_names <- eval(vec_rrr[i])
-      sss_names <- eval(vec_sss[i])
-      .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
-      .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
-
-      #If grouping variable is not 0 (NA), create interaction terms in the formula
-      if (group[i] != 0) {
-        acpart <- paste((rep(group[i], 2)), c(rrr_names, sss_names), sep = ":")
-        acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
-        formula_expr <- str2expression(noquote(paste(
-          "update.formula(newformula, .~. +", rrr_names, "+", sss_names,
-          "+", acpart_combined, ")"
-        )))
-      }
-
-      #If grouping variable is 0 (NA), do not create interaction terms in the formula
-      if (group[i] == 0) {
-        acpart_combined <- NULL
-        formula_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +", rrr_names, "+", sss_names, ")")))
-      }
-
-      #Evaluate the formula string expression
-      newformula <- eval(formula_expr)
-    }
-
-    #Update the formula
-    newformula <- update.formula(newformula, ~.)
-
-  return(list(data = .data, formula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss, n_components = n_components))
-}
