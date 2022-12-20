@@ -40,10 +40,8 @@ cosinor.glmm <- function(formula,
   vec_rrr <- updated_df_and_formula$vec_rrr #vector of rrr names for each component
   vec_sss <- updated_df_and_formula$vec_sss #vector of sss names for each component
   n_components <- updated_df_and_formula$n_components
-  group_names <- updated_df_and_formula$group_names
-  group_levels <- updated_df_and_formula$group_levels
-  group_levels_total <- updated_df_and_formula$group_levels_total
-  group_check <- updated_df_and_formula$group_check
+  group_stats <- updated_df_and_formula$group_stats
+
   #Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
@@ -110,10 +108,7 @@ cosinor.glmm <- function(formula,
       coefficients = new_coefs,
       raw_coefficients = coefs,
       period = period,
-      group_names = group_names,
-      group_levels = group_levels,
-      group_levels_total = group_levels_total,
-      group_check = group_check
+      group_stats = group_stats
     ),
     class = "cosinor.glmm"
   )
@@ -130,7 +125,6 @@ cosinor.glmm <- function(formula,
 #' @export
 #'
 
-
 print.cosinor.glmm <- function(x, ...) {
   cat("Call: \n")
   print(x$Call)
@@ -140,10 +134,8 @@ print.cosinor.glmm <- function(x, ...) {
   print(x$raw_coefficients)
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
-  if (x$group_check == TRUE) {
-  names(t.x) <- update_covnames(names(t.x), group_names = x$group_names,
-                                group_levels = x$group_levels,
-                                group_levels_total = x$group_levels_total)
+  if (x$group_stats$group_check == TRUE) {
+  names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
   }
   print(t.x)
 }
@@ -207,15 +199,38 @@ get_varnames <- function(Terms) {
 #' @export
 #'
 
-update_covnames <- function(names, group_names, group_levels, group_levels_total) {
+update_covnames <- function(names, group_stats) {
   #Present the covariate names with descriptive text
+  group_names <- group_stats$group_names
+  group_levels <- group_stats$group_levels
+  group_levels_total <- group_stats$group_levels_total
+  ref_group_level <- group_stats$ref_group_level
+  group <- group_stats$group
+
+  # get the names of the covariates alone
   covnames <- grep("(amp|acr|Intercept)", names, invert = TRUE, value = TRUE)
-  group_names_2 = c(rep(group_names,noquote(group_levels_total)))
+  # get the names that covnames does not get:
+  covnames_inv <- grep(paste0("(Intercept|",paste(covnames, collapse = "|"),")"), invert = TRUE, names, value = TRUE)
+  # group_levels_total is a vector of the total number of levels per group.
+  # group_names_vectorized converts group_levels_total into a sequence for naming
+  # e.g. (4,6) --> (1,2,3,4,1,2,3,4,5,6)
+  group_names_vectorized = c(rep(group_names,noquote(group_levels_total)))
+  # group_names_double is the 'group' vector repeated twice into a single vector.
+  # This corresponds to the amplitude and acrophase naming requirements.
+  group_names_double = c(rep(group, 2))
+  # ref_group_level is a vector of the reference levels in each group. These values
+  # are then repeated to match the length of group_names_double vector
+  ref_group_level = c(rep(ref_group_level,length(group_names_double)/length(ref_group_level)))
   lack <- names
     for (i in 1:length(covnames)) {
-      lack <- gsub(paste0(covnames[i], ":"), paste0("[",group_names_2[i], "=",group_levels[i],"]:"), lack)
-      lack <- gsub(paste0("^", covnames[i], "$"), paste0("[", group_names_2[i], "=",group_levels[i],"]"), lack)
+      lack <- gsub(paste0(covnames[i], ":"), paste0("[",group_names_vectorized[i], "=",group_levels[i],"]:"), lack)
+      lack <- gsub(paste0("^", covnames[i], "$"), paste0("[", group_names_vectorized[i], "=",group_levels[i],"]"), lack)
+    }
+    for (i in 1:length(covnames_inv)) {
+      if (group_names_double[i] != 0) {
+      lack <- gsub(paste0("^",covnames_inv[i],"$"),paste0("[",group_names_double[i],"=",ref_group_level[i],"]:",covnames_inv[i]),lack)
       }
+    }
   lack
 }
 

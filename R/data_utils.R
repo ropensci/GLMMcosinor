@@ -117,24 +117,27 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 
   #Update the formula
   newformula <- update.formula(newformula, ~.)
-  group_levels = NULL
-  group_levels = NULL
-  group_levels_total = NULL
+  group_levels <- NULL
+  group_levels <- NULL
+  group_levels_total <- NULL
+  ref_group_level <- NULL
+
   if (group_check == TRUE) {
   group_levels_total = rep(0,length(group_names))
   for (i in 1:length(group_names)) {
-    single_group_level = levels(as.factor(.data[[group_names[i]]]))
-    #single_group_level <- single_group_level[single_group_level != 0]
+    single_group_level <- levels(as.factor(.data[[group_names[i]]]))
+    ref_group_level <- append(single_group_level[1],ref_group_level)
     single_group_level <- single_group_level[-1]
     group_levels <- append(group_levels, single_group_level)
     group_levels_total[[i]] <- length(single_group_level)
   }
   }
-  #group_levels <- group_levels[group_levels != 0]
 
+  group_stats = list(group = group,group_names = group_names,
+                     group_levels = group_levels,
+                     group_levels_total = group_levels_total,
+                     group_check = group_check,
+                     ref_group_level = ref_group_level)
   return(list(data = .data, formula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss, n_components = n_components,
-              group_names = group_names,
-              group_levels = group_levels,
-              group_levels_total = group_levels_total,
-              group_check = group_check))
+              group_stats = group_stats))
 }
