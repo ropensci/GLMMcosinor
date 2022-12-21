@@ -12,33 +12,45 @@ update_formula_and_data <- function(data, formula) {
 
 
 amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12) {
-  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
-  #Test for whether n_components is an integer greater than 0
 
-  stopifnot(assertthat::is.count(n_components))
-  lapply(period, function(period) stopifnot(assertthat::is.number(period)))
-  stopifnot(all(period > 0))
-  stopifnot(inherits(.formula, "formula"))
+  stopifnot(assertthat::is.count(n_components)) #Ensure n_components is an integer > 0
+  lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
+  stopifnot(all(period > 0)) #ensure all periods are greater than 0
+  stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
+  stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
 
-  # add stopifnot for group and time_col as character (assertthat::is.string())
-  # add stopifnot for .data being a data.frame or tibble or whatever would work for lm
-  # add stopifnot for substitute(time_col) being a column within .data
+  #ensure time_col is not a character
+  if (assertthat::is.string(substitute(time_col)) == TRUE) {
+    stop("time_col argument must not be a string")
+  }
 
-  # if (n_components %% 1 != 0| n_components < 1) {
-  #     stop("Number of components (n_components) must be an integer greater than 0")
-  # }
+  #ensure .data argument is a dataframe or matrix
+  assertthat::assert_that(
+    inherits(.data, "data.frame") | inherits(.data, "matrix"),
+    msg = "'data' must be of class 'data.frame' or 'matrix'"
+  )
 
+  #NOT SURE IF THIS IS NECESSARY
+  #assertthat::assert_that(
+  #  isTRUE(
+  #    all(unique(purrr::map_chr(.data, class)) %in% c("numeric", "integer","factor"))
+  #  ),
+  #  msg = "All columns of 'data' must be numeric, integer, or factor class"
+  #)
 
-  #Allow the user to not have any grouping structure (if group arg is missing)
-  group_check = TRUE
+  # allow the user to not have any grouping structure (if group argument is missing)
   if (missing(group) == TRUE) {
     group = 0
     group_check = FALSE
-  }
+  } else {
+    group_check = TRUE
+    }
+  #"group_check" variable can be passed to cosinor.glmm to indicate if there is a
+  # group argument present in amp.acro()
 
-  #Test for whether the length of the grouping variable matches the value of n_components.
-  #If one grouping variable is supplied but n_components > 1, then the one grouping
-  #variable is repeated to match the value of n_components
+  # test for whether the length of the grouping variable matches the value of n_components.
+  # if one grouping variable is supplied but n_components > 1, then the one grouping
+  # variable is repeated to match the value of n_components
   if (length(group) != n_components) {
     if (length(group) == 1) {
       group <- rep(group, n_components)
@@ -47,14 +59,14 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     }
   }
 
-  #Show error message if user uses 'rrr' or 'sss' for their grouping variable name
+  # show error message if user uses 'rrr' or 'sss' in their grouping variable name
   if (any(grepl("rrr", group) == TRUE) | any(grepl("sss",group) == TRUE)) {
     stop("Group variable names cannot contain 'rrr' or 'sss' ")
   }
 
-  #Test for whether the length of the period matches the value of n_components
-  #If one period is supplied but n_components > 1, then the period is repeated to
-  #match the value of n_components
+  # test for whether the length of the period matches the value of n_components
+  # if one period is supplied but n_components > 1, then the period is repeated to
+  # match the value of n_components
   if (length(period) != n_components) {
     if (length(period) == 1) {
       period <- rep(period, n_components)
@@ -63,21 +75,25 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     }
   }
 
-  #Checks for NA group values supplied by the user and replaces with zeroes.
-  #This is important when creating the formula: 'newformula'.
+  # check for NA group values supplied by the user and replaces with zeroes.
+  # this is important when creating the formula: 'newformula'.
   for (i in 1:(length(group))) {
     if (is.na(group[i]) == TRUE) {
       group[i] <- 0
     }
   }
-  #Create a vector with just the named groups, disregarding 'zero'/NA elements
+
+  # extract the time vector
+  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
+
+  # create a vector with just the named groups, disregarding 'zero'/NA elements
   group_names <- group[group != 0]
 
-  #Get the terms and variable names from the amp.acro call
+  # get the terms and variable names from the amp.acro call
   Terms <- stats::terms(.formula)
   varnames <- get_varnames(Terms)
 
-  #Create the initial formula string
+  # create the initial formula string
   newformula <- stats::as.formula(paste(all.vars(.formula, max.names=1), #rownames(attr(Terms, "factors"))[1],
                                         paste(c(attr(terms(.formula), "intercept"), group_names), collapse = " + "),
                                         sep = " ~ "
@@ -95,7 +111,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
     .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
 
-    #If grouping variable is not 0 (NA), create interaction terms in the formula
+    # if grouping variable is not 0 (NA), create interaction terms in the formula
     if (group[i] != 0) {
       acpart <- paste((rep(group[i], 2)), c(rrr_names, sss_names), sep = ":")
       acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
@@ -105,39 +121,31 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
       )))
     }
 
-    #If grouping variable is 0 (NA), do not create interaction terms in the formula
+    # if grouping variable is 0 (or NA), do not create interaction terms in the formula
     if (group[i] == 0) {
       acpart_combined <- NULL
       formula_expr <- str2expression(noquote(paste("update.formula(newformula, .~. +", rrr_names, "+", sss_names, ")")))
     }
 
-    #Evaluate the formula string expression
+    # evaluate the formula string expression
     newformula <- eval(formula_expr)
   }
 
-  #Update the formula
+  # update the formula
   newformula <- update.formula(newformula, ~.)
-  group_levels <- NULL
-  group_levels <- NULL
-  group_levels_total <- NULL
-  ref_group_level <- NULL
 
+  # create NULL vectors for group metrics. These will be updated if there is a group argument
+  group_stats = NULL
   if (group_check == TRUE) {
   group_levels_total = rep(0,length(group_names))
-  for (i in 1:length(group_names)) {
-    single_group_level <- levels(as.factor(.data[[group_names[i]]]))
-    ref_group_level <- append(single_group_level[1],ref_group_level)
-    single_group_level <- single_group_level[-1]
-    group_levels <- append(group_levels, single_group_level)
-    group_levels_total[[i]] <- length(single_group_level)
+  for (i in group_names) {
+    single_group_level <- levels(as.factor(.data[[i]]))
+    group_stats[[i]] <- as.array(single_group_level)
   }
+ # colnames(group_stats) = group_names
   }
-
-  group_stats = list(group = group,group_names = group_names,
-                     group_levels = group_levels,
-                     group_levels_total = group_levels_total,
-                     group_check = group_check,
-                     ref_group_level = ref_group_level)
   return(list(data = .data, formula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss, n_components = n_components,
-              group_stats = group_stats))
+              group_stats = group_stats,
+              group = group,
+              group_check = group_check))
 }
