@@ -206,9 +206,12 @@ get_varnames <- function(Terms) {
 update_covnames <- function(names, group_stats, group) {
   #Present the covariate names with descriptive text
   group_names <- names(group_stats) #get the group names
-  group_stats_without_first <- NULL # a vector without the first level of each group
+  group_stats_without_first <- NULL # a vector of group levels without the first level of each group
+  group_names_together <- NULL #a vector of the group_names of each level
   for (i in group_names) {
     group_stats_without_first[[i]] = group_stats[[i]][-1]
+    group_names_together <- append(group_names_together,
+                                   rep(names(group_stats[i]),length(group_stats[[i]][-1])))
   }
 
   # get the names of the covariates alone
@@ -218,8 +221,7 @@ update_covnames <- function(names, group_stats, group) {
   covnames_inv <- grep(paste0("(Intercept|",paste(covnames, collapse = "|"),")"), invert = TRUE, names, value = TRUE)
   lack <- names
     for (i in 1:length(covnames)) {
-      var <- str_extract(covnames[i],group_names) #get the group name from covnames
-      var <- var[!is.na(var)] # remove NA values
+      var <- group_names_together[i]
       var_number = unlist(group_stats_without_first)[[i]] #get the group level
       lack <- gsub(paste0(covnames[i], ":"), paste0("[",var, "=",var_number,"]:"), lack)
       lack <- gsub(paste0("^", covnames[i], "$"), paste0("[",var, "=",var_number,"]"), lack)
@@ -228,7 +230,7 @@ update_covnames <- function(names, group_stats, group) {
   var = rep(group,length(covnames_inv)/length(group))
   # name the reference group of each covariate accordingly
     for (i in 1:length(covnames_inv)) {
-      if (var[i] != 0) {
+      if (var[i] != 0) { # this condition is necessary to avoid naming components with no group specification
       var_number <- group_stats[[var[i]]][1]
       lack <- gsub(paste0("^",covnames_inv[i],"$"),paste0("[",var[i],"=",var_number,"]:",covnames_inv[i]),lack)
       }
