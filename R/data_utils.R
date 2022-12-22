@@ -1,51 +1,56 @@
 
-update_formula_and_data <- function(data, formula) {
-  #Extract only the amp.acro function from the call
+#' Update data and formula for fitting cosinor.glmm model
+#'
+#' @param data input data for fitting cosinor.glmm model.
+#' @param formula model formula, specified by user including \code{amp.acro()}.
+#' @param ... optional additional arguments.
+#'
+#' @return Returns a \code{list}.
+#' @export
+update_formula_and_data <- function(data, formula, ...) {
+  # Extract only the amp.acro function from the call
   Terms <- stats::terms(formula, specials = c("amp.acro"))
   amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro - 1]
   e <- str2lang(amp.acro_text)
   e$.data <- data # add data that will be called to amp.acro()
   e$.formula <- formula # add formula that will be called to amp.acro()
   updated_df_and_formula <- eval(e) # evaluate amp.acro call
-  c(updated_df_and_formula, list(Terms = Terms))
+  c(updated_df_and_formula, list(Terms = Terms)) # TODO: extract period from amp.acro call and return here
 }
 
 
 amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12) {
-
-  stopifnot(assertthat::is.count(n_components)) #Ensure n_components is an integer > 0
+  stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
   lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
-  stopifnot(all(period > 0)) #ensure all periods are greater than 0
+  stopifnot(all(period > 0)) # ensure all periods are greater than 0
   stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
   stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
+  # browser()
 
-  #ensure time_col is not a character
-  if (assertthat::is.string(substitute(time_col)) == TRUE) {
+  # ensure time_col is of the right class (most likely a character by)
+  if (assertthat::is.string(substitute(time_col))) {
     stop("time_col argument must not be a string")
   }
 
-  #ensure .data argument is a dataframe or matrix
+  if (!inherits(substitute(time_col), "name")) {
+    stop("time_col must be name of column in data.")
+  }
+
+  # ensure .data argument is a dataframe or matrix
   assertthat::assert_that(
     inherits(.data, "data.frame") | inherits(.data, "matrix"),
     msg = "'data' must be of class 'data.frame' or 'matrix'"
   )
 
-  #NOT SURE IF THIS IS NECESSARY
-  #assertthat::assert_that(
-  #  isTRUE(
-  #    all(unique(purrr::map_chr(.data, class)) %in% c("numeric", "integer","factor"))
-  #  ),
-  #  msg = "All columns of 'data' must be numeric, integer, or factor class"
-  #)
-
   # allow the user to not have any grouping structure (if group argument is missing)
-  if (missing(group) == TRUE) {
-    group = 0
-    group_check = FALSE
+  if (missing(group)) {
+    group <- 0
+    group_check <- FALSE
   } else {
-    group_check = TRUE
-    }
-  #"group_check" variable can be passed to cosinor.glmm to indicate if there is a
+    group_check <- TRUE
+    check_group_var(.data = .data, group = group)
+  }
+  # "group_check" variable is passed to cosinor.glmm to indicate if there is a
   # group argument present in amp.acro()
 
   # test for whether the length of the grouping variable matches the value of n_components.
@@ -60,7 +65,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   }
 
   # show error message if user uses 'rrr' or 'sss' in their grouping variable name
-  if (any(grepl("rrr", group) == TRUE) | any(grepl("sss",group) == TRUE)) {
+  if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
     stop("Group variable names cannot contain 'rrr' or 'sss' ")
   }
 
@@ -94,15 +99,15 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   varnames <- get_varnames(Terms)
 
   # create the initial formula string
-  newformula <- stats::as.formula(paste(all.vars(.formula, max.names=1), #rownames(attr(Terms, "factors"))[1],
-                                        paste(c(attr(terms(.formula), "intercept"), group_names), collapse = " + "),
-                                        sep = " ~ "
+  newformula <- stats::as.formula(paste(all.vars(.formula, max.names = 1), # rownames(attr(Terms, "factors"))[1],
+    paste(c(attr(terms(.formula), "intercept"), group_names), collapse = " + "),
+    sep = " ~ "
   ))
 
   # generate 'n_components' number of rrr and sss vectors
   n_count <- 1:n_components
-  vec_rrr <- (paste0("rrr", n_count)) #vector of rrr names
-  vec_sss <- (paste0("sss", n_count)) #vector of sss names
+  vec_rrr <- (paste0("rrr", n_count)) # vector of rrr names
+  vec_sss <- (paste0("sss", n_count)) # vector of sss names
 
   # adding the rrr and sss columns to the dataframe
   for (i in 1:n_components) {
@@ -135,17 +140,34 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   newformula <- update.formula(newformula, ~.)
 
   # create NULL vectors for group metrics. These will be updated if there is a group argument
-  group_stats = NULL
+  group_stats <- NULL
   if (group_check == TRUE) {
-  group_levels_total = rep(0,length(group_names))
-  for (i in group_names) {
-    single_group_level <- levels(as.factor(.data[[i]]))
-    group_stats[[i]] <- as.array(single_group_level)
+    group_levels_total <- rep(0, length(group_names))
+    for (i in group_names) {
+      single_group_level <- levels(as.factor(.data[[i]]))
+      group_stats[[i]] <- as.array(single_group_level)
+    }
+    # colnames(group_stats) = group_names
   }
- # colnames(group_stats) = group_names
-  }
-  return(list(data = .data, formula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss, n_components = n_components,
-              group_stats = group_stats,
-              group = group,
-              group_check = group_check))
+  return(list(
+    newdata = .data, newformula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss, n_components = n_components,
+    period = period,
+    group_stats = group_stats,
+    group = group,
+    group_check = group_check
+  ))
 }
+
+
+check_group_var <- function(.data, group) {
+  grouping_vars <- group[!group %in% c(0, NA)]
+  if(!all(grouping_vars %in% colnames(.data))) {
+    bad_groups <- grouping_vars[which(!grouping_vars %in% colnames(.data))]
+    stop(
+      "Grouping variable(s) not found in input data: [",
+      paste0(bad_groups, collapse = ", "),
+      "]"
+    )
+  }
+}
+

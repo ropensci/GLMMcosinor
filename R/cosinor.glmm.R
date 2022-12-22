@@ -6,7 +6,6 @@
 #' @param formula Formula specifying the model. Indicate the time variable with
 #'   \code{time()} and covariate effects on the amplitude and acrophase with
 #'   \code{amp.acro()}. See details for more information.
-#' @param period Length of time for a complete period of the sine curve.
 #' @param data Data frame where variable can be found
 #' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
 #' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
@@ -25,97 +24,14 @@
 #'
 #'
 #' @export
-#'
-
-
 cosinor.glmm <- function(formula,
-                         period = 12,
+                         # period = 12,
                          data,
                          family = gaussian(),
                          ...) {
-  updated_df_and_formula <- update_formula_and_data(data = data, formula = formula)
-  #Extract the data and updated formula from amp.acro()
-  data <- updated_df_and_formula$data #data from amp.acro()
-  newformula <- updated_df_and_formula$formula #formula from amp.acro()
-  vec_rrr <- updated_df_and_formula$vec_rrr #vector of rrr names for each component
-  vec_sss <- updated_df_and_formula$vec_sss #vector of sss names for each component
-  n_components <- updated_df_and_formula$n_components #number of model components
-  group_stats <- updated_df_and_formula$group_stats #a list of levels per group
-  group <- updated_df_and_formula$group #group arguments repeated to match n_components
-  group_check <- updated_df_and_formula$group_check #TRUE if there was a group argument in amp.acro()
-
-  #Fit the data and formula to a model
-  fit <- glmmTMB::glmmTMB(
-    formula = newformula,
-    data = data,
-    family = family,
-    ...
-  )
-
-  #Retrieve the fit, coefficients from the model and priming vectors
-  #in preparation for transforming the raw coefficients
-  mf <- fit
-  coefs <- glmmTMB::fixef(mf)$cond
-  r.coef <- NULL
-  s.coef <- NULL
-  mu.coef <- NULL
-  mu_inv <- rep(0, length(names(coefs)))
-
-  #Get a Boolean vector for rrr, sss, and mu. This will be used to extract
-  #the relevant raw parameters from the raw coefficient model output
-  for (i in 1:n_components) {
-    r.coef[[i]] <- grepl(paste0(vec_rrr[i], "$"), names(coefs))
-    s.coef[[i]] <- grepl(paste0(vec_sss[i], "$"), names(coefs))
-
-    mu_inv_carry <- r.coef[[i]] + s.coef[[i]] #Keep track of non-mesor terms
-    mu_inv <- mu_inv_carry + mu_inv #Ultimately,every non-mesor term will be true
-  }
-
-  mu.coef <- c(!mu_inv) #invert 'mu_inv' to get a Boolean vector for mesor terms
-  r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) #a matrix of rrr coefficients
-  s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) #a matrix of sss coefficients
-
-  #Calculate the parameter estimates for all components
-  amp <- NULL
-  acr <- NULL
-  for (i in 1:n_components) {
-    beta.s <- coefs[s.coef[i, ]]
-    beta.r <- coefs[r.coef[i, ]]
-
-    groups.r <- c(beta.r[vec_rrr[i]], beta.r[vec_rrr[i]] + beta.r[which(names(beta.r) != vec_rrr[i])])
-    groups.s <- c(beta.s[vec_sss[i]], beta.s[vec_sss[i]] + beta.s[which(names(beta.s) != vec_sss[i])])
-
-    amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
-    names(amp[[i]]) <- gsub(vec_rrr[i], paste0("amp", i), names(beta.r))
-
-    acr[[i]] <- -atan2(groups.s, groups.r)
-    names(acr[[i]]) <- gsub(vec_sss[i], paste0("acr", i), names(beta.s))
-  }
-  new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-
-  # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
-  if (n_components == 1) {
-    names(amp[[1]]) <- gsub(vec_rrr[1], "amp", names(beta.r))
-    names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
-    new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-  }
-
-  # Arrange and display the output
-  structure(
-    list(
-      formula = newformula,
-      fit = fit,
-      Call = match.call(),
-      Terms = updated_df_and_formula$Terms,
-      coefficients = new_coefs,
-      raw_coefficients = coefs,
-      period = period,
-      group_stats = group_stats,
-      group = group,
-      group_check = group_check
-    ),
-    class = "cosinor.glmm"
-  )
+  updated_df_and_formula <- update_formula_and_data(data = data, formula = formula, ...)
+  #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + (1|X)
+  do.call(data_processor,c(updated_df_and_formula,list(family = family)))
 }
 
 #' Print cosinor model
@@ -128,10 +44,9 @@ cosinor.glmm <- function(formula,
 #'
 #' @export
 #'
-
 print.cosinor.glmm <- function(x, ...) {
-  cat("Call: \n")
-  print(x$Call)
+  #cat("Call: \n")
+  #print(x$Call)
   cat("\n Raw formula: \n")
   print(x$formula)
   cat("\n Raw Coefficients: \n")
@@ -139,7 +54,7 @@ print.cosinor.glmm <- function(x, ...) {
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
   if (x$group_check == TRUE) {
-  names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats, group = x$group)
+    names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats, group = x$group)
   }
   print(t.x)
 }
@@ -204,38 +119,39 @@ get_varnames <- function(Terms) {
 #'
 
 update_covnames <- function(names, group_stats, group) {
-  #Present the covariate names with descriptive text
-  group_names <- names(group_stats) #get the group names
+  # Present the covariate names with descriptive text
+  group_names <- names(group_stats) # get the group names
   group_stats_without_first <- NULL # a vector of group levels without the first level of each group
-  group_names_together <- NULL #a vector of the group_names of each level
+  group_names_together <- NULL # a vector of the group_names of each level
   for (i in group_names) {
-    group_stats_without_first[[i]] = group_stats[[i]][-1]
-    group_names_together <- append(group_names_together,
-                                   rep(names(group_stats[i]),length(group_stats[[i]][-1])))
+    group_stats_without_first[[i]] <- group_stats[[i]][-1]
+    group_names_together <- append(
+      group_names_together,
+      rep(names(group_stats[i]), length(group_stats[[i]][-1]))
+    )
   }
 
   # get the names of the covariates alone
   covnames <- grep("(amp|acr|Intercept)", names, invert = TRUE, value = TRUE)
 
   # get the names that covnames does not get:
-  covnames_inv <- grep(paste0("(Intercept|",paste(covnames, collapse = "|"),")"), invert = TRUE, names, value = TRUE)
+  covnames_inv <- grep(paste0("(Intercept|", paste(covnames, collapse = "|"), ")"), invert = TRUE, names, value = TRUE)
   lack <- names
-    for (i in 1:length(covnames)) {
-      var <- group_names_together[i]
-      var_number = unlist(group_stats_without_first)[[i]] #get the group level
-      lack <- gsub(paste0(covnames[i], ":"), paste0("[",var, "=",var_number,"]:"), lack)
-      lack <- gsub(paste0("^", covnames[i], "$"), paste0("[",var, "=",var_number,"]"), lack)
-    }
-  #get a vector of group names repeated so that the length matches that of covnames_inv
-  var = rep(group,length(covnames_inv)/length(group))
+  for (i in 1:length(covnames)) {
+    var <- group_names_together[i] # var is a group name corresponding to that in covnames
+    var_number <- unlist(group_stats_without_first)[[i]] # get the group level
+    lack <- gsub(paste0(covnames[i], ":"), paste0("[", var, "=", var_number, "]:"), lack)
+    lack <- gsub(paste0("^", covnames[i], "$"), paste0("[", var, "=", var_number, "]"), lack)
+  }
+
+  # get a vector of group names repeated so that the length matches that of covnames_inv
+  var <- rep(group, length(covnames_inv) / length(group))
   # name the reference group of each covariate accordingly
-    for (i in 1:length(covnames_inv)) {
-      if (var[i] != 0) { # this condition is necessary to avoid naming components with no group specification
+  for (i in 1:length(covnames_inv)) {
+    if (var[i] != 0) { # this condition is necessary to avoid naming components with no group specification
       var_number <- group_stats[[var[i]]][1]
-      lack <- gsub(paste0("^",covnames_inv[i],"$"),paste0("[",var[i],"=",var_number,"]:",covnames_inv[i]),lack)
-      }
-      }
+      lack <- gsub(paste0("^", covnames_inv[i], "$"), paste0("[", var[i], "=", var_number, "]:", covnames_inv[i]), lack)
+    }
+  }
   lack
 }
-
-
