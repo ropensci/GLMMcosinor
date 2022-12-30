@@ -1,11 +1,14 @@
 data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
                            group_stats,group,group_check, period,family_var,Terms, ...)  {
+  group_names <- names(group_stats)
+  contrasts_arg <- lapply(group_stats, function(x) contr.sum(x, contrasts=FALSE))[group_names]
 
   # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = newdata,
     family = family_var,
+    contrasts = contrasts_arg,
     ...
   )
 
@@ -17,6 +20,7 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
   s.coef <- NULL
   mu.coef <- NULL
   mu_inv <- rep(0, length(names(coefs)))
+
 
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
@@ -49,7 +53,6 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     names(acr[[i]]) <- gsub(vec_sss[i], paste0("acr", i), names(beta.s))
   }
   new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-
   # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
   if (n_components == 1) {
     names(amp[[1]]) <- gsub(vec_rrr[1], "amp", names(beta.r))
@@ -57,7 +60,7 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
 
-  # Arrange and display the output
+  # Arrange the output
   structure(
     list(
       formula = newformula,
@@ -73,5 +76,4 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     ),
     class = "cosinor.glmm"
   )
-
 }

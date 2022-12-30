@@ -25,7 +25,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   stopifnot(all(period > 0)) # ensure all periods are greater than 0
   stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
   stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
-  # browser()
 
   # ensure time_col is of the right class (most likely a character by)
   if (assertthat::is.string(substitute(time_col))) {
@@ -94,6 +93,10 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # create a vector with just the named groups, disregarding 'zero'/NA elements
   group_names <- group[group != 0]
 
+  #Formatting the group columns in .data as factors
+    for (i in group_names) {
+    .data[[i]] <- factor(.data[[i]])
+  }
   # get the terms and variable names from the amp.acro call
   Terms <- stats::terms(.formula)
   varnames <- get_varnames(Terms)
@@ -135,14 +138,12 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     # evaluate the formula string expression
     newformula <- eval(formula_expr)
   }
-
   # update the formula
   newformula <- update.formula(newformula, ~.)
 
   # create NULL vectors for group metrics. These will be updated if there is a group argument
   group_stats <- NULL
   if (group_check == TRUE) {
-    group_levels_total <- rep(0, length(group_names))
     for (i in group_names) {
       single_group_level <- levels(as.factor(.data[[i]]))
       group_stats[[i]] <- as.array(single_group_level)

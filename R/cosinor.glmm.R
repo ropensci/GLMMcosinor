@@ -25,12 +25,15 @@
 #'
 #' @export
 cosinor.glmm <- function(formula,
-                         # period = 12,
                          data,
                          family = gaussian(),
                          ...) {
   updated_df_and_formula <- update_formula_and_data(data = data, formula = formula, ...)
-  #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + (1|X)
+
+  #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
+  #Alternatively:
+  #updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
+
   do.call(data_processor,c(updated_df_and_formula,list(family = family)))
 }
 
@@ -54,7 +57,7 @@ print.cosinor.glmm <- function(x, ...) {
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
   if (x$group_check == TRUE) {
-    names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats, group = x$group)
+    names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
   }
   print(t.x)
 }
@@ -118,16 +121,18 @@ get_varnames <- function(Terms) {
 #' @export
 #'
 
-update_covnames <- function(names, group_stats, group) {
+update_covnames <- function(names, group_stats) {
   # Present the covariate names with descriptive text
   group_names <- names(group_stats) # get the group names
-  group_stats_without_first <- NULL # a vector of group levels without the first level of each group
   group_names_together <- NULL # a vector of the group_names of each level
+
+  # creates a vector of group names corresponding to the number of levels in each group
+  # Example: if groups are "X" and "Z" with 2 and 3 levels respectively, this 'for loop'
+  # would create the vector: c("X","X","Z","Z","Z")
   for (i in group_names) {
-    group_stats_without_first[[i]] <- group_stats[[i]][-1]
     group_names_together <- append(
       group_names_together,
-      rep(names(group_stats[i]), length(group_stats[[i]][-1]))
+      rep(names(group_stats[i]), length(group_stats[[i]]))
     )
   }
 
@@ -139,19 +144,15 @@ update_covnames <- function(names, group_stats, group) {
   lack <- names
   for (i in 1:length(covnames)) {
     var <- group_names_together[i] # var is a group name corresponding to that in covnames
-    var_number <- unlist(group_stats_without_first)[[i]] # get the group level
+    var_number <- unlist(group_stats)[[i]] # get the group level
     lack <- gsub(paste0(covnames[i], ":"), paste0("[", var, "=", var_number, "]:"), lack)
     lack <- gsub(paste0("^", covnames[i], "$"), paste0("[", var, "=", var_number, "]"), lack)
   }
 
   # get a vector of group names repeated so that the length matches that of covnames_inv
-  var <- rep(group, length(covnames_inv) / length(group))
   # name the reference group of each covariate accordingly
   for (i in 1:length(covnames_inv)) {
-    if (var[i] != 0) { # this condition is necessary to avoid naming components with no group specification
-      var_number <- group_stats[[var[i]]][1]
-      lack <- gsub(paste0("^", covnames_inv[i], "$"), paste0("[", var[i], "=", var_number, "]:", covnames_inv[i]), lack)
-    }
+      lack <- gsub(paste0("^", covnames_inv[i], "$"), paste0("[Int.]:", covnames_inv[i]), lack)
   }
   lack
 }
