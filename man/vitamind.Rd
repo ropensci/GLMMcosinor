@@ -6,7 +6,7 @@
 \title{Vitamin D}
 \format{
 A data frame with 3 variables: \code{X}, \code{Y},
-  \code{time}.
+\code{time}.
 }
 \usage{
 vitamind

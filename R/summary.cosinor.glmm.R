@@ -23,29 +23,29 @@
 summary.cosinor.glmm <- function(object, ...) {
   mf <- object$fit
 
-#  ###
-#  int = object$Call$int
-#  if (int == 0) {
-#    r.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
-#    s.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
-#    mu.coef <- c(!(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-#                     as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
-#  }
-#
-#  if (int == 1) {
-#
-#    r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
-#    s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
-#    mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-#                           as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
-#
-#  }
+  #  ###
+  #  int = object$Call$int
+  #  if (int == 0) {
+  #    r.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
+  #    s.coef <- c(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
+  #    mu.coef <- c(!(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
+  #                     as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+  #  }
+  #
+  #  if (int == 1) {
+  #
+  #    r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
+  #    s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
+  #    mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
+  #                           as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+  #
+  #  }
   ###
 
   r.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ]))
   s.coef <- c(FALSE, as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]))
   mu.coef <- c(TRUE, !(as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["sss", ]) |
-                         as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
+    as.logical(attr(mf$modelInfo$terms$cond$fixed, "factors")["rrr", ])))
 
 
 
@@ -53,7 +53,7 @@ summary.cosinor.glmm <- function(object, ...) {
 
 
   ##
-  coefs["group"]<- coefs[1]+coefs["group"]
+  coefs["group"] <- coefs[1] + coefs["group"]
   ##
 
 
@@ -118,8 +118,10 @@ summary.cosinor.glmm <- function(object, ...) {
     p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
   )
 
-  smat <- cbind(estimate = coef, standard.error = se, lower.CI = coef - zt * se,
-                upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se)))
+  smat <- cbind(
+    estimate = coef, standard.error = se, lower.CI = coef - zt * se,
+    upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se))
+  )
 
   rownames(smat) <- update_covnames(rownames(smat))
 
@@ -148,6 +150,3 @@ print.summary.cosinor.glmm <- function(x, ...) {
   cat("Transformed coefficients:\n")
   print(round(x$transformed.table, 4))
 }
-
-
-

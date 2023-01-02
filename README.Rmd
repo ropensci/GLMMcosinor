@@ -22,8 +22,14 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 <!-- badges: end -->
+#' @srrstatsTODO {G1.1} *Statistical Software should document whether the algorithm(s) it implements are:* - *The first implementation of a novel algorithm*; or - *The first implementation within **R** of an algorithm which has previously been implemented in other languages or contexts*; or - *An improvement on other implementations of similar algorithms in **R***.
 
-The goal of GLMMcosinor is to ...
+The goal of GLMMcosinor is to fit a generalised linear model (GLM) to circadian data that
+may be sourced from any distribution listed in glmmTMB, such as gaussian, poisson, 
+gamma, binomial. Existing programs allow the user to fit such data to a GLM, but 
+many are limited in their design; GLMMcosinor aims to be comprehensive and flexible. 
+Hence, GLMMcosinor is an improvement of other implementations of similar algorithms 
+in R. 
 
 ## Installation
 

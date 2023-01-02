@@ -1,13 +1,57 @@
+#' Fit the cosinorGLMM model using the output from update_formula_and_data() and
+#' a new formula
+#'
+#' @param obj output from `update_formula_and_data()`
+#' @param formula new formula to use when fitting model (maybe with random effects)
+#' @param ... optional additional arguments passed to `glmmTMB::glmmTMB()`
+#'
+#' @export
+#'
+#' @examples
+#' vitamind2 <- vitamind
+#' vitamind2$patient <- sample(LETTERS[1:5], size=nrow(vitamind2), replace=TRUE)
+#' updated_df_and_formula <- update_formula_and_data(data = vitamind2, formula = Y ~ X + amp.acro(time, group="X", period = 12))
+#' res <- fit_model_and_process(
+#'   updated_df_and_formula,
+#'   update.formula(updated_df_and_formula$newformula, .~.+(1|patient))
+#' )
+fit_model_and_process <- function(obj, formula, ...) {
+  if(!missing(formula)) {
+    obj$newformula <- formula
+  }
+  do.call(data_processor, obj)
+}
+
+
+#' Process and fit the data using glmmTMB after initial processing by data_utils.R.
+#'
+#'
+#' @param newdata processed dataframe with rrr and sss columns added
+#' @param newformula processed formula wwith rrr and sss components
+#' @param vec_sss a vector of sss for each component. (eg, "sss1, sss2")
+#' @param vec_rrr a vector of sss for each component. (eg, "rrr1, rrr2")
+#' @param n_components number of components specified
+#' @param group_stats a list of levels per group
+#' @param group the original group argument
+#' @param group_check binary vector indicating whether a group arg is present
+#' @param period a vector of periods for each component
+#' @param family the data distribution family
+#' @param Terms a list of  Terms from the original cosinor.glmm() call
+#' @param ... extra parameters
+#'
+#' @return the model fit from glmmTMB (as well as some other inputs )
+#' @export
+#'
+#' @examples
 data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
-                           group_stats,group,group_check, period,family_var,Terms, ...)  {
+                           group_stats, group, group_check, period,family,Terms, ...)  {
   group_names <- names(group_stats)
   contrasts_arg <- lapply(group_stats, function(x) contr.sum(x, contrasts=FALSE))[group_names]
-
   # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = newdata,
-    family = family_var,
+    family = family,
     contrasts = contrasts_arg,
     ...
   )
@@ -25,8 +69,8 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
   for (i in 1:n_components) {
-    r.coef[[i]] <- grepl(paste0(vec_rrr[i], "$"), names(coefs))
-    s.coef[[i]] <- grepl(paste0(vec_sss[i], "$"), names(coefs))
+    r.coef[[i]] <- grepl(paste0(vec_rrr[i]), names(coefs))
+    s.coef[[i]] <- grepl(paste0(vec_sss[i]), names(coefs))
 
     mu_inv_carry <- r.coef[[i]] + s.coef[[i]] # Keep track of non-mesor terms
     mu_inv <- mu_inv_carry + mu_inv # Ultimately,every non-mesor term will be true
@@ -59,7 +103,6 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
-
   # Arrange the output
   structure(
     list(
