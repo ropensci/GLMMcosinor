@@ -29,6 +29,9 @@ update_formula_and_data <- function(data, formula, family = "gaussian", ...) {
 #' @param .formula the formula from the original cosinor.glmm() function
 #' @param period the period of each component
 #'
+#' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
+#' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
+
 #' @return
 #' @noRd
 #'
@@ -40,8 +43,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   stopifnot(all(period > 0)) # ensure all periods are greater than 0
   stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
   stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
-
-  #' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
 
    # ensure time_col is of the right class (most likely a character by)
   if (assertthat::is.string(substitute(time_col))) {
@@ -72,7 +73,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # test for whether the length of the grouping variable matches the value of n_components.
   # if one grouping variable is supplied but n_components > 1, then the one grouping
   # variable is repeated to match the value of n_components
-  #' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
 
   if (length(group) != n_components) {
     if (length(group) == 1) {

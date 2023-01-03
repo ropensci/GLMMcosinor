@@ -99,4 +99,31 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
   #In this example, X has 3 levels, Z has 2 levels.
   dat$Z = rbinom(length(dat$X),1,prob = 0.5)
   cosinor.glmm(Y~ 0 + X + Z + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = dat)
+  cosinor.glmm(Y~ 0 + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = dat)
+
   #Might need to address the warning message
+
+#Meeting on 3/01/2023
+  #Addressed the issues with the no-intercept implementation:
+  dat$Z = rbinom(length(dat$X),1,prob = 0.5)
+  cosinor.glmm(Y~ 0 + X + Z + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = dat)
+  cosinor.glmm(Y~ 0 + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = dat)
+
+  #In the cosinor.lm() package, the update_covnames() function would not work
+  #if there is no intercept. I've since adjusted the code so that it is
+  #as flexible as possible. This is reflected in the naming of the transformed
+  #coefficients
+
+  #A few other things to note:
+    #There's a bug (or a feature?) in the glmmTMB function that involves rearranging
+    #the order of interaction terms depending on whether that term has already
+    #appeared in the formula. For example:
+    cosinor.glmm(Y~ 0 + X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = dat)
+    #note the way the interaction terms are arranged:
+    cosinor.glmm(Y~ 0 + Z + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = dat)
+
+    #In addition to giving the interaction term components, the model will give
+    #estimates without any interaction terms (which I believe is an aggregate estimate
+    #across the group terms...)
+
+    #I'm not sure how to address the issue indicated by the warning message
