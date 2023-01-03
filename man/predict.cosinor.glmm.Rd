@@ -4,14 +4,14 @@
 \alias{predict.cosinor.glmm}
 \title{Predict from a cosinor model}
 \usage{
-\method{predict}{cosinor.glmm}(object, ...)
+\method{predict}{cosinor.glmm}(object, newdata, ...)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
 
-\item{...}{other arguments}
-
 \item{newdata}{Optional new data}
+
+\item{...}{other arguments passed to \code{glmmTMB:::predict.glmmTMB}}
 }
 \description{
 Given a time variable and optional covariates, generate predicted values from
@@ -20,7 +20,7 @@ at a given month
 }
 \examples{
 
-fit <- cosinor.glmm(Y ~ time(time) + X + amp.acro(X), data = vitamind)
-predict(fit)
+fit <- cosinor.glmm(Y ~ X + amp.acro(X), data = vitamind)
+predict(fit, newdata=vitamind)
 
 }
