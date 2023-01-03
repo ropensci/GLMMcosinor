@@ -4,14 +4,14 @@
 \alias{predict.cosinor.glmm}
 \title{Predict from a cosinor model}
 \usage{
-\method{predict}{cosinor.glmm}(object, newdata, ...)
+\method{predict}{cosinor.glmm}(object, ...)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
 
-\item{newdata}{Optional new data}
-
 \item{...}{other arguments}
+
+\item{newdata}{Optional new data}
 }
 \description{
 Given a time variable and optional covariates, generate predicted values from

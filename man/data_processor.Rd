@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_processor.R
 \name{data_processor}
 \alias{data_processor}
-\title{Title}
+\title{Process and fit the data using glmmTMB after initial processing by data_utils.R.}
 \usage{
 data_processor(
   newdata,
@@ -20,8 +20,33 @@ data_processor(
 )
 }
 \arguments{
-\item{...}{}
+\item{newdata}{processed dataframe with rrr and sss columns added}
+
+\item{newformula}{processed formula wwith rrr and sss components}
+
+\item{vec_sss}{a vector of sss for each component. (eg, "sss1, sss2")}
+
+\item{vec_rrr}{a vector of sss for each component. (eg, "rrr1, rrr2")}
+
+\item{n_components}{number of components specified}
+
+\item{group_stats}{a list of levels per group}
+
+\item{group}{the original group argument}
+
+\item{group_check}{binary vector indicating whether a group arg is present}
+
+\item{period}{a vector of periods for each component}
+
+\item{family}{the data distribution family}
+
+\item{Terms}{a list of  Terms from the original cosinor.glmm() call}
+
+\item{...}{extra parameters}
+}
+\value{
+the model fit from glmmTMB (as well as some other inputs )
 }
 \description{
-Title
+Process and fit the data using glmmTMB after initial processing by data_utils.R.
 }
