@@ -33,8 +33,19 @@ cosinor.glmm <- function(formula,
   #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
   #Alternatively:
   #updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
-
-  do.call(data_processor,updated_df_and_formula)
+  cosinor.glmm.calls <-list(
+    cosinor.glmm = match.call(),
+    update_formula_and_data = updated_df_and_formula$Call
+  )
+  updated_df_and_formula$Call <- NULL
+  # browser()
+  do.call(
+    data_processor,
+    c(
+      updated_df_and_formula,
+      cosinor.glmm.calls = list(cosinor.glmm.calls)
+    )
+  )
 }
 
 #' Print cosinor model

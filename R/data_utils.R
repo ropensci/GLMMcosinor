@@ -4,11 +4,10 @@
 #' @param data input data for fitting cosinor.glmm model.
 #' @param formula model formula, specified by user including \code{amp.acro()}.
 #' @param family the model family.
-#' @param ... optional additional arguments.
 #'
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula, family = "gaussian", ...) {
+update_formula_and_data <- function(data, formula, family = "gaussian") {
   # Extract only the amp.acro function from the call
   Terms <- stats::terms(formula, specials = c("amp.acro"))
   amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro - 1]
@@ -16,7 +15,7 @@ update_formula_and_data <- function(data, formula, family = "gaussian", ...) {
   e$.data <- data # add data that will be called to amp.acro()
   e$.formula <- formula # add formula that will be called to amp.acro()
   updated_df_and_formula <- eval(e) # evaluate amp.acro call
-  c(updated_df_and_formula, list(Terms = Terms, family = family)) # TODO: extract period from amp.acro call and return here
+  c(updated_df_and_formula, list(Terms = Terms, family = family, Call = match.call())) # TODO: extract period from amp.acro call and return here
 }
 
 

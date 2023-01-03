@@ -43,8 +43,19 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @export
 #'
 #' @examples
-data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
-                           group_stats, group, group_check, period,family,Terms, ...)  {
+data_processor <- function(newdata,
+                           newformula,
+                           vec_sss,
+                           vec_rrr,
+                           n_components,
+                           group_stats,
+                           group,
+                           group_check,
+                           period,
+                           family,
+                           Terms,
+                           cosinor.glmm.calls,
+                           ...)  {
   group_names <- names(group_stats)
   contrasts_arg <- lapply(group_stats, function(x) contr.sum(x, contrasts=FALSE))[group_names]
   # Fit the data and formula to a model
@@ -103,12 +114,19 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
+
+  # update calls
+  if(missing(cosinor.glmm.calls)) {
+    cosinor.glmm.calls <- list()
+  }
+  cosinor.glmm.calls$data_processor <- match.call()
+
   # Arrange the output
   structure(
     list(
       formula = newformula,
       fit = fit,
-      Call = match.call(),
+      cosinor.glmm.calls = cosinor.glmm.calls,
       Terms = Terms,
       coefficients = new_coefs,
       raw_coefficients = coefs,

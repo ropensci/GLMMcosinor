@@ -16,6 +16,7 @@ data_processor(
   period,
   family,
   Terms,
+  cosinor.glmm.calls,
   ...
 )
 }
