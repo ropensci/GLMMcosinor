@@ -30,7 +30,7 @@ m <- cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "X", period
 
 # Examples for meeting: 15/12/2022
 # Evidence that the multi-component estimation works. In this example, amp2 = amp1 + 3, acr2 = acr1-1.
-comod = simulate_cosinor(10000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
+comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
 cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 #
 # You can now have different groups assigned to different components. For example:

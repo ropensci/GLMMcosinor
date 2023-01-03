@@ -17,7 +17,8 @@
 #' @export
 #'
 
-predict.cosinor.glmm <- function(object, newdata, ...) {
+predict.cosinor.glmm <- function(object, ...) {
+  newdata <- object$fit$frame
   if (missing(newdata) || is.null(newdata)) {
     Y <- object$fit$model[, paste(attr(object$Terms, "variables")[1 + attr(object$Terms, "response")])]
     Y.hat <- stats::fitted(object$fit)
@@ -26,6 +27,6 @@ predict.cosinor.glmm <- function(object, newdata, ...) {
     Y.hat <- stats::predict(object$fit, newdata = newdata)
   }
 
-  mu.hat <- object$fit$coefficients[1]
+  mu.hat <- object$coefficients[1]
   return(Y - Y.hat + mu.hat)
 }
