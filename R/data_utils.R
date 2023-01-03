@@ -134,6 +134,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   formula_expr <- NULL
   # adding the rrr and sss columns to the dataframe
   for (i in 1:n_components) {
+    #browser()
     rrr_names <- eval(vec_rrr[i])
     sss_names <- eval(vec_sss[i])
     .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
@@ -144,7 +145,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 
       acpart <- paste((rep(group[i], 2)), c(rrr_names, sss_names), sep = ":")
       acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
-      formula_expr <- paste(formula_expr,"+",rrr_names,"+",sss_names,"+",acpart_combined)
+      formula_expr <- paste(formula_expr,"+",acpart_combined)
     }
 
     # if grouping variable is 0 (or NA), do not create interaction terms in the formula
@@ -156,7 +157,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 
     #newformula <- eval(formula_expr)
   }
-
   newformula <- stats::as.formula(paste(all.vars(.formula, max.names = 1), # rownames(attr(Terms, "factors"))[1],
                                         paste(c(attr(terms(.formula), "intercept"),non_acro_formula, formula_expr), collapse = " + "),
                                         sep = " ~ "

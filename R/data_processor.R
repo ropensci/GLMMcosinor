@@ -52,7 +52,7 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     formula = newformula,
     data = newdata,
     family = family,
-    contrasts = contrasts_arg,
+    #contrasts = contrasts_arg,
     ...
   )
 
@@ -87,8 +87,8 @@ data_processor <- function(newdata,newformula,vec_sss,vec_rrr,n_components,
     beta.s <- coefs[s.coef[i, ]]
     beta.r <- coefs[r.coef[i, ]]
 
-    groups.r <- c(beta.r[vec_rrr[i]], beta.r[vec_rrr[i]] + beta.r[which(names(beta.r) != vec_rrr[i])])
-    groups.s <- c(beta.s[vec_sss[i]], beta.s[vec_sss[i]] + beta.s[which(names(beta.s) != vec_sss[i])])
+    groups.r <- c(beta.r[1], beta.r[which(names(beta.r) != names(beta.r[1]))])
+    groups.s <- c(beta.s[1], beta.s[which(names(beta.s) != names(beta.s[1]))])
 
     amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
     names(amp[[i]]) <- gsub(vec_rrr[i], paste0("amp", i), names(beta.r))
