@@ -4,11 +4,23 @@
 #' @param data input data for fitting cosinor.glmm model.
 #' @param formula model formula, specified by user including \code{amp.acro()}.
 #' @param family the model family.
+#' @param verbose controls whether messages from amp.acro are displayed. FALSE by default
+#'
+#' @srrstatsTODO {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
+#' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
 #'
 #' @return Returns a \code{list}.
 #' @export
 update_formula_and_data <- function(data, formula, family = "gaussian", verbose = FALSE) {
   # Extract only the amp.acro function from the call
+  #check for missing data
+  if (verbose) {
+    if (any(is.na(data))) {
+      message("\n Missing data in the following dataframe columns: \n")
+      print(colSums(is.na(data)))
+      message("\n Missing data will be ignored ")
+    }
+  }
 
   #check if family argument is of type family
   stopifnot(inherits(family, "family"))
@@ -30,12 +42,11 @@ update_formula_and_data <- function(data, formula, family = "gaussian", verbose 
 #'
 #' @param time_col a column of time values in the dataframe
 #' @param n_components number of components in the model
-#' @param group a vector of the names of group factors. The levels of each factor
-#'              should be ordered, with the first level of each factor being the reference level
+#' @param group a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level
 #' @param .data the dataframe from the original cosinor.glmm() function
 #' @param .formula the formula from the original cosinor.glmm() function
 #' @param period the period of each component
-#'
+#' @param .verbose controls whether messages from amp.acro are displayed. FALSE by default
 #' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
 #' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
 #' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
@@ -74,11 +85,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     inherits(.data, "data.frame") | inherits(.data, "matrix"),
     msg = "'data' must be of class 'data.frame' or 'matrix'"
   )
-
-  # ensure group argument is a string or character
-  if (assertthat::is.string(group) == FALSE) {
-    stop("group argument must be a string or character")
-  }
 
   # allow the user to not have any grouping structure (if group argument is missing)
   if (missing(group)) {
@@ -162,7 +168,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
 
     # add a warning message that columns have been added to the dataframe
-    browser()
     if (.verbose) {
     message(paste(rrr_names,"and",sss_names,"have been added to dataframe"))
     }

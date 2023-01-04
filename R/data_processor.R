@@ -57,13 +57,12 @@ data_processor <- function(newdata,
                            cosinor.glmm.calls,
                            ...)  {
   group_names <- names(group_stats)
-  contrasts_arg <- lapply(group_stats, function(x) contr.sum(x, contrasts=FALSE))[group_names]
+
   # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = newdata,
     family = family,
-    #contrasts = contrasts_arg,
     ...
   )
 

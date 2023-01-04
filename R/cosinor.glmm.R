@@ -8,6 +8,7 @@
 #'   \code{amp.acro()}. See details for more information.
 #' @param data Data frame where variable can be found
 #' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
+#' @param verbose controls whether messages from amp.acro are displayed. FALSE by default
 #' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
 #' @details This defines special functions that are used in the formula to
 #'   indicate the time variable and which covariates effect the amplitude. To
@@ -15,6 +16,11 @@
 #'   \code{time()}. To indicate a variable which affects the
 #'   acrophase/amplitude, wrap the name in \code{amp.acro()}. This will then do
 #'   all the transformations for you. See examples for usage.
+#'
+#' @srrstatsTODO {G2.14} *Where possible, all functions should provide options for users to specify how to handle missing (`NA`) data, with options minimally including:*
+#' @srrstatsTODO {G2.14a} *error on missing data*
+#' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
+#' @srrstatsTODO {G2.14c} *replace missing data with appropriately imputed values*
 #'
 #' @examples
 #'
