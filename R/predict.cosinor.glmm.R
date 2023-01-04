@@ -18,6 +18,7 @@
 #'
 
 predict.cosinor.glmm <- function(object, newdata, ...) {
+  browser()
   if(missing(newdata)) {
     return(glmmTMB:::predict.glmmTMB(object$fit, ...))
   }

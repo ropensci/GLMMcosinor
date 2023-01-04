@@ -7,13 +7,20 @@
 #'
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula, family = "gaussian") {
+update_formula_and_data <- function(data, formula, family = "gaussian", verbose = FALSE) {
   # Extract only the amp.acro function from the call
+
+  #check if family argument is of type family
+  stopifnot(inherits(family, "family"))
+
+  #formatting data to be evaluated in amp.acro()
   Terms <- stats::terms(formula, specials = c("amp.acro"))
   amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro - 1]
   e <- str2lang(amp.acro_text)
   e$.data <- data # add data that will be called to amp.acro()
   e$.formula <- formula # add formula that will be called to amp.acro()
+  e$.verbose <- verbose
+ # e$.verbose <- verbose
   updated_df_and_formula <- eval(e) # evaluate amp.acro call
   c(updated_df_and_formula, list(Terms = Terms, family = family, Call = match.call())) # TODO: extract period from amp.acro call and return here
 }
@@ -23,19 +30,27 @@ update_formula_and_data <- function(data, formula, family = "gaussian") {
 #'
 #' @param time_col a column of time values in the dataframe
 #' @param n_components number of components in the model
-#' @param group a vector of the names of group factors
+#' @param group a vector of the names of group factors. The levels of each factor
+#'              should be ordered, with the first level of each factor being the reference level
 #' @param .data the dataframe from the original cosinor.glmm() function
 #' @param .formula the formula from the original cosinor.glmm() function
 #' @param period the period of each component
 #'
 #' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
 #' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
-
+#' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
+#' @srrstatsTODO {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
+#' @srrstatsTODO {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
+#' @srrstatsTODO {G2.4a} *explicit conversion to `integer` via `as.integer()`*
+#' @srrstatsTODO {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
+#' @srrstatsTODO {G2.5} *Where inputs are expected to be of `factor` type, secondary documentation should explicitly state whether these should be `ordered` or not, and those inputs should provide appropriate error or other routines to ensure inputs follow these expectations.*
+#' @srrstatsTODO {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
+#'
 #' @return
 #' @noRd
 #'
 #' @examples
-amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12) {
+amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .verbose = FALSE) {
   #' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
   stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
   lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
@@ -43,7 +58,8 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
   stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
 
-   # ensure time_col is of the right class (most likely a character by)
+  # checking time_col data
+   # ensure time_col is of the right class (most likely a character)
   if (assertthat::is.string(substitute(time_col))) {
     stop("time_col argument must not be a string")
   }
@@ -52,11 +68,17 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     stop("time_col must be name of column in data.")
   }
 
+
   # ensure .data argument is a dataframe or matrix
   assertthat::assert_that(
     inherits(.data, "data.frame") | inherits(.data, "matrix"),
     msg = "'data' must be of class 'data.frame' or 'matrix'"
   )
+
+  # ensure group argument is a string or character
+  if (assertthat::is.string(group) == FALSE) {
+    stop("group argument must be a string or character")
+  }
 
   # allow the user to not have any grouping structure (if group argument is missing)
   if (missing(group)) {
@@ -138,6 +160,12 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     sss_names <- eval(vec_sss[i])
     .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
     .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
+
+    # add a warning message that columns have been added to the dataframe
+    browser()
+    if (.verbose) {
+    message(paste(rrr_names,"and",sss_names,"have been added to dataframe"))
+    }
 
     # if grouping variable is not 0 (NA), create interaction terms in the formula
     if (group[i] != 0) {
