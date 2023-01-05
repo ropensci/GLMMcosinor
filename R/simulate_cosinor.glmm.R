@@ -46,7 +46,7 @@ simulate_cosinor.glmm <- function (n,
     rrr <- cos(2*pi*(ttt)/period)
     sss <- sin(2*pi*(ttt)/period)
 
-    PSuccess <- exp(mesor+B*rrr+G*sss)/(1+exp(M+B*rrr+G*sss))
+    PSuccess <- exp(mesor+B*rrr+G*sss)/(1+exp(mesor+B*rrr+G*sss))
     nsize <- length(ttt)
     y <- rbinom(nsize, 1, PSuccess)
     df <- data.frame(y,rrr,sss,ttt)
@@ -63,7 +63,7 @@ simulate_cosinor.glmm <- function (n,
     alpha <- 5
     beta <- alpha/exp(mesor+B*rrr+G*sss)
     nsize <- length(ttt)
-    y <-rgamma(nsize,shap=alpha, rate = beta)
+    y <- stats::rgamma(nsize,shap=alpha, rate = beta)
     df <- data.frame(y,rrr,sss,ttt)
     return(df)
   }

@@ -18,9 +18,8 @@
 #'
 
 predict.cosinor.glmm <- function(object, newdata, ...) {
-  browser()
   if(missing(newdata)) {
-    return(glmmTMB:::predict.glmmTMB(object$fit, ...))
+    return(stats::predict(object$fit, ...))
   }
 
   # if the code runs this far, it's because the user has specified something in 'newdata'
@@ -43,5 +42,5 @@ predict.cosinor.glmm <- function(object, newdata, ...) {
   # and then append on that this was happening when wrangling newdata.
     # you can use capture.ouput() to evaluate some code and record any output, including error messages.
 
-  return(glmmTMB:::predict.glmmTMB(object$fit, newdata = nd, ...))
+  return(stats::predict(object$fit, newdata = nd, ...))
 }

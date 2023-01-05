@@ -58,7 +58,7 @@ test_model <- function(family_name) {
       alpha <- 5
       beta <- alpha / exp(M + B * x + G * z)
       nsize <- length(times)
-      y <- rgamma(nsize, shap = alpha, rate = beta)
+      y <- stats::rgamma(nsize, shap = alpha, rate = beta)
       df <- data.frame(y, x, z, times)
       return(df)
     }

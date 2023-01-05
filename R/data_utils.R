@@ -4,17 +4,17 @@
 #' @param data input data for fitting cosinor.glmm model.
 #' @param formula model formula, specified by user including \code{amp.acro()}.
 #' @param family the model family.
-#' @param verbose controls whether messages from amp.acro are displayed. FALSE by default
+#' @param quietly controls whether messages from amp.acro are displayed. TRUE by default
 #'
 #' @srrstatsTODO {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
 #' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
 #'
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula, family = "gaussian", verbose = FALSE) {
+update_formula_and_data <- function(data, formula, family = "gaussian", quietly = TRUE) {
   # Extract only the amp.acro function from the call
   #check for missing data
-  if (verbose) {
+  if (!quietly) {
     if (any(is.na(data))) {
       message("\n Missing data in the following dataframe columns: \n")
       print(colSums(is.na(data)))
@@ -23,7 +23,7 @@ update_formula_and_data <- function(data, formula, family = "gaussian", verbose 
   }
 
   #check if family argument is of type family
-  stopifnot(inherits(family, "family"))
+  #stopifnot(inherits(family, "family"))
 
   #formatting data to be evaluated in amp.acro()
   Terms <- stats::terms(formula, specials = c("amp.acro"))
@@ -31,8 +31,7 @@ update_formula_and_data <- function(data, formula, family = "gaussian", verbose 
   e <- str2lang(amp.acro_text)
   e$.data <- data # add data that will be called to amp.acro()
   e$.formula <- formula # add formula that will be called to amp.acro()
-  e$.verbose <- verbose
- # e$.verbose <- verbose
+  e$.quietly <- quietly
   updated_df_and_formula <- eval(e) # evaluate amp.acro call
   c(updated_df_and_formula, list(Terms = Terms, family = family, Call = match.call())) # TODO: extract period from amp.acro call and return here
 }
@@ -46,7 +45,7 @@ update_formula_and_data <- function(data, formula, family = "gaussian", verbose 
 #' @param .data the dataframe from the original cosinor.glmm() function
 #' @param .formula the formula from the original cosinor.glmm() function
 #' @param period the period of each component
-#' @param .verbose controls whether messages from amp.acro are displayed. FALSE by default
+#' @param .quietly controls whether messages from amp.acro are displayed. TRUE by default
 #' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
 #' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
 #' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
@@ -56,21 +55,40 @@ update_formula_and_data <- function(data, formula, family = "gaussian", verbose 
 #' @srrstatsTODO {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
 #' @srrstatsTODO {G2.5} *Where inputs are expected to be of `factor` type, secondary documentation should explicitly state whether these should be `ordered` or not, and those inputs should provide appropriate error or other routines to ensure inputs follow these expectations.*
 #' @srrstatsTODO {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
+#' @srrstatsTODO {G2.6} *Software which accepts one-dimensional input should ensure values are appropriately pre-processed regardless of class structures.*
+#' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
+#' @srrstatsTODO {G2.4b} *explicit conversion to continuous via `as.numeric()`*
+#' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.* #ensure time_col is univariate
 #'
 #' @return
 #' @noRd
 #'
 #' @examples
-amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .verbose = FALSE) {
-  #' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
+amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .quietly = TRUE) {
+
   stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
   lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
   stopifnot(all(period > 0)) # ensure all periods are greater than 0
   stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
   stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
 
+  # extract the time vector
+  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
+
   # checking time_col data
-   # ensure time_col is of the right class (most likely a character)
+
+   # ensure ttt contains numeric values only
+  if (!assertthat::assert_that(is.numeric(ttt))) {
+    stop("time column in dataframe must contain numeric values")
+  }
+
+  # ensure that time_col is univariate
+  if (!assertthat::assert_that(ncol(.data[paste(substitute(time_col))]) == 1)) {
+    stop("time_col must be univariate")
+  }
+
+
+  # ensure time_col is of the right class (most likely a character)
   if (assertthat::is.string(substitute(time_col))) {
     stop("time_col argument must not be a string")
   }
@@ -117,7 +135,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # test for whether the length of the period matches the value of n_components
   # if one period is supplied but n_components > 1, then the period is repeated to
   # match the value of n_components
-  #' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
 
   if (length(period) != n_components) {
     if (length(period) == 1) {
@@ -134,9 +151,6 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
       group[i] <- 0
     }
   }
-
-  # extract the time vector
-  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
 
   # create a vector with just the named groups, disregarding 'zero'/NA elements
   group_names <- group[group != 0]
@@ -168,7 +182,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     .data[[sss_names]] <- sin(2 * pi * ttt / period[i])
 
     # add a warning message that columns have been added to the dataframe
-    if (.verbose) {
+    if (!.quietly) {
     message(paste(rrr_names,"and",sss_names,"have been added to dataframe"))
     }
 

@@ -8,7 +8,7 @@
 #'   \code{amp.acro()}. See details for more information.
 #' @param data Data frame where variable can be found
 #' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
-#' @param verbose controls whether messages from amp.acro are displayed. FALSE by default
+#' @param quietly controls whether messages from amp.acro are displayed. TRUE by default
 #' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
 #' @details This defines special functions that are used in the formula to
 #'   indicate the time variable and which covariates effect the amplitude. To
@@ -33,9 +33,9 @@
 cosinor.glmm <- function(formula,
                          data,
                          family = gaussian(),
-                         verbose = FALSE,
+                         quietly = TRUE,
                          ...) {
-  updated_df_and_formula <- update_formula_and_data(data = data, formula = formula, family = family, verbose, ...)
+  updated_df_and_formula <- update_formula_and_data(data = data, formula = formula, family = family, quietly, ...)
 
   #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
   #Alternatively:

@@ -138,6 +138,20 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     data(vitamind)
     vitamindmod <- vitamind
     vitamindmod$Y[2] <- NA
-    cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamindmod, verbose = TRUE)
+    cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamindmod)
+
+    #Testing the predict function()
+    data(vitamind)
+    form = Y ~ X + amp.acro(time, group = "X")
+    fit <- cosinor.glmm(form, data = vitamind)
+    predict(fit)
+
+    vitamind_no_response_v <- vitamind
+    vitamind_no_response_v["Y"]<-NULL
+    predict(fit, vitamind_no_response_v)
+
+    #One issue: I implemented a test that the family argument is of class family,
+    #but this doesn't work with the predict function:
+      #stopifnot(inherits(family, "family"))   #in data_utils.R
 
     #Made progress towards the SRR standards

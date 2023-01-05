@@ -63,7 +63,7 @@ simulate_cosinor <- function(n,
     alpha <- 5
     beta <- alpha / exp(mesor + B * rrr + G * sss)
     nsize <- length(ttt)
-    y <- rgamma(nsize, shap = alpha, rate = beta)
+    y <- stats::rgamma(nsize, shap = alpha, rate = beta)
     df <- data.frame(y, rrr, sss, ttt)
     return(df)
   }
