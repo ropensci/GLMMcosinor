@@ -131,7 +131,7 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 #Meeting on 5/01/2023
     #Addressed the issues from the previous meeting
     data(vitamind)
-    vitamind$Z = rbinom(length(vitamind$X),5,prob = 0.5)
+    vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
     cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind)
 
     #Added a verbose argument to cosinor.glmm()
