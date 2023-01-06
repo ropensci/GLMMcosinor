@@ -163,13 +163,13 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #Ex. 1
     object1 <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
     summary.cosinor.glmm(object1)
-    #Ex. 2 (many warnings)
+    #Ex. 2
     data(vitamind)
     vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
     object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind)
     summary.cosinor.glmm(object2)
 
-    #Ex. 3 (many warnings)
+    #Ex. 3
     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
     summary.cosinor.glmm(object3)
