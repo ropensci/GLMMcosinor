@@ -70,39 +70,50 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
   stopifnot(all(period > 0)) # ensure all periods are greater than 0
   stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
-  stopifnot(paste(substitute(time_col)) %in% colnames(.data)) # check for time column in .data
 
-  # extract the time vector
-  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
+  #checking dataframe
+
+  # ensure .data argument is a dataframe, matrix, or tibble (tested)
+  assertthat::assert_that(
+    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data, "tibble"),
+    msg = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
+  )
+
+  # Formatting .data argument as dataframe (tested)
+  .data <- as.data.frame(.data)
+
 
   # checking time_col data
 
-   # ensure ttt contains numeric values only
-  if (!assertthat::assert_that(is.numeric(ttt))) {
-    stop("time column in dataframe must contain numeric values")
-  }
-
-  # ensure that time_col is univariate
-  if (!assertthat::assert_that(ncol(.data[paste(substitute(time_col))]) == 1)) {
-    stop("time_col must be univariate")
-  }
+  # check for time column in .data (tested)
+  assertthat::assert_that((paste(substitute(time_col)) %in% colnames(.data)),
+                          msg = "time_col must be the name of a column in dataframe")
 
 
-  # ensure time_col is of the right class (most likely a character)
+  # ensure time_col is of the right class (most likely a character) (tested)
   if (assertthat::is.string(substitute(time_col))) {
     stop("time_col argument must not be a string")
   }
 
+  # ensure time_col is within the dataframe
   if (!inherits(substitute(time_col), "name")) {
     stop("time_col must be name of column in data.")
   }
 
+  # extract the time vector
+  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
 
-  # ensure .data argument is a dataframe or matrix
-  assertthat::assert_that(
-    inherits(.data, "data.frame") | inherits(.data, "matrix"),
-    msg = "'data' must be of class 'data.frame' or 'matrix'"
-  )
+   # ensure ttt contains numeric values only (tested)
+  if (!assertthat::assert_that(is.numeric(ttt))) {
+    stop("time column in dataframe must contain numeric values")
+  }
+
+
+  # ensure time_col is univariate (tested)
+  assertthat::assert_that(is.vector(ttt),
+                          msg = "time_col must be univariate")
+
+
 
   # allow the user to not have any grouping structure (if group argument is missing)
   if (missing(group)) {
@@ -115,24 +126,23 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # "group_check" variable is passed to cosinor.glmm to indicate if there is a
   # group argument present in amp.acro()
 
-  # test for whether the length of the grouping variable matches the value of n_components.
-  # if one grouping variable is supplied but n_components > 1, then the one grouping
-  # variable is repeated to match the value of n_components
-
+  # ensure the length of the grouping variable matches the value of n_components. (tested)
+    # if one grouping variable is supplied but n_components > 1, then the one grouping
+    # variable is repeated to match the value of n_components
   if (length(group) != n_components) {
     if (length(group) == 1) {
       group <- rep(group, n_components)
     } else {
-      stop("grouping variable in amp.acro() must be of length 1 or the same as n_components.")
+      stop("Grouping variable in amp.acro() must be of length 1 or the same as n_components")
     }
   }
 
-  # show error message if user uses 'rrr' or 'sss' in their grouping variable name
+  # show error message if user uses 'rrr' or 'sss' in their grouping variable name (tested)
   if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
-    stop("Group variable names cannot contain 'rrr' or 'sss' ")
+    stop("Group variable names cannot contain 'rrr' or 'sss'")
   }
 
-  # test for whether the length of the period matches the value of n_components
+  # ensure the length of the period matches the value of n_components (tested)
   # if one period is supplied but n_components > 1, then the period is repeated to
   # match the value of n_components
 
@@ -140,7 +150,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     if (length(period) == 1) {
       period <- rep(period, n_components)
     } else {
-      stop("period value(s) in amp.acro() must be of length 1 or the same as n_components.")
+      stop("period value(s) in amp.acro() must be of length 1 or the same as n_components")
     }
   }
 
@@ -238,6 +248,8 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 #' @noRd
 #'
 #' @examples
+
+#(tested)
 check_group_var <- function(.data, group) {
   grouping_vars <- group[!group %in% c(0, NA)]
   if(!all(grouping_vars %in% colnames(.data))) {
