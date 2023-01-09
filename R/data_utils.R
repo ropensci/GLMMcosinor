@@ -11,7 +11,7 @@
 #'
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula, family = "gaussian", quietly = TRUE) {
+update_formula_and_data <- function(data, formula, family = "gaussian", quietly = TRUE, ...) {
   # Extract only the amp.acro function from the call
   #check for missing data
   if (!quietly) {
@@ -21,9 +21,6 @@ update_formula_and_data <- function(data, formula, family = "gaussian", quietly 
       message("\n Missing data will be ignored ")
     }
   }
-
-  #check if family argument is of type family
-  #stopifnot(inherits(family, "family"))
 
   #formatting data to be evaluated in amp.acro()
   Terms <- stats::terms(formula, specials = c("amp.acro"))
@@ -64,7 +61,7 @@ update_formula_and_data <- function(data, formula, family = "gaussian", quietly 
 #' @noRd
 #'
 #' @examples
-amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .quietly = TRUE) {
+amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .quietly = TRUE, ...) {
 
   stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
   lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
@@ -230,11 +227,15 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     # colnames(group_stats) = group_names
   }
   return(list(
-    newdata = .data, newformula = newformula, vec_rrr = vec_rrr, vec_sss = vec_sss, n_components = n_components,
+    newdata = .data, newformula = newformula,
+    vec_rrr = vec_rrr,
+    vec_sss = vec_sss,
+    n_components = n_components,
     period = period,
     group_stats = group_stats,
     group = group,
-    group_check = group_check
+    group_check = group_check,
+    ...
   ))
 }
 

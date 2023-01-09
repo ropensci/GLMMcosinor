@@ -93,7 +93,7 @@ test_that("bad inputs return useful errors", {
   }
   expect_error(f(),regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
 
-
+  #test 9
   data(vitamind)
   vitamind_mod <- vitamind
   colnames(vitamind_mod)[1] <- "rrr2"
@@ -106,6 +106,7 @@ test_that("bad inputs return useful errors", {
   }
   expect_error(f(),regexp = "Group variable names cannot contain 'rrr' or 'sss'")
 
+  #test 10
   data(vitamind)
   vitamind_two_groups <- vitamind
   vitamind_two_groups["X2"] <- vitamind_two_groups["X"]
@@ -118,6 +119,7 @@ test_that("bad inputs return useful errors", {
   }
   expect_error(f(), regexp = "Grouping variable in amp.acro() must be of length 1 or the same as n_components", fixed = TRUE)
 
+  #test 11
   data(vitamind)
   f <- function() {
     amp.acro(
@@ -128,6 +130,7 @@ test_that("bad inputs return useful errors", {
   }
   expect_error(f(), regexp = "period value(s) in amp.acro() must be of length 1 or the same as n_components", fixed = TRUE)
 
+  #test 12
   data(vitamind)
   f <- function() {
     amp.acro(
@@ -142,7 +145,7 @@ expect_error(f(), regexp = "Grouping variable(s) not found in input data:", fixe
 
 test_that("matrix, or tibble inputs are converted to dataframe ", {
 
-  #test 9
+  #test 13
   data(vitamind)
   vitamind_mod <- as_tibble(vitamind)
 
@@ -155,7 +158,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
   }
   expect(f(), ok = TRUE, "unsuccessful conversion of tibble to dataframe")
 
-  #test 10
+  #test 14
   vitamind_mod <- as.matrix(vitamind)
   expect(f(), ok = TRUE, "unsuccessful conversion of matrix to dataframe")
 

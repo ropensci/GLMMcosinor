@@ -174,4 +174,8 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
     summary.cosinor.glmm(object3)
 
-    #Goal for next session: try format the cosinor.glmm output in a nicer way
+    #added around 15 tests to the test-amp-acro.R function
+    #Testing dispersion formula behaviour:
+    data(vitamind)
+    object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind, dispformula = ~ X)
+    object$fit

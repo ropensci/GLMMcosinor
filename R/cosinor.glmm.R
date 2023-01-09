@@ -36,7 +36,6 @@ cosinor.glmm <- function(formula,
                          quietly = TRUE,
                          ...) {
   updated_df_and_formula <- update_formula_and_data(data = data, formula = formula, family = family, quietly, ...)
-
   #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
   #Alternatively:
   #updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
@@ -50,7 +49,8 @@ cosinor.glmm <- function(formula,
     data_processor,
     c(
       updated_df_and_formula,
-      cosinor.glmm.calls = list(cosinor.glmm.calls)
+      cosinor.glmm.calls = list(cosinor.glmm.calls),
+      ...
     )
   )
 }
