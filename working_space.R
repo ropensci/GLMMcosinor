@@ -177,5 +177,12 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #added around 15 tests to the test-amp-acro.R function
     #Testing dispersion formula behaviour:
     data(vitamind)
-    object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind, dispformula = ~ X + amp.acro(time, group = "X"))
-    object$fit
+    cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind) #normal
+    cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind, dispformula = ~ X + amp.acro(time, group = "X")) #with dispersion
+
+    #seems to be working well
+    data(vitamind)
+    vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
+    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind,
+                 dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,11,8)))
+

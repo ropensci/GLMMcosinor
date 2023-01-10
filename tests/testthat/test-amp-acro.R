@@ -157,7 +157,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
       .quietly = FALSE
     )
   }
-  suppressMessages(expect_message(f(), regexp = "rrr1 and sss1 have been added to dataframe"))
+  suppressMessages(expect_message(f(), regexp = "main_rrr1 and main_sss1 have been added to dataframe"))
   #test 14
   suppressMessages(expect_message(f(), regexp = "Data has been reformatted as dataframe"))
 

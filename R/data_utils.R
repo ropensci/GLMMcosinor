@@ -11,7 +11,11 @@
 #'
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula, family = "gaussian", quietly = TRUE, dispformula, ziformula, ...) {
+update_formula_and_data <- function(data, formula,
+                                    family = "gaussian",
+                                    quietly = TRUE,
+                                    dispformula,
+                                    ziformula) {
   # Extract only the amp.acro function from the call
   #check for missing data
   if (!quietly) {
@@ -23,14 +27,51 @@ update_formula_and_data <- function(data, formula, family = "gaussian", quietly 
   }
 
   #formatting data to be evaluated in amp.acro()
-  Terms <- stats::terms(formula, specials = c("amp.acro"))
-  amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro - 1]
-  e <- str2lang(amp.acro_text)
-  e$.data <- data # add data that will be called to amp.acro()
-  e$.formula <- formula # add formula that will be called to amp.acro()
-  e$.quietly <- quietly
-  updated_df_and_formula <- eval(e) # evaluate amp.acro call
-  c(updated_df_and_formula, list(Terms = Terms, family = family, Call = match.call())) # TODO: extract period from amp.acro call and return here
+  #check for dispformula and/or ziformula argument
+  dispformula_check <- (!missing(dispformula) & dispformula != ~1)
+  ziformula_check <- (!missing(ziformula) & ziformula != ~0)
+
+
+  formula_eval <- function(formula,
+                           data,
+                           quietly,
+                           amp.acro_ind = -1,
+                           data_prefix = "main_") {
+
+    Terms <- stats::terms(formula, specials = c("amp.acro"))
+    amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro + amp.acro_ind]
+    e <- str2lang(amp.acro_text)
+    e$.data <- data # add data that will be called to amp.acro()
+    e$.formula <- formula # add formula that will be called to amp.acro()
+    e$.quietly <- quietly
+    e$.amp.acro_ind = amp.acro_ind
+    e$.data_prefix = data_prefix
+    updated_df_and_formula <- eval(e) # evaluate amp.acro call
+    c(updated_df_and_formula, list(Terms = Terms, family = family,
+                                   dispformula_check = dispformula_check,
+                                   ziformula_check = ziformula_check)) # TODO: extract period from amp.acro call and return here
+  }
+    initial_output <- formula_eval(formula,
+                                         data,
+                                         quietly,
+                                         amp.acro_ind = -1,
+                                         data_prefix = "main_")
+  if (dispformula_check) {
+
+    data <- initial_output$newdata
+    dispformula <- formula_eval(formula = dispformula, data = data ,quietly = quietly, amp.acro_ind = 0, data_prefix = "disp_")
+    initial_output$newdata <-dispformula$newdata
+    initial_output$dispformula <- list()
+    initial_output$dispformula$formula <- dispformula$newformula
+    initial_output$dispformula$vec_rrr <- dispformula$vec_rrr
+    initial_output$dispformula$vec_sss <- dispformula$vec_sss
+    initial_output$dispformula$n_components <- dispformula$n_components
+    initial_output$dispformula$period <- dispformula$period
+    initial_output$dispformula$group_stats <- dispformula$group_stats
+    initial_output$dispformula$group_check <- dispformula$group_check
+    initial_output$dispformula$group <- dispformula$group
+  }
+    initial_output
 }
 
 
@@ -61,7 +102,15 @@ update_formula_and_data <- function(data, formula, family = "gaussian", quietly 
 #' @noRd
 #'
 #' @examples
-amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .quietly = TRUE, ...) {
+amp.acro <- function(time_col,
+                     n_components = 1,
+                     group,
+                     .data,
+                     .formula,
+                     period = 12,
+                     .quietly = TRUE,
+                     .amp.acro_ind = -1,
+                     .data_prefix = "main_") {
 
 
   #checking dataframe
@@ -81,7 +130,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     }
   }
   env <- environment() #preserve environment of amp.acro to be passed into amp.acro_iteration
-  amp.acro_iteration <- function(time_col, n_components, group, .formula, period, quietly = TRUE, .data, ...) {
+  amp.acro_iteration <- function(time_col, n_components, group, .formula, period, quietly = TRUE, .data, .amp.acro_ind = -1) {
 
   # assess the quality of the inputs
   stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
@@ -181,7 +230,8 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   Terms$factors <- group_names
   varnames <- get_varnames(Terms)
   # create the initial formula string
-  spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 1
+
+  spec_dex <- unlist(attr(Terms, "special")$amp.acro) + .amp.acro_ind
   non_acro_formula <- attr(Terms,"term.labels")[-spec_dex]
 
 
@@ -193,12 +243,12 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 
   # generate 'n_components' number of rrr and sss vectors
   n_count <- 1:n_components
-  vec_rrr <- (paste0("rrr", n_count)) # vector of rrr names
-  vec_sss <- (paste0("sss", n_count)) # vector of sss names
+  vec_rrr <- (paste0(.data_prefix,"rrr", n_count)) # vector of rrr names
+  vec_sss <- (paste0(.data_prefix, "sss", n_count)) # vector of sss names
   formula_expr <- NULL
   # adding the rrr and sss columns to the dataframe
   for (i in 1:n_components) {
-    #browser()
+    #
     rrr_names <- eval(vec_rrr[i])
     sss_names <- eval(vec_sss[i])
     .data[[rrr_names]] <- cos(2 * pi * ttt / period[i])
@@ -226,11 +276,17 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 
     #newformula <- eval(formula_expr)
   }
-  newformula <- stats::as.formula(paste(all.vars(.formula, max.names = 1), # rownames(attr(Terms, "factors"))[1],
+
+  if (.amp.acro_ind == -1) {
+    left_part <- all.vars(.formula, max.names = 1)
+  } else {
+    left_part <- NULL
+  }
+  newformula <- stats::as.formula(paste(left_part, # rownames(attr(Terms, "factors"))[1],
                                         paste(c(attr(terms(.formula), "intercept"),non_acro_formula, formula_expr), collapse = " + "),
                                         sep = " ~ "
   ))
-  newformula <- update.formula(newformula, .~. )
+  newformula <- update.formula(newformula, ~. )
   # update the formula
 
   # create NULL vectors for group metrics. These will be updated if there is a group argument
@@ -250,8 +306,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     period = period,
     group_stats = group_stats,
     group = group,
-    group_check = group_check,
-    ...
+    group_check = group_check
   ))
 
   }
@@ -262,7 +317,7 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
                      period = period,
                      quietly = quietly,
                      .data = .data,
-                     ... )
+                     .amp.acro_ind = .amp.acro_ind)
 }
 
 

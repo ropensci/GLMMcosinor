@@ -55,20 +55,32 @@ data_processor <- function(newdata,
                            family,
                            Terms,
                            cosinor.glmm.calls,
+                           dispformula,
+                           dispformula_check,
+                           ziformula_check,
                            ...)  {
   group_names <- names(group_stats)
+  if (dispformula_check){
+    dispformula_val = dispformula$formula
+  } else {
+    dispformula_val = ~1
+  }
+
   # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = newdata,
     family = family,
+    dispformula = dispformula_val,
     ...
   )
-
   # Retrieve the fit, coefficients from the model and priming vectors
   # in preparation for transforming the raw coefficients
   mf <- fit
-  coefs <- glmmTMB::fixef(mf)$cond
+
+  #coefs_disp <- glmmTMB::fixef(mf)$disp
+
+  get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components){
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
@@ -112,6 +124,28 @@ data_processor <- function(newdata,
     names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
+  new_coefs
+  }
+
+  main_coefs <- glmmTMB::fixef(mf)$cond
+  conditional_model <- get_new_coefs(main_coefs, vec_rrr, vec_sss, n_components)
+
+  if (dispformula_check){
+    disp_coefs<- glmmTMB::fixef(mf)$disp
+    dispersion_model <- get_new_coefs(disp_coefs, dispformula$vec_rrr, dispformula$vec_sss, dispformula$n_components)
+    disp_list <- list(formula_disp = dispformula$formula,
+         coefficients_disp = dispersion_model,
+         raw_coefficients_disp = disp_coefs,
+         vec_sss_disp = dispformula$vec_sss,
+         vec_rrr_disp = dispformula$vec_rrr,
+         n_components_disp = dispformula$n_components,
+         group_stats_disp = dispformula$group_stats,
+         group_disp = dispformula$group_disp,
+         group_check_disp = dispformula$group_check
+         )
+  } else {
+    disp_list <- NULL
+  }
 
   # update calls
   if(missing(cosinor.glmm.calls)) {
@@ -126,16 +160,19 @@ data_processor <- function(newdata,
       fit = fit,
       cosinor.glmm.calls = cosinor.glmm.calls,
       Terms = Terms,
-      coefficients = new_coefs,
-      raw_coefficients = coefs,
+      coefficients = conditional_model,
+      raw_coefficients = main_coefs,
       vec_sss = vec_sss,
       vec_rrr = vec_rrr,
       period = period,
       n_components = n_components,
       group_stats = group_stats,
       group = group,
-      group_check = group_check
+      group_check = group_check,
+      dispformula_check = dispformula_check,
+      disp_list = disp_list
     ),
     class = "cosinor.glmm"
   )
+
 }

@@ -42,8 +42,7 @@ cosinor.glmm <- function(formula,
                                                     family = family,
                                                     quietly,
                                                     dispformula = dispformula,
-                                                    ziformula = ziformula,
-                                                    ...)
+                                                    ziformula = ziformula)
   #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
   #Alternatively:
   #updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
@@ -76,6 +75,7 @@ cosinor.glmm <- function(formula,
 print.cosinor.glmm <- function(x, ...) {
   #cat("Call: \n")
   #print(x$Call)
+  cat("\n Conditional Model \n")
   cat("\n Raw formula: \n")
   print(x$formula)
   cat("\n Raw Coefficients: \n")
@@ -86,6 +86,20 @@ print.cosinor.glmm <- function(x, ...) {
    names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
  }
   print(t.x)
+  if (x$dispformula_check) {
+  cat("\n***********************\n")
+  cat("\n Dispersion Model \n")
+  cat("\n Raw  Formula: \n")
+  print(x$disp_list$formula_disp)
+  cat("\n Raw  Coefficients: \n")
+  print(x$disp_list$raw_coefficients_disp)
+  cat("\n Transformed  Coefficients: \n")
+  td.x <- x$disp_list$coefficients_disp
+  if (x$disp_list$group_check_disp == TRUE) {
+    names(td.x) <- update_covnames(names(td.x), group_stats = x$disp_list$group_stats_disp)
+  }
+  print(td.x)
+  }
 }
 
 #' Fit cosinor model
