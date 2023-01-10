@@ -153,13 +153,24 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
     amp.acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
+      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12),
+      .quietly = FALSE
+    )
+  }
+  suppressMessages(expect_message(f(), regexp = "rrr1 and sss1 have been added to dataframe"))
+  #test 14
+  suppressMessages(expect_message(f(), regexp = "Data has been reformatted as dataframe"))
+
+
+  #test 15
+  vitamind_mod <- as.matrix(vitamind)
+  f <- function() {
+    amp.acro(
+      time_col = time, n_components = 1, group = "X", period = 12,
+      .data = vitamind_mod,
       .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
     )
   }
-  expect(f(), ok = TRUE, "unsuccessful conversion of tibble to dataframe")
-
-  #test 14
-  vitamind_mod <- as.matrix(vitamind)
   expect(f(), ok = TRUE, "unsuccessful conversion of matrix to dataframe")
 
 

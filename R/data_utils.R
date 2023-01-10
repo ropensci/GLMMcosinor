@@ -72,13 +72,18 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
 
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
-    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data, "tibble"),
+    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data, "tbl"),
     msg = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
   )
 
   # Formatting .data argument as dataframe (tested)
-  .data <- as.data.frame(.data)
 
+  if (inherits(.data,"matrix") | inherits(.data, "tbl")) {
+    .data <- as.data.frame(.data)
+    if (!.quietly) {
+      message("Data has been reformatted as dataframe")
+    }
+  }
 
   # checking time_col data
 
@@ -174,6 +179,13 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
   # create the initial formula string
   spec_dex <- unlist(attr(Terms, "special")$amp.acro) - 1
   non_acro_formula <- attr(Terms,"term.labels")[-spec_dex]
+
+
+  #TODO: convert to a function that wraps the df modifying bit, and loop the
+  #dispformula and ziformula inputs
+    #disp_rrr
+    #zi_rrr
+    #main_rrr
 
   # generate 'n_components' number of rrr and sss vectors
   n_count <- 1:n_components

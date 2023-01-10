@@ -26,7 +26,13 @@ summary.cosinor.glmm <- function(object, ...) {
   vec_rrr <- object$vec_rrr
   vec_sss <- object$vec_sss
 
-  coefs <- glmmTMB::fixef(mf)$cond
+
+  #TOOD: validate summary outputs with test-script using parts of the simulation study code
+  #TODO: structure output of summary script so that zi and disp are displayed in output
+
+  #TODO: wrap in function from here
+
+  coefs <- glmmTMB::fixef(mf)$cond #TODO: do this for zi and disp if present in initial formula
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
@@ -139,8 +145,10 @@ summary.cosinor.glmm <- function(object, ...) {
 
 
   names(cov.trans_c) <- paste("component number =",seq(from = 1, to = n_components, by = 1))
-  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans_c), class = "summary.cosinor.glmm")
 
+  ##Need to modify with additional zi and dispersion (or default)
+  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans_c), class = "summary.cosinor.glmm")
+### TO HERE
 }
 
 
@@ -158,6 +166,7 @@ summary.cosinor.glmm <- function(object, ...) {
 #' @export
 #'
 
+#check if there is dispersion or zi (as opposed to default) then print
 print.summary.cosinor.glmm <- function(x, ...) {
   cat("Raw model coefficients:\n")
   print(round(x$raw.table, 4))
