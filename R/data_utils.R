@@ -11,7 +11,7 @@
 #'
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula, family = "gaussian", quietly = TRUE, ...) {
+update_formula_and_data <- function(data, formula, family = "gaussian", quietly = TRUE, dispformula, ziformula, ...) {
   # Extract only the amp.acro function from the call
   #check for missing data
   if (!quietly) {
@@ -80,10 +80,10 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
       message("Data has been reformatted as dataframe") #(tested)
     }
   }
-  env <- environment()
-  ###FROM HERE?
+  env <- environment() #preserve environment of amp.acro to be passed into amp.acro_iteration
   amp.acro_iteration <- function(time_col, n_components, group, .formula, period, quietly = TRUE, .data, ...) {
 
+  # assess the quality of the inputs
   stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
   lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
   stopifnot(all(period > 0)) # ensure all periods are greater than 0
