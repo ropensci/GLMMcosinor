@@ -63,10 +63,6 @@ update_formula_and_data <- function(data, formula, family = "gaussian", quietly 
 #' @examples
 amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period = 12, .quietly = TRUE, ...) {
 
-  stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
-  lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
-  stopifnot(all(period > 0)) # ensure all periods are greater than 0
-  stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
 
   #checking dataframe
 
@@ -76,34 +72,42 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     msg = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
   )
 
-  # Formatting .data argument as dataframe (tested)
+  # Formatting .data argument as dataframe if matrix or tibble (tested)
 
   if (inherits(.data,"matrix") | inherits(.data, "tbl")) {
     .data <- as.data.frame(.data)
     if (!.quietly) {
-      message("Data has been reformatted as dataframe")
+      message("Data has been reformatted as dataframe") #(tested)
     }
   }
+  env <- environment()
+  ###FROM HERE?
+  amp.acro_iteration <- function(time_col, n_components, group, .formula, period, quietly = TRUE, .data, ...) {
+
+  stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
+  lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
+  stopifnot(all(period > 0)) # ensure all periods are greater than 0
+  stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
 
   # checking time_col data
 
   # check for time column in .data (tested)
-  assertthat::assert_that((paste(substitute(time_col)) %in% colnames(.data)),
+  assertthat::assert_that((paste(substitute(time_col, env)) %in% colnames(.data)),
                           msg = "time_col must be the name of a column in dataframe")
 
 
   # ensure time_col is of the right class (most likely a character) (tested)
-  if (assertthat::is.string(substitute(time_col))) {
+  if (assertthat::is.string(substitute(time_col, env))) {
     stop("time_col argument must not be a string")
   }
 
   # ensure time_col is within the dataframe
-  if (!inherits(substitute(time_col), "name")) {
+  if (!inherits(substitute(time_col, env), "name")) {
     stop("time_col must be name of column in data.")
   }
 
   # extract the time vector
-  ttt <- eval(substitute(time_col), env = .data) # extract vector of "time" values from .data
+  ttt <- eval(substitute(time_col, env), env = .data) # extract vector of "time" values from .data
 
    # ensure ttt contains numeric values only (tested)
   if (!assertthat::assert_that(is.numeric(ttt))) {
@@ -249,7 +253,19 @@ amp.acro <- function(time_col, n_components = 1, group, .data, .formula, period 
     group_check = group_check,
     ...
   ))
+
+  }
+  amp.acro_iteration(time_col = time_col,
+                     n_components = n_components,
+                     group = group,
+                     .formula = .formula,
+                     period = period,
+                     quietly = quietly,
+                     .data = .data,
+                     ... )
 }
+
+
 
 
 #' Checks that the group names supplied by the user are in the dataframe
