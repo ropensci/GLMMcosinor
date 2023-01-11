@@ -30,3 +30,8 @@
 
 
   })
+test_that("model output is class cosinor.glmm", {
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+  expect_true(inherits(object, "cosinor.glmm"))
+})
