@@ -57,21 +57,30 @@ data_processor <- function(newdata,
                            cosinor.glmm.calls,
                            dispformula,
                            dispformula_check,
+                           ziformula,
                            ziformula_check,
                            ...)  {
   group_names <- names(group_stats)
+
   if (dispformula_check){
     dispformula_val = dispformula$formula
   } else {
     dispformula_val = ~1
   }
 
-  # Fit the data and formula to a model
+  if (ziformula_check){
+    ziformula_val = ziformula$formula
+  } else {
+    ziformula_val = ~0
+  }
+
+    # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,
     data = newdata,
     family = family,
     dispformula = dispformula_val,
+    ziformula = ziformula_val,
     ...
   )
   # Retrieve the fit, coefficients from the model and priming vectors
@@ -147,6 +156,23 @@ data_processor <- function(newdata,
     disp_list <- NULL
   }
 
+  if (ziformula_check){
+    zi_coefs<- glmmTMB::fixef(mf)$zi
+    zi_model <- get_new_coefs(zi_coefs, ziformula$vec_rrr, ziformula$vec_sss, ziformula$n_components)
+    zi_list <- list(formula_zi = ziformula$formula,
+                      coefficients_zi = zi_model,
+                      raw_coefficients_zi = zi_coefs,
+                      vec_sss_zi = ziformula$vec_sss,
+                      vec_rrr_zi = ziformula$vec_rrr,
+                      n_components_zi = ziformula$n_components,
+                      group_stats_zi = ziformula$group_stats,
+                      group_zi = ziformula$group_zi,
+                      group_check_zi = ziformula$group_check
+    )
+  } else {
+    zi_list <- NULL
+  }
+
   # update calls
   if(missing(cosinor.glmm.calls)) {
     cosinor.glmm.calls <- list()
@@ -170,7 +196,9 @@ data_processor <- function(newdata,
       group = group,
       group_check = group_check,
       dispformula_check = dispformula_check,
-      disp_list = disp_list
+      ziformula_check = ziformula_check,
+      disp_list = disp_list,
+      zi_list = zi_list
     ),
     class = "cosinor.glmm"
   )

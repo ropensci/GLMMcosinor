@@ -86,6 +86,7 @@ print.cosinor.glmm <- function(x, ...) {
    names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
  }
   print(t.x)
+
   if (x$dispformula_check) {
   cat("\n***********************\n")
   cat("\n Dispersion Model \n")
@@ -99,6 +100,21 @@ print.cosinor.glmm <- function(x, ...) {
     names(td.x) <- update_covnames(names(td.x), group_stats = x$disp_list$group_stats_disp)
   }
   print(td.x)
+  }
+
+  if (x$ziformula_check) {
+    cat("\n***********************\n")
+    cat("\n Zero Inflation Model \n")
+    cat("\n Raw  Formula: \n")
+    print(x$zi_list$formula_zi)
+    cat("\n Raw  Coefficients: \n")
+    print(x$zi_list$raw_coefficients_zi)
+    cat("\n Transformed  Coefficients: \n")
+    tzi.x <- x$zi_list$coefficients_zi
+    if (x$zi_list$group_check_zi == TRUE) {
+      names(tzi.x) <- update_covnames(names(tzi.x), group_stats = x$zi_list$group_stats_zi)
+    }
+    print(tzi.x)
   }
 }
 

@@ -38,40 +38,53 @@ update_formula_and_data <- function(data, formula,
                            amp.acro_ind = -1,
                            data_prefix = "main_") {
 
-    Terms <- stats::terms(formula, specials = c("amp.acro"))
-    amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro + amp.acro_ind]
-    e <- str2lang(amp.acro_text)
-    e$.data <- data # add data that will be called to amp.acro()
-    e$.formula <- formula # add formula that will be called to amp.acro()
-    e$.quietly <- quietly
-    e$.amp.acro_ind = amp.acro_ind
-    e$.data_prefix = data_prefix
-    updated_df_and_formula <- eval(e) # evaluate amp.acro call
-    c(updated_df_and_formula, list(Terms = Terms, family = family,
-                                   dispformula_check = dispformula_check,
-                                   ziformula_check = ziformula_check)) # TODO: extract period from amp.acro call and return here
+      Terms <- stats::terms(formula, specials = c("amp.acro"))
+      amp.acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp.acro + amp.acro_ind]
+      e <- str2lang(amp.acro_text)
+      e$.data <- data # add data that will be called to amp.acro()
+      e$.formula <- formula # add formula that will be called to amp.acro()
+      e$.quietly <- quietly
+      e$.amp.acro_ind = amp.acro_ind
+      e$.data_prefix = data_prefix
+      updated_df_and_formula <- eval(e) # evaluate amp.acro call
+      c(updated_df_and_formula, list(Terms = Terms, family = family,
+                                     dispformula_check = dispformula_check,
+                                     ziformula_check = ziformula_check))
   }
-    initial_output <- formula_eval(formula,
+    main_output <- formula_eval(formula,
                                          data,
                                          quietly,
                                          amp.acro_ind = -1,
                                          data_prefix = "main_")
   if (dispformula_check) {
-
-    data <- initial_output$newdata
+    data <- main_output$newdata
     dispformula <- formula_eval(formula = dispformula, data = data ,quietly = quietly, amp.acro_ind = 0, data_prefix = "disp_")
-    initial_output$newdata <-dispformula$newdata
-    initial_output$dispformula <- list()
-    initial_output$dispformula$formula <- dispformula$newformula
-    initial_output$dispformula$vec_rrr <- dispformula$vec_rrr
-    initial_output$dispformula$vec_sss <- dispformula$vec_sss
-    initial_output$dispformula$n_components <- dispformula$n_components
-    initial_output$dispformula$period <- dispformula$period
-    initial_output$dispformula$group_stats <- dispformula$group_stats
-    initial_output$dispformula$group_check <- dispformula$group_check
-    initial_output$dispformula$group <- dispformula$group
+    main_output$newdata <-dispformula$newdata
+    main_output$dispformula <- list()
+    main_output$dispformula$formula <- dispformula$newformula
+    main_output$dispformula$vec_rrr <- dispformula$vec_rrr
+    main_output$dispformula$vec_sss <- dispformula$vec_sss
+    main_output$dispformula$n_components <- dispformula$n_components
+    main_output$dispformula$period <- dispformula$period
+    main_output$dispformula$group_stats <- dispformula$group_stats
+    main_output$dispformula$group_check <- dispformula$group_check
+    main_output$dispformula$group <- dispformula$group
   }
-    initial_output
+  if (ziformula_check) {
+      data <- main_output$newdata
+      ziformula <- formula_eval(formula = ziformula, data = data ,quietly = quietly, amp.acro_ind = 0, data_prefix = "zi_")
+      main_output$newdata <-ziformula$newdata
+      main_output$ziformula <- list()
+      main_output$ziformula$formula <- ziformula$newformula
+      main_output$ziformula$vec_rrr <- ziformula$vec_rrr
+      main_output$ziformula$vec_sss <- ziformula$vec_sss
+      main_output$ziformula$n_components <- ziformula$n_components
+      main_output$ziformula$period <- ziformula$period
+      main_output$ziformula$group_stats <- ziformula$group_stats
+      main_output$ziformula$group_check <- ziformula$group_check
+      main_output$ziformula$group <- ziformula$group
+    }
+  main_output
 }
 
 
