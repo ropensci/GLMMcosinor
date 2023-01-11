@@ -110,6 +110,7 @@ update_formula_and_data <- function(data, formula,
 #' @srrstatsTODO {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
 #' @srrstatsTODO {G2.4b} *explicit conversion to continuous via `as.numeric()`*
 #' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.* #ensure time_col is univariate
+#' @srrstatsTODO {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
 #'
 #' @return
 #' @noRd

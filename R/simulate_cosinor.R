@@ -9,6 +9,7 @@
 #' @param beta.mean Effect on the mean (intercept)
 #' @param beta.amp Effect on the amplitude
 #' @param beta.acro Effect on the acrophase
+#' @srrstatsTODO {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
 #'
 #' @export
 #'

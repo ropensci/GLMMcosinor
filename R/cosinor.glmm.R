@@ -88,23 +88,23 @@ print.cosinor.glmm <- function(x, ...) {
   print(t.x)
 
   if (x$dispformula_check) {
-  cat("\n***********************\n")
-  cat("\n Dispersion Model \n")
-  cat("\n Raw  Formula: \n")
-  print(x$disp_list$formula_disp)
-  cat("\n Raw  Coefficients: \n")
-  print(x$disp_list$raw_coefficients_disp)
-  cat("\n Transformed  Coefficients: \n")
-  td.x <- x$disp_list$coefficients_disp
-  if (x$disp_list$group_check_disp == TRUE) {
-    names(td.x) <- update_covnames(names(td.x), group_stats = x$disp_list$group_stats_disp)
-  }
-  print(td.x)
+    cat("\n***********************\n")
+    cat("\n Dispersion Model \n")
+    cat("\n Raw  Formula: \n")
+    print(x$disp_list$formula_disp)
+    cat("\n Raw  Coefficients: \n")
+    print(x$disp_list$raw_coefficients_disp)
+    cat("\n Transformed  Coefficients: \n")
+    td.x <- x$disp_list$coefficients_disp
+    if (x$disp_list$group_check_disp == TRUE) {
+      names(td.x) <- update_covnames(names(td.x), group_stats = x$disp_list$group_stats_disp)
+    }
+    print(td.x)
   }
 
   if (x$ziformula_check) {
     cat("\n***********************\n")
-    cat("\n Zero Inflation Model \n")
+    cat("\n Zero-Inflation Model \n")
     cat("\n Raw  Formula: \n")
     print(x$zi_list$formula_zi)
     cat("\n Raw  Coefficients: \n")
