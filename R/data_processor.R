@@ -52,6 +52,7 @@ data_processor <- function(newdata,
                            group,
                            group_check,
                            period,
+                           time_name,
                            family,
                            Terms,
                            cosinor.glmm.calls,
@@ -61,7 +62,6 @@ data_processor <- function(newdata,
                            ziformula_check,
                            ...)  {
   group_names <- names(group_stats)
-
   if (dispformula_check){
     dispformula_val = dispformula$formula
   } else {
@@ -191,6 +191,7 @@ data_processor <- function(newdata,
       vec_sss = vec_sss,
       vec_rrr = vec_rrr,
       period = period,
+      time_name = time_name,
       n_components = n_components,
       group_stats = group_stats,
       group = group,

@@ -162,25 +162,26 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #to be a probelm with amp1?
     #Ex. 1
     object1 <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+    ggplot.cosinor.glmm(object1, x_str = "X")
     summary.cosinor.glmm(object1)
+
     #Ex. 2
     data(vitamind)
     vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
     object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind)
+    ggplot.cosinor.glmm(object2, x_str = "Z")
+    ggplot.cosinor.glmm(object2, x_str = c("X","Z"))
     summary.cosinor.glmm(object2)
 
     #Ex. 3
     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+    ggplot.cosinor.glmm(object3, x_str = "group")
     summary.cosinor.glmm(object3)
 
     #added around 15 tests to the test-amp-acro.R function
     #Testing dispersion formula behaviour:
-    data(vitamind)
-    cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind) #normal
-    cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind, dispformula = ~ X + amp.acro(time, group = "X")) #with dispersion
 
-    #seems to be working well
     data(vitamind)
     vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
     cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind,

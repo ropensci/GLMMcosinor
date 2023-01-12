@@ -83,7 +83,7 @@ update_formula_and_data <- function(data, formula,
       main_output$ziformula$group_stats <- ziformula$group_stats
       main_output$ziformula$group_check <- ziformula$group_check
       main_output$ziformula$group <- ziformula$group
-    }
+  }
   main_output
 }
 
@@ -143,6 +143,7 @@ amp.acro <- function(time_col,
       message("Data has been reformatted as dataframe") #(tested)
     }
   }
+
   env <- environment() #preserve environment of amp.acro to be passed into amp.acro_iteration
   amp.acro_iteration <- function(time_col, n_components, group, .formula, period, quietly = TRUE, .data, .amp.acro_ind = -1) {
 
@@ -249,12 +250,6 @@ amp.acro <- function(time_col,
   non_acro_formula <- attr(Terms,"term.labels")[-spec_dex]
 
 
-  #TODO: convert to a function that wraps the df modifying bit, and loop the
-  #dispformula and ziformula inputs
-    #disp_rrr
-    #zi_rrr
-    #main_rrr
-
   # generate 'n_components' number of rrr and sss vectors
   n_count <- 1:n_components
   vec_rrr <- (paste0(.data_prefix,"rrr", n_count)) # vector of rrr names
@@ -302,7 +297,7 @@ amp.acro <- function(time_col,
   ))
   newformula <- update.formula(newformula, ~. )
   # update the formula
-
+  time_name <- paste(substitute(time_col, env))
   # create NULL vectors for group metrics. These will be updated if there is a group argument
   group_stats <- NULL
   if (group_check == TRUE) {
@@ -313,14 +308,16 @@ amp.acro <- function(time_col,
     # colnames(group_stats) = group_names
   }
   return(list(
-    newdata = .data, newformula = newformula,
+    newdata = .data,
+    newformula = newformula,
     vec_rrr = vec_rrr,
     vec_sss = vec_sss,
     n_components = n_components,
     period = period,
     group_stats = group_stats,
     group = group,
-    group_check = group_check
+    group_check = group_check,
+    time_name = time_name
   ))
 
   }
