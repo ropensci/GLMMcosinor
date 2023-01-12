@@ -1,4 +1,5 @@
 #' @import ggplot2
+#' @import ellipse
 NULL
 
 #' Plot a cosinor model
@@ -67,3 +68,16 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL) {
       geom_line()
   }
 }
+
+
+#' Generates a polar plot with elliptical confidence intervals
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#ggplot.cosinor.glmm.polar <- function(object) {
+#  df <- object$fit$frame
+#  sum_obj <- summary(object)
+#  cov <- sum_obj$transformed.covariance
+#}
