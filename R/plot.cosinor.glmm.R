@@ -21,16 +21,26 @@ NULL
 #'
 #'
 ggplot.cosinor.glmm <- function(object, x_str = NULL) {
-  timeax <- seq(0, object$period, length.out = 200)
-  covars <- grep("(rrr|sss)", attr(object$fit$terms, "term.labels"), invert = TRUE, value = TRUE)
+  browser()
+  timeax <- seq(0, max(object$period), length.out = 200) #with multiple periods, largest is used for timeax simulation
+  covars <- names(object$group_stats)
 
-  newdata <- data.frame(
-    time = timeax, rrr = cos(2 * pi * timeax / object$period),
-    sss = sin(2 * pi * timeax / object$period)
-  )
+  #newdata <- data.frame(
+  #  time = timeax, rrr = cos(2 * pi * timeax / object$period),
+  #  sss = sin(2 * pi * timeax / object$period)
+  #)
+
+  newdata <- data.frame(time = timeax)
   for (j in covars) {
     newdata[, j] <- 0
   }
+  newdata <- update_formula_and_data(
+    data = newdata, # pass new dataset that's being used for prediction in this function
+    formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula) # get the formula that was originally to cosinor.glmm()
+  )$newdata # only keep the newdata that's returned from update_formula_and_data()
+
+
+
   if (!is.null(x_str)) {
     for (d in x_str) {
       tdat <- newdata
@@ -44,7 +54,8 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL) {
   }
 
 
-  newdata$Y.hat <- stats::predict(object$fit, newdata = newdata)
+  #newdata$Y.hat <- stats::predict(object$fit, newdata = newdata)
+  newdata$Y.hat <- predict.cosinor.glmm(object, newdata = newdata)
 
   if (missing(x_str) || is.null(x_str)) {
     ggplot(newdata, aes_string(x = "time", y = "Y.hat")) +

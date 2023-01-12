@@ -14,8 +14,8 @@
 update_formula_and_data <- function(data, formula,
                                     family = "gaussian",
                                     quietly = TRUE,
-                                    dispformula,
-                                    ziformula) {
+                                    dispformula = ~1,
+                                    ziformula = ~0) {
   # Extract only the amp.acro function from the call
   #check for missing data
   if (!quietly) {
