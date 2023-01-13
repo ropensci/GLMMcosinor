@@ -1,3 +1,6 @@
+#' TODO: Hi Oliver, it's best to access ggplot2 and ellipse by namespace (i.e. ggplot2::ggplot(...))
+#'       rather than importing the entire package. Also, when you do this, you'll need
+#'       to add them as a dependency to the package - you should use `usethis::use_package()` to do this.
 #' @import ggplot2
 #' @import ellipse
 NULL

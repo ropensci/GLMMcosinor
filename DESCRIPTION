@@ -10,12 +10,14 @@ Description: Fit the cosinor model using the glmmTMB framework, allowing for a
     hierarchical structure in the models formula.
 URL: https://github.com/RWParsons/GLMMcosinor
 Imports:
+    assertthat,
     ggplot2,
     glmmTMB
 Suggests:
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
