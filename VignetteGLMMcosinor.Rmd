@@ -33,6 +33,61 @@ which allows users to model circadian data from the following distributions:
   - quasipoisson
 
 ## Using: 'cosinor.glmm.R'
+cosinor.glmm() generates a model with parameter estimates based on a data set and 
+formula specified by the user. 
+
+The formula argument for cosinor.glmm() is constructed in two parts: 
+
+Firstly: specification of any intercept or covariate mesor terms. By default, an 
+intercept term is included but this can be removed by including a 0 in the formula. 
+
+  The following formula has an intercept and X listed as a covariate mesor term: 
+                cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind) 
+  
+  The following will have no intercept term, but will still generate a mesor estimate for the X group: 
+                cosinor.glmm(Y ~ 0 + X + amp.acro(time, group = "X"), data = vitamind) 
+      
+  The following will have no intercept term, nor will it generate any mesor estimates: 
+                cosinor.glmm(Y ~ 0 + amp.acro(time, group = "X"), data = vitamind)
+ 
+Secondly, specification of the amp.acro() function. As will be described later, 
+the amp.acro() function manipulates the original dataset so that the amplitude and 
+acrophase can be calculated. Importantly, the amp.acro() argument is where users specify: 
+ - group (the group covariates). Ensure that the names in this argument are actually found in the dataset 
+ 
+ - time (the time column). Again, ensure that the name matches the name of the time values in the dataset. 
+Also, ensure that this argument is NOT a string. 
+
+ - n_components (The number of components). If the user wishes to have a more than one trigonometric component in the model, they can specify the number of such components here. Note that this value will need to match the length of the group argument, and the period argument. For example, if n_components = 3, 
+then the group argument should have 3 characters, where the position of each character corresponds to the component that the group covariate describes:  
+
+                data(vitamind)
+                vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
+                cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period =                         c(12,10,8)),data = vitamind)
+                  
+As demonstrated in the example above, the NA entry in the group argument indicates a component with no group covariate assigned. 
+
+If only one group argument and and/or one period argument is supplied, but there is more than one component specified, then it will be assumed that the one group and one period specified applies to all components: 
+    
+  (The following are equivalent)
+  
+                 cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = "X", period = c(12)), data =                   vitamind)
+                 cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X","X","X"), period =                       c(12,12,12)), data = vitamind)
+   
+   
+cosinor.glmm() optionally allows users to specify formulas for dispersion and zero-inflation models. These formulas are independent of the main formula specification:
+
+                data(vitamind) #load vitamind dataset
+                vitamind$Z = rbinom(length(vitamind$X),2,prob = 0.5) #modify dataset 
+                
+                cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period =                         c(12,10,8)),data = vitamind,
+                dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period =                         c(12,11,8)),
+                ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z","X"), period = c(12,8)))
+
+This example shows how dispformula and ziformula can be specified with a different number of components, with different periods, and with different group-component assignments. 
+By default, dispformula = ~1, and ziformula = ~0
+
+
 Mention: 
 - how to specify the input (specifically, amp.acro)
 - how to specify multi-component models
