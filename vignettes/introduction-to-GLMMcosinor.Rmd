@@ -1,20 +1,23 @@
 ---
-title: "GLMMcosinor"
-author: "Rex Parsons, Oliver Jayasinghe"
-date: "`r Sys.Date()`"
+title: "introduction-to-GLMMcosinor"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{introduction-to-GLMMcosinor}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
+
+```{r setup}
+library(GLMMcosinor)
+```
+
 
 ##  Introduction 
 The GLMMcosinor package generates generalised linear models based on circadian data, and 
