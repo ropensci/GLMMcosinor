@@ -21,7 +21,7 @@
 #' @export
 #'
 
-test_cosinor <- function(object, x_str, param = "amp") {
+test_cosinor <- function(object, x_str, param = "amp", ref_level = 0, comp_level = 1, component_index = 1) {
   stopifnot(is.character(x_str))
   stopifnot(length(grep(x_str, names(object$coefficients))) > 0)
 
@@ -31,12 +31,15 @@ test_cosinor <- function(object, x_str, param = "amp") {
   colnames(index) <- names(object$coefficients)
 
   for (i in 1:length(x_str)) {
-    index[i, param] <- -1
-    index[i, paste0(x_str[i], ":", param)] <- 1
+    index[i, paste0(x_str[i],ref_level,":", param)] <- -1
+    #index[i, paste0(param,":",x_str[i],ref_level)] <- -1
+
+    index[i, paste0(x_str[i],comp_level,":", param)] <- 1
+    #index[i, paste0(param,":",x_str[i],comp_level)] <- 1
   }
 
   diff.est <- index %*% object$coefficients
-  diff.var <- index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE] %*% summary.fit$transformed.covariance %*%
+  diff.var <- index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE] %*% summary.fit$transformed.covariance[[component_index]] %*%
     t(index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE])
 
   glob.chi <- (diff.est %*% solve(diff.var) %*% t(diff.est))[1, 1]
