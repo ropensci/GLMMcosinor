@@ -20,16 +20,16 @@
 #'
 
 #Add ability to specify plotting of original dataset overalyed by trendline (off by default)
-ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200) {
+ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200, transpose_data = FALSE) {
   if(!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
   } else {
-    timeax <- seq(0, 2*max(object$period), length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
+    timeax <- seq(0, max(object$period), length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
   }
-  covars <- names(object$group_stats)
 
-  newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
-  colnames(newdata)[1] <- object$time_name
+  data_processor_plot <- function(object, newdata, x_str) {
+
+  covars <- names(object$group_stats)
   for (j in covars) {
     ref_level <- unlist(object$group_stats[j])[[1]]
     newdata[,j] <- factor(ref_level)
@@ -38,7 +38,6 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
     data = newdata, # pass new dataset that's being used for prediction in this function
     formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula) # get the formula that was originally to cosinor.glmm()
   )$newdata # only keep the newdata that's returned from update_formula_and_data()
-
 
   if (!is.null(x_str)) {
     for (d in x_str) {
@@ -50,22 +49,53 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
     }
     newdata$levels <- ""
     for (d in x_str) {
-      newdata$levels <- paste(newdata$levels, paste(d, "=", newdata[, d]))
+      #newdata$levels <- paste(newdata$levels, paste(d, "=", newdata[, d]))
+      newdata$levels <- newdata[, d]
+
+    }
+  }
+  newdata
+  }
+
+  newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
+  colnames(newdata)[1] <- object$time_name
+  newdata_processed <- data_processor_plot(object, newdata, x_str)
+  y_name <- object$response_var
+  newdata_processed[[y_name]] <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type) #adjust Y-axis name to correspond to whatever is in the dataframe
+
+  if (transpose_data) {
+  original_data <- object$newdata
+  original_data_processed <- object$newdata
+  original_data_processed["levels"] <-  original_data_processed[x_str]
+  }
+
+  if (!transpose_data) {
+    if (missing(x_str) || is.null(x_str)) {
+      plot_object <- ggplot2::ggplot(newdata_processed, aes_string(x = paste(object$time_name), y = y_name)) +
+        ggplot2::geom_line()
+    } else {
+      plot_object <-ggplot2::ggplot() +
+        geom_line(data = newdata_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels"))
     }
   }
 
+  if (transpose_data) {
+    if (missing(x_str) || is.null(x_str)) {
+      plot_object <- ggplot2::ggplot(newdata_processed, aes_string(x = paste(object$time_name), y = y_name)) +
+        ggplot2::geom_line()
+    } else {
+      plot_object <- ggplot2::ggplot() +
+        geom_line(data = newdata_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
+        geom_point(data = original_data_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels"), alpha = 0.2) +
+        facet_grid(rows = vars(NULL))
+    }
 
-  y_name <- object$response_var
-  newdata[[y_name]] <- predict.cosinor.glmm(object, newdata = newdata, type = type) #adjust Y-axis name to correspond to whatever is in the dataframe
 
-  if (missing(x_str) || is.null(x_str)) {
-    ggplot2::ggplot(newdata, aes_string(x = paste(object$time_name), y = y_name)) +
-      ggplot2::geom_line()
-  } else {
-    ggplot2::ggplot(newdata, aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
-      ggplot2::geom_line()
-  }
+
+
 }
+print(plot_object)
+  }
 
 
 #' Generates a polar plot with elliptical confidence intervals

@@ -197,3 +197,16 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 ##notes from meeting 14/01/2023
 #Use: usethis::use_package("ellipse")
 #Use: check() and make sure there are no warnings or errors
+#Testing out the updated plot function:
+    comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+    object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
+
+    comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "poisson")
+    object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "poisson")
+    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
+
+    comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "gamma")
+    object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "Gamma"(link = "log"))
+    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
+

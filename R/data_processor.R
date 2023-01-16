@@ -200,7 +200,8 @@ data_processor <- function(newdata,
       ziformula_check = ziformula_check,
       disp_list = disp_list,
       zi_list = zi_list,
-      response_var = response_var
+      response_var = response_var,
+      newdata = newdata
     ),
     class = "cosinor.glmm"
   )
