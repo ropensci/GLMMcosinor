@@ -20,7 +20,7 @@
 #'
 
 #Add ability to specify plotting of original dataset overalyed by trendline (off by default)
-ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200, transpose_data = FALSE) {
+ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200, transpose_data = FALSE, data_opacity = 0.3) {
   if(!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
   } else {
@@ -83,10 +83,12 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(newdata_processed, aes_string(x = paste(object$time_name), y = y_name)) +
         ggplot2::geom_line()
+        geom_point(data = original_data_processed, aes_string(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
+        facet_grid(rows = vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
         geom_line(data = newdata_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
-        geom_point(data = original_data_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels"), alpha = 0.2) +
+        geom_point(data = original_data_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels"), alpha = data_opacity) +
         facet_grid(rows = vars(NULL))
     }
 
