@@ -51,7 +51,7 @@ cosinor.glmm <- function(formula,
     update_formula_and_data = updated_df_and_formula$Call
   )
   updated_df_and_formula$Call <- NULL
-  # browser()
+
   do.call(
     data_processor,
     c(

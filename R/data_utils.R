@@ -112,10 +112,9 @@ update_formula_and_data <- function(data, formula,
 #' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.* #ensure time_col is univariate
 #' @srrstatsTODO {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
 #'
-#' @return
+#' @return updated dataframe and formula to then be processed by data_processor()
 #' @noRd
-#'
-#' @examples
+
 amp.acro <- function(time_col,
                      n_components = 1,
                      group,
@@ -317,7 +316,8 @@ amp.acro <- function(time_col,
     group_stats = group_stats,
     group = group,
     group_check = group_check,
-    time_name = time_name
+    time_name = time_name,
+    response_var = left_part
   ))
 
   }
@@ -341,8 +341,7 @@ amp.acro <- function(time_col,
 #'
 #' @return nothing if successful, an error message if not
 #' @noRd
-#'
-#' @examples
+
 
 #(tested)
 check_group_var <- function(.data, group) {

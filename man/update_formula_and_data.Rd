@@ -4,7 +4,14 @@
 \alias{update_formula_and_data}
 \title{Update data and formula for fitting cosinor.glmm model}
 \usage{
-update_formula_and_data(data, formula, family = "gaussian", verbose = FALSE)
+update_formula_and_data(
+  data,
+  formula,
+  family = "gaussian",
+  quietly = TRUE,
+  dispformula = ~1,
+  ziformula = ~0
+)
 }
 \arguments{
 \item{data}{input data for fitting cosinor.glmm model.}
@@ -13,7 +20,7 @@ update_formula_and_data(data, formula, family = "gaussian", verbose = FALSE)
 
 \item{family}{the model family.}
 
-\item{verbose}{controls whether messages from amp.acro are displayed. FALSE by default}
+\item{quietly}{controls whether messages from amp.acro are displayed. TRUE by default}
 }
 \value{
 Returns a \code{list}.

@@ -4,7 +4,7 @@
 \alias{ggplot.cosinor.glmm}
 \title{Plot a cosinor model}
 \usage{
-\method{ggplot}{cosinor.glmm}(object, x_str = NULL)
+\method{ggplot}{cosinor.glmm}(object, x_str = NULL, type = "response", xlims, pred.length.out = 200)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
@@ -13,11 +13,11 @@
 }
 \description{
 Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
-Optionally allows for plotting by covariate levels 0 and 1.
+Optionally allows for plotting by covariates
 }
 \examples{
 
-fit <- cosinor.glmm(Y ~ time(time) + X + amp.acro(X), data = vitamind)
-ggplot.cosinor.glmm(fit, "X")
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+ggplot.cosinor.glmm(object, x_str = "X")
 
 }

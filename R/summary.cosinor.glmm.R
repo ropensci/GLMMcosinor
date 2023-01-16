@@ -18,7 +18,6 @@
 #' summary(fit)
 #'
 #' @export
-#'
 
 summary.cosinor.glmm <- function(object, ...) {
   mf <- object$fit

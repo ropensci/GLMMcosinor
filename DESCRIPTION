@@ -11,6 +11,7 @@ Description: Fit the cosinor model using the glmmTMB framework, allowing for a
 URL: https://github.com/RWParsons/GLMMcosinor
 Imports:
     assertthat,
+    ellipse,
     ggplot2,
     glmmTMB
 Suggests:

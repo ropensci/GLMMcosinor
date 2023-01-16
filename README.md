@@ -4,9 +4,17 @@
 # GLMMcosinor
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of GLMMcosinor is to …
+The goal of GLMMcosinor is to fit a generalised linear model (GLM) to
+circadian data that may be sourced from any distribution listed in
+glmmTMB, such as gaussian, poisson, gamma, binomial. Existing programs
+allow the user to fit such data to a GLM, but many are limited in their
+design; GLMMcosinor aims to be comprehensive and flexible. Hence,
+GLMMcosinor is an improvement of other implementations of similar
+algorithms in R.
 
 ## Installation
 

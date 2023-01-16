@@ -4,7 +4,14 @@
 \alias{test_cosinor}
 \title{Test for differences in a cosinor model}
 \usage{
-test_cosinor(object, x_str, param = "amp")
+test_cosinor(
+  object,
+  x_str,
+  param = "amp",
+  ref_level = 0,
+  comp_level = 1,
+  component_index = 1
+)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}

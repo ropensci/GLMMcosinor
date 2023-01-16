@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 # GLMMcosinor
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 

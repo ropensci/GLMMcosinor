@@ -1,10 +1,3 @@
-#' TODO: Hi Oliver, it's best to access ggplot2 and ellipse by namespace (i.e. ggplot2::ggplot(...))
-#'       rather than importing the entire package. Also, when you do this, you'll need
-#'       to add them as a dependency to the package - you should use `usethis::use_package()` to do this.
-#' @import ggplot2
-#' @import ellipse
-NULL
-
 #' Plot a cosinor model
 #'
 #' Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
@@ -24,14 +17,17 @@ NULL
 #' @export
 #'
 #'
-ggplot.cosinor.glmm <- function(object, x_str = NULL) {
-  timeax <- seq(0, 2*max(object$period), length.out = 200) #with multiple periods, largest is used for timeax simulation
+#'
+
+#Add ability to specify plotting of original dataset overalyed by trendline (off by default)
+ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200) {
+  if(!missing(xlims)) {
+    timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
+  } else {
+    timeax <- seq(0, 2*max(object$period), length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
+  }
   covars <- names(object$group_stats)
 
-  #newdata <- data.frame(
-  #  time = timeax, rrr = cos(2 * pi * timeax / object$period),
-  #  sss = sin(2 * pi * timeax / object$period)
-  #)
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
   for (j in covars) {
@@ -54,21 +50,20 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL) {
     }
     newdata$levels <- ""
     for (d in x_str) {
-    #for (k in unlist(object$group_stats[[x_str]])) {
       newdata$levels <- paste(newdata$levels, paste(d, "=", newdata[, d]))
-    #}
     }
   }
 
 
-  newdata$Y.hat <- predict.cosinor.glmm(object, newdata = newdata)
+  y_name <- object$response_var
+  newdata[[y_name]] <- predict.cosinor.glmm(object, newdata = newdata, type = type) #adjust Y-axis name to correspond to whatever is in the dataframe
 
   if (missing(x_str) || is.null(x_str)) {
-    ggplot(newdata, aes_string(x = paste(object$time_name), y = "Y.hat")) +
-      geom_line()
+    ggplot2::ggplot(newdata, aes_string(x = paste(object$time_name), y = y_name)) +
+      ggplot2::geom_line()
   } else {
-    ggplot(newdata, aes_string(x = paste(object$time_name), y = "Y.hat", col = "levels")) +
-      geom_line()
+    ggplot2::ggplot(newdata, aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
+      ggplot2::geom_line()
   }
 }
 

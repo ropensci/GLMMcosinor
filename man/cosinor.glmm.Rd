@@ -4,7 +4,15 @@
 \alias{cosinor.glmm}
 \title{Fit cosinor model with \code{{glmmTMB}}}
 \usage{
-cosinor.glmm(formula, data, family = gaussian(), verbose = FALSE, ...)
+cosinor.glmm(
+  formula,
+  data,
+  family = gaussian(),
+  quietly = TRUE,
+  dispformula = ~1,
+  ziformula = ~0,
+  ...
+)
 }
 \arguments{
 \item{formula}{Formula specifying the model. Indicate the time variable with
@@ -15,7 +23,7 @@ cosinor.glmm(formula, data, family = gaussian(), verbose = FALSE, ...)
 
 \item{family}{a family function, see \code{?family} and \code{?glmmTMB::nbinom2}}
 
-\item{verbose}{controls whether messages from amp.acro are displayed. FALSE by default}
+\item{quietly}{controls whether messages from amp.acro are displayed. TRUE by default}
 
 \item{...}{optional additional arguments passed to glmmTMB::glmmTMB()}
 }

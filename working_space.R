@@ -161,9 +161,10 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #summary.cosinor.glmm() now works, but needs to be validated further. Seems
     #to be a probelm with amp1?
     #Ex. 1
-    object1 <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-    ggplot.cosinor.glmm(object1, x_str = "X")
+    object1 <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind, family = "poisson")
+    ggplot.cosinor.glmm(object1, x_str = "X") #geom_ribbon for confidence interval plotting or dotted lines above and below (add as argument)
     summary.cosinor.glmm(object1)
+    test_cosinor(object, x_str = "X", param = "amp", ref_level = 0, comp_level =1, component_index = 1)
 
     #Ex. 2
     data(vitamind)
@@ -172,6 +173,9 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     ggplot.cosinor.glmm(object2, x_str = "Z")
     ggplot.cosinor.glmm(object2, x_str = c("X","Z"))
     summary.cosinor.glmm(object2)
+
+    #issuw with this: need to address the inconsistent order of object2$coefficients
+    test_cosinor(object2, x_str = "X", param = "amp")
 
     #Ex. 3
     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
@@ -188,3 +192,8 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
                  dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,11,8)),
                  ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z","X"), period = c(12,8)))
 
+
+
+##notes from meeting 14/01/2023
+#Use: usethis::use_package("ellipse")
+#Use: check() and make sure there are no warnings or errors

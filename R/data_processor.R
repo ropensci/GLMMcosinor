@@ -40,9 +40,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @param ... extra parameters
 #'
 #' @return the model fit from glmmTMB (as well as some other inputs )
-#' @export
-#'
-#' @examples
+#' @noRd
+
 data_processor <- function(newdata,
                            newformula,
                            vec_sss,
@@ -60,6 +59,7 @@ data_processor <- function(newdata,
                            dispformula_check,
                            ziformula,
                            ziformula_check,
+                           response_var,
                            ...)  {
   group_names <- names(group_stats)
   if (dispformula_check){
@@ -199,7 +199,8 @@ data_processor <- function(newdata,
       dispformula_check = dispformula_check,
       ziformula_check = ziformula_check,
       disp_list = disp_list,
-      zi_list = zi_list
+      zi_list = zi_list,
+      response_var = response_var
     ),
     class = "cosinor.glmm"
   )
