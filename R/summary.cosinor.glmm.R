@@ -59,6 +59,7 @@ summary.cosinor.glmm <- function(object, ...) {
   cov.trans_c <- NULL
   cov.trans <- NULL
   se.trans <- NULL
+  vmat_c <- NULL
 
   disp <- NULL
   for (i in 1:n_components) {
@@ -99,7 +100,6 @@ summary.cosinor.glmm <- function(object, ...) {
     )
 
     indVmat <- indexmat %*% vmat %*% t(indexmat)
-
     a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
     a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
 
@@ -117,7 +117,7 @@ summary.cosinor.glmm <- function(object, ...) {
 
     cov.trans <- jac %*% indVmat %*% t(jac)
     cov.trans_c[[i]] <- cov.trans
-
+    vmat_c[[i]] <- vmat
     se.trans <- append(se.trans,sqrt(diag(cov.trans)))
 
   }
@@ -146,7 +146,7 @@ summary.cosinor.glmm <- function(object, ...) {
   names(cov.trans_c) <- paste("component number =",seq(from = 1, to = n_components, by = 1))
 
   ##Need to modify with additional zi and dispersion (or default)
-  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans_c), class = "summary.cosinor.glmm")
+  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans_c, raw.covariance = vmat_c), class = "summary.cosinor.glmm")
 ### TO HERE
 }
 

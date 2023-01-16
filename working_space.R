@@ -161,10 +161,10 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #summary.cosinor.glmm() now works, but needs to be validated further. Seems
     #to be a probelm with amp1?
     #Ex. 1
-    object1 <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind, family = "poisson")
+    object1 <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
     ggplot.cosinor.glmm(object1, x_str = "X") #geom_ribbon for confidence interval plotting or dotted lines above and below (add as argument)
     summary.cosinor.glmm(object1)
-    test_cosinor(object, x_str = "X", param = "amp", ref_level = 0, comp_level =1, component_index = 1)
+    test_cosinor(object1, x_str = "X", param = "amp", ref_level = 0, comp_level =1, component_index = 1)
 
     #Ex. 2
     data(vitamind)
@@ -174,11 +174,12 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     ggplot.cosinor.glmm(object2, x_str = c("X","Z"))
     summary.cosinor.glmm(object2)
 
+
     #issuw with this: need to address the inconsistent order of object2$coefficients
     test_cosinor(object2, x_str = "X", param = "amp")
 
     #Ex. 3
-    comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+    comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
     ggplot.cosinor.glmm(object3, x_str = "group")
     summary.cosinor.glmm(object3)
@@ -198,7 +199,7 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 #Use: usethis::use_package("ellipse")
 #Use: check() and make sure there are no warnings or errors
 #Testing out the updated plot function:
-    comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+    comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 2, beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
     ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
 
@@ -208,5 +209,27 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 
     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "gamma")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "Gamma"(link = "log"))
-    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
+    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE, data_opacity = 0.1)
+
+
+
+    #polar plots in progress: (proof of concept)
+    object1 <- cosinor.glmm(Y ~ 0 + amp.acro(time, group = "X"), data = vitamind)
+    summary.cosinor.glmm(object1)
+    ggplot.cosinor.glmm.polar(object1)
+    test_cosinor(object1, x_str = "X")
+
+
+    data(vitamind)
+    vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
+    object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+    ggplot.cosinor.glmm.polar(object2)
+
+    comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+    object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+    ggplot.cosinor.glmm.polar(object3)
+
+    #currently, the component specification doesn't correspond nicely if the user specifies NA
+    #it would be beneficial to plot components even if they have no group-assignment
+      #if group = NA, then do the same thing but without the multiple levels etc
 
