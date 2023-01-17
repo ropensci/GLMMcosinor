@@ -60,6 +60,7 @@ data_processor <- function(newdata,
                            ziformula,
                            ziformula_check,
                            response_var,
+                           group_original,
                            ...)  {
   group_names <- names(group_stats)
   if (dispformula_check){
@@ -201,7 +202,8 @@ data_processor <- function(newdata,
       disp_list = disp_list,
       zi_list = zi_list,
       response_var = response_var,
-      newdata = newdata
+      newdata = newdata,
+      group_original = group_original
     ),
     class = "cosinor.glmm"
   )

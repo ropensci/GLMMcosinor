@@ -62,7 +62,7 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
   newdata_processed <- data_processor_plot(object, newdata, x_str)
   y_name <- object$response_var
   newdata_processed[[y_name]] <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type) #adjust Y-axis name to correspond to whatever is in the dataframe
-
+  browser()
   if (transpose_data) {
   original_data <- object$newdata
   original_data_processed <- object$newdata
@@ -106,55 +106,108 @@ print(plot_object)
 #' @export
 #'
 #' @examples
-ggplot.cosinor.glmm.polar <- function(object, distinc_colours = TRUE, component_index = 1) {
-  df <- object$fit$frame
-  sum_obj <- summary.cosinor.glmm(object)
-  cov <- sum_obj$raw.covariance
-  n_components <- length(object$group_stats)
-  nc <- component_index
-  group_names <- names(object$group_stats)
-  group_stats <- object$group_stats
-  plot_obj_final <- NULL
-  plot_obj_comp <- NULL
+ggplot.cosinor.glmm.polar <- function(object, distinc_colours = TRUE, component_index = 1, xlims, pred.length.out = 200) {
 
-  assertthat::assert_that(component_index <= n_components,
-    msg = "component_index must be an integer less than n_components specified in model")
+  #if(!missing(xlims)) {
+  #  timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
+  #} else {
+  #  timeax <- seq(0, max(object$period), length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
+  #}
+#
+  #browser()
+  ## Create elliptical confidence interval
+  #lower_params <- c(-1.6560,-2.0814  )
+  #upper_params <- c(13.2081, 0.4634  )
+  #estimates <- c( 5.7760 ,-0.1810)
+#
+  #y_lower = lower_params[1] * cos(timeax + lower_params[2])
+  #y_upper = upper_params[1] * cos(timeax + upper_params[2])
+#
+#
+  #ell <- ellipse(covm, centre = means, level = 0.95)
+#
+  #ell <- data.frame(amp, acr)
+#
+  ## Create polar plot
+  #ggplot(data = ell, aes(xacr, amp)) +
+  #  geom_path(data = ell, aes(acr, amp), color = "red") +
+  #  coord_polar(theta = "x")
 
-  covnames <- NULL
+df <- object$fit$frame
+sum_obj <- summary.cosinor.glmm(object)
+cov <- sum_obj$raw.covariance
+n_components <- object$n_components
+nc <- component_index
+group_names <- names(object$group_stats)
+group_stats <- object$group_stats
+plot_obj_final <- NULL
+plot_obj_comp <- NULL
+
+assertthat::assert_that(component_index <= n_components,
+  msg = "component_index must be an integer less than n_components specified in model")
+group <- object$group_original
+if (length(group) != n_components) {
+  if (length(group) == 1) {
+    group <- rep(group, n_components)
+    group_stats <- rep(group_stats, n_components)
+  } else {
+    stop("Grouping variable in amp.acro() must be of length 1 or the same as n_components")
+  }
+}
+
+covnames <- NULL
+plot_obj <- NULL
+center_vals <- NULL
+df_circ <- NULL
+
+for (nc in 1:n_components)
+{
+if (nc>0) {
+  center_vals <- rbind(center_vals,center_vals)
+  df_circ <- rbind(df_circ,df_circ)
+}
   for (i in group_names) {
     # get the names of the covariates alone
-    for (j in group_stats[i]) {
+    for (j in group_stats[nc]) {
       covnames <- append(covnames,paste0(i,j))
     }
   }
 
-  comp_ind <- NULL
+comp_ind <- NULL
 
-    for (i in 1:length(group_stats[[nc]])) {
-    comp_ind <- append(comp_ind,(paste0(covnames[i],":")))
-    }
-
-  plot_obj <- NULL
-  center_vals <- NULL
-  df_circ <- NULL
-  if (distinc_colours & length(comp_ind) <= 10) {
-  colours_vector <- c("blue", "red", "green", "purple", "orange", "pink", "yellow","aquamarine", "brown", "black")
-  } else {
-    colours_vector <- rep("blue", length(comp_ind))
+  for (i in 1:length(group_stats[[nc]])) {
+  comp_ind <- append(comp_ind,(paste0(covnames[i],":")))
   }
 
-  for (i in 1:length(comp_ind)) {
-  subset_matrix = cov[[nc]][which(grepl(comp_ind[i], rownames(cov[[nc]]))),
-                                 which(grepl(comp_ind[i], colnames(cov[[nc]])))]
-  center_vals[[i]] <- sum_obj$raw.table$estimate[which(grepl(comp_ind[i], rownames(sum_obj$raw.table)))]
-  coords <- ellipse::ellipse(subset_matrix, centre = c(center_vals[[i]][1],center_vals[[i]][2]), npoints = 500)
-  df_circle <- NULL
-  df_circle$X <- coords[,1]
-  df_circle$Y <- coords[,2]
-  df_circ[[i]] <- data.frame(df_circle)
-  plot_obj <- paste0(plot_obj,"geom_point(data = df_circ[[",i,"]], aes_string(x = 'X', y = 'Y'), colour = '",colours_vector[i],"') +",
-                     "geom_point(aes(x = center_vals[[",i,"]][1], y = center_vals[[",i,"]][2]), colour = '",colours_vector[i],"') + ")
-   }
-  plot_obj_final <- paste0("ggplot2::ggplot() + ", plot_obj, "facet_grid(rows = vars(NULL))")
-  eval(parse(text = plot_obj_final))
+
+df_circ <- df_circ
+center_vals <- center_vals
+
+if (distinc_colours & length(comp_ind) <= 10) {
+colours_vector <- c("blue", "red", "green", "purple", "orange", "pink", "yellow","aquamarine", "brown", "black")
+} else {
+  colours_vector <- rep("blue", length(comp_ind))
+}
+
+
+for (i in 1:length(comp_ind)) {
+subset_matrix = cov[[nc]][which(grepl(comp_ind[i], rownames(cov[[nc]]))),
+                               which(grepl(comp_ind[i], colnames(cov[[nc]])))]
+center_vals[[nc]][[i]] <- sum_obj$raw.table$estimate[which(grepl(comp_ind[i], rownames(sum_obj$raw.table)))]
+coords <- ellipse::ellipse(subset_matrix, centre = c(center_vals[[nc]][[i]] [1],center_vals[[nc]][[i]] [2]), npoints = 500)
+
+
+
+
+df_circle <- NULL
+df_circle$X <- coords[,1]
+df_circle$Y <- coords[,2]
+df_circ[[nc]][[i]] <- data.frame(df_circle)
+plot_obj <- paste0(plot_obj,"geom_point(data = df_circ[[",nc,"]][[",i,"]], aes_string(x = 'X', y = 'Y'), colour = '",colours_vector[i],"') +",
+                   "geom_point(aes(x = center_vals[[",nc,"]][[",i,"]][1], y = center_vals[[",nc,"]][[",i,"]][2]), colour = '",colours_vector[i],"') + ")
+}
+
+}
+plot_obj_final <- paste0("ggplot2::ggplot() + ", toString(unlist(plot_obj)), "facet_grid(rows = vars(NULL))")
+eval(parse(text = plot_obj_final))
 }

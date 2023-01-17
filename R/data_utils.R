@@ -183,7 +183,7 @@ amp.acro <- function(time_col,
                           msg = "time_col must be univariate")
 
 
-
+  group_original <- group
   # allow the user to not have any grouping structure (if group argument is missing)
   if (missing(group)) {
     group <- 0
@@ -317,7 +317,8 @@ amp.acro <- function(time_col,
     group = group,
     group_check = group_check,
     time_name = time_name,
-    response_var = left_part
+    response_var = left_part,
+    group_original = group_original
   ))
 
   }
