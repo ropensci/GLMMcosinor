@@ -62,8 +62,8 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
   newdata_processed <- data_processor_plot(object, newdata, x_str)
   y_name <- object$response_var
   newdata_processed[[y_name]] <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type) #adjust Y-axis name to correspond to whatever is in the dataframe
-  browser()
-  if (transpose_data) {
+
+    if (transpose_data) {
   original_data <- object$newdata
   original_data_processed <- object$newdata
   original_data_processed["levels"] <-  original_data_processed[x_str]
@@ -100,22 +100,22 @@ print(plot_object)
   }
 
 
-#' Generates a polar plot with elliptical confidence intervals: PROOF OF CONCEPT
+#' Generates a polar plot with elliptical confidence intervals
 #'
 #' @return
 #' @export
 #'
 #' @examples
-ggplot.cosinor.glmm.polar <- function(object, distinc_colours = TRUE, component_index = 1, xlims, pred.length.out = 200) {
+ggplot.cosinor.glmm.polar <- function(object, x_str, contour_interval, grid_angle_segments = 8, plot_info = FALSE) {
   sum <- summary.cosinor.glmm(object)
-  group <- names(object$group_stats)[1]
-  component <- 1
+  group <- x_str
   n_components <- object$n_components
-  period <- object$period[1]
-  get_ellipse <- function(group, level, component, n_components, period) {
+  period <- object$period[which(grepl(x_str, object$group_original))]
+  max_period <- max(object$period)
+  level <- object$group_stats[[x_str]]
 
-     string_index <- paste0("[",group,"=")
-     string_index_raw <- paste0(group)
+    string_index <- paste0("[",group,"=")
+    string_index_raw <- paste0(group)
 
     est_amp <- sum$transformed.table$estimate[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl("amp", rownames(sum$transformed.table), fixed = TRUE) )]
     l_est_amp <- sum$transformed.table$lower.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE)& grepl("amp", rownames(sum$transformed.table), fixed = TRUE) )]
@@ -125,125 +125,51 @@ ggplot.cosinor.glmm.polar <- function(object, distinc_colours = TRUE, component_
     l_est_acr <- sum$transformed.table$lower.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE)& grepl("acr", rownames(sum$transformed.table), fixed = TRUE) )]
     u_est_acr <- sum$transformed.table$upper.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE)& grepl("acr", rownames(sum$transformed.table), fixed = TRUE) )]
 
-    est_rrr <- sum$raw.table$estimate[which(grepl(string_index_raw, rownames(sum$raw.table), fixed = TRUE) & grepl("rrr", rownames(sum$raw.table), fixed = TRUE))]
-    est_sss <- sum$raw.table$estimate[which(grepl(string_index_raw, rownames(sum$raw.table), fixed = TRUE) & grepl("sss", rownames(sum$raw.table), fixed = TRUE))]
+    name_index <- rownames(sum$transformed.table)[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl("amp", rownames(sum$transformed.table), fixed = TRUE) )]
+    group_level <- array(dim = length(name_index))
 
+    for (i in level) {
+      group_ind <- paste0(group,"=",i )
+      group_level[which(grepl(group_ind, name_index))] <- paste(group,"=",i)
+    }
+
+    est_rrr <- est_amp*cos(-(est_acr) + pi/2)
+    est_sss <- est_amp*sin(-(est_acr) + pi/2)
     #a_trans <- tan(((u_est_acr - l_est_acr)*2*pi/period)/2)*est_amp
     b_trans <- tan((u_est_acr-l_est_acr)/2)*est_amp
     a_trans <- est_amp - l_est_amp
 
-    plot_obj <- ggplot() + geom_ellipse(aes(x0 = est_rrr , y0 = est_sss , a = a_trans, b = b_trans, angle = pi/2 - est_acr)) +
-      coord_fixed()
-    browser()
+    max_radius <- max(abs(u_est_amp),abs(l_est_amp))
+    if (!missing(contour_interval)) {
+      if (contour_interval > max_radius) {
+        contour_interval <- max_radius/5
+        warning("contour_interval ignored because it is too high")
+      }
+    } else {
+      contour_interval <- max_radius/5
+    }
+
+
+    time_labels <- seq(from = 0, to = max_period, by = max_period/grid_angle_segments)
+
+    dial_pos_full_x <- round(max_radius*cos(-time_labels*2*pi/max_period  + pi/2), digits = 5)
+    dial_pos_full_y <- round(max_radius*sin(-time_labels*2*pi/max_period  + pi/2), digits = 5)
+
+    plot_obj <- ggplot2::ggplot() +
+      ggforce::geom_circle(aes(x0 = 0, y0 = 0, r = seq(from = 0, to = max_radius, length.out = max_radius/contour_interval)), alpha = 0.5, linetype = "dotted") +
+      ggforce::geom_ellipse(aes(x0 = est_rrr , y0 = est_sss , a = a_trans, b = b_trans, angle = pi/2 - est_acr, fill = group_level), alpha = 0.3) +
+      ggplot2::geom_point(aes(x = est_rrr, y = est_sss)) +
+      ggplot2::geom_segment(aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = "dotted") +
+      ggplot2::geom_text(aes(label = time_labels[-length(time_labels)]), x = 1.1*dial_pos_full_x[-length(dial_pos_full_x)], y = 1.1*dial_pos_full_y[-length(dial_pos_full_y)]) +
+      ggplot2:: ylim(-1.2*max_radius, 1.2*max_radius) + ggplot2::xlim(-1.2*max_radius, 1.2*max_radius) +
+      ggplot2::labs(x = "rrr", y = "sss", fill = "Group level") +
+      ggplot2::coord_fixed()
+
+  print(plot_obj)
+  if (plot_info) {
+  print(paste("Circular contours every",contour_interval,"unit(s) corresponding to units of period"))
+  print(paste("Segments every", 2*pi/grid_angle_segments,"radians, or",360/grid_angle_segments ,"degrees, or",period/grid_angle_segments,"unit(s) corresponding to units of period"))
   }
 
 
-  plot <- get_ellipse(group = group, level = 1, component = component, n_components = n_components, period = period)
-  browser()
-
-
-
-
-  #if(!missing(xlims)) {
-  #  timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
-  #} else {
-  #  timeax <- seq(0, max(object$period), length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
-  #}
-#
-  #browser()
-  ## Create elliptical confidence interval
-  #lower_params <- c(-1.6560,-2.0814  )
-  #upper_params <- c(13.2081, 0.4634  )
-  #estimates <- c( 5.7760 ,-0.1810)
-#
-  #y_lower = lower_params[1] * cos(timeax + lower_params[2])
-  #y_upper = upper_params[1] * cos(timeax + upper_params[2])
-#
-#
-  #ell <- ellipse(covm, centre = means, level = 0.95)
-#
-  #ell <- data.frame(amp, acr)
-#
-  ## Create polar plot
-  #ggplot(data = ell, aes(xacr, amp)) +
-  #  geom_path(data = ell, aes(acr, amp), color = "red") +
-  #  coord_polar(theta = "x")
-
-#df <- object$fit$frame
-#sum_obj <- summary.cosinor.glmm(object)
-#cov <- sum_obj$raw.covariance
-#n_components <- object$n_components
-#nc <- component_index
-#group_names <- names(object$group_stats)
-#group_stats <- object$group_stats
-#plot_obj_final <- NULL
-#plot_obj_comp <- NULL
-#
-#assertthat::assert_that(component_index <= n_components,
-#  msg = "component_index must be an integer less than n_components specified in model")
-#group <- object$group_original
-#if (length(group) != n_components) {
-#  if (length(group) == 1) {
-#    group <- rep(group, n_components)
-#    group_stats <- rep(group_stats, n_components)
-#  } else {
-#    stop("Grouping variable in amp.acro() must be of length 1 or the same as n_components")
-#  }
-#}
-#
-#covnames <- NULL
-#plot_obj <- NULL
-#center_vals <- NULL
-#df_circ <- NULL
-#
-#for (nc in 1:n_components)
-#{
-#if (nc>0) {
-#  center_vals <- rbind(center_vals,center_vals)
-#  df_circ <- rbind(df_circ,df_circ)
-#}
-#  for (i in group_names) {
-#    # get the names of the covariates alone
-#    for (j in group_stats[nc]) {
-#      covnames <- append(covnames,paste0(i,j))
-#    }
-#  }
-#
-#comp_ind <- NULL
-#
-#  for (i in 1:length(group_stats[[nc]])) {
-#  comp_ind <- append(comp_ind,(paste0(covnames[i],":")))
-#  }
-#
-#
-#df_circ <- df_circ
-#center_vals <- center_vals
-#
-#if (distinc_colours & length(comp_ind) <= 10) {
-#colours_vector <- c("blue", "red", "green", "purple", "orange", "pink", "yellow","aquamarine", "brown", "black")
-#} else {
-#  colours_vector <- rep("blue", length(comp_ind))
-#}
-#
-#
-#for (i in 1:length(comp_ind)) {
-#subset_matrix = cov[[nc]][which(grepl(comp_ind[i], rownames(cov[[nc]]))),
-#                               which(grepl(comp_ind[i], colnames(cov[[nc]])))]
-#center_vals[[nc]][[i]] <- sum_obj$raw.table$estimate[which(grepl(comp_ind[i], rownames(sum_obj$raw.table)))]
-#coords <- ellipse::ellipse(subset_matrix, centre = c(center_vals[[nc]][[i]] [1],center_vals[[nc]][[i]] [2]), npoints = 500)
-#
-#
-#
-#
-#df_circle <- NULL
-#df_circle$X <- coords[,1]
-#df_circle$Y <- coords[,2]
-#df_circ[[nc]][[i]] <- data.frame(df_circle)
-#plot_obj <- paste0(plot_obj,"geom_point(data = df_circ[[",nc,"]][[",i,"]], aes_string(x = 'X', y = 'Y'), colour = '",colours_vector[i],"') +",
-#                   "geom_point(aes(x = center_vals[[",nc,"]][[",i,"]][1], y = center_vals[[",nc,"]][[",i,"]][2]), colour = '",colours_vector[i],"') + ")
-#}
-#
-#}
-#plot_obj_final <- paste0("ggplot2::ggplot() + ", toString(unlist(plot_obj)), "facet_grid(rows = vars(NULL))")
-#eval(parse(text = plot_obj_final))
 }

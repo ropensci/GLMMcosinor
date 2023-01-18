@@ -216,14 +216,14 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #polar plots in progress: (proof of concept)
     object1 <- cosinor.glmm(Y ~ 0 + amp.acro(time, group = "X"), data = vitamind)
     summary.cosinor.glmm(object1)
-    ggplot.cosinor.glmm.polar(object1)
+    ggplot.cosinor.glmm.polar(object1, x_str = "X")
     test_cosinor(object1, x_str = "X")
 
 
     data(vitamind)
-    vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
+    vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
     object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
-    ggplot.cosinor.glmm.polar(object2)
+    ggplot.cosinor.glmm.polar(object2, x_str = "Z")
 
     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
@@ -233,9 +233,11 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #it would be beneficial to plot components even if they have no group-assignment
       #if group = NA, then do the same thing but without the multiple levels etc
 
-    sumo <- summary.cosinor.glmm(object1)
-    ggplot() + geom_ellipse(aes(x0 = 3.9868 , y0 = 4.1794 , a = 7.4321, b = 4.54, angle = pi/2-0.8090*2*pi/12 )) +
-      coord_fixed()
 
+    #UPDATE: polar plots are much more refined now
+    comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = -1.5,beta.mesor = 0.5,beta.amp = 1, beta.acro = -1, dist = "2_component")
+    object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE, data_opacity = 0.5)
+    ggplot.cosinor.glmm.polar(object3, x_str = "group")
 
 
