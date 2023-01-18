@@ -240,4 +240,9 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE, data_opacity = 0.5)
     ggplot.cosinor.glmm.polar(object3, x_str = "group")
 
+    comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = 0.5,beta.mesor = 1,beta.amp = 2, beta.acro = 0.4, dist = "poisson")
+    object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "poisson")
+    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
+    ggplot.cosinor.glmm.polar(object3, x_str = "group", grid_angle_segments = 12)
+
 
