@@ -233,3 +233,9 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #it would be beneficial to plot components even if they have no group-assignment
       #if group = NA, then do the same thing but without the multiple levels etc
 
+    sumo <- summary.cosinor.glmm(object1)
+    ggplot() + geom_ellipse(aes(x0 = 3.9868 , y0 = 4.1794 , a = 7.4321, b = 4.54, angle = pi/2-0.8090*2*pi/12 )) +
+      coord_fixed()
+
+
+
