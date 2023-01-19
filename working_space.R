@@ -201,6 +201,7 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 #Testing out the updated plot function:
     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 2, beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+    summary.cosinor.glmm(object3)
     ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
 
     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "poisson")
@@ -221,9 +222,10 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 
 
     data(vitamind)
-    vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
+    vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
     object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
-    ggplot.cosinor.glmm.polar(object2, x_str = "Z")
+    ggplot.cosinor.glmm(object2, x_str = "Z")
+    ggplot.cosinor.glmm.polar(object2, x_str = "X")
 
     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
@@ -237,12 +239,13 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
     #UPDATE: polar plots are much more refined now
     comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = -1.5,beta.mesor = 0.5,beta.amp = 1, beta.acro = -1, dist = "2_component")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
-    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE, data_opacity = 0.5)
+    ggplot.cosinor.glmm(object3, x_str = "group", superimpose.data = TRUE, data_opacity = 0.5)
     ggplot.cosinor.glmm.polar(object3, x_str = "group")
 
     comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = 0.5,beta.mesor = 1,beta.amp = 2, beta.acro = 0.4, dist = "poisson")
     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "poisson")
-    ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
+    ggplot.cosinor.glmm(object3, x_str = "group", superimpose.data = TRUE)
     ggplot.cosinor.glmm.polar(object3, x_str = "group", grid_angle_segments = 12)
+
 
 

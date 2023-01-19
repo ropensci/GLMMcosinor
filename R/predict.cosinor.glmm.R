@@ -17,7 +17,7 @@
 #' @export
 #'
 
-predict.cosinor.glmm <- function(object, newdata, ...) {
+predict.cosinor.glmm <- function(object, newdata, se.fit = TRUE, ...) {
   if(missing(newdata)) {
     return(stats::predict(object$fit, ...))
   }
@@ -41,5 +41,5 @@ predict.cosinor.glmm <- function(object, newdata, ...) {
   # make some useful error messages here - maybe catch the messages when evaluating the code used to wrangle the data using previous call
   # and then append on that this was happening when wrangling newdata.
     # you can use capture.ouput() to evaluate some code and record any output, including error messages.
-  return(stats::predict(object$fit, newdata = nd, se.fit = FALSE))
+  return(stats::predict(object$fit, newdata = nd, se.fit = se.fit, ...))
 }

@@ -30,61 +30,59 @@ summary.cosinor.glmm <- function(object, ...) {
   #TODO: structure output of summary script so that zi and disp are displayed in output
 
   #TODO: wrap in function from here
-
   coefs <- glmmTMB::fixef(mf)$cond #TODO: do this for zi and disp if present in initial formula
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
   mu_inv <- rep(0, length(names(coefs)))
 
+  if (length(vec_rrr) > 1) {
+    vec_rrr_spec <- vec_rrr[1]
+    vec_sss_spec <- vec_sss[1]
+    for (i in 2:length(vec_rrr)) {
+      vec_rrr_spec <- paste0(vec_rrr_spec,"|",vec_rrr[i])
+      vec_sss_spec <- paste0(vec_sss_spec,"|",vec_sss[i])
+    }
+  } else {
+    vec_rrr_spec <- vec_rrr
+    vec_sss_spec <- vec_sss
+  }
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
-  for (i in 1:n_components) {
-    r.coef[[i]] <- grepl(paste0(vec_rrr[i]), names(coefs))
-    s.coef[[i]] <- grepl(paste0(vec_sss[i]), names(coefs))
 
-    mu_inv_carry <- r.coef[[i]] + s.coef[[i]] # Keep track of non-mesor terms
+    r.coef <- grepl(vec_rrr_spec, names(coefs))
+    s.coef <- grepl(vec_sss_spec, names(coefs))
+
+    mu_inv_carry <- r.coef + s.coef # Keep track of non-mesor terms
     mu_inv <- mu_inv_carry + mu_inv # Ultimately,every non-mesor term will be true
-  }
+
 
   mu.coef <- c(!mu_inv) # invert 'mu_inv' to get a Boolean vector for mesor terms
   r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) # a matrix of rrr coefficients
   s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) # a matrix of sss coefficients
 
-  # Calculate the parameter estimates for all components
-  amp <- NULL
-  acr <- NULL
-  smat_c <- NULL
-  rawmat_c <- NULL
-  cov.trans_c <- NULL
-  cov.trans <- NULL
-  se.trans <- NULL
-  vmat_c <- NULL
 
-  disp <- NULL
-  for (i in 1:n_components) {
-    #r.coef <- grepl(paste0(vec_rrr[i]), names(coefs))
-    #s.coef <- grepl(paste0(vec_sss[i]), names(coefs))
+    beta.s <- coefs[s.coef]
+    beta.r <- coefs[r.coef]
 
+    groups.r <- c(beta.r, beta.r[which(names(beta.r) != names(beta.r))])
+    groups.s <- c(beta.s, beta.s[which(names(beta.s) != names(beta.s))])
 
-    beta.s <- coefs[s.coef[i, ]]
-    beta.r <- coefs[r.coef[i, ]]
+    amp <- sqrt(groups.r^2 + groups.s^2)
+    acr <- -atan2(groups.s, groups.r)
 
-    groups.r <- c(beta.r[1], beta.r[which(names(beta.r) != names(beta.r[1]))])
-    groups.s <- c(beta.s[1], beta.s[which(names(beta.s) != names(beta.s[1]))])
+    for (i in 1:n_components) {
+      names(amp) <- gsub(vec_rrr[i], paste0("amp", i), names(amp))
+      names(acr) <- gsub(vec_sss[i], paste0("acr", i), names(acr))
+    }
 
-    amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
-    names(amp[[i]]) <- gsub(vec_rrr[i], paste0("amp", i), names(beta.r))
-
-    acr[[i]] <- -atan2(groups.s, groups.r)
-    names(acr[[i]]) <- gsub(vec_sss[i], paste0("acr", i), names(beta.s))
-    vmat <- vcov(mf)$cond[c(which(r.coef[i,]), which(s.coef[i,])),
-                          c(which(r.coef[i,]), which(s.coef[i,]))]
+    vmat <- vcov(mf)$cond[c(which(r.coef), which(s.coef)),
+                          c(which(r.coef), which(s.coef))]
     ##
     # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
     if (n_components == 1) {
-      names(amp[[1]]) <- gsub(vec_rrr[1], "amp", names(beta.r))
-      names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
+      names(amp) <- gsub(vec_rrr, "amp", names(amp))
+      names(acr) <- gsub(vec_sss, "acr", names(acr))
       new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
     }
     ##
@@ -116,11 +114,8 @@ summary.cosinor.glmm <- function(object, ...) {
     }
 
     cov.trans <- jac %*% indVmat %*% t(jac)
-    cov.trans_c[[i]] <- cov.trans
-    vmat_c[[i]] <- vmat
-    se.trans <- append(se.trans,sqrt(diag(cov.trans)))
+    se.trans <- sqrt(diag(cov.trans))
 
-  }
     ## assemble summary matrix
     coef <- c(coefs[mu.coef], unlist(amp), unlist(acr))
     se <- c(sqrt(diag(vcov(mf)$cond))[mu.coef], se.trans)
@@ -143,10 +138,10 @@ summary.cosinor.glmm <- function(object, ...) {
     rownames(smat) <- update_covnames(rownames(smat), object$group_stats)
 
 
-  names(cov.trans_c) <- paste("component number =",seq(from = 1, to = n_components, by = 1))
+
 
   ##Need to modify with additional zi and dispersion (or default)
-  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans_c, raw.covariance = vmat_c), class = "summary.cosinor.glmm")
+  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans, raw.covariance = vmat), class = "summary.cosinor.glmm")
 ### TO HERE
 }
 

@@ -22,7 +22,7 @@
 #vdiffr - check out this package to see tests for plots
 #cowplot - check this out to plot several plots within a single output check out: https://github.com/gentrywhite/DSSP/blob/master/R/plot.R
 #Add ability to specify plotting of original dataset overalyed by trendline (off by default)
-ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200, transpose_data = FALSE, data_opacity = 0.3) {
+ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200, superimpose.data = FALSE, data_opacity = 0.3, predict.ribbon = TRUE ) {
   if(!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) #with multiple periods, largest is used for timeax simulation
   } else {
@@ -64,49 +64,51 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
   newdata_processed <- data_processor_plot(object, newdata, x_str)
   y_name <- object$response_var
 
-  browser()
   pred_obj <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type)
-  newdata_processed[[y_name]] <- pred_obj$fit #adjust Y-axis name to correspond to whatever is in the dataframe
-  newdata_processed$y_min <- newdata_processed[[y_name]]-(get_predicted_ci(data = newdata_processed, x = object$fit, ci_type = "prediction", predictions = pred_obj$fit))
-  newdata_processed$y_max <- newdata_processed[[y_name]]+(get_predicted_ci(data = newdata_processed, x = object$fit, ci_type = "prediction", predictions = pred_obj$fit))
+  newdata_processed[[y_name]] <- pred_obj$fit#adjust Y-axis name to correspond to whatever is in the dataframe
+  newdata_processed$y_min <-pred_obj$fit-1.96*pred_obj$se.fit
+  newdata_processed$y_max <-pred_obj$fit+1.96*pred_obj$se.fit
 
-    if (transpose_data) {
+    if (superimpose.data) {
   original_data <- object$newdata
   original_data_processed <- object$newdata
 
   original_data_processed["levels"] <-  original_data_processed[x_str]
   }
-  if (!transpose_data) {
+  if (!superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(newdata_processed, aes_string(x = paste(object$time_name), y = y_name)) +
-        ggplot2::geom_line() +
-        ggplot2::geom_ribbon(data = newdata_processed,aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5)
-    } else {
+        ggplot2::geom_line()
+      } else {
       plot_object <-ggplot2::ggplot() +
-        geom_line(data = newdata_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
-        ggplot2::geom_ribbon(data = newdata_processed,aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5)
+        geom_line(data = newdata_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels"))
     }
   }
 
-  if (transpose_data) {
+  if (superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(newdata_processed, aes_string(x = paste(object$time_name), y = y_name)) +
-        ggplot2::geom_ribbon(data = newdata_processed,aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5) +
-        ggplot2::geom_line()
+        ggplot2::geom_line() +
         geom_point(data = original_data_processed, aes_string(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
         facet_grid(rows = vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_ribbon(data = newdata_processed,aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5) +
         geom_line(data = newdata_processed, aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
         geom_point(data = original_data_processed, aes_string(paste(object$time_name), y = y_name, col = "levels"), alpha = data_opacity) +
         facet_grid(rows = vars(NULL))
     }
 
+  }
 
-
-
-}
+  if (predict.ribbon) {
+    if (missing(x_str) || is.null(x_str)) {
+    plot_object <-  plot_object + ggplot2::geom_ribbon(data = newdata_processed,aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max), alpha = 0.5) +
+      facet_grid(rows = vars(NULL))
+    } else {
+    plot_object <-  plot_object + ggplot2::geom_ribbon(data = newdata_processed,aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5) +
+      facet_grid(rows = vars(NULL))
+    }
+    }
 print(plot_object)
   }
 
@@ -160,7 +162,7 @@ ggplot.cosinor.glmm.polar <- function(object, x_str, contour_interval, grid_angl
       contour_interval <- max_radius/5
     }
 
-
+    #TODO: change this to work with different units (radians, degrees, period etc)
     time_labels <- seq(from = 0, to = max_period, by = max_period/grid_angle_segments)
 
     dial_pos_full_x <- round(max_radius*cos(-time_labels*2*pi/max_period  + pi/2), digits = 5)
