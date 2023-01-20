@@ -249,3 +249,27 @@ cosinor.glmm(Y ~ group+amp.acro(time, n_components = 2, group = "rrr", period = 
 
 
 
+##Updated on polar plots
+comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = -1.5,beta.mesor = 1,beta.amp = 2, beta.acro = -1.5, dist = "2_component")
+object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+ggplot.cosinor.glmm.polar(object3, x_str = "group",
+                          radial_units = "period",
+                          grid_angle_segments = 4,
+                          make_cowplot = TRUE,
+                          contour_interval = 1,
+                          clockwise = FALSE,
+                          component_index = 2,
+                          text_size = 3,
+                          text_opacity = 0.5,
+                          plot_info = TRUE, show_polar_grid = TRUE)
+
+
+data(vitamind)
+vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
+object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z","X","X"), period = c(12,10,8)),data = vitamind)
+ggplot.cosinor.glmm.polar(object2)
+ggplot.cosinor.glmm.polar(object2, component_index = 2) #currently doesn't work with NA group
+ggplot.cosinor.glmm.polar(object2, component_index = 3)
+ggplot.cosinor.glmm.polar(object2, make_grid = TRUE)
+
+

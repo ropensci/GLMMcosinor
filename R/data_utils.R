@@ -183,7 +183,7 @@ amp.acro <- function(time_col,
                           msg = "time_col must be univariate")
 
 
-  group_original <- group
+
   # allow the user to not have any grouping structure (if group argument is missing)
   if (missing(group)) {
     group <- 0
@@ -205,6 +205,7 @@ amp.acro <- function(time_col,
       stop("Grouping variable in amp.acro() must be of length 1 or the same as n_components")
     }
   }
+  group_original <- group
 
   # show error message if user uses 'rrr' or 'sss' in their grouping variable name (tested)
   if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
