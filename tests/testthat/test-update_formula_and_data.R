@@ -19,7 +19,7 @@ test_that("warning for missing data", {
   expect_message(res())
 })
 
-#not sure if this is relevant?
+# not sure if this is relevant?
 #  dat <- vitamind
 #  dat$ID <- sample(LETTERS[1:5], size = nrow(dat), replace = TRUE)
 #  res <- update_formula_and_data(
@@ -29,5 +29,3 @@ test_that("warning for missing data", {
 #  expected_formula <- Y ~ X + X:rrr1 + X:sss1 + (X:rrr1 + X:sss1 | ID)
 #
 #  Y <- 1 + X + (1 | ID)
-
-

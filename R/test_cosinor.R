@@ -31,11 +31,11 @@ test_cosinor <- function(object, x_str, param = "amp", ref_level = 0, comp_level
   colnames(index) <- names(object$coefficients)
 
   for (i in 1:length(x_str)) {
-    index[i, paste0(x_str[i],ref_level,":", param)] <- -1
-    #index[i, paste0(param,":",x_str[i],ref_level)] <- -1
+    index[i, paste0(x_str[i], ref_level, ":", param)] <- -1
+    # index[i, paste0(param,":",x_str[i],ref_level)] <- -1
 
-    index[i, paste0(x_str[i],comp_level,":", param)] <- 1
-    #index[i, paste0(param,":",x_str[i],comp_level)] <- 1
+    index[i, paste0(x_str[i], comp_level, ":", param)] <- 1
+    # index[i, paste0(param,":",x_str[i],comp_level)] <- 1
   }
 
   diff.est <- index %*% object$coefficients

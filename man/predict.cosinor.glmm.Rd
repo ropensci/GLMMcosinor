@@ -4,7 +4,7 @@
 \alias{predict.cosinor.glmm}
 \title{Predict from a cosinor model}
 \usage{
-\method{predict}{cosinor.glmm}(object, newdata, ...)
+\method{predict}{cosinor.glmm}(object, newdata, se.fit = TRUE, ...)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}

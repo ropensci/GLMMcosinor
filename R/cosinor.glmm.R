@@ -37,16 +37,18 @@ cosinor.glmm <- function(formula,
                          dispformula = ~1,
                          ziformula = ~0,
                          ...) {
-  updated_df_and_formula <- update_formula_and_data(data = data,
-                                                    formula = formula,
-                                                    family = family,
-                                                    quietly,
-                                                    dispformula = dispformula,
-                                                    ziformula = ziformula)
-  #updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
-  #Alternatively:
-  #updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
-  cosinor.glmm.calls <-list(
+  updated_df_and_formula <- update_formula_and_data(
+    data = data,
+    formula = formula,
+    family = family,
+    quietly,
+    dispformula = dispformula,
+    ziformula = ziformula
+  )
+  # updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
+  # Alternatively:
+  # updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
+  cosinor.glmm.calls <- list(
     cosinor.glmm = match.call(),
     update_formula_and_data = updated_df_and_formula$Call
   )
@@ -73,8 +75,8 @@ cosinor.glmm <- function(formula,
 #' @export
 #'
 print.cosinor.glmm <- function(x, ...) {
-  #cat("Call: \n")
-  #print(x$Call)
+  # cat("Call: \n")
+  # print(x$Call)
   cat("\n Conditional Model \n")
   cat("\n Raw formula: \n")
   print(x$formula)
@@ -82,9 +84,9 @@ print.cosinor.glmm <- function(x, ...) {
   print(x$raw_coefficients)
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
- if (x$group_check == TRUE) {
-   names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
- }
+  if (x$group_check == TRUE) {
+    names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
+  }
   print(t.x)
 
   if (x$dispformula_check) {
@@ -190,7 +192,7 @@ update_covnames <- function(names, group_stats) {
     )
     # get the names of the covariates alone
     for (j in group_stats[i]) {
-    covnames <- append(covnames,paste0(i,j))
+      covnames <- append(covnames, paste0(i, j))
     }
   }
 

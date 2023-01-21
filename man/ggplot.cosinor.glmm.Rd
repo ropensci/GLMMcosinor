@@ -4,7 +4,16 @@
 \alias{ggplot.cosinor.glmm}
 \title{Plot a cosinor model}
 \usage{
-\method{ggplot}{cosinor.glmm}(object, x_str = NULL, type = "response", xlims, pred.length.out = 200)
+\method{ggplot}{cosinor.glmm}(
+  object,
+  x_str = NULL,
+  type = "response",
+  xlims,
+  pred.length.out = 200,
+  superimpose.data = FALSE,
+  data_opacity = 0.3,
+  predict.ribbon = TRUE
+)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
