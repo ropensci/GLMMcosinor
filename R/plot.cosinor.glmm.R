@@ -130,14 +130,26 @@ ggplot.cosinor.glmm.polar <- function(object,
                                       circle_linetype = "dotted",
                                       ellipse_opacity = 0.3,
                                       fill_colours,
-                                      zoom = FALSE,
-                                      zoom_origin = FALSE,
+                                      view = "full",
                                       start = "right",
-                                      overlay_parameter_info = FALSE
-                                      ) {
+                                      overlay_parameter_info = FALSE) {
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-  # check if there is a countour argument
+  # convert user input for zoom level into logical arguments
+  if (view == "full") {
+    zoom <- FALSE
+    zoom_origin <- FALSE
+  }
+  if (view == "zoom_origin") {
+    zoom <- TRUE
+    zoom_origin <- TRUE
+  }
+  if (view == "zoom") {
+    zoom <- TRUE
+    zoom_origin <- FALSE
+  }
+
+  # check if there is a contour argument & store this check in local environment
   n_components <- object$n_components
   if (!missing(contour_interval)) {
     contour_interval_check <- TRUE
@@ -145,48 +157,56 @@ ggplot.cosinor.glmm.polar <- function(object,
     contour_interval_check <- FALSE
   }
 
+  # check if there is a fill_colours argument & store this check in local environment
   if (!missing(fill_colours)) {
     fill_colours_check <- TRUE
   } else {
     fill_colours_check <- FALSE
   }
 
-  if(!missing(zoom_origin)) {
-    zoom = TRUE
-  } else {
-    zoom = FALSE
+  # convert user input for starting position (on Cartesian plane) into logical arguments
+  # by default, ggplot() ellipse and circle functions use unit circle angles where 0 degrees
+  # starts at the '3pm' position and rotates counterclockwise
+  # However, the ggforce function geom_arc() starts at upwards 12pm position, also rotating coutnerclockwise
+  # Hence, offset, and overlay_param_offset are different to ultimately describe the same angle position
+  if (start == "top") {
+    offset <- pi / 2
+    overlay_param_offset <- offset - pi / 2
+  }
+  if (start == "left") {
+    offset <- pi
+    overlay_param_offset <- offset + pi / 2
+  }
+  if (start == "bottom") {
+    offset <- 3 * pi / 2
+    overlay_param_offset <- offset - pi / 2
+  }
+  if (start == "right") {
+    offset <- 0
+    overlay_param_offset <- offset + pi / 2
   }
 
-
-  if(start == "top") {
-    offset = pi/2
-  }
-  if(start == "left") {
-    offset = pi
-  }
-  if(start == "bottom") {
-    offset = 3*pi/2
-  }
-  if(start == "right") {
-    offset = 0
+  if (!missing(make_cowplot) & !missing(component_index)) {
+    make_cowplot <- FALSE
   }
 
 
   # get ggplot for a single component. Function will then be looped for multiple components
   sub_ggplot.cosinor.glmm.polar <- function(comp, ...) {
-    component_index <- comp
-    args <- match.call()[-1]
+    component_index <- comp # get the component that is going to plotted
+    args <- match.call()[-1] # get the arguments from the function wrapping this function
     period <- object$period[component_index]
     max_period <- period
     x_str <- object$group_original[component_index]
     group <- x_str
-    level <- object$group_stats[[x_str]]
+    level <- object$group_stats[[group]]
 
-    string_index <- paste0("[", group, "=")
-    string_index_raw <- paste0(group)
+    string_index <- paste0("[", group, "=") # create an index that will be used to grab the correct transformed summary stats
+    string_index_raw <- paste0(group) # create an index that grabs the corresponding raw summary stats
     amp_index <- paste0("amp", component_index)
     acr_index <- paste0("acr", component_index)
 
+    # grab and store the summary statistics for amp and acr
     est_amp <- sum$transformed.table$estimate[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
     l_est_amp <- sum$transformed.table$lower.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
     u_est_amp <- sum$transformed.table$upper.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
@@ -195,36 +215,44 @@ ggplot.cosinor.glmm.polar <- function(object,
     l_est_acr <- sum$transformed.table$lower.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(acr_index, rownames(sum$transformed.table), fixed = TRUE))]
     u_est_acr <- sum$transformed.table$upper.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(acr_index, rownames(sum$transformed.table), fixed = TRUE))]
 
+    # an index of the names of the summary statistics used in iteration of loop
     name_index <- rownames(sum$transformed.table)[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
     group_level <- array(dim = length(name_index))
+
+    # obtain an index of group levels
     for (i in level) {
       group_ind <- paste0(group, "=", i)
       group_level[which(grepl(group_ind, name_index))] <- paste(group, "=", i)
     }
 
-
+    # set direction of increasing angle based on user input of clockwise argument
     if (clockwise) {
-      direction <- -1 # used to reverse the counter-clockwise direction of the unit circle
+      direction <- -1
     } else {
       direction <- 1
     }
 
-
+    # determine the estimated rrr and sss used parameter estimates
     est_rrr <- est_amp * cos(direction * (est_acr) + offset)
     est_sss <- est_amp * sin(direction * (est_acr) + offset)
-    b_trans <- tan((u_est_acr - l_est_acr) / 2) * est_amp
-    a_trans <- est_amp - l_est_amp
 
+    # for confidence ellipses, get the long_axis width "a_trans" (amplitude), and the short-axis height "b_trans" (acrophase)
+    # note that both values are halved because they are technically radii,
+    a_trans <- est_amp - l_est_amp
+    b_trans <- tan((u_est_acr - l_est_acr) / 2) * est_amp
+
+    # determine the maximum radius in a single plot. This will be used for formatting plot features
     max_radius <- max(abs(u_est_amp), abs(l_est_amp))
     if (contour_interval_check) {
       if (contour_interval > max_radius) {
-        contour_interval <- max_radius / 5
+        contour_interval <- max_radius / 5 # reformat the contour_interval if the user supplies an inappropriate value
         warning("contour_interval ignored because it is too high")
       }
     } else {
-      contour_interval <- max_radius / 5
+      contour_interval <- max_radius / 5 # a default if no contour_interval argument is supplied
     }
 
+    # change 'max_period' to correspond to units specified by the user
     if (radial_units == "radians") {
       max_period <- 2 * pi
     }
@@ -235,74 +263,98 @@ ggplot.cosinor.glmm.polar <- function(object,
       max_period <- max_period
     }
 
+    # create a sequence of labels for time (to be inserted around the polar plot)
     time_labels <- signif(seq(from = 0, to = max_period, by = max_period / grid_angle_segments), 3)
 
 
+    # create a sequence of labels for the contours.
     contour_labels <- signif(seq(from = 0, to = max_radius + contour_interval, by = contour_interval), 3)
+
+    # determine largest contour, and use this as a plot limit
     max_plot_radius <- max(contour_labels)
+
+    # convert time_labels to polar coordinates to determine position of where they should be placed
     dial_pos_full_x <- round(max_plot_radius * cos(direction * time_labels * 2 * pi / max_period + offset), digits = 5)
     dial_pos_full_y <- round(max_plot_radius * sin(direction * time_labels * 2 * pi / max_period + offset), digits = 5)
 
-    #determining the bounds to plot if zoom = TRUE
+    # determining the bounds to plot if zoom = TRUE
+    # designed to find the minimum plot window that contains all confidence ellipses.
     if (zoom) {
       xmax_zoom <- max(est_rrr) + max(max(a_trans), max(b_trans))
       xmin_zoom <- min(est_rrr) - max(max(a_trans), max(b_trans))
       ymax_zoom <- max(est_sss) + max(max(a_trans), max(b_trans))
-      ymin_zoom <-min(est_sss) - max(max(a_trans), max(b_trans))
+      ymin_zoom <- min(est_sss) - max(max(a_trans), max(b_trans))
 
-
-      if(zoom_origin) {
-      xmin_zoom <- min(xmin_zoom, 0)
-      xmax_zoom <- max(xmax_zoom, 0)
-      ymin_zoom <- min(ymin_zoom, 0)
-      ymax_zoom <- max(ymax_zoom,0)
+      # if view = "zoom_origin", anchor the view window to the origin
+      if (zoom_origin) {
+        xmin_zoom <- min(xmin_zoom, 0)
+        xmax_zoom <- max(xmax_zoom, 0)
+        ymin_zoom <- min(ymin_zoom, 0)
+        ymax_zoom <- max(ymax_zoom, 0)
       }
 
-      contour_x_zoom <- cos(max(est_acr))*contour_labels
-      contour_y_zoom <- sin(max(est_acr))*contour_labels
+
+      # ensure that contour labels are always within the view window
+      contour_x_zoom <- cos(direction*mean(est_acr) + offset) * contour_labels
+      #contour_x_zoom <- cos(direction*est_acr + offset)*t(replicate(length(est_amp), contour_labels))
+      contour_y_zoom <- sin(direction*mean(est_acr) + offset) * contour_labels
+      #contour_y_zoom <- sin(direction*est_acr + offset)*t(replicate(length(est_amp), contour_labels))
     }
 
-
-
+    # adding special symbols to time_labels (π for radians, ° for degrees )
     if (radial_units == "radians") {
       pi_string <- paste(round(time_labels / pi, 1))
       time_labels <- paste0(pi_string, "π")
     }
 
-
-      plot_obj <-
-        ggplot2::ggplot() +
-        ggforce::geom_circle(ggplot2::aes(x0 = 0, y0 = 0, r = seq(from = 0, to = max_plot_radius, by = contour_interval)), alpha = 0.3, linetype = circle_linetype) +
-        ggforce::geom_ellipse(ggplot2::aes(x0 = est_rrr, y0 = est_sss, a = a_trans, b = b_trans, angle = offset + direction * est_acr, fill = group_level), alpha = ellipse_opacity) +
-        ggplot2::geom_point(ggplot2::aes(x = est_rrr, y = est_sss)) +
-        ggplot2::geom_segment(ggplot2::aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = circle_linetype) +
-        ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.03 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.03 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
-        ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0.1 * contour_interval), hjust = 1, size = text_size, alpha = text_opacity) +
-        ggplot2::labs(fill = "Group level") +
-        ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x=element_blank(), axis.text.y=element_blank(), axis.ticks=element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-
-
-    if (fill_colours_check) {
-      plot_obj <- plot_obj + scale_fill_manual(values = fill_colours)
+    if (radial_units == "degrees") {
+      time_labels <- paste0(time_labels, "°")
     }
 
-      if (overlay_parameter_info) {
-        plot_obj <- plot_obj + ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss)) +
-          ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = seq(1,1.5, length.out = length(est_amp)), start = 0, end = est_acr))
-      }
 
+    # create the main plot object
+    plot_obj <-
+      ggplot2::ggplot() +
+      ggforce::geom_circle(ggplot2::aes(x0 = 0, y0 = 0, r = seq(from = 0, to = max_plot_radius, by = contour_interval)), alpha = 0.3, linetype = circle_linetype) +
+      ggforce::geom_ellipse(ggplot2::aes(x0 = est_rrr, y0 = est_sss, a = a_trans, b = b_trans, angle = offset + direction * est_acr, fill = group_level, colour = group_level), alpha = ellipse_opacity) +
+      ggplot2::geom_point(ggplot2::aes(x = est_rrr, y = est_sss)) +
+      ggplot2::geom_segment(ggplot2::aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = circle_linetype) +
+      ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.03 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.03 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
+      ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0.1 * contour_interval), hjust = 1, size = text_size, alpha = text_opacity) +
+      ggplot2::labs(fill = "Group level", colour = NULL) +
+      guides(colour = "none") +
+      ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
+    # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
+    if (overlay_parameter_info) {
+      radius_sequence <- seq(0.20 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
+      overlay_labels <- paste(paste0("A = ", signif(est_amp, 3)), paste0("ϕ = ", signif(est_acr, 3)), sep = "\n")
+      plot_obj <- plot_obj +
+        ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
+        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = -direction * overlay_param_offset, end = -direction * (overlay_param_offset + est_acr), colour = group_level)) +
+        ggplot2::geom_text(
+          ggplot2::aes(
+            label = overlay_labels, x = cos(direction * est_acr * 1.05 + offset) * radius_sequence,
+            y = sin(direction * est_acr * 1.05 + offset) * radius_sequence
+          ),
+          size = text_size, alpha = text_opacity
+        )
+    }
 
+    # apply colours chosen by user input to the fill and colour aesthetics
+    if (fill_colours_check) {
+      plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
+    }
+
+    # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits
     if (zoom) {
       plot_obj <- plot_obj + ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_x_zoom, y = contour_y_zoom), size = text_size, alpha = text_opacity)
-      plot_obj <- plot_obj + ggplot2::coord_cartesian(xlim = c(xmin_zoom, xmax_zoom), ylim = c(ymin_zoom, ymax_zoom) )
-
+      plot_obj <- plot_obj + ggplot2::coord_cartesian(xlim = c(xmin_zoom, xmax_zoom), ylim = c(ymin_zoom, ymax_zoom))
     } else {
-      plot_obj <- plot_obj + ggplot2::coord_fixed()
+      plot_obj <- plot_obj + ggplot2::coord_fixed() # plot full polar plot if view = "full"
     }
 
-
-
+    # return the plot object
     plot_obj
   }
 
@@ -321,7 +373,7 @@ ggplot.cosinor.glmm.polar <- function(object,
     print(final_obj)
   }
 
-  # print information about the polar grid, if the user requests
+  # OPTIONAL: print information about the polar grid
   if (!quietly) {
     message("Circular contours every ", contour_interval, " unit(s)")
     message("Angle in units of ", radial_units)

@@ -250,30 +250,33 @@
 #
 #
 # ##Updated on polar plots
-# #add degrees symbol to polar plots
+# #add degrees symbol to polar plots (DONE)
 # #add zoom independent of show_polar_grid argument: 'focus_quadrant' to zoom in on quadrant (DONE)
-# #remove show_polar_grid as an argument
-# #add top,left,bottom,right as arguments to dictate where plot starts, and keep clockwise but make it just affect the direction
+# #remove show_polar_grid as an argument (DONE)
+# #add top,left,bottom,right as arguments to dictate where plot starts, and keep clockwise but make it just affect the direction (DONE)
 # #let the user specify the level too if component_index is specified, and cowplot is FALSE
-# #if component index supplied but cowplot TRUE, override cowplot to be FALSE
+# #if component index supplied but cowplot TRUE, override cowplot to be FALSE (DONE)
 # #allow user to specify confidence level
 # # get rid of the sss and rrr and axes labels - remove ticks and grid, use theme_bw() (DONE)
 # # add hjust and vjust to the labels of the outer ring as vector corresponding to length rather than multipliers
 # #codecov
 #check out the error when restarting R and loading (error in ggplot ...)
-comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = -1.5,beta.mesor = 1,beta.amp = 2, beta.acro = -1.5, dist = "2_component")
+comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
 object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 ggplot.cosinor.glmm.polar(object3, x_str = "group",
-                          radial_units = "radians",
+                          radial_units = "degrees",
                           grid_angle_segments = 4,
                           make_cowplot = TRUE,
-                          contour_interval = 0.1,
-                          clockwise = FALSE,
-                          component_index = 2,
-                          text_size = 3,
+                          contour_interval = 1,
+                          clockwise = TRUE,
+                          text_size = 5,
                           text_opacity = 0.5,
-                          quietly = FALSE, zoom = FALSE, zoom_origin = FALSE,
-                          start = "bottom")
+                          quietly = FALSE,
+                          fill_colours = c("red","blue"),
+                          start = "bottom",
+                          overlay_parameter_info = TRUE,
+                          ellipse_opacity = 0.1,
+                          view = "zoom")
 
 #
 # data(vitamind)
