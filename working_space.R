@@ -251,7 +251,7 @@
 #
 # ##Updated on polar plots
 # #add degrees symbol to polar plots
-# #add zoom independent of show_polar_grid argument: 'focus_quadrant' to zoom in on quadrant
+# #add zoom independent of show_polar_grid argument: 'focus_quadrant' to zoom in on quadrant (DONE)
 # #remove show_polar_grid as an argument
 # #add top,left,bottom,right as arguments to dictate where plot starts, and keep clockwise but make it just affect the direction
 # #let the user specify the level too if component_index is specified, and cowplot is FALSE
@@ -267,13 +267,13 @@ ggplot.cosinor.glmm.polar(object3, x_str = "group",
                           radial_units = "radians",
                           grid_angle_segments = 4,
                           make_cowplot = TRUE,
-                          contour_interval = 1,
+                          contour_interval = 0.1,
                           clockwise = FALSE,
                           component_index = 2,
                           text_size = 3,
                           text_opacity = 0.5,
-                          quietly = FALSE,
-                          show_polar_grid = TRUE)
+                          quietly = FALSE, zoom = FALSE, zoom_origin = FALSE,
+                          start = "bottom")
 
 #
 # data(vitamind)

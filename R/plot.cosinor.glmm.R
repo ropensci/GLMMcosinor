@@ -127,10 +127,14 @@ ggplot.cosinor.glmm.polar <- function(object,
                                       text_opacity = 0.5,
                                       component_index = 1,
                                       make_cowplot = TRUE,
-                                      show_polar_grid = TRUE,
                                       circle_linetype = "dotted",
                                       ellipse_opacity = 0.3,
-                                      fill_colours) {
+                                      fill_colours,
+                                      zoom = FALSE,
+                                      zoom_origin = FALSE,
+                                      start = "right",
+                                      overlay_parameter_info = FALSE
+                                      ) {
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
   # check if there is a countour argument
@@ -146,6 +150,27 @@ ggplot.cosinor.glmm.polar <- function(object,
   } else {
     fill_colours_check <- FALSE
   }
+
+  if(!missing(zoom_origin)) {
+    zoom = TRUE
+  } else {
+    zoom = FALSE
+  }
+
+
+  if(start == "top") {
+    offset = pi/2
+  }
+  if(start == "left") {
+    offset = pi
+  }
+  if(start == "bottom") {
+    offset = 3*pi/2
+  }
+  if(start == "right") {
+    offset = 0
+  }
+
 
   # get ggplot for a single component. Function will then be looped for multiple components
   sub_ggplot.cosinor.glmm.polar <- function(comp, ...) {
@@ -180,11 +205,10 @@ ggplot.cosinor.glmm.polar <- function(object,
 
     if (clockwise) {
       direction <- -1 # used to reverse the counter-clockwise direction of the unit circle
-      offset <- pi / 2 # angle used to rotate the polar plots
     } else {
       direction <- 1
-      offset <- 0
     }
+
 
     est_rrr <- est_amp * cos(direction * (est_acr) + offset)
     est_sss <- est_amp * sin(direction * (est_acr) + offset)
@@ -219,12 +243,33 @@ ggplot.cosinor.glmm.polar <- function(object,
     dial_pos_full_x <- round(max_plot_radius * cos(direction * time_labels * 2 * pi / max_period + offset), digits = 5)
     dial_pos_full_y <- round(max_plot_radius * sin(direction * time_labels * 2 * pi / max_period + offset), digits = 5)
 
+    #determining the bounds to plot if zoom = TRUE
+    if (zoom) {
+      xmax_zoom <- max(est_rrr) + max(max(a_trans), max(b_trans))
+      xmin_zoom <- min(est_rrr) - max(max(a_trans), max(b_trans))
+      ymax_zoom <- max(est_sss) + max(max(a_trans), max(b_trans))
+      ymin_zoom <-min(est_sss) - max(max(a_trans), max(b_trans))
+
+
+      if(zoom_origin) {
+      xmin_zoom <- min(xmin_zoom, 0)
+      xmax_zoom <- max(xmax_zoom, 0)
+      ymin_zoom <- min(ymin_zoom, 0)
+      ymax_zoom <- max(ymax_zoom,0)
+      }
+
+      contour_x_zoom <- cos(max(est_acr))*contour_labels
+      contour_y_zoom <- sin(max(est_acr))*contour_labels
+    }
+
+
+
     if (radial_units == "radians") {
       pi_string <- paste(round(time_labels / pi, 1))
       time_labels <- paste0(pi_string, "π")
     }
 
-    if (show_polar_grid) {
+
       plot_obj <-
         ggplot2::ggplot() +
         ggforce::geom_circle(ggplot2::aes(x0 = 0, y0 = 0, r = seq(from = 0, to = max_plot_radius, by = contour_interval)), alpha = 0.3, linetype = circle_linetype) +
@@ -234,22 +279,29 @@ ggplot.cosinor.glmm.polar <- function(object,
         ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.03 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.03 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
         ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0.1 * contour_interval), hjust = 1, size = text_size, alpha = text_opacity) +
         ggplot2::labs(fill = "Group level") +
-        ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x=element_blank(), axis.text.y=element_blank(), axis.ticks=element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-        ggplot2::coord_fixed()
-    }
-    if (!show_polar_grid) {
-      plot_obj <-
-        ggplot2::ggplot() +
-        ggforce::geom_ellipse(ggplot2::aes(x0 = est_rrr, y0 = est_sss, a = a_trans, b = b_trans, angle = offset + direction * est_acr, fill = group_level), alpha = 0.3) +
-        ggplot2::geom_point(ggplot2::aes(x = est_rrr, y = est_sss)) +
-        ggplot2::labs(fill = "Group level") +
-        ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x=element_blank(), axis.text.y=element_blank(), axis.ticks=element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-        ggplot2::coord_fixed()
-    }
+        ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x=element_blank(), axis.text.y=element_blank(), axis.ticks=element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
 
     if (fill_colours_check) {
       plot_obj <- plot_obj + scale_fill_manual(values = fill_colours)
     }
+
+      if (overlay_parameter_info) {
+        plot_obj <- plot_obj + ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss)) +
+          ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = seq(1,1.5, length.out = length(est_amp)), start = 0, end = est_acr))
+      }
+
+
+
+    if (zoom) {
+      plot_obj <- plot_obj + ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_x_zoom, y = contour_y_zoom), size = text_size, alpha = text_opacity)
+      plot_obj <- plot_obj + ggplot2::coord_cartesian(xlim = c(xmin_zoom, xmax_zoom), ylim = c(ymin_zoom, ymax_zoom) )
+
+    } else {
+      plot_obj <- plot_obj + ggplot2::coord_fixed()
+    }
+
+
 
     plot_obj
   }
@@ -270,7 +322,7 @@ ggplot.cosinor.glmm.polar <- function(object,
   }
 
   # print information about the polar grid, if the user requests
-  if (!quietly & show_polar_grid) {
+  if (!quietly) {
     message("Circular contours every ", contour_interval, " unit(s)")
     message("Angle in units of ", radial_units)
   }
