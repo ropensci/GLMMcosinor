@@ -1,4 +1,3 @@
-
 #' Update data and formula for fitting cosinor.glmm model
 #'
 #' @param data input data for fitting cosinor.glmm model.

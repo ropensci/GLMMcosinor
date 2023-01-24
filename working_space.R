@@ -187,12 +187,12 @@
 #     #added around 15 tests to the test-amp-acro.R function
 #     #Testing dispersion formula behaviour:
 #
-#     data(vitamind)
-#     vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
-#     cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind,
-#                  dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,11,8)),
-#                  ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z","X"), period = c(12,8)))
-#
+    data(vitamind)
+    vitamind$Z = rbinom(length(vitamind$X),4,prob = 0.5)
+    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period = c(12,10,8)),data = vitamind,
+                 dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,11,8)),
+                 ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z","X"), period = c(12,8)))
+
 #
 #
 # ##notes from meeting 14/01/2023
@@ -254,7 +254,7 @@
 #
 #
 #
-# ##Updated on polar plots
+# ##Updated  polar plots
 # #add degrees symbol to polar plots (DONE)
 # #add zoom independent of show_polar_grid argument: 'focus_quadrant' to zoom in on quadrant (DONE)
 # #remove show_polar_grid as an argument (DONE)
@@ -265,33 +265,48 @@
 # # get rid of the sss and rrr and axes labels - remove ticks and grid, use theme_bw() (DONE)
 # # add hjust and vjust to the labels of the outer ring as vector corresponding to length rather than multipliers
 # #codecov
-# vdiffr - check out this package to see tests for plots
+# #vdiffr - check out this package to see tests for plots
+# #check out the error when restarting R and loading (error in ggplot ...)
 
-#check out the error when restarting R and loading (error in ggplot ...)
-comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
+
+
+#Meeting for Wednesday Morning:
+#Significant improvements to polar plots:
+comod = simulate_cosinor(50,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
 object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 ggplot.cosinor.glmm.polar(object3,
-                          radial_units = "degrees",
-                          grid_angle_segments = 4,
-                          make_cowplot = TRUE,
                           contour_interval = 1,
-                          clockwise = TRUE,
-                          text_size = 5,
+                          make_cowplot = TRUE,
+                          component_index = 1,
+                          grid_angle_segments = 8,
+                          radial_units = "radians",
+                          clockwise = FALSE,
+                          text_size = 3,
                           text_opacity = 0.5,
-                          quietly = FALSE,
-                          fill_colours = c("red","blue"),
-                          start = "bottom",
-                          overlay_parameter_info = TRUE,
-                          ellipse_opacity = 0.1,
-                          view = "zoom")
+                          fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
+                          ellipse_opacity = 0.3,
+                          circle_linetype = "dotted",
+                          start = "right",
+                          view = "full",
+                          overlay_parameter_info = FALSE,
+                          quietly = TRUE)
 
-#
-# data(vitamind)
-# vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
-# object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z","X","X"), period = c(12,10,8)),data = vitamind)
-# ggplot.cosinor.glmm.polar(object2)
-# ggplot.cosinor.glmm.polar(object2, component_index = 2) #currently doesn't work with NA group
-# ggplot.cosinor.glmm.polar(object2, component_index = 3)
-# ggplot.cosinor.glmm.polar(object2, make_grid = TRUE)
-#
-#
+#Added around 25 tests (specifically for the plot script)
+#The package now works when there is no group assigned (ie, analysis of a single group)
+
+#summary.cosinor.glmm() now deals with dispersion formula and ziformula appropriately
+  #Ex. 1:
+comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
+object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod,
+                        dispformula = ~ group + amp.acro(times, n_components = 2, group = "group", period = c(12, 8)),
+                        ziformula = ~ group + amp.acro(times, n_components = 2, group = "group", period = c(12, 8)))
+summary.cosinor.glmm(object3)
+#Ex. 2: notice how because of the non-convergence warning, NaN is produced in the summary. This is normal behaviour (according to a post I read)
+object4 <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12), data = vitamind,
+                        dispformula = ~ X + amp.acro(time, n_components= 1, group = "X", period = 12),
+                        ziformula = ~ X + amp.acro(time, n_components= 1, group = "X", period = 12))
+summary.cosinor.glmm(object4)
+
+#The p-values currently aren't comparing to the reference group. They are comparing to 0 (ie, the parameter = 0)
+#that's why the p-values for the estimates are 0. Seems like an easy fix though
+

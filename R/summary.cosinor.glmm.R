@@ -21,133 +21,181 @@
 #' @export
 
 summary.cosinor.glmm <- function(object, ...) {
+  # get the fitted model from the cosinor.glmm() output, along with n_components, vec_rrr, and vec_sss
   mf <- object$fit
   n_components <- object$n_components
   vec_rrr <- object$vec_rrr
   vec_sss <- object$vec_sss
 
 
-  # TOOD: validate summary outputs with test-script using parts of the simulation study code
-  # TODO: structure output of summary script so that zi and disp are displayed in output
+  # TODO: validate summary outputs with test-script using parts of the simulation study code
 
-  # TODO: wrap in function from here
-  coefs <- glmmTMB::fixef(mf)$cond # TODO: do this for zi and disp if present in initial formula
-  r.coef <- NULL
-  s.coef <- NULL
-  mu.coef <- NULL
-  mu_inv <- rep(0, length(names(coefs)))
+  # this function can be looped if there is disp or zi formula present. 'model_index' is a string: 'cond', 'disp', or 'zi'
+  sub_summary.cosinor.glmm <- function(model_index) {
+    args <- match.call()[-1] # get the arguments from the function wrapping this function
+    coefs <- glmmTMB::fixef(mf)[[model_index]]
 
-  if (length(vec_rrr) > 1) {
-    vec_rrr_spec <- vec_rrr[1]
-    vec_sss_spec <- vec_sss[1]
-    for (i in 2:length(vec_rrr)) {
-      vec_rrr_spec <- paste0(vec_rrr_spec, "|", vec_rrr[i])
-      vec_sss_spec <- paste0(vec_sss_spec, "|", vec_sss[i])
+    # reassign vec_rrr and vec_sss to those in the disp or zi model, if necessary
+    if (model_index == "disp") {
+      vec_rrr <- object$disp_list$vec_rrr_disp
+      vec_sss <- object$disp_list$vec_sss_disp
     }
-  } else {
-    vec_rrr_spec <- vec_rrr
-    vec_sss_spec <- vec_sss
-  }
-  # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
-  # the relevant raw parameters from the raw coefficient model output
 
-  r.coef <- grepl(vec_rrr_spec, names(coefs))
-  s.coef <- grepl(vec_sss_spec, names(coefs))
+    if (model_index == "zi") {
+      vec_rrr <- object$zi_list$vec_rrr_zi
+      vec_sss <- object$zi_list$vec_sss_zi
+    }
 
-  mu_inv_carry <- r.coef + s.coef # Keep track of non-mesor terms
-  mu_inv <- mu_inv_carry + mu_inv # Ultimately,every non-mesor term will be true
+    # create objects r.coef, s.coef, and mu.coef. This will be Boolean vectors that indicate
+    # the position of particular coefficients in coefs.
+    r.coef <- NULL
+    s.coef <- NULL
+    mu.coef <- NULL
+    mu_inv <- rep(0, length(names(coefs)))
+
+    # put a '|' between adjecent elements of vec_rrr and vec_sss, used for indexing.
+    if (length(vec_rrr) > 1) {
+      vec_rrr_spec <- vec_rrr[1]
+      vec_sss_spec <- vec_sss[1]
+      for (i in 2:length(vec_rrr)) {
+        vec_rrr_spec <- paste0(vec_rrr_spec, "|", vec_rrr[i])
+        vec_sss_spec <- paste0(vec_sss_spec, "|", vec_sss[i])
+      }
+    } else {
+      vec_rrr_spec <- vec_rrr
+      vec_sss_spec <- vec_sss
+    }
+
+    # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
+    # the relevant raw parameters from the raw coefficient model output
+    r.coef <- grepl(vec_rrr_spec, names(coefs))
+    s.coef <- grepl(vec_sss_spec, names(coefs))
+
+    mu_inv_carry <- r.coef + s.coef # Keep track of non-mesor terms
+    mu_inv <- mu_inv_carry + mu_inv # Ultimately,every non-mesor term will be true
 
 
-  mu.coef <- c(!mu_inv) # invert 'mu_inv' to get a Boolean vector for mesor terms
-  r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) # a matrix of rrr coefficients
-  s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) # a matrix of sss coefficients
+    mu.coef <- c(!mu_inv) # invert 'mu_inv' to get a Boolean vector for mesor terms
+    r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) # a matrix of rrr coefficients
+    s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) # a matrix of sss coefficients
 
+    # generate coefs containing sss, and rrr, respectively
+    beta.s <- coefs[s.coef]
+    beta.r <- coefs[r.coef]
 
-  beta.s <- coefs[s.coef]
-  beta.r <- coefs[r.coef]
+    # convert beta.s and beta.r to groups
+    groups.r <- c(beta.r, beta.r[which(names(beta.r) != names(beta.r))])
+    groups.s <- c(beta.s, beta.s[which(names(beta.s) != names(beta.s))])
 
-  groups.r <- c(beta.r, beta.r[which(names(beta.r) != names(beta.r))])
-  groups.s <- c(beta.s, beta.s[which(names(beta.s) != names(beta.s))])
+    # calculate parameters amp and acr
+    amp <- sqrt(groups.r^2 + groups.s^2)
+    acr <- -atan2(groups.s, groups.r)
 
-  amp <- sqrt(groups.r^2 + groups.s^2)
-  acr <- -atan2(groups.s, groups.r)
+    # rename the vectors amp and acr
+    for (i in 1:n_components) {
+      names(amp) <- gsub(vec_rrr[i], paste0("amp", i), names(amp))
+      names(acr) <- gsub(vec_sss[i], paste0("acr", i), names(acr))
+    }
 
-  for (i in 1:n_components) {
-    names(amp) <- gsub(vec_rrr[i], paste0("amp", i), names(amp))
-    names(acr) <- gsub(vec_sss[i], paste0("acr", i), names(acr))
-  }
+    # calculate the variance-covariance matrix
+    vmat <- vcov(mf)[[model_index]][
+      c(which(r.coef), which(s.coef)),
+      c(which(r.coef), which(s.coef))
+    ]
 
-  vmat <- vcov(mf)$cond[
-    c(which(r.coef), which(s.coef)),
-    c(which(r.coef), which(s.coef))
-  ]
-  ##
-  # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
-  if (n_components == 1) {
-    names(amp) <- gsub(vec_rrr, "amp", names(amp))
-    names(acr) <- gsub(vec_sss, "acr", names(acr))
-    new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-  }
-  ##
+    # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
+    if (n_components == 1) {
+      names(amp) <- gsub(vec_rrr, "amp", names(amp))
+      names(acr) <- gsub(vec_sss, "acr", names(acr))
+      new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
+    }
 
-  index.s <- matrix(0, nrow = length(groups.r), ncol = length(groups.r))
-  index.r <- matrix(0, nrow = length(groups.s), ncol = length(groups.s))
+    # create empty index arrays and calculate standard errors for each parameter
+    index.s <- matrix(0, nrow = length(groups.r), ncol = length(groups.r))
+    index.r <- matrix(0, nrow = length(groups.s), ncol = length(groups.s))
 
-  index.r[, 1] <- index.s[, 1] <- 1
-  diag(index.r) <- diag(index.s) <- 1
-  indexmat <- rbind(
-    cbind(index.r, index.s * 0),
-    cbind(index.r * 0, index.s)
-  )
-
-  indVmat <- indexmat %*% vmat %*% t(indexmat)
-  a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
-  a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
-
-  b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
-  b_s <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
-
-  if (length(groups.r) == 1) {
-    jac <- matrix(c(a_r, a_s, b_r, b_s), byrow = TRUE, nrow = 2)
-  } else {
-    jac <- rbind(
-      cbind(diag(a_r), diag(a_s)),
-      cbind(diag(b_r), diag(b_s))
+    index.r[, 1] <- index.s[, 1] <- 1
+    diag(index.r) <- diag(index.s) <- 1
+    indexmat <- rbind(
+      cbind(index.r, index.s * 0),
+      cbind(index.r * 0, index.s)
     )
+
+    indVmat <- indexmat %*% vmat %*% t(indexmat)
+
+    a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
+    a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
+
+    b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
+    b_s <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
+
+    if (length(groups.r) == 1) {
+      jac <- matrix(c(a_r, a_s, b_r, b_s), byrow = TRUE, nrow = 2)
+    } else {
+      jac <- rbind(
+        cbind(diag(a_r), diag(a_s)),
+        cbind(diag(b_r), diag(b_s))
+      )
+    }
+
+    cov.trans <- jac %*% indVmat %*% t(jac)
+    se.trans <- sqrt(diag(cov.trans))
+
+    # assemble summary matrix
+    coef <- c(coefs[mu.coef], unlist(amp), unlist(acr))
+    se <- c(sqrt(diag(vcov(mf)[[model_index]]))[mu.coef], se.trans)
+
+
+    zt <- stats::qnorm((1 - .95) / 2, lower.tail = F)
+    raw.se <- sqrt(diag(vcov(mf)[[model_index]]))
+
+    rawmat <- cbind(
+      estimate = coefs, standard.error = raw.se, ## ?This could be changed to determine p-val between groups?
+      lower.CI = coefs - zt * raw.se, upper.CI = coefs + zt * raw.se,
+      p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
+    )
+
+    smat <- cbind(
+      estimate = coef, standard.error = se, lower.CI = coef - zt * se,
+      upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se))
+    )
+
+    if (object$group_check) {
+      rownames(smat) <- update_covnames(rownames(smat), object$group_stats)
+    }
+
+    structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans, raw.covariance = vmat), class = "sub_summary.cosinor.glmm")
   }
 
-  cov.trans <- jac %*% indVmat %*% t(jac)
-  se.trans <- sqrt(diag(cov.trans))
+  # store the output from the conditional model
+  main_output <- sub_summary.cosinor.glmm(model_index = "cond")
 
-  ## assemble summary matrix
-  coef <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-  se <- c(sqrt(diag(vcov(mf)$cond))[mu.coef], se.trans)
-
-
-  zt <- stats::qnorm((1 - .95) / 2, lower.tail = F)
-  raw.se <- sqrt(diag(vcov(mf)$cond))
-
-  rawmat <- cbind(
-    estimate = coefs, standard.error = raw.se,
-    lower.CI = coefs - zt * raw.se, upper.CI = coefs + zt * raw.se,
-    p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
-  )
-
-  smat <- cbind(
-    estimate = coef, standard.error = se, lower.CI = coef - zt * se,
-    upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se))
-  )
-
-  if (object$group_check) {
-  rownames(smat) <- update_covnames(rownames(smat), object$group_stats)
+  # store the output from the dispersion model (if present)
+  if (object$dispformula_check) {
+    output_disp <- sub_summary.cosinor.glmm(model_index = "disp")
+  } else {
+    output_disp <- NULL
   }
 
+  # store the output from the zero-inflation model (if present)
+  if (object$ziformula_check) {
+    output_zi <- sub_summary.cosinor.glmm(model_index = "zi")
+  } else {
+    output_zi <- NULL
+  }
 
-
-
-  ## Need to modify with additional zi and dispersion (or default)
-  structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans, raw.covariance = vmat), class = "summary.cosinor.glmm")
-  ### TO HERE
+  # here, the outputs from main_output are renamed to remove the main_output tag.
+  # this was done to remain cohesive with other parts of the package.
+  structure(list(
+    transformed.table = main_output$transformed.table,
+    raw.table = main_output$raw.table,
+    transformed.covariance = main_output$transformed.covariance,
+    raw.covariance = main_output$raw.covariance,
+    main_output = main_output,
+    output_disp = output_disp,
+    output_zi = output_zi,
+    object = object
+  ), class = "summary.cosinor.glmm")
 }
 
 
@@ -167,9 +215,32 @@ summary.cosinor.glmm <- function(object, ...) {
 
 # check if there is dispersion or zi (as opposed to default) then print
 print.summary.cosinor.glmm <- function(x, ...) {
+  cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
-  print(round(x$raw.table, 4))
-  cat("\n***********************\n\n")
+  print(round(x$main_output$raw.table, 6))
+  cat("\n")
   cat("Transformed coefficients:\n")
-  print(round(x$transformed.table, 4))
+  print(round(x$main_output$transformed.table, 6))
+
+  # display the output from the dispersion model (if present)
+
+  if (!is.null(x$output_disp)) {
+    cat("\n***********************\n")
+    cat("\n Dispersion Model \n")
+    cat("Raw model coefficients:\n")
+    print(round(x$output_disp$raw.table, 6))
+    cat("\n")
+    cat("Transformed coefficients:\n")
+    print(round(x$output_disp$transformed.table, 6))
+  }
+
+  if (!is.null(x$output_zi)) {
+    cat("\n***********************\n")
+    cat("\n Zero-Inflation Model \n")
+    cat("Raw model coefficients:\n")
+    print(round(x$output_zi$raw.table, 6))
+    cat("\n")
+    cat("Transformed coefficients:\n")
+    print(round(x$output_zi$transformed.table, 6))
+  }
 }

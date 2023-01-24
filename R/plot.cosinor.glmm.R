@@ -30,26 +30,35 @@ ggplot.cosinor.glmm <- function(object,
                                 superimpose.data = FALSE,
                                 data_opacity = 0.3,
                                 predict.ribbon = TRUE) {
-
-  #Validating user inputs
-  assertthat::assert_that(inherits(object,"cosinor.glmm"),
-                          msg = "object must be of class cosinor.glmm")
+  # Validating user inputs
+  assertthat::assert_that(inherits(object, "cosinor.glmm"),
+    msg = "object must be of class cosinor.glmm"
+  )
   if (!missing(x_str) & (!is.null(x_str))) {
-  assertthat::assert_that((is.character(x_str)),
-                          msg = "x_str must be string corresponding to a group name in cosinor.glmm object")}
+    assertthat::assert_that((is.character(x_str)),
+      msg = "x_str must be string corresponding to a group name in cosinor.glmm object"
+    )
+  }
   assertthat::assert_that(is.character(type),
-                         msg = "type must be a string. See type in ?predict for more information about valid inputs")
+    msg = "type must be a string. See type in ?predict for more information about valid inputs"
+  )
   if (!missing(xlims)) {
-  assertthat::assert_that(length(xlims) ==2 & is.numeric(xlims) & xlims[1] < xlims[2],
-                          msg = "xlims must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate")}
-  assertthat::assert_that(pred.length.out == floor(pred.length.out) & pred.length.out>0,
-                          msg = "pred.length.out must be an integer greater than 0 ")
+    assertthat::assert_that(length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
+      msg = "xlims must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate"
+    )
+  }
+  assertthat::assert_that(pred.length.out == floor(pred.length.out) & pred.length.out > 0,
+    msg = "pred.length.out must be an integer greater than 0 "
+  )
   assertthat::assert_that(is.logical(superimpose.data),
-                          msg = "superimpose.data must be a logical argument, either TRUE or FALSE")
+    msg = "superimpose.data must be a logical argument, either TRUE or FALSE"
+  )
   assertthat::assert_that(is.numeric(data_opacity) & data_opacity >= 0 & data_opacity <= 1,
-                          msg = "data_opacity must be a number between 0 and 1 inclusive")
+    msg = "data_opacity must be a number between 0 and 1 inclusive"
+  )
   assertthat::assert_that(is.logical(predict.ribbon),
-                          msg = "predict.ribbon must be a logical argument, either TRUE or FALSE")
+    msg = "predict.ribbon must be a logical argument, either TRUE or FALSE"
+  )
 
 
   # generate the time values for the x-axis
@@ -97,13 +106,13 @@ ggplot.cosinor.glmm <- function(object,
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
   newdata_processed <- data_processor_plot(object, newdata, x_str)
-  y_name <- object$response_var #get the response data from the cosinor.glmm object
+  y_name <- object$response_var # get the response data from the cosinor.glmm object
 
   # get the predicted response values using the predict.cosinor.glmm() function
   pred_obj <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
-  newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit #determine the upper predicted interval
-  newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit #determine the lower predicted interval
+  newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
+  newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
 
   # get the original data from the cosinor.glmm object to be superimposed
   if (superimpose.data) {
@@ -178,7 +187,7 @@ ggplot.cosinor.glmm <- function(object,
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
 #' ggplot.cosinor.glmm.polar(object)
 ggplot.cosinor.glmm.polar <- function(object,
-                                      contour_interval,
+                                      contour_interval = 1,
                                       make_cowplot = TRUE,
                                       component_index = 1,
                                       grid_angle_segments = 8,
@@ -186,59 +195,76 @@ ggplot.cosinor.glmm.polar <- function(object,
                                       clockwise = FALSE,
                                       text_size = 3,
                                       text_opacity = 0.5,
-                                      fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
+                                      fill_colours = c("red", "green", "blue", "purple", "pink", "yellow", "orange", "black"),
                                       ellipse_opacity = 0.3,
                                       circle_linetype = "dotted",
                                       start = "right",
                                       view = "full",
                                       overlay_parameter_info = FALSE,
                                       quietly = TRUE) {
+  # checking the quality of inputs
 
-  #checking the quality of inputs
-
-  assertthat::assert_that(inherits(object,"cosinor.glmm"),
-                          msg = "object must be of class cosinor.glmm")
-  if (!missing(contour_interval)) { assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
-                          msg = "contour_interval must be a number greater than 0")}
-  assertthat::assert_that(grid_angle_segments ==floor(grid_angle_segments) & grid_angle_segments > 0,msg = "grid_angle_segments must be an integer greater than 0")
+  assertthat::assert_that(inherits(object, "cosinor.glmm"),
+    msg = "object must be of class cosinor.glmm"
+  )
+  if (!missing(contour_interval)) {
+    assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
+      msg = "contour_interval must be a number greater than 0"
+    )
+  }
+  assertthat::assert_that(grid_angle_segments == floor(grid_angle_segments) & grid_angle_segments > 0, msg = "grid_angle_segments must be an integer greater than 0")
   assertthat::assert_that(is.logical(quietly),
-                          msg = "quietly must a logical argument, either TRUE or FALSE")
+    msg = "quietly must a logical argument, either TRUE or FALSE"
+  )
   assertthat::assert_that(is.character(radial_units) & radial_units %in% c("radians", "degrees", "period"),
-                          msg = "radial_units must be either 'radians', 'degrees', or 'period'  ")
+    msg = "radial_units must be either 'radians', 'degrees', or 'period'  "
+  )
   assertthat::assert_that(is.logical(clockwise),
-                          msg = "clockwise must be a logical argument, either TRUE or FALSE ")
+    msg = "clockwise must be a logical argument, either TRUE or FALSE "
+  )
   assertthat::assert_that(is.numeric(text_size) & text_size > 0,
-                          msg = "text_size must be a number greater than 0")
+    msg = "text_size must be a number greater than 0"
+  )
   assertthat::assert_that(is.numeric(text_opacity) & text_opacity >= 0 & text_opacity <= 1,
-                          msg = "text_opacity must be a number between 0 and 1 inclusive")
+    msg = "text_opacity must be a number between 0 and 1 inclusive"
+  )
   assertthat::assert_that(is.numeric(ellipse_opacity) & ellipse_opacity >= 0 & ellipse_opacity <= 1,
-                          msg = "ellipse_opacity must be a number between 0 and 1 inclusive")
+    msg = "ellipse_opacity must be a number between 0 and 1 inclusive"
+  )
   assertthat::assert_that(is.logical(make_cowplot),
-                          msg = "make_cowplot must be a logical argument, either TRUE or FALSE")
+    msg = "make_cowplot must be a logical argument, either TRUE or FALSE"
+  )
   assertthat::assert_that(component_index == floor(component_index) & component_index > 0 & component_index <= object$n_components,
-                          msg = "component_index must be an integer between 1 and n_components (total number of components in model) inclusive")
+    msg = "component_index must be an integer between 1 and n_components (total number of components in model) inclusive"
+  )
   assertthat::assert_that(is.character(circle_linetype),
-                          msg = "circle_linetype must be a character. See ?linetype for more details")
+    msg = "circle_linetype must be a character. See ?linetype for more details"
+  )
   assertthat::assert_that(is.character(fill_colours),
-                          msg = "fill_colours must be of class character, and must be a valid colour")
+    msg = "fill_colours must be of class character, and must be a valid colour"
+  )
   assertthat::assert_that(is.character(start) & start %in% c("right", "left", "bottom", "top"),
-                          msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'")
+    msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'"
+  )
   assertthat::assert_that(is.character(view) & view %in% c("full", "zoom", "zoom_origin"),
-                          msg = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'")
+    msg = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'"
+  )
   assertthat::assert_that(is.logical(overlay_parameter_info),
-                          msg = "overlay_parameter_info must be a logical argument, either TRUE or FALSE")
-
+    msg = "overlay_parameter_info must be a logical argument, either TRUE or FALSE"
+  )
 
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-   if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
-   if(!quietly) {
-     message(paste('"fill_colours" argument requires ',max(unlist(lapply(object$group_stats, length))),
-                   "arguments, but", length(fill_colours),"arguments supplied. Colours will be generated to meet this requirement using rainbow() function"))
-   }
-   fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
- }
-    # convert user input for zoom level into logical arguments
+  if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
+    if (!quietly) {
+      message(paste(
+        '"fill_colours" argument requires ', max(unlist(lapply(object$group_stats, length))),
+        "arguments, but", length(fill_colours), "arguments supplied. Colours will be generated to meet this requirement using rainbow() function"
+      ))
+    }
+    fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
+  }
+  # convert user input for zoom level into logical arguments
   if (view == "full") {
     zoom <- FALSE
     zoom_origin <- FALSE
@@ -279,7 +305,7 @@ ggplot.cosinor.glmm.polar <- function(object,
   }
   if (start == "left") {
     offset <- pi
-    overlay_start <- -pi/2
+    overlay_start <- -pi / 2
   }
   if (start == "bottom") {
     offset <- 3 * pi / 2
@@ -287,7 +313,7 @@ ggplot.cosinor.glmm.polar <- function(object,
   }
   if (start == "right") {
     offset <- 0
-    overlay_start <- pi/2
+    overlay_start <- pi / 2
   }
 
   if (!missing(make_cowplot) & !missing(component_index)) {
@@ -297,20 +323,19 @@ ggplot.cosinor.glmm.polar <- function(object,
 
   # get ggplot for a single component. Function will then be looped for multiple components
   sub_ggplot.cosinor.glmm.polar <- function(comp, ...) {
-
     component_index <- comp # get the component that is going to plotted
     args <- match.call()[-1] # get the arguments from the function wrapping this function
     period <- object$period[component_index]
     max_period <- period
     group_check <- (object$group[component_index] != 0)
-      if (group_check) {
+    if (group_check) {
       x_str <- object$group_original[component_index]
       group <- x_str
       level <- object$group_stats[[group]]
       string_index <- paste0("[", group, "=") # create an index that will be used to grab the correct transformed summary stats
       string_index_raw <- paste0(group) # create an index that grabs the corresponding raw summary stats
     } else {
-      group = NULL
+      group <- NULL
       string_index <- ""
       string_index_raw <- ""
     }
@@ -333,10 +358,10 @@ ggplot.cosinor.glmm.polar <- function(object,
 
     # obtain an index of group levels
     if (group_check) {
-    for (i in level) {
-      group_ind <- paste0(group, "=", i)
-      group_level[which(grepl(group_ind, name_index))] <- paste(group, "=", i)
-    }
+      for (i in level) {
+        group_ind <- paste0(group, "=", i)
+        group_level[which(grepl(group_ind, name_index))] <- paste(group, "=", i)
+      }
     }
 
 
@@ -403,8 +428,8 @@ ggplot.cosinor.glmm.polar <- function(object,
 
 
       # ensure that contour labels are always within the view window
-      contour_x_zoom <- cos(direction*mean(est_acr) + offset) * contour_labels
-      contour_y_zoom <- sin(direction*mean(est_acr) + offset) * contour_labels
+      contour_x_zoom <- cos(direction * mean(est_acr) + offset) * contour_labels
+      contour_y_zoom <- sin(direction * mean(est_acr) + offset) * contour_labels
     }
 
     # adding special symbols to time_labels (π for radians, ° for degrees )
@@ -437,7 +462,7 @@ ggplot.cosinor.glmm.polar <- function(object,
       overlay_labels <- paste(paste0("A = ", signif(est_amp, 3)), paste0("ϕ = ", signif(est_acr, 3)), sep = "\n")
       plot_obj <- plot_obj +
         ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
-        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end =  (overlay_start  - direction*est_acr), colour = group_level)) +
+        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
         ggplot2::geom_text(
           ggplot2::aes(
             label = overlay_labels, x = cos(direction * est_acr * 1.05 + offset) * radius_sequence,
@@ -460,7 +485,7 @@ ggplot.cosinor.glmm.polar <- function(object,
 
     # OPTIONAL: print information about the polar grid
     if (!quietly) {
-      message("Circular contours every ", signif(contour_interval,5), " unit(s)")
+      message("Circular contours every ", signif(contour_interval, 5), " unit(s)")
       message("Angle in units of ", radial_units)
     }
 
@@ -482,5 +507,4 @@ ggplot.cosinor.glmm.polar <- function(object,
     final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
     print(final_obj)
   }
-
 }
