@@ -260,7 +260,13 @@ ggplot.cosinor.glmm.polar <- function(object,
     contour_interval_check <- FALSE
   }
 
-  # check if there is a fill_colours argument & store this check in local environment
+
+  # set direction of increasing angle based on user input of clockwise argument
+  if (clockwise) {
+    direction <- -1
+  } else {
+    direction <- 1
+  }
 
   # convert user input for starting position (on Cartesian plane) into logical arguments
   # by default, ggplot() ellipse and circle functions use unit circle angles where 0 degrees
@@ -269,19 +275,19 @@ ggplot.cosinor.glmm.polar <- function(object,
   # Hence, offset, and overlay_param_offset are different to ultimately describe the same angle position
   if (start == "top") {
     offset <- pi / 2
-    overlay_param_offset <- offset - pi / 2
+    overlay_start <- 0
   }
   if (start == "left") {
     offset <- pi
-    overlay_param_offset <- offset + pi / 2
+    overlay_start <- -pi/2
   }
   if (start == "bottom") {
     offset <- 3 * pi / 2
-    overlay_param_offset <- offset - pi / 2
+    overlay_start <- pi
   }
   if (start == "right") {
     offset <- 0
-    overlay_param_offset <- offset + pi / 2
+    overlay_start <- pi/2
   }
 
   if (!missing(make_cowplot) & !missing(component_index)) {
@@ -333,12 +339,6 @@ ggplot.cosinor.glmm.polar <- function(object,
     }
     }
 
-    # set direction of increasing angle based on user input of clockwise argument
-    if (clockwise) {
-      direction <- -1
-    } else {
-      direction <- 1
-    }
 
     # determine the estimated rrr and sss used parameter estimates
     est_rrr <- est_amp * cos(direction * (est_acr) + offset)
@@ -437,7 +437,7 @@ ggplot.cosinor.glmm.polar <- function(object,
       overlay_labels <- paste(paste0("A = ", signif(est_amp, 3)), paste0("ϕ = ", signif(est_acr, 3)), sep = "\n")
       plot_obj <- plot_obj +
         ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
-        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = -direction * overlay_param_offset, end = -direction * (overlay_param_offset + est_acr), colour = group_level)) +
+        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end =  (overlay_start  - direction*est_acr), colour = group_level)) +
         ggplot2::geom_text(
           ggplot2::aes(
             label = overlay_labels, x = cos(direction * est_acr * 1.05 + offset) * radius_sequence,
