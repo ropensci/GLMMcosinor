@@ -6,8 +6,12 @@
 #'
 #' @param object An object of class \code{cosinor.glmm}
 #' @param x_str Character vector naming the covariate(s) to be plotted. May be NULL to plot overall curve
-#'
-#'
+#' @param type Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")
+#' @param xlims A vector of length two containing the lower and upper x limit to be plotted
+#' @param pred.length.out An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear
+#' @param superimpose.data A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit
+#' @param data_opacity A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data
+#' @param predict.ribbon A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted
 #' @examples
 #'
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
@@ -17,29 +21,62 @@
 #' @export
 #'
 #'
-#'
-#
-# vdiffr - check out this package to see tests for plots
-# cowplot - check this out to plot several plots within a single output check out: https://github.com/gentrywhite/DSSP/blob/master/R/plot.R
-# Add ability to specify plotting of original dataset overalyed by trendline (off by default)
-ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, pred.length.out = 200, superimpose.data = FALSE, data_opacity = 0.3, predict.ribbon = TRUE) {
+
+ggplot.cosinor.glmm <- function(object,
+                                x_str = NULL,
+                                type = "response",
+                                xlims,
+                                pred.length.out = 200,
+                                superimpose.data = FALSE,
+                                data_opacity = 0.3,
+                                predict.ribbon = TRUE) {
+
+  #Validating user inputs
+  assertthat::assert_that(inherits(object,"cosinor.glmm"),
+                          msg = "object must be of class cosinor.glmm")
+  if (!missing(x_str) & (!is.null(x_str))) {
+  assertthat::assert_that((is.character(x_str)),
+                          msg = "x_str must be string corresponding to a group name in cosinor.glmm object")}
+  assertthat::assert_that(is.character(type),
+                         msg = "type must be a string. See type in ?predict for more information about valid inputs")
+  if (!missing(xlims)) {
+  assertthat::assert_that(length(xlims) ==2 & is.numeric(xlims) & xlims[1] < xlims[2],
+                          msg = "xlims must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate")}
+  assertthat::assert_that(pred.length.out == floor(pred.length.out) & pred.length.out>0,
+                          msg = "pred.length.out must be an integer greater than 0 ")
+  assertthat::assert_that(is.logical(superimpose.data),
+                          msg = "superimpose.data must be a logical argument, either TRUE or FALSE")
+  assertthat::assert_that(is.numeric(data_opacity) & data_opacity >= 0 & data_opacity <= 1,
+                          msg = "data_opacity must be a number between 0 and 1 inclusive")
+  assertthat::assert_that(is.logical(predict.ribbon),
+                          msg = "predict.ribbon must be a logical argument, either TRUE or FALSE")
+
+
+  # generate the time values for the x-axis
   if (!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
   } else {
     timeax <- seq(0, max(object$period), length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
   }
 
+  # this is the function that generates the plots and can be looped iteratively for different x_str
   data_processor_plot <- function(object, newdata, x_str) {
+    # get the names of the covariates (factors)
     covars <- names(object$group_stats)
+
+    # obtain the reference level of each factor
     for (j in covars) {
       ref_level <- unlist(object$group_stats[j])[[1]]
       newdata[, j] <- factor(ref_level)
     }
+
+    # process the data. This step mimics the first step of a cosinor.glmm() call
     newdata <- update_formula_and_data(
       data = newdata, # pass new dataset that's being used for prediction in this function
       formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula) # get the formula that was originally to cosinor.glmm()
     )$newdata # only keep the newdata that's returned from update_formula_and_data()
 
+    # repeat dataset for every level in x_str (factor), with an additional column in each corresponding to factor name and level
     if (!is.null(x_str)) {
       for (d in x_str) {
         for (k in unlist(object$group_stats[[d]])[-1]) {
@@ -50,29 +87,32 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
       }
       newdata$levels <- ""
       for (d in x_str) {
-        # newdata$levels <- paste(newdata$levels, paste(d, "=", newdata[, d]))
         newdata$levels <- newdata[, d]
       }
     }
     newdata
   }
 
+  # format the newdata dataframe before passing to data_processor_plot()
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
   newdata_processed <- data_processor_plot(object, newdata, x_str)
-  y_name <- object$response_var
+  y_name <- object$response_var #get the response data from the cosinor.glmm object
 
+  # get the predicted response values using the predict.cosinor.glmm() function
   pred_obj <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
-  newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit
-  newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit
+  newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit #determine the upper predicted interval
+  newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit #determine the lower predicted interval
 
+  # get the original data from the cosinor.glmm object to be superimposed
   if (superimpose.data) {
     original_data <- object$newdata
     original_data_processed <- object$newdata
-
     original_data_processed["levels"] <- original_data_processed[x_str]
   }
+
+  # get the plot object
   if (!superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name)) +
@@ -83,6 +123,7 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
     }
   }
 
+  # superimpose original data from cosinor.glmm() object
   if (superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name)) +
@@ -97,6 +138,7 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
     }
   }
 
+  # plot the prediction interval
   if (predict.ribbon) {
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max), alpha = 0.5) +
@@ -112,10 +154,29 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
 
 #' Generates a polar plot with elliptical confidence intervals
 #'
+#' @param object An object of class \code{cosinor.glmm}
+#' @param contour_interval The distance bewteen adjacent circular contours in the background of the polar plot
+#' @param make_cowplot A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant
+#' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
+#' @param grid_angle_segments An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.
+#' @param radial_units A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component
+#' @param clockwise A logical argument. If TRUE, the angles increase in a clockwise fashion
+#' @param text_size A number controlling the size of the text labels
+#' @param text_opacity A number between 0 and 1 inclusive which determines the opacity of the text labels
+#' @param fill_colours A vector containing colours (expressed as strings) that will be used to delineate levels within a group. If the model has components with different number of levels per factor, the length of this input should match the greatest number of levels. If not, or if the number of levels exceeds the length of the default argument (8), colours are generated using rainbow()
+#' @param ellipse_opacity A number between 0 and 1 inclusive which determines the opacity of the confidence ellipses
+#' @param circle_linetype A string which determines the linetype of the radial circles in background of the polar plot. See ?linetype for more details
+#' @param start A character, either "right", "left", "top", or "bottom" which determines where angle 0 is located. If start = "top", and clockwise = TRUE, the angle will rotate clockwise, starting at the '12' position on a clock
+#' @param view A character, either "full", "zoom", or "zoom_origin" which controls the view of the plots. "full" maintains a full view of the polar plot, including the background radial circles. "zoom" finds the minimum viewwindow which contains all confidence ellipses. "zoom_origin" zooms into the confidence ellipses (like "zoom"), but also keeps the origin within frame
+#' @param overlay_parameter_info A logical argument. If TRUE, more information about the acrophase and amplitude are overlayed onto the polar plots.
+#' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
+#'
 #' @return
 #' @export
 #'
 #' @examples
+#' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+#' ggplot.cosinor.glmm.polar(object)
 ggplot.cosinor.glmm.polar <- function(object,
                                       contour_interval,
                                       make_cowplot = TRUE,

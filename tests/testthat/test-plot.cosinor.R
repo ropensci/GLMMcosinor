@@ -151,3 +151,86 @@ test_that("ggplot.cosinor.glmm.polar messages work", {
     regex = "Angle in units of radians", fixed = TRUE
   ))
 })
+
+test_that("ggplot.cosinor.glmm produces error messages", {
+  #Test 1
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  object_bad <- lm(Y ~ X, data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object_bad)}
+
+  expect_error(
+    f(),
+    regex = "object must be of class cosinor.glmm", fixed = TRUE
+  )
+
+  #Test 2
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, x_str = 10)}
+
+  expect_error(
+    f(),
+    regex = "x_str must be string corresponding to a group name in cosinor.glmm object", fixed = TRUE
+  )
+
+  #Test 3
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, type = 20)}
+
+  expect_error(
+    f(),
+    regex = "type must be a string. See type in ?predict for more information about valid inputs", fixed = TRUE
+  )
+
+  #Test 4
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, xlims = c(2,1))}
+
+  expect_error(
+    f(),
+    regex = "xlims must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate", fixed = TRUE
+  )
+
+  #Test 5
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, pred.length.out = 100.5)}
+
+  expect_error(
+    f(),
+    regex = "pred.length.out must be an integer greater than 0", fixed = TRUE
+  )
+
+  #Test 6
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, superimpose.data = 10)}
+
+  expect_error(
+    f(),
+    regex = "superimpose.data must be a logical argument, either TRUE or FALSE", fixed = TRUE
+  )
+
+  #Test 7
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, data_opacity = 1.5)}
+
+  expect_error(
+    f(),
+    regex = "data_opacity must be a number between 0 and 1 inclusive", fixed = TRUE
+  )
+
+  #Test 8
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+  f <- function(){ggplot.cosinor.glmm(object, predict.ribbon = 10)}
+
+  expect_error(
+    f(),
+    regex = "predict.ribbon must be a logical argument, either TRUE or FALSE", fixed = TRUE
+  )
+})

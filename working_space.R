@@ -219,6 +219,11 @@
    summary.cosinor.glmm(object1)
    ggplot.cosinor.glmm.polar(object1)
    test_cosinor(object1, x_str = "X")
+
+   object1 <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+   summary.cosinor.glmm(object1)
+   ggplot.cosinor.glmm.polar(object1)
+   test_cosinor(object1, x_str = "X")
 #
 #
      data(vitamind)
@@ -260,6 +265,8 @@
 # # get rid of the sss and rrr and axes labels - remove ticks and grid, use theme_bw() (DONE)
 # # add hjust and vjust to the labels of the outer ring as vector corresponding to length rather than multipliers
 # #codecov
+# vdiffr - check out this package to see tests for plots
+
 #check out the error when restarting R and loading (error in ggplot ...)
 comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
 object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
