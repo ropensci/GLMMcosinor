@@ -137,7 +137,9 @@ summary.cosinor.glmm <- function(object, ...) {
     upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se))
   )
 
+  if (object$group_check) {
   rownames(smat) <- update_covnames(rownames(smat), object$group_stats)
+  }
 
 
 

@@ -214,18 +214,18 @@
 #
 #
 #
-#     #polar plots in progress: (proof of concept)
-#     object1 <- cosinor.glmm(Y ~ 0 + amp.acro(time, group = "X"), data = vitamind)
-#     summary.cosinor.glmm(object1)
-#     ggplot.cosinor.glmm.polar(object1, x_str = "X")
-#     test_cosinor(object1, x_str = "X")
+   #polar plots in progress: (proof of concept)
+   object1 <- cosinor.glmm(Y ~ 0 + amp.acro(time, group = NA), data = vitamind)
+   summary.cosinor.glmm(object1)
+   ggplot.cosinor.glmm.polar(object1)
+   test_cosinor(object1, x_str = "X")
 #
 #
-#     data(vitamind)
-#     vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
-#     object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
-#     ggplot.cosinor.glmm(object2, x_str = "Z")
-#     ggplot.cosinor.glmm.polar(object2, x_str = "X")
+     data(vitamind)
+     vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
+     object2 <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+     ggplot.cosinor.glmm.polar(object2)
+
 #
 #     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
@@ -263,7 +263,7 @@
 #check out the error when restarting R and loading (error in ggplot ...)
 comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
 object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
-ggplot.cosinor.glmm.polar(object3, x_str = "group",
+ggplot.cosinor.glmm.polar(object3,
                           radial_units = "degrees",
                           grid_angle_segments = 4,
                           make_cowplot = TRUE,

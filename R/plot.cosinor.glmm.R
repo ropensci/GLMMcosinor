@@ -117,7 +117,6 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
 #'
 #' @examples
 ggplot.cosinor.glmm.polar <- function(object,
-                                      x_str,
                                       contour_interval,
                                       grid_angle_segments = 8,
                                       quietly = TRUE,
@@ -129,13 +128,26 @@ ggplot.cosinor.glmm.polar <- function(object,
                                       make_cowplot = TRUE,
                                       circle_linetype = "dotted",
                                       ellipse_opacity = 0.3,
-                                      fill_colours,
+                                      fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
                                       view = "full",
                                       start = "right",
                                       overlay_parameter_info = FALSE) {
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-  # convert user input for zoom level into logical arguments
+  browser()
+  #checking the quality of inputs
+  assertthat::assert_that(inherits(object,"cosinor.glmm"),
+                          msg = "object must be of class cosinor.glmm")
+
+  assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
+                          msg = "contour_interval must be a number greater than 0")
+
+
+
+ if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
+   fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
+ }
+    # convert user input for zoom level into logical arguments
   if (view == "full") {
     zoom <- FALSE
     zoom_origin <- FALSE
@@ -158,11 +170,6 @@ ggplot.cosinor.glmm.polar <- function(object,
   }
 
   # check if there is a fill_colours argument & store this check in local environment
-  if (!missing(fill_colours)) {
-    fill_colours_check <- TRUE
-  } else {
-    fill_colours_check <- FALSE
-  }
 
   # convert user input for starting position (on Cartesian plane) into logical arguments
   # by default, ggplot() ellipse and circle functions use unit circle angles where 0 degrees
@@ -193,16 +200,24 @@ ggplot.cosinor.glmm.polar <- function(object,
 
   # get ggplot for a single component. Function will then be looped for multiple components
   sub_ggplot.cosinor.glmm.polar <- function(comp, ...) {
+
     component_index <- comp # get the component that is going to plotted
     args <- match.call()[-1] # get the arguments from the function wrapping this function
     period <- object$period[component_index]
     max_period <- period
-    x_str <- object$group_original[component_index]
-    group <- x_str
-    level <- object$group_stats[[group]]
+    group_check <- (object$group[component_index] != 0)
+      if (group_check) {
+      x_str <- object$group_original[component_index]
+      group <- x_str
+      level <- object$group_stats[[group]]
+      string_index <- paste0("[", group, "=") # create an index that will be used to grab the correct transformed summary stats
+      string_index_raw <- paste0(group) # create an index that grabs the corresponding raw summary stats
+    } else {
+      group = NULL
+      string_index <- ""
+      string_index_raw <- ""
+    }
 
-    string_index <- paste0("[", group, "=") # create an index that will be used to grab the correct transformed summary stats
-    string_index_raw <- paste0(group) # create an index that grabs the corresponding raw summary stats
     amp_index <- paste0("amp", component_index)
     acr_index <- paste0("acr", component_index)
 
@@ -220,9 +235,11 @@ ggplot.cosinor.glmm.polar <- function(object,
     group_level <- array(dim = length(name_index))
 
     # obtain an index of group levels
+    if (group_check) {
     for (i in level) {
       group_ind <- paste0(group, "=", i)
       group_level[which(grepl(group_ind, name_index))] <- paste(group, "=", i)
+    }
     }
 
     # set direction of increasing angle based on user input of clockwise argument
@@ -319,8 +336,8 @@ ggplot.cosinor.glmm.polar <- function(object,
       ggforce::geom_ellipse(ggplot2::aes(x0 = est_rrr, y0 = est_sss, a = a_trans, b = b_trans, angle = offset + direction * est_acr, fill = group_level, colour = group_level), alpha = ellipse_opacity) +
       ggplot2::geom_point(ggplot2::aes(x = est_rrr, y = est_sss)) +
       ggplot2::geom_segment(ggplot2::aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = circle_linetype) +
-      ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.03 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.03 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
-      ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0.1 * contour_interval), hjust = 1, size = text_size, alpha = text_opacity) +
+      ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
+      ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0), hjust = 1, vjust = -1, size = text_size, alpha = text_opacity) +
       ggplot2::labs(fill = "Group level", colour = NULL) +
       guides(colour = "none") +
       ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
@@ -342,9 +359,7 @@ ggplot.cosinor.glmm.polar <- function(object,
     }
 
     # apply colours chosen by user input to the fill and colour aesthetics
-    if (fill_colours_check) {
-      plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
-    }
+    plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
 
     # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits
     if (zoom) {

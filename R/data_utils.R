@@ -184,7 +184,6 @@ amp.acro <- function(time_col,
     )
 
 
-
     # allow the user to not have any grouping structure (if group argument is missing)
     if (missing(group)) {
       group <- 0
