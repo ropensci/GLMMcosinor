@@ -118,33 +118,63 @@ ggplot.cosinor.glmm <- function(object, x_str = NULL, type = "response", xlims, 
 #' @examples
 ggplot.cosinor.glmm.polar <- function(object,
                                       contour_interval,
+                                      make_cowplot = TRUE,
+                                      component_index = 1,
                                       grid_angle_segments = 8,
-                                      quietly = TRUE,
                                       radial_units = "radians",
                                       clockwise = FALSE,
                                       text_size = 3,
                                       text_opacity = 0.5,
-                                      component_index = 1,
-                                      make_cowplot = TRUE,
-                                      circle_linetype = "dotted",
-                                      ellipse_opacity = 0.3,
                                       fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
-                                      view = "full",
+                                      ellipse_opacity = 0.3,
+                                      circle_linetype = "dotted",
                                       start = "right",
-                                      overlay_parameter_info = FALSE) {
-  sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
+                                      view = "full",
+                                      overlay_parameter_info = FALSE,
+                                      quietly = TRUE) {
 
-  browser()
   #checking the quality of inputs
+
   assertthat::assert_that(inherits(object,"cosinor.glmm"),
                           msg = "object must be of class cosinor.glmm")
+  if (!missing(contour_interval)) { assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
+                          msg = "contour_interval must be a number greater than 0")}
+  assertthat::assert_that(grid_angle_segments ==floor(grid_angle_segments) & grid_angle_segments > 0,msg = "grid_angle_segments must be an integer greater than 0")
+  assertthat::assert_that(is.logical(quietly),
+                          msg = "quietly must a logical argument, either TRUE or FALSE")
+  assertthat::assert_that(is.character(radial_units) & radial_units %in% c("radians", "degrees", "period"),
+                          msg = "radial_units must be either 'radians', 'degrees', or 'period'  ")
+  assertthat::assert_that(is.logical(clockwise),
+                          msg = "clockwise must be a logical argument, either TRUE or FALSE ")
+  assertthat::assert_that(is.numeric(text_size) & text_size > 0,
+                          msg = "text_size must be a number greater than 0")
+  assertthat::assert_that(is.numeric(text_opacity) & text_opacity >= 0 & text_opacity <= 1,
+                          msg = "text_opacity must be a number between 0 and 1 inclusive")
+  assertthat::assert_that(is.numeric(ellipse_opacity) & ellipse_opacity >= 0 & ellipse_opacity <= 1,
+                          msg = "ellipse_opacity must be a number between 0 and 1 inclusive")
+  assertthat::assert_that(is.logical(make_cowplot),
+                          msg = "make_cowplot must be a logical argument, either TRUE or FALSE")
+  assertthat::assert_that(component_index == floor(component_index) & component_index > 0 & component_index <= object$n_components,
+                          msg = "component_index must be an integer between 1 and n_components (total number of components in model) inclusive")
+  assertthat::assert_that(is.character(circle_linetype),
+                          msg = "circle_linetype must be a character. See ?linetype for more details")
+  assertthat::assert_that(is.character(fill_colours),
+                          msg = "fill_colours must be of class character, and must be a valid colour")
+  assertthat::assert_that(is.character(start) & start %in% c("right", "left", "bottom", "top"),
+                          msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'")
+  assertthat::assert_that(is.character(view) & view %in% c("full", "zoom", "zoom_origin"),
+                          msg = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'")
+  assertthat::assert_that(is.logical(overlay_parameter_info),
+                          msg = "overlay_parameter_info must be a logical argument, either TRUE or FALSE")
 
-  assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
-                          msg = "contour_interval must be a number greater than 0")
 
+  sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-
- if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
+   if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
+   if(!quietly) {
+     message(paste('"fill_colours" argument requires ',max(unlist(lapply(object$group_stats, length))),
+                   "arguments, but", length(fill_colours),"arguments supplied. Colours will be generated to meet this requirement using rainbow() function"))
+   }
    fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
  }
     # convert user input for zoom level into logical arguments
@@ -313,9 +343,7 @@ ggplot.cosinor.glmm.polar <- function(object,
 
       # ensure that contour labels are always within the view window
       contour_x_zoom <- cos(direction*mean(est_acr) + offset) * contour_labels
-      #contour_x_zoom <- cos(direction*est_acr + offset)*t(replicate(length(est_amp), contour_labels))
       contour_y_zoom <- sin(direction*mean(est_acr) + offset) * contour_labels
-      #contour_y_zoom <- sin(direction*est_acr + offset)*t(replicate(length(est_amp), contour_labels))
     }
 
     # adding special symbols to time_labels (π for radians, ° for degrees )
@@ -369,6 +397,12 @@ ggplot.cosinor.glmm.polar <- function(object,
       plot_obj <- plot_obj + ggplot2::coord_fixed() # plot full polar plot if view = "full"
     }
 
+    # OPTIONAL: print information about the polar grid
+    if (!quietly) {
+      message("Circular contours every ", signif(contour_interval,5), " unit(s)")
+      message("Angle in units of ", radial_units)
+    }
+
     # return the plot object
     plot_obj
   }
@@ -388,9 +422,4 @@ ggplot.cosinor.glmm.polar <- function(object,
     print(final_obj)
   }
 
-  # OPTIONAL: print information about the polar grid
-  if (!quietly) {
-    message("Circular contours every ", contour_interval, " unit(s)")
-    message("Angle in units of ", radial_units)
-  }
 }
