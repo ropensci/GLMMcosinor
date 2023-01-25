@@ -195,7 +195,7 @@ ggplot.cosinor.glmm.polar <- function(object,
                                       clockwise = FALSE,
                                       text_size = 3,
                                       text_opacity = 0.5,
-                                      fill_colours = c("red", "green", "blue", "purple", "pink", "yellow", "orange", "black"),
+                                      fill_colours,
                                       ellipse_opacity = 0.3,
                                       circle_linetype = "dotted",
                                       start = "right",
@@ -240,9 +240,9 @@ ggplot.cosinor.glmm.polar <- function(object,
   assertthat::assert_that(is.character(circle_linetype),
     msg = "circle_linetype must be a character. See ?linetype for more details"
   )
-  assertthat::assert_that(is.character(fill_colours),
-    msg = "fill_colours must be of class character, and must be a valid colour"
-  )
+  #assertthat::assert_that(is.character(fill_colours),
+  #  msg = "fill_colours must be of class character, and must be a valid colour"
+  #)
   assertthat::assert_that(is.character(start) & start %in% c("right", "left", "bottom", "top"),
     msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'"
   )
@@ -255,15 +255,16 @@ ggplot.cosinor.glmm.polar <- function(object,
 
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-  if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
-    if (!quietly) {
-      message(paste(
-        '"fill_colours" argument requires ', max(unlist(lapply(object$group_stats, length))),
-        "arguments, but", length(fill_colours), "arguments supplied. Colours will be generated to meet this requirement using rainbow() function"
-      ))
-    }
-    fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
-  }
+  #if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
+  #  if (!quietly) {
+  #    message(paste(
+  #      '"fill_colours" argument requires ', max(unlist(lapply(object$group_stats, length))),
+  #      "arguments, but", length(fill_colours), "arguments supplied. Colours will be generated to meet this requirement using rainbow() function"
+  #    ))
+  #  }
+  #  fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
+  #}
+
   # convert user input for zoom level into logical arguments
   if (view == "full") {
     zoom <- FALSE
@@ -284,6 +285,12 @@ ggplot.cosinor.glmm.polar <- function(object,
     contour_interval_check <- TRUE
   } else {
     contour_interval_check <- FALSE
+  }
+
+  if (!missing(fill_colours)) {
+    fill_colours_check <- TRUE
+  } else {
+    fill_colours_check <- FALSE
   }
 
 
@@ -386,14 +393,18 @@ ggplot.cosinor.glmm.polar <- function(object,
     }
 
     # change 'max_period' to correspond to units specified by the user
+    # conversion_factor is used to convert from radians (default acrophase output) to whatever radial_units is
     if (radial_units == "radians") {
       max_period <- 2 * pi
+      conversion_factor <- 1
     }
     if (radial_units == "degrees") {
       max_period <- 360
+      conversion_factor <- (1/2*pi)*360
     }
     if (radial_units == "period") {
       max_period <- max_period
+      conversion_factor <- (1/2*pi)*max_period
     }
 
     # create a sequence of labels for time (to be inserted around the polar plot)
@@ -436,10 +447,13 @@ ggplot.cosinor.glmm.polar <- function(object,
     if (radial_units == "radians") {
       pi_string <- paste(round(time_labels / pi, 1))
       time_labels <- paste0(pi_string, "π")
+      acr_overlay <- paste0(signif(conversion_factor*est_acr/pi, 2),'π')
     }
 
     if (radial_units == "degrees") {
       time_labels <- paste0(time_labels, "°")
+      conversion_factor*est_acr
+      acr_overlay <- paste0(signif(conversion_factor*est_acr/360, 2),"°")
     }
 
 
@@ -458,27 +472,27 @@ ggplot.cosinor.glmm.polar <- function(object,
 
     # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
     if (overlay_parameter_info) {
-      radius_sequence <- seq(0.20 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
-      overlay_labels <- paste(paste0("A = ", signif(est_amp, 3)), paste0("ϕ = ", signif(est_acr, 3)), sep = "\n")
+      radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
+      overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
       plot_obj <- plot_obj +
         ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
         ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
         ggplot2::geom_text(
           ggplot2::aes(
-            label = overlay_labels, x = cos(direction * est_acr * 1.05 + offset) * radius_sequence,
-            y = sin(direction * est_acr * 1.05 + offset) * radius_sequence
-          ),
+            label = overlay_labels, est_rrr, y = est_sss),
           size = text_size, alpha = text_opacity
         )
     }
 
     # apply colours chosen by user input to the fill and colour aesthetics
+    if (fill_colours_check) {
     plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
+    }
 
     # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits
     if (zoom) {
       plot_obj <- plot_obj + ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_x_zoom, y = contour_y_zoom), size = text_size, alpha = text_opacity)
-      plot_obj <- plot_obj + ggplot2::coord_cartesian(xlim = c(xmin_zoom, xmax_zoom), ylim = c(ymin_zoom, ymax_zoom))
+      plot_obj <- plot_obj + ggplot2::coord_equal(xlim = c(xmin_zoom, xmax_zoom), ylim = c(ymin_zoom, ymax_zoom))
     } else {
       plot_obj <- plot_obj + ggplot2::coord_fixed() # plot full polar plot if view = "full"
     }

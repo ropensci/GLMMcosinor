@@ -15,4 +15,13 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Rex Parsons \email{rex.parsons94@gmail.com} (\href{https://orcid.org/0000-0002-6053-8174}{ORCID})
+
+Authors:
+\itemize{
+  \item Oliver Jayasinghe
+}
+
+}
 \keyword{internal}

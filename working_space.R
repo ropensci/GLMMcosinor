@@ -1,5 +1,5 @@
 # # working out space
-# comod = simulate_cosinor(1000,mesor = 50,amp = 7,acro = 1,beta.mesor = 0.1,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
+# comod = simulate_cosinor(1000,mesor = 50,amp = 7,acro = 1,beta.mesor = 0.1,beta.amp = 0.2, beta.acro = 0.3, family = "2_component")
 # m <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 12)), data = comod)
 # comod$pred <- predict(m$fit, type="response")
 #
@@ -30,7 +30,7 @@
 #
 # # Examples for meeting: 15/12/2022
 # # Evidence that the multi-component estimation works. In this example, amp2 = amp1 + 3, acr2 = acr1-1.
-# comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 0.2, beta.acro = 0.3, dist = "2_component")
+# comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 0.2, beta.acro = 0.3, family = "2_component")
 # cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 # #
 # # You can now have different groups assigned to different components. For example:
@@ -179,7 +179,7 @@
 #     test_cosinor(object2, x_str = "X", param = "amp")
 #
 #     #Ex. 3
-#     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+#     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, family = "2_component")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 #     ggplot.cosinor.glmm(object3, x_str = "group")
 #     summary.cosinor.glmm(object3)
@@ -199,16 +199,16 @@
 # #Use: usethis::use_package("ellipse")
 # #Use: check() and make sure there are no warnings or errors
 # #Testing out the updated plot function:
-#     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 2, beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+#     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 2, beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, family = "2_component")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 #     summary.cosinor.glmm(object3)
 #     ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
 #
-#     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "poisson")
+#     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, family = "poisson")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "poisson")
 #     ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE)
 #
-#     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "gamma")
+#     comod = simulate_cosinor(1000,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, family = "gamma")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "Gamma"(link = "log"))
 #     ggplot.cosinor.glmm(object3, x_str = "group", transpose_data = TRUE, data_opacity = 0.1)
 #
@@ -232,7 +232,7 @@
      ggplot.cosinor.glmm.polar(object2)
 
 #
-#     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, dist = "2_component")
+#     comod = simulate_cosinor(100,mesor = 1,amp = 2,acro = 3,beta.mesor = 0.5,beta.amp = 1, beta.acro = 0.3, family = "2_component")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 #     ggplot.cosinor.glmm.polar(object3)
 #
@@ -242,12 +242,12 @@
 #
 #
 #     #UPDATE: polar plots are much more refined now
-#     comod = simulate_cosinor(500,mesor = 1,amp = 2,acro = -1.5,beta.mesor = 0.5,beta.amp = 1, beta.acro = -1, dist = "2_component")
+#     comod = simulate_cosinor(500,mesor = 1,amp = 2,acro = -1.5,beta.mesor = 0.5,beta.amp = 1, beta.acro = -1, family = "2_component")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 #     ggplot.cosinor.glmm(object3, x_str = "group", superimpose.data = TRUE, data_opacity = 0.5)
 #     ggplot.cosinor.glmm.polar(object3, x_str = "group")
 #
-#     comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = 0.5,beta.mesor = 1,beta.amp = 2, beta.acro = 0.4, dist = "poisson")
+#     comod = simulate_cosinor(50,mesor = 1,amp = 2,acro = 0.5,beta.mesor = 1,beta.amp = 2, beta.acro = 0.4, family = "poisson")
 #     object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 1, group = "group", period = 12), data = comod, family = "poisson")
 #     ggplot.cosinor.glmm(object3, x_str = "group", superimpose.data = TRUE)
 #     ggplot.cosinor.glmm.polar(object3, x_str = "group", grid_angle_segments = 12)
@@ -272,7 +272,7 @@
 
 #Meeting for Wednesday Morning:
 #Significant improvements to polar plots:
-comod = simulate_cosinor(50,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
+comod = simulate_cosinor(50,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, family = "2_component")
 object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
 ggplot.cosinor.glmm.polar(object3,
                           contour_interval = 1,
@@ -280,14 +280,14 @@ ggplot.cosinor.glmm.polar(object3,
                           component_index = 1,
                           grid_angle_segments = 8,
                           radial_units = "radians",
-                          clockwise = FALSE,
+                          clockwise = TRUE,
                           text_size = 3,
                           text_opacity = 0.5,
                           fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
                           ellipse_opacity = 0.3,
                           circle_linetype = "dotted",
-                          start = "right",
-                          view = "full",
+                          start = "bottom",
+                          view = "zoom_origin",
                           overlay_parameter_info = FALSE,
                           quietly = TRUE)
 
@@ -296,7 +296,7 @@ ggplot.cosinor.glmm.polar(object3,
 
 #summary.cosinor.glmm() now deals with dispersion formula and ziformula appropriately
   #Ex. 1:
-comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, dist = "2_component")
+comod = simulate_cosinor(500,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, family = "2_component")
 object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod,
                         dispformula = ~ group + amp.acro(times, n_components = 2, group = "group", period = c(12, 8)),
                         ziformula = ~ group + amp.acro(times, n_components = 2, group = "group", period = c(12, 8)))
@@ -310,3 +310,67 @@ summary.cosinor.glmm(object4)
 #The p-values currently aren't comparing to the reference group. They are comparing to 0 (ie, the parameter = 0)
 #that's why the p-values for the estimates are 0. Seems like an easy fix though
 
+
+
+#TODO: make sure acrophase units match radial units (DONE)
+#TODO: make sure zoom_origin maintains eqaul x and y scales (avoid familyortion) (DONE)
+#TODO: use vdiffr to compare image output see https://github.com/RWParsons/predictNMB/blob/master/tests/testthat/test-plot.R
+#TODO: if group_level = NULL, set fill and colour to grey outside of main aesthetic (will have to create a separate line)
+
+
+
+#The simulate_cosinor() function is now much more robust. YOu can specify any number of components now,
+testdata = simulate_cosinor(1000,
+                            mesor = c(1,2,4),
+                            amp = c(0.1,0.4,0.5),
+                            acro = c(1,1.5, 0.1),
+                            beta.mesor = c(0.4,1, 3),
+                            beta.amp = c(2,1, 0.4),
+                            beta.acro = c(1,-1.5, -1),
+                            family = "gamma",
+                            period = c(12,6,8),
+                            n_components = 3,
+                            alpha = 5)
+object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(12,6, 8), group = 'group'), data = testdata, family = Gamma(link = "log"))
+ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+
+testdata = simulate_cosinor(1000,
+                            mesor = c(1,2,4),
+                            amp = c(2,1,0.5),
+                            acro = c(1,1.5, 0.1),
+                            beta.mesor = c(1,2, 3),
+                            beta.amp = c(2,1, 0.4),
+                            beta.acro = c(1,1.5, -1),
+                            family = "binomial",
+                            period = c(12,6,8),
+                            n_components = 3)
+object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(12,6, 8), group = 'group'), data = testdata, family = binomial())
+ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+
+testdata = simulate_cosinor(1000,
+                            mesor = c(1,2,4),
+                            amp = c(0.1,0.4,0.5),
+                            acro = c(1,1.5, 0.1),
+                            beta.mesor = c(0.4,1, 3),
+                            beta.amp = c(2,1, 0.4),
+                            beta.acro = c(1,-1.5, -1),
+                            family = "gaussian",
+                            period = c(12,6,8),
+                            n_components = 3,
+                            sd = 0.3)
+object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(12,6, 8), group = 'group'), data = testdata, family = gaussian())
+ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+
+testdata = simulate_cosinor(1000,
+                            mesor = c(1,2,4),
+                            amp = c(0.1,0.4,0.5),
+                            acro = c(1,1.5, 0.1),
+                            beta.mesor = c(0.4,1, 3),
+                            beta.amp = c(2,1, 0.4),
+                            beta.acro = c(1,-1.5, -1),
+                            family = "poisson",
+                            period = c(12,6,8),
+                            n_components = 3)
+object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(12,6, 8), group = 'group'), data = testdata, family = poisson())
+ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+ggplot.cosinor.glmm.polar(object)

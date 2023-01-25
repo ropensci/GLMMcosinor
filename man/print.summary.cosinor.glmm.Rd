@@ -4,7 +4,7 @@
 \alias{print.summary.cosinor.glmm}
 \title{Print the summary of a cosinor model}
 \usage{
-\method{print}{summary.cosinor.glmm}(x, ...)
+\method{print}{summary.cosinor.glmm}(x, digits = getOption("digits"), ...)
 }
 \arguments{
 \item{x}{An object of class \code{summary.cosinor.glmm}}

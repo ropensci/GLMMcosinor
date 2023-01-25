@@ -19,6 +19,18 @@
 \item{object}{An object of class \code{cosinor.glmm}}
 
 \item{x_str}{Character vector naming the covariate(s) to be plotted. May be NULL to plot overall curve}
+
+\item{type}{Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")}
+
+\item{xlims}{A vector of length two containing the lower and upper x limit to be plotted}
+
+\item{pred.length.out}{An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear}
+
+\item{superimpose.data}{A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit}
+
+\item{data_opacity}{A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data}
+
+\item{predict.ribbon}{A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted}
 }
 \description{
 Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.

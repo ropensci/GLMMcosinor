@@ -21,6 +21,6 @@ at a given month
 \examples{
 
 fit <- cosinor.glmm(Y ~ X + amp.acro(X), data = vitamind)
-predict(fit, newdata=vitamind)
+predict(fit, newdata = vitamind)
 
 }

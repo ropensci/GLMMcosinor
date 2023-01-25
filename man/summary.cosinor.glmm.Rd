@@ -21,6 +21,7 @@ not be the desired result for continuous covariates.
 }
 \examples{
 
+
 fit <- cosinor.glmm(Y ~ time(time) + X + amp.acro(X), data = vitamind)
 summary(fit)
 

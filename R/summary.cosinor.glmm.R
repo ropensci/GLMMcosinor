@@ -214,13 +214,13 @@ summary.cosinor.glmm <- function(object, ...) {
 #'
 
 # check if there is dispersion or zi (as opposed to default) then print
-print.summary.cosinor.glmm <- function(x, ...) {
+print.summary.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
-  print(round(x$main_output$raw.table, 6))
+  print(round(x$main_output$raw.table, digits = digits))
   cat("\n")
   cat("Transformed coefficients:\n")
-  print(round(x$main_output$transformed.table, 6))
+  print(round(x$main_output$transformed.table, digits = digits))
 
   # display the output from the dispersion model (if present)
 
@@ -228,19 +228,19 @@ print.summary.cosinor.glmm <- function(x, ...) {
     cat("\n***********************\n")
     cat("\n Dispersion Model \n")
     cat("Raw model coefficients:\n")
-    print(round(x$output_disp$raw.table, 6))
+    print(round(x$output_disp$raw.table, digits = digits))
     cat("\n")
     cat("Transformed coefficients:\n")
-    print(round(x$output_disp$transformed.table, 6))
+    print(round(x$output_disp$transformed.table, digits = digits))
   }
 
   if (!is.null(x$output_zi)) {
     cat("\n***********************\n")
     cat("\n Zero-Inflation Model \n")
     cat("Raw model coefficients:\n")
-    print(round(x$output_zi$raw.table, 6))
+    print(round(x$output_zi$raw.table, digits = digits))
     cat("\n")
     cat("Transformed coefficients:\n")
-    print(round(x$output_zi$transformed.table, 6))
+    print(round(x$output_zi$transformed.table, digits = digits))
   }
 }
