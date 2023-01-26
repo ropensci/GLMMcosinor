@@ -19,10 +19,10 @@ test_that("multiplication works", {
 
   #Test 2
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 4,
                                     amp = c(2,1,0.5),
                                     acro = c(1,1.5, 0.1),
-                                    beta.mesor = c(1,2, 3),
+                                    beta.mesor = 3,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, -1),
                                     family = "gamma",
@@ -40,7 +40,7 @@ test_that("multiplication works", {
                                     mesor = c(1,4),
                                     amp = c(2,1,0.5),
                                     acro = c(1,1.5, 0.1),
-                                    beta.mesor = c(1,2, 3),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, -1),
                                     family = "gamma",
@@ -50,15 +50,15 @@ test_that("multiplication works", {
                                     beta.group =  FALSE)}
   expect_error(
     f(),
-    regex = "mesor must be a vector containing numbers, with length equal to n_components", fixed = TRUE
+    regex = "mesor must a single number", fixed = TRUE
   )
 
   #Test 4
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 4,
                                     amp = c(2,1),
                                     acro = c(1,1.5, 0.1),
-                                    beta.mesor = c(1,2, 3),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, -1),
                                     family = "gamma",
@@ -73,10 +73,10 @@ test_that("multiplication works", {
 
   #Test 5
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 3,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5),
-                                    beta.mesor = c(1,2, 3),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, -1),
                                     family = "gamma",
@@ -91,7 +91,7 @@ test_that("multiplication works", {
 
   #Test 6
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 2,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5, 2),
                                     beta.mesor = c(1,2),
@@ -104,15 +104,15 @@ test_that("multiplication works", {
                                     beta.group =  FALSE)}
   expect_error(
     f(),
-    regex = "beta.mesor must be a vector containing numbers, with length equal to n_components", fixed = TRUE
+    regex = "beta.mesor must be a single number", fixed = TRUE
   )
 
   #Test 6
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 4,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5, 2),
-                                    beta.mesor = c(1,2, 1),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1),
                                     beta.acro = c(1,1.5, -1),
                                     family = "gamma",
@@ -127,10 +127,10 @@ test_that("multiplication works", {
 
   #Test 7
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 3,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5, 2),
-                                    beta.mesor = c(1,2, 1),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5),
                                     family = "gamma",
@@ -145,10 +145,10 @@ test_that("multiplication works", {
 
   #Test 8
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 3,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5, 2),
-                                    beta.mesor = c(1,2, 1),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, 0.4),
                                     family = "gamma",
@@ -163,10 +163,10 @@ test_that("multiplication works", {
 
   #Test 9
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 3,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5, 2),
-                                    beta.mesor = c(1,2, 1),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, 0.4),
                                     family = "gamma",
@@ -182,10 +182,10 @@ test_that("multiplication works", {
 
   #Test 10
   f <- function() {simulate_cosinor(100,
-                                    mesor = c(1,2,4),
+                                    mesor = 3,
                                     amp = c(2,1,3),
                                     acro = c(1,1.5, 2),
-                                    beta.mesor = c(1,2, 1),
+                                    beta.mesor = 4,
                                     beta.amp = c(2,1, 0.4),
                                     beta.acro = c(1,1.5, 0.4),
                                     family = "continuous",

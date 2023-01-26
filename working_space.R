@@ -348,29 +348,33 @@ object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(1
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 
 testdata = simulate_cosinor(1000,
-                            mesor = c(1,2,4),
+                            mesor = 4,
                             amp = c(0.1,0.4,0.5),
                             acro = c(1,1.5, 0.1),
-                            beta.mesor = c(0.4,1, 3),
+                            beta.mesor = 3,
                             beta.amp = c(2,1, 0.4),
                             beta.acro = c(1,-1.5, -1),
                             family = "gaussian",
                             period = c(12,6,8),
                             n_components = 3,
-                            sd = 0.3)
+                            sd = 1)
 object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(12,6, 8), group = 'group'), data = testdata, family = gaussian())
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+ggplot.cosinor.glmm.polar(object)
 
 testdata = simulate_cosinor(1000,
-                            mesor = c(1,2,4),
+                            mesor = 7,
                             amp = c(0.1,0.4,0.5),
                             acro = c(1,1.5, 0.1),
-                            beta.mesor = c(0.4,1, 3),
+                            beta.mesor = 4.4,
                             beta.amp = c(2,1, 0.4),
                             beta.acro = c(1,-1.5, -1),
                             family = "poisson",
                             period = c(12,6,8),
                             n_components = 3)
-object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(12,6, 8), group = 'group'), data = testdata, family = poisson())
+object = cosinor.glmm(Y ~ group + amp.acro(times,
+                                           n_components = 3,
+                                           period = c(12,6, 8),
+                                           group = 'group'),data = testdata, family = poisson())
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
-ggplot.cosinor.glmm.polar(object)
+ggplot.cosinor.glmm.polar(object, view = "zoom")

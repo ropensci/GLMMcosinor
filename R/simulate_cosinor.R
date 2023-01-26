@@ -41,14 +41,14 @@ simulate_cosinor <- function(n,
                           msg = "n must be an integer greater than 0")
   assertthat::assert_that(n_components == floor(n_components) & n_components > 0,
                           msg = "n_components must be an integer greater than 0")
-  assertthat::assert_that(is.numeric(mesor) & length(mesor) == n_components,
-                          msg = "mesor must be a vector containing numbers, with length equal to n_components")
+  assertthat::assert_that(is.numeric(mesor) & length(mesor) == 1,
+                          msg = "mesor must a single number")
   assertthat::assert_that(is.numeric(amp) & length(amp) == n_components,
                           msg = "amp must be a vector containing numbers, with length equal to n_components")
   assertthat::assert_that(is.numeric(acro) & length(acro) == n_components,
                           msg = "acro must be a vector containing numbers, with length equal to n_components")
-  assertthat::assert_that(is.numeric(beta.mesor) & length(beta.mesor) == n_components,
-                          msg = "beta.mesor must be a vector containing numbers, with length equal to n_components")
+  assertthat::assert_that(is.numeric(beta.mesor) & length(beta.mesor) == 1,
+                          msg = "beta.mesor must be a single number")
   assertthat::assert_that(is.numeric(beta.amp) & length(beta.amp) == n_components,
                           msg = "beta.amp must be a vector containing numbers, with length equal to n_components")
   assertthat::assert_that(is.numeric(beta.acro) & length(beta.acro) == n_components,
@@ -76,7 +76,7 @@ simulate_cosinor <- function(n,
     lambda_argument <- lambda_argument + B*rrr + G*sss
     }
 
-    lambda <- exp(sum(mesor) + lambda_argument)
+    lambda <- exp(mesor + lambda_argument)
     nsize <- length(ttt)
     y <- rpois(nsize, lambda = lambda)
     df <- data.frame(y, rrr, sss, ttt)
@@ -94,7 +94,7 @@ simulate_cosinor <- function(n,
     PSuccess_argument <- PSuccess_argument + B *rrr+G*sss
     }
 
-    PSuccess <- exp(sum(mesor) + PSuccess_argument) / (1 + exp(sum(mesor) + PSuccess_argument))
+    PSuccess <- exp(mesor + PSuccess_argument) / (1 + exp(mesor + PSuccess_argument))
     nsize <- length(ttt)
     y <- rbinom(nsize, 1, PSuccess)
     df <- data.frame(y, rrr, sss, ttt)
@@ -115,7 +115,7 @@ simulate_cosinor <- function(n,
     beta_argument <- beta_argument +  B * rrr + G * sss
     }
 
-    beta <- alpha / exp(sum(mesor) +beta_argument)
+    beta <- alpha / exp(mesor +beta_argument)
     nsize <- length(ttt)
     y <- stats::rgamma(nsize, shap = alpha, rate = beta)
     df <- data.frame(y, rrr, sss, ttt)
@@ -137,7 +137,7 @@ simulate_cosinor <- function(n,
     lambda_argument <- lambda_argument + B*rrr + G*sss
     }
 
-    lambda <- (sum(mesor) + lambda_argument)
+    lambda <- (mesor + lambda_argument)
     nsize <- length(ttt)
 
     y <- rnorm(nsize, lambda, sd)
