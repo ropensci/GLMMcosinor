@@ -349,10 +349,10 @@ ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ri
 
 testdata = simulate_cosinor(1000,
                             mesor = 4,
-                            amp = c(0.1,0.4,0.5),
+                            amp = c(1,0.4,0.5),
                             acro = c(1,1.5, 0.1),
                             beta.mesor = 3,
-                            beta.amp = c(2,1, 0.4),
+                            beta.amp = c(1,1, 0.4),
                             beta.acro = c(1,-1.5, -1),
                             family = "gaussian",
                             period = c(12,6,8),
@@ -378,3 +378,26 @@ object = cosinor.glmm(Y ~ group + amp.acro(times,
                                            group = 'group'),data = testdata, family = poisson())
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ggplot.cosinor.glmm.polar(object, view = "zoom")
+
+
+#Testing test_cosinor
+testdata = simulate_cosinor(1000,
+                            mesor = 4,
+                            amp = c(2,3),
+                            acro = c(0.4,0.4),
+                            beta.mesor = 4,
+                            beta.amp = c(2,3),
+                            beta.acro = c(0.4, 0.5),
+                            family = "gaussian",
+                            period = c(10,12),
+                            n_components =2,
+                            sd = 1)
+object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 2, period = c(10,12), group = 'group'), data = testdata, family = gaussian())
+test_cosinor(object, x_str ="group", param = "acr")
+
+#Can now compare components for a given level
+test_cosinor(object, x_str ="group", param = "amp", comparison_A = 1, comparison_B = 2, comparison_type = "components", level_index = 0)
+
+#Or, can compare levels for a given component
+test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison_B = 1, comparison_type = "levels", component_index = 1)
+

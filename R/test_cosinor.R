@@ -12,6 +12,11 @@
 #' @param param Character string naming the parameter to test, either "amp" for
 #'   amplitude or "acr" for acrophase
 #'
+#' @param comparison_A A number, referring to the level (within a group) or component number that is to be compared to comparison_B
+#' @param comparison_B A number, referring to the level (within a group) or component number that is to be compared to comparison_A
+#' @param comparison_type A string that is either: "levels" (default), or "components". If "levels", then comparison_A and comparison_B will refer to the two levels that are being compared. If comparison_type = "components", then comparison_A component will be compared to comparison_B component
+#' @param component_index If comparison_type = "levels", this controls which single component the levels are being compared to. Note that component_index must be an integer, and must refer to a component within the model
+#' @param level_index If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model
 #'
 #' @examples
 #'
@@ -21,25 +26,44 @@
 #' @export
 #'
 
-test_cosinor <- function(object, x_str, param = "amp", ref_level = 0, comp_level = 1, component_index = 1) {
+test_cosinor <- function(object,
+                         x_str,
+                         param = "amp",
+                         comparison_A = 0,
+                         comparison_B = 1,
+                         comparison_type = "levels",
+                         component_index = 1,
+                         level_index = 0) {
   stopifnot(is.character(x_str))
   stopifnot(length(grep(x_str, names(object$coefficients))) > 0)
 
   summary.fit <- summary.cosinor.glmm(object)
-
   index <- matrix(0, ncol = length(object$coefficients), nrow = length(x_str))
   colnames(index) <- names(object$coefficients)
 
-  for (i in 1:length(x_str)) {
-    index[i, paste0(x_str[i], ref_level, ":", param)] <- -1
-    # index[i, paste0(param,":",x_str[i],ref_level)] <- -1
+  if (comparison_type == "components") {
+    for (i in 1:length(x_str)) {
+      index[i, paste0(x_str[i], level_index, ":", param, comparison_A)] <- -1
 
-    index[i, paste0(x_str[i], comp_level, ":", param)] <- 1
-    # index[i, paste0(param,":",x_str[i],comp_level)] <- 1
+      index[i, paste0(x_str[i], level_index, ":", param, comparison_B)] <- 1
+    }
+  }
+
+  if(comparison_type == "levels"){
+
+    if(object$n_components == 1) {
+      component_index = ""
+    }
+
+    for (i in 1:length(x_str)) {
+      index[i, paste0(x_str[i], comparison_A, ":", param, component_index)] <- -1
+
+      index[i, paste0(x_str[i], comparison_B, ":", param, component_index)] <- 1
+    }
   }
 
   diff.est <- index %*% object$coefficients
-  diff.var <- index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE] %*% summary.fit$transformed.covariance[[component_index]] %*%
+  diff.var <- index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE] %*% summary.fit$transformed.covariance %*%
     t(index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE])
 
   glob.chi <- (diff.est %*% solve(diff.var) %*% t(diff.est))[1, 1]
