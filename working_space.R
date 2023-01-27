@@ -220,7 +220,7 @@
    ggplot.cosinor.glmm.polar(object1)
    test_cosinor(object1, x_str = "X")
 
-   object1 <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+   object1 <- cosinor.glmm(Y ~ 1 + X +amp.acro(time, group = "X"), data = vitamind)
    summary.cosinor.glmm(object1)
    ggplot.cosinor.glmm.polar(object1)
    test_cosinor(object1, x_str = "X")
@@ -272,24 +272,24 @@
 
 #Meeting for Wednesday Morning:
 #Significant improvements to polar plots:
-comod = simulate_cosinor(50,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, family = "2_component")
-object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
-ggplot.cosinor.glmm.polar(object3,
-                          contour_interval = 1,
-                          make_cowplot = TRUE,
-                          component_index = 1,
-                          grid_angle_segments = 8,
-                          radial_units = "radians",
-                          clockwise = TRUE,
-                          text_size = 3,
-                          text_opacity = 0.5,
-                          fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
-                          ellipse_opacity = 0.3,
-                          circle_linetype = "dotted",
-                          start = "bottom",
-                          view = "zoom_origin",
-                          overlay_parameter_info = FALSE,
-                          quietly = TRUE)
+#comod = simulate_cosinor(50,mesor = 0.4,amp = 3,acro = 1.2,beta.mesor = 1,beta.amp = 2, beta.acro = 2, family = "2_component")
+#object3 <- cosinor.glmm(Y ~ group+amp.acro(times, n_components = 2, group = "group", period = c(12, 8)), data = comod)
+#ggplot.cosinor.glmm.polar(object3,
+#                          contour_interval = 1,
+#                          make_cowplot = TRUE,
+#                          component_index = 1,
+#                          grid_angle_segments = 8,
+#                          radial_units = "radians",
+#                          clockwise = TRUE,
+#                          text_size = 3,
+#                          text_opacity = 0.5,
+#                          fill_colours = c("red" ,"green", "blue", "purple", "pink", "yellow", "orange", "black"),
+#                          ellipse_opacity = 0.3,
+#                          circle_linetype = "dotted",
+#                          start = "bottom",
+#                          view = "zoom_origin",
+#                          overlay_parameter_info = FALSE,
+#                          quietly = TRUE)
 
 #Added around 25 tests (specifically for the plot script)
 #The package now works when there is no group assigned (ie, analysis of a single group)
@@ -375,9 +375,9 @@ testdata = simulate_cosinor(1000,
 object = cosinor.glmm(Y ~ group + amp.acro(times,
                                            n_components = 3,
                                            period = c(12,6, 8),
-                                           group = 'group'),data = testdata, family = poisson())
+                                           group = c('group', NA, 'group')),data = testdata, family = poisson())
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
-ggplot.cosinor.glmm.polar(object, view = "zoom")
+ggplot.cosinor.glmm.polar(object, view = "full")
 
 
 #Testing test_cosinor

@@ -32,6 +32,13 @@ summary.cosinor.glmm <- function(object, ...) {
 
   # this function can be looped if there is disp or zi formula present. 'model_index' is a string: 'cond', 'disp', or 'zi'
   sub_summary.cosinor.glmm <- function(model_index) {
+    if (model_index == "disp") {
+      n_components <- object$disp_list$n_components_disp
+    }
+    if (model_index == "zi") {
+      n_components <- object$zi_list$n_components_zi
+    }
+
     args <- match.call()[-1] # get the arguments from the function wrapping this function
     coefs <- glmmTMB::fixef(mf)[[model_index]]
 
@@ -82,6 +89,7 @@ summary.cosinor.glmm <- function(object, ...) {
     # generate coefs containing sss, and rrr, respectively
     beta.s <- coefs[s.coef]
     beta.r <- coefs[r.coef]
+
 
     # convert beta.s and beta.r to groups
     groups.r <- c(beta.r, beta.r[which(names(beta.r) != names(beta.r))])

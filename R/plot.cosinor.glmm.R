@@ -458,6 +458,10 @@ ggplot.cosinor.glmm.polar <- function(object,
 
 
     # create the main plot object
+    if(is.na(object$group_origina[component_index])) {
+      group_level = NULL
+    }
+
     plot_obj <-
       ggplot2::ggplot() +
       ggforce::geom_circle(ggplot2::aes(x0 = 0, y0 = 0, r = seq(from = 0, to = max_plot_radius, by = contour_interval)), alpha = 0.3, linetype = circle_linetype) +
@@ -466,23 +470,27 @@ ggplot.cosinor.glmm.polar <- function(object,
       ggplot2::geom_segment(ggplot2::aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = circle_linetype) +
       ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
       ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0), hjust = 1, vjust = -1, size = text_size, alpha = text_opacity) +
-      ggplot2::labs(fill = "Group level", colour = NULL) +
       guides(colour = "none") +
       ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-    # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
-    if (overlay_parameter_info) {
-      radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
-      overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
-      plot_obj <- plot_obj +
-        ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
-        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
-        ggplot2::geom_text(
-          ggplot2::aes(
-            label = overlay_labels, est_rrr, y = est_sss),
-          size = text_size, alpha = text_opacity
-        )
+    if(object$group_check) {
+      plot_obj <- plot_obj + ggplot2::labs(fill = "Group level", colour = NULL)
     }
+      # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
+      if (overlay_parameter_info) {
+        radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
+        overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
+        plot_obj <- plot_obj +
+          ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
+          ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
+          ggplot2::geom_text(
+            ggplot2::aes(
+              label = overlay_labels, est_rrr, y = est_sss),
+            size = text_size, alpha = text_opacity
+          )
+      }
+
+
 
     # apply colours chosen by user input to the fill and colour aesthetics
     if (fill_colours_check) {

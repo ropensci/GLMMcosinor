@@ -184,7 +184,7 @@ amp.acro <- function(time_col,
 
 
     # allow the user to not have any grouping structure (if group argument is missing)
-    if (missing(group)) {
+    if (missing(group)|all(is.na(group))|all(is.na(group))) {
       group <- 0
       group_check <- FALSE
     } else {
