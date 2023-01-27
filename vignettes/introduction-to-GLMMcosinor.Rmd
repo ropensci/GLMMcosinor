@@ -148,7 +148,7 @@ Here is an example of how to use the summary.cosinor.glmm() function:
 ```{r, message=F, warning=F}
 data(vitamind)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-summary.cosinor.glmm(object)
+summary(object)
 ```
 
 The summary statistics for dispersion and zero-inflation models will
@@ -165,7 +165,7 @@ object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", N
   ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
 )
 
-summary.cosinor.glmm(object)
+summary(object)
 ```
 
 ## Using: 'predict.cosinor.glmm.R'
@@ -177,7 +177,7 @@ acosinor.glmm object.
 
 ```{r, message=F, warning=F}
 data(vitamind)
-fit <- cosinor.glmm(Y ~ X + amp.acro(X), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(X, group = NA), data = vitamind)
 predict(fit, newdata = vitamind)
 ```
 
@@ -189,7 +189,7 @@ time-response plot of the fitted model:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-ggplot.cosinor.glmm(object, x_str = "X")
+plot(object, x_str = "X")
 ```
 
 This function also allows users to superimpose the datapoints (that the
@@ -198,7 +198,7 @@ TRUE argument:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-ggplot.cosinor.glmm(object, x_str = "X", superimpose.data = TRUE)
+plot(object, x_str = "X", superimpose.data = TRUE)
 ```
 
 If there are multiple factors in the model, the user can specify which
@@ -213,21 +213,21 @@ different plots for the same model;
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-ggplot.cosinor.glmm(object2)
+plot(object)
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-ggplot.cosinor.glmm(object2, x_str = "X")
+plot(object, x_str = "X")
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-ggplot.cosinor.glmm(object2, x_str = "Z")
+plot(object, x_str = "Z")
 ```
 
 In addition to time-response plots, the GLMMcosinor package also allows
@@ -325,8 +325,8 @@ object <- cosinor.glmm(Y ~ group + amp.acro(times,
   period = c(12, 6, 8),
   group = "group"
 ), data = testdata, family = poisson())
-summary.cosinor.glmm(object)
-ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+summary(object)
+plot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ```
 
 Vignettes are long form documentation commonly included in packages.
