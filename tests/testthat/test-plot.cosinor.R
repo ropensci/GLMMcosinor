@@ -1,21 +1,21 @@
-test_that("ggplot.cosinor.glmm.polar input checks work", {
+test_that("polar_plot input checks work", {
   # Test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   object_bad <- lm(Y ~ X, data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object = object_bad)
+    polar_plot(object = object_bad)
   }
   expect_error(
     f(),
-    regex = "object must be of class cosinor.glmm", fixed = TRUE
+    regex = "no applicable method", fixed = TRUE
   )
 
   # Test 2
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, contour_interval = -1)
+    polar_plot(object, contour_interval = -1)
   }
   expect_error(
     f(),
@@ -26,7 +26,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, quietly = "true")
+    polar_plot(object, quietly = "true")
   }
   expect_error(
     f(),
@@ -37,7 +37,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, radial_units = "angle")
+    polar_plot(object, radial_units = "angle")
   }
   expect_error(
     f(),
@@ -48,7 +48,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, clockwise = 10)
+    polar_plot(object, clockwise = 10)
   }
   expect_error(
     f(),
@@ -59,7 +59,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, text_size = -1)
+    polar_plot(object, text_size = -1)
   }
   expect_error(
     f(),
@@ -70,7 +70,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, text_opacity = 2)
+    polar_plot(object, text_opacity = 2)
   }
   expect_error(
     f(),
@@ -81,7 +81,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, ellipse_opacity = 2)
+    polar_plot(object, ellipse_opacity = 2)
   }
   expect_error(
     f(),
@@ -92,7 +92,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, make_cowplot = 2)
+    polar_plot(object, make_cowplot = 2)
   }
   expect_error(
     f(),
@@ -103,7 +103,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, component_index = 2)
+    polar_plot(object, component_index = 2)
   }
   expect_error(
     f(),
@@ -114,7 +114,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, circle_linetype = 2)
+    polar_plot(object, circle_linetype = 2)
   }
   expect_error(
     f(),
@@ -125,7 +125,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   # data(vitamind)
   # object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   # f <- function() {
-  #   ggplot.cosinor.glmm.polar(object, fill_colours = 2)
+  #   polar_plot(object, fill_colours = 2)
   # }
   # expect_error(
   #   f(),
@@ -136,7 +136,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, start = "side")
+    polar_plot(object, start = "side")
   }
   expect_error(
     f(),
@@ -147,7 +147,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, view = "all")
+    polar_plot(object, view = "all")
   }
   expect_error(
     f(),
@@ -158,7 +158,7 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, overlay_parameter_info = 2)
+    polar_plot(object, overlay_parameter_info = 2)
   }
   expect_error(
     f(),
@@ -166,12 +166,12 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
   )
 })
 
-test_that("ggplot.cosinor.glmm.polar messages work", {
+test_that("polar_plot messages work", {
   # Test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm.polar(object, quietly = FALSE)
+    polar_plot(object, quietly = FALSE)
   }
   suppressMessages(expect_message(
     capture.output(f()),
@@ -184,25 +184,15 @@ test_that("ggplot.cosinor.glmm.polar messages work", {
   ))
 })
 
-test_that("ggplot.cosinor.glmm produces error messages", {
+test_that("plot produces error messages", {
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+
   # Test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
-  object_bad <- lm(Y ~ X, data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object_bad)
-  }
-
-  expect_error(
-    f(),
-    regex = "object must be of class cosinor.glmm", fixed = TRUE
-  )
-
-  # Test 2
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
-  f <- function() {
-    ggplot.cosinor.glmm(object, x_str = 10)
+    plot(object, x_str = 10)
   }
 
   expect_error(
@@ -210,11 +200,11 @@ test_that("ggplot.cosinor.glmm produces error messages", {
     regex = "x_str must be string corresponding to a group name in cosinor.glmm object", fixed = TRUE
   )
 
-  # Test 3
+  # Test 2
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, type = 20)
+    plot(object, type = 20)
   }
 
   expect_error(
@@ -222,11 +212,11 @@ test_that("ggplot.cosinor.glmm produces error messages", {
     regex = "type must be a string. See type in ?predict for more information about valid inputs", fixed = TRUE
   )
 
-  # Test 4
+  # Test 3
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, xlims = c(2, 1))
+    plot(object, xlims = c(2, 1))
   }
 
   expect_error(
@@ -234,11 +224,11 @@ test_that("ggplot.cosinor.glmm produces error messages", {
     regex = "xlims must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate", fixed = TRUE
   )
 
-  # Test 5
+  # Test 4
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, pred.length.out = 100.5)
+    plot(object, pred.length.out = 100.5)
   }
 
   expect_error(
@@ -246,11 +236,11 @@ test_that("ggplot.cosinor.glmm produces error messages", {
     regex = "pred.length.out must be an integer greater than 0", fixed = TRUE
   )
 
-  # Test 6
+  # Test 5
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, superimpose.data = 10)
+    plot(object, superimpose.data = 10)
   }
 
   expect_error(
@@ -258,11 +248,11 @@ test_that("ggplot.cosinor.glmm produces error messages", {
     regex = "superimpose.data must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 
-  # Test 7
+  # Test 6
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, data_opacity = 1.5)
+    plot(object, data_opacity = 1.5)
   }
 
   expect_error(
@@ -270,11 +260,11 @@ test_that("ggplot.cosinor.glmm produces error messages", {
     regex = "data_opacity must be a number between 0 and 1 inclusive", fixed = TRUE
   )
 
-  # Test 8
+  # Test 7
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, predict.ribbon = 10)
+    plot(object, predict.ribbon = 10)
   }
 
   expect_error(
@@ -284,20 +274,20 @@ test_that("ggplot.cosinor.glmm produces error messages", {
 })
 
 
-test_that("ggplot.cosinor.glmm gives appropriate plot output", {
+test_that("plot gives appropriate plot output", {
   # Test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object)
+    plot(object)
   }
   vdiffr::expect_doppelganger("vitamind_plot", f)
 
   # Test 2
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp.acro(time), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = NA), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object)
+    plot(object)
   }
   vdiffr::expect_doppelganger("vitamind_plot_no_group", f)
 
@@ -305,7 +295,7 @@ test_that("ggplot.cosinor.glmm gives appropriate plot output", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, superimpose.data = TRUE)
+    plot(object, superimpose.data = TRUE)
   }
   vdiffr::expect_doppelganger("vitamind_plot_superimpose.data_TRUE", f)
 
@@ -313,7 +303,7 @@ test_that("ggplot.cosinor.glmm gives appropriate plot output", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    ggplot.cosinor.glmm(object, superimpose.data = TRUE, predict.ribbon = TRUE)
+    plot(object, superimpose.data = TRUE, predict.ribbon = TRUE)
   }
   vdiffr::expect_doppelganger("vitamind_plot_superimpose.data_TRUE_and_predict_ribbon", f)
 })

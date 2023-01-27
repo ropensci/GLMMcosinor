@@ -138,7 +138,7 @@ plot.cosinor.glmm <- function(object,
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name)) +
         ggplot2::geom_line() +
-        geom_point(data = original_data_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
+        ggplot2::geom_point(data = original_data_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
