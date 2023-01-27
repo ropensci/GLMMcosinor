@@ -49,10 +49,9 @@ test_cosinor <- function(object,
     }
   }
 
-  if(comparison_type == "levels"){
-
-    if(object$n_components == 1) {
-      component_index = ""
+  if (comparison_type == "levels") {
+    if (object$n_components == 1) {
+      component_index <- ""
     }
 
     for (i in 1:length(x_str)) {

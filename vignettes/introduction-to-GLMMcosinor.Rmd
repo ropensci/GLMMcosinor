@@ -47,7 +47,7 @@ intercept and X listed as a covariate mesor term:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind) 
+cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
 ```
 
 Alternatively, the following example will have no intercept term, but
@@ -56,7 +56,7 @@ will still generate a mesor estimate for the X group. In the output, the
 within the group "X".
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + X + amp.acro(time, group = "X"), data = vitamind) 
+cosinor.glmm(Y ~ 0 + X + amp.acro(time, group = "X"), data = vitamind)
 ```
 
 Finally, the following will have no intercept term, nor will it generate
@@ -88,8 +88,8 @@ argument is where users specify:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-vitamind$Z = rbinom(length(vitamind$X),1,prob = 0.5)
-cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period= c(12,10,8)),data = vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 1, prob = 0.5)
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)), data = vitamind)
 ```
 
 As demonstrated in the example above, the 'NA' entry in the group
@@ -103,8 +103,8 @@ For instance, the following two cosinor.glmm() calls produce the same
 output:
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = "X", period = c(12)), data =                   vitamind)
-cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X","X","X"), period =                       c(12,12,12)), data = vitamind)
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = "X", period = c(12)), data = vitamind)
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", "X", "X"), period = c(12, 12, 12)), data = vitamind)
 ```
 
 ### Dispersion and zero-inflation model specification
@@ -114,12 +114,14 @@ for dispersion and zero-inflation models. These formulas are independent
 of the main formula specification:
 
 ```{r, message=F, warning=F}
-data(vitamind) #load vitamind dataset
-vitamind$Z = rbinom(length(vitamind$X),2,prob = 0.5) #modify dataset 
-                
-cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period =                         c(12,10,8)),data = vitamind, 
-             dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period =                         c(12,11,8)),
-              ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z","X"), period = c(12,8)))
+data(vitamind) # load vitamind dataset
+vitamind$Z <- rbinom(length(vitamind$X), 2, prob = 0.5) # modify dataset
+
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)),
+  data = vitamind,
+  dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 11, 8)),
+  ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
+)
 ```
 
 This example shows how dispformula and ziformula can be specified with a
@@ -145,7 +147,7 @@ Here is an example of how to use the summary.cosinor.glmm() function:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind) 
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
 summary.cosinor.glmm(object)
 ```
 
@@ -154,12 +156,14 @@ also be provided by the summary.cosinor.glmm() function, if the original
 cosinor.glmm object being analysed contains them:
 
 ```{r, message=F, warning=F}
-data(vitamind) #load vitamind dataset
-vitamind$Z = rbinom(length(vitamind$X),2,prob = 0.5) #modify dataset 
-                
-object <- cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("X",NA,"Z"), period =                         c(12,10,8)),data = vitamind, 
-             dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period =                         c(12,11,8)),
-              ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z","X"), period = c(12,8)))
+data(vitamind) # load vitamind dataset
+vitamind$Z <- rbinom(length(vitamind$X), 2, prob = 0.5) # modify dataset
+
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)),
+  data = vitamind,
+  dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 11, 8)),
+  ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
+)
 
 summary.cosinor.glmm(object)
 ```
@@ -207,22 +211,22 @@ different plots for the same model;
 
 ```{r, message=F, warning=F}
 data(vitamind)
-vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
-object <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 ggplot.cosinor.glmm(object2)
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
-vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
-object <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 ggplot.cosinor.glmm(object2, x_str = "X")
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
-vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
-object <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 ggplot.cosinor.glmm(object2, x_str = "Z")
 ```
 
@@ -274,17 +278,19 @@ distributions: - family = 'gaussian' - family = 'Gamma(link = 'log')' -
 family = 'binomial' - family = 'poisson'
 
 ```{r, message=F, warning=F}
-simulate_cosinor(n = 100,
-                             mesor = 1,
-                             amp = 2,
-                             acro = 1.2,
-                             period = 12,
-                             n_components = 1,
-                             beta.group = TRUE,
-                             beta.mesor = 0.4,
-                             beta.amp = 0.5,
-                             beta.acro = 0.2,
-                             family = c("poisson"))
+simulate_cosinor(
+  n = 100,
+  mesor = 1,
+  amp = 2,
+  acro = 1.2,
+  period = 12,
+  n_components = 1,
+  beta.group = TRUE,
+  beta.mesor = 0.4,
+  beta.amp = 0.5,
+  beta.acro = 0.2,
+  family = c("poisson")
+)
 ```
 
 mesor, amp, and acro represent the parameters for the first level, and
@@ -303,23 +309,24 @@ parameter estimates accurately reflect the inputs into the simulate
 function:
 
 ```{r, message=F, warning=F}
-testdata = simulate_cosinor(1000,
-                            mesor = 7,
-                            amp = c(0.1,0.4,0.5),
-                            acro = c(1,1.5, 0.1),
-                            beta.mesor = 4.4,
-                            beta.amp = c(2,1, 0.4),
-                            beta.acro = c(1,-1.5, -1),
-                            family = "poisson",
-                            period = c(12,6,8),
-                            n_components = 3)
-object = cosinor.glmm(Y ~ group + amp.acro(times,
-                                           n_components = 3,
-                                           period = c(12,6, 8),
-                                           group = 'group'),data = testdata, family = poisson())
+testdata <- simulate_cosinor(1000,
+  mesor = 7,
+  amp = c(0.1, 0.4, 0.5),
+  acro = c(1, 1.5, 0.1),
+  beta.mesor = 4.4,
+  beta.amp = c(2, 1, 0.4),
+  beta.acro = c(1, -1.5, -1),
+  family = "poisson",
+  period = c(12, 6, 8),
+  n_components = 3
+)
+object <- cosinor.glmm(Y ~ group + amp.acro(times,
+  n_components = 3,
+  period = c(12, 6, 8),
+  group = "group"
+), data = testdata, family = poisson())
 summary.cosinor.glmm(object)
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
-
 ```
 
 Vignettes are long form documentation commonly included in packages.

@@ -240,9 +240,9 @@ ggplot.cosinor.glmm.polar <- function(object,
   assertthat::assert_that(is.character(circle_linetype),
     msg = "circle_linetype must be a character. See ?linetype for more details"
   )
-  #assertthat::assert_that(is.character(fill_colours),
+  # assertthat::assert_that(is.character(fill_colours),
   #  msg = "fill_colours must be of class character, and must be a valid colour"
-  #)
+  # )
   assertthat::assert_that(is.character(start) & start %in% c("right", "left", "bottom", "top"),
     msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'"
   )
@@ -255,7 +255,7 @@ ggplot.cosinor.glmm.polar <- function(object,
 
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-  #if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
+  # if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
   #  if (!quietly) {
   #    message(paste(
   #      '"fill_colours" argument requires ', max(unlist(lapply(object$group_stats, length))),
@@ -263,7 +263,7 @@ ggplot.cosinor.glmm.polar <- function(object,
   #    ))
   #  }
   #  fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
-  #}
+  # }
 
   # convert user input for zoom level into logical arguments
   if (view == "full") {
@@ -400,11 +400,11 @@ ggplot.cosinor.glmm.polar <- function(object,
     }
     if (radial_units == "degrees") {
       max_period <- 360
-      conversion_factor <- (1/2*pi)*360
+      conversion_factor <- (1 / 2 * pi) * 360
     }
     if (radial_units == "period") {
       max_period <- max_period
-      conversion_factor <- (1/2*pi)*max_period
+      conversion_factor <- (1 / 2 * pi) * max_period
     }
 
     # create a sequence of labels for time (to be inserted around the polar plot)
@@ -447,19 +447,19 @@ ggplot.cosinor.glmm.polar <- function(object,
     if (radial_units == "radians") {
       pi_string <- paste(round(time_labels / pi, 1))
       time_labels <- paste0(pi_string, "π")
-      acr_overlay <- paste0(signif(conversion_factor*est_acr/pi, 2),'π')
+      acr_overlay <- paste0(signif(conversion_factor * est_acr / pi, 2), "π")
     }
 
     if (radial_units == "degrees") {
       time_labels <- paste0(time_labels, "°")
-      conversion_factor*est_acr
-      acr_overlay <- paste0(signif(conversion_factor*est_acr/360, 2),"°")
+      conversion_factor * est_acr
+      acr_overlay <- paste0(signif(conversion_factor * est_acr / 360, 2), "°")
     }
 
 
     # create the main plot object
-    if(is.na(object$group_origina[component_index])) {
-      group_level = NULL
+    if (is.na(object$group_origina[component_index])) {
+      group_level <- NULL
     }
 
     plot_obj <-
@@ -473,28 +473,29 @@ ggplot.cosinor.glmm.polar <- function(object,
       guides(colour = "none") +
       ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-    if(object$group_check) {
+    if (object$group_check) {
       plot_obj <- plot_obj + ggplot2::labs(fill = "Group level", colour = NULL)
     }
-      # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
-      if (overlay_parameter_info) {
-        radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
-        overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
-        plot_obj <- plot_obj +
-          ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
-          ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
-          ggplot2::geom_text(
-            ggplot2::aes(
-              label = overlay_labels, est_rrr, y = est_sss),
-            size = text_size, alpha = text_opacity
-          )
-      }
+    # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
+    if (overlay_parameter_info) {
+      radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
+      overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
+      plot_obj <- plot_obj +
+        ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
+        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
+        ggplot2::geom_text(
+          ggplot2::aes(
+            label = overlay_labels, est_rrr, y = est_sss
+          ),
+          size = text_size, alpha = text_opacity
+        )
+    }
 
 
 
     # apply colours chosen by user input to the fill and colour aesthetics
     if (fill_colours_check) {
-    plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
+      plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
     }
 
     # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits

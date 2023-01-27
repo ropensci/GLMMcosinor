@@ -121,16 +121,16 @@ test_that("ggplot.cosinor.glmm.polar input checks work", {
     regex = "circle_linetype must be a character. See ?linetype for more details", fixed = TRUE
   )
 
-# # Test 12
-# data(vitamind)
-# object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
-# f <- function() {
-#   ggplot.cosinor.glmm.polar(object, fill_colours = 2)
-# }
-# expect_error(
-#   f(),
-#   regex = "fill_colours must be of class character, and must be a valid colour", fixed = TRUE
-# )
+  # # Test 12
+  # data(vitamind)
+  # object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  # f <- function() {
+  #   ggplot.cosinor.glmm.polar(object, fill_colours = 2)
+  # }
+  # expect_error(
+  #   f(),
+  #   regex = "fill_colours must be of class character, and must be a valid colour", fixed = TRUE
+  # )
 
   # Test 13
   data(vitamind)
@@ -284,8 +284,8 @@ test_that("ggplot.cosinor.glmm produces error messages", {
 })
 
 
-test_that("ggplot.cosinor.glmm gives appropriate plot output" ,{
-  #Test 1
+test_that("ggplot.cosinor.glmm gives appropriate plot output", {
+  # Test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -293,7 +293,7 @@ test_that("ggplot.cosinor.glmm gives appropriate plot output" ,{
   }
   vdiffr::expect_doppelganger("vitamind_plot", f)
 
-  #Test 2
+  # Test 2
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time), data = vitamind)
   f <- function() {
@@ -301,7 +301,7 @@ test_that("ggplot.cosinor.glmm gives appropriate plot output" ,{
   }
   vdiffr::expect_doppelganger("vitamind_plot_no_group", f)
 
-  #Test 3
+  # Test 3
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -309,7 +309,7 @@ test_that("ggplot.cosinor.glmm gives appropriate plot output" ,{
   }
   vdiffr::expect_doppelganger("vitamind_plot_superimpose.data_TRUE", f)
 
-  #Test 5
+  # Test 5
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -317,6 +317,3 @@ test_that("ggplot.cosinor.glmm gives appropriate plot output" ,{
   }
   vdiffr::expect_doppelganger("vitamind_plot_superimpose.data_TRUE_and_predict_ribbon", f)
 })
-
-
-

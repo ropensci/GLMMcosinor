@@ -33,47 +33,56 @@ simulate_cosinor <- function(n,
                              beta.amp = 0.5,
                              beta.acro = 0.2,
                              family = c("poisson"),
-                             ...)
-  {
-
-  #validating inputs
-  assertthat::assert_that(n == floor(n) & n>0,
-                          msg = "n must be an integer greater than 0")
+                             ...) {
+  # validating inputs
+  assertthat::assert_that(n == floor(n) & n > 0,
+    msg = "n must be an integer greater than 0"
+  )
   assertthat::assert_that(n_components == floor(n_components) & n_components > 0,
-                          msg = "n_components must be an integer greater than 0")
+    msg = "n_components must be an integer greater than 0"
+  )
   assertthat::assert_that(is.numeric(mesor) & length(mesor) == 1,
-                          msg = "mesor must a single number")
+    msg = "mesor must a single number"
+  )
   assertthat::assert_that(is.numeric(amp) & length(amp) == n_components,
-                          msg = "amp must be a vector containing numbers, with length equal to n_components")
+    msg = "amp must be a vector containing numbers, with length equal to n_components"
+  )
   assertthat::assert_that(is.numeric(acro) & length(acro) == n_components,
-                          msg = "acro must be a vector containing numbers, with length equal to n_components")
+    msg = "acro must be a vector containing numbers, with length equal to n_components"
+  )
   assertthat::assert_that(is.numeric(beta.mesor) & length(beta.mesor) == 1,
-                          msg = "beta.mesor must be a single number")
+    msg = "beta.mesor must be a single number"
+  )
   assertthat::assert_that(is.numeric(beta.amp) & length(beta.amp) == n_components,
-                          msg = "beta.amp must be a vector containing numbers, with length equal to n_components")
+    msg = "beta.amp must be a vector containing numbers, with length equal to n_components"
+  )
   assertthat::assert_that(is.numeric(beta.acro) & length(beta.acro) == n_components,
-                          msg = "beta.acro must be a vector containing numbers, with length equal to n_components")
+    msg = "beta.acro must be a vector containing numbers, with length equal to n_components"
+  )
   assertthat::assert_that(is.numeric(period) & length(period) == n_components,
-                          msg = "period must be a vector containing numbers, with length equal to n_components")
+    msg = "period must be a vector containing numbers, with length equal to n_components"
+  )
   assertthat::assert_that(family %in% c("poisson", "binomial", "gamma", "gaussian"),
-                          msg = 'family argument must be a string that matches one of: "poisson", "binomial", "gamma", "gaussian"')
+    msg = 'family argument must be a string that matches one of: "poisson", "binomial", "gamma", "gaussian"'
+  )
   assertthat::assert_that(is.logical(beta.group),
-                          msg = 'beta.group argument must be logical')
+    msg = "beta.group argument must be logical"
+  )
 
 
 
-  #generate a time vector
+  # generate a time vector
   ttt <- runif(n, min = 0, period)
 
   # Simulates Poisson circadian GLM
   get_dataset_poisson <- function(amp, acr, mesor, n_components, period) {
     lambda_argument <- 0
     for (i in 1:n_components) {
-    B <- amp[i] * cos(acr[i])
-    G <- -amp[i] * sin(acr[i])
-    rrr <- cos(2 * pi * (ttt) / period[i])
-    sss <- sin(2 * pi * (ttt) / period[i])
-    lambda_argument <- lambda_argument + B*rrr + G*sss
+      B <- amp[i] * cos(acr[i])
+      G <- -amp[i] * sin(acr[i])
+      rrr <- cos(2 * pi * (ttt) / period[i])
+      sss <- sin(2 * pi * (ttt) / period[i])
+      lambda_argument <- lambda_argument + B * rrr + G * sss
     }
 
     lambda <- exp(mesor + lambda_argument)
@@ -87,11 +96,11 @@ simulate_cosinor <- function(n,
   get_dataset_bin <- function(amp, acr, mesor, n_components, period) {
     PSuccess_argument <- 0
     for (i in 1:n_components) {
-    B <- amp[i] * cos(acr[i])
-    G <- -amp[i] * sin(acr[i])
-    rrr <- cos(2 * pi * (ttt) / period[i])
-    sss <- sin(2 * pi * (ttt) / period[i])
-    PSuccess_argument <- PSuccess_argument + B *rrr+G*sss
+      B <- amp[i] * cos(acr[i])
+      G <- -amp[i] * sin(acr[i])
+      rrr <- cos(2 * pi * (ttt) / period[i])
+      sss <- sin(2 * pi * (ttt) / period[i])
+      PSuccess_argument <- PSuccess_argument + B * rrr + G * sss
     }
 
     PSuccess <- exp(mesor + PSuccess_argument) / (1 + exp(mesor + PSuccess_argument))
@@ -104,18 +113,18 @@ simulate_cosinor <- function(n,
   # Simulates gamma circadian data
   get_dataset_gamma <- function(amp, acr, mesor, n_components, period, alpha) {
     if (missing(alpha)) {
-      alpha = 5
+      alpha <- 5
     }
     beta_argument <- 0
     for (i in 1:n_components) {
-    B <- amp[i] * cos(acr[i])
-    G <- -amp[i] * sin(acr[i])
-    rrr <- cos(2 * pi * (ttt) / period[i])
-    sss <- sin(2 * pi * (ttt) / period[i])
-    beta_argument <- beta_argument +  B * rrr + G * sss
+      B <- amp[i] * cos(acr[i])
+      G <- -amp[i] * sin(acr[i])
+      rrr <- cos(2 * pi * (ttt) / period[i])
+      sss <- sin(2 * pi * (ttt) / period[i])
+      beta_argument <- beta_argument + B * rrr + G * sss
     }
 
-    beta <- alpha / exp(mesor +beta_argument)
+    beta <- alpha / exp(mesor + beta_argument)
     nsize <- length(ttt)
     y <- stats::rgamma(nsize, shap = alpha, rate = beta)
     df <- data.frame(y, rrr, sss, ttt)
@@ -126,15 +135,15 @@ simulate_cosinor <- function(n,
 
   get_dataset_gaussian <- function(amp, acr, mesor, n_components, period, sd) {
     if (missing(sd)) {
-      sd = 1
+      sd <- 1
     }
     lambda_argument <- 0
     for (i in 1:n_components) {
-    B <- amp[i] * cos(acr[i])
-    G <- -amp[i] * sin(acr[i])
-    rrr <- cos(2 * pi * (ttt) / period[i])
-    sss <- sin(2 * pi * (ttt) / period[i])
-    lambda_argument <- lambda_argument + B*rrr + G*sss
+      B <- amp[i] * cos(acr[i])
+      G <- -amp[i] * sin(acr[i])
+      rrr <- cos(2 * pi * (ttt) / period[i])
+      sss <- sin(2 * pi * (ttt) / period[i])
+      lambda_argument <- lambda_argument + B * rrr + G * sss
     }
 
     lambda <- (mesor + lambda_argument)
@@ -159,21 +168,21 @@ simulate_cosinor <- function(n,
     get_dataset <- get_dataset_gaussian
   }
 
-  #create dataset for only one group if beta.group = FALSE
+  # create dataset for only one group if beta.group = FALSE
   if (!beta.group) {
-  df <- get_dataset(amp, acro, mesor, n_components, period, ...)
-  colnames(df) <- c("Y", "x","z","times")
+    df <- get_dataset(amp, acro, mesor, n_components, period, ...)
+    colnames(df) <- c("Y", "x", "z", "times")
   }
 
-  #create dataset for two groups if beta.group = TRUE
+  # create dataset for two groups if beta.group = TRUE
   if (beta.group) {
-  data_A <- get_dataset(amp, acro, mesor, n_components, period, ...)
-  data_B <- get_dataset(amp = beta.amp, acr = beta.acro,mesor = beta.mesor, n_components, period, ...)
-  data_A$group <- "A"
-  data_B$group <- "B"
-  df <- rbind(data_A, data_B)
-  df$group <- as.numeric(as.factor(df$group)) - 1
-  colnames(df) <- c("Y", "x", "z", "times", "group")
+    data_A <- get_dataset(amp, acro, mesor, n_components, period, ...)
+    data_B <- get_dataset(amp = beta.amp, acr = beta.acro, mesor = beta.mesor, n_components, period, ...)
+    data_A$group <- "A"
+    data_B$group <- "B"
+    df <- rbind(data_A, data_B)
+    df$group <- as.numeric(as.factor(df$group)) - 1
+    colnames(df) <- c("Y", "x", "z", "times", "group")
   }
 
   return(df)
