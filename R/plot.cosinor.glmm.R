@@ -12,24 +12,25 @@
 #' @param superimpose.data A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit
 #' @param data_opacity A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data
 #' @param predict.ribbon A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted
+#' @param ... Additional, ignored arguments.
 #' @examples
 #'
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-#' ggplot.cosinor.glmm(object, x_str = "X")
+#' plot(object, x_str = "X")
 #'
-#' @export ggplot.cosinor.glmm
 #' @export
 #'
 #'
 
-ggplot.cosinor.glmm <- function(object,
+plot.cosinor.glmm <- function(object,
                                 x_str = NULL,
                                 type = "response",
                                 xlims,
                                 pred.length.out = 200,
                                 superimpose.data = FALSE,
                                 data_opacity = 0.3,
-                                predict.ribbon = TRUE) {
+                                predict.ribbon = TRUE,
+                              ...) {
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
     msg = "object must be of class cosinor.glmm"
@@ -128,7 +129,7 @@ ggplot.cosinor.glmm <- function(object,
         ggplot2::geom_line()
     } else {
       plot_object <- ggplot2::ggplot() +
-        geom_line(data = newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name, col = "levels"))
+        ggplot2::geom_line(data = newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name, col = "levels"))
     }
   }
 
@@ -138,23 +139,23 @@ ggplot.cosinor.glmm <- function(object,
       plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name)) +
         ggplot2::geom_line() +
         geom_point(data = original_data_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
-        facet_grid(rows = vars(NULL))
+        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
-        geom_line(data = newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
-        geom_point(data = original_data_processed, ggplot2::aes_string(paste(object$time_name), y = y_name, col = "levels"), alpha = data_opacity) +
-        facet_grid(rows = vars(NULL))
+        ggplot2::geom_line(data = newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
+        ggplot2::geom_point(data = original_data_processed, ggplot2::aes_string(paste(object$time_name), y = y_name, col = "levels"), alpha = data_opacity) +
+        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }
 
   # plot the prediction interval
   if (predict.ribbon) {
     if (missing(x_str) || is.null(x_str)) {
-      plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max), alpha = 0.5) +
-        facet_grid(rows = vars(NULL))
+      plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(object$time_name), ymin = y_min, ymax = y_max), alpha = 0.5) +
+        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
-      plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5) +
-        facet_grid(rows = vars(NULL))
+      plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(object$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5) +
+        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }
   print(plot_object)
@@ -179,14 +180,16 @@ ggplot.cosinor.glmm <- function(object,
 #' @param view A character, either "full", "zoom", or "zoom_origin" which controls the view of the plots. "full" maintains a full view of the polar plot, including the background radial circles. "zoom" finds the minimum viewwindow which contains all confidence ellipses. "zoom_origin" zooms into the confidence ellipses (like "zoom"), but also keeps the origin within frame
 #' @param overlay_parameter_info A logical argument. If TRUE, more information about the acrophase and amplitude are overlayed onto the polar plots.
 #' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
+#' @param ... Additional, ignored arguments.
 #'
 #' @return
 #' @export
 #'
+#'
 #' @examples
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-#' ggplot.cosinor.glmm.polar(object)
-ggplot.cosinor.glmm.polar <- function(object,
+#' polar_plot(object)
+polar_plot.cosinor.glmm <- function(object,
                                       contour_interval = 1,
                                       make_cowplot = TRUE,
                                       component_index = 1,
@@ -201,7 +204,8 @@ ggplot.cosinor.glmm.polar <- function(object,
                                       start = "right",
                                       view = "full",
                                       overlay_parameter_info = FALSE,
-                                      quietly = TRUE) {
+                                      quietly = TRUE,
+                                    ...) {
   # checking the quality of inputs
 
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
@@ -470,8 +474,8 @@ ggplot.cosinor.glmm.polar <- function(object,
       ggplot2::geom_segment(ggplot2::aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = circle_linetype) +
       ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
       ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0), hjust = 1, vjust = -1, size = text_size, alpha = text_opacity) +
-      guides(colour = "none") +
-      ggplot2::theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      ggplot2::guides(colour = "none") +
+      ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(), axis.ticks = ggplot2::element_blank(), panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank())
 
     if (object$group_check) {
       plot_obj <- plot_obj + ggplot2::labs(fill = "Group level", colour = NULL)
@@ -495,7 +499,7 @@ ggplot.cosinor.glmm.polar <- function(object,
 
     # apply colours chosen by user input to the fill and colour aesthetics
     if (fill_colours_check) {
-      plot_obj <- plot_obj + scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
+      plot_obj <- plot_obj + ggplot2::scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
     }
 
     # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits
@@ -530,4 +534,52 @@ ggplot.cosinor.glmm.polar <- function(object,
     final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
     print(final_obj)
   }
+}
+
+
+#' Generates a polar plot with elliptical confidence intervals
+#'
+#' @param object An object of class \code{cosinor.glmm}
+#' @param contour_interval The distance bewteen adjacent circular contours in the background of the polar plot
+#' @param make_cowplot A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant
+#' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
+#' @param grid_angle_segments An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.
+#' @param radial_units A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component
+#' @param clockwise A logical argument. If TRUE, the angles increase in a clockwise fashion
+#' @param text_size A number controlling the size of the text labels
+#' @param text_opacity A number between 0 and 1 inclusive which determines the opacity of the text labels
+#' @param fill_colours A vector containing colours (expressed as strings) that will be used to delineate levels within a group. If the model has components with different number of levels per factor, the length of this input should match the greatest number of levels. If not, or if the number of levels exceeds the length of the default argument (8), colours are generated using rainbow()
+#' @param ellipse_opacity A number between 0 and 1 inclusive which determines the opacity of the confidence ellipses
+#' @param circle_linetype A string which determines the linetype of the radial circles in background of the polar plot. See ?linetype for more details
+#' @param start A character, either "right", "left", "top", or "bottom" which determines where angle 0 is located. If start = "top", and clockwise = TRUE, the angle will rotate clockwise, starting at the '12' position on a clock
+#' @param view A character, either "full", "zoom", or "zoom_origin" which controls the view of the plots. "full" maintains a full view of the polar plot, including the background radial circles. "zoom" finds the minimum viewwindow which contains all confidence ellipses. "zoom_origin" zooms into the confidence ellipses (like "zoom"), but also keeps the origin within frame
+#' @param overlay_parameter_info A logical argument. If TRUE, more information about the acrophase and amplitude are overlayed onto the polar plots.
+#' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
+#' @param ... Additional, ignored arguments.
+#'
+#' @return
+#' @export
+#'
+#'
+#' @examples
+#' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+#' polar_plot(object)
+polar_plot <- function(x,
+                       contour_interval = 1,
+                       make_cowplot = TRUE,
+                       component_index = 1,
+                       grid_angle_segments = 8,
+                       radial_units = "radians",
+                       clockwise = FALSE,
+                       text_size = 3,
+                       text_opacity = 0.5,
+                       fill_colours,
+                       ellipse_opacity = 0.3,
+                       circle_linetype = "dotted",
+                       start = "right",
+                       view = "full",
+                       overlay_parameter_info = FALSE,
+                       quietly = TRUE,
+                       ...) {
+  UseMethod("polar_plot")
 }

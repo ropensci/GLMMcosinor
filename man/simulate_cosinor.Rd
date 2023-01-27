@@ -9,21 +9,40 @@ simulate_cosinor(
   mesor = 1,
   amp = 2,
   acro = 1.2,
+  period = 12,
+  n_components = 1,
+  beta.group = TRUE,
   beta.mesor = 0.4,
   beta.amp = 0.5,
   beta.acro = 0.2,
-  period = 12,
-  dist = c("poisson")
+  family = c("poisson"),
+  ...
 )
 }
 \arguments{
-\item{n}{Sample size}
+\item{n}{Sample size. Integer greater than 0.}
 
-\item{beta.amp}{Effect on the amplitude}
+\item{mesor}{Mesor parameter for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components}
 
-\item{beta.acro}{Effect on the acrophase}
+\item{amp}{Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components}
 
-\item{beta.mean}{Effect on the mean (intercept)}
+\item{acro}{Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components}
+
+\item{period}{The period of data. If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(12,6) for two components}
+
+\item{n_components}{The number of components in the model. This must match the length of the parameter inputs}
+
+\item{beta.group}{A logical argument. TRUE if you want to simulate second group dataset. If FALSE, beta. arguments will be ignored}
+
+\item{beta.mesor}{Amplitude parameter term for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components}
+
+\item{beta.amp}{Acrophase parameter for group = 1. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components}
+
+\item{beta.acro}{Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components}
+
+\item{family}{family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian"}
+
+\item{...}{Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation}
 }
 \description{
 This function simulates data from a cosinor model with a single covariate,

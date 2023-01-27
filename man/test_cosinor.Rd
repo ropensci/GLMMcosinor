@@ -8,9 +8,11 @@ test_cosinor(
   object,
   x_str,
   param = "amp",
-  ref_level = 0,
-  comp_level = 1,
-  component_index = 1
+  comparison_A = 0,
+  comparison_B = 1,
+  comparison_type = "levels",
+  component_index = 1,
+  level_index = 0
 )
 }
 \arguments{
@@ -20,6 +22,16 @@ test_cosinor(
 
 \item{param}{Character string naming the parameter to test, either "amp" for
 amplitude or "acr" for acrophase}
+
+\item{comparison_A}{A number, referring to the level (within a group) or component number that is to be compared to comparison_B}
+
+\item{comparison_B}{A number, referring to the level (within a group) or component number that is to be compared to comparison_A}
+
+\item{comparison_type}{A string that is either: "levels" (default), or "components". If "levels", then comparison_A and comparison_B will refer to the two levels that are being compared. If comparison_type = "components", then comparison_A component will be compared to comparison_B component}
+
+\item{component_index}{If comparison_type = "levels", this controls which single component the levels are being compared to. Note that component_index must be an integer, and must refer to a component within the model}
+
+\item{level_index}{If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model}
 }
 \description{
 Given a time variable and optional covariates, generate inference a cosinor
