@@ -16,7 +16,7 @@ Print the summary of a cosinor model
 }
 \examples{
 
-fit <- cosinor.glmm(Y ~ time(time) + X + amp.acro(X), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
 summary(fit)
 
 }
