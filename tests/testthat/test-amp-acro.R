@@ -12,6 +12,8 @@ test_that("multiplication works", {
 })
 
 test_that("bad inputs return useful errors", {
+  library(tidyverse)
+
   # test 2
   f <- function() {
     amp.acro(

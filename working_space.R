@@ -215,9 +215,9 @@
 #
 #
    #polar plots in progress: (proof of concept)
-   object1 <- cosinor.glmm(Y ~ 0 + amp.acro(time, group = NA), data = vitamind)
+   object1 <- cosinor.glmm(Y ~ 0 + amp.acro(time), data = vitamind)
    summary.cosinor.glmm(object1)
-   ggplot.cosinor.glmm.polar(object1)
+   #ggplot.cosinor.glmm.polar(object1)
    test_cosinor(object1, x_str = "X")
 
    object1 <- cosinor.glmm(Y ~ 1 + X +amp.acro(time, group = "X"), data = vitamind)
@@ -362,7 +362,7 @@ object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(1
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ggplot.cosinor.glmm.polar(object)
 
-testdata = simulate_cosinor(1000,
+testdata = simulate_cosinor(50,
                             mesor = 7,
                             amp = c(0.1,0.4,0.5),
                             acro = c(1,1.5, 0.1),
@@ -376,8 +376,8 @@ object = cosinor.glmm(Y ~ group + amp.acro(times,
                                            n_components = 3,
                                            period = c(12,6, 8),
                                            group = c('group', NA, 'group')),data = testdata, family = poisson())
-ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
-ggplot.cosinor.glmm.polar(object, view = "full")
+plot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+polar_plot.cosinor.glmm(object, view = "full")
 
 
 #Testing test_cosinor

@@ -182,15 +182,20 @@ amp.acro <- function(time_col,
       msg = "time_col must be univariate"
     )
 
-
     # allow the user to not have any grouping structure (if group argument is missing)
-    if (missing(group) | all(is.na(group)) | all(is.na(group))) {
+    if (missing(group)) {
       group <- 0
       group_check <- FALSE
     } else {
-      group_check <- TRUE
-      check_group_var(.data = .data, group = group)
+      if(all(is.na(group)) | all(is.null(group))) {
+        group <- 0
+        group_check <- FALSE
+      } else {
+        group_check <- TRUE
+        check_group_var(.data = .data, group = group)
+      }
     }
+
     # "group_check" variable is passed to cosinor.glmm to indicate if there is a
     # group argument present in amp.acro()
 

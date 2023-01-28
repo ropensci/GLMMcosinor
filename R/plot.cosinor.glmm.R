@@ -125,25 +125,25 @@ plot.cosinor.glmm <- function(object,
   # get the plot object
   if (!superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name)) +
+      plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes(x = paste(object$time_name), y = y_name)) +
         ggplot2::geom_line()
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(data = newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name, col = "levels"))
+        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = paste(object$time_name), y = y_name, col = "levels"))
     }
   }
 
   # superimpose original data from cosinor.glmm() object
   if (superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name)) +
+      plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes(x = paste(object$time_name), y = y_name)) +
         ggplot2::geom_line() +
-        ggplot2::geom_point(data = original_data_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
+        ggplot2::geom_point(data = original_data_processed, ggplot2::aes(x = paste(object$time_name), y = y_name), alpha = data_opacity) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(data = newdata_processed, ggplot2::aes_string(x = paste(object$time_name), y = y_name, col = "levels")) +
-        ggplot2::geom_point(data = original_data_processed, ggplot2::aes_string(paste(object$time_name), y = y_name, col = "levels"), alpha = data_opacity) +
+        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = paste(object$time_name), y = y_name, col = "levels")) +
+        ggplot2::geom_point(data = original_data_processed, ggplot2::aes(paste(object$time_name), y = y_name, col = "levels"), alpha = data_opacity) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }

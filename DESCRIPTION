@@ -17,7 +17,8 @@ Imports:
     assertthat,
     ggforce,
     ggplot2,
-    glmmTMB
+    glmmTMB,
+    vdiffr
 Suggests:
     knitr,
     rmarkdown,
@@ -30,3 +31,5 @@ VignetteBuilder: knitr
 RoxygenNote: 7.2.2
 Roxygen: list(markdown = TRUE, roclets = c ("namespace", "rd", "srr::srr_stats_roclet"))
 Config/testthat/edition: 3
+Depends: 
+    tidyverse
