@@ -297,7 +297,7 @@ test_that("plot gives appropriate plot output", {
   f <- function() {
     plot(object, superimpose.data = TRUE)
   }
-  vdiffr::expect_doppelganger("vitamind_plot_superimpose.data_TRUE", f)
+  vdiffr::expect_doppelganger("vitamind_plot_si_data", f)
 
   # Test 5
   data(vitamind)
@@ -305,5 +305,5 @@ test_that("plot gives appropriate plot output", {
   f <- function() {
     plot(object, superimpose.data = TRUE, predict.ribbon = TRUE)
   }
-  vdiffr::expect_doppelganger("vitamind_plot_superimpose.data_TRUE_and_predict_ribbon", f)
+  vdiffr::expect_doppelganger("vitamind_plot_si_data_and_pred_ribbon", f)
 })
