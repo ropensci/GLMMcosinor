@@ -17,13 +17,13 @@ Imports:
     assertthat,
     ggforce,
     ggplot2,
-    glmmTMB,
-    vdiffr
+    glmmTMB
 Suggests:
     dplyr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
+    vdiffr,
     withr
 License: GPL (>= 3)
 Encoding: UTF-8
