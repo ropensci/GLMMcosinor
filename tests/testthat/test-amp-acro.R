@@ -12,8 +12,6 @@ test_that("multiplication works", {
 })
 
 test_that("bad inputs return useful errors", {
-  library(tidyverse)
-
   # test 2
   f <- function() {
     amp.acro(
@@ -149,7 +147,7 @@ test_that("bad inputs return useful errors", {
 test_that("matrix, or tibble inputs are converted to dataframe ", {
   # test 13
   data(vitamind)
-  vitamind_mod <- as_tibble(vitamind)
+  vitamind_mod <- dplyr::as_tibble(vitamind)
 
   f <- function() {
     amp.acro(
