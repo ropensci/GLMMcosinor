@@ -21,7 +21,11 @@ a new formula
 \examples{
 vitamind2 <- vitamind
 vitamind2$patient <- sample(LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
-updated_df_and_formula <- update_formula_and_data(data = vitamind2, formula = Y ~ X + amp.acro(time, group = "X", period = 12))
+updated_df_and_formula <- update_formula_and_data(
+  data = vitamind2,
+   formula = Y ~ X + amp.acro(time,
+                               group = "X",
+                               period = 12))
 res <- fit_model_and_process(
   updated_df_and_formula,
   update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))

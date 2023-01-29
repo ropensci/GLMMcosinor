@@ -22,7 +22,10 @@ not be the desired result for continuous covariates.
 \examples{
 
 
-fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+                                    group = "X",
+                                    n_components = 1,
+                                    period = 12), data = vitamind)
 summary(fit)
 
 }

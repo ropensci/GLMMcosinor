@@ -4,6 +4,8 @@
 #' @param formula model formula, specified by user including \code{amp.acro()}.
 #' @param family the model family.
 #' @param quietly controls whether messages from amp.acro are displayed. TRUE by default
+#' @param dispformula The formula specifying the dispersion model
+#' @param ziformula The formula specifying the zero-inflation model
 #'
 #' @srrstatsTODO {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
 #' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
@@ -143,7 +145,7 @@ amp.acro <- function(time_col,
   }
 
   env <- environment() # preserve environment of amp.acro to be passed into amp.acro_iteration
-  amp.acro_iteration <- function(time_col, n_components, group, .formula, period, quietly = TRUE, .data, .amp.acro_ind = -1) {
+  amp.acro_iteration <- function(time_col, n_components, group, .formula, period, .quietly = TRUE, .data, .amp.acro_ind = -1) {
     # assess the quality of the inputs
     stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
     lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
@@ -169,7 +171,7 @@ amp.acro <- function(time_col,
     }
 
     # extract the time vector
-    ttt <- eval(substitute(time_col, env), env = .data) # extract vector of "time" values from .data
+    ttt <- eval(substitute(time_col, env), envir = .data) # extract vector of "time" values from .data
 
     # ensure ttt contains numeric values only (tested)
     if (!assertthat::assert_that(is.numeric(ttt))) {
@@ -245,7 +247,7 @@ amp.acro <- function(time_col,
     }
     # get the terms and variable names from the amp.acro call
     # Terms <- stats::terms(.formula)
-    Terms <- terms(.formula, specials = "amp.acro")
+    Terms <- stats::terms(.formula, specials = "amp.acro")
     Terms$factors <- group_names
     varnames <- get_varnames(Terms)
     # create the initial formula string
@@ -295,10 +297,10 @@ amp.acro <- function(time_col,
       left_part <- NULL
     }
     newformula <- stats::as.formula(paste(left_part, # rownames(attr(Terms, "factors"))[1],
-      paste(c(attr(terms(.formula), "intercept"), non_acro_formula, formula_expr), collapse = " + "),
+      paste(c(attr(stats::terms(.formula), "intercept"), non_acro_formula, formula_expr), collapse = " + "),
       sep = " ~ "
     ))
-    newformula <- update.formula(newformula, ~.)
+    newformula <- stats::update.formula(newformula, ~.)
     # update the formula
     time_name <- paste(substitute(time_col, env))
     # create NULL vectors for group metrics. These will be updated if there is a group argument
@@ -331,7 +333,7 @@ amp.acro <- function(time_col,
     group = group,
     .formula = .formula,
     period = period,
-    quietly = quietly,
+    .quietly = .quietly,
     .data = .data,
     .amp.acro_ind = .amp.acro_ind
   )

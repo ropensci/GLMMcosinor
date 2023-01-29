@@ -25,6 +25,8 @@ polar_plot(
 )
 }
 \arguments{
+\item{x}{An object of class \code{cosinor.glmm}}
+
 \item{contour_interval}{The distance bewteen adjacent circular contours in the background of the polar plot}
 
 \item{make_cowplot}{A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant}
@@ -56,8 +58,6 @@ polar_plot(
 \item{quietly}{Analagous to verbose, this logical argument controls whether messages are displayed in the console.}
 
 \item{...}{Additional, ignored arguments.}
-
-\item{object}{An object of class \code{cosinor.glmm}}
 }
 \description{
 Generates a polar plot with elliptical confidence intervals

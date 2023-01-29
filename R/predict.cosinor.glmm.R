@@ -6,12 +6,16 @@
 #'
 #' @param object An object of class \code{cosinor.glmm}
 #' @param newdata Optional new data
+#' @param se.fit Logical argument indicating whether to determine standard error (default = TRUE)
 #' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}
 #'
 #'
 #' @examples
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
+#' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+#'                                      group = "X",
+#'                                      n_components = 1,
+#'                                      period = 12), data = vitamind)
 #' predict(fit)
 #'
 #' @export

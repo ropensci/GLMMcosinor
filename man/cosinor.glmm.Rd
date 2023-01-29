@@ -7,7 +7,7 @@
 cosinor.glmm(
   formula,
   data,
-  family = gaussian(),
+  family = stats::gaussian(),
   quietly = TRUE,
   dispformula = ~1,
   ziformula = ~0,
@@ -25,6 +25,10 @@ cosinor.glmm(
 
 \item{quietly}{controls whether messages from amp.acro are displayed. TRUE by default}
 
+\item{dispformula}{Formula specifying a dispersion model (optional). Use the same format as the main formula}
+
+\item{ziformula}{Formula specifying a zero-inflation model (optional). Use the same format as the main formula}
+
 \item{...}{optional additional arguments passed to glmmTMB::glmmTMB()}
 }
 \description{
@@ -41,7 +45,10 @@ all the transformations for you. See examples for usage.
 }
 \examples{
 
-cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = "X", period = c(12, 8, 9)), data = vitamind)
+cosinor.glmm(Y ~ X + amp.acro(time,
+                             n_components = 3,
+                             group = "X",
+                             period = c(12, 8, 9)), data = vitamind)
 
 }
 \references{

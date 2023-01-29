@@ -9,7 +9,10 @@
 #' @param data Data frame where variable can be found
 #' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
 #' @param quietly controls whether messages from amp.acro are displayed. TRUE by default
+#' @param dispformula Formula specifying a dispersion model (optional). Use the same format as the main formula
+#' @param ziformula Formula specifying a zero-inflation model (optional). Use the same format as the main formula
 #' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
+#'
 #' @details This defines special functions that are used in the formula to
 #'   indicate the time variable and which covariates effect the amplitude. To
 #'   indicate the time variable wrap the name of it in the function
@@ -24,7 +27,10 @@
 #'
 #' @examples
 #'
-#' cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = "X", period = c(12, 8, 9)), data = vitamind)
+#'cosinor.glmm(Y ~ X + amp.acro(time,
+#'                              n_components = 3,
+#'                              group = "X",
+#'                              period = c(12, 8, 9)), data = vitamind)
 #'
 #' @references Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.
 #'
@@ -32,7 +38,7 @@
 #' @export
 cosinor.glmm <- function(formula,
                          data,
-                         family = gaussian(),
+                         family = stats::gaussian(),
                          quietly = TRUE,
                          dispformula = ~1,
                          ziformula = ~0,

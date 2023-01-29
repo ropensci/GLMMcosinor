@@ -11,6 +11,8 @@
 
 \item{newdata}{Optional new data}
 
+\item{se.fit}{Logical argument indicating whether to determine standard error (default = TRUE)}
+
 \item{...}{other arguments passed to \code{glmmTMB:::predict.glmmTMB}}
 }
 \description{
@@ -20,7 +22,10 @@ at a given month
 }
 \examples{
 
-fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+                                     group = "X",
+                                     n_components = 1,
+                                     period = 12), data = vitamind)
 predict(fit)
 
 }

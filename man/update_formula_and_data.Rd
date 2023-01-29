@@ -21,6 +21,10 @@ update_formula_and_data(
 \item{family}{the model family.}
 
 \item{quietly}{controls whether messages from amp.acro are displayed. TRUE by default}
+
+\item{dispformula}{The formula specifying the dispersion model}
+
+\item{ziformula}{The formula specifying the zero-inflation model}
 }
 \value{
 Returns a \code{list}.

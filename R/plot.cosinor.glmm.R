@@ -112,9 +112,11 @@ plot.cosinor.glmm <- function(object,
   # get the predicted response values using the predict.cosinor.glmm() function
   pred_obj <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
-  newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
-  newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
+  #newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
+  #newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
 
+  y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit
+  y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit
   # get the original data from the cosinor.glmm object to be superimposed
   if (superimpose.data) {
     original_data <- object$newdata
@@ -258,15 +260,6 @@ polar_plot.cosinor.glmm <- function(object,
 
   sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
 
-  # if (length(fill_colours) < max(unlist(lapply(object$group_stats, length)))) {
-  #  if (!quietly) {
-  #    message(paste(
-  #      '"fill_colours" argument requires ', max(unlist(lapply(object$group_stats, length))),
-  #      "arguments, but", length(fill_colours), "arguments supplied. Colours will be generated to meet this requirement using rainbow() function"
-  #    ))
-  #  }
-  #  fill_colours <- rainbow(max(unlist(lapply(object$group_stats, length))), start = 0)
-  # }
 
   # convert user input for zoom level into logical arguments
   if (view == "full") {
@@ -485,7 +478,7 @@ polar_plot.cosinor.glmm <- function(object,
       overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
       plot_obj <- plot_obj +
         ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
-        ggforce::geom_arc(aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
+        ggforce::geom_arc(ggplot2::aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
         ggplot2::geom_text(
           ggplot2::aes(
             label = overlay_labels, est_rrr, y = est_sss
@@ -538,7 +531,7 @@ polar_plot.cosinor.glmm <- function(object,
 
 #' Generates a polar plot with elliptical confidence intervals
 #'
-#' @param object An object of class \code{cosinor.glmm}
+#' @param x An object of class \code{cosinor.glmm}
 #' @param contour_interval The distance bewteen adjacent circular contours in the background of the polar plot
 #' @param make_cowplot A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant
 #' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted

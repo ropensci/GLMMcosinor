@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{An object of class \code{summary.cosinor.glmm}}
 
+\item{digits}{Controls the number of digits displayed in the summary output}
+
 \item{...}{Currently unused}
 }
 \description{
@@ -16,7 +18,10 @@ Print the summary of a cosinor model
 }
 \examples{
 
-fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+                                    group = "X",
+                                    n_components = 1,
+                                    period = 12), data = vitamind)
 summary(fit)
 
 }

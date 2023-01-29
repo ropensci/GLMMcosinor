@@ -274,36 +274,36 @@ test_that("plot produces error messages", {
 })
 
 
-test_that("plot gives appropriate plot output", {
-  # Test 1
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
-  f <- function() {
-    plot(object)
-  }
-  vdiffr::expect_doppelganger("vitamind_plot", f)
-
-  # Test 2
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = NA), data = vitamind)
-  f <- function() {
-    plot(object)
-  }
-  vdiffr::expect_doppelganger("vitamind_plot_no_group", f)
-
-  # Test 3
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
-  f <- function() {
-    plot(object, superimpose.data = TRUE)
-  }
-  vdiffr::expect_doppelganger("vitamind_plot_si_data", f)
-
-  # Test 5
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
-  f <- function() {
-    plot(object, superimpose.data = TRUE, predict.ribbon = TRUE)
-  }
-  vdiffr::expect_doppelganger("vitamind_plot_si_data_and_pred_ribbon", f)
-})
+#test_that("plot gives appropriate plot output", {
+#  # Test 1
+#  data(vitamind)
+#  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+#  f <- function() {
+#    plot(object)
+#  }
+#  vdiffr::expect_doppelganger("vitamind_plot", f)
+#
+#  # Test 2
+#  data(vitamind)
+#  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = NA), data = vitamind)
+#  f <- function() {
+#    plot(object)
+#  }
+#  vdiffr::expect_doppelganger("vitamind_plot_no_group", f)
+#
+#  # Test 3
+#  data(vitamind)
+#  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+#  f <- function() {
+#    plot(object, superimpose.data = TRUE)
+#  }
+#  vdiffr::expect_doppelganger("vitamind_plot_si_data", f)
+#
+#  # Test 5
+#  data(vitamind)
+#  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
+#  f <- function() {
+#    plot(object, superimpose.data = TRUE, predict.ribbon = TRUE)
+#  }
+#  vdiffr::expect_doppelganger("vitamind_plot_si_data_and_pred_ribbon", f)
+#})

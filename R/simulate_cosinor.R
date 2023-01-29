@@ -72,7 +72,7 @@ simulate_cosinor <- function(n,
 
 
   # generate a time vector
-  ttt <- runif(n, min = 0, period)
+  ttt <- stats::runif(n, min = 0, period)
 
   # Simulates Poisson circadian GLM
   get_dataset_poisson <- function(amp, acr, mesor, n_components, period) {
@@ -87,7 +87,7 @@ simulate_cosinor <- function(n,
 
     lambda <- exp(mesor + lambda_argument)
     nsize <- length(ttt)
-    y <- rpois(nsize, lambda = lambda)
+    y <- stats::rpois(nsize, lambda = lambda)
     df <- data.frame(y, rrr, sss, ttt)
     return(df)
   }
@@ -105,7 +105,7 @@ simulate_cosinor <- function(n,
 
     PSuccess <- exp(mesor + PSuccess_argument) / (1 + exp(mesor + PSuccess_argument))
     nsize <- length(ttt)
-    y <- rbinom(nsize, 1, PSuccess)
+    y <- stats::rbinom(nsize, 1, PSuccess)
     df <- data.frame(y, rrr, sss, ttt)
     return(df)
   }
@@ -149,7 +149,7 @@ simulate_cosinor <- function(n,
     lambda <- (mesor + lambda_argument)
     nsize <- length(ttt)
 
-    y <- rnorm(nsize, lambda, sd)
+    y <- stats::rnorm(nsize, lambda, sd)
     df <- data.frame(y, rrr, sss, ttt)
     return(df)
   }

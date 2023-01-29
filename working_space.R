@@ -362,7 +362,7 @@ object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(1
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ggplot.cosinor.glmm.polar(object)
 
-testdata = simulate_cosinor(50,
+testdata = simulate_cosinor(500,
                             mesor = 7,
                             amp = c(0.1,0.4,0.5),
                             acro = c(1,1.5, 0.1),

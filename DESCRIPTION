@@ -15,9 +15,12 @@ Description: Fit the cosinor model using the glmmTMB framework, allowing for a
 URL: https://github.com/RWParsons/GLMMcosinor
 Imports:
     assertthat,
+    cowplot,
     ggforce,
     ggplot2,
-    glmmTMB
+    glmmTMB,
+    rlang,
+    stats
 Suggests:
     dplyr,
     knitr,

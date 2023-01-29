@@ -15,7 +15,10 @@
 #' @examples
 #'
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
+#'fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+#'                                     group = "X",
+#'                                     n_components = 1,
+#'                                     period = 12), data = vitamind)
 #' summary(fit)
 #'
 #' @export
@@ -106,7 +109,7 @@ summary.cosinor.glmm <- function(object, ...) {
     }
 
     # calculate the variance-covariance matrix
-    vmat <- vcov(mf)[[model_index]][
+    vmat <- stats::vcov(mf)[[model_index]][
       c(which(r.coef), which(s.coef)),
       c(which(r.coef), which(s.coef))
     ]
@@ -151,11 +154,11 @@ summary.cosinor.glmm <- function(object, ...) {
 
     # assemble summary matrix
     coef <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-    se <- c(sqrt(diag(vcov(mf)[[model_index]]))[mu.coef], se.trans)
+    se <- c(sqrt(diag(stats::vcov(mf)[[model_index]]))[mu.coef], se.trans)
 
 
     zt <- stats::qnorm((1 - .95) / 2, lower.tail = F)
-    raw.se <- sqrt(diag(vcov(mf)[[model_index]]))
+    raw.se <- sqrt(diag(stats::vcov(mf)[[model_index]]))
 
     rawmat <- cbind(
       estimate = coefs, standard.error = raw.se, ## ?This could be changed to determine p-val between groups?
@@ -210,12 +213,16 @@ summary.cosinor.glmm <- function(object, ...) {
 #' Print the summary of a cosinor model
 #'
 #' @param x An object of class \code{summary.cosinor.glmm}
+#' @param digits Controls the number of digits displayed in the summary output
 #' @param ... Currently unused
 #'
 #'
 #' @examples
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", n_components = 1, period = 12), data = vitamind)
+#'fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+#'                                     group = "X",
+#'                                     n_components = 1,
+#'                                     period = 12), data = vitamind)
 #' summary(fit)
 #'
 #' @export
