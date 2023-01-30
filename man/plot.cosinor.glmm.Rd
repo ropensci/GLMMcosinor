@@ -6,6 +6,7 @@
 \usage{
 \method{plot}{cosinor.glmm}(
   object,
+  ci_level = 0.95,
   x_str = NULL,
   type = "response",
   xlims,
@@ -18,6 +19,8 @@
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
+
+\item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
 
 \item{x_str}{Character vector naming the covariate(s) to be plotted. May be NULL to plot overall curve}
 

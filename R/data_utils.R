@@ -363,3 +363,18 @@ check_group_var <- function(.data, group) {
     )
   }
 }
+
+#' Checks that the `ci_level` values provided are reasonable
+#'
+#' @param ci_level Confidence level.
+#'
+#' @return nothing if successful, an error message if not
+#' @noRd
+
+validate_ci_level <- function(ci_level) {
+  assertthat::is.number(ci_level)
+
+  if (ci_level < 0 || ci_level > 1) {
+    stop("'ci_level' must be a single numeric value in [0, 1].")
+  }
+}

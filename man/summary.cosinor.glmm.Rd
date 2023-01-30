@@ -4,10 +4,12 @@
 \alias{summary.cosinor.glmm}
 \title{Summarize a cosinor model}
 \usage{
-\method{summary}{cosinor.glmm}(object, ...)
+\method{summary}{cosinor.glmm}(object, ci_level = 0.95, ...)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
+
+\item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
 
 \item{...}{Currently unused}
 }

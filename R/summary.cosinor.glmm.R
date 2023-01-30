@@ -9,6 +9,7 @@
 #'
 #'
 #' @param object An object of class \code{cosinor.glmm}
+#' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param ... Currently unused
 #'
 #'
@@ -24,14 +25,14 @@
 #'
 #' @export
 
-summary.cosinor.glmm <- function(object, ...) {
+summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
   # get the fitted model from the cosinor.glmm() output, along with n_components, vec_rrr, and vec_sss
   mf <- object$fit
   n_components <- object$n_components
   vec_rrr <- object$vec_rrr
   vec_sss <- object$vec_sss
 
-
+  validate_ci_level(ci_level)
   # TODO: validate summary outputs with test-script using parts of the simulation study code
 
   # this function can be looped if there is disp or zi formula present. 'model_index' is a string: 'cond', 'disp', or 'zi'
@@ -158,25 +159,38 @@ summary.cosinor.glmm <- function(object, ...) {
     se <- c(sqrt(diag(stats::vcov(mf)[[model_index]]))[mu.coef], se.trans)
 
 
-    zt <- stats::qnorm((1 - .95) / 2, lower.tail = F)
+    zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F)
     raw.se <- sqrt(diag(stats::vcov(mf)[[model_index]]))
 
     rawmat <- cbind(
-      estimate = coefs, standard.error = raw.se, ## ?This could be changed to determine p-val between groups?
-      lower.CI = coefs - zt * raw.se, upper.CI = coefs + zt * raw.se,
+      estimate = coefs,
+      standard.error = raw.se, ## ?This could be changed to determine p-val between groups?
+      lower.CI = coefs - zt * raw.se,
+      upper.CI = coefs + zt * raw.se,
       p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
     )
 
     smat <- cbind(
-      estimate = coef, standard.error = se, lower.CI = coef - zt * se,
-      upper.CI = coef + zt * se, p.value = 2 * stats::pnorm(-abs(coef / se))
+      estimate = coef,
+      standard.error = se,
+      lower.CI = coef - zt * se,
+      upper.CI = coef + zt * se,
+      p.value = 2 * stats::pnorm(-abs(coef / se))
     )
 
     if (object$group_check) {
       rownames(smat) <- update_covnames(rownames(smat), object$group_stats)
     }
 
-    structure(list(transformed.table = as.data.frame(smat), raw.table = as.data.frame(rawmat), transformed.covariance = cov.trans, raw.covariance = vmat), class = "sub_summary.cosinor.glmm")
+    structure(
+      list(
+        transformed.table = as.data.frame(smat),
+        raw.table = as.data.frame(rawmat),
+        transformed.covariance = cov.trans,
+        raw.covariance = vmat
+      ),
+      class = "sub_summary.cosinor.glmm"
+    )
   }
 
   # store the output from the conditional model

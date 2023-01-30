@@ -6,6 +6,7 @@
 \usage{
 \method{polar_plot}{cosinor.glmm}(
   object,
+  ci_level = 0.95,
   contour_interval = 1,
   make_cowplot = TRUE,
   component_index = 1,
@@ -26,6 +27,8 @@
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
+
+\item{ci_level}{The level for calculated confidence ellipses. Defaults to 0.95.}
 
 \item{contour_interval}{The distance bewteen adjacent circular contours in the background of the polar plot}
 
@@ -58,6 +61,9 @@
 \item{quietly}{Analagous to verbose, this logical argument controls whether messages are displayed in the console.}
 
 \item{...}{Additional, ignored arguments.}
+}
+\value{
+Returns a ggplot graphic.
 }
 \description{
 Generates a polar plot with elliptical confidence intervals

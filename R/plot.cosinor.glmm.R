@@ -5,6 +5,7 @@
 #'
 #'
 #' @param object An object of class \code{cosinor.glmm}
+#' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param x_str Character vector naming the covariate(s) to be plotted. May be NULL to plot overall curve
 #' @param type Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")
 #' @param xlims A vector of length two containing the lower and upper x limit to be plotted
@@ -23,6 +24,7 @@
 #'
 
 plot.cosinor.glmm <- function(object,
+                              ci_level = 0.95,
                               x_str = NULL,
                               type = "response",
                               xlims,
@@ -35,6 +37,9 @@ plot.cosinor.glmm <- function(object,
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
     msg = "object must be of class cosinor.glmm"
   )
+
+  validate_ci_level(ci_level)
+
   if (!missing(x_str) & (!is.null(x_str))) {
     assertthat::assert_that((is.character(x_str)),
       msg = "x_str must be string corresponding to a group name in cosinor.glmm object"
@@ -115,8 +120,10 @@ plot.cosinor.glmm <- function(object,
   # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
   # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
 
-  y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit
-  y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit
+  zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F)
+
+  y_min <- pred_obj$fit - zt * pred_obj$se.fit
+  y_max <- pred_obj$fit + zt * pred_obj$se.fit
   # get the original data from the cosinor.glmm object to be superimposed
   if (superimpose.data) {
     original_data <- object$newdata
@@ -166,6 +173,7 @@ plot.cosinor.glmm <- function(object,
 #' Generates a polar plot with elliptical confidence intervals
 #'
 #' @param object An object of class \code{cosinor.glmm}
+#' @param ci_level The level for calculated confidence ellipses. Defaults to 0.95.
 #' @param contour_interval The distance bewteen adjacent circular contours in the background of the polar plot
 #' @param make_cowplot A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant
 #' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
@@ -183,7 +191,7 @@ plot.cosinor.glmm <- function(object,
 #' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
-#' @return
+#' @return Returns a ggplot graphic.
 #' @export
 #'
 #'
@@ -191,6 +199,7 @@ plot.cosinor.glmm <- function(object,
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
 #' polar_plot(object)
 polar_plot.cosinor.glmm <- function(object,
+                                    ci_level = 0.95,
                                     contour_interval = 1,
                                     make_cowplot = TRUE,
                                     component_index = 1,
@@ -212,6 +221,9 @@ polar_plot.cosinor.glmm <- function(object,
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
     msg = "object must be of class cosinor.glmm"
   )
+
+  validate_ci_level(ci_level)
+
   if (!missing(contour_interval)) {
     assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
       msg = "contour_interval must be a number greater than 0"
@@ -258,7 +270,7 @@ polar_plot.cosinor.glmm <- function(object,
     msg = "overlay_parameter_info must be a logical argument, either TRUE or FALSE"
   )
 
-  sum <- summary.cosinor.glmm(object) # get summary statistics of cosinor.glmm object
+  sum <- summary(object, ci_level = ci_level) # get summary statistics of cosinor.glmm object
 
 
   # convert user input for zoom level into logical arguments
@@ -532,6 +544,7 @@ polar_plot.cosinor.glmm <- function(object,
 #' Generates a polar plot with elliptical confidence intervals
 #'
 #' @param x An object of class \code{cosinor.glmm}
+#' @param ci_level The level for calculated confidence ellipses. Defaults to 0.95.
 #' @param contour_interval The distance bewteen adjacent circular contours in the background of the polar plot
 #' @param make_cowplot A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant
 #' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
@@ -549,7 +562,7 @@ polar_plot.cosinor.glmm <- function(object,
 #' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
-#' @return
+#' @return Returns a ggplot graphic.
 #' @export
 #'
 #'
@@ -557,6 +570,7 @@ polar_plot.cosinor.glmm <- function(object,
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
 #' polar_plot(object)
 polar_plot <- function(x,
+                       ci_level = 0.95,
                        contour_interval = 1,
                        make_cowplot = TRUE,
                        component_index = 1,
