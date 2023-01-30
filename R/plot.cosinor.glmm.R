@@ -23,13 +23,13 @@
 #'
 
 plot.cosinor.glmm <- function(object,
-                                x_str = NULL,
-                                type = "response",
-                                xlims,
-                                pred.length.out = 200,
-                                superimpose.data = FALSE,
-                                data_opacity = 0.3,
-                                predict.ribbon = TRUE,
+                              x_str = NULL,
+                              type = "response",
+                              xlims,
+                              pred.length.out = 200,
+                              superimpose.data = FALSE,
+                              data_opacity = 0.3,
+                              predict.ribbon = TRUE,
                               ...) {
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
@@ -112,8 +112,8 @@ plot.cosinor.glmm <- function(object,
   # get the predicted response values using the predict.cosinor.glmm() function
   pred_obj <- predict.cosinor.glmm(object, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
-  #newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
-  #newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
+  # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
+  # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
 
   y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit
   y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit
@@ -191,21 +191,21 @@ plot.cosinor.glmm <- function(object,
 #' object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
 #' polar_plot(object)
 polar_plot.cosinor.glmm <- function(object,
-                                      contour_interval = 1,
-                                      make_cowplot = TRUE,
-                                      component_index = 1,
-                                      grid_angle_segments = 8,
-                                      radial_units = "radians",
-                                      clockwise = FALSE,
-                                      text_size = 3,
-                                      text_opacity = 0.5,
-                                      fill_colours,
-                                      ellipse_opacity = 0.3,
-                                      circle_linetype = "dotted",
-                                      start = "right",
-                                      view = "full",
-                                      overlay_parameter_info = FALSE,
-                                      quietly = TRUE,
+                                    contour_interval = 1,
+                                    make_cowplot = TRUE,
+                                    component_index = 1,
+                                    grid_angle_segments = 8,
+                                    radial_units = "radians",
+                                    clockwise = FALSE,
+                                    text_size = 3,
+                                    text_opacity = 0.5,
+                                    fill_colours,
+                                    ellipse_opacity = 0.3,
+                                    circle_linetype = "dotted",
+                                    start = "right",
+                                    view = "full",
+                                    overlay_parameter_info = FALSE,
+                                    quietly = TRUE,
                                     ...) {
   # checking the quality of inputs
 

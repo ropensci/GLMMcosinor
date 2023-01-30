@@ -46,9 +46,10 @@ all the transformations for you. See examples for usage.
 \examples{
 
 cosinor.glmm(Y ~ X + amp.acro(time,
-                             n_components = 3,
-                             group = "X",
-                             period = c(12, 8, 9)), data = vitamind)
+  n_components = 3,
+  group = "X",
+  period = c(12, 8, 9)
+), data = vitamind)
 
 }
 \references{

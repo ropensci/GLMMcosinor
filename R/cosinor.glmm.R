@@ -27,10 +27,11 @@
 #'
 #' @examples
 #'
-#'cosinor.glmm(Y ~ X + amp.acro(time,
-#'                              n_components = 3,
-#'                              group = "X",
-#'                              period = c(12, 8, 9)), data = vitamind)
+#' cosinor.glmm(Y ~ X + amp.acro(time,
+#'   n_components = 3,
+#'   group = "X",
+#'   period = c(12, 8, 9)
+#' ), data = vitamind)
 #'
 #' @references Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.
 #'

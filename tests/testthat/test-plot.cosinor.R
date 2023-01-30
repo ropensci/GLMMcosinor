@@ -274,7 +274,7 @@ test_that("plot produces error messages", {
 })
 
 
-#test_that("plot gives appropriate plot output", {
+# test_that("plot gives appropriate plot output", {
 #  # Test 1
 #  data(vitamind)
 #  object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
@@ -306,4 +306,4 @@ test_that("plot produces error messages", {
 #    plot(object, superimpose.data = TRUE, predict.ribbon = TRUE)
 #  }
 #  vdiffr::expect_doppelganger("vitamind_plot_si_data_and_pred_ribbon", f)
-#})
+# })

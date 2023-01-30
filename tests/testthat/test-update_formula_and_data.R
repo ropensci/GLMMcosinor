@@ -18,5 +18,3 @@ test_that("warning for missing data", {
   }
   suppressMessages(expect_message(res()))
 })
-
-

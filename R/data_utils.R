@@ -189,7 +189,7 @@ amp.acro <- function(time_col,
       group <- 0
       group_check <- FALSE
     } else {
-      if(all(is.na(group)) | all(is.null(group))) {
+      if (all(is.na(group)) | all(is.null(group))) {
         group <- 0
         group_check <- FALSE
       } else {

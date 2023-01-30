@@ -43,9 +43,10 @@ continuous covariates.
 \examples{
 
 fit <- cosinor.glmm(Y ~ X + amp.acro(time,
-                                    group = "X",
-                                    n_components = 1,
-                                    period = 12), data = vitamind)
+  group = "X",
+  n_components = 1,
+  period = 12
+), data = vitamind)
 test_cosinor(fit, "X", "amp")
 
 }
