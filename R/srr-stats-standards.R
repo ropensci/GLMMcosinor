@@ -8,7 +8,8 @@
 #' (These comments may be deleted at any time.)
 #'
 #' @srrstatsVerbose TRUE
-#' @name
+#'
+#' @noRd
 NULL
 
 #' #Not sure where to put:
