@@ -4,9 +4,9 @@
 \name{GLMMcosinor-package}
 \alias{GLMMcosinor}
 \alias{GLMMcosinor-package}
-\title{GLMMcosinor: Estimate and fit the cosinor (generalised mixed) model}
+\title{GLMMcosinor: Fit a cosinor model using a generalised mixed modelling framework}
 \description{
-Fit the cosinor model using the glmmTMB framework, allowing for a wide range of family functions and a lme4-style for specifying hierarchical structure in the models formula.
+Fit the cosinor model using the glmmTMB framework, allowing for a wide range of link functions and capacity of heirachical structures.
 }
 \seealso{
 Useful links:

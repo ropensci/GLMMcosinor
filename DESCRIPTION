@@ -1,8 +1,7 @@
 Package: GLMMcosinor
 Type: Package
-Title: Estimate and fit the cosinor (generalised mixed) model 
+Title: Fit a cosinor model using a generalised mixed modelling framework
 Version: 0.0.9000
-Date: 2022-05-23
 Authors@R: c(
     person("Rex", "Parsons", role = c("aut", "cre"),
            email = "rex.parsons94@gmail.com",
@@ -10,8 +9,7 @@ Authors@R: c(
     person("Oliver", "Jayasinghe", role = "aut")
   )
 Description: Fit the cosinor model using the glmmTMB framework, allowing for a
-    wide range of family functions and a lme4-style for specifying 
-    hierarchical structure in the models formula.
+    wide range of link functions and capacity of heirachical structures.
 URL: https://github.com/RWParsons/GLMMcosinor
 Imports:
     assertthat,
