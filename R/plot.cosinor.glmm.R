@@ -457,14 +457,14 @@ polar_plot.cosinor.glmm <- function(x,
     # adding special symbols to time_labels (π for radians, ° for degrees )
     if (radial_units == "radians") {
       pi_string <- paste(round(time_labels / pi, 1))
-      time_labels <- paste0(pi_string, "π")
-      acr_overlay <- paste0(signif(conversion_factor * est_acr / pi, 2), "π")
+      time_labels <- paste0(pi_string, "\U03C0")
+      acr_overlay <- paste0(signif(conversion_factor * est_acr / pi, 2), "\U03C0")
     }
 
     if (radial_units == "degrees") {
-      time_labels <- paste0(time_labels, "°")
+      time_labels <- paste0(time_labels, "\U00B0")
       conversion_factor * est_acr
-      acr_overlay <- paste0(signif(conversion_factor * est_acr / 360, 2), "°")
+      acr_overlay <- paste0(signif(conversion_factor * est_acr / 360, 2), "\U00B0")
     }
 
 
@@ -490,7 +490,7 @@ polar_plot.cosinor.glmm <- function(x,
     # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
     if (overlay_parameter_info) {
       radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
-      overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("ϕ = ", acr_overlay), sep = "\n")
+      overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("\U03D5 = ", acr_overlay), sep = "\n")
       plot_obj <- plot_obj +
         ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
         ggforce::geom_arc(ggplot2::aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
