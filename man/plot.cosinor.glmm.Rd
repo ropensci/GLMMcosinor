@@ -5,7 +5,7 @@
 \title{Plot a cosinor model}
 \usage{
 \method{plot}{cosinor.glmm}(
-  object,
+  x,
   ci_level = 0.95,
   x_str = NULL,
   type = "response",
@@ -18,7 +18,7 @@
 )
 }
 \arguments{
-\item{object}{An object of class \code{cosinor.glmm}}
+\item{x}{An \code{cosinor.glmm} object.}
 
 \item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
 
@@ -44,7 +44,7 @@ Optionally allows for plotting by covariates
 }
 \examples{
 
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-plot(object, x_str = "X")
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+plot(model, x_str = "X")
 
 }

@@ -5,7 +5,7 @@
 \title{Generates a polar plot with elliptical confidence intervals}
 \usage{
 \method{polar_plot}{cosinor.glmm}(
-  object,
+  x,
   ci_level = 0.95,
   contour_interval = 1,
   make_cowplot = TRUE,
@@ -26,7 +26,7 @@
 )
 }
 \arguments{
-\item{object}{An object of class \code{cosinor.glmm}}
+\item{x}{An \code{cosinor.glmm} object.}
 
 \item{ci_level}{The level for calculated confidence ellipses. Defaults to 0.95.}
 
@@ -69,6 +69,6 @@ Returns a ggplot graphic.
 Generates a polar plot with elliptical confidence intervals
 }
 \examples{
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-polar_plot(object)
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model)
 }

@@ -69,6 +69,6 @@ Returns a ggplot graphic.
 Generates a polar plot with elliptical confidence intervals
 }
 \examples{
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-polar_plot(object)
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model)
 }

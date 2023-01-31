@@ -19,7 +19,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "contour_interval must be a number greater than 0", fixed = TRUE
+    regex = "'contour_interval' must be a number greater than 0", fixed = TRUE
   )
 
   # Test 3
@@ -30,7 +30,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "quietly must a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'quietly' must a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 
   # Test 4
@@ -41,7 +41,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "radial_units must be either 'radians', 'degrees', or 'period'", fixed = TRUE
+    regex = "'radial_units' must be either 'radians', 'degrees', or 'period'", fixed = TRUE
   )
 
   # Test 5
@@ -52,7 +52,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "clockwise must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'clockwise' must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 
   # Test 6
@@ -63,7 +63,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "text_size must be a number greater than 0", fixed = TRUE
+    regex = "'text_size' must be a number greater than 0", fixed = TRUE
   )
 
   # Test 7
@@ -74,7 +74,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "text_opacity must be a number between 0 and 1 inclusive", fixed = TRUE
+    regex = "'text_opacity' must be a number between 0 and 1 inclusive", fixed = TRUE
   )
 
   # Test 8
@@ -85,7 +85,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "ellipse_opacity must be a number between 0 and 1 inclusive", fixed = TRUE
+    regex = "'ellipse_opacity' must be a number between 0 and 1 inclusive", fixed = TRUE
   )
 
   # Test 9
@@ -96,7 +96,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "make_cowplot must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'make_cowplot' must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 
   # Test 10
@@ -107,7 +107,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "component_index must be an integer between 1 and n_components (total number of components in model) inclusive", fixed = TRUE
+    regex = "'component_index' must be an integer between 1 and n_components (total number of components in model) inclusive", fixed = TRUE
   )
 
   # Test 11
@@ -118,7 +118,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "circle_linetype must be a character. See ?linetype for more details", fixed = TRUE
+    regex = "'circle_linetype' must be a character. See ?linetype for more details", fixed = TRUE
   )
 
   # # Test 12
@@ -162,7 +162,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "overlay_parameter_info must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'overlay_parameter_info' must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 })
 
@@ -197,7 +197,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "x_str must be string corresponding to a group name in cosinor.glmm object", fixed = TRUE
+    regex = "'x_str' must be string corresponding to a group name in cosinor.glmm object", fixed = TRUE
   )
 
   # Test 2
@@ -209,7 +209,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "type must be a string. See type in ?predict for more information about valid inputs", fixed = TRUE
+    regex = "'type' must be a string. See type in ?predict for more information about valid inputs", fixed = TRUE
   )
 
   # Test 3
@@ -221,7 +221,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "xlims must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate", fixed = TRUE
+    regex = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate", fixed = TRUE
   )
 
   # Test 4
@@ -233,7 +233,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "pred.length.out must be an integer greater than 0", fixed = TRUE
+    regex = "'pred.length.out' must be an integer greater than 0", fixed = TRUE
   )
 
   # Test 5
@@ -245,7 +245,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "superimpose.data must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'superimpose.data' must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 
   # Test 6
@@ -257,7 +257,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "data_opacity must be a number between 0 and 1 inclusive", fixed = TRUE
+    regex = "data_opacity' must be a number between 0 and 1 inclusive", fixed = TRUE
   )
 
   # Test 7
@@ -269,7 +269,7 @@ test_that("plot produces error messages", {
 
   expect_error(
     f(),
-    regex = "predict.ribbon must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'predict.ribbon' must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 })
 
