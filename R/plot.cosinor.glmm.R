@@ -166,7 +166,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }
-  print(plot_object)
+  invisible(plot_object)
 }
 
 
@@ -539,7 +539,7 @@ polar_plot.cosinor.glmm <- function(x,
     print(final_obj)
   } else {
     final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
-    print(final_obj)
+    invisible(final_obj)
   }
 }
 
