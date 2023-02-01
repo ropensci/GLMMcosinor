@@ -137,7 +137,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_line()
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = "levels"))
+        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = levels))
     }
   }
 
@@ -150,8 +150,8 @@ plot.cosinor.glmm <- function(x,
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = "levels")) +
-        ggplot2::geom_point(data = original_data_processed, ggplot2::aes(!!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = "levels"), alpha = data_opacity) +
+        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = levels)) +
+        ggplot2::geom_point(data = original_data_processed, ggplot2::aes(!!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = levels), alpha = data_opacity) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }
