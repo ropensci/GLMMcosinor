@@ -7,7 +7,7 @@
 #' continuous covariates.
 #'
 #'
-#' @param object An object of class \code{cosinor.glmm}
+#' @param x An object of class \code{cosinor.glmm}
 #' @param x_str Character naming the covariate whose amplitude/acrophase will be tested
 #' @param param Character string naming the parameter to test, either "amp" for
 #'   amplitude or "acr" for acrophase
@@ -30,7 +30,7 @@
 #' @export
 #'
 
-test_cosinor <- function(object,
+test_cosinor <- function(x,
                          x_str,
                          param = "amp",
                          comparison_A = 0,
@@ -39,11 +39,40 @@ test_cosinor <- function(object,
                          component_index = 1,
                          level_index = 0) {
   stopifnot(is.character(x_str))
-  stopifnot(length(grep(x_str, names(object$coefficients))) > 0)
 
-  summary.fit <- summary.cosinor.glmm(object)
-  index <- matrix(0, ncol = length(object$coefficients), nrow = length(x_str))
-  colnames(index) <- names(object$coefficients)
+  assertthat::assert_that(length(grep(x_str, names(x$coefficients))) > 0,
+                          msg = "x_str must be the name of a group in object")
+
+  assertthat::assert_that(inherits(x, "cosinor.glmm"),
+                          msg = "'x' must be of class 'cosinor.glmm'"
+  )
+
+  assertthat::assert_that(param %in% c("amp","acr"),
+                          msg = "'param' must be either 'amp' and 'acr'")
+
+  assertthat::assert_that(comparison_type %in% c("levels", "components"),
+                         msg = "'comparison_type' must be one of the following strings:'levels', or 'components'")
+
+  if(comparison_type == "levels") {
+  assertthat::assert_that(comparison_A %in% x$group_stats[[x_str]] &
+                          comparison_B %in% x$group_stats[[x_str]] ,
+                          msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'")
+  assertthat::assert_that(component_index %in% 1:x$n_components,
+                          msg = "'component_index' must be supplied. Ensure that it is a number corresponding to a component in the model")
+    }
+
+  if(comparison_type == "components") {
+    assertthat::assert_that(comparison_A %in% 1:x$n_components &
+                              comparison_B %in% 1:x$n_components,
+                            msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model" )
+    assertthat::assert_that(level_index %in% x$group_stats[comparison_A] & level_index %in% x$group_stats[comparison_B],
+                            msg = "'level_index' must be supplied. Ensure that it is a number corresponding to a level in the model")
+    }
+
+
+  summary.fit <- summary.cosinor.glmm(x)
+  index <- matrix(0, ncol = length(x$coefficients), nrow = length(x_str))
+  colnames(index) <- names(x$coefficients)
 
   if (comparison_type == "components") {
     for (i in 1:length(x_str)) {
@@ -54,7 +83,7 @@ test_cosinor <- function(object,
   }
 
   if (comparison_type == "levels") {
-    if (object$n_components == 1) {
+    if (x$n_components == 1) {
       component_index <- ""
     }
 
@@ -65,9 +94,9 @@ test_cosinor <- function(object,
     }
   }
 
-  diff.est <- index %*% object$coefficients
-  diff.var <- index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE] %*% summary.fit$transformed.covariance %*%
-    t(index[, grep("(amp|acr)", names(object$coefficients)), drop = FALSE])
+  diff.est <- index %*% x$coefficients
+  diff.var <- index[, grep("(amp|acr)", names(x$coefficients)), drop = FALSE] %*% summary.fit$transformed.covariance %*%
+    t(index[, grep("(amp|acr)", names(x$coefficients)), drop = FALSE])
 
   glob.chi <- (diff.est %*% solve(diff.var) %*% t(diff.est))[1, 1]
   ind.Z <- diff.est / sqrt(diag(diff.var))

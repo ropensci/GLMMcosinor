@@ -5,7 +5,7 @@
 \title{Test for differences in a cosinor model}
 \usage{
 test_cosinor(
-  object,
+  x,
   x_str,
   param = "amp",
   comparison_A = 0,
@@ -16,7 +16,7 @@ test_cosinor(
 )
 }
 \arguments{
-\item{object}{An object of class \code{cosinor.glmm}}
+\item{x}{An object of class \code{cosinor.glmm}}
 
 \item{x_str}{Character naming the covariate whose amplitude/acrophase will be tested}
 

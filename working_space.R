@@ -401,3 +401,15 @@ test_cosinor(object, x_str ="group", param = "amp", comparison_A = 1, comparison
 #Or, can compare levels for a given component
 test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison_B = 1, comparison_type = "levels", component_index = 1)
 
+
+#Links from meeting 1/02/2023
+#Create a feature-table:
+#https://link.springer.com/article/10.1186/s12859-020-03830-w
+#https://www.sciencedirect.com/science/article/pii/S1877750322001429
+#https://arxiv.org/pdf/2105.10168.pdf
+#https://link.springer.com/article/10.1007/s10928-021-09748-x
+
+#pkgcheck::pkgcheck
+#goodpractice::goodpractice
+#Change the 1:x to 1:seq_along()
+#Add some more tests
