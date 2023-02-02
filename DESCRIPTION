@@ -10,7 +10,9 @@ Authors@R: c(
   )
 Description: Fit the cosinor model using the glmmTMB framework, allowing for a
     wide range of link functions and capacity of heirachical structures.
-URL: https://github.com/RWParsons/GLMMcosinor
+URL: https://github.com/RWParsons/GLMMcosinor,
+    https://rwparsons.github.io/GLMMcosinor/
+BugReports: https://github.com/RWParsons/GLMMcosinor/issues
 Imports:
     assertthat,
     cowplot,

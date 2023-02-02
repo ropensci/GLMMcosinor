@@ -12,6 +12,8 @@ Fit the cosinor model using the glmmTMB framework, allowing for a wide range of 
 Useful links:
 \itemize{
   \item \url{https://github.com/RWParsons/GLMMcosinor}
+  \item \url{https://rwparsons.github.io/GLMMcosinor/}
+  \item Report bugs at \url{https://github.com/RWParsons/GLMMcosinor/issues}
 }
 
 }

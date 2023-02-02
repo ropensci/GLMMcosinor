@@ -115,7 +115,7 @@ plot.cosinor.glmm <- function(x,
   y_name <- x$response_var # get the response data from the cosinor.glmm object
 
   # get the predicted response values using the predict.cosinor.glmm() function
-  pred_obj <- predict(x, newdata = newdata_processed, type = type)
+  pred_obj <- stats::predict(x, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
   # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
   # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
