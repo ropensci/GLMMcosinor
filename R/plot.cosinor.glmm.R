@@ -115,7 +115,7 @@ plot.cosinor.glmm <- function(x,
   y_name <- x$response_var # get the response data from the cosinor.glmm object
 
   # get the predicted response values using the predict.cosinor.glmm() function
-  pred_obj <- predict.cosinor.glmm(x, newdata = newdata_processed, type = type)
+  pred_obj <- predict(x, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
   # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
   # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
@@ -133,25 +133,66 @@ plot.cosinor.glmm <- function(x,
   # get the plot object
   if (!superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name))) +
+      plot_object <- ggplot2::ggplot(
+        data = newdata_processed,
+        ggplot2::aes(
+          x = !!rlang::sym(paste(x$time_name)),
+          y = !!rlang::sym(y_name)
+        )
+      ) +
         ggplot2::geom_line()
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = levels))
+        ggplot2::geom_line(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(x$time_name)),
+            y = !!rlang::sym(y_name),
+            col = levels
+          )
+        )
     }
   }
 
   # superimpose original data from cosinor.glmm() object
   if (superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot(newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name))) +
+      plot_object <- ggplot2::ggplot(
+        data = newdata_processed,
+        ggplot2::aes(
+          x = !!rlang::sym(paste(x$time_name)),
+          y = !!rlang::sym(y_name)
+        )
+      ) +
         ggplot2::geom_line() +
-        ggplot2::geom_point(data = original_data_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name)), alpha = data_opacity) +
+        ggplot2::geom_point(
+          data = original_data_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(x$time_name)),
+            y = !!rlang::sym(y_name)
+          ),
+          alpha = data_opacity
+        ) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
       plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = levels)) +
-        ggplot2::geom_point(data = original_data_processed, ggplot2::aes(!!rlang::sym(paste(x$time_name)), y = !!rlang::sym(y_name), col = levels), alpha = data_opacity) +
+        ggplot2::geom_line(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(x$time_name)),
+            y = !!rlang::sym(y_name),
+            col = levels
+          )
+        ) +
+        ggplot2::geom_point(
+          data = original_data_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(x$time_name)),
+            y = !!rlang::sym(y_name),
+            col = levels
+          ),
+          alpha = data_opacity
+        ) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }
@@ -159,14 +200,34 @@ plot.cosinor.glmm <- function(x,
   # plot the prediction interval
   if (predict.ribbon) {
     if (missing(x_str) || is.null(x_str)) {
-      plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(x$time_name), ymin = y_min, ymax = y_max), alpha = 0.5) +
+      plot_object <- plot_object +
+        ggplot2::geom_ribbon(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(x$time_name),
+            ymin = y_min,
+            ymax = y_max
+          ),
+          alpha = 0.5
+        ) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     } else {
-      plot_object <- plot_object + ggplot2::geom_ribbon(data = newdata_processed, ggplot2::aes(x = !!rlang::sym(x$time_name), ymin = y_min, ymax = y_max, col = levels, fill = levels), alpha = 0.5) +
+      plot_object <- plot_object +
+        ggplot2::geom_ribbon(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(x$time_name),
+            ymin = y_min,
+            ymax = y_max,
+            col = levels,
+            fill = levels
+          ),
+          alpha = 0.5
+        ) +
         ggplot2::facet_grid(rows = ggplot2::vars(NULL))
     }
   }
-  invisible(plot_object)
+  plot_object
 }
 
 
@@ -280,37 +341,22 @@ polar_plot.cosinor.glmm <- function(x,
   if (view == "full") {
     zoom <- FALSE
     zoom_origin <- FALSE
-  }
-  if (view == "zoom_origin") {
+  } else if (view == "zoom_origin") {
     zoom <- TRUE
     zoom_origin <- TRUE
-  }
-  if (view == "zoom") {
+  } else if (view == "zoom") {
     zoom <- TRUE
     zoom_origin <- FALSE
   }
 
   # check if there is a contour argument & store this check in local environment
   n_components <- x$n_components
-  if (!missing(contour_interval)) {
-    contour_interval_check <- TRUE
-  } else {
-    contour_interval_check <- FALSE
-  }
-
-  if (!missing(fill_colours)) {
-    fill_colours_check <- TRUE
-  } else {
-    fill_colours_check <- FALSE
-  }
+  contour_interval_check <- !missing(contour_interval)
+  fill_colours_check <- !missing(fill_colours)
 
 
   # set direction of increasing angle based on user input of clockwise argument
-  if (clockwise) {
-    direction <- -1
-  } else {
-    direction <- 1
-  }
+  direction <- ifelse(clockwise, -1, 1)
 
   # convert user input for starting position (on Cartesian plane) into logical arguments
   # by default, ggplot() ellipse and circle functions use unit circle angles where 0 degrees
@@ -320,16 +366,13 @@ polar_plot.cosinor.glmm <- function(x,
   if (start == "top") {
     offset <- pi / 2
     overlay_start <- 0
-  }
-  if (start == "left") {
+  } else if (start == "left") {
     offset <- pi
     overlay_start <- -pi / 2
-  }
-  if (start == "bottom") {
+  } else if (start == "bottom") {
     offset <- 3 * pi / 2
     overlay_start <- pi
-  }
-  if (start == "right") {
+  } else if (start == "right") {
     offset <- 0
     overlay_start <- pi / 2
   }
@@ -362,16 +405,26 @@ polar_plot.cosinor.glmm <- function(x,
     acr_index <- paste0("acr", component_index)
 
     # grab and store the summary statistics for amp and acr
-    est_amp <- sum$transformed.table$estimate[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
-    l_est_amp <- sum$transformed.table$lower.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
-    u_est_amp <- sum$transformed.table$upper.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
+    amp_row_idx <- which(
+      grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) &
+        grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE)
+    )
 
-    est_acr <- sum$transformed.table$estimate[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(acr_index, rownames(sum$transformed.table), fixed = TRUE))]
-    l_est_acr <- sum$transformed.table$lower.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(acr_index, rownames(sum$transformed.table), fixed = TRUE))]
-    u_est_acr <- sum$transformed.table$upper.CI[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(acr_index, rownames(sum$transformed.table), fixed = TRUE))]
+    est_amp <- sum$transformed.table$estimate[amp_row_idx]
+    l_est_amp <- sum$transformed.table$lower.CI[amp_row_idx]
+    u_est_amp <- sum$transformed.table$upper.CI[amp_row_idx]
+
+    acr_row_idx <- which(
+      grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) &
+        grepl(acr_index, rownames(sum$transformed.table), fixed = TRUE)
+    )
+
+    est_acr <- sum$transformed.table$estimate[acr_row_idx]
+    l_est_acr <- sum$transformed.table$lower.CI[acr_row_idx]
+    u_est_acr <- sum$transformed.table$upper.CI[acr_row_idx]
 
     # an index of the names of the summary statistics used in iteration of loop
-    name_index <- rownames(sum$transformed.table)[which(grepl(string_index, rownames(sum$transformed.table), fixed = TRUE) & grepl(amp_index, rownames(sum$transformed.table), fixed = TRUE))]
+    name_index <- rownames(sum$transformed.table)[amp_row_idx]
     group_level <- array(dim = length(name_index))
 
     # obtain an index of group levels
@@ -408,12 +461,10 @@ polar_plot.cosinor.glmm <- function(x,
     if (radial_units == "radians") {
       max_period <- 2 * pi
       conversion_factor <- 1
-    }
-    if (radial_units == "degrees") {
+    } else if (radial_units == "degrees") {
       max_period <- 360
       conversion_factor <- (1 / 2 * pi) * 360
-    }
-    if (radial_units == "period") {
+    } else if (radial_units == "period") {
       max_period <- max_period
       conversion_factor <- (1 / 2 * pi) * max_period
     }
@@ -458,13 +509,17 @@ polar_plot.cosinor.glmm <- function(x,
     if (radial_units == "radians") {
       pi_string <- paste(round(time_labels / pi, 1))
       time_labels <- paste0(pi_string, "\U03C0")
-      acr_overlay <- paste0(signif(conversion_factor * est_acr / pi, 2), "\U03C0")
-    }
-
-    if (radial_units == "degrees") {
+      acr_overlay <- paste0(
+        signif(conversion_factor * est_acr / pi, 2),
+        "\U03C0"
+      )
+    } else if (radial_units == "degrees") {
       time_labels <- paste0(time_labels, "\U00B0")
       conversion_factor * est_acr
-      acr_overlay <- paste0(signif(conversion_factor * est_acr / 360, 2), "\U00B0")
+      acr_overlay <- paste0(
+        signif(conversion_factor * est_acr / 360, 2),
+        "\U00B0"
+      )
     }
 
 
@@ -475,30 +530,102 @@ polar_plot.cosinor.glmm <- function(x,
 
     plot_obj <-
       ggplot2::ggplot() +
-      ggforce::geom_circle(ggplot2::aes(x0 = 0, y0 = 0, r = seq(from = 0, to = max_plot_radius, by = contour_interval)), alpha = 0.3, linetype = circle_linetype) +
-      ggforce::geom_ellipse(ggplot2::aes(x0 = est_rrr, y0 = est_sss, a = a_trans, b = b_trans, angle = offset + direction * est_acr, fill = group_level, colour = group_level), alpha = ellipse_opacity) +
-      ggplot2::geom_point(ggplot2::aes(x = est_rrr, y = est_sss)) +
-      ggplot2::geom_segment(ggplot2::aes(x = dial_pos_full_x, y = dial_pos_full_y, xend = -dial_pos_full_x, yend = -dial_pos_full_y), linetype = circle_linetype) +
-      ggplot2::geom_text(ggplot2::aes(label = time_labels[-length(time_labels)]), x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)], y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)], size = text_size, alpha = text_opacity) +
-      ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_labels, y = 0), hjust = 1, vjust = -1, size = text_size, alpha = text_opacity) +
+      ggforce::geom_circle(
+        ggplot2::aes(
+          x0 = 0,
+          y0 = 0,
+          r = seq(from = 0, to = max_plot_radius, by = contour_interval)
+        ),
+        alpha = 0.3,
+        linetype = circle_linetype
+      ) +
+      ggforce::geom_ellipse(
+        ggplot2::aes(
+          x0 = est_rrr,
+          y0 = est_sss,
+          a = a_trans,
+          b = b_trans,
+          angle = offset + direction * est_acr,
+          fill = group_level,
+          colour = group_level
+        ),
+        alpha = ellipse_opacity
+      ) +
+      ggplot2::geom_point(
+        ggplot2::aes(x = est_rrr, y = est_sss)
+      ) +
+      ggplot2::geom_segment(
+        ggplot2::aes(
+          x = dial_pos_full_x,
+          y = dial_pos_full_y,
+          xend = -dial_pos_full_x,
+          yend = -dial_pos_full_y
+        ),
+        linetype = circle_linetype
+      ) +
+      ggplot2::geom_text(
+        ggplot2::aes(label = time_labels[-length(time_labels)]),
+        x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)],
+        y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)],
+        size = text_size,
+        alpha = text_opacity
+      ) +
+      ggplot2::geom_text(
+        ggplot2::aes(label = contour_labels, x = contour_labels, y = 0),
+        hjust = 1, vjust = -1, size = text_size, alpha = text_opacity
+      ) +
       ggplot2::guides(colour = "none") +
-      ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(), axis.ticks = ggplot2::element_blank(), panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank())
+      ggplot2::theme(
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        panel.grid.major = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      )
 
     if (x$group_check) {
       plot_obj <- plot_obj + ggplot2::labs(fill = "Group level", colour = NULL)
     }
     # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
     if (overlay_parameter_info) {
-      radius_sequence <- seq(0.65 * min(l_est_amp), 0.80 * min(l_est_amp), length.out = length(est_amp))
-      overlay_labels <- paste(paste0("A = ", signif(est_amp, 2)), paste0("\U03D5 = ", acr_overlay), sep = "\n")
+      radius_sequence <- seq(
+        0.65 * min(l_est_amp),
+        0.80 * min(l_est_amp),
+        length.out = length(est_amp)
+      )
+      overlay_labels <- paste(
+        paste0("A = ", signif(est_amp, 2)),
+        paste0("\U03D5 = ", acr_overlay),
+        sep = "\n"
+      )
       plot_obj <- plot_obj +
-        ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = est_rrr, yend = est_sss, colour = group_level)) +
-        ggforce::geom_arc(ggplot2::aes(x0 = 0, y0 = 0, r = radius_sequence, start = overlay_start, end = (overlay_start - direction * est_acr), colour = group_level)) +
+        ggplot2::geom_segment(
+          ggplot2::aes(
+            x = 0,
+            y = 0,
+            xend = est_rrr,
+            yend = est_sss,
+            colour = group_level
+          )
+        ) +
+        ggforce::geom_arc(
+          ggplot2::aes(
+            x0 = 0,
+            y0 = 0,
+            r = radius_sequence,
+            start = overlay_start,
+            end = (overlay_start - direction * est_acr),
+            colour = group_level
+          )
+        ) +
         ggplot2::geom_text(
           ggplot2::aes(
             label = overlay_labels, est_rrr, y = est_sss
           ),
-          size = text_size, alpha = text_opacity
+          size = text_size,
+          alpha = text_opacity
         )
     }
 
@@ -506,20 +633,39 @@ polar_plot.cosinor.glmm <- function(x,
 
     # apply colours chosen by user input to the fill and colour aesthetics
     if (fill_colours_check) {
-      plot_obj <- plot_obj + ggplot2::scale_fill_manual(values = fill_colours, aesthetics = c("fill", "colour"))
+      plot_obj <- plot_obj +
+        ggplot2::scale_fill_manual(
+          values = fill_colours,
+          aesthetics = c("fill", "colour")
+        )
     }
 
     # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits
     if (zoom) {
-      plot_obj <- plot_obj + ggplot2::geom_text(ggplot2::aes(label = contour_labels, x = contour_x_zoom, y = contour_y_zoom), size = text_size, alpha = text_opacity)
-      plot_obj <- plot_obj + ggplot2::coord_equal(xlim = c(xmin_zoom, xmax_zoom), ylim = c(ymin_zoom, ymax_zoom))
+      plot_obj <- plot_obj +
+        ggplot2::geom_text(
+          ggplot2::aes(
+            label = contour_labels,
+            x = contour_x_zoom,
+            y = contour_y_zoom
+          ),
+          size = text_size,
+          alpha = text_opacity
+        )
+      plot_obj <- plot_obj +
+        ggplot2::coord_equal(
+          xlim = c(xmin_zoom, xmax_zoom),
+          ylim = c(ymin_zoom, ymax_zoom)
+        )
     } else {
       plot_obj <- plot_obj + ggplot2::coord_fixed() # plot full polar plot if view = "full"
     }
 
     # OPTIONAL: print information about the polar grid
     if (!quietly) {
-      message("Circular contours every ", signif(contour_interval, 5), " unit(s)")
+      message(
+        "Circular contours every ", signif(contour_interval, 5), " unit(s)"
+      )
       message("Angle in units of ", radial_units)
     }
 
@@ -535,11 +681,14 @@ polar_plot.cosinor.glmm <- function(x,
       assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
       plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cosinor.glmm.polar(i))
     }
-    final_obj <- cowplot::plot_grid(plotlist = plot_list, labels = paste("Component", seq(from = 1, to = n_components, by = 1)))
-    print(final_obj)
+    final_obj <- cowplot::plot_grid(
+      plotlist = plot_list,
+      labels = paste("Component", 1:n_components)
+    )
+    final_obj
   } else {
     final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
-    invisible(final_obj)
+    final_obj
   }
 }
 
