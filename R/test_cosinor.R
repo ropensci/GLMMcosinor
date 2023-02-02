@@ -17,6 +17,7 @@
 #' @param comparison_type A string that is either: "levels" (default), or "components". If "levels", then comparison_A and comparison_B will refer to the two levels that are being compared. If comparison_type = "components", then comparison_A component will be compared to comparison_B component
 #' @param component_index If comparison_type = "levels", this controls which single component the levels are being compared to. Note that component_index must be an integer, and must refer to a component within the model
 #' @param level_index If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model
+#' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #'
 #' @examples
 #'
@@ -37,7 +38,8 @@ test_cosinor <- function(x,
                          comparison_B = 1,
                          comparison_type = "levels",
                          component_index = 1,
-                         level_index = 0) {
+                         level_index = 0,
+                         ci_level = 0.95) {
   stopifnot(is.character(x_str))
 
   assertthat::assert_that(length(grep(x_str, names(x$coefficients))) > 0,
@@ -100,7 +102,10 @@ test_cosinor <- function(x,
 
   glob.chi <- (diff.est %*% solve(diff.var) %*% t(diff.est))[1, 1]
   ind.Z <- diff.est / sqrt(diag(diff.var))
-  interval <- cbind(diff.est, diff.est - 1.96 * sqrt(diag(diff.var)), diff.est + 1.96 * sqrt(diag(diff.var)))
+
+  zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F) #get the quantile corresponding to ci_level
+
+  interval <- cbind(diff.est, diff.est - zt * sqrt(diag(diff.var)), diff.est + zt * sqrt(diag(diff.var)))
 
   global.test <- list(statistic = glob.chi, df = dim(diff.var)[1], conf.int = NULL, p.value = stats::pchisq(glob.chi, df = dim(diff.var)[1], lower.tail = FALSE))
   ind.test <- list(statistic = ind.Z[, ], df = NULL, conf.int = interval, p.value = 2 * stats::pnorm(-abs(ind.Z))[, ], names = x_str)

@@ -12,7 +12,8 @@ test_cosinor(
   comparison_B = 1,
   comparison_type = "levels",
   component_index = 1,
-  level_index = 0
+  level_index = 0,
+  ci_level = 0.95
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ amplitude or "acr" for acrophase}
 \item{component_index}{If comparison_type = "levels", this controls which single component the levels are being compared to. Note that component_index must be an integer, and must refer to a component within the model}
 
 \item{level_index}{If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model}
+
+\item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
 }
 \description{
 Given a time variable and optional covariates, generate inference a cosinor
