@@ -91,8 +91,9 @@ citation("GLMMcosinor")
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
 #>   Parsons R, Jayasinghe O (2023). _GLMMcosinor: Fit a cosinor model
-#>   using a generalised mixed modelling framework_. R package version
-#>   0.0.9000, <https://github.com/RWParsons/GLMMcosinor>.
+#>   using a generalised mixed modelling framework_.
+#>   https://github.com/RWParsons/GLMMcosinor,
+#>   https://rwparsons.github.io/GLMMcosinor/.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -101,7 +102,7 @@ citation("GLMMcosinor")
 #> framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe},
 #>     year = {2023},
-#>     note = {R package version 0.0.9000},
-#>     url = {https://github.com/RWParsons/GLMMcosinor},
+#>     note = {https://github.com/RWParsons/GLMMcosinor,
+#> https://rwparsons.github.io/GLMMcosinor/},
 #>   }
 ```

@@ -70,17 +70,8 @@ cowplot::plot_grid(p1, p2, nrow=1)
 ```
 
 
-
-
-
 ## Citation
 
 ```{r}
 citation("GLMMcosinor")
 ```
-
-
-
-
-
-
