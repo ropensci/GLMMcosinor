@@ -200,7 +200,25 @@ test_that("plot produces error messages", {
     regex = "'x_str' must be string corresponding to a group name in cosinor.glmm object", fixed = TRUE
   )
 
-  # Test 2
+  #Test 2
+  data(vitamind)
+  vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
+  object <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+
+  f <- function() {
+    plot(object, x_str = c("X", "Z"))
+  }
+
+  expect_no_error(f())
+
+  f <- function() {
+    plot(object)
+  }
+
+  #Test 3
+  expect_no_error(f())
+
+  # Test 4
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -212,7 +230,7 @@ test_that("plot produces error messages", {
     regex = "'type' must be a string. See type in ?predict for more information about valid inputs", fixed = TRUE
   )
 
-  # Test 3
+  # Test 5
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -224,7 +242,7 @@ test_that("plot produces error messages", {
     regex = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate", fixed = TRUE
   )
 
-  # Test 4
+  # Test 6
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -236,7 +254,7 @@ test_that("plot produces error messages", {
     regex = "'pred.length.out' must be an integer greater than 0", fixed = TRUE
   )
 
-  # Test 5
+  # Test 7
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -248,7 +266,7 @@ test_that("plot produces error messages", {
     regex = "'superimpose.data' must be a logical argument, either TRUE or FALSE", fixed = TRUE
   )
 
-  # Test 6
+  # Test 8
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -260,7 +278,7 @@ test_that("plot produces error messages", {
     regex = "data_opacity' must be a number between 0 and 1 inclusive", fixed = TRUE
   )
 
-  # Test 7
+  # Test 9
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {

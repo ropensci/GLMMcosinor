@@ -43,9 +43,11 @@ plot.cosinor.glmm <- function(x,
   validate_ci_level(ci_level)
 
   if (!missing(x_str)) {
-    assertthat::assert_that(x_str %in% names(x$group_stats),
+    for (i in x_str) {
+    assertthat::assert_that(i %in% names(x$group_stats),
       msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
     )
+    }
   }
   assertthat::assert_that(is.character(type),
     msg = "'type' must be a string. See type in ?predict for more information about valid inputs"
