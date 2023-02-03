@@ -77,7 +77,7 @@ test_cosinor <- function(x,
   colnames(index) <- names(x$coefficients)
 
   if (comparison_type == "components") {
-    for (i in 1:length(x_str)) {
+    for (i in seq_along(x_str)) {
       index[i, paste0(x_str[i], level_index, ":", param, comparison_A)] <- -1
 
       index[i, paste0(x_str[i], level_index, ":", param, comparison_B)] <- 1
@@ -89,7 +89,7 @@ test_cosinor <- function(x,
       component_index <- ""
     }
 
-    for (i in 1:length(x_str)) {
+    for (i in seq_along(x_str)) {
       index[i, paste0(x_str[i], comparison_A, ":", param, component_index)] <- -1
 
       index[i, paste0(x_str[i], comparison_B, ":", param, component_index)] <- 1

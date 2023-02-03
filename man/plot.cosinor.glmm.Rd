@@ -7,7 +7,7 @@
 \method{plot}{cosinor.glmm}(
   x,
   ci_level = 0.95,
-  x_str = NULL,
+  x_str,
   type = "response",
   xlims,
   pred.length.out = 200,
@@ -22,7 +22,7 @@
 
 \item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
 
-\item{x_str}{Character vector naming the covariate(s) to be plotted. May be NULL to plot overall curve}
+\item{x_str}{Character vector naming covariate(s) to be plotted. Default has no value and plots all groups}
 
 \item{type}{Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")}
 

@@ -362,38 +362,39 @@ object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(1
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ggplot.cosinor.glmm.polar(object)
 
-testdata = simulate_cosinor(500,
+testdata = simulate_cosinor(200,
                             mesor = 7,
                             amp = c(0.1,0.4,0.5),
                             acro = c(1,1.5, 0.1),
                             beta.mesor = 4.4,
                             beta.amp = c(2,1, 0.4),
                             beta.acro = c(1,-1.5, -1),
-                            family = "poisson",
+                            family = "gamma",
                             period = c(12,6,8),
                             n_components = 3)
 object = cosinor.glmm(Y ~ group + amp.acro(times,
                                            n_components = 3,
-                                           period = c(12,6, 8),
-                                           group = c('group', NA, 'group')),data = testdata, family = poisson())
+                                           period = c(12,6, 8), group = 'group'
+                                           ),data = testdata, family = Gamma(link = "log"))
 plot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 polar_plot.cosinor.glmm(object, view = "full")
 
 
 #Testing test_cosinor
-testdata = simulate_cosinor(1000,
+testdata = simulate_cosinor(100,
                             mesor = 4,
                             amp = c(2,3),
                             acro = c(0.4,0.4),
                             beta.mesor = 4,
-                            beta.amp = c(2,3),
-                            beta.acro = c(0.4, 0.5),
+                            beta.amp = c(4,3),
+                            beta.acro = c(2, 3),
                             family = "gaussian",
                             period = c(10,12),
                             n_components =2,
                             sd = 1)
-object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 2, period = c(10,12), group = 'group'), data = testdata, family = gaussian())
+object = cosinor.glmm(Y ~ group + amp.acro(times,n_components = 2, period = c(10,12), group = 'group'), data = testdata, family = gaussian())
 test_cosinor(object, x_str ="group", param = "acr")
+plot.cosinor.glmm(object, predict.ribbon = FALSE, superimpose.data = TRUE)
 
 #Can now compare components for a given level
 test_cosinor(object, x_str ="group", param = "amp", comparison_A = 1, comparison_B = 2, comparison_type = "components", level_index = 0)

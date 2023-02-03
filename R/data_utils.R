@@ -232,7 +232,7 @@ amp.acro <- function(time_col,
 
     # check for NA group values supplied by the user and replaces with zeroes.
     # this is important when creating the formula: 'newformula'.
-    for (i in 1:(length(group))) {
+    for (i in seq_along(group)) {
       if (is.na(group[i]) == TRUE) {
         group[i] <- 0
       }

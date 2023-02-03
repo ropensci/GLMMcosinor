@@ -6,7 +6,7 @@
 #'
 #' @param x An \code{cosinor.glmm} object.
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
-#' @param x_str Character vector naming the covariate(s) to be plotted. May be NULL to plot overall curve
+#' @param x_str Character vector naming covariate(s) to be plotted. Default has no value and plots all groups
 #' @param type Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")
 #' @param xlims A vector of length two containing the lower and upper x limit to be plotted
 #' @param pred.length.out An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear
@@ -25,7 +25,7 @@
 
 plot.cosinor.glmm <- function(x,
                               ci_level = 0.95,
-                              x_str = NULL,
+                              x_str,
                               type = "response",
                               xlims,
                               pred.length.out = 200,
@@ -33,6 +33,8 @@ plot.cosinor.glmm <- function(x,
                               data_opacity = 0.3,
                               predict.ribbon = TRUE,
                               ...) {
+
+
   # Validating user inputs
   assertthat::assert_that(inherits(x, "cosinor.glmm"),
     msg = "'x' must be of class 'cosinor.glmm'"
@@ -40,8 +42,8 @@ plot.cosinor.glmm <- function(x,
 
   validate_ci_level(ci_level)
 
-  if (!missing(x_str) & (!is.null(x_str))) {
-    assertthat::assert_that((is.character(x_str)),
+  if (!missing(x_str)) {
+    assertthat::assert_that(x_str %in% names(x$group_stats),
       msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
     )
   }
@@ -65,6 +67,11 @@ plot.cosinor.glmm <- function(x,
   assertthat::assert_that(is.logical(predict.ribbon),
     msg = "'predict.ribbon' must be a logical argument, either TRUE or FALSE"
   )
+
+  # default to plotting all groups if x_str is missing
+  if(missing(x_str)) {
+    x_str <- names(x$group_stats)
+  }
 
 
   # generate the time values for the x-axis
@@ -100,9 +107,10 @@ plot.cosinor.glmm <- function(x,
           newdata <- rbind(newdata, tdat, stringsAsFactors = FALSE)
         }
       }
+
       newdata$levels <- ""
       for (d in x_str) {
-        newdata$levels <- newdata[, d]
+        newdata$levels <- paste0(newdata$levels,"[", d,"=" ,newdata[,d], "] ")
       }
     }
     newdata
@@ -128,7 +136,15 @@ plot.cosinor.glmm <- function(x,
   if (superimpose.data) {
     original_data <- x$newdata
     original_data_processed <- x$newdata
-    original_data_processed["levels"] <- original_data_processed[x_str]
+    original_data_processed$levels <- ""
+    for (d in x_str) {
+      original_data_processed$levels <- paste0(original_data_processed$levels,
+                                               "[",
+                                               d,
+                                               "=",
+                                               original_data_processed[,d],
+                                               "] ")
+    }
   }
   # get the plot object
   if (!superimpose.data) {
