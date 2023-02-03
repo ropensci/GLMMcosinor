@@ -8,6 +8,9 @@
 [![R-CMD-check](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/RWParsons/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![pkgcheck](https://github.com/RWParsons/GLMMcosinor/workflows/pkgcheck/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions?query=workflow%3Apkgcheck)
 <!-- badges: end -->
 
 The goal of GLMMcosinor is to fit a generalised linear (mixed-) model
