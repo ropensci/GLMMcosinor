@@ -1,0 +1,20 @@
+---
+title: "model-visualisations"
+author: "Oliver Jayasinghe and Rex Parsons"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{model-visualisations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(GLMMcosinor)
+```

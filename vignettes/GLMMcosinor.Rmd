@@ -1,5 +1,6 @@
 ---
-title: "Introduction to GLMMcosinor"
+title: "GLMMcosinor"
+author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction-to-GLMMcosinor}
@@ -277,7 +278,7 @@ Simulate_cosinor allows users to simulate circadian data from four
 distributions: - family = 'gaussian' - family = 'Gamma(link = 'log')' -
 family = 'binomial' - family = 'poisson'
 
-```{r, message=F, warning=F}
+```{r, message=F, warning=F, eval=F}
 simulate_cosinor(
   n = 100,
   mesor = 1,
@@ -291,6 +292,24 @@ simulate_cosinor(
   beta.acro = 0.2,
   family = c("poisson")
 )
+```
+
+```{r, message=F, warning=F, echo=F}
+df <- simulate_cosinor(
+  n = 100,
+  mesor = 1,
+  amp = 2,
+  acro = 1.2,
+  period = 12,
+  n_components = 1,
+  beta.group = TRUE,
+  beta.mesor = 0.4,
+  beta.amp = 0.5,
+  beta.acro = 0.2,
+  family = c("poisson")
+)
+
+DT::datatable(df)
 ```
 
 mesor, amp, and acro represent the parameters for the first level, and

@@ -1,0 +1,20 @@
+---
+title: "multiple-components"
+author: "Oliver Jayasinghe and Rex Parsons"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{multiple-components}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(GLMMcosinor)
+```
