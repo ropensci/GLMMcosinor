@@ -414,3 +414,14 @@ test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison
 #goodpractice::goodpractice
 #Change the 1:x to 1:seq_along()
 #Add some more tests
+
+
+#Opensci websites and other resources from meeting 8/02/2023
+#https://www.biorxiv.org/content/10.1101/2023.02.02.526897v1.full.pdf
+#https://docs.ropensci.org/dynamite/
+#https://github.com/ropensci/software-review
+
+#For creating the feature-table in the Vignette
+#flextable::flextable()
+#https://stackoverflow.com/questions/65925855/placing-literature-references-in-a-table-in-rmd
+#Add .bib file for references (and add in text-tag)
