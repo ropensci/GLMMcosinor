@@ -10,10 +10,25 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/articles/data-simulations.html</loc>
+  </url>
+  <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/articles/introduction-to-GLMMcosinor.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/articles/model-visualisations.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/authors.html</loc>
@@ -23,9 +38,6 @@
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/GLMMcosinor-package.html</loc>
-  </url>
-  <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/cosinor.glmm.default.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/cosinor.glmm.html</loc>
