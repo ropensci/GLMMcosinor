@@ -4,8 +4,11 @@ author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{model-specification}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -17,4 +20,152 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
+```
+
+## Using: 'cosinor.glmm.R'
+
+cosinor.glmm() generates a regression model with parameter estimates
+based on a data set and formula specified by the user.
+
+The formula argument for cosinor.glmm() is constructed in two parts:
+
+Firstly: specification of any intercept or covariate mesor terms. By
+default, an intercept term is included but this can be removed by
+including a 0 in the formula. For example, the following formula has an
+intercept and X listed as a covariate mesor term:
+
+```{r, message=F, warning=F}
+data(vitamind)
+cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+```
+
+Alternatively, the following example will have no intercept term, but
+will still generate a mesor estimate for the X group. In the output, the
+[X=0] and [X=1] refer to mesors for the levels 0 and 1 respectively
+within the group "X".
+
+```{r, message=F, warning=F}
+cosinor.glmm(Y ~ 0 + X + amp.acro(time, group = "X"), data = vitamind)
+```
+
+Finally, the following will have no intercept term, nor will it generate
+any mesor estimates:
+
+```{r, message=F, warning=F}
+cosinor.glmm(Y ~ 0 + amp.acro(time, group = "X"), data = vitamind)
+```
+
+Secondly, specification of the amp.acro() function. As will be described
+later, the amp.acro() function modifies the original dataset so that the
+amplitude and acrophase can be calculated. Importantly, the amp.acro()
+argument is where users specify:
+
+-   'group' (the name of the group covariates). Ensure that the names in
+    this argument are actually found in the dataset
+
+-   'time' (the name of the time column). Again, ensure that the name
+    matches the name of the time values in the dataset. Also, ensure
+    that this argument is NOT a string.
+
+-   'n_components' (The number of components). If the user wishes to
+    have a more than one trigonometric component in the model, they can
+    specify the number of such components here. Note that this value
+    will need to match the length of the group argument and the period
+    argument. For example, if n_components = 3, then the group argument
+    should have 3 characters, where the position of each character
+    corresponds to the component that the group covariate describes:\
+
+```{r, message=F, warning=F}
+data(vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 1, prob = 0.5)
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)), data = vitamind)
+```
+
+As demonstrated in the example above, the 'NA' entry in the group
+argument indicates a component with no group covariate assigned.
+
+If only one group argument and and/or one period argument is supplied,
+but there is more than one component specified, then it will be assumed
+that the one group and one period specified applies to all components:
+
+For instance, the following two cosinor.glmm() calls produce the same
+output:
+
+```{r, message=F, warning=F}
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = "X", period = c(12)), data = vitamind)
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", "X", "X"), period = c(12, 12, 12)), data = vitamind)
+```
+
+### Dispersion and zero-inflation model specification
+
+The cosinor.glmm() function optionally allows users to specify formulas
+for dispersion and zero-inflation models. These formulas are independent
+of the main formula specification:
+
+```{r, message=F, warning=F}
+data(vitamind) # load vitamind dataset
+vitamind$Z <- rbinom(length(vitamind$X), 2, prob = 0.5) # modify dataset
+
+cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)),
+  data = vitamind,
+  dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 11, 8)),
+  ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
+)
+```
+
+This example shows how dispformula and ziformula can be specified with a
+different number of components, with different periods, and with
+different group-component assignments. By default, dispformula = \~1,
+and ziformula = \~0
+
+Mention: - how to specify the input (specifically, amp.acro) - how to
+specify multi-component models - how to specify dispersion and
+zero-inflation models - how to specify random effects - how to interpret
+the output
+
+## Using: 'summary.cosinor.glmm.R'
+
+The summary.cosinor.glmm() function provides summary statistics for an
+object produced by the cosinor.glmm() function. It outputs the
+estimates, confidence intervals, and tests for both the raw parameters
+and the transformed (mesor, amplitude, and acrophase) parameters.
+Currently, the summary statistics do not represent a comparison between
+any groups - that is the role of the test_cosinor() function.
+
+Here is an example of how to use the summary.cosinor.glmm() function:
+
+```{r, message=F, warning=F}
+data(vitamind)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+summary(object)
+```
+
+The summary statistics for dispersion and zero-inflation models will
+also be provided by the summary.cosinor.glmm() function, if the original
+cosinor.glmm object being analysed contains them:
+
+```{r, message=F, warning=F}
+data(vitamind) # load vitamind dataset
+vitamind$Z <- rbinom(length(vitamind$X), 2, prob = 0.5) # modify dataset
+
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)),
+  data = vitamind,
+  dispformula = ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 11, 8)),
+  ziformula = ~ X + amp.acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
+)
+
+summary(object)
+```
+
+## Using: 'predict.cosinor.glmm.R'
+
+The predict.cosinor.glmm() function allows users to generate predicted
+values given a time variable and optional covariates. It is used in the
+plot.cosinor.glmm() function to generate the fitted line based on
+acosinor.glmm object.
+
+```{r, message=F, warning=F}
+data(vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(X, group = NA), data = vitamind)
+predict(fit, newdata = vitamind)
 ```

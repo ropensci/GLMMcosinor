@@ -473,7 +473,7 @@ polar_plot.cosinor.glmm <- function(x,
         warning("contour_interval ignored because it is too high")
       }
     } else {
-      contour_interval <- max_radius / 5 # a default if no contour_interval argument is supplied
+      contour_interval <- 1 # a default if no contour_interval argument is supplied
     }
 
     # change 'max_period' to correspond to units specified by the user

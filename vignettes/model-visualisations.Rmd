@@ -4,8 +4,11 @@ author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{model-visualisations}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -17,4 +20,122 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
+```
+
+## Plotting cosinor.glmm objects
+
+The GLMMcosinor package includes two ways to visualise cosinor.glmm
+objects. Firstly, the function ggplot.cosinor.glmm() creates a
+time-response plot of the fitted model:
+
+```{r, message=F, warning=F}
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+plot(object, x_str = "X")
+```
+
+This function also allows users to superimpose the datapoints (that the
+fit is based on) over the fitted model, using the superimpose.data =
+TRUE argument:
+
+```{r, message=F, warning=F}
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+plot(object, x_str = "X", superimpose.data = TRUE)
+```
+
+If there are multiple factors in the model, the user can specify which
+covariate to be plotted using the x_str argument which accepts a string
+corresponding to a group name within the original dataset. By default,
+x_str = NULL and the intercept is plotted (all group levels = 0).
+
+The following examples demonstrate how x_str can be used to produce
+different plots for the same model;
+
+```{r, message=F, warning=F}
+data(vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+plot(object)
+```
+
+```{r, message=F, warning=F}
+data(vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+plot(object, x_str = "X")
+```
+
+```{r, message=F, warning=F}
+data(vitamind)
+vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+plot(object, x_str = "Z")
+```
+
+## Polar plots
+
+In addition to time-response plots, the GLMMcosinor package also allows
+users to create polar plots. In these plots, the plotted point
+represents the acrophase estimate, and the radius represents the
+amplitude estimate for a given component. The ellipses represent
+confidence regions.
+
+```{r, message=F, warning=F}
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model)
+```
+
+The angle units in the plot can be specified with the 'radial_units'
+argument. By default, the units are in radians where a complete
+revolution of the plot (2\*pi) represents the maximum period from the
+model. The units can be changed to degrees, or even to be expressed in
+the same units as the period specification.
+
+```{r, message=F, warning=F}
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model, radial_units = "degrees")
+```
+
+By default, the function creates creates polar plots for all components
+and stiches them together using the make_cowplot = TRUE argument. If the
+user wishes to plot just one component, they can specify this by using
+'component_index', though the 'make_cowplot' argument must be FALSE for
+this to register.
+
+The direction that the angle increases in can be changed with the
+clockwise argument, and the location of the angle = 0 starting point can
+be specified with the 'start' argument. Hence, if the user wishes to
+create a polar plot that resembles a clock, this can be done by
+specifying clockwise = TRUE and start = "top".
+
+The argument: overlay_parameter_info can be used to create a line
+extending from the origin to the parameter estimate (to visualise the
+amplitude estimate), and a circular arc extending from the angle
+starting position (at 0) to the acrophase estimate.
+
+```{r, message=F, warning=F}
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model, overlay_parameter_info = TRUE)
+```
+
+The background grid can also be customised. The argument
+'grid_angle_segments' is used to specify how many sectors the polar grid
+has, and the 'contour_interval' argument can be used to specify the
+distance between adjacent radial circles.
+
+```{r, message=F, warning=F}
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model, grid_angle_segments = 12, clockwise = TRUE, start = "top", contour_interval = 1)
+```
+
+If the user wishes to zoom into the confidence ellipses to show
+releveant information, they can adjust the view from the default 'full'
+(which plots a full view of the polar plot) to 'zoom' (which enlarges
+the smallest view window containing all confidence ellipses), or
+'zoom_origin' (which enlarges the smallest view window containing all
+confidence ellipses AND the origin).
+
+```{r, message=F, warning=F}
+model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+polar_plot(model, grid_angle_segments = 12, clockwise = TRUE, start = "top",
+           view = "zoom_origin")
 ```

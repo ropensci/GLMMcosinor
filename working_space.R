@@ -425,3 +425,4 @@ test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison
 #flextable::flextable()
 #https://stackoverflow.com/questions/65925855/placing-literature-references-in-a-table-in-rmd
 #Add .bib file for references (and add in text-tag)
+#Or, in markdown: [link text here](https://link...)
