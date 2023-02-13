@@ -123,7 +123,7 @@ intercept and X listed as a covariate mesor term:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564eb9b2bf98&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f0fbb1be70&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -143,7 +143,7 @@ within the group “X”.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 - 1</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec273b690&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f10471a9f0&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;           X0           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -161,7 +161,7 @@ generate any mesor estimates:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X:main_rrr1 + X:main_sss1 - 1</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec221c798&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f10420ac50&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt; X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -198,19 +198,19 @@ component that the group covariate describes:<br></p></li>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + main_rrr2 + main_sss2 + X:main_rrr1 + X:main_sss1 + Z:main_rrr3 + </span></span>
 <span><span class="co">#&gt;     Z:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec202bbf8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f10401f978&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    main_rrr2    main_sss2 X0:main_rrr1 X1:main_rrr1 </span></span>
-<span><span class="co">#&gt;   30.9946125    2.0487881  -12.8448741   -2.1380369   11.1598552   16.8289508 </span></span>
+<span><span class="co">#&gt;    31.062460     1.940324   -13.500632    -2.953325    11.588973    17.040725 </span></span>
 <span><span class="co">#&gt; X0:main_sss1 X1:main_sss1 Z0:main_rrr3 Z1:main_rrr3 Z0:main_sss3 Z1:main_sss3 </span></span>
-<span><span class="co">#&gt;    2.5395693    0.8374799    0.4083423    4.4093232    2.1667695    2.4559724 </span></span>
+<span><span class="co">#&gt;     2.602688     1.224667     1.335602     2.873083     3.280713     2.915340 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [X=0]:amp1  [X=1]:amp1        amp2  [Z=0]:amp3 </span></span>
-<span><span class="co">#&gt; 30.99461251  2.04878806 11.44516403 16.84977623 13.02159715  2.20491122 </span></span>
+<span><span class="co">#&gt; 31.06246024  1.94032408 11.87763777 17.08467451 13.81988356  3.54216217 </span></span>
 <span><span class="co">#&gt;  [Z=1]:amp3  [X=0]:acr1  [X=1]:acr1        acr2  [Z=0]:acr3  [Z=1]:acr3 </span></span>
-<span><span class="co">#&gt;  5.04717068 -0.22375253 -0.04972322  2.97665422 -1.38452430 -0.50819804</span></span></code></pre></div>
+<span><span class="co">#&gt;  4.09314280 -0.22091765 -0.07174373  2.92623062 -1.18417815 -0.79269829</span></span></code></pre></div>
 <p>As demonstrated in the example above, the ‘NA’ entry in the group
 argument indicates a component with no group covariate assigned.</p>
 <p>If only one group argument and and/or one period argument is
@@ -227,7 +227,7 @@ output:</p>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 + </span></span>
 <span><span class="co">#&gt;     X:main_rrr3 + X:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec20b08a0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f1040f7268&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -251,7 +251,7 @@ output:</p>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 + </span></span>
 <span><span class="co">#&gt;     X:main_rrr3 + X:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec20adb38&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f1040ce528&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -289,23 +289,23 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + main_rrr2 + main_sss2 + X:main_rrr1 + X:main_sss1 + Z:main_rrr3 + </span></span>
 <span><span class="co">#&gt;     Z:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec1cb75a0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f103cbfa58&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    main_rrr2    main_sss2 X0:main_rrr1 X1:main_rrr1 </span></span>
-<span><span class="co">#&gt;  31.54674814   2.02701423 -20.15171557  -5.94257797  16.71845110  23.43299293 </span></span>
+<span><span class="co">#&gt;   30.6565048    2.1475303  -11.3916325    1.1861679    8.3759252   14.2578738 </span></span>
 <span><span class="co">#&gt; X0:main_sss1 X1:main_sss1 Z0:main_rrr3 Z1:main_rrr3 Z2:main_rrr3 Z0:main_sss3 </span></span>
-<span><span class="co">#&gt;   1.18543699  -0.06806426   1.36398472   2.89142456  -0.37545733   4.55324865 </span></span>
+<span><span class="co">#&gt;    1.0979653   -0.1101855    3.1774519    2.4180357    3.9813027    1.1312754 </span></span>
 <span><span class="co">#&gt; Z1:main_sss3 Z2:main_sss3 </span></span>
-<span><span class="co">#&gt;   4.65820879   5.61699223 </span></span>
+<span><span class="co">#&gt;    1.4494739    1.6979259 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)        [X=1]   [X=0]:amp1   [X=1]:amp1         amp2   [Z=0]:amp3 </span></span>
-<span><span class="co">#&gt; 31.546748139  2.027014232 16.760425655 23.433091778 21.009661426  4.753159748 </span></span>
+<span><span class="co">#&gt; 30.656504782  2.147530259  8.447582572 14.258299581 11.453221597  3.372830374 </span></span>
 <span><span class="co">#&gt;   [Z=1]:amp3   [Z=2]:amp3   [X=0]:acr1   [X=1]:acr1         acr2   [Z=0]:acr3 </span></span>
-<span><span class="co">#&gt;  5.482631224  5.629526612 -0.070787438  0.002904626  2.854828740 -1.279740518 </span></span>
+<span><span class="co">#&gt;  2.819196921  4.328247193 -0.130342663  0.007727894 -3.037840305 -0.342038632 </span></span>
 <span><span class="co">#&gt;   [Z=1]:acr3   [Z=2]:acr3 </span></span>
-<span><span class="co">#&gt; -1.015283600 -1.637540168 </span></span>
+<span><span class="co">#&gt; -0.540009636 -0.403119290 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -314,23 +314,23 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt;  Raw  Formula: </span></span>
 <span><span class="co">#&gt; ~X + disp_rrr2 + disp_sss2 + Z:disp_rrr1 + Z:disp_sss1 + X:disp_rrr3 + </span></span>
 <span><span class="co">#&gt;     X:disp_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec1c352a0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f103c53798&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    disp_rrr2    disp_sss2 Z0:disp_rrr1 Z1:disp_rrr1 </span></span>
-<span><span class="co">#&gt;    3.3771199    0.3302110   -5.2720688    3.3348326    4.0142849    4.1032463 </span></span>
+<span><span class="co">#&gt;    2.8279800    0.3234763    3.5908351    7.6859531   -4.9680951   -5.0328560 </span></span>
 <span><span class="co">#&gt; Z2:disp_rrr1 Z0:disp_sss1 Z1:disp_sss1 Z2:disp_sss1 X0:disp_rrr3 X1:disp_rrr3 </span></span>
-<span><span class="co">#&gt;    4.5207335   -4.2893619   -3.9635949   -2.7613967    0.9645603    0.5446415 </span></span>
+<span><span class="co">#&gt;   -5.0254576   -5.4126901   -5.1301565   -5.1283088    1.3903941    1.1288095 </span></span>
 <span><span class="co">#&gt; X0:disp_sss3 X1:disp_sss3 </span></span>
-<span><span class="co">#&gt;    0.3933866    0.1887170 </span></span>
+<span><span class="co">#&gt;   -0.5876337   -1.0080896 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [Z=0]:amp1  [Z=1]:amp1  [Z=2]:amp1        amp2 </span></span>
-<span><span class="co">#&gt;   3.3771199   0.3302110   5.8747858   5.7049728   5.2973902   6.2382544 </span></span>
+<span><span class="co">#&gt;   2.8279800   0.3234763   7.3470526   7.1866644   7.1801654   8.4833939 </span></span>
 <span><span class="co">#&gt;  [X=0]:amp3  [X=1]:amp3  [Z=0]:acr1  [Z=1]:acr1  [Z=2]:acr1        acr2 </span></span>
-<span><span class="co">#&gt;   1.0416956   0.5764100   0.8185133   0.7680881   0.5483442  -2.5775845 </span></span>
+<span><span class="co">#&gt;   1.5094731   1.5134251   2.3133920   2.3466208   2.3460655  -1.1337358 </span></span>
 <span><span class="co">#&gt;  [X=0]:acr3  [X=1]:acr3 </span></span>
-<span><span class="co">#&gt;  -0.3872470  -0.3335512 </span></span>
+<span><span class="co">#&gt;   0.3998685   0.7289651 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -338,21 +338,21 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Formula: </span></span>
 <span><span class="co">#&gt; ~X + Z:zi_rrr1 + Z:zi_sss1 + X:zi_rrr2 + X:zi_sss2</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x564ec1b4ea18&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55f103b7e028&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt;   (Intercept)            X1    Z0:zi_rrr1    Z1:zi_rrr1    Z2:zi_rrr1 </span></span>
-<span><span class="co">#&gt; -17.614000599  -0.081769263   0.278811380  -0.474615836   0.002433373 </span></span>
+<span><span class="co">#&gt; -14.649483231  -0.759153228   0.130828883   0.241221175   0.269328379 </span></span>
 <span><span class="co">#&gt;    Z0:zi_sss1    Z1:zi_sss1    Z2:zi_sss1    X0:zi_rrr2    X1:zi_rrr2 </span></span>
-<span><span class="co">#&gt;  -0.007129628   0.145774119  -0.052394571  -0.039078015   0.080112369 </span></span>
+<span><span class="co">#&gt;   0.018308419   0.110393641  -0.132762717  -0.049328083  -0.008427546 </span></span>
 <span><span class="co">#&gt;    X0:zi_sss2    X1:zi_sss2 </span></span>
-<span><span class="co">#&gt;  -1.866494290  -0.120350557 </span></span>
+<span><span class="co">#&gt;  -0.552356967  -0.265468933 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
-<span><span class="co">#&gt;  (Intercept)        [X=1]   [Z=0]:amp1   [Z=1]:amp1   [Z=2]:amp1   [X=0]:amp2 </span></span>
-<span><span class="co">#&gt; -17.61400060  -0.08176926   0.27890252   0.49649802   0.05245105   1.86690333 </span></span>
-<span><span class="co">#&gt;   [X=1]:amp2   [Z=0]:acr1   [Z=1]:acr1   [Z=2]:acr1   [X=0]:acr2   [X=1]:acr2 </span></span>
-<span><span class="co">#&gt;   0.14457610   0.02556594  -2.84359716   1.52438646   1.59172985   0.98349202</span></span></code></pre></div>
+<span><span class="co">#&gt; (Intercept)       [X=1]  [Z=0]:amp1  [Z=1]:amp1  [Z=2]:amp1  [X=0]:amp2 </span></span>
+<span><span class="co">#&gt; -14.6494832  -0.7591532   0.1321037   0.2652818   0.3002727   0.5545552 </span></span>
+<span><span class="co">#&gt;  [X=1]:amp2  [Z=0]:acr1  [Z=1]:acr1  [Z=2]:acr1  [X=0]:acr2  [X=1]:acr2 </span></span>
+<span><span class="co">#&gt;   0.2656027  -0.1390388  -0.4291932   0.4579836   1.6598648   1.6025316</span></span></code></pre></div>
 <p>This example shows how dispformula and ziformula can be specified
 with a different number of components, with different periods, and with
 different group-component assignments. By default, dispformula = ~1, and
@@ -415,107 +415,107 @@ cosinor.glmm object being analysed contains them:</p>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                 estimate standard.error    lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)   31.9484521      3.1159242  25.8413529 38.055551 0.0000000</span></span>
-<span><span class="co">#&gt; X1             2.0212695      0.8221344   0.4099157  3.632623 0.0139494</span></span>
-<span><span class="co">#&gt; main_rrr2    -24.8040895     28.7733354 -81.1987906 31.590612 0.3886593</span></span>
-<span><span class="co">#&gt; main_sss2     -7.5791332     22.6917874 -52.0542192 36.895953 0.7383770</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  20.7040164     27.1428289 -32.4949507 73.902984 0.4455944</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  26.5511449     27.1975949 -26.7551615 79.857451 0.3289498</span></span>
-<span><span class="co">#&gt; X0:main_sss1   0.7913110      6.4852703 -11.9195853 13.502207 0.9028858</span></span>
-<span><span class="co">#&gt; X1:main_sss1  -0.4858919      6.6434113 -13.5067388 12.534955 0.9416956</span></span>
-<span><span class="co">#&gt; Z0:main_rrr3   2.6549991      4.6983580  -6.5536135 11.863612 0.5720120</span></span>
-<span><span class="co">#&gt; Z1:main_rrr3   3.7081992      4.4948666  -5.1015775 12.517976 0.4093799</span></span>
-<span><span class="co">#&gt; Z2:main_rrr3   3.8814893      4.7543493  -5.4368642 13.199843 0.4142668</span></span>
-<span><span class="co">#&gt; Z0:main_sss3   7.8649070     11.6952387 -15.0573397 30.787154 0.5012731</span></span>
-<span><span class="co">#&gt; Z1:main_sss3   5.6839469     11.4663296 -16.7896462 28.157540 0.6201007</span></span>
-<span><span class="co">#&gt; Z2:main_sss3   6.9689388     11.4966371 -15.5640558 29.501933 0.5444006</span></span>
+<span><span class="co">#&gt; (Intercept)   31.2420558      3.0153528  25.3320729 37.152039 0.0000000</span></span>
+<span><span class="co">#&gt; X1             1.9667342      0.8556818   0.2896287  3.643840 0.0215367</span></span>
+<span><span class="co">#&gt; main_rrr2    -14.6645643     27.5153220 -68.5936045 39.264476 0.5940613</span></span>
+<span><span class="co">#&gt; main_sss2     -4.3884886     22.0180386 -47.5430512 38.766074 0.8420177</span></span>
+<span><span class="co">#&gt; X0:main_rrr1  13.3617835     26.0661942 -37.7270183 64.450585 0.6082244</span></span>
+<span><span class="co">#&gt; X1:main_rrr1  19.2220516     26.2032675 -32.1354089 70.579512 0.4632080</span></span>
+<span><span class="co">#&gt; X0:main_sss1   2.8186801      6.2377802  -9.4071444 15.044505 0.6513610</span></span>
+<span><span class="co">#&gt; X1:main_sss1   1.1128837      6.4263126 -11.4824574 13.708225 0.8625130</span></span>
+<span><span class="co">#&gt; Z0:main_rrr3   0.6451574      4.4973057  -8.1693999  9.459715 0.8859315</span></span>
+<span><span class="co">#&gt; Z1:main_rrr3   2.4286371      4.3846009  -6.1650227 11.022297 0.5796462</span></span>
+<span><span class="co">#&gt; Z2:main_rrr3   1.8164977      4.7976150  -7.5866548 11.219650 0.7049662</span></span>
+<span><span class="co">#&gt; Z0:main_sss3   5.4651485     11.0519863 -16.1963467 27.126644 0.6209569</span></span>
+<span><span class="co">#&gt; Z1:main_sss3   2.7731564     11.1084659 -18.9990368 24.545350 0.8028631</span></span>
+<span><span class="co">#&gt; Z2:main_sss3   1.1463963     11.0030522 -20.4191897 22.711982 0.9170194</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;               estimate standard.error    lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) 31.9484521      3.1159242  25.8413529 38.055551 0.0000000</span></span>
-<span><span class="co">#&gt; [X=1]        2.0212695      0.8221344   0.4099157  3.632623 0.0139494</span></span>
-<span><span class="co">#&gt; amp2        25.9361932     33.2356370 -39.2044583 91.076845 0.4351714</span></span>
-<span><span class="co">#&gt; [X=0]:amp1  20.7191329      6.2589785   8.4517606 32.986505 0.0009319</span></span>
-<span><span class="co">#&gt; [X=1]:amp1  26.5555905      6.0292558  14.7384664 38.372715 0.0000106</span></span>
-<span><span class="co">#&gt; [Z=0]:amp3   8.3009507     19.5752555 -30.0658451 46.667746 0.6715270</span></span>
-<span><span class="co">#&gt; [Z=1]:amp3   6.7866039     24.3744077 -40.9863573 54.559565 0.7806811</span></span>
-<span><span class="co">#&gt; [Z=2]:amp3   7.9769710     23.3420459 -37.7725983 53.726540 0.7325446</span></span>
-<span><span class="co">#&gt; acr2         2.8450429      0.5950834   1.6787009  4.011385 0.0000017</span></span>
-<span><span class="co">#&gt; [X=0]:acr1  -0.0382016      1.0083972  -2.0146238  1.938221 0.9697806</span></span>
-<span><span class="co">#&gt; [X=1]:acr1   0.0182982      0.7835627  -1.5174566  1.554053 0.9813691</span></span>
-<span><span class="co">#&gt; [Z=0]:acr3  -1.2452328      2.9177067  -6.9638329  4.473367 0.6695361</span></span>
-<span><span class="co">#&gt; [Z=1]:acr3  -0.9927367      2.8568058  -6.5919732  4.606500 0.7282166</span></span>
-<span><span class="co">#&gt; [Z=2]:acr3  -1.0626177      2.6364591  -6.2299826  4.104747 0.6869134</span></span>
+<span><span class="co">#&gt; (Intercept) 31.2420558      3.0153528  25.3320729 37.152039 0.0000000</span></span>
+<span><span class="co">#&gt; [X=1]        1.9667342      0.8556818   0.2896287  3.643840 0.0215367</span></span>
+<span><span class="co">#&gt; amp2        15.3071316     31.7941735 -47.0083034 77.622567 0.6302006</span></span>
+<span><span class="co">#&gt; [X=0]:amp1  13.6558492      7.3522326  -0.7542620 28.065960 0.0632579</span></span>
+<span><span class="co">#&gt; [X=1]:amp1  19.2542405      5.9792286   7.5351678 30.973313 0.0012811</span></span>
+<span><span class="co">#&gt; [Z=0]:amp3   5.5030970     14.8995296 -23.6994443 34.705638 0.7118691</span></span>
+<span><span class="co">#&gt; [Z=1]:amp3   3.6862819     25.5777901 -46.4452655 53.817829 0.8854054</span></span>
+<span><span class="co">#&gt; [Z=2]:amp3   2.1479964     28.4132205 -53.5408925 57.836885 0.9397385</span></span>
+<span><span class="co">#&gt; acr2         2.8508167      0.9929528   0.9046649  4.796969 0.0040911</span></span>
+<span><span class="co">#&gt; [X=0]:acr1  -0.2079027      1.4464597  -3.0429116  2.627106 0.8857120</span></span>
+<span><span class="co">#&gt; [X=1]:acr1  -0.0578316      1.0393479  -2.0949161  1.979253 0.9556268</span></span>
+<span><span class="co">#&gt; [Z=0]:acr3  -1.4532908      4.7494148 -10.7619728  7.855391 0.7596095</span></span>
+<span><span class="co">#&gt; [Z=1]:acr3  -0.8515324      4.2729633  -9.2263867  7.523322 0.8420407</span></span>
+<span><span class="co">#&gt; [Z=2]:acr3  -0.5629756      4.6859325  -9.7472345  8.621283 0.9043709</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Dispersion Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)   2.7087576       1.268423   0.2226951  5.1948201 0.0327175</span></span>
-<span><span class="co">#&gt; X1            0.3663409       0.237871  -0.0998777  0.8325594 0.1235403</span></span>
-<span><span class="co">#&gt; disp_rrr2     5.9247241      22.375275 -37.9300087 49.7794570 0.7911721</span></span>
-<span><span class="co">#&gt; disp_sss2     6.9146492       6.995199  -6.7956887 20.6249871 0.3229152</span></span>
-<span><span class="co">#&gt; Z0:disp_rrr1 -7.0368488      21.245227 -48.6767294 34.6030318 0.7404782</span></span>
-<span><span class="co">#&gt; Z1:disp_rrr1 -6.7899116      21.206304 -48.3535041 34.7736809 0.7488291</span></span>
-<span><span class="co">#&gt; Z2:disp_rrr1 -6.6052806      21.196222 -48.1491113 34.9385501 0.7553252</span></span>
-<span><span class="co">#&gt; Z0:disp_sss1 -4.2019981       4.783413 -13.5773163  5.1733201 0.3796986</span></span>
-<span><span class="co">#&gt; Z1:disp_sss1 -4.1649729       4.708639 -13.3937364  5.0637906 0.3764056</span></span>
-<span><span class="co">#&gt; Z2:disp_sss1 -3.7133332       4.782758 -13.0873669  5.6607005 0.4375129</span></span>
-<span><span class="co">#&gt; X0:disp_rrr3  1.1118158       1.127312  -1.0976751  3.3213068 0.3240086</span></span>
-<span><span class="co">#&gt; X1:disp_rrr3  0.7677421       1.095555  -1.3795054  2.9149897 0.4834407</span></span>
-<span><span class="co">#&gt; X0:disp_sss3 -0.9214851       2.961246  -6.7254206  4.8824503 0.7556626</span></span>
-<span><span class="co">#&gt; X1:disp_sss3 -1.4063216       3.004758  -7.2955382  4.4828949 0.6397620</span></span>
+<span><span class="co">#&gt; (Intercept)   3.3501833       1.260330   0.8799820  5.8203846 0.0078564</span></span>
+<span><span class="co">#&gt; X1            0.4641837       0.234378   0.0048113  0.9235562 0.0476483</span></span>
+<span><span class="co">#&gt; disp_rrr2    -7.4781600      22.293307 -51.1722393 36.2159192 0.7372900</span></span>
+<span><span class="co">#&gt; disp_sss2     4.1881073       6.928917  -9.3923211 17.7685357 0.5455519</span></span>
+<span><span class="co">#&gt; Z0:disp_rrr1  5.7553082      21.167630 -35.7324848 47.2431012 0.7857051</span></span>
+<span><span class="co">#&gt; Z1:disp_rrr1  5.8867991      21.159831 -35.5857084 47.3593065 0.7808540</span></span>
+<span><span class="co">#&gt; Z2:disp_rrr1  5.4527704      21.109637 -35.9213568 46.8268976 0.7961699</span></span>
+<span><span class="co">#&gt; Z0:disp_sss1 -4.9390614       4.573905 -13.9037503  4.0256274 0.2802158</span></span>
+<span><span class="co">#&gt; Z1:disp_sss1 -4.9606163       4.573971 -13.9254344  4.0042019 0.2781291</span></span>
+<span><span class="co">#&gt; Z2:disp_sss1 -4.6449123       4.581298 -13.6240920  4.3342674 0.3106374</span></span>
+<span><span class="co">#&gt; X0:disp_rrr3  1.4050982       1.076076  -0.7039717  3.5141681 0.1916337</span></span>
+<span><span class="co">#&gt; X1:disp_rrr3  1.1760593       1.049711  -0.8813364  3.2334551 0.2625583</span></span>
+<span><span class="co">#&gt; X0:disp_sss3  1.1860432       2.986038  -4.6664848  7.0385712 0.6912228</span></span>
+<span><span class="co">#&gt; X1:disp_sss3  0.4192829       3.013802  -5.4876613  6.3262270 0.8893546</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;               estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)  2.7087576      1.2684225   0.2226951  5.1948201 0.0327175</span></span>
-<span><span class="co">#&gt; [X=1]        0.3663409      0.2378710  -0.0998777  0.8325594 0.1235403</span></span>
-<span><span class="co">#&gt; amp2         9.1057526     18.3619163 -26.8829421 45.0944473 0.6199620</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1   8.1959764      4.2340613  -0.1026313 16.4945841 0.0529014</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1   7.9655445      4.3166579  -0.4949495 16.4260384 0.0649934</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1   7.5775045      4.1326751  -0.5223898 15.6773989 0.0667194</span></span>
-<span><span class="co">#&gt; [X=0]:amp3   1.4440461     16.1917295 -30.2911606 33.1792529 0.9289355</span></span>
-<span><span class="co">#&gt; [X=1]:amp3   1.6022386     10.1724279 -18.3353538 21.5398310 0.8748445</span></span>
-<span><span class="co">#&gt; acr2        -0.8623467      1.6006182  -3.9995007  2.2748073 0.5900535</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1   2.6032773      0.6052162   1.4170754  3.7894791 0.0000170</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1   2.5913740      0.6166591   1.3827444  3.8000036 0.0000264</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1   2.6294490      0.6584808   1.3388504  3.9200476 0.0000652</span></span>
-<span><span class="co">#&gt; [X=0]:acr3   0.6920634     10.9738437 -20.8162750 22.2004018 0.9497149</span></span>
-<span><span class="co">#&gt; [X=1]:acr3   1.0710893     12.6731809 -23.7678888 25.9100673 0.9326460</span></span>
+<span><span class="co">#&gt; (Intercept)  3.3501833      1.2603300   0.8799820  5.8203846 0.0078564</span></span>
+<span><span class="co">#&gt; [X=1]        0.4641837      0.2343780   0.0048113  0.9235562 0.0476483</span></span>
+<span><span class="co">#&gt; amp2         8.5710630     17.4382485 -25.6072760 42.7494019 0.6230662</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1   7.5840557      3.5645366   0.5976923 14.5704190 0.0333668</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1   7.6981892      3.5202129   0.7986987 14.5976797 0.0287532</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1   7.1629544      3.4443071   0.4122365 13.9136722 0.0375576</span></span>
+<span><span class="co">#&gt; [X=0]:amp3   1.8387494     18.2003007 -33.8331844 37.5106832 0.9195278</span></span>
+<span><span class="co">#&gt; [X=1]:amp3   1.2485646     21.3637621 -40.6236396 43.1207688 0.9533957</span></span>
+<span><span class="co">#&gt; acr2        -2.6310700      1.8108887  -6.1803467  0.9182067 0.1462470</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1   0.7092209      0.7199506  -0.7018563  2.1202982 0.3245766</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   0.7002219      0.7130321  -0.6972952  2.0977391 0.3260830</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1   0.7055639      0.7569308  -0.7779932  2.1891210 0.3512652</span></span>
+<span><span class="co">#&gt; [X=0]:acr3  -0.7010587      7.2587241 -14.9278965 13.5257790 0.9230587</span></span>
+<span><span class="co">#&gt; [X=1]:acr3  -0.3424671      5.9372606 -11.9792841 11.2943499 0.9540027</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Zero-Inflation Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error   lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -16.1689760       308.8492  -621.5023  589.1643 0.9582480</span></span>
-<span><span class="co">#&gt; X1           -1.0510207       810.6682 -1589.9315 1587.8295 0.9989656</span></span>
-<span><span class="co">#&gt; Z0:zi_rrr1    0.2959927       834.4691 -1635.2334 1635.8254 0.9997170</span></span>
-<span><span class="co">#&gt; Z1:zi_rrr1    0.4037213       771.0136 -1510.7551 1511.5626 0.9995822</span></span>
-<span><span class="co">#&gt; Z2:zi_rrr1    0.2745820       894.2597 -1752.4423 1752.9915 0.9997550</span></span>
-<span><span class="co">#&gt; Z0:zi_sss1    0.2753203       762.8939 -1494.9692 1495.5199 0.9997121</span></span>
-<span><span class="co">#&gt; Z1:zi_sss1   -0.0834085       682.1341 -1337.0416 1336.8748 0.9999024</span></span>
-<span><span class="co">#&gt; Z2:zi_sss1   -0.0990010       934.3468 -1831.3850 1831.1870 0.9999155</span></span>
-<span><span class="co">#&gt; X0:zi_rrr2    0.0004150       462.3397  -906.1687  906.1696 0.9999993</span></span>
-<span><span class="co">#&gt; X1:zi_rrr2   -0.0013702      1015.6582 -1990.6548 1990.6520 0.9999989</span></span>
-<span><span class="co">#&gt; X0:zi_sss2   -0.5621919       740.5110 -1451.9372 1450.8128 0.9993943</span></span>
-<span><span class="co">#&gt; X1:zi_sss2   -0.2448133      1174.0012 -2301.2449 2300.7552 0.9998336</span></span>
+<span><span class="co">#&gt; (Intercept) -15.7266964       244.8144  -495.5541  464.1007 0.9487797</span></span>
+<span><span class="co">#&gt; X1           -0.9506538       607.2700 -1191.1779 1189.2766 0.9987509</span></span>
+<span><span class="co">#&gt; Z0:zi_rrr1    0.4155198       709.5612 -1390.2988 1391.1298 0.9995328</span></span>
+<span><span class="co">#&gt; Z1:zi_rrr1    0.1891440       606.6092 -1188.7430 1189.1212 0.9997512</span></span>
+<span><span class="co">#&gt; Z2:zi_rrr1    0.2675271       706.9414 -1385.3122 1385.8473 0.9996981</span></span>
+<span><span class="co">#&gt; Z0:zi_sss1   -0.0332095       641.7437 -1257.8277 1257.7613 0.9999587</span></span>
+<span><span class="co">#&gt; Z1:zi_sss1    0.0258115       502.9565  -985.7509  985.8025 0.9999591</span></span>
+<span><span class="co">#&gt; Z2:zi_sss1    0.1652777       872.0562 -1709.0335 1709.3641 0.9998488</span></span>
+<span><span class="co">#&gt; X0:zi_rrr2   -0.0219902       372.2758  -729.6691  729.6251 0.9999529</span></span>
+<span><span class="co">#&gt; X1:zi_rrr2    0.0214657       787.2166 -1542.8946 1542.9376 0.9999782</span></span>
+<span><span class="co">#&gt; X0:zi_sss2   -0.6703095       592.9477 -1162.8265 1161.4859 0.9990980</span></span>
+<span><span class="co">#&gt; X1:zi_sss2   -0.2279958       891.4374 -1747.4132 1746.9572 0.9997959</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -16.1689760       308.8492   -621.5023   589.1643 0.9582480</span></span>
-<span><span class="co">#&gt; [X=1]        -1.0510207       810.6682  -1589.9315  1587.8295 0.9989656</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1    0.4042437       812.7551  -1592.5666  1593.3750 0.9996032</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1    0.4122474      1330.7947  -2607.8974  2608.7219 0.9997528</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1    0.2918843      1441.3524  -2824.7070  2825.2908 0.9998384</span></span>
-<span><span class="co">#&gt; [X=0]:amp2    0.5621920      1067.1004  -2090.9161  2092.0405 0.9995796</span></span>
-<span><span class="co">#&gt; [X=1]:amp2    0.2448172      1362.3091  -2669.8320  2670.3217 0.9998566</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1   -0.7492299      1944.3384  -3811.5825  3810.0840 0.9996925</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1    0.2037328      2641.0875  -5176.2326  5176.6401 0.9999385</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1    0.3460440      4143.6990  -8121.1548  8121.8469 0.9999334</span></span>
-<span><span class="co">#&gt; [X=0]:acr2    1.5700581      1784.6585  -3496.2963  3499.4364 0.9992981</span></span>
-<span><span class="co">#&gt; [X=1]:acr2    1.5763933      5493.9631 -10766.3934 10769.5462 0.9997711</span></span></code></pre></div>
+<span><span class="co">#&gt;                estimate standard.error   lower.CI  upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept) -15.7266964       244.8144  -495.5541  464.1007 0.9487797</span></span>
+<span><span class="co">#&gt; [X=1]        -0.9506538       607.2700 -1191.1779 1189.2766 0.9987509</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1    0.4168448       709.0940 -1389.3818 1390.2155 0.9995310</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1    0.1908970      1129.3507 -2213.2958 2213.6776 0.9998651</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1    0.3144638      1113.4836 -2182.0733 2182.7022 0.9997747</span></span>
+<span><span class="co">#&gt; [X=0]:amp2    0.6706701       874.6343 -1713.5811 1714.9225 0.9993882</span></span>
+<span><span class="co">#&gt; [X=1]:amp2    0.2290040      1110.8699 -2177.0360 2177.4940 0.9998355</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1    0.0797532      1540.7650 -3019.7642 3019.9237 0.9999587</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   -0.1356270      4472.3497 -8765.7800 8765.5088 0.9999758</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1   -0.5534036      3709.7093 -7271.4500 7270.3432 0.9998810</span></span>
+<span><span class="co">#&gt; [X=0]:acr2    1.6035906      1166.9915 -2285.6578 2288.8649 0.9989036</span></span>
+<span><span class="co">#&gt; [X=1]:acr2    1.4769235      4554.1853 -8924.5623 8927.5161 0.9997412</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-predict-cosinor-glmm-r">Using: ‘predict.cosinor.glmm.R’<a class="anchor" aria-label="anchor" href="#using-predict-cosinor-glmm-r"></a>
@@ -765,8 +765,8 @@ family = ‘binomial’ - family = ‘poisson’</p>
 <span>  beta.acro <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1a49a4c2f92b70755a69" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1a49a4c2f92b70755a69">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[0,0,21,0,0,2,1,4,0,1,5,1,5,17,1,0,1,12,17,7,0,29,14,0,6,1,2,8,19,0,0,2,4,2,0,6,0,10,1,1,5,2,16,9,14,1,26,1,0,9,0,1,0,0,19,4,7,6,13,21,13,9,0,3,3,0,0,8,12,0,13,10,1,3,0,0,9,0,22,15,1,0,1,6,17,8,5,1,1,10,1,18,7,13,11,4,6,0,1,1,1,3,1,3,1,1,1,0,1,1,3,1,1,4,2,3,1,1,3,0,1,2,5,2,0,0,4,1,1,6,1,1,0,1,2,1,1,1,1,4,5,0,2,2,1,0,3,2,2,0,0,3,3,1,0,2,4,1,3,3,2,1,4,1,2,1,1,1,4,2,2,6,0,0,3,0,2,0,4,3,1,0,1,3,3,1,2,1,2,1,0,1,0,2,3,1,3,0,3,0],[0.0761205849589923,0.826182480962701,0.510660373184712,-0.994032328793161,-0.00228711535366901,-0.942779243861597,-0.316898350473308,-0.997933402123718,-0.809492455959465,0.863022927515593,0.998369589139244,-0.38108249161171,-0.998751452241769,0.579327625346155,0.860445717647056,0.139868567216228,-0.160682716477337,0.797167763802074,0.223689442940248,-0.810482635055926,0.511754719171513,0.17945214239082,0.8658315630619,-0.802023674656816,-0.73150494268503,-0.0877828490953777,0.721468958590683,-0.839508054878747,0.0406844016274064,0.755646566212367,-0.989752611780506,-0.936357377363534,0.956379892889172,-0.663244617620415,0.816159788844086,0.992914066275272,-0.626599138290304,0.805928292652864,-0.831189468323493,-0.0632508271949774,0.996586457355041,0.292643703662748,0.369239975521755,0.841529641055807,0.584388002846611,-0.998859166114397,0.641809576763975,0.271967023713035,-0.966825612704725,-0.152833416842449,-0.26954731424621,0.915525605620032,-0.0519836302052725,-0.0502070047924338,0.850896002385737,0.958795133668016,0.999980763012552,0.993252760609948,0.897772526655642,0.824043390099713,0.918483196772137,0.959437209748013,0.798555002366512,0.380216498547196,0.779105522458741,-0.998338240295966,-0.52427046855013,0.73393972910505,0.948565126837887,0.399250189211613,0.845349964765282,0.99999632139559,-0.996152725228168,-0.889973851375894,-0.999999770179092,-0.553361940313111,0.998917928655919,-0.913010829979262,0.00530921051680288,0.489812257726417,-0.578314171161065,-0.911732035540831,-0.589815355050147,-0.723607296169806,0.804511118135426,-0.784681294767708,0.989711002219175,0.598893550239429,-0.991862190936369,0.957497998306584,-0.915011260309431,0.253584091944982,-0.853123413318755,-0.340604182902393,-0.646438506588481,0.956960452678625,0.995416707682692,-0.993302069686985,-0.415032680903022,0.781648385956912,0.0761205849589923,0.826182480962701,0.510660373184712,-0.994032328793161,-0.00228711535366901,-0.942779243861597,-0.316898350473308,-0.997933402123718,-0.809492455959465,0.863022927515593,0.998369589139244,-0.38108249161171,-0.998751452241769,0.579327625346155,0.860445717647056,0.139868567216228,-0.160682716477337,0.797167763802074,0.223689442940248,-0.810482635055926,0.511754719171513,0.17945214239082,0.8658315630619,-0.802023674656816,-0.73150494268503,-0.0877828490953777,0.721468958590683,-0.839508054878747,0.0406844016274064,0.755646566212367,-0.989752611780506,-0.936357377363534,0.956379892889172,-0.663244617620415,0.816159788844086,0.992914066275272,-0.626599138290304,0.805928292652864,-0.831189468323493,-0.0632508271949774,0.996586457355041,0.292643703662748,0.369239975521755,0.841529641055807,0.584388002846611,-0.998859166114397,0.641809576763975,0.271967023713035,-0.966825612704725,-0.152833416842449,-0.26954731424621,0.915525605620032,-0.0519836302052725,-0.0502070047924338,0.850896002385737,0.958795133668016,0.999980763012552,0.993252760609948,0.897772526655642,0.824043390099713,0.918483196772137,0.959437209748013,0.798555002366512,0.380216498547196,0.779105522458741,-0.998338240295966,-0.52427046855013,0.73393972910505,0.948565126837887,0.399250189211613,0.845349964765282,0.99999632139559,-0.996152725228168,-0.889973851375894,-0.999999770179092,-0.553361940313111,0.998917928655919,-0.913010829979262,0.00530921051680288,0.489812257726417,-0.578314171161065,-0.911732035540831,-0.589815355050147,-0.723607296169806,0.804511118135426,-0.784681294767708,0.989711002219175,0.598893550239429,-0.991862190936369,0.957497998306584,-0.915011260309431,0.253584091944982,-0.853123413318755,-0.340604182902393,-0.646438506588481,0.956960452678625,0.995416707682692,-0.993302069686985,-0.415032680903022,0.781648385956912],[0.997098619267673,0.563402616385757,-0.859782520907962,0.109085880452266,0.999997384548259,0.333417602030481,0.948459506498457,0.0642567111341753,0.587130278340944,0.50516475192002,0.0570803248233379,0.924541039969028,-0.0499553465102298,-0.815094781305085,0.509542115023716,0.990170078271849,0.987006111746763,-0.603757862354439,-0.974660470685603,-0.585762663775017,0.859131600749085,-0.983766704351873,-0.500335591783942,0.597292244458254,-0.681836137812723,0.996139634491419,0.692446779030761,-0.54334724237241,-0.999172046979007,0.65497959279008,-0.14279274307074,-0.351048232949383,0.292125829870103,0.748402683852449,0.577826270667903,-0.118834578270406,0.779341722156493,-0.592013164635415,0.555989269454105,0.997997661750343,0.0825556358859215,0.956221555240494,-0.929334084426421,-0.540210943266133,-0.811474375522079,0.0477531807239134,-0.766864047386528,0.962306571739315,-0.255437339905765,-0.988251965187149,0.962987147049562,0.402259699018027,0.998647937058242,0.998738833063866,-0.525334172811909,0.284098383759097,0.00620270947528266,-0.115969623353345,-0.440459408325381,-0.566526690662473,-0.395460007140084,-0.281922401647949,0.601921845587465,0.924897515529429,0.62689280174069,0.0576260181060113,0.851551804534655,-0.679214600874573,-0.316582059104782,0.916842018242233,-0.534212913613418,0.00271241502856824,0.0876341715342525,-0.456011561111292,0.00067796885104664,0.832940912077747,-0.0465077607477275,0.407935318819761,-0.999985906042524,-0.871827937256515,0.815814145154575,0.410785461486374,0.807538139623801,-0.690211910162251,-0.593937589984408,-0.619899399613899,-0.143080858560176,0.800828643020224,-0.127316119132283,-0.288439912700868,-0.403428300329744,-0.967313345463836,-0.521709154268311,-0.940206780761229,-0.76296609177581,0.290218352295509,-0.0956325157368082,0.115546520309144,0.909806503484367,0.623719328489149,0.997098619267673,0.563402616385757,-0.859782520907962,0.109085880452266,0.999997384548259,0.333417602030481,0.948459506498457,0.0642567111341753,0.587130278340944,0.50516475192002,0.0570803248233379,0.924541039969028,-0.0499553465102298,-0.815094781305085,0.509542115023716,0.990170078271849,0.987006111746763,-0.603757862354439,-0.974660470685603,-0.585762663775017,0.859131600749085,-0.983766704351873,-0.500335591783942,0.597292244458254,-0.681836137812723,0.996139634491419,0.692446779030761,-0.54334724237241,-0.999172046979007,0.65497959279008,-0.14279274307074,-0.351048232949383,0.292125829870103,0.748402683852449,0.577826270667903,-0.118834578270406,0.779341722156493,-0.592013164635415,0.555989269454105,0.997997661750343,0.0825556358859215,0.956221555240494,-0.929334084426421,-0.540210943266133,-0.811474375522079,0.0477531807239134,-0.766864047386528,0.962306571739315,-0.255437339905765,-0.988251965187149,0.962987147049562,0.402259699018027,0.998647937058242,0.998738833063866,-0.525334172811909,0.284098383759097,0.00620270947528266,-0.115969623353345,-0.440459408325381,-0.566526690662473,-0.395460007140084,-0.281922401647949,0.601921845587465,0.924897515529429,0.62689280174069,0.0576260181060113,0.851551804534655,-0.679214600874573,-0.316582059104782,0.916842018242233,-0.534212913613418,0.00271241502856824,0.0876341715342525,-0.456011561111292,0.00067796885104664,0.832940912077747,-0.0465077607477275,0.407935318819761,-0.999985906042524,-0.871827937256515,0.815814145154575,0.410785461486374,0.807538139623801,-0.690211910162251,-0.593937589984408,-0.619899399613899,-0.143080858560176,0.800828643020224,-0.127316119132283,-0.288439912700868,-0.403428300329744,-0.967313345463836,-0.521709154268311,-0.940206780761229,-0.76296609177581,0.290218352295509,-0.0956325157368082,0.115546520309144,0.909806503484367,0.623719328489149],[2.85447962768376,1.14304798375815,10.0235942294821,5.79124589078128,3.00436807237566,5.35078860539943,3.61584845278412,5.87719411309808,4.80154575314373,1.01140965241939,0.109074675478041,3.74669169355184,6.09544741082937,10.1801088424399,1.02111116889864,2.73199197091162,3.30821752455086,10.7620162842795,9.43086082208902,7.19522956665605,1.9739739485085,9.34459500946105,10.9992598313838,4.77745953015983,7.4329097494483,3.16786895971745,1.4608035357669,7.09705973882228,9.07772293500602,1.36393675301224,6.27364942152053,6.68504810426384,0.566175643354654,4.38492659199983,1.17659329622984,11.7725050812587,4.29332188144326,10.7900000335649,4.87403732445091,3.12088087387383,0.15784929972142,2.43279009405524,9.72229174152017,10.9100666726008,10.191992232576,5.90876344498247,10.3308962602168,2.47395500633866,6.49331670440733,8.70696123037487,3.52124437317252,0.790650646202266,3.09932618960738,3.09592864662409,10.9436419224367,0.550165406428277,0.0118463784456253,11.7780148470774,11.1288934377953,10.849720842205,11.2235111128539,11.4541675597429,1.2335888016969,2.25509687606245,1.29404164385051,5.88988140877336,4.05397148430347,10.5739233456552,11.3847884098068,2.21562291495502,10.9236483704299,0.00518033746629953,5.83241609204561,6.90433462522924,5.99870517477393,4.11993210855871,11.9111446682364,5.19749331381172,9.01013989280909,9.97760808560997,4.17773525230587,5.19152713939548,4.20479687768966,7.45489619113505,10.7854355899617,7.27695961575955,11.7257946096361,1.77364349830896,6.24381761625409,11.4411807032302,6.79308912623674,9.48965673800558,7.04823227226734,8.33621038589627,7.65754614584148,0.562367630191147,11.817075798288,5.77882838342339,3.81737915240228,1.28627503942698,2.85447962768376,1.14304798375815,10.0235942294821,5.79124589078128,3.00436807237566,5.35078860539943,3.61584845278412,5.87719411309808,4.80154575314373,1.01140965241939,0.109074675478041,3.74669169355184,6.09544741082937,10.1801088424399,1.02111116889864,2.73199197091162,3.30821752455086,10.7620162842795,9.43086082208902,7.19522956665605,1.9739739485085,9.34459500946105,10.9992598313838,4.77745953015983,7.4329097494483,3.16786895971745,1.4608035357669,7.09705973882228,9.07772293500602,1.36393675301224,6.27364942152053,6.68504810426384,0.566175643354654,4.38492659199983,1.17659329622984,11.7725050812587,4.29332188144326,10.7900000335649,4.87403732445091,3.12088087387383,0.15784929972142,2.43279009405524,9.72229174152017,10.9100666726008,10.191992232576,5.90876344498247,10.3308962602168,2.47395500633866,6.49331670440733,8.70696123037487,3.52124437317252,0.790650646202266,3.09932618960738,3.09592864662409,10.9436419224367,0.550165406428277,0.0118463784456253,11.7780148470774,11.1288934377953,10.849720842205,11.2235111128539,11.4541675597429,1.2335888016969,2.25509687606245,1.29404164385051,5.88988140877336,4.05397148430347,10.5739233456552,11.3847884098068,2.21562291495502,10.9236483704299,0.00518033746629953,5.83241609204561,6.90433462522924,5.99870517477393,4.11993210855871,11.9111446682364,5.19749331381172,9.01013989280909,9.97760808560997,4.17773525230587,5.19152713939548,4.20479687768966,7.45489619113505,10.7854355899617,7.27695961575955,11.7257946096361,1.77364349830896,6.24381761625409,11.4411807032302,6.79308912623674,9.48965673800558,7.04823227226734,8.33621038589627,7.65754614584148,0.562367630191147,11.817075798288,5.77882838342339,3.81737915240228,1.28627503942698],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Y<\/th>\n      <th>x<\/th>\n      <th>z<\/th>\n      <th>times<\/th>\n      <th>group<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>mesor, amp, and acro represent the parameters for the first level,
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-318c381fb4b99dddd7a5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-318c381fb4b99dddd7a5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[2,1,7,0,0,0,0,8,8,20,1,0,22,1,18,4,1,0,3,4,12,0,6,13,0,0,0,1,2,10,0,7,8,1,0,11,9,0,19,0,1,2,0,7,15,12,0,16,0,15,11,11,0,0,0,5,0,13,17,21,1,4,2,8,0,10,0,1,21,15,3,11,17,0,21,0,2,0,1,18,2,1,0,15,6,1,3,7,16,10,9,15,0,0,2,16,1,0,2,11,1,1,0,0,2,5,0,1,2,0,1,0,7,2,3,2,1,2,3,3,1,0,3,4,0,0,0,0,2,2,2,5,2,1,2,2,2,4,4,2,1,2,0,1,1,4,0,2,1,1,3,0,3,1,3,0,1,2,2,1,1,2,2,1,1,3,1,3,3,1,2,0,4,1,1,2,0,0,0,1,0,1,2,4,3,3,2,0,3,0,2,0,4,2,1,2,1,1,2,5],[0.833529177617269,-0.999586919980491,-0.447012036518073,0.038550032794794,-0.999363815282448,0.210321654318795,-0.0630302987209199,0.990038901223873,-0.787615268001444,0.350342351627845,0.72954150741214,-0.570854706611852,0.16645622370916,0.84816390414433,0.702829304269028,-0.902130314253601,-0.33087153780105,-0.232095583887996,-0.855575966833595,0.872944279221975,-0.358698714923428,-0.299010932232494,0.943590375033437,0.560236029447679,-0.201003792866072,0.866642095906276,-0.992638174086178,-0.954730142947933,0.186311410521252,-0.555542569981744,-0.198316093030098,0.99981135521026,0.96050757163316,-0.730161178137338,-0.587034775109251,0.451647654558936,0.998199323329793,-0.451567153879921,0.594219209152925,-0.31116028251421,0.00257630414354966,-0.946899316143892,-0.106776441112493,-0.619732826403741,0.852101168551786,0.830062798460092,-0.828540436014227,-0.0446262250412961,-0.917310821542277,-0.292504155891079,-0.455786320651919,-0.588601186092349,0.194713156703766,0.135889492312642,-0.800694340736968,-0.667668099165423,-0.0748938750676242,0.744405139289552,0.512757780012838,-0.0823306279456009,-0.957393698871919,-0.997950458695325,0.843729329571339,-0.831036232634624,0.45816641812211,0.818840185043025,-0.76086322668315,0.665055050443986,-0.0457815570427193,0.717270942087353,-0.91402070148623,-0.475697702467452,-0.285691996758175,-0.35971966748553,0.150274727388243,0.683692122458985,-0.991298956932369,0.622241609235085,-0.0668181156618996,0.287266823829754,-0.859779626058765,-0.779031211374924,-0.797798899523858,0.694059564630247,0.989072142695863,-0.728575443029025,-0.998983946346885,-0.74697188374022,0.738749220214764,-0.53232308989918,-0.741235370934313,-0.0967809714645976,0.444910988210611,0.362217157049212,0.830095627468326,0.0397365235762197,-0.526661532920067,0.243022747699797,0.660036221487657,0.742850304340534,0.833529177617269,-0.999586919980491,-0.447012036518073,0.038550032794794,-0.999363815282448,0.210321654318795,-0.0630302987209199,0.990038901223873,-0.787615268001444,0.350342351627845,0.72954150741214,-0.570854706611852,0.16645622370916,0.84816390414433,0.702829304269028,-0.902130314253601,-0.33087153780105,-0.232095583887996,-0.855575966833595,0.872944279221975,-0.358698714923428,-0.299010932232494,0.943590375033437,0.560236029447679,-0.201003792866072,0.866642095906276,-0.992638174086178,-0.954730142947933,0.186311410521252,-0.555542569981744,-0.198316093030098,0.99981135521026,0.96050757163316,-0.730161178137338,-0.587034775109251,0.451647654558936,0.998199323329793,-0.451567153879921,0.594219209152925,-0.31116028251421,0.00257630414354966,-0.946899316143892,-0.106776441112493,-0.619732826403741,0.852101168551786,0.830062798460092,-0.828540436014227,-0.0446262250412961,-0.917310821542277,-0.292504155891079,-0.455786320651919,-0.588601186092349,0.194713156703766,0.135889492312642,-0.800694340736968,-0.667668099165423,-0.0748938750676242,0.744405139289552,0.512757780012838,-0.0823306279456009,-0.957393698871919,-0.997950458695325,0.843729329571339,-0.831036232634624,0.45816641812211,0.818840185043025,-0.76086322668315,0.665055050443986,-0.0457815570427193,0.717270942087353,-0.91402070148623,-0.475697702467452,-0.285691996758175,-0.35971966748553,0.150274727388243,0.683692122458985,-0.991298956932369,0.622241609235085,-0.0668181156618996,0.287266823829754,-0.859779626058765,-0.779031211374924,-0.797798899523858,0.694059564630247,0.989072142695863,-0.728575443029025,-0.998983946346885,-0.74697188374022,0.738749220214764,-0.53232308989918,-0.741235370934313,-0.0967809714645976,0.444910988210611,0.362217157049212,0.830095627468326,0.0397365235762197,-0.526661532920067,0.243022747699797,0.660036221487657,0.742850304340534],[0.552475438422994,-0.0287400313833479,-0.89452794210576,0.99925667121692,0.0356646141730059,0.977632242576218,0.998011613881899,0.140794083907762,-0.616167338968087,-0.936621714811199,0.683936538695531,0.821051097033002,-0.986048845437429,0.529733887632883,-0.71135853763114,-0.431463667189602,0.943675805281225,0.972692983391826,-0.517677278791294,0.487819931300091,-0.933453390326631,0.954249685567386,-0.331115091991074,-0.828333019569243,0.979590463027001,0.498930333416577,0.121117527001084,-0.297473283080379,0.982490742098663,-0.83148809548789,0.980138116412824,-0.0194230273805043,-0.278253849632614,0.683274947543882,0.809561716493827,-0.892196388768421,-0.0599842554671033,0.892237135259897,-0.804303134069284,0.950357447798289,0.999996681322973,-0.321530224218858,0.994283054076328,-0.784812859143905,-0.523377109312856,-0.557669929808486,0.5599292329298,-0.999003753766002,-0.398171893384543,-0.956264251546845,-0.890089225811989,-0.808423554660971,0.980860227864529,0.990724000859479,0.599073094631859,-0.744459071646541,0.997191509930442,-0.667728229595921,-0.858533318535924,-0.996605071079855,0.288785916139178,-0.0639912649491396,0.536768868714551,-0.556218284532656,0.88886643164491,-0.574021560012082,0.648912282424447,0.746794335730359,-0.99895147481484,-0.696794371129045,-0.405667545232078,-0.879608831167121,-0.958321492500469,0.933060427209353,-0.988644276930984,0.729770567841379,0.131629700238196,0.782825254917425,0.99776517248268,-0.957850600003344,-0.510665247118159,0.626985144723316,0.602923640205392,-0.719917579133384,0.147432345647126,0.684965563962933,0.0450674487984931,-0.66485562711132,-0.673980407454162,-0.846541273630642,-0.671245204732124,-0.995305703571706,0.895574794514371,0.932093735167867,0.557621062423189,-0.999210192449055,0.850075073003723,0.970020589523976,0.751233776080586,-0.669457560522828,0.552475438422994,-0.0287400313833479,-0.89452794210576,0.99925667121692,0.0356646141730059,0.977632242576218,0.998011613881899,0.140794083907762,-0.616167338968087,-0.936621714811199,0.683936538695531,0.821051097033002,-0.986048845437429,0.529733887632883,-0.71135853763114,-0.431463667189602,0.943675805281225,0.972692983391826,-0.517677278791294,0.487819931300091,-0.933453390326631,0.954249685567386,-0.331115091991074,-0.828333019569243,0.979590463027001,0.498930333416577,0.121117527001084,-0.297473283080379,0.982490742098663,-0.83148809548789,0.980138116412824,-0.0194230273805043,-0.278253849632614,0.683274947543882,0.809561716493827,-0.892196388768421,-0.0599842554671033,0.892237135259897,-0.804303134069284,0.950357447798289,0.999996681322973,-0.321530224218858,0.994283054076328,-0.784812859143905,-0.523377109312856,-0.557669929808486,0.5599292329298,-0.999003753766002,-0.398171893384543,-0.956264251546845,-0.890089225811989,-0.808423554660971,0.980860227864529,0.990724000859479,0.599073094631859,-0.744459071646541,0.997191509930442,-0.667728229595921,-0.858533318535924,-0.996605071079855,0.288785916139178,-0.0639912649491396,0.536768868714551,-0.556218284532656,0.88886643164491,-0.574021560012082,0.648912282424447,0.746794335730359,-0.99895147481484,-0.696794371129045,-0.405667545232078,-0.879608831167121,-0.958321492500469,0.933060427209353,-0.988644276930984,0.729770567841379,0.131629700238196,0.782825254917425,0.99776517248268,-0.957850600003344,-0.510665247118159,0.626985144723316,0.602923640205392,-0.719917579133384,0.147432345647126,0.684965563962933,0.0450674487984931,-0.66485562711132,-0.673980407454162,-0.846541273630642,-0.671245204732124,-0.995305703571706,0.895574794514371,0.932093735167867,0.557621062423189,-0.999210192449055,0.850075073003723,0.970020589523976,0.751233776080586,-0.669457560522828],[1.117900156416,6.05489697586745,8.11492865625769,2.92635661270469,5.93187115620822,2.59529324434698,3.12045885343105,0.269793301820755,7.26789300888777,9.68360854312778,1.4384009744972,4.16032828576863,9.31939466390759,1.06624921504408,10.4884814182296,6.8520161351189,3.64405609387904,3.44734929967672,7.03921921737492,0.973246414214373,8.29932329524308,3.57994023710489,11.3554509663954,10.1357374107465,3.38652214128524,0.997641887515783,5.76811324618757,6.57686352264136,2.64207999687642,7.87506354041398,3.38128353282809,11.9629024174064,11.4614661131054,4.5633302628994,4.19822893291712,9.89498149976134,11.885369698517,3.89480918180197,10.2152330428362,3.60430561378598,2.99507961608469,6.62518305424601,3.20431748684496,7.72344577778131,10.9480314943939,10.8701729821041,4.86496987100691,8.91474187374115,6.78213147819042,8.43306880630553,8.09614870324731,7.79807310551405,2.62573441676795,2.73966473154724,4.77321527525783,7.60375527665019,3.14317082148045,10.6036010105163,10.0282566435635,8.8425819016993,5.44049051497132,6.12229787651449,1.08213171456009,7.12648894172162,2.09103823453188,10.832295326516,4.65134524181485,1.61044837161899,8.91253309417516,10.527654052712,6.79776552412659,8.05317376367748,8.44665943365544,3.70276602823287,9.28809492476285,1.5622387798503,5.74787411279976,1.71733286418021,3.12770835030824,9.55647984333336,7.02360505610704,4.70573198050261,4.76401412766427,10.4650774654001,0.282605214044452,4.55890336632729,5.91389834973961,7.38904168177396,10.5874992348254,7.92791495192796,7.40544143971056,8.81487218756229,2.11941186804324,2.29211927298456,1.12971458304673,9.07591115590185,4.05933881085366,2.53116618935019,1.62324548978359,10.5991595713422,1.117900156416,6.05489697586745,8.11492865625769,2.92635661270469,5.93187115620822,2.59529324434698,3.12045885343105,0.269793301820755,7.26789300888777,9.68360854312778,1.4384009744972,4.16032828576863,9.31939466390759,1.06624921504408,10.4884814182296,6.8520161351189,3.64405609387904,3.44734929967672,7.03921921737492,0.973246414214373,8.29932329524308,3.57994023710489,11.3554509663954,10.1357374107465,3.38652214128524,0.997641887515783,5.76811324618757,6.57686352264136,2.64207999687642,7.87506354041398,3.38128353282809,11.9629024174064,11.4614661131054,4.5633302628994,4.19822893291712,9.89498149976134,11.885369698517,3.89480918180197,10.2152330428362,3.60430561378598,2.99507961608469,6.62518305424601,3.20431748684496,7.72344577778131,10.9480314943939,10.8701729821041,4.86496987100691,8.91474187374115,6.78213147819042,8.43306880630553,8.09614870324731,7.79807310551405,2.62573441676795,2.73966473154724,4.77321527525783,7.60375527665019,3.14317082148045,10.6036010105163,10.0282566435635,8.8425819016993,5.44049051497132,6.12229787651449,1.08213171456009,7.12648894172162,2.09103823453188,10.832295326516,4.65134524181485,1.61044837161899,8.91253309417516,10.527654052712,6.79776552412659,8.05317376367748,8.44665943365544,3.70276602823287,9.28809492476285,1.5622387798503,5.74787411279976,1.71733286418021,3.12770835030824,9.55647984333336,7.02360505610704,4.70573198050261,4.76401412766427,10.4650774654001,0.282605214044452,4.55890336632729,5.91389834973961,7.38904168177396,10.5874992348254,7.92791495192796,7.40544143971056,8.81487218756229,2.11941186804324,2.29211927298456,1.12971458304673,9.07591115590185,4.05933881085366,2.53116618935019,1.62324548978359,10.5991595713422],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Y<\/th>\n      <th>x<\/th>\n      <th>z<\/th>\n      <th>times<\/th>\n      <th>group<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>mesor, amp, and acro represent the parameters for the first level,
 and the beta.prefix indicates a second level that can be used for data
 visualisation (if comparing two groups, for example) if desired.</p>
 <p>The simulate_cosinor function can simulate multi-component data. To
@@ -799,38 +799,38 @@ function:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                    estimate standard.error   lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)       7.0068734      0.0023305  7.0023056  7.0114411 0.0000000</span></span>
-<span><span class="co">#&gt; group1           -2.6106933      0.0081603 -2.6266873 -2.5946993 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_rrr1  0.0720237      0.0072229  0.0578672  0.0861803 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  1.1026876      0.0198755  1.0637323  1.1416428 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_sss1 -0.0878160      0.0027208 -0.0931487 -0.0824832 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_sss1 -1.6852974      0.0090363 -1.7030084 -1.6675865 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_rrr2  0.0153061      0.0049208  0.0056616  0.0249507 0.0018677</span></span>
-<span><span class="co">#&gt; group1:main_rrr2  0.0606637      0.0152547  0.0307651  0.0905622 0.0000699</span></span>
-<span><span class="co">#&gt; group0:main_sss2 -0.3969515      0.0032217 -0.4032659 -0.3906371 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_sss2  1.0043080      0.0096668  0.9853614  1.0232546 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_rrr3  0.4942254      0.0043081  0.4857817  0.5026692 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_rrr3  0.2173567      0.0095069  0.1987235  0.2359899 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_sss3 -0.0737088      0.0090529 -0.0914521 -0.0559655 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_sss3  0.3160227      0.0234115  0.2701370  0.3619084 0.0000000</span></span>
+<span><span class="co">#&gt;                    estimate standard.error   lower.CI   upper.CI  p.value</span></span>
+<span><span class="co">#&gt; (Intercept)       7.0028419      0.0022892  6.9983551  7.0073287 0.00e+00</span></span>
+<span><span class="co">#&gt; group1           -2.6089337      0.0081727 -2.6249519 -2.5929155 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr1  0.0637531      0.0072450  0.0495532  0.0779530 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  1.0738743      0.0197342  1.0351960  1.1125526 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_sss1 -0.0859979      0.0025462 -0.0909883 -0.0810075 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss1 -1.6895537      0.0088069 -1.7068148 -1.6722925 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr2  0.0199389      0.0049637  0.0102103  0.0296675 5.89e-05</span></span>
+<span><span class="co">#&gt; group1:main_rrr2  0.0818941      0.0151583  0.0521844  0.1116038 1.00e-07</span></span>
+<span><span class="co">#&gt; group0:main_sss2 -0.3985965      0.0031874 -0.4048437 -0.3923494 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss2  1.0036876      0.0097098  0.9846567  1.0227185 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr3  0.4989438      0.0040466  0.4910125  0.5068750 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_rrr3  0.2111978      0.0090364  0.1934868  0.2289087 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_sss3 -0.0650794      0.0092150 -0.0831405 -0.0470183 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss3  0.3490133      0.0236757  0.3026098  0.3954167 0.00e+00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                  estimate standard.error   lower.CI   upper.CI p.value</span></span>
-<span><span class="co">#&gt; (Intercept)     7.0068734      0.0023305  7.0023056  7.0114411       0</span></span>
-<span><span class="co">#&gt; [group=1]      -2.6106933      0.0081603 -2.6266873 -2.5946993       0</span></span>
-<span><span class="co">#&gt; [group=0]:amp1  0.1135740      0.0058060  0.1021944  0.1249537       0</span></span>
-<span><span class="co">#&gt; [group=1]:amp1  2.0139879      0.0155028  1.9836030  2.0443728       0</span></span>
-<span><span class="co">#&gt; [group=0]:amp2  0.3972465      0.0024305  0.3924828  0.4020102       0</span></span>
-<span><span class="co">#&gt; [group=1]:amp2  1.0061385      0.0098664  0.9868008  1.0254762       0</span></span>
-<span><span class="co">#&gt; [group=0]:amp3  0.4996917      0.0072041  0.4855719  0.5138114       0</span></span>
-<span><span class="co">#&gt; [group=1]:amp3  0.3835548      0.0222477  0.3399501  0.4271595       0</span></span>
-<span><span class="co">#&gt; [group=0]:acr1  0.8838789      0.0447772  0.7961172  0.9716405       0</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  0.9914053      0.0085415  0.9746641  1.0081464       0</span></span>
-<span><span class="co">#&gt; [group=0]:acr2  1.5322562      0.0089971  1.5146223  1.5498902       0</span></span>
-<span><span class="co">#&gt; [group=1]:acr2 -1.5104662      0.0168781 -1.5435467 -1.4773857       0</span></span>
-<span><span class="co">#&gt; [group=0]:acr3  0.1480488      0.0191474  0.1105205  0.1855771       0</span></span>
-<span><span class="co">#&gt; [group=1]:acr3 -0.9683133      0.0371551 -1.0411358 -0.8954907       0</span></span>
+<span><span class="co">#&gt; (Intercept)     7.0028419      0.0022892  6.9983551  7.0073287       0</span></span>
+<span><span class="co">#&gt; [group=1]      -2.6089337      0.0081727 -2.6249519 -2.5929155       0</span></span>
+<span><span class="co">#&gt; [group=0]:amp1  0.1070518      0.0053880  0.0964916  0.1176121       0</span></span>
+<span><span class="co">#&gt; [group=1]:amp1  2.0019484      0.0148435  1.9728557  2.0310411       0</span></span>
+<span><span class="co">#&gt; [group=0]:amp2  0.3990949      0.0025600  0.3940774  0.4041125       0</span></span>
+<span><span class="co">#&gt; [group=1]:amp2  1.0070231      0.0098107  0.9877945  1.0262516       0</span></span>
+<span><span class="co">#&gt; [group=0]:amp3  0.5031702      0.0072340  0.4889919  0.5173485       0</span></span>
+<span><span class="co">#&gt; [group=1]:amp3  0.4079397      0.0227502  0.3633500  0.4525293       0</span></span>
+<span><span class="co">#&gt; [group=0]:acr1  0.9328648      0.0511150  0.8326812  1.0330485       0</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  1.0046134      0.0087328  0.9874974  1.0217294       0</span></span>
+<span><span class="co">#&gt; [group=0]:acr2  1.5208152      0.0086212  1.5039180  1.5377124       0</span></span>
+<span><span class="co">#&gt; [group=1]:acr2 -1.4893834      0.0168164 -1.5223430 -1.4564239       0</span></span>
+<span><span class="co">#&gt; [group=0]:acr3  0.1297021      0.0189488  0.0925633  0.1668410       0</span></span>
+<span><span class="co">#&gt; [group=1]:acr3 -1.0266146      0.0332148 -1.0917145 -0.9615148       0</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>, x_str <span class="op">=</span> <span class="st">"group"</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GLMMcosinor_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>Vignettes are long form documentation commonly included in packages.
