@@ -88,7 +88,110 @@ Jayasinghe and Rex Parsons</h4>
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<div class="section level2">
+<h2 id="plotting-cosinor-glmm-objects">Plotting cosinor.glmm objects<a class="anchor" aria-label="anchor" href="#plotting-cosinor-glmm-objects"></a>
+</h2>
+<p>The GLMMcosinor package includes two ways to visualise cosinor.glmm
+objects. Firstly, the function ggplot.cosinor.glmm() creates a
+time-response plot of the fitted model:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, x_str <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>This function also allows users to superimpose the datapoints (that
+the fit is based on) over the fitted model, using the superimpose.data =
+TRUE argument:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, x_str <span class="op">=</span> <span class="st">"X"</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p>If there are multiple factors in the model, the user can specify
+which covariate to be plotted using the x_str argument which accepts a
+string corresponding to a group name within the original dataset. By
+default, x_str = NULL and the intercept is plotted (all group levels =
+0).</p>
+<p>The following examples demonstrate how x_str can be used to produce
+different plots for the same model;</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="va">vitamind</span><span class="op">$</span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>, <span class="fl">3</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, n_components <span class="op">=</span> <span class="fl">3</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Z"</span>, <span class="cn">NA</span>, <span class="st">"X"</span><span class="op">)</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="va">vitamind</span><span class="op">$</span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>, <span class="fl">3</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, n_components <span class="op">=</span> <span class="fl">3</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Z"</span>, <span class="cn">NA</span>, <span class="st">"X"</span><span class="op">)</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, x_str <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="va">vitamind</span><span class="op">$</span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>, <span class="fl">3</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, n_components <span class="op">=</span> <span class="fl">3</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Z"</span>, <span class="cn">NA</span>, <span class="st">"X"</span><span class="op">)</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, x_str <span class="op">=</span> <span class="st">"Z"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="polar-plots">Polar plots<a class="anchor" aria-label="anchor" href="#polar-plots"></a>
+</h2>
+<p>In addition to time-response plots, the GLMMcosinor package also
+allows users to create polar plots. In these plots, the plotted point
+represents the acrophase estimate, and the radius represents the
+amplitude estimate for a given component. The ellipses represent
+confidence regions.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>The angle units in the plot can be specified with the ‘radial_units’
+argument. By default, the units are in radians where a complete
+revolution of the plot (2*pi) represents the maximum period from the
+model. The units can be changed to degrees, or even to be expressed in
+the same units as the period specification.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span>, radial_units <span class="op">=</span> <span class="st">"degrees"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p>By default, the function creates creates polar plots for all
+components and stiches them together using the make_cowplot = TRUE
+argument. If the user wishes to plot just one component, they can
+specify this by using ‘component_index’, though the ‘make_cowplot’
+argument must be FALSE for this to register.</p>
+<p>The direction that the angle increases in can be changed with the
+clockwise argument, and the location of the angle = 0 starting point can
+be specified with the ‘start’ argument. Hence, if the user wishes to
+create a polar plot that resembles a clock, this can be done by
+specifying clockwise = TRUE and start = “top”.</p>
+<p>The argument: overlay_parameter_info can be used to create a line
+extending from the origin to the parameter estimate (to visualise the
+amplitude estimate), and a circular arc extending from the angle
+starting position (at 0) to the acrophase estimate.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span>, overlay_parameter_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p>The background grid can also be customised. The argument
+‘grid_angle_segments’ is used to specify how many sectors the polar grid
+has, and the ‘contour_interval’ argument can be used to specify the
+distance between adjacent radial circles.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span>, grid_angle_segments <span class="op">=</span> <span class="fl">12</span>, clockwise <span class="op">=</span> <span class="cn">TRUE</span>, start <span class="op">=</span> <span class="st">"top"</span>, contour_interval <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p>If the user wishes to zoom into the confidence ellipses to show
+releveant information, they can adjust the view from the default ‘full’
+(which plots a full view of the polar plot) to ‘zoom’ (which enlarges
+the smallest view window containing all confidence ellipses), or
+‘zoom_origin’ (which enlarges the smallest view window containing all
+confidence ellipses AND the origin).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu">amp.acro</span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span>, grid_angle_segments <span class="op">=</span> <span class="fl">12</span>, clockwise <span class="op">=</span> <span class="cn">TRUE</span>, start <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>           view <span class="op">=</span> <span class="st">"zoom_origin"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="model-visualisations_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
