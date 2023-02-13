@@ -31,6 +31,9 @@ cosinor.glmm(
 
 \item{...}{optional additional arguments passed to glmmTMB::glmmTMB()}
 }
+\value{
+Returns a fitted cosinor model as a \code{cosinor.glmm} object.
+}
 \description{
 Given an outcome and time variable, fit the cosinor model with optional
 covariate effects.

@@ -12,7 +12,7 @@
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param ... Currently unused
 #'
-#'
+#' @return Returns a summary of the `cosinor.glmm` model as a `summary.cosinor.glmm` object.
 #' @examples
 #'
 #'
@@ -231,7 +231,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #' @param digits Controls the number of digits displayed in the summary output
 #' @param ... Currently unused
 #'
-#'
+#' @return `print` returns `x` invisibly.
 #' @examples
 #'
 #' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
@@ -274,4 +274,5 @@ print.summary.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     cat("Transformed coefficients:\n")
     print(round(x$output_zi$transformed.table, digits = digits))
   }
+  invisible(x)
 }

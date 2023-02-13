@@ -9,7 +9,7 @@
 #' @param se.fit Logical argument indicating whether to determine standard error (default = TRUE)
 #' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}
 #'
-#'
+#' @return Returns predicted values from the cosinor model.
 #' @examples
 #'
 #' fit <- cosinor.glmm(Y ~ X + amp.acro(time,

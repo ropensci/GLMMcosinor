@@ -13,6 +13,9 @@
 
 \item{...}{Currently unused}
 }
+\value{
+Returns a summary of the \code{cosinor.glmm} model as a \code{summary.cosinor.glmm} object.
+}
 \description{
 Given a time variable and optional covariates, generate inference a cosinor
 fit. Gives estimates, confidence intervals, and tests for the raw parameters,

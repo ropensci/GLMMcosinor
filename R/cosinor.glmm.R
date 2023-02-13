@@ -20,6 +20,8 @@
 #'   acrophase/amplitude, wrap the name in \code{amp.acro()}. This will then do
 #'   all the transformations for you. See examples for usage.
 #'
+#' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
+#'
 #' @srrstatsTODO {G2.14} *Where possible, all functions should provide options for users to specify how to handle missing (`NA`) data, with options minimally including:*
 #' @srrstatsTODO {G2.14a} *error on missing data*
 #' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
@@ -78,6 +80,7 @@ cosinor.glmm <- function(formula,
 #' @param x cosinor.glmm object
 #' @param ... passed to summary
 #'
+#' @return `print` returns `x` invisibly.
 #'
 #' @export
 #'
@@ -125,31 +128,7 @@ print.cosinor.glmm <- function(x, ...) {
     }
     print(tzi.x)
   }
-}
-
-#' Fit cosinor model
-#'
-#' Given an outcome and time variable, fit the cosinor model with optional covariate effects.
-#'
-#' @param formula Formula specifying the model. Indicate the time variable with \code{time()} and covariate effects on the
-#' amplitude and acrophase with \code{amp.acro()}. See details.
-#' @param ... other arguments
-#'
-#' @details This defines special functions that are used in the formula to indicate the time variable
-#' and which covariates effect the amplitude. To indicate the time variable wrap the name of it in the function
-#' \code{time()}. To indicate a variable which affects the acrophase/amplitude, wrap the name in
-#' \code{amp.acro()}. This will then do all the transformations for you. See examples for usage.
-#'
-#' @examples
-#'
-#' cosinor.glmm(Y ~ time(time) + X + amp.acro(X), data = vitamind)
-#'
-#' @export
-#'
-
-
-cosinor.glmm.default <- function(formula, ...) {
-  UseMethod("cosinor.glmm")
+  invisible(x)
 }
 
 #' Extract variable names from terms object, handling specials

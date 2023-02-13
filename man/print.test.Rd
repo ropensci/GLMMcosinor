@@ -9,7 +9,9 @@
 \arguments{
 \item{x}{test object}
 }
+\value{
+\code{print} returns \code{x} invisibly.
+}
 \description{
 Print test of model
 }
-\keyword{Internal}

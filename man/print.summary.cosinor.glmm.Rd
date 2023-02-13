@@ -13,6 +13,9 @@
 
 \item{...}{Currently unused}
 }
+\value{
+\code{print} returns \code{x} invisibly.
+}
 \description{
 Print the summary of a cosinor model
 }

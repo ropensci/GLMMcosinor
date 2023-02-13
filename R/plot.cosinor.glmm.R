@@ -14,6 +14,8 @@
 #' @param data_opacity A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data
 #' @param predict.ribbon A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted
 #' @param ... Additional, ignored arguments.
+#'
+#' @return Returns a `ggplot` graphics object.
 #' @examples
 #'
 #' model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
@@ -270,7 +272,7 @@ plot.cosinor.glmm <- function(x,
 #' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
-#' @return Returns a ggplot graphic.
+#' @return Returns a `ggplot` graphics object.
 #' @export
 #'
 #'
@@ -732,7 +734,7 @@ polar_plot.cosinor.glmm <- function(x,
 #' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
-#' @return Returns a ggplot graphic.
+#' @return Returns a `ggplot` graphics object.
 #' @export
 #'
 #'

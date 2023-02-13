@@ -14,6 +14,9 @@ fit_model_and_process(obj, formula, ...)
 
 \item{...}{optional additional arguments passed to \code{glmmTMB::glmmTMB()}}
 }
+\value{
+Returns a fitted cosinor model as a \code{cosinor.glmm} object.
+}
 \description{
 Fit the cosinorGLMM model using the output from update_formula_and_data() and
 a new formula

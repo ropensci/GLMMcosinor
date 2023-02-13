@@ -63,7 +63,7 @@
 \item{...}{Additional, ignored arguments.}
 }
 \value{
-Returns a ggplot graphic.
+Returns a \code{ggplot} graphics object.
 }
 \description{
 Generates a polar plot with elliptical confidence intervals

@@ -36,6 +36,9 @@ amplitude or "acr" for acrophase}
 
 \item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
 }
+\value{
+Returns a \code{test_cosinor} object.
+}
 \description{
 Given a time variable and optional covariates, generate inference a cosinor
 fit. For the covariate named (or vector of covariates), this function

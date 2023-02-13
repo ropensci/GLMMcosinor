@@ -11,6 +11,9 @@
 
 \item{...}{Arguments passed to \code{print}}
 }
+\value{
+\code{print} returns \code{x} invisibly.
+}
 \description{
 Print results of test of cosinor model
 }

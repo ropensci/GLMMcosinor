@@ -19,6 +19,7 @@
 #' @param level_index If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #'
+#' @return Returns a `test_cosinor` object.
 #' @examples
 #'
 #' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
@@ -120,7 +121,7 @@ test_cosinor <- function(x,
 #' @param x test_cosinor object
 #' @param ... Arguments passed to \code{print}
 #'
-#'
+#' @return `print` returns `x` invisibly.
 #' @export
 #'
 
@@ -129,14 +130,16 @@ print.test_cosinor <- function(x, ...) {
   print(x$global.test, ...)
   cat("\n Individual tests: \n")
   print(x$ind.test, ...)
+
+  invisible(x)
 }
 
 #' Print test of model
 #'
 #' @param x test object
 #'
-#'
-#' @keywords Internal
+#' @return `print` returns `x` invisibly.
+#' @export
 #'
 
 print.test <- function(x) {
@@ -156,4 +159,5 @@ print.test <- function(x) {
     msat <- data.frame(statistic = round(x$statistic), estimate = paste0(ci[, 1], " (", ci[, 2], " to ", ci[, 3], ")"), p.value = round(x$p.value, 4))
     rownames(msat) <- x$names
   }
+  invisible(x)
 }

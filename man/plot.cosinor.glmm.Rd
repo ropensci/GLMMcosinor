@@ -38,6 +38,9 @@
 
 \item{...}{Additional, ignored arguments.}
 }
+\value{
+Returns a \code{ggplot} graphics object.
+}
 \description{
 Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
 Optionally allows for plotting by covariates

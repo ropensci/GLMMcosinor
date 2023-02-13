@@ -44,6 +44,9 @@ simulate_cosinor(
 
 \item{...}{Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation}
 }
+\value{
+Returns simulated data in a \code{data.frame}.
+}
 \description{
 This function simulates data from a cosinor model with a single covariate,
 where the time scale is month, and optionally

@@ -15,6 +15,9 @@
 
 \item{...}{other arguments passed to \code{glmmTMB:::predict.glmmTMB}}
 }
+\value{
+Returns predicted values from the cosinor model.
+}
 \description{
 Given a time variable and optional covariates, generate predicted values from
 a cosinor fit. Default prediction is the mean value, optionally can predict

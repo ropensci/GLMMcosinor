@@ -11,6 +11,9 @@
 
 \item{...}{passed to summary}
 }
+\value{
+\code{print} returns \code{x} invisibly.
+}
 \description{
 Given an outcome and time variable, fit the cosinor model with optional covariate effects.
 }

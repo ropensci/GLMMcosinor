@@ -5,6 +5,7 @@
 #' @param formula new formula to use when fitting model (maybe with random effects)
 #' @param ... optional additional arguments passed to `glmmTMB::glmmTMB()`
 #'
+#' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
 #' @export
 #'
 #' @examples

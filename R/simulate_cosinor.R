@@ -18,6 +18,8 @@
 #' @param family family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian"
 #' @param ... Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation
 #'
+#' @return Returns simulated data in a `data.frame`.
+#'
 #' @srrstatsTODO {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
 #'
 #' @export
