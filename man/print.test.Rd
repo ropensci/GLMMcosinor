@@ -4,10 +4,12 @@
 \alias{print.test}
 \title{Print test of model}
 \usage{
-\method{print}{test}(x)
+\method{print}{test}(x, ...)
 }
 \arguments{
 \item{x}{test object}
+
+\item{...}{Additional, ignored arguments.}
 }
 \value{
 \code{print} returns \code{x} invisibly.

@@ -137,12 +137,13 @@ print.test_cosinor <- function(x, ...) {
 #' Print test of model
 #'
 #' @param x test object
+#' @param ... Additional, ignored arguments.
 #'
 #' @return `print` returns `x` invisibly.
 #' @export
 #'
 
-print.test <- function(x) {
+print.test <- function(x, ...) {
   if (length(x$statistic) == 1) {
     cat("Statistic: \n")
     print(round(x$statistic, 2))
