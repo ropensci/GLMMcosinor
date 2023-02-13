@@ -65,6 +65,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "DT",
+      "name": "DT",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=DT"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
       "provider": {
@@ -205,7 +217,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "212.669KB",
+  "fileSize": "214.23KB",
   "readme": "https://github.com/RWParsons/GLMMcosinor/blob/main/README.md",
   "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main", "https://github.com/RWParsons/GLMMcosinor/actions?query=workflow%3Apkgcheck"]
 }
