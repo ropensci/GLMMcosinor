@@ -175,7 +175,7 @@ test_that("polar_plot messages work", {
   }
   suppressMessages(expect_message(
     capture.output(f()),
-    regex = "Circular contours every 2.0344 unit(s)", fixed = TRUE
+    regex = "Circular contours every 1 unit(s)", fixed = TRUE
   ))
 
   suppressMessages(expect_message(
