@@ -53,39 +53,44 @@ update_formula_and_data <- function(data, formula,
       ziformula_check = ziformula_check
     ))
   }
+
+
   main_output <- formula_eval(formula,
     data,
     quietly,
     amp.acro_ind = -1,
     data_prefix = "main_"
   )
+
+
+  items_keep <- c(
+    "newformula",
+    "vec_rrr",
+    "vec_sss",
+    "n_components",
+    "period",
+    "group_stats",
+    "group_check",
+    "group"
+  )
+
   if (dispformula_check) {
     data <- main_output$newdata
     dispformula <- formula_eval(formula = dispformula, data = data, quietly = quietly, amp.acro_ind = 0, data_prefix = "disp_")
     main_output$newdata <- dispformula$newdata
-    main_output$dispformula <- list()
-    main_output$dispformula$formula <- dispformula$newformula
-    main_output$dispformula$vec_rrr <- dispformula$vec_rrr
-    main_output$dispformula$vec_sss <- dispformula$vec_sss
-    main_output$dispformula$n_components <- dispformula$n_components
-    main_output$dispformula$period <- dispformula$period
-    main_output$dispformula$group_stats <- dispformula$group_stats
-    main_output$dispformula$group_check <- dispformula$group_check
-    main_output$dispformula$group <- dispformula$group
+
+    dispformula <- dispformula[items_keep]
+    names(dispformula)[names(dispformula) == "newformula"] <- "formula"
+    main_output$dispformula <- dispformula
   }
   if (ziformula_check) {
     data <- main_output$newdata
     ziformula <- formula_eval(formula = ziformula, data = data, quietly = quietly, amp.acro_ind = 0, data_prefix = "zi_")
     main_output$newdata <- ziformula$newdata
-    main_output$ziformula <- list()
-    main_output$ziformula$formula <- ziformula$newformula
-    main_output$ziformula$vec_rrr <- ziformula$vec_rrr
-    main_output$ziformula$vec_sss <- ziformula$vec_sss
-    main_output$ziformula$n_components <- ziformula$n_components
-    main_output$ziformula$period <- ziformula$period
-    main_output$ziformula$group_stats <- ziformula$group_stats
-    main_output$ziformula$group_check <- ziformula$group_check
-    main_output$ziformula$group <- ziformula$group
+
+    ziformula <- ziformula[items_keep]
+    names(ziformula)[names(ziformula) == "newformula"] <- "formula"
+    main_output$ziformula <- ziformula
   }
   main_output
 }

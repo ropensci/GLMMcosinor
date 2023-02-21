@@ -147,20 +147,29 @@ data_processor <- function(newdata,
   main_coefs <- glmmTMB::fixef(mf)$cond
   conditional_model <- get_new_coefs(main_coefs, vec_rrr, vec_sss, n_components)
 
+  items_keep <- c(
+    "formula",
+    "vec_rrr",
+    "vec_sss",
+    "n_components",
+    "group_stats",
+    "group_check"
+  )
+
   if (dispformula_check) {
     disp_coefs <- glmmTMB::fixef(mf)$disp
     dispersion_model <- get_new_coefs(disp_coefs, dispformula$vec_rrr, dispformula$vec_sss, dispformula$n_components)
-    disp_list <- list(
-      formula_disp = dispformula$formula,
-      coefficients_disp = dispersion_model,
-      raw_coefficients_disp = disp_coefs,
-      vec_sss_disp = dispformula$vec_sss,
-      vec_rrr_disp = dispformula$vec_rrr,
-      n_components_disp = dispformula$n_components,
-      group_stats_disp = dispformula$group_stats,
-      group_disp = dispformula$group_disp,
-      group_check_disp = dispformula$group_check
+
+    disp_list <- c(
+      dispformula[items_keep],
+      list(
+        coefficients = dispersion_model,
+        raw_coefficients = disp_coefs,
+        group = dispformula$group_disp
+      )
     )
+    names(disp_list) <- paste0(names(disp_list), "_disp")
+
   } else {
     disp_list <- NULL
   }
@@ -168,17 +177,17 @@ data_processor <- function(newdata,
   if (ziformula_check) {
     zi_coefs <- glmmTMB::fixef(mf)$zi
     zi_model <- get_new_coefs(zi_coefs, ziformula$vec_rrr, ziformula$vec_sss, ziformula$n_components)
-    zi_list <- list(
-      formula_zi = ziformula$formula,
-      coefficients_zi = zi_model,
-      raw_coefficients_zi = zi_coefs,
-      vec_sss_zi = ziformula$vec_sss,
-      vec_rrr_zi = ziformula$vec_rrr,
-      n_components_zi = ziformula$n_components,
-      group_stats_zi = ziformula$group_stats,
-      group_zi = ziformula$group_zi,
-      group_check_zi = ziformula$group_check
+
+    zi_list <- c(
+      ziformula[items_keep],
+      list(
+        coefficients = zi_model,
+        raw_coefficients = zi_coefs,
+        group = ziformula$group_disp
+      )
     )
+    names(zi_list) <- paste0(names(zi_list), "_zi")
+
   } else {
     zi_list <- NULL
   }
