@@ -106,5 +106,9 @@ test_that("multiplication works", {
     regex = "'level_index' must be supplied. Ensure that it is a number corresponding to a level in the model", fixed = TRUE
   )
 
+  #Test 11
+  data(vitamind)
+  obj <- test_cosinor(object, x_str = "X")
+  expect_true(inherits(obj, "test_cosinor"))
 
 })
