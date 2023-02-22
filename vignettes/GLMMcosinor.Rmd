@@ -366,9 +366,9 @@ dat <- dplyr::tibble(
 'Gaussian','Gaussian','Gaussian','Gaussian','Gaussian','Gaussian'),
 "Reference" = c('-','Moskon, 2020','Velikajne, 2022','Fernández, 2022','Parsons,2020', 'Sachs, 2014','Mutak, 2018','Carlucci, 2019','Singer, 2019'))
 dat %>%
-  flextable() %>%
-  colformat_md() %>%
-  autofit()
+  flextable::flextable() %>%
+  ftExtra::colformat_md() %>%
+  flextable::autofit()
 ```
 
 Vignettes are long form documentation commonly included in packages.
