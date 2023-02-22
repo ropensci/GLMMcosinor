@@ -348,11 +348,68 @@ summary(object)
 plot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ```
 
-##Feature table
+## Feature table
 
 ```{r, echo = F}
-library("flextable")
-library("ftExtra")
+dat_list <- list(
+  list(
+    name = "GLMMCosinor",
+    language = "R",
+    multicomponent = TRUE,
+    disp = TRUE,
+    zi = TRUE,
+    rhythmdiff = FALSE,
+    family = "Any family listed in glmmTMB (See ?family_glmmTMB)",
+    ref = "Parsons, 2023"
+  ),
+  list(
+    name = "CosinorPy",
+    language = "Python",
+    multicomponent = TRUE,
+    disp = FALSE,
+    zi = FALSE,
+    rhythmdiff = TRUE,
+    family = "Gaussian, Poisson, negative-binomial",
+    ref = "Moskon, 2020"
+  ),
+  list(
+    name = "RhythmCount",
+    language = "Python",
+    multicomponent = TRUE,
+    disp = FALSE,
+    zi = TRUE,
+    rhythmdiff = FALSE,
+    family = "Poisson, generalised Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial",
+    ref = "Velikajne, 2022"
+  )
+)
+
+
+dat <- do.call(rbind, dat_list) 
+dat <- as.data.frame(dat) 
+dat <- dplyr:::mutate(
+  dat, 
+  dplyr::across(dplyr::everything(), unlist),
+  dplyr::across(
+    multicomponent:rhythmdiff, 
+    function(x) ifelse(x, "&#x2713;", "&#x2717;")
+    )
+  )
+dat <- flextable::flextable(dat)
+
+dat <- flextable::color(
+  dat, 
+  j = c("multicomponent", "disp", "zi", "rhythmdiff"), 
+  col = function(x) ifelse(x == "&#x2713;", "green", "red")
+) 
+
+dat <- ftExtra::colformat_md(dat)
+flextable::autofit(dat)
+```
+
+
+```{r echo=F, eval=F}
+
 dat <- dplyr::tibble(
 "Package" = c('GLMMCosinor','CosinorPy', 'RhythmCount', 'FMM', 'CircaCompare', 'Cosinor', 'Cosinor2', 'DiscoRhythm', 'LimoRhyde'),
 "Language" = c('R','Python','Python', 'R', 'R', 'R', 'R', 'R', 'R'),
@@ -364,10 +421,10 @@ dat <- dplyr::tibble(
 'Gaussian, Poisson, negative-binomial', 
 'Poisson, generalised Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial ', 
 'Gaussian','Gaussian','Gaussian','Gaussian','Gaussian','Gaussian'),
-"Reference" = c('-','Moskon, 2020','Velikajne, 2022','Fernández, 2022','Parsons,2020', 'Sachs, 2014','Mutak, 2018','Carlucci, 2019','Singer, 2019'))
+"Reference" = c('-','Moskon, 2020','Velikajne, 2022','Fernández, 2022','Parsons, 2020', 'Sachs, 2014','Mutak, 2018','Carlucci, 2019','Singer, 2019'))
 dat %>%
   flextable() %>%
-  colformat_md() %>%
+  ftExtra::colformat_md() %>%
   autofit()
 ```
 
