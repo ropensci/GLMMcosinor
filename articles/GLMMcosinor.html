@@ -124,7 +124,7 @@ intercept and X listed as a covariate mesor term:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x56348c377f80&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x564689140538&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -144,7 +144,7 @@ within the group “X”.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 - 1</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x56349516c998&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x564691b295c8&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;           X0           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -162,7 +162,7 @@ generate any mesor estimates:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X:main_rrr1 + X:main_sss1 - 1</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x563494bfa088&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x5646915f6ee8&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt; X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -199,19 +199,19 @@ component that the group covariate describes:<br></p></li>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + main_rrr2 + main_sss2 + X:main_rrr1 + X:main_sss1 + Z:main_rrr3 + </span></span>
 <span><span class="co">#&gt;     Z:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5634949c9298&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x564691425938&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    main_rrr2    main_sss2 X0:main_rrr1 X1:main_rrr1 </span></span>
-<span><span class="co">#&gt;   31.5242915    1.8648486  -19.6556316   -4.7376372   15.9837397   21.6466776 </span></span>
+<span><span class="co">#&gt;   30.8856941    1.7371496  -12.8396740   -0.7291562   10.3679028   15.8738827 </span></span>
 <span><span class="co">#&gt; X0:main_sss1 X1:main_sss1 Z0:main_rrr3 Z1:main_rrr3 Z0:main_sss3 Z1:main_sss3 </span></span>
-<span><span class="co">#&gt;    1.2276397   -0.4664283    3.7087739    2.3612603    5.7562765    4.7334136 </span></span>
+<span><span class="co">#&gt;    1.7575424    0.1464085    2.0756876    3.3510576    3.2355785    1.5514446 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
-<span><span class="co">#&gt; (Intercept)       [X=1]  [X=0]:amp1  [X=1]:amp1        amp2  [Z=0]:amp3 </span></span>
-<span><span class="co">#&gt; 31.52429150  1.86484858 16.03081510 21.65170215 20.21853262  6.84760708 </span></span>
-<span><span class="co">#&gt;  [Z=1]:amp3  [X=0]:acr1  [X=1]:acr1        acr2  [Z=0]:acr3  [Z=1]:acr3 </span></span>
-<span><span class="co">#&gt;  5.28968379 -0.07665504  0.02154401  2.90507206 -0.99843797 -1.10806965</span></span></code></pre></div>
+<span><span class="co">#&gt;  (Intercept)        [X=1]   [X=0]:amp1   [X=1]:amp1         amp2   [Z=0]:amp3 </span></span>
+<span><span class="co">#&gt; 30.885694114  1.737149625 10.515814909 15.874557826 12.860361519  3.844144507 </span></span>
+<span><span class="co">#&gt;   [Z=1]:amp3   [X=0]:acr1   [X=1]:acr1         acr2   [Z=0]:acr3   [Z=1]:acr3 </span></span>
+<span><span class="co">#&gt;  3.692772319 -0.167921311 -0.009222969  3.084864275 -1.000405725 -0.433588618</span></span></code></pre></div>
 <p>As demonstrated in the example above, the ‘NA’ entry in the group
 argument indicates a component with no group covariate assigned.</p>
 <p>If only one group argument and and/or one period argument is
@@ -228,7 +228,7 @@ output:</p>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 + </span></span>
 <span><span class="co">#&gt;     X:main_rrr3 + X:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x563494a9b1a8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x5646914d9250&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -252,7 +252,7 @@ output:</p>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 + </span></span>
 <span><span class="co">#&gt;     X:main_rrr3 + X:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x563494a8cfe8&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x5646914cbc28&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span></span>
@@ -290,23 +290,23 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt;  Raw formula: </span></span>
 <span><span class="co">#&gt; Y ~ X + main_rrr2 + main_sss2 + X:main_rrr1 + X:main_sss1 + Z:main_rrr3 + </span></span>
 <span><span class="co">#&gt;     Z:main_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5634946022b0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x5646910ce7b8&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    main_rrr2    main_sss2 X0:main_rrr1 X1:main_rrr1 </span></span>
-<span><span class="co">#&gt;   30.3359209    2.0288466   -7.9392371    3.6210921    5.4176372   11.4488357 </span></span>
+<span><span class="co">#&gt;  30.29061851   2.42105216  -9.15154549   0.32979391   7.63991857  13.40737847 </span></span>
 <span><span class="co">#&gt; X0:main_sss1 X1:main_sss1 Z0:main_rrr3 Z1:main_rrr3 Z2:main_rrr3 Z0:main_sss3 </span></span>
-<span><span class="co">#&gt;    1.1235936   -0.0209379    2.3363098    3.2917842    2.8558301    0.5520651 </span></span>
+<span><span class="co">#&gt;   2.29497097   1.67351684   2.10178402   2.35303955   0.32197789   1.16698943 </span></span>
 <span><span class="co">#&gt; Z1:main_sss3 Z2:main_sss3 </span></span>
-<span><span class="co">#&gt;   -1.0841366    0.3385906 </span></span>
+<span><span class="co">#&gt;  -0.03948918   2.80000829 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
-<span><span class="co">#&gt;  (Intercept)        [X=1]   [X=0]:amp1   [X=1]:amp1         amp2   [Z=0]:amp3 </span></span>
-<span><span class="co">#&gt; 30.335920886  2.028846611  5.532924668 11.448854868  8.726041164  2.400649748 </span></span>
-<span><span class="co">#&gt;   [Z=1]:amp3   [Z=2]:amp3   [X=0]:acr1   [X=1]:acr1         acr2   [Z=0]:acr3 </span></span>
-<span><span class="co">#&gt;  3.465717178  2.875831857 -0.204496409  0.001828822 -2.713676924 -0.232041586 </span></span>
-<span><span class="co">#&gt;   [Z=1]:acr3   [Z=2]:acr3 </span></span>
-<span><span class="co">#&gt;  0.318157853 -0.118010289 </span></span>
+<span><span class="co">#&gt; (Intercept)       [X=1]  [X=0]:amp1  [X=1]:amp1        amp2  [Z=0]:amp3 </span></span>
+<span><span class="co">#&gt; 30.29061851  2.42105216  7.97717040 13.51141947  9.15748594  2.40403003 </span></span>
+<span><span class="co">#&gt;  [Z=1]:amp3  [Z=2]:amp3  [X=0]:acr1  [X=1]:acr1        acr2  [Z=0]:acr3 </span></span>
+<span><span class="co">#&gt;  2.35337088  2.81845989 -0.29181645 -0.12417834 -3.10557128 -0.50685548 </span></span>
+<span><span class="co">#&gt;  [Z=1]:acr3  [Z=2]:acr3 </span></span>
+<span><span class="co">#&gt;  0.01678062 -1.45630743 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -315,23 +315,23 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt;  Raw  Formula: </span></span>
 <span><span class="co">#&gt; ~X + disp_rrr2 + disp_sss2 + Z:disp_rrr1 + Z:disp_sss1 + X:disp_rrr3 + </span></span>
 <span><span class="co">#&gt;     X:disp_sss3</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x563494526640&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x564691043478&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    disp_rrr2    disp_sss2 Z0:disp_rrr1 Z1:disp_rrr1 </span></span>
-<span><span class="co">#&gt;    2.8256790    0.4116066    3.1884158    8.6392389   -4.7885802   -4.8759220 </span></span>
+<span><span class="co">#&gt;    2.4017348    0.5194125    9.9880901    7.9366968  -10.7249818  -10.7309334 </span></span>
 <span><span class="co">#&gt; Z2:disp_rrr1 Z0:disp_sss1 Z1:disp_sss1 Z2:disp_sss1 X0:disp_rrr3 X1:disp_rrr3 </span></span>
-<span><span class="co">#&gt;   -4.9020714   -6.0325848   -5.9357624   -6.3462047    1.6686343    1.2998927 </span></span>
+<span><span class="co">#&gt;  -10.1187038   -4.3633009   -3.7322753   -3.3376563    1.1495570    0.6833768 </span></span>
 <span><span class="co">#&gt; X0:disp_sss3 X1:disp_sss3 </span></span>
-<span><span class="co">#&gt;   -0.6383630   -1.0407715 </span></span>
+<span><span class="co">#&gt;   -1.4278863   -2.0368001 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [Z=0]:amp1  [Z=1]:amp1  [Z=2]:amp1        amp2 </span></span>
-<span><span class="co">#&gt;   2.8256790   0.4116066   7.7021153   7.6816594   8.0190160   9.2088242 </span></span>
+<span><span class="co">#&gt;   2.4017348   0.5194125  11.5785850  11.3614616  10.6549573  12.7574723 </span></span>
 <span><span class="co">#&gt;  [X=0]:amp3  [X=1]:amp3  [Z=0]:acr1  [Z=1]:acr1  [Z=2]:acr1        acr2 </span></span>
-<span><span class="co">#&gt;   1.7865743   1.6652106   2.2417366   2.2584794   2.2285059  -1.2172416 </span></span>
+<span><span class="co">#&gt;   1.8331232   2.1483851   2.7552077   2.8068744   2.8229802  -0.6714494 </span></span>
 <span><span class="co">#&gt;  [X=0]:acr3  [X=1]:acr3 </span></span>
-<span><span class="co">#&gt;   0.3653874   0.6751430 </span></span>
+<span><span class="co">#&gt;   0.8929679   1.2470837 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -339,21 +339,19 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Formula: </span></span>
 <span><span class="co">#&gt; ~X + Z:zi_rrr1 + Z:zi_sss1 + X:zi_rrr2 + X:zi_sss2</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x563494497210&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x564690f69610&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
-<span><span class="co">#&gt;   (Intercept)            X1    Z0:zi_rrr1    Z1:zi_rrr1    Z2:zi_rrr1 </span></span>
-<span><span class="co">#&gt; -14.142278493  -0.835166045   0.252964866   0.089577754   0.221616710 </span></span>
-<span><span class="co">#&gt;    Z0:zi_sss1    Z1:zi_sss1    Z2:zi_sss1    X0:zi_rrr2    X1:zi_rrr2 </span></span>
-<span><span class="co">#&gt;   0.052939098   0.083036465  -0.081153908  -0.028197494  -0.003648603 </span></span>
-<span><span class="co">#&gt;    X0:zi_sss2    X1:zi_sss2 </span></span>
-<span><span class="co">#&gt;  -0.627896950  -0.259467052 </span></span>
+<span><span class="co">#&gt;  (Intercept)           X1   Z0:zi_rrr1   Z1:zi_rrr1   Z2:zi_rrr1   Z0:zi_sss1 </span></span>
+<span><span class="co">#&gt; -14.80150211  -0.85339622   0.08488232   0.19944935   0.28293850   0.01916650 </span></span>
+<span><span class="co">#&gt;   Z1:zi_sss1   Z2:zi_sss1   X0:zi_rrr2   X1:zi_rrr2   X0:zi_sss2   X1:zi_sss2 </span></span>
+<span><span class="co">#&gt;   0.06577871  -0.04406094  -0.03678895   0.02309016  -0.85856117  -0.23730708 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
-<span><span class="co">#&gt; (Intercept)       [X=1]  [Z=0]:amp1  [Z=1]:amp1  [Z=2]:amp1  [X=0]:amp2 </span></span>
-<span><span class="co">#&gt; -14.1422785  -0.8351660   0.2584449   0.1221443   0.2360083   0.6285298 </span></span>
-<span><span class="co">#&gt;  [X=1]:amp2  [Z=0]:acr1  [Z=1]:acr1  [Z=2]:acr1  [X=0]:acr2  [X=1]:acr2 </span></span>
-<span><span class="co">#&gt;   0.2594927  -0.2062972  -0.7475209   0.3510249   1.6156740   1.5848573</span></span></code></pre></div>
+<span><span class="co">#&gt;  (Intercept)        [X=1]   [Z=0]:amp1   [Z=1]:amp1   [Z=2]:amp1   [X=0]:amp2 </span></span>
+<span><span class="co">#&gt; -14.80150211  -0.85339622   0.08701932   0.21001638   0.28634867   0.85934901 </span></span>
+<span><span class="co">#&gt;   [X=1]:amp2   [Z=0]:acr1   [Z=1]:acr1   [Z=2]:acr1   [X=0]:acr2   [X=1]:acr2 </span></span>
+<span><span class="co">#&gt;   0.23842777  -0.22207656  -0.31856861   0.15448538   1.61361967   1.47380091</span></span></code></pre></div>
 <p>This example shows how dispformula and ziformula can be specified
 with a different number of components, with different periods, and with
 different group-component assignments. By default, dispformula = ~1, and
@@ -416,107 +414,107 @@ cosinor.glmm object being analysed contains them:</p>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                 estimate standard.error    lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)   31.5989637      3.0577202  25.6059422 37.591985 0.0000000</span></span>
-<span><span class="co">#&gt; X1             2.0937672      0.8159593   0.4945164  3.693018 0.0102873</span></span>
-<span><span class="co">#&gt; main_rrr2    -20.3356941     28.4537015 -76.1039243 35.432536 0.4747981</span></span>
-<span><span class="co">#&gt; main_sss2     -4.1814659     21.2467684 -45.8243668 37.461435 0.8439803</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  16.8176855     26.3625907 -34.8520429 68.487414 0.5235144</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  22.6784253     26.4964160 -29.2535958 74.610446 0.3920501</span></span>
-<span><span class="co">#&gt; X0:main_sss1   0.0285279      6.1881199 -12.0999643 12.157020 0.9963217</span></span>
-<span><span class="co">#&gt; X1:main_sss1  -0.7421975      6.3448686 -13.1779114 11.693516 0.9068791</span></span>
-<span><span class="co">#&gt; Z0:main_rrr3   2.2258717      4.3518744  -6.3036455 10.755389 0.6090190</span></span>
-<span><span class="co">#&gt; Z1:main_rrr3   4.1603407      4.4542324  -4.5697943 12.890476 0.3502937</span></span>
-<span><span class="co">#&gt; Z2:main_rrr3   1.4546901      4.4712282  -7.3087561 10.218136 0.7449203</span></span>
-<span><span class="co">#&gt; Z0:main_sss3   6.1687807     11.2650254 -15.9102634 28.247825 0.5839634</span></span>
-<span><span class="co">#&gt; Z1:main_sss3   4.4881847     11.0912208 -17.2502085 26.226578 0.6857267</span></span>
-<span><span class="co">#&gt; Z2:main_sss3   3.8343807     11.1767959 -18.0717367 25.740498 0.7315487</span></span>
+<span><span class="co">#&gt; (Intercept)   30.6455561      3.1784953  24.4158198 36.875293 0.0000000</span></span>
+<span><span class="co">#&gt; X1             1.9732438      0.8586001   0.2904185  3.656069 0.0215498</span></span>
+<span><span class="co">#&gt; main_rrr2    -12.8841281     29.3193931 -70.3490827 44.580827 0.6603424</span></span>
+<span><span class="co">#&gt; main_sss2      4.4937312     22.6367249 -39.8734344 48.860897 0.8426421</span></span>
+<span><span class="co">#&gt; X0:main_rrr1   8.0461687     27.5196231 -45.8913014 61.983639 0.7699966</span></span>
+<span><span class="co">#&gt; X1:main_rrr1  14.1382079     27.6078566 -39.9721968 68.248613 0.6085753</span></span>
+<span><span class="co">#&gt; X0:main_sss1  -0.9949885      6.3882540 -13.5157363 11.525759 0.8762279</span></span>
+<span><span class="co">#&gt; X1:main_sss1  -2.3123610      6.5318588 -15.1145690 10.489847 0.7233294</span></span>
+<span><span class="co">#&gt; Z0:main_rrr3   5.4224482      4.6622476  -3.7153891 14.560286 0.2448074</span></span>
+<span><span class="co">#&gt; Z1:main_rrr3   3.9324394      4.4414869  -4.7727150 12.637594 0.3759474</span></span>
+<span><span class="co">#&gt; Z2:main_rrr3   5.2508999      4.6219383  -3.8079328 14.309733 0.2559223</span></span>
+<span><span class="co">#&gt; Z0:main_sss3   1.2186964     11.6685636 -21.6512681 24.088661 0.9168180</span></span>
+<span><span class="co">#&gt; Z1:main_sss3   1.2545349     11.6335449 -21.5467941 24.055864 0.9141244</span></span>
+<span><span class="co">#&gt; Z2:main_sss3   0.5078103     11.6317506 -22.2900019 23.305622 0.9651776</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;               estimate standard.error    lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) 31.5989637      3.0577202  25.6059422 37.591985 0.0000000</span></span>
-<span><span class="co">#&gt; [X=1]        2.0937672      0.8159593   0.4945164  3.693018 0.0102873</span></span>
-<span><span class="co">#&gt; amp2        20.7611443     31.5130085 -41.0032174 82.525506 0.5100166</span></span>
-<span><span class="co">#&gt; [X=0]:amp1  16.8177097      5.9676778   5.1212761 28.514143 0.0048304</span></span>
-<span><span class="co">#&gt; [X=1]:amp1  22.6905670      5.7602558  11.4006731 33.980461 0.0000818</span></span>
-<span><span class="co">#&gt; [Z=0]:amp3   6.5580760     18.7495641 -30.1903945 43.306546 0.7265097</span></span>
-<span><span class="co">#&gt; [Z=1]:amp3   6.1198233     25.6411316 -44.1358711 56.375518 0.8113598</span></span>
-<span><span class="co">#&gt; [Z=2]:amp3   4.1010485     19.3031164 -33.7323645 41.934461 0.8317519</span></span>
-<span><span class="co">#&gt; acr2         2.9387972      0.7884800   1.3934049  4.484190 0.0001936</span></span>
-<span><span class="co">#&gt; [X=0]:acr1  -0.0016963      1.1995860  -2.3528417  2.349449 0.9988717</span></span>
-<span><span class="co">#&gt; [X=1]:acr1   0.0327154      0.8843240  -1.7005278  1.765958 0.9704892</span></span>
-<span><span class="co">#&gt; [Z=0]:acr3  -1.2245075      3.5992669  -8.2789410  5.829926 0.7336982</span></span>
-<span><span class="co">#&gt; [Z=1]:acr3  -0.8232875      2.5853896  -5.8905581  4.243983 0.7501524</span></span>
-<span><span class="co">#&gt; [Z=2]:acr3  -1.2081906      5.7199582 -12.4191027 10.002721 0.8327127</span></span>
+<span><span class="co">#&gt; (Intercept) 30.6455561      3.1784953  24.4158198 36.875293 0.0000000</span></span>
+<span><span class="co">#&gt; [X=1]        1.9732438      0.8586001   0.2904185  3.656069 0.0215498</span></span>
+<span><span class="co">#&gt; amp2        13.6453060     21.8252611 -29.1314196 56.422032 0.5318352</span></span>
+<span><span class="co">#&gt; [X=0]:amp1   8.1074554      6.3586463  -4.3552623 20.570173 0.2022991</span></span>
+<span><span class="co">#&gt; [X=1]:amp1  14.3260579      6.5694973   1.4500798 27.202036 0.0292061</span></span>
+<span><span class="co">#&gt; [Z=0]:amp3   5.5577122     30.1948532 -53.6231126 64.738537 0.8539652</span></span>
+<span><span class="co">#&gt; [Z=1]:amp3   4.1277036     30.4265887 -55.5073143 63.762722 0.8920892</span></span>
+<span><span class="co">#&gt; [Z=2]:amp3   5.2753977     29.7999567 -53.1314440 63.682240 0.8594872</span></span>
+<span><span class="co">#&gt; acr2        -2.8060048      2.1933073  -7.1048081  1.492799 0.2007743</span></span>
+<span><span class="co">#&gt; [X=0]:acr1   0.1230353      2.6020424  -4.9768740  5.222945 0.9622868</span></span>
+<span><span class="co">#&gt; [X=1]:acr1   0.1621187      1.4578214  -2.6951588  3.019396 0.9114529</span></span>
+<span><span class="co">#&gt; [Z=0]:acr3  -0.2210767      1.6190565  -3.3943691  2.952216 0.8913892</span></span>
+<span><span class="co">#&gt; [Z=1]:acr3  -0.3088156      2.0260661  -4.2798321  3.662201 0.8788547</span></span>
+<span><span class="co">#&gt; [Z=2]:acr3  -0.0964094      2.0461313  -4.1067530  3.913934 0.9624193</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Dispersion Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)   3.0658417      1.2029218   0.7081583  5.4235252 0.0108137</span></span>
-<span><span class="co">#&gt; X1            0.3367040      0.2387922  -0.1313201  0.8047282 0.1585310</span></span>
-<span><span class="co">#&gt; disp_rrr2    -1.8070449     21.1626628 -43.2851017 39.6710120 0.9319527</span></span>
-<span><span class="co">#&gt; disp_sss2     5.2495857      7.0307758  -8.5304816 19.0296529 0.4552700</span></span>
-<span><span class="co">#&gt; Z0:disp_rrr1  0.9691379     20.2013064 -38.6246951 40.5629710 0.9617369</span></span>
-<span><span class="co">#&gt; Z1:disp_rrr1  0.6524150     20.1147617 -38.7717935 40.0766235 0.9741254</span></span>
-<span><span class="co">#&gt; Z2:disp_rrr1  0.0328575     20.1313697 -39.4239021 39.4896172 0.9986977</span></span>
-<span><span class="co">#&gt; Z0:disp_sss1 -4.3381469      4.6509939 -13.4539274  4.7776336 0.3509566</span></span>
-<span><span class="co">#&gt; Z1:disp_sss1 -4.7612564      4.6555826 -13.8860305  4.3635178 0.3064505</span></span>
-<span><span class="co">#&gt; Z2:disp_sss1 -4.4007895      4.6071089 -13.4305570  4.6289779 0.3394679</span></span>
-<span><span class="co">#&gt; X0:disp_rrr3  1.2370605      1.1184525  -0.9550661  3.4291871 0.2687064</span></span>
-<span><span class="co">#&gt; X1:disp_rrr3  0.8713979      1.0595621  -1.2053057  2.9481015 0.4108418</span></span>
-<span><span class="co">#&gt; X0:disp_sss3  0.1089084      2.8149208  -5.4082351  5.6260518 0.9691378</span></span>
-<span><span class="co">#&gt; X1:disp_sss3 -0.3699707      2.8808880  -6.0164073  5.2764659 0.8978147</span></span>
+<span><span class="co">#&gt; (Intercept)   2.8461842      1.2364082   0.4228686  5.2694998 0.0213364</span></span>
+<span><span class="co">#&gt; X1            0.3850602      0.2416109  -0.0884884  0.8586088 0.1109987</span></span>
+<span><span class="co">#&gt; disp_rrr2     3.3246054     21.8284853 -39.4584396 46.1076505 0.8789457</span></span>
+<span><span class="co">#&gt; disp_sss2     7.3518118      7.0341508  -6.4348705 21.1384940 0.2959491</span></span>
+<span><span class="co">#&gt; Z0:disp_rrr1 -4.8015224     20.7267757 -45.4252563 35.8222115 0.8168037</span></span>
+<span><span class="co">#&gt; Z1:disp_rrr1 -4.4404450     20.7753648 -45.1594118 36.2785219 0.8307529</span></span>
+<span><span class="co">#&gt; Z2:disp_rrr1 -4.4830873     20.7613816 -45.1746476 36.2084729 0.8290392</span></span>
+<span><span class="co">#&gt; Z0:disp_sss1 -5.0803115      4.6395227 -14.1736090  4.0129859 0.2735134</span></span>
+<span><span class="co">#&gt; Z1:disp_sss1 -5.0172745      4.6141345 -14.0608120  4.0262630 0.2768730</span></span>
+<span><span class="co">#&gt; Z2:disp_sss1 -4.8322371      4.6479976 -13.9421451  4.2776709 0.2985079</span></span>
+<span><span class="co">#&gt; X0:disp_rrr3  1.4240111      1.0934682  -0.7191471  3.5671693 0.1928178</span></span>
+<span><span class="co">#&gt; X1:disp_rrr3  1.1081481      1.0495386  -0.9489097  3.1652059 0.2910399</span></span>
+<span><span class="co">#&gt; X0:disp_sss3 -0.6979459      2.9087864  -6.3990625  5.0031707 0.8103737</span></span>
+<span><span class="co">#&gt; X1:disp_sss3 -1.0289256      2.9396654  -6.7905639  4.7327128 0.7263278</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;               estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)  3.0658417      1.2029218   0.7081583  5.4235252 0.0108137</span></span>
-<span><span class="co">#&gt; [X=1]        0.3367040      0.2387922  -0.1313201  0.8047282 0.1585310</span></span>
-<span><span class="co">#&gt; amp2         5.5518970      5.8248425  -5.8645845 16.9683786 0.3405186</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1   4.4450812      5.6443033  -6.6175499 15.5077123 0.4309693</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1   4.8057473      5.8220863  -6.6053320 16.2168267 0.4091253</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1   4.4009122      6.0031951  -7.3651341 16.1669585 0.4635005</span></span>
-<span><span class="co">#&gt; [X=0]:amp3   1.2418453     20.9738404 -39.8661266 42.3498172 0.9527854</span></span>
-<span><span class="co">#&gt; [X=1]:amp3   0.9466850     18.6522780 -35.6111081 37.5044782 0.9595212</span></span>
-<span><span class="co">#&gt; acr2        -1.9023182      3.8772025  -9.5014954  5.6968590 0.6236797</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1   1.3510062      0.5830629   0.2082240  2.4937884 0.0204991</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1   1.4346186      0.4733064   0.5069552  2.3622820 0.0024370</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1   1.5633302      0.4000032   0.7793383  2.3473221 0.0000930</span></span>
-<span><span class="co">#&gt; [X=0]:acr3  -0.0878116      4.1073770  -8.1381226  7.9624994 0.9829433</span></span>
-<span><span class="co">#&gt; [X=1]:acr3   0.4015076     11.5707233 -22.2766932 23.0797085 0.9723187</span></span>
+<span><span class="co">#&gt; (Intercept)  2.8461842      1.2364082   0.4228686  5.2694998 0.0213364</span></span>
+<span><span class="co">#&gt; [X=1]        0.3850602      0.2416109  -0.0884884  0.8586088 0.1109987</span></span>
+<span><span class="co">#&gt; amp2         8.0685896     13.9967241 -19.3644856 35.5016647 0.5643025</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1   6.9902920      5.2238052  -3.2481780 17.2287621 0.1808440</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1   6.7000444      5.2582759  -3.6059869 17.0060758 0.2025960</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1   6.5915543      5.2173196  -3.6342043 16.8173128 0.2064460</span></span>
+<span><span class="co">#&gt; [X=0]:amp3   1.5858550     18.6135412 -34.8960153 38.0677253 0.9321032</span></span>
+<span><span class="co">#&gt; [X=1]:amp3   1.5121772     14.9577170 -27.8044094 30.8287639 0.9194736</span></span>
+<span><span class="co">#&gt; acr2        -1.1461013      2.2516180  -5.5591915  3.2669890 0.6107436</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1   2.3279897      0.5374971   1.2745147  3.3814647 0.0000148</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   2.2952796      0.5413324   1.2342875  3.3562717 0.0000223</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1   2.3187308      0.5675773   1.2062998  3.4311618 0.0000440</span></span>
+<span><span class="co">#&gt; [X=0]:acr3   0.4557178      7.5912882 -14.4229336 15.3343693 0.9521304</span></span>
+<span><span class="co">#&gt; [X=1]:acr3   0.7483446     10.8755631 -20.5673674 22.0640565 0.9451411</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Zero-Inflation Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error   lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -15.7000926       243.1300  -492.2262  460.8260 0.9485125</span></span>
-<span><span class="co">#&gt; X1           -1.1984367       671.0561 -1316.4442 1314.0473 0.9985751</span></span>
-<span><span class="co">#&gt; Z0:zi_rrr1    0.1568965       746.8095 -1463.5629 1463.8767 0.9998324</span></span>
-<span><span class="co">#&gt; Z1:zi_rrr1    0.2730666       594.8139 -1165.5408 1166.0869 0.9996337</span></span>
-<span><span class="co">#&gt; Z2:zi_rrr1    0.5216669       693.3175 -1358.3557 1359.3990 0.9993997</span></span>
-<span><span class="co">#&gt; Z0:zi_sss1   -0.1881375       720.8155 -1412.9606 1412.5843 0.9997917</span></span>
-<span><span class="co">#&gt; Z1:zi_sss1    0.0706391       537.8344 -1054.0654 1054.2067 0.9998952</span></span>
-<span><span class="co">#&gt; Z2:zi_sss1    0.2153472       668.9058 -1310.8159 1311.2466 0.9997431</span></span>
-<span><span class="co">#&gt; X0:zi_rrr2    0.0059490       362.0865  -709.6706  709.6825 0.9999869</span></span>
-<span><span class="co">#&gt; X1:zi_rrr2    0.0003395       870.8076 -1706.7511 1706.7518 0.9999997</span></span>
-<span><span class="co">#&gt; X0:zi_sss2   -0.6589397       594.3649 -1165.5927 1164.2748 0.9991154</span></span>
-<span><span class="co">#&gt; X1:zi_sss2   -0.2431146       977.8038 -1916.7034 1916.2172 0.9998016</span></span>
+<span><span class="co">#&gt;                estimate standard.error  lower.CI upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept) -14.6530739       202.5333 -411.6111 382.3050 0.9423242</span></span>
+<span><span class="co">#&gt; X1            0.0720211       296.8765 -581.7952 581.9393 0.9998064</span></span>
+<span><span class="co">#&gt; Z0:zi_rrr1    0.5544322       304.8844 -597.0080 598.1168 0.9985490</span></span>
+<span><span class="co">#&gt; Z1:zi_rrr1    1.1558843       195.2970 -381.6191 383.9309 0.9952777</span></span>
+<span><span class="co">#&gt; Z2:zi_rrr1    0.5050535       258.8364 -506.8049 507.8151 0.9984431</span></span>
+<span><span class="co">#&gt; Z0:zi_sss1   -0.0923173       223.0043 -437.1728 436.9881 0.9996697</span></span>
+<span><span class="co">#&gt; Z1:zi_sss1    0.0438366       148.2934 -290.6059 290.6936 0.9997641</span></span>
+<span><span class="co">#&gt; Z2:zi_sss1    0.0596796       200.4247 -392.7655 392.8849 0.9997624</span></span>
+<span><span class="co">#&gt; X0:zi_rrr2   -0.1553016       134.1301 -263.0455 262.7349 0.9990762</span></span>
+<span><span class="co">#&gt; X1:zi_rrr2    0.0712381       248.1014 -486.1986 486.3411 0.9997709</span></span>
+<span><span class="co">#&gt; X0:zi_sss2    1.1725001       253.5282 -495.7336 498.0786 0.9963100</span></span>
+<span><span class="co">#&gt; X1:zi_sss2   -0.0313535       322.5413 -632.2007 632.1380 0.9999224</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error   lower.CI upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -15.7000926       243.1300  -492.2262  460.826 0.9485125</span></span>
-<span><span class="co">#&gt; [X=1]        -1.1984367       671.0561 -1316.4442 1314.047 0.9985751</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1    0.2449740       718.5633 -1408.1132 1408.603 0.9997280</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1    0.2820554      1127.1930 -2208.9756 2209.540 0.9998003</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1    0.5643675      1188.7067 -2329.2579 2330.387 0.9996212</span></span>
-<span><span class="co">#&gt; [X=0]:amp2    0.6589666       914.0911 -1790.9267 1792.245 0.9994248</span></span>
-<span><span class="co">#&gt; [X=1]:amp2    0.2431148      1214.7824 -2380.6866 2381.173 0.9998403</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1    0.8756965      3057.3729 -5991.4651 5993.217 0.9997715</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1   -0.2531388      3314.8828 -6497.3040 6496.798 0.9999391</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1   -0.3914970      1811.6851 -3551.2291 3550.446 0.9998276</span></span>
-<span><span class="co">#&gt; [X=0]:acr2    1.5617684      1248.6345 -2445.7168 2448.840 0.9990020</span></span>
-<span><span class="co">#&gt; [X=1]:acr2    1.5693997      4660.3487 -9132.5463 9135.685 0.9997313</span></span></code></pre></div>
+<span><span class="co">#&gt;                estimate standard.error   lower.CI  upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept) -14.6530739       202.5333  -411.6111  382.3050 0.9423242</span></span>
+<span><span class="co">#&gt; [X=1]         0.0720211       296.8765  -581.7952  581.9393 0.9998064</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1    0.5620655       300.9940  -589.3754  590.4995 0.9985101</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1    1.1567153       409.6523  -801.7469  804.0604 0.9977471</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1    0.5085673       446.4623  -874.5415  875.5586 0.9990911</span></span>
+<span><span class="co">#&gt; [X=0]:amp2    1.1827405       357.6269  -699.7531  702.1186 0.9973612</span></span>
+<span><span class="co">#&gt; [X=1]:amp2    0.0778325       423.9291  -830.8080  830.9636 0.9998535</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1    0.1649941       406.0523  -795.6829  796.0129 0.9996758</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   -0.0379066       228.5554  -447.9982  447.9224 0.9998677</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1   -0.1176196       593.5815 -1163.5159 1163.2806 0.9998419</span></span>
+<span><span class="co">#&gt; [X=0]:acr2   -1.7024832       270.6832  -532.2317  528.8267 0.9949817</span></span>
+<span><span class="co">#&gt; [X=1]:acr2    0.4146092      4909.1595 -9621.3612 9622.1904 0.9999326</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-predict-cosinor-glmm-r">Using: ‘predict.cosinor.glmm.R’<a class="anchor" aria-label="anchor" href="#using-predict-cosinor-glmm-r"></a>
@@ -766,8 +764,8 @@ family = ‘binomial’ - family = ‘poisson’</p>
 <span>  beta.acro <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1876a28aecbe470c66ca" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1876a28aecbe470c66ca">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[0,25,2,0,17,7,2,2,2,0,18,1,1,17,2,2,1,24,0,2,2,10,1,3,1,3,9,11,1,12,0,13,16,0,3,1,8,22,1,8,15,17,0,0,0,5,6,0,2,1,0,25,0,1,1,6,12,1,1,0,3,10,2,7,19,18,3,1,2,0,2,0,2,28,0,1,0,2,27,0,2,0,4,20,12,1,1,4,24,0,13,1,1,1,1,1,2,1,3,9,0,2,0,1,1,2,3,1,0,0,0,2,2,4,0,0,1,4,2,0,2,2,1,4,5,0,2,1,2,0,3,1,2,0,2,3,2,2,1,1,4,1,1,3,0,3,1,0,0,1,0,6,4,1,1,3,1,2,1,3,3,3,0,5,0,2,1,1,3,2,1,2,0,1,2,2,0,2,0,1,1,0,0,2,1,1,2,4,1,1,1,1,3,3,2,1,1,2,1,1],[-0.686202405914723,0.270437939549144,0.348353486059127,-0.984518673779906,0.593946342806371,0.989661109807443,0.708674361480874,-0.970915675625494,0.667502709851784,-0.857158634334459,0.676119092345302,-0.999983878462189,0.949571818329974,0.59896254274496,-0.869237320220427,-0.536550536420045,-0.996095267731353,0.665766346503042,0.355842904881048,0.97587500797684,0.977065669990253,0.883710080346163,0.789213864071516,0.924860725221319,0.574374604479098,-0.938282103422103,-0.122642866650212,-0.382996022241566,-0.932326254756008,-0.206036958412064,-0.383639327625853,0.0775270697786601,-0.203297102523794,0.0377240459324713,-0.920601476912698,0.727198820411188,-0.946718776028335,0.604833188787804,-0.6587857875453,0.878673495849334,0.758124873477766,0.844505493741865,0.91439845659114,0.117331190840693,-0.74110060915133,0.967204857737393,-0.794012906526941,-0.905651710358317,-0.710636509800057,-0.86069505612031,-0.821137264726993,0.284183522810122,0.0177607758297609,-0.957090239971407,0.543423941829885,-0.66864098935129,0.685476803101116,-0.999242615431097,-0.985900597284285,-0.416037886382686,-0.897716361797626,-0.500751173380088,-0.999976166372255,0.999621624929724,0.332369238875306,0.783369696989842,-0.750497571204696,-0.982605435114688,0.218794488457644,-0.755496306351491,-0.836606909288217,-0.0805205585485185,-0.985226400074798,0.0262807913592295,0.476048815646508,0.931329078833601,-0.999959690831591,-0.482833772412902,0.131300183890406,0.0128175923872159,-0.961622517854469,0.263056286783904,0.931306416461684,-0.19376187957306,-0.462451258170094,-0.0447070290547118,-0.708164396957644,0.997189705018836,0.350106915395135,-0.413211495087266,-0.333851228607061,-0.868493670895909,0.890789596697649,-0.543169967899645,0.481819240539362,-0.271473558382157,0.831156466943489,-0.958155333422772,0.744435311883872,-0.635136441475826,-0.686202405914723,0.270437939549144,0.348353486059127,-0.984518673779906,0.593946342806371,0.989661109807443,0.708674361480874,-0.970915675625494,0.667502709851784,-0.857158634334459,0.676119092345302,-0.999983878462189,0.949571818329974,0.59896254274496,-0.869237320220427,-0.536550536420045,-0.996095267731353,0.665766346503042,0.355842904881048,0.97587500797684,0.977065669990253,0.883710080346163,0.789213864071516,0.924860725221319,0.574374604479098,-0.938282103422103,-0.122642866650212,-0.382996022241566,-0.932326254756008,-0.206036958412064,-0.383639327625853,0.0775270697786601,-0.203297102523794,0.0377240459324713,-0.920601476912698,0.727198820411188,-0.946718776028335,0.604833188787804,-0.6587857875453,0.878673495849334,0.758124873477766,0.844505493741865,0.91439845659114,0.117331190840693,-0.74110060915133,0.967204857737393,-0.794012906526941,-0.905651710358317,-0.710636509800057,-0.86069505612031,-0.821137264726993,0.284183522810122,0.0177607758297609,-0.957090239971407,0.543423941829885,-0.66864098935129,0.685476803101116,-0.999242615431097,-0.985900597284285,-0.416037886382686,-0.897716361797626,-0.500751173380088,-0.999976166372255,0.999621624929724,0.332369238875306,0.783369696989842,-0.750497571204696,-0.982605435114688,0.218794488457644,-0.755496306351491,-0.836606909288217,-0.0805205585485185,-0.985226400074798,0.0262807913592295,0.476048815646508,0.931329078833601,-0.999959690831591,-0.482833772412902,0.131300183890406,0.0128175923872159,-0.961622517854469,0.263056286783904,0.931306416461684,-0.19376187957306,-0.462451258170094,-0.0447070290547118,-0.708164396957644,0.997189705018836,0.350106915395135,-0.413211495087266,-0.333851228607061,-0.868493670895909,0.890789596697649,-0.543169967899645,0.481819240539362,-0.271473558382157,0.831156466943489,-0.958155333422772,0.744435311883872,-0.635136441475826],[0.727410653013032,-0.962737410124076,0.937363242692209,0.175279722097725,-0.804504656212092,-0.143425547705768,0.705535718004181,-0.239421700822399,0.744607367906418,0.515052497893065,-0.736792354036173,0.00567827576987332,0.313549616222867,-0.800777042870543,0.494395065849175,0.843868189865788,-0.0882848662184155,-0.746160285638408,0.934545786489789,0.218329953982962,0.212938198842995,-0.468034714411845,0.614118454988373,0.380305980682786,0.818592581037404,0.34587092158462,-0.992450868940029,-0.923749991581671,0.361618244413408,-0.978544210431141,0.923483008126724,-0.996990247420472,-0.979117096217521,0.999288194845954,-0.390503419583183,0.686426890202137,-0.322061421339799,-0.79635219202359,0.752330569715413,-0.47742317464898,-0.652109405095741,-0.535546889674293,0.404815343809669,0.993092841408045,0.671393987994775,0.25399756528201,-0.607900900039339,0.424022380924704,0.703559344291008,0.509120830815296,0.570730753049695,-0.958769902199286,0.999842264980794,-0.28979004908981,0.83945840840751,-0.743585386730621,-0.728094466680165,-0.0389126651158711,-0.167332041983863,0.909347280797731,-0.44057386867679,-0.86559127904483,0.00690410656411566,0.0275064896498526,-0.943149346100314,-0.621556045612979,-0.660873206913288,-0.185705570414768,0.975770962788173,0.655152906647947,0.547803686854348,0.996752948152668,0.171256943204224,-0.999654600352308,0.879418856473727,0.364178729360951,-0.00897868097155576,0.875712023565696,-0.991342656053065,0.999917851288492,-0.27437589754793,0.964780487978206,0.364236679450733,-0.981048589023151,-0.886644705514501,0.999000140917458,0.706047581173972,0.074917903096963,-0.936709745755057,0.910635086259994,-0.942625777897866,0.495700255813681,0.454415992693083,0.839622764086288,0.876270631395388,0.962445898271342,0.556038602489087,-0.286248767741447,0.667694590677776,-0.772399961619253,0.727410653013032,-0.962737410124076,0.937363242692209,0.175279722097725,-0.804504656212092,-0.143425547705768,0.705535718004181,-0.239421700822399,0.744607367906418,0.515052497893065,-0.736792354036173,0.00567827576987332,0.313549616222867,-0.800777042870543,0.494395065849175,0.843868189865788,-0.0882848662184155,-0.746160285638408,0.934545786489789,0.218329953982962,0.212938198842995,-0.468034714411845,0.614118454988373,0.380305980682786,0.818592581037404,0.34587092158462,-0.992450868940029,-0.923749991581671,0.361618244413408,-0.978544210431141,0.923483008126724,-0.996990247420472,-0.979117096217521,0.999288194845954,-0.390503419583183,0.686426890202137,-0.322061421339799,-0.79635219202359,0.752330569715413,-0.47742317464898,-0.652109405095741,-0.535546889674293,0.404815343809669,0.993092841408045,0.671393987994775,0.25399756528201,-0.607900900039339,0.424022380924704,0.703559344291008,0.509120830815296,0.570730753049695,-0.958769902199286,0.999842264980794,-0.28979004908981,0.83945840840751,-0.743585386730621,-0.728094466680165,-0.0389126651158711,-0.167332041983863,0.909347280797731,-0.44057386867679,-0.86559127904483,0.00690410656411566,0.0275064896498526,-0.943149346100314,-0.621556045612979,-0.660873206913288,-0.185705570414768,0.975770962788173,0.655152906647947,0.547803686854348,0.996752948152668,0.171256943204224,-0.999654600352308,0.879418856473727,0.364178729360951,-0.00897868097155576,0.875712023565696,-0.991342656053065,0.999917851288492,-0.27437589754793,0.964780487978206,0.364236679450733,-0.981048589023151,-0.886644705514501,0.999000140917458,0.706047581173972,0.074917903096963,-0.936709745755057,0.910635086259994,-0.942625777897866,0.495700255813681,0.454415992693083,0.839622764086288,0.876270631395388,0.962445898271342,0.556038602489087,-0.286248767741447,0.667694590677776,-0.772399961619253],[4.44434143602848,9.52301094867289,2.32044533360749,5.66350211296231,10.2145851887763,11.7251294413581,1.49576133862138,6.46174704004079,1.60417952947319,4.96663453057408,10.4180371519178,5.98915523383766,0.609109254553914,10.2265210440382,5.01233772654086,4.08163753990084,6.16883147880435,10.391371476464,2.30516290292144,0.420365402474999,0.409819800406694,11.0697732986882,1.26292978506535,0.745087902992964,1.83147176261991,5.32550102937967,8.7651781802997,8.24935376364738,5.29334629140794,8.60365972202271,3.75197646673769,9.14821452274919,8.60900562722236,2.9279352799058,6.76619424205273,1.44493091851473,6.62625456042588,10.2405613074079,4.3735778555274,11.0494253234938,10.6433056192473,10.9206330757588,0.795985205098987,2.77539656963199,4.59417517203838,0.49047314375639,7.24792928807437,5.16370670031756,4.50955757126212,4.97982378490269,4.83996002934873,9.55033500026911,2.96607763320208,6.56151289958507,1.90276576671749,7.60125792771578,10.4424372185022,6.07433648407459,6.32109114713967,3.81948980502784,6.8713500648737,7.99834301043302,5.98681402299553,0.0525401523336768,9.64708806294948,10.7190048526973,7.37888341862708,6.35674238204956,2.57872542086989,4.63562516123056,4.89278443995863,3.15394960250705,5.67130305245519,9.05019839387387,2.05241132341325,0.711901634931564,6.01714824791998,3.96235480997711,9.25149104744196,2.97551953140646,6.53082750644535,2.4916170341894,0.71202047355473,8.62758649606258,8.08182012755424,3.0854126047343,4.50285870674998,0.143216840922832,9.6831284891814,3.81355787348002,8.34991010371596,5.00946877989918,0.900912148877978,4.09665647149086,2.03985709883273,3.52506569959223,1.12607603240758,6.55445026326925,1.39631268661469,7.68566317297518,4.44434143602848,9.52301094867289,2.32044533360749,5.66350211296231,10.2145851887763,11.7251294413581,1.49576133862138,6.46174704004079,1.60417952947319,4.96663453057408,10.4180371519178,5.98915523383766,0.609109254553914,10.2265210440382,5.01233772654086,4.08163753990084,6.16883147880435,10.391371476464,2.30516290292144,0.420365402474999,0.409819800406694,11.0697732986882,1.26292978506535,0.745087902992964,1.83147176261991,5.32550102937967,8.7651781802997,8.24935376364738,5.29334629140794,8.60365972202271,3.75197646673769,9.14821452274919,8.60900562722236,2.9279352799058,6.76619424205273,1.44493091851473,6.62625456042588,10.2405613074079,4.3735778555274,11.0494253234938,10.6433056192473,10.9206330757588,0.795985205098987,2.77539656963199,4.59417517203838,0.49047314375639,7.24792928807437,5.16370670031756,4.50955757126212,4.97982378490269,4.83996002934873,9.55033500026911,2.96607763320208,6.56151289958507,1.90276576671749,7.60125792771578,10.4424372185022,6.07433648407459,6.32109114713967,3.81948980502784,6.8713500648737,7.99834301043302,5.98681402299553,0.0525401523336768,9.64708806294948,10.7190048526973,7.37888341862708,6.35674238204956,2.57872542086989,4.63562516123056,4.89278443995863,3.15394960250705,5.67130305245519,9.05019839387387,2.05241132341325,0.711901634931564,6.01714824791998,3.96235480997711,9.25149104744196,2.97551953140646,6.53082750644535,2.4916170341894,0.71202047355473,8.62758649606258,8.08182012755424,3.0854126047343,4.50285870674998,0.143216840922832,9.6831284891814,3.81355787348002,8.34991010371596,5.00946877989918,0.900912148877978,4.09665647149086,2.03985709883273,3.52506569959223,1.12607603240758,6.55445026326925,1.39631268661469,7.68566317297518],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Y<\/th>\n      <th>x<\/th>\n      <th>z<\/th>\n      <th>times<\/th>\n      <th>group<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>mesor, amp, and acro represent the parameters for the first level,
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-084a94c4b8e1c1b1c31a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-084a94c4b8e1c1b1c31a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[4,0,7,16,5,3,0,1,6,16,0,1,2,1,22,2,0,3,12,7,0,2,4,1,4,0,1,1,1,1,11,0,2,0,1,5,24,1,17,5,4,0,0,0,0,0,12,2,7,1,1,0,0,2,22,3,2,18,0,11,22,0,1,18,13,0,0,25,6,1,2,3,17,0,11,9,9,8,0,16,25,2,3,19,0,3,4,15,18,1,10,0,5,9,0,1,21,0,0,0,3,0,1,3,1,1,1,0,1,3,2,1,1,0,4,1,2,0,1,0,1,2,1,1,1,1,0,1,5,1,3,0,1,1,0,4,2,1,1,5,1,1,1,1,1,0,1,2,6,0,0,1,1,2,1,3,1,2,2,3,1,1,0,1,1,0,2,3,0,4,0,2,2,1,3,2,3,2,3,2,3,1,0,1,3,0,3,0,3,1,1,2,0,2,1,0,0,4,3,2],[0.959964449575291,-0.457316360730893,-0.584899981755212,0.764702794068008,-0.977540014534622,0.820816181904685,0.475296817527725,-0.202508687090778,-0.704803469890555,0.67783420315238,0.608518574380606,0.361063782376959,-0.907574062207738,-0.512462078122059,0.667358857567166,-0.998265431336749,-0.999987826540702,0.766797732433511,0.00302917937363596,-0.68368306173128,-0.698093068856607,0.994501343195114,0.921083072017971,-0.292131044331721,0.871043294818588,-0.900365262810283,-0.928116889579179,0.238211003218131,0.696771827438317,-0.416154396013126,0.942475746425347,-0.953409179136532,-0.704357670322606,0.0312620322030161,-0.955092016134708,0.983372810506284,0.262500413296706,-0.986528418425633,-0.1086611676717,0.990867393369611,0.996081158960366,0.513646297995215,0.48315229496862,-0.0715021015553566,0.563135499864863,-0.549036665347456,-0.415841823667409,-0.701766012773579,0.999756422772653,0.805582059952319,0.735794294860822,-0.263900550058961,0.260991401323963,-0.419762230791645,0.0623247978101558,0.705164608970825,0.877364586532806,0.50604491295262,-0.194646778378767,-0.560746022176586,-0.0519683648358662,0.561954744635912,0.0554736785424549,0.33624193753765,-0.525756989610276,0.203319481789911,-0.557966657900634,0.41785037875972,-0.863920203330164,0.805003130307408,0.811823208362933,-0.989139410330433,0.501526747738611,-0.775673734463494,0.902659223781984,0.919975839941663,0.997932649096746,-0.48228346351842,-0.696560758086586,0.853710710350442,0.777963992652411,-0.0690305040541411,-0.820886730181953,-0.0178573701550381,0.597957604345688,-0.980701184503802,-0.704026044874435,-0.0198914597687228,0.607305056678846,-0.968637190243334,0.924397744263029,0.947865732995859,-0.782131967472776,0.999881995624076,-0.666547693463936,-0.56775816685112,0.09492672934354,-0.917685689167883,-0.747888018334425,-0.61641022803023,0.959964449575291,-0.457316360730893,-0.584899981755212,0.764702794068008,-0.977540014534622,0.820816181904685,0.475296817527725,-0.202508687090778,-0.704803469890555,0.67783420315238,0.608518574380606,0.361063782376959,-0.907574062207738,-0.512462078122059,0.667358857567166,-0.998265431336749,-0.999987826540702,0.766797732433511,0.00302917937363596,-0.68368306173128,-0.698093068856607,0.994501343195114,0.921083072017971,-0.292131044331721,0.871043294818588,-0.900365262810283,-0.928116889579179,0.238211003218131,0.696771827438317,-0.416154396013126,0.942475746425347,-0.953409179136532,-0.704357670322606,0.0312620322030161,-0.955092016134708,0.983372810506284,0.262500413296706,-0.986528418425633,-0.1086611676717,0.990867393369611,0.996081158960366,0.513646297995215,0.48315229496862,-0.0715021015553566,0.563135499864863,-0.549036665347456,-0.415841823667409,-0.701766012773579,0.999756422772653,0.805582059952319,0.735794294860822,-0.263900550058961,0.260991401323963,-0.419762230791645,0.0623247978101558,0.705164608970825,0.877364586532806,0.50604491295262,-0.194646778378767,-0.560746022176586,-0.0519683648358662,0.561954744635912,0.0554736785424549,0.33624193753765,-0.525756989610276,0.203319481789911,-0.557966657900634,0.41785037875972,-0.863920203330164,0.805003130307408,0.811823208362933,-0.989139410330433,0.501526747738611,-0.775673734463494,0.902659223781984,0.919975839941663,0.997932649096746,-0.48228346351842,-0.696560758086586,0.853710710350442,0.777963992652411,-0.0690305040541411,-0.820886730181953,-0.0178573701550381,0.597957604345688,-0.980701184503802,-0.704026044874435,-0.0198914597687228,0.607305056678846,-0.968637190243334,0.924397744263029,0.947865732995859,-0.782131967472776,0.999881995624076,-0.666547693463936,-0.56775816685112,0.09492672934354,-0.917685689167883,-0.747888018334425,-0.61641022803023],[0.280121858396679,0.889304079720683,-0.811105425541435,-0.644383144367218,-0.21074989913082,0.571192433006088,0.879825514092435,0.979280466287758,-0.709402614056526,-0.735214793809794,0.793539630159575,0.932541122447501,-0.419892035656483,0.858709856987109,-0.744736299119794,-0.0588738362777053,-0.00493424466384202,0.64188880464986,-0.999995412025636,-0.729779056360034,0.716007030143116,0.10472381955942,0.389366118764766,0.956378300118556,0.491206248485886,0.435134914164067,0.372288919090899,0.971213425538286,0.717292841514725,0.909293967140963,-0.334274538964585,0.301680190165353,0.70984524528781,0.999511223219898,0.296309366567678,0.181598225643787,-0.964931879988975,0.163589974138451,-0.994078845283523,0.134839937544157,0.088443907445196,0.85800202829353,0.875536326982813,0.997440449086143,0.826364573775976,0.835798265195702,-0.909436956412573,0.712407512113589,-0.022070231644214,0.59248421471207,0.677205106042671,0.964549894862147,0.965341125424041,0.907634105573839,-0.998055920065566,0.709043633533948,0.479824324412715,-0.862507128129835,0.980873402466785,-0.827987861392385,-0.998648731564951,0.827167978696701,0.998460149925358,-0.941775641775113,-0.850634814639008,0.97911244927469,0.829863367471535,-0.908515856201948,-0.503628714707539,0.593270562387242,0.583903312512709,-0.146980362399755,-0.865142139363661,0.631134104341904,-0.43035604529425,-0.391975067987278,-0.0642684048872391,-0.876015217228946,0.717497812048121,-0.520747561715792,-0.628308862054579,0.997614549568134,-0.571091040212663,-0.999840544452537,0.80152773090216,-0.195512625456363,-0.710174153386661,-0.999802145340902,-0.794468733262867,0.248479362679275,-0.381429954777314,0.318669973816523,-0.623112819204648,0.0153621231219631,0.745462388278515,0.823195398416351,-0.995484262083604,0.397307155606928,0.663824910674349,0.787425190592554,0.280121858396679,0.889304079720683,-0.811105425541435,-0.644383144367218,-0.21074989913082,0.571192433006088,0.879825514092435,0.979280466287758,-0.709402614056526,-0.735214793809794,0.793539630159575,0.932541122447501,-0.419892035656483,0.858709856987109,-0.744736299119794,-0.0588738362777053,-0.00493424466384202,0.64188880464986,-0.999995412025636,-0.729779056360034,0.716007030143116,0.10472381955942,0.389366118764766,0.956378300118556,0.491206248485886,0.435134914164067,0.372288919090899,0.971213425538286,0.717292841514725,0.909293967140963,-0.334274538964585,0.301680190165353,0.70984524528781,0.999511223219898,0.296309366567678,0.181598225643787,-0.964931879988975,0.163589974138451,-0.994078845283523,0.134839937544157,0.088443907445196,0.85800202829353,0.875536326982813,0.997440449086143,0.826364573775976,0.835798265195702,-0.909436956412573,0.712407512113589,-0.022070231644214,0.59248421471207,0.677205106042671,0.964549894862147,0.965341125424041,0.907634105573839,-0.998055920065566,0.709043633533948,0.479824324412715,-0.862507128129835,0.980873402466785,-0.827987861392385,-0.998648731564951,0.827167978696701,0.998460149925358,-0.941775641775113,-0.850634814639008,0.97911244927469,0.829863367471535,-0.908515856201948,-0.503628714707539,0.593270562387242,0.583903312512709,-0.146980362399755,-0.865142139363661,0.631134104341904,-0.43035604529425,-0.391975067987278,-0.0642684048872391,-0.876015217228946,0.717497812048121,-0.520747561715792,-0.628308862054579,0.997614549568134,-0.571091040212663,-0.999840544452537,0.80152773090216,-0.195512625456363,-0.710174153386661,-0.999802145340902,-0.794468733262867,0.248479362679275,-0.381429954777314,0.318669973816523,-0.623112819204648,0.0153621231219631,0.745462388278515,0.823195398416351,-0.995484262083604,0.397307155606928,0.663824910674349,0.787425190592554],[0.542249257676303,3.90713574271649,7.80680251680315,10.6626852834597,6.40554339531809,1.16111398860812,2.05404408182949,3.38945662323385,7.50621103774756,10.4224876994267,1.75058456137776,2.29448196943849,6.82759238127619,4.02759890444577,10.3954515326768,6.11250580195338,6.00942375138402,1.33109358418733,9.00578531529754,7.56226249225438,4.47580700553954,0.200375162065029,0.763835440389812,3.56618605647236,0.98066318873316,5.14020403381437,5.27143832389265,2.54063412174582,1.5277140783146,3.81973451189697,11.3490523640066,5.41471509262919,4.49258915148675,2.94028418697417,5.42546435538679,0.348762192763388,9.50728265661746,5.68615556694567,8.79206188302487,0.258312145248055,0.169136418029666,1.96976618282497,2.03695044759661,3.13667558412999,1.8575694328174,4.11003164201975,8.18092195596546,4.48562879115343,11.9578455397859,1.21111648343503,1.42085414472967,3.51005445141345,2.49570344947278,3.8273192346096,9.11910879146308,1.50523853022605,0.95579763315618,10.0133580202237,3.37413633707911,7.8630864713341,8.90070300456136,1.8602970186621,2.89399866387248,9.65493590757251,7.94269275292754,2.60896197427064,4.13050983007997,9.82329823728651,7.00801218766719,1.21298141218722,1.19085172656924,6.28173248190433,10.0033686775714,4.69553852174431,11.1503280736506,11.2307516718283,11.8771717334166,8.0388451628387,4.47172401007265,10.9539196724072,10.7024845546111,3.13194348290563,7.16087807994336,8.96589312236756,1.77587461844087,6.37582237645984,7.50830288976431,8.96200760453939,10.24649650231,5.52041510213166,11.2525904830545,0.619416986592114,7.28479356877506,0.0293406480923295,4.39337233453989,4.15313478000462,9.18157008849084,5.21966855507344,4.61359204072505,4.26848205272108,0.542249257676303,3.90713574271649,7.80680251680315,10.6626852834597,6.40554339531809,1.16111398860812,2.05404408182949,3.38945662323385,7.50621103774756,10.4224876994267,1.75058456137776,2.29448196943849,6.82759238127619,4.02759890444577,10.3954515326768,6.11250580195338,6.00942375138402,1.33109358418733,9.00578531529754,7.56226249225438,4.47580700553954,0.200375162065029,0.763835440389812,3.56618605647236,0.98066318873316,5.14020403381437,5.27143832389265,2.54063412174582,1.5277140783146,3.81973451189697,11.3490523640066,5.41471509262919,4.49258915148675,2.94028418697417,5.42546435538679,0.348762192763388,9.50728265661746,5.68615556694567,8.79206188302487,0.258312145248055,0.169136418029666,1.96976618282497,2.03695044759661,3.13667558412999,1.8575694328174,4.11003164201975,8.18092195596546,4.48562879115343,11.9578455397859,1.21111648343503,1.42085414472967,3.51005445141345,2.49570344947278,3.8273192346096,9.11910879146308,1.50523853022605,0.95579763315618,10.0133580202237,3.37413633707911,7.8630864713341,8.90070300456136,1.8602970186621,2.89399866387248,9.65493590757251,7.94269275292754,2.60896197427064,4.13050983007997,9.82329823728651,7.00801218766719,1.21298141218722,1.19085172656924,6.28173248190433,10.0033686775714,4.69553852174431,11.1503280736506,11.2307516718283,11.8771717334166,8.0388451628387,4.47172401007265,10.9539196724072,10.7024845546111,3.13194348290563,7.16087807994336,8.96589312236756,1.77587461844087,6.37582237645984,7.50830288976431,8.96200760453939,10.24649650231,5.52041510213166,11.2525904830545,0.619416986592114,7.28479356877506,0.0293406480923295,4.39337233453989,4.15313478000462,9.18157008849084,5.21966855507344,4.61359204072505,4.26848205272108],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Y<\/th>\n      <th>x<\/th>\n      <th>z<\/th>\n      <th>times<\/th>\n      <th>group<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>mesor, amp, and acro represent the parameters for the first level,
 and the beta.prefix indicates a second level that can be used for data
 visualisation (if comparing two groups, for example) if desired.</p>
 <p>The simulate_cosinor function can simulate multi-component data. To
@@ -800,50 +798,97 @@ function:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                    estimate standard.error   lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)       7.0030699      0.0022273  6.9987045  7.0074353 0.0000000</span></span>
-<span><span class="co">#&gt; group1           -2.5865001      0.0081754 -2.6025236 -2.5704766 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_rrr1  0.0639549      0.0070887  0.0500613  0.0778485 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  1.0894408      0.0195634  1.0510972  1.1277845 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_sss1 -0.0826202      0.0025043 -0.0875286 -0.0777119 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_sss1 -1.6732560      0.0086315 -1.6901735 -1.6563385 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_rrr2  0.0190122      0.0049874  0.0092370  0.0287874 0.0001378</span></span>
-<span><span class="co">#&gt; group1:main_rrr2  0.0603472      0.0153806  0.0302016  0.0904927 0.0000872</span></span>
-<span><span class="co">#&gt; group0:main_sss2 -0.3951659      0.0030500 -0.4011437 -0.3891880 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_sss2  0.9883687      0.0092863  0.9701679  1.0065694 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_rrr3  0.4957243      0.0039027  0.4880751  0.5033735 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_rrr3  0.2144110      0.0085958  0.1975636  0.2312584 0.0000000</span></span>
-<span><span class="co">#&gt; group0:main_sss3 -0.0661248      0.0090929 -0.0839466 -0.0483031 0.0000000</span></span>
-<span><span class="co">#&gt; group1:main_sss3  0.3139164      0.0237110  0.2674437  0.3603892 0.0000000</span></span>
+<span><span class="co">#&gt;                    estimate standard.error   lower.CI   upper.CI  p.value</span></span>
+<span><span class="co">#&gt; (Intercept)       7.0009961      0.0024155  6.9962619  7.0057304 0.00e+00</span></span>
+<span><span class="co">#&gt; group1           -2.5929939      0.0081693 -2.6090054 -2.5769824 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr1  0.0592695      0.0073628  0.0448387  0.0737003 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  1.0688604      0.0207031  1.0282831  1.1094377 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_sss1 -0.0856639      0.0028541 -0.0912578 -0.0800699 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss1 -1.6704099      0.0093013 -1.6886401 -1.6521797 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr2  0.0233252      0.0049101  0.0137015  0.0329489 2.00e-06</span></span>
+<span><span class="co">#&gt; group1:main_rrr2  0.0640433      0.0152171  0.0342184  0.0938682 2.57e-05</span></span>
+<span><span class="co">#&gt; group0:main_sss2 -0.3960614      0.0034090 -0.4027428 -0.3893799 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss2  0.9923496      0.0101327  0.9724900  1.0122093 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr3  0.4956138      0.0046148  0.4865690  0.5046585 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_rrr3  0.2168776      0.0103929  0.1965078  0.2372474 0.00e+00</span></span>
+<span><span class="co">#&gt; group0:main_sss3 -0.0555249      0.0090993 -0.0733592 -0.0376906 0.00e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss3  0.3390533      0.0235023  0.2929897  0.3851169 0.00e+00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                  estimate standard.error   lower.CI   upper.CI p.value</span></span>
-<span><span class="co">#&gt; (Intercept)     7.0030699      0.0022273  6.9987045  7.0074353       0</span></span>
-<span><span class="co">#&gt; [group=1]      -2.5865001      0.0081754 -2.6025236 -2.5704766       0</span></span>
-<span><span class="co">#&gt; [group=0]:amp1  0.1044812      0.0053681  0.0939600  0.1150025       0</span></span>
-<span><span class="co">#&gt; [group=1]:amp1  1.9966640      0.0146814  1.9678889  2.0254391       0</span></span>
-<span><span class="co">#&gt; [group=0]:amp2  0.3956230      0.0025121  0.3906994  0.4005466       0</span></span>
-<span><span class="co">#&gt; [group=1]:amp2  0.9902093      0.0094608  0.9716665  1.0087521       0</span></span>
-<span><span class="co">#&gt; [group=0]:amp3  0.5001150      0.0070437  0.4863096  0.5139205       0</span></span>
-<span><span class="co">#&gt; [group=1]:amp3  0.3801521      0.0222640  0.3365155  0.4237887       0</span></span>
-<span><span class="co">#&gt; [group=0]:acr1  0.9120596      0.0503780  0.8133206  1.0107986       0</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  0.9936550      0.0086488  0.9767037  1.0106063       0</span></span>
-<span><span class="co">#&gt; [group=0]:acr2  1.5227214      0.0082768  1.5064993  1.5389436       0</span></span>
-<span><span class="co">#&gt; [group=1]:acr2 -1.5098147      0.0171922 -1.5435108 -1.4761186       0</span></span>
-<span><span class="co">#&gt; [group=0]:acr3  0.1326076      0.0187325  0.0958926  0.1693225       0</span></span>
-<span><span class="co">#&gt; [group=1]:acr3 -0.9715579      0.0369153 -1.0439105 -0.8992053       0</span></span>
+<span><span class="co">#&gt; (Intercept)     7.0009961      0.0024155  6.9962619  7.0057304   0e+00</span></span>
+<span><span class="co">#&gt; [group=1]      -2.5929939      0.0081693 -2.6090054 -2.5769824   0e+00</span></span>
+<span><span class="co">#&gt; [group=0]:amp1  0.1041689      0.0058134  0.0927750  0.1155629   0e+00</span></span>
+<span><span class="co">#&gt; [group=1]:amp1  1.9831116      0.0167305  1.9503205  2.0159028   0e+00</span></span>
+<span><span class="co">#&gt; [group=0]:amp2  0.3967476      0.0023444  0.3921527  0.4013426   0e+00</span></span>
+<span><span class="co">#&gt; [group=1]:amp2  0.9944141      0.0102259  0.9743717  1.0144565   0e+00</span></span>
+<span><span class="co">#&gt; [group=0]:amp3  0.4987144      0.0064617  0.4860496  0.5113791   0e+00</span></span>
+<span><span class="co">#&gt; [group=1]:amp3  0.4024836      0.0234426  0.3565369  0.4484302   0e+00</span></span>
+<span><span class="co">#&gt; [group=0]:acr1  0.9655379      0.0513038  0.8649842  1.0660915   0e+00</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  1.0015689      0.0086987  0.9845198  1.0186180   0e+00</span></span>
+<span><span class="co">#&gt; [group=0]:acr2  1.5119713      0.0094231  1.4935023  1.5304403   0e+00</span></span>
+<span><span class="co">#&gt; [group=1]:acr2 -1.5063486      0.0171845 -1.5400296 -1.4726676   0e+00</span></span>
+<span><span class="co">#&gt; [group=0]:acr3  0.1115674      0.0205100  0.0713686  0.1517662   1e-07</span></span>
+<span><span class="co">#&gt; [group=1]:acr3 -1.0017269      0.0326956 -1.0658090 -0.9376447   0e+00</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>, x_str <span class="op">=</span> <span class="st">"group"</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GLMMcosinor_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>##Feature table</p>
-<pre><code><span><span class="co">#&gt; Registered S3 method overwritten by 'ftExtra':</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"GLMMCosinor"</span>,</span>
+<span>    language <span class="op">=</span> <span class="st">"R"</span>,</span>
+<span>    multicomponent <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    disp <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    zi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    rhythmdiff <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    family <span class="op">=</span> <span class="st">"n = (INSERT NUMBER) \nAny family listed in glmmTMB: Gaussian, Gamma, Binomial, Poisson, ..."</span>,</span>
+<span>    ref <span class="op">=</span> <span class="st">"Parsons, 2023"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"CosinorPy"</span>,</span>
+<span>    language <span class="op">=</span> <span class="st">"Python"</span>,</span>
+<span>    multicomponent <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    disp <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    zi <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    rhythmdiff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    family <span class="op">=</span> <span class="st">"n = (INSERT NUMBER) \nGaussian, Poisson, negative-binomial"</span>,</span>
+<span>    ref <span class="op">=</span> <span class="st">"Moskon, 2020"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"RhythmCount"</span>,</span>
+<span>    language <span class="op">=</span> <span class="st">"Python"</span>,</span>
+<span>    multicomponent <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    disp <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    zi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    rhythmdiff <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    family <span class="op">=</span> <span class="st">"n = (INSERT NUMBER) \nPoisson, generalised Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial"</span>,</span>
+<span>    ref <span class="op">=</span> <span class="st">"Velikajne, 2022"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">dat_list</span><span class="op">)</span> </span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> </span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">:::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>, </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">unlist</span><span class="op">)</span>,</span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span></span>
+<span>    <span class="va">multicomponent</span><span class="op">:</span><span class="va">rhythmdiff</span>, </span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"&amp;#x2713;"</span>, <span class="st">"&amp;#x2717;"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/color.html" class="external-link">color</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>, </span>
+<span>  j <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"multicomponent"</span>, <span class="st">"disp"</span>, <span class="st">"zi"</span>, <span class="st">"rhythmdiff"</span><span class="op">)</span>, </span>
+<span>  col <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"&amp;#x2713;"</span>, <span class="st">"green"</span>, <span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="op">)</span> </span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">ftExtra</span><span class="fu">::</span><span class="fu"><a href="https://ftextra.atusy.net/reference/colformat_md.html" class="external-link">colformat_md</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Registered S3 method overwritten by 'ftExtra':</span></span>
 <span><span class="co">#&gt;   method                  from     </span></span>
 <span><span class="co">#&gt;   as_flextable.data.frame flextable</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'ftExtra'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:flextable':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     separate_header</span></span></code></pre>
-<template id="526959e4-8a25-478f-8d9c-8765e8f45a8f"><style>
+<span><span class="co">#flextable::autofit(dat)</span></span>
+<span><span class="va">dat</span></span></code></pre></div>
+<template id="b0b8d6ae-05c4-4575-83a5-719f14dbc5b6"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -883,115 +928,212 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-897d4dbe{}.cl-897399b8{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8977261e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8977413a{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774144{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774145{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977414e{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977414f{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774158{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774159{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977415a{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774162{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774163{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977416c{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977416d{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977416e{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774176{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774177{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774178{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774180{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774181{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774182{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977418a{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977418b{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774194{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774195{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774196{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977419e{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8977419f{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741a8{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741a9{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741aa{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741b2{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741b3{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741bc{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741bd{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741c6{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741d0{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741d1{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741d2{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741da{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741db{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741dc{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741e4{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741e5{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741e6{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741ee{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741ef{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741f8{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897741f9{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-89774202{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-897d4dbe">
+<style>.cl-76e6b916{}.cl-76ded67e{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-76ded692{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 255, 0, 1.00);background-color:transparent;}.cl-76ded693{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-76e2606e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-76e27734{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-76e27735{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-76e2773e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-76e6b916">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-8977413a"><p class="cl-8977261e"><span class="cl-897399b8">Package</span></p></th>
-<th class="cl-89774144"><p class="cl-8977261e"><span class="cl-897399b8">Language</span></p></th>
-<th class="cl-89774145"><p class="cl-8977261e"><span class="cl-897399b8">Multi-component</span></p></th>
-<th class="cl-8977414e"><p class="cl-8977261e"><span class="cl-897399b8">Dispersion models</span></p></th>
-<th class="cl-8977414f"><p class="cl-8977261e"><span class="cl-897399b8">Zero-inflation models</span></p></th>
-<th class="cl-89774158"><p class="cl-8977261e"><span class="cl-897399b8">Differential rhythmicity</span></p></th>
-<th class="cl-89774159"><p class="cl-8977261e"><span class="cl-897399b8">Supported model distributions</span></p></th>
-<th class="cl-8977415a"><p class="cl-8977261e"><span class="cl-897399b8">Reference</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">name</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">language</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">multicomponent</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">disp</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">zi</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">rhythmdiff</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">family</span></p></th>
+<th class="cl-76e27734"><p class="cl-76e2606e"><span class="cl-76ded67e">ref</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-89774162"><p class="cl-8977261e"><span class="cl-897399b8">GLMMCosinor</span></p></td>
-<td class="cl-89774163"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-8977416c"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-8977416d"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-8977416e"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-89774176"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774177"><p class="cl-8977261e"><span class="cl-897399b8">Any</span><span class="cl-897399b8"> </span><span class="cl-897399b8">family</span><span class="cl-897399b8"> </span><span class="cl-897399b8">listed</span><span class="cl-897399b8"> </span><span class="cl-897399b8">in</span><span class="cl-897399b8"> </span><span class="cl-897399b8">glmmTMB</span><span class="cl-897399b8"> </span><span class="cl-897399b8">(See</span><span class="cl-897399b8"> </span><span class="cl-897399b8">?family_glmmTMB)</span></p></td>
-<td class="cl-89774178"><p class="cl-8977261e"><span class="cl-897399b8"></span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">GLMMCosinor</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">R</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded693">✗</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">n</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">=</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">(INSERT</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">NUMBER)</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Any</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">family</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">listed</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">in</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">glmmTMB:</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Gaussian,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Gamma,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Binomial,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Poisson,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">…</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">Parsons,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">2023</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-89774180"><p class="cl-8977261e"><span class="cl-897399b8">CosinorPy</span></p></td>
-<td class="cl-89774181"><p class="cl-8977261e"><span class="cl-897399b8">Python</span></p></td>
-<td class="cl-89774182"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-8977418a"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-8977418b"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774194"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-89774195"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">Poisson,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">negative-binomial</span></p></td>
-<td class="cl-89774196"><p class="cl-8977261e"><span class="cl-897399b8">Moskon,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2020</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">CosinorPy</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">Python</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded693">✗</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded693">✗</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">n</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">=</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">(INSERT</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">NUMBER)</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Gaussian,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Poisson,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">negative-binomial</span></p></td>
+<td class="cl-76e27735"><p class="cl-76e2606e"><span class="cl-76ded67e">Moskon,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">2020</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-89774180"><p class="cl-8977261e"><span class="cl-897399b8">RhythmCount</span></p></td>
-<td class="cl-89774181"><p class="cl-8977261e"><span class="cl-897399b8">Python</span></p></td>
-<td class="cl-89774182"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-8977418a"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-8977418b"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-89774194"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774195"><p class="cl-8977261e"><span class="cl-897399b8">Poisson,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">generalised</span><span class="cl-897399b8"> </span><span class="cl-897399b8">Poisson,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">zero-inflated</span><span class="cl-897399b8"> </span><span class="cl-897399b8">Poisson,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">negative</span><span class="cl-897399b8"> </span><span class="cl-897399b8">binomial,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">zero-inflated</span><span class="cl-897399b8"> </span><span class="cl-897399b8">negative-binomial</span></p></td>
-<td class="cl-89774196"><p class="cl-8977261e"><span class="cl-897399b8">Velikajne,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2022</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-8977419e"><p class="cl-8977261e"><span class="cl-897399b8">FMM</span></p></td>
-<td class="cl-8977419f"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-897741a8"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-897741a9"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741aa"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741b2"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741b3"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian</span></p></td>
-<td class="cl-897741bc"><p class="cl-8977261e"><span class="cl-897399b8">Fernández,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2022</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-89774180"><p class="cl-8977261e"><span class="cl-897399b8">CircaCompare</span></p></td>
-<td class="cl-89774181"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-89774182"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-8977418a"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-8977418b"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774194"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774195"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian</span></p></td>
-<td class="cl-89774196"><p class="cl-8977261e"><span class="cl-897399b8">Parsons,2020</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-897741bd"><p class="cl-8977261e"><span class="cl-897399b8">Cosinor</span></p></td>
-<td class="cl-897741c6"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-897741d0"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741d1"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741d2"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741da"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-897741db"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian</span></p></td>
-<td class="cl-897741dc"><p class="cl-8977261e"><span class="cl-897399b8">Sachs,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2014</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-897741bd"><p class="cl-8977261e"><span class="cl-897399b8">Cosinor2</span></p></td>
-<td class="cl-897741c6"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-897741d0"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741d1"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741d2"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741da"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-897741db"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian</span></p></td>
-<td class="cl-897741dc"><p class="cl-8977261e"><span class="cl-897399b8">Mutak,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2018</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-89774180"><p class="cl-8977261e"><span class="cl-897399b8">DiscoRhythm</span></p></td>
-<td class="cl-89774181"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-89774182"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-8977418a"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-8977418b"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774194"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-89774195"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian</span></p></td>
-<td class="cl-89774196"><p class="cl-8977261e"><span class="cl-897399b8">Carlucci,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2019</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-897741e4"><p class="cl-8977261e"><span class="cl-897399b8">LimoRhyde</span></p></td>
-<td class="cl-897741e5"><p class="cl-8977261e"><span class="cl-897399b8">R</span></p></td>
-<td class="cl-897741e6"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741ee"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741ef"><p class="cl-8977261e"><span class="cl-897399b8">No</span></p></td>
-<td class="cl-897741f8"><p class="cl-8977261e"><span class="cl-897399b8">Yes</span></p></td>
-<td class="cl-897741f9"><p class="cl-8977261e"><span class="cl-897399b8">Gaussian</span></p></td>
-<td class="cl-89774202"><p class="cl-8977261e"><span class="cl-897399b8">Singer,</span><span class="cl-897399b8"> </span><span class="cl-897399b8">2019</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded67e">RhythmCount</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded67e">Python</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded693">✗</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded692">✓</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded693">✗</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded67e">n</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">=</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">(INSERT</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">NUMBER)</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Poisson,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">generalised</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Poisson,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">zero-inflated</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">Poisson,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">negative</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">binomial,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">zero-inflated</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">negative-binomial</span></p></td>
+<td class="cl-76e2773e"><p class="cl-76e2606e"><span class="cl-76ded67e">Velikajne,</span><span class="cl-76ded67e"> </span><span class="cl-76ded67e">2022</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="c1c92a8f-1aa3-4ba3-b569-793500e22b2b"></div>
+</div></template><div class="flextable-shadow-host" id="0ebe1d87-ac37-4577-b085-e9303c99543f"></div>
 <script>
-var dest = document.getElementById("c1c92a8f-1aa3-4ba3-b569-793500e22b2b");
-var template = document.getElementById("526959e4-8a25-478f-8d9c-8765e8f45a8f");
+var dest = document.getElementById("0ebe1d87-ac37-4577-b085-e9303c99543f");
+var template = document.getElementById("b0b8d6ae-05c4-4575-83a5-719f14dbc5b6");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'ftExtra'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:flextable':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     separate_header</span></span></code></pre>
+<template id="72518f27-fddd-4bfc-8356-b621afd4c576"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style>
+<div class="tabwid">
+<style>.cl-77c8d558{}.cl-77c14ca2{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-77c47b3e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-77c490b0{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490ba{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490c4{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490c5{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490ce{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490cf{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490d0{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490d8{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490d9{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490e2{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490e3{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490e4{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490ec{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490ed{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490f6{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490f7{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c490f8{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49100{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49101{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49102{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4910a{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4910b{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49114{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49115{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49116{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4911e{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4911f{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49120{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49128{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49129{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4912a{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49132{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4913c{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4913d{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4913e{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49146{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49147{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49150{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49151{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4915a{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4915b{width:1.371in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4915c{width:1.039in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49164{width:1.578in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49165{width:1.695in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4916e{width:1.921in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c4916f{width:2.062in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49170{width:8.131in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-77c49171{width:1.574in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-77c8d558">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-77c490b0"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Package</span></p></th>
+<th class="cl-77c490ba"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Language</span></p></th>
+<th class="cl-77c490c4"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Multi-component</span></p></th>
+<th class="cl-77c490c5"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Dispersion models</span></p></th>
+<th class="cl-77c490ce"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Zero-inflation models</span></p></th>
+<th class="cl-77c490cf"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Differential rhythmicity</span></p></th>
+<th class="cl-77c490d0"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Supported model distributions</span></p></th>
+<th class="cl-77c490d8"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Reference</span></p></th>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c490d9"><p class="cl-77c47b3e"><span class="cl-77c14ca2">GLMMCosinor</span></p></td>
+<td class="cl-77c490e2"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c490e3"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c490e4"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c490ec"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c490ed"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c490f6"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Any</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">family</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">listed</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">in</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">glmmTMB</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">(See</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">?family_glmmTMB)</span></p></td>
+<td class="cl-77c490f7"><p class="cl-77c47b3e"><span class="cl-77c14ca2"></span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c490f8"><p class="cl-77c47b3e"><span class="cl-77c14ca2">CosinorPy</span></p></td>
+<td class="cl-77c49100"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Python</span></p></td>
+<td class="cl-77c49101"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49102"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910b"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49114"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">Poisson,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">negative-binomial</span></p></td>
+<td class="cl-77c49115"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Moskon,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2020</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c490f8"><p class="cl-77c47b3e"><span class="cl-77c14ca2">RhythmCount</span></p></td>
+<td class="cl-77c49100"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Python</span></p></td>
+<td class="cl-77c49101"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49102"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c4910b"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49114"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Poisson,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">generalised</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">Poisson,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">zero-inflated</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">Poisson,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">negative</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">binomial,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">zero-inflated</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">negative-binomial</span></p></td>
+<td class="cl-77c49115"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Velikajne,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2022</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c49116"><p class="cl-77c47b3e"><span class="cl-77c14ca2">FMM</span></p></td>
+<td class="cl-77c4911e"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c4911f"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49120"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49128"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49129"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4912a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian</span></p></td>
+<td class="cl-77c49132"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Fernández,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2022</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c490f8"><p class="cl-77c47b3e"><span class="cl-77c14ca2">CircaCompare</span></p></td>
+<td class="cl-77c49100"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c49101"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49102"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910b"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49114"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian</span></p></td>
+<td class="cl-77c49115"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Parsons,2020</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c4913c"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Cosinor</span></p></td>
+<td class="cl-77c4913d"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c4913e"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49146"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49147"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49150"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49151"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian</span></p></td>
+<td class="cl-77c4915a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Sachs,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2014</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c4913c"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Cosinor2</span></p></td>
+<td class="cl-77c4913d"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c4913e"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49146"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49147"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49150"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49151"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian</span></p></td>
+<td class="cl-77c4915a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Mutak,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2018</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c490f8"><p class="cl-77c47b3e"><span class="cl-77c14ca2">DiscoRhythm</span></p></td>
+<td class="cl-77c49100"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c49101"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49102"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910a"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4910b"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49114"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian</span></p></td>
+<td class="cl-77c49115"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Carlucci,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2019</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-77c4915b"><p class="cl-77c47b3e"><span class="cl-77c14ca2">LimoRhyde</span></p></td>
+<td class="cl-77c4915c"><p class="cl-77c47b3e"><span class="cl-77c14ca2">R</span></p></td>
+<td class="cl-77c49164"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c49165"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4916e"><p class="cl-77c47b3e"><span class="cl-77c14ca2">No</span></p></td>
+<td class="cl-77c4916f"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Yes</span></p></td>
+<td class="cl-77c49170"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Gaussian</span></p></td>
+<td class="cl-77c49171"><p class="cl-77c47b3e"><span class="cl-77c14ca2">Singer,</span><span class="cl-77c14ca2"> </span><span class="cl-77c14ca2">2019</span></p></td>
+</tr>
+</tbody>
+</table>
+</div></template><div class="flextable-shadow-host" id="6fa8e1df-12c5-4728-af55-263ba1a71713"></div>
+<script>
+var dest = document.getElementById("6fa8e1df-12c5-4728-af55-263ba1a71713");
+var template = document.getElementById("72518f27-fddd-4bfc-8356-b621afd4c576");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
