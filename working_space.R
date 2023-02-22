@@ -426,3 +426,8 @@ test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison
 #https://stackoverflow.com/questions/65925855/placing-literature-references-in-a-table-in-rmd
 #Add .bib file for references (and add in text-tag)
 #Or, in markdown: [link text here](https://link...)
+
+#To add to feature table: Parameters, and difference between groups,
+#exponential decay term to parameters, mixed models
+#Move get_new_coefs to data_utils as a function
+#Rework mixed model specification (check out: https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)

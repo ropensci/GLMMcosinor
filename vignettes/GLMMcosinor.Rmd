@@ -349,6 +349,60 @@ plot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ```
 
 ##Feature table
+``` {r}
+dat_list <- list(
+  list(
+    name = "GLMMCosinor",
+    language = "R",
+    multicomponent = TRUE,
+    disp = TRUE,
+    zi = TRUE,
+    rhythmdiff = FALSE,
+    family = "n = (INSERT NUMBER) \nAny family listed in glmmTMB: Gaussian, Gamma, Binomial, Poisson, ...",
+    ref = "Parsons, 2023"
+  ),
+  list(
+    name = "CosinorPy",
+    language = "Python",
+    multicomponent = TRUE,
+    disp = FALSE,
+    zi = FALSE,
+    rhythmdiff = TRUE,
+    family = "n = (INSERT NUMBER) \nGaussian, Poisson, negative-binomial",
+    ref = "Moskon, 2020"
+  ),
+  list(
+    name = "RhythmCount",
+    language = "Python",
+    multicomponent = TRUE,
+    disp = FALSE,
+    zi = TRUE,
+    rhythmdiff = FALSE,
+    family = "n = (INSERT NUMBER) \nPoisson, generalised Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial",
+    ref = "Velikajne, 2022"
+  )
+)
+dat <- do.call(rbind, dat_list) 
+dat <- as.data.frame(dat) 
+dat <- dplyr:::mutate(
+  dat, 
+  dplyr::across(dplyr::everything(), unlist),
+  dplyr::across(
+    multicomponent:rhythmdiff, 
+    function(x) ifelse(x, "&#x2713;", "&#x2717;")
+    )
+  )
+dat <- flextable::flextable(dat)
+dat <- flextable::color(
+  dat, 
+  j = c("multicomponent", "disp", "zi", "rhythmdiff"), 
+  col = function(x) ifelse(x == "&#x2713;", "green", "red")
+) 
+dat <- ftExtra::colformat_md(dat)
+#flextable::autofit(dat)
+dat
+```
+
 
 ```{r, echo = F}
 library("flextable")

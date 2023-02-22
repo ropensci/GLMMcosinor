@@ -54,6 +54,10 @@ cosinor.glmm <- function(formula,
     dispformula = dispformula,
     ziformula = ziformula
   )
+
+  # Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1 + amp.acro1|patient_id) #passed formula with mixed model for individuals
+  # Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1 + rrr1 + sss1|patient_id) #resulting formula used for model
+
   # updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
   # Alternatively:
   # updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
