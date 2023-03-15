@@ -1,5 +1,4 @@
 ---
-rary---
 title: "GLMMcosinor"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
@@ -396,32 +395,3 @@ dat <- ftExtra::colformat_md(dat)
 #flextable::autofit(dat)
 dat
 ```
-
-```{r, echo = F}
-library("flextable")
-library("ftExtra")
-dat <- dplyr::tibble(
-"Package" = c('GLMMCosinor','CosinorPy', 'RhythmCount', 'FMM', 'CircaCompare', 'Cosinor', 'Cosinor2', 'DiscoRhythm', 'LimoRhyde'),
-"Language" = c('R','Python','Python', 'R', 'R', 'R', 'R', 'R', 'R'),
-"Multi-component" = c('Yes','Yes','Yes','Yes','No','No','No','No','No'), 
-"Dispersion models" = c('Yes','No','No','No','No','No','No','No','No'), 
-"Zero-inflation models" = c('Yes','No','Yes','No','No','No','No','No','No'), 
-"Differential rhythmicity" = c('No','Yes','No','No','No','Yes','Yes','No','Yes'),
-"Supported model distributions" = c('Any family listed in glmmTMB (See ?family_glmmTMB)', 
-'Gaussian, Poisson, negative-binomial', 
-'Poisson, generalised Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial ', 
-'Gaussian','Gaussian','Gaussian','Gaussian','Gaussian','Gaussian'),
-"Parameter estimates" = c('Amp, Acr, Mesor', 'Amp, Acr, Mesor', ),
-"Estimates difference between groups" = c('Yes'),
-"Reference" = c('-','Moskon, 2020','Velikajne, 2022','Fernández, 2022','Parsons,2020', 'Sachs, 2014','Mutak, 2018','Carlucci, 2019','Singer, 2019'))
-dat %>%
-  flextable::flextable() %>%
-  ftExtra::colformat_md() %>%
-  flextable::autofit()
-```
-
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
--   Never uses retina figures
--   Has a smaller default figure size
--   Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
