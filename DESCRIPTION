@@ -16,8 +16,6 @@ BugReports: https://github.com/RWParsons/GLMMcosinor/issues
 Imports:
     assertthat,
     cowplot,
-    flextable,
-    ftExtra,
     ggforce,
     ggplot2,
     glmmTMB,
@@ -27,6 +25,8 @@ Suggests:
     covr,
     dplyr,
     DT,
+    flextable,
+    ftExtra,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),

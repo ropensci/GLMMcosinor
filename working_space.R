@@ -428,6 +428,12 @@ test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison
 #Or, in markdown: [link text here](https://link...)
 
 #To add to feature table: Parameters, and difference between groups,
-#exponential decay term to parameters, mixed models
+#exponential decay term to parameters, mixed models (feature table)
 #Move get_new_coefs to data_utils as a function
 #Rework mixed model specification (check out: https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
+
+#Meeting 16/03/2023: TODO
+#Add package version as a column
+#exponential decay term to parameters, mixed models (feature table)
+#Rework mixed model specification (check out: https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
+#SRR standards
