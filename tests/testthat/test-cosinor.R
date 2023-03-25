@@ -90,6 +90,18 @@ test_that("model output is class cosinor.glmm", {
   testthat::expect_snapshot_output(print(object))
   testthat::expect_true(inherits(object, "cosinor.glmm"))
 
+#' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
+#' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
+#' @noRd
+
+  # check if the column names from vitamind are present in object_cols
+  vitamind_cols <- colnames(vitamind)
+  object_cols <- colnames(object$newdata)
+  testthat::expect_true(all(vitamind_cols %in% object_cols))
+
+  # test that coefficients and formula can be accessed from object
+  testthat::expect_no_error(coefficients(object))
+  testthat::expect_no_error(formula(object))
 })
 
 

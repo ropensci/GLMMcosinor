@@ -46,6 +46,26 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @param Terms a list of  Terms from the original cosinor.glmm() call
 #' @param ... extra parameters
 #'
+#' @srrstats {RE1.0} *Regression Software should enable models to be specified via a formula interface, unless reasons for not doing so are explicitly documented.*
+#' @srrstats {RE1.3} *Regression Software which passes or otherwise transforms aspects of input data onto output structures should ensure that those output structures retain all relevant aspects of input data, notably including row and column names, and potentially information from other `attributes()`.*
+#' @srrstats {RE1.3a} *Where otherwise relevant information is not transferred, this should be explicitly documented.*
+#' @srrstats {RE1.4} *Regression Software should document any assumptions made with regard to input data; for example distributional assumptions, or assumptions that predictor data have mean values of zero. Implications of violations of these assumptions should be both documented and tested.*
+#' @srrstats {RE2.0} *Regression Software should document any transformations applied to input data, for example conversion of label-values to `factor`, and should provide ways to explicitly avoid any default transformations (with error or warning conditions where appropriate).*
+#' @srrstats {RE2.1} *Regression Software should implement explicit parameters controlling the processing of missing values, ideally distinguishing `NA` or `NaN` values from `Inf` values (for example, through use of `na.omit()` and related functions from the `stats` package).*
+#' @srrstats {RE4.0} *Regression Software should return some form of "model" object, generally through using or modifying existing class structures for model objects (such as `lm`, `glm`, or model objects from other packages), or creating a new class of model objects.*
+#' @srrstats {RE4.2} *Model coefficients (via `coeff()` / `coefficients()`)*
+#' @srrstats {RE4.4} *The specification of the model, generally as a formula (via `formula()`)*
+#'
+#' The following standards are covered in the glmmTMB package
+#' @srrstats {RE2.2} *Regression Software should provide different options for processing missing values in predictor and response data. For example, it should be possible to fit a model with no missing predictor data in order to generate values for all associated response points, even where submitted response values may be missing.*
+#' @srrstats {RE3.0} *Issue appropriate warnings or other diagnostic messages for models which fail to converge.*
+#' @srrstats {RE3.1} *Enable such messages to be optionally suppressed, yet should ensure that the resultant model object nevertheless includes sufficient data to identify lack of convergence.*
+#' @srrstats {RE4.8} *Response variables, and associated "metadata" where applicable.*
+#' @srrstats {RE4.10} *Model Residuals, including sufficient documentation to enable interpretation of residuals, and to enable users to submit residuals to their own tests.*
+#' @srrstats {RE4.11} *Goodness-of-fit and other statistics associated such as effect sizes with model coefficients.*
+#' @srrstats {RE4.12} *Where appropriate, functions used to transform input data, and associated inverse transform functions.*
+#' @srrstatsTODO {RE4.13} *Predictor variables, and associated "metadata" where applicable.*
+#'
 #' @return the model fit from glmmTMB (as well as some other inputs )
 #' @noRd
 

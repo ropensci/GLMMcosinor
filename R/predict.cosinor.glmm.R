@@ -10,6 +10,8 @@
 #' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}
 #'
 #' @return Returns predicted values from the cosinor model.
+#'
+#' @srrstats {RE4.9} *Modelled values of response variables.*
 #' @examples
 #'
 #' fit <- cosinor.glmm(Y ~ X + amp.acro(time,

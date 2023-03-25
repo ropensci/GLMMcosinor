@@ -10,6 +10,9 @@
 #' @srrstatsTODO {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
 #' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
 #'
+#' @srrstats {RE2.0} *Regression Software should document any transformations applied to input data, for example conversion of label-values to `factor`, and should provide ways to explicitly avoid any default transformations (with error or warning conditions where appropriate).*
+#' @srrstats {RE2.1} *Regression Software should implement explicit parameters controlling the processing of missing values, ideally distinguishing `NA` or `NaN` values from `Inf` values (for example, through use of `na.omit()` and related functions from the `stats` package).*
+#'
 #' @return Returns a \code{list}.
 #' @export
 update_formula_and_data <- function(data, formula,
@@ -119,6 +122,9 @@ update_formula_and_data <- function(data, formula,
 #' @srrstatsTODO {G2.4b} *explicit conversion to continuous via `as.numeric()`*
 #' @srrstatsTODO {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.* #ensure time_col is univariate
 #' @srrstatsTODO {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
+#'
+#' @srrstats {RE1.2} *Regression Software should document expected format (types or classes) for inputting predictor variables, including descriptions of types or classes which are not accepted.*
+#'
 #'
 #' @return updated dataframe and formula to then be processed by data_processor()
 #' @noRd

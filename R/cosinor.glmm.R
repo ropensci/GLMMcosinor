@@ -6,7 +6,9 @@
 #' @param formula Formula specifying the model. Indicate the time variable with
 #'   \code{time()} and covariate effects on the amplitude and acrophase with
 #'   \code{amp.acro()}. See details for more information.
-#' @param data Data frame where variable can be found
+#' @param data Data frame where variable can be found.
+#' Row names corresponding to variables specified in the formula will be inherited with their attributes; details from unused columns are not inherited.
+#' The analysis assumes that the data follows the distribution specified in the 'family' parameter.
 #' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
 #' @param quietly controls whether messages from amp.acro are displayed. TRUE by default
 #' @param dispformula Formula specifying a dispersion model (optional). Use the same format as the main formula
@@ -20,12 +22,14 @@
 #'   acrophase/amplitude, wrap the name in \code{amp.acro()}. This will then do
 #'   all the transformations for you. See examples for usage.
 #'
+#'
 #' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
 #'
 #' @srrstatsTODO {G2.14} *Where possible, all functions should provide options for users to specify how to handle missing (`NA`) data, with options minimally including:*
 #' @srrstatsTODO {G2.14a} *error on missing data*
 #' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
 #' @srrstatsTODO {G2.14c} *replace missing data with appropriately imputed values*
+#'
 #'
 #' @examples
 #'
@@ -83,6 +87,8 @@ cosinor.glmm <- function(formula,
 #'
 #' @param x cosinor.glmm object
 #' @param ... passed to summary
+#'
+#' @srrstats {RE4.17} *Model objects returned by Regression Software should implement or appropriately extend a default `print` method which provides an on-screen summary of model (input) parameters and (output) coefficients.*
 #'
 #' @return `print` returns `x` invisibly.
 #'

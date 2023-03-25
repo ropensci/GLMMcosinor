@@ -15,6 +15,10 @@
 #' @param predict.ribbon A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted
 #' @param ... Additional, ignored arguments.
 #'
+#' @srrstats {RE6.0} *Model objects returned by Regression Software (see* **RE4***) should have default `plot` methods, either through explicit implementation, extension of methods for existing model objects, or through ensuring default methods work appropriately.*
+#' @srrstats {RE6.2} *The default `plot` method should produce a plot of the `fitted` values of the model, with optional visualisation of confidence intervals or equivalent.*
+#' @srrstats {RE6.3} *Where a model object is used to generate a forecast (for example, through a `predict()` method), the default `plot` method should provide clear visual distinction between modelled (interpolated) and forecast (extrapolated) values.*
+#'
 #' @return Returns a `ggplot` graphics object.
 #' @examples
 #'

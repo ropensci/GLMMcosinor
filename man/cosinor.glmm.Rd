@@ -19,7 +19,9 @@ cosinor.glmm(
 \code{time()} and covariate effects on the amplitude and acrophase with
 \code{amp.acro()}. See details for more information.}
 
-\item{data}{Data frame where variable can be found}
+\item{data}{Data frame where variable can be found.
+Row names corresponding to variables specified in the formula will be inherited with their attributes; details from unused columns are not inherited.
+The analysis assumes that the data follows the distribution specified in the 'family' parameter.}
 
 \item{family}{a family function, see \code{?family} and \code{?glmmTMB::nbinom2}}
 
