@@ -84,7 +84,9 @@ covariate effects.</p>
 
 
 <dt>data</dt>
-<dd><p>Data frame where variable can be found</p></dd>
+<dd><p>Data frame where variable can be found.
+Row names corresponding to variables specified in the formula will be inherited with their attributes; details from unused columns are not inherited.
+The analysis assumes that the data follows the distribution specified in the 'family' parameter.</p></dd>
 
 
 <dt>family</dt>
