@@ -56,20 +56,22 @@ test_cosinor <- function(x,
   assertthat::assert_that(comparison_type %in% c("levels", "components"),
                          msg = "'comparison_type' must be one of the following strings:'levels', or 'components'")
 
+
   if(comparison_type == "levels") {
   assertthat::assert_that(comparison_A %in% x$group_stats[[x_str]] &
                           comparison_B %in% x$group_stats[[x_str]] ,
                           msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'")
   assertthat::assert_that(component_index %in% 1:x$n_components,
-                          msg = "'component_index' must be supplied. Ensure that it is a number corresponding to a component in the model")
+                          msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model")
     }
 
   if(comparison_type == "components") {
     assertthat::assert_that(comparison_A %in% 1:x$n_components &
                               comparison_B %in% 1:x$n_components,
                             msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model" )
-    assertthat::assert_that(level_index %in% x$group_stats[comparison_A] & level_index %in% x$group_stats[comparison_B],
-                            msg = "'level_index' must be supplied. Ensure that it is a number corresponding to a level in the model")
+    assertthat::assert_that(level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
+                              level_index %in% x$group_stats[[x$group_original[comparison_B]]],
+                            msg = "'level_index' must be supplied and it must be a number corresponding to a level in the model")
     }
 
 
