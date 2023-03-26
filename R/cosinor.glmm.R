@@ -29,6 +29,8 @@
 #' @srrstatsTODO {G2.14a} *error on missing data*
 #' @srrstatsTODO {G2.14b} *ignore missing data with default warnings or messages issued*
 #' @srrstatsTODO {G2.14c} *replace missing data with appropriately imputed values*
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#'
 #'
 #'
 #' @examples
@@ -89,6 +91,7 @@ cosinor.glmm <- function(formula,
 #' @param ... passed to summary
 #'
 #' @srrstats {RE4.17} *Model objects returned by Regression Software should implement or appropriately extend a default `print` method which provides an on-screen summary of model (input) parameters and (output) coefficients.*
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #'
 #' @return `print` returns `x` invisibly.
 #'
@@ -144,6 +147,8 @@ print.cosinor.glmm <- function(x, ...) {
 #' Extract variable names from terms object, handling specials
 #'
 #' @param Terms a terms object
+#'
+#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
 #'
 #' @keywords Internal
 #' @noRd

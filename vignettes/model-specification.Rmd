@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
+#' @srrstats {G2.0a} Provide explicit secondary documentation of any expectations on lengths of inputs
+#' @srrstats {G2.1a} *Provide explicit secondary documentation of expectations on data types of all vector inputs.*
+
 ```
 
 ## Using: 'cosinor.glmm.R'
@@ -61,7 +64,7 @@ amplitude and acrophase can be calculated. Importantly, the amp.acro()
 argument is where users specify:
 
 -   'group' (the name of the group covariates). Ensure that the names in
-    this argument are actually found in the dataset
+    this argument are actually found in the dataset.
 
 -   'time' (the name of the time column). Again, ensure that the name
     matches the name of the time values in the dataset. Also, ensure

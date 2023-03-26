@@ -12,6 +12,7 @@
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param ... Currently unused
 #'
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #' @srrstats {RE4.18} *Regression Software may also implement `summary` methods for model objects, and in particular should implement distinct `summary` methods for any cases in which calculation of summary statistics is computationally non-trivial (for example, for bootstrapped estimates of confidence intervals).*
 #'
 #' @return Returns a summary of the `cosinor.glmm` model as a `summary.cosinor.glmm` object.
@@ -232,6 +233,8 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #' @param x An object of class \code{summary.cosinor.glmm}
 #' @param digits Controls the number of digits displayed in the summary output
 #' @param ... Currently unused
+#'
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #'
 #' @return `print` returns `x` invisibly.
 #' @examples

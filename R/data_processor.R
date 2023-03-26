@@ -6,6 +6,8 @@
 #' @param ... optional additional arguments passed to `glmmTMB::glmmTMB()`
 #'
 #' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#'
 #' @export
 #'
 #' @examples
@@ -55,6 +57,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {RE4.0} *Regression Software should return some form of "model" object, generally through using or modifying existing class structures for model objects (such as `lm`, `glm`, or model objects from other packages), or creating a new class of model objects.*
 #' @srrstats {RE4.2} *Model coefficients (via `coeff()` / `coefficients()`)*
 #' @srrstats {RE4.4} *The specification of the model, generally as a formula (via `formula()`)*
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#'
 #'
 #' The following standards are covered in the glmmTMB package
 #' @srrstats {RE2.2} *Regression Software should provide different options for processing missing values in predictor and response data. For example, it should be possible to fit a model with no missing predictor data in order to generate values for all associated response points, even where submitted response values may be missing.*
@@ -65,6 +69,7 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {RE4.11} *Goodness-of-fit and other statistics associated such as effect sizes with model coefficients.*
 #' @srrstats {RE4.12} *Where appropriate, functions used to transform input data, and associated inverse transform functions.*
 #' @srrstatsTODO {RE4.13} *Predictor variables, and associated "metadata" where applicable.*
+#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
 #'
 #' @return the model fit from glmmTMB (as well as some other inputs )
 #' @noRd

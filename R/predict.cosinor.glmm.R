@@ -12,6 +12,8 @@
 #' @return Returns predicted values from the cosinor model.
 #'
 #' @srrstats {RE4.9} *Modelled values of response variables.*
+#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#'
 #' @examples
 #'
 #' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
