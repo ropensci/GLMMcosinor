@@ -7,7 +7,6 @@
 #' acrophase for the group with covariates equal to 1 and equal to 0. This may
 #' not be the desired result for continuous covariates.
 #'
-#'
 #' @param object An object of class \code{cosinor.glmm}
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param ... Currently unused
