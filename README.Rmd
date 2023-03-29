@@ -70,7 +70,7 @@ polar_plot(model)
 ```{r}
 p1 <- plot(model, superimpose.data = TRUE)
 p2 <- polar_plot(model)
-cowplot::plot_grid(p1, p2, nrow=1)
+cowplot::plot_grid(p1, p2, nrow = 1)
 ```
 
 

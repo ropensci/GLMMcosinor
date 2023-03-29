@@ -41,8 +41,6 @@ plot.cosinor.glmm <- function(x,
                               data_opacity = 0.3,
                               predict.ribbon = TRUE,
                               ...) {
-
-
   # Validating user inputs
   assertthat::assert_that(inherits(x, "cosinor.glmm"),
     msg = "'x' must be of class 'cosinor.glmm'"
@@ -52,9 +50,9 @@ plot.cosinor.glmm <- function(x,
 
   if (!missing(x_str)) {
     for (i in x_str) {
-    assertthat::assert_that(i %in% names(x$group_stats),
-      msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
-    )
+      assertthat::assert_that(i %in% names(x$group_stats),
+        msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
+      )
     }
   }
   assertthat::assert_that(is.character(type),
@@ -79,7 +77,7 @@ plot.cosinor.glmm <- function(x,
   )
 
   # default to plotting all groups if x_str is missing
-  if(missing(x_str)) {
+  if (missing(x_str)) {
     x_str <- names(x$group_stats)
   }
 
@@ -120,7 +118,7 @@ plot.cosinor.glmm <- function(x,
 
       newdata$levels <- ""
       for (d in x_str) {
-        newdata$levels <- paste0(newdata$levels,"[", d,"=" ,newdata[,d], "] ")
+        newdata$levels <- paste0(newdata$levels, "[", d, "=", newdata[, d], "] ")
       }
     }
     newdata
@@ -148,12 +146,14 @@ plot.cosinor.glmm <- function(x,
     original_data_processed <- x$newdata
     original_data_processed$levels <- ""
     for (d in x_str) {
-      original_data_processed$levels <- paste0(original_data_processed$levels,
-                                               "[",
-                                               d,
-                                               "=",
-                                               original_data_processed[,d],
-                                               "] ")
+      original_data_processed$levels <- paste0(
+        original_data_processed$levels,
+        "[",
+        d,
+        "=",
+        original_data_processed[, d],
+        "] "
+      )
     }
   }
   # get the plot object

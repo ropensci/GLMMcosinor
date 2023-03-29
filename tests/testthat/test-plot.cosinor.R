@@ -200,10 +200,10 @@ test_that("plot produces error messages", {
     regex = "'x_str' must be string corresponding to a group name in cosinor.glmm object", fixed = TRUE
   )
 
-  #Test 2
+  # Test 2
   data(vitamind)
-  vitamind$Z = rbinom(length(vitamind$X),3,prob = 0.5)
-  object <-    cosinor.glmm(Y~ X + amp.acro(time, n_components = 3, group = c("Z",NA,"X"), period = c(12,10,8)),data = vitamind)
+  vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+  object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 
   f <- function() {
     plot(object, x_str = c("X", "Z"))
@@ -215,7 +215,7 @@ test_that("plot produces error messages", {
     plot(object)
   }
 
-  #Test 3
+  # Test 3
   expect_no_error(f())
 
   # Test 4

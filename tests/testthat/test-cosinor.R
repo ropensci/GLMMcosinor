@@ -1,7 +1,6 @@
 test_that("model returns accurate parameters", {
-
   f_round <- function(x) {
-    unname(round(x, digits=4))
+    unname(round(x, digits = 4))
   }
 
 
@@ -12,7 +11,7 @@ test_that("model returns accurate parameters", {
   TrueAcr_a <- 3
   TrueAcr_b <- 0.3
 
-  #test parameter estimation of guassian simulated data
+  # test parameter estimation of guassian simulated data
   withr::with_seed(
     50,
     {
@@ -28,7 +27,7 @@ test_that("model returns accurate parameters", {
   testthat::expect_equal(f_round(object$coefficients[5]), 2.9907)
   testthat::expect_equal(f_round(object$coefficients[6]), 0.2885)
 
-  #test parameter estimation of poisson simulated data
+  # test parameter estimation of poisson simulated data
   withr::with_seed(
     50,
     {
@@ -37,14 +36,14 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_equal(f_round(object$coefficients[1]), 0.9980 )
-  testthat::expect_equal(f_round(object$coefficients[2]), -0.4849  )
-  testthat::expect_equal(f_round(object$coefficients[3]), 1.9973  )
-  testthat::expect_equal(f_round(object$coefficients[4]), 0.9947  )
-  testthat::expect_equal(f_round(object$coefficients[5]), 3.0045  )
+  testthat::expect_equal(f_round(object$coefficients[1]), 0.9980)
+  testthat::expect_equal(f_round(object$coefficients[2]), -0.4849)
+  testthat::expect_equal(f_round(object$coefficients[3]), 1.9973)
+  testthat::expect_equal(f_round(object$coefficients[4]), 0.9947)
+  testthat::expect_equal(f_round(object$coefficients[5]), 3.0045)
   testthat::expect_equal(f_round(object$coefficients[6]), 0.2858)
 
-  #test parameter estimation of Gamma(link="log") simulated data
+  # test parameter estimation of Gamma(link="log") simulated data
   withr::with_seed(
     50,
     {
@@ -61,7 +60,7 @@ test_that("model returns accurate parameters", {
   testthat::expect_equal(f_round(object$coefficients[6]), 0.2951)
 
 
-  #test parameter estimation of binomial simulated data
+  # test parameter estimation of binomial simulated data
   withr::with_seed(
     50,
     {
@@ -70,11 +69,11 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_equal(f_round(object$coefficients[1]), 0.9822 )
-  testthat::expect_equal(f_round(object$coefficients[2]), -0.4799  )
-  testthat::expect_equal(f_round(object$coefficients[3]), 1.9368  )
-  testthat::expect_equal(f_round(object$coefficients[4]), 1.0394  )
-  testthat::expect_equal(f_round(object$coefficients[5]), 2.9841  )
+  testthat::expect_equal(f_round(object$coefficients[1]), 0.9822)
+  testthat::expect_equal(f_round(object$coefficients[2]), -0.4799)
+  testthat::expect_equal(f_round(object$coefficients[3]), 1.9368)
+  testthat::expect_equal(f_round(object$coefficients[4]), 1.0394)
+  testthat::expect_equal(f_round(object$coefficients[5]), 2.9841)
   testthat::expect_equal(f_round(object$coefficients[6]), 0.3197)
 })
 test_that("model output is class cosinor.glmm", {
@@ -83,16 +82,18 @@ test_that("model output is class cosinor.glmm", {
   expect_true(inherits(object, "cosinor.glmm"))
 
   data(vitamind)
-  object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind,
-                         dispformula = ~ 0 + amp.acro(time, group = "X"),
-                         ziformula = ~ 0  + amp.acro(time,group="X"))
+  object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"),
+    data = vitamind,
+    dispformula = ~ 0 + amp.acro(time, group = "X"),
+    ziformula = ~ 0 + amp.acro(time, group = "X")
+  )
   testthat::expect_no_error(object)
   testthat::expect_snapshot_output(print(object))
   testthat::expect_true(inherits(object, "cosinor.glmm"))
 
-#' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
-#' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
-#' @noRd
+  #' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
+  #' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
+  #' @noRd
 
   # check if the column names from vitamind are present in object_cols
   vitamind_cols <- colnames(vitamind)
@@ -103,5 +104,3 @@ test_that("model output is class cosinor.glmm", {
   testthat::expect_no_error(coefficients(object))
   testthat::expect_no_error(formula(object))
 })
-
-

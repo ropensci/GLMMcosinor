@@ -23,8 +23,6 @@ library(GLMMcosinor)
 #' @srrstats {G1.0} *Statistical Software should list at least one primary reference from published academic literature.*
 #' @srrstats {G1.1} *Statistical Software should document whether the algorithm(s) it implements are:* - *The first implementation of a novel algorithm*; or - *The first implementation within **R** of an algorithm which has previously been implemented in other languages or contexts*; or - *An improvement on other implementations of similar algorithms in **R***.
 #' @srrstats {G1.3} *All statistical terminology should be clarified and unambiguously defined.*
-
-
 ```
 
 ## Introduction
@@ -364,9 +362,9 @@ dat_list <- list(
     disp = TRUE,
     zi = TRUE,
     rhythmdiff = FALSE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n > 15 \nAny family listed in glmmTMB: Gaussian, Gamma, Binomial, Poisson, ...",
-    estimates = "Amplitude, Acrophase, Mesor", 
+    estimates = "Amplitude, Acrophase, Mesor",
     ref = "Parsons, 2023"
   ),
   list(
@@ -376,9 +374,9 @@ dat_list <- list(
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = TRUE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = 3 \nGaussian, Poisson, negative-binomial",
-    estimates = "Amplitude, Acrophase, Mesor", 
+    estimates = "Amplitude, Acrophase, Mesor",
     ref = "Moskon, 2020"
   ),
   list(
@@ -388,111 +386,101 @@ dat_list <- list(
     disp = FALSE,
     zi = TRUE,
     rhythmdiff = FALSE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = 6 \nPoisson, generalised Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial",
-    estimates = "Amplitude, Acrophase, Mesor, Zenith", 
+    estimates = "Amplitude, Acrophase, Mesor, Zenith",
     ref = "Velikajne, 2022"
   ),
-    list(
+  list(
     name = "FMM",
     language = "R",
     multicomponent = TRUE,
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = FALSE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = 1 \nGaussian",
-    estimates = "Amplitude, FMM phase angle parameters: alpha, beta, gamma", 
+    estimates = "Amplitude, FMM phase angle parameters: alpha, beta, gamma",
     ref = "Fernández, 2022"
   ),
-  
-    list(
+  list(
     name = "CircaCompare",
     language = "R",
     multicomponent = FALSE,
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = FALSE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = 1 \nGaussian",
-    estimates = "Amplitude,Acrophase, Mesor", 
+    estimates = "Amplitude,Acrophase, Mesor",
     ref = "Parsons,2020"
   ),
-  
-      
-    list(
+  list(
     name = "Cosinor",
     language = "R",
     multicomponent = FALSE,
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = TRUE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = ? \nGaussian",
-    estimates = "Amplitude,Acrophase, Mesor", 
+    estimates = "Amplitude,Acrophase, Mesor",
     ref = "Sachs, 2014"
   ),
-  
-        
-    list(
+  list(
     name = "Cosinor2",
     language = "R",
     multicomponent = FALSE,
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = TRUE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = ? \nGaussian",
-    estimates = "Amplitude,Acrophase, Mesor", 
+    estimates = "Amplitude,Acrophase, Mesor",
     ref = "Mutak, 2018"
   ),
-  
-
-    list(
+  list(
     name = "DiscoRhythm",
     language = "R",
     multicomponent = FALSE,
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = FALSE,
-    diff_est = FALSE, 
+    diff_est = FALSE,
     family = "n = ? \nGaussian",
-    estimates = "Amplitude,Acrophase", 
+    estimates = "Amplitude,Acrophase",
     ref = "Carlucci, 2019"
   ),
-  
-        
-    list(
+  list(
     name = "LimoRhyde",
     language = "R",
     multicomponent = FALSE,
     disp = FALSE,
     zi = FALSE,
     rhythmdiff = TRUE,
-    diff_est = TRUE, 
+    diff_est = TRUE,
     family = "n = ? \nGaussian",
-    estimates = "Amplitude,Acrophase, Period, Mesor", 
+    estimates = "Amplitude,Acrophase, Period, Mesor",
     ref = "Singer, 2019"
   )
-  
 )
-dat <- do.call(rbind, dat_list) 
-dat <- as.data.frame(dat) 
+dat <- do.call(rbind, dat_list)
+dat <- as.data.frame(dat)
 dat <- dplyr:::mutate(
-  dat, 
+  dat,
   dplyr::across(dplyr::everything(), unlist),
   dplyr::across(
-    multicomponent:diff_est, 
+    multicomponent:diff_est,
     function(x) ifelse(x, "&#x2713;", "&#x2717;")
-    )
   )
+)
 dat <- flextable::flextable(dat)
 dat <- flextable::color(
-  dat, 
-  j = c("multicomponent", "disp", "zi", "rhythmdiff", "diff_est"), 
+  dat,
+  j = c("multicomponent", "disp", "zi", "rhythmdiff", "diff_est"),
   col = function(x) ifelse(x == "&#x2713;", "green", "red")
-) 
+)
 dat <- ftExtra::colformat_md(dat)
-#flextable::autofit(dat)
+# flextable::autofit(dat)
 dat
 ```

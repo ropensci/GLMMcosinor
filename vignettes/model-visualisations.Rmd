@@ -136,6 +136,8 @@ confidence ellipses AND the origin).
 
 ```{r, message=F, warning=F}
 model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-polar_plot(model, grid_angle_segments = 12, clockwise = TRUE, start = "top",
-           view = "zoom_origin")
+polar_plot(model,
+  grid_angle_segments = 12, clockwise = TRUE, start = "top",
+  view = "zoom_origin"
+)
 ```

@@ -147,7 +147,6 @@ data_processor <- function(newdata,
       )
     )
     names(disp_list) <- paste0(names(disp_list), "_disp")
-
   } else {
     disp_list <- NULL
   }
@@ -165,7 +164,6 @@ data_processor <- function(newdata,
       )
     )
     names(zi_list) <- paste0(names(zi_list), "_zi")
-
   } else {
     zi_list <- NULL
   }

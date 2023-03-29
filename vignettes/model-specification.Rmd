@@ -22,7 +22,6 @@ knitr::opts_chunk$set(
 library(GLMMcosinor)
 #' @srrstats {G2.0a} Provide explicit secondary documentation of any expectations on lengths of inputs
 #' @srrstats {G2.1a} *Provide explicit secondary documentation of expectations on data types of all vector inputs.*
-
 ```
 
 ## Using: 'cosinor.glmm.R'
