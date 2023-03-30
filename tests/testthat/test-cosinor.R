@@ -88,7 +88,7 @@ test_that("model output is class cosinor.glmm", {
     ziformula = ~ 0 + amp.acro(time, group = "X")
   )
   testthat::expect_no_error(object)
-  testthat::expect_snapshot_output(print(object))
+  testthat::expect_snapshot_output(print(object, digits = 2))
   testthat::expect_true(inherits(object, "cosinor.glmm"))
 
   #' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
