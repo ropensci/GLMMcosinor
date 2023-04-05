@@ -34,10 +34,10 @@
 
 test_cosinor <- function(x,
                          x_str,
-                         param = "amp",
+                         param = c("amp", "acr"),
                          comparison_A = 0,
                          comparison_B = 1,
-                         comparison_type = "levels",
+                         comparison_type = "levels", # TODO: do match.arg() for comparison_type same as has been done for param
                          component_index = 1,
                          level_index = 0,
                          ci_level = 0.95) {
@@ -51,9 +51,10 @@ test_cosinor <- function(x,
     msg = "'x' must be of class 'cosinor.glmm'"
   )
 
-  assertthat::assert_that(param %in% c("amp", "acr"),
-    msg = "'param' must be either 'amp' and 'acr'"
-  )
+  param <- match.arg(param)
+  # assertthat::assert_that(param %in% c("amp", "acr"),
+  #   msg = "'param' must be either 'amp' and 'acr'"
+  # )
 
   assertthat::assert_that(comparison_type %in% c("levels", "components"),
     msg = "'comparison_type' must be one of the following strings:'levels', or 'components'"
@@ -139,6 +140,7 @@ test_cosinor <- function(x,
 
 print.test_cosinor <- function(x, ...) {
   cat("Global test: \n")
+  # TODO: add the parameter being tested
   print(x$global.test, ...)
   cat("\n Individual tests: \n")
   print(x$ind.test, ...)
