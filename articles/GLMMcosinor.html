@@ -76,7 +76,8 @@
 <script src="GLMMcosinor_files/datatables-binding-0.27/datatables.js"></script><link href="GLMMcosinor_files/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="GLMMcosinor_files/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="GLMMcosinor_files/dt-core-1.12.1/js/jquery.dataTables.min.js"></script><link href="GLMMcosinor_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-<script src="GLMMcosinor_files/crosstalk-1.2.0/js/crosstalk.min.js"></script><div class="row">
+<script src="GLMMcosinor_files/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="GLMMcosinor_files/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="GLMMcosinor_files/tabwid-1.1.3/tabwid.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>GLMMcosinor</h1>
                         <h4 data-toc-skip class="author">Oliver
@@ -200,15 +201,15 @@ component that the group covariate describes:<br></p></li>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    main_rrr2    main_sss2 X0:main_rrr1 X1:main_rrr1 </span></span>
-<span><span class="co">#&gt;   31.1709193    1.9594516  -16.3997808   -2.3871108   13.0478281   18.5762896 </span></span>
+<span><span class="co">#&gt;   30.8061641    2.0090994  -11.6003312   -0.2785262    9.2381428   14.9771006 </span></span>
 <span><span class="co">#&gt; X0:main_sss1 X1:main_sss1 Z0:main_rrr3 Z1:main_rrr3 Z0:main_sss3 Z1:main_sss3 </span></span>
-<span><span class="co">#&gt;    1.1735408   -0.2391132    2.8940291    3.3287075    3.3618994    4.2657859 </span></span>
+<span><span class="co">#&gt;    2.0629540    0.7266691    3.0349117    2.2988048    2.9288333    1.0672854 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [X=0]:amp1  [X=1]:amp1        amp2  [Z=0]:amp3 </span></span>
-<span><span class="co">#&gt;  31.1709193   1.9594516  13.1004967  18.5778285  16.5726011   4.4359634 </span></span>
+<span><span class="co">#&gt;  30.8061641   2.0090994   9.4656780  14.9947188  11.6036745   4.2176716 </span></span>
 <span><span class="co">#&gt;  [Z=1]:amp3  [X=0]:acr1  [X=1]:acr1        acr2  [Z=0]:acr3  [Z=1]:acr3 </span></span>
-<span><span class="co">#&gt;   5.4108431  -0.0897001   0.0128712   2.9970503  -0.8600475  -0.9081668</span></span></code></pre></div>
+<span><span class="co">#&gt;   2.5344825  -0.2197037  -0.0484807   3.1175871  -0.7676128  -0.4346642</span></span></code></pre></div>
 <p>As demonstrated in the example above, the ‘NA’ entry in the group
 argument indicates a component with no group covariate assigned.</p>
 <p>If only one group argument and and/or one period argument is
@@ -285,19 +286,19 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    main_rrr2    main_sss2 X0:main_rrr1 X1:main_rrr1 </span></span>
-<span><span class="co">#&gt;   32.6529421    1.9997731  -28.3203808  -12.2993595   25.4564027   31.2573571 </span></span>
+<span><span class="co">#&gt;   32.1820655    1.8958857  -25.0178810  -10.0981957   21.9174138   27.4656055 </span></span>
 <span><span class="co">#&gt; X0:main_sss1 X1:main_sss1 Z0:main_rrr3 Z1:main_rrr3 Z2:main_rrr3 Z0:main_sss3 </span></span>
-<span><span class="co">#&gt;    1.3794592    0.6754073    3.5450795    2.1473877    1.8743748    8.3242796 </span></span>
+<span><span class="co">#&gt;    2.0122736    0.4859055    2.9901728    1.8595689    4.6223706    7.0389228 </span></span>
 <span><span class="co">#&gt; Z1:main_sss3 Z2:main_sss3 </span></span>
-<span><span class="co">#&gt;    8.4230873    8.1591760 </span></span>
+<span><span class="co">#&gt;    8.5518456    5.7859499 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [X=0]:amp1  [X=1]:amp1        amp2  [Z=0]:amp3 </span></span>
-<span><span class="co">#&gt;  32.6529421   1.9997731  25.4937511  31.2646534  30.8758516   9.0477190 </span></span>
+<span><span class="co">#&gt;  32.1820655   1.8958857  22.0095950  27.4699033  26.9790276   7.6477165 </span></span>
 <span><span class="co">#&gt;  [Z=1]:amp3  [Z=2]:amp3  [X=0]:acr1  [X=1]:acr1        acr2  [Z=0]:acr3 </span></span>
-<span><span class="co">#&gt;   8.6925068   8.3717043  -0.0541361  -0.0216046   2.7318767  -1.1681871 </span></span>
+<span><span class="co">#&gt;   8.7516890   7.4056415  -0.0915550  -0.0176896   2.7579530  -1.1690905 </span></span>
 <span><span class="co">#&gt;  [Z=1]:acr3  [Z=2]:acr3 </span></span>
-<span><span class="co">#&gt;  -1.3211730  -1.3449882 </span></span>
+<span><span class="co">#&gt;  -1.3566829  -0.8967291 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -308,19 +309,19 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt;  (Intercept)           X1    disp_rrr2    disp_sss2 Z0:disp_rrr1 Z1:disp_rrr1 </span></span>
-<span><span class="co">#&gt;    2.2138740    0.2750778   14.7702432    8.8975162  -15.2814519  -15.4993141 </span></span>
+<span><span class="co">#&gt;     2.484002     0.330041     8.897027     9.829055    -9.995820   -10.306233 </span></span>
 <span><span class="co">#&gt; Z2:disp_rrr1 Z0:disp_sss1 Z1:disp_sss1 Z2:disp_sss1 X0:disp_rrr3 X1:disp_rrr3 </span></span>
-<span><span class="co">#&gt;  -14.7397456   -3.5957638   -3.4034170   -3.9963071    1.0492294    0.8418274 </span></span>
+<span><span class="co">#&gt;   -10.144316    -5.482980    -5.838740    -5.816335     1.565078     1.122665 </span></span>
 <span><span class="co">#&gt; X0:disp_sss3 X1:disp_sss3 </span></span>
-<span><span class="co">#&gt;   -2.0298676   -2.5007979 </span></span>
+<span><span class="co">#&gt;    -1.378610    -1.855727 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [Z=0]:amp1  [Z=1]:amp1  [Z=2]:amp1        amp2 </span></span>
-<span><span class="co">#&gt;   2.2138740   0.2750778  15.6987990  15.8685848  15.2718883  17.2431400 </span></span>
+<span><span class="co">#&gt;   2.4840021   0.3300410  11.4008546  11.8452240  11.6934558  13.2577305 </span></span>
 <span><span class="co">#&gt;  [X=0]:amp3  [X=1]:amp3  [Z=0]:acr1  [Z=1]:acr1  [Z=2]:acr1        acr2 </span></span>
-<span><span class="co">#&gt;   2.2850043   2.6386859   2.9104940   2.9254382   2.8768330  -0.5421784 </span></span>
+<span><span class="co">#&gt;   2.0856738   2.1688933   2.6398809   2.6261508   2.6209925  -0.8351288 </span></span>
 <span><span class="co">#&gt;  [X=0]:acr3  [X=1]:acr3 </span></span>
-<span><span class="co">#&gt;   1.0937239   1.2460875 </span></span>
+<span><span class="co">#&gt;   0.7221376   1.0267280 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -331,15 +332,15 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)          X1  Z0:zi_rrr1  Z1:zi_rrr1  Z2:zi_rrr1  Z0:zi_sss1 </span></span>
-<span><span class="co">#&gt; -17.1223605  -0.6337854   0.3569224   0.2498236   0.3084448   0.0146143 </span></span>
+<span><span class="co">#&gt; -15.1674875  -0.9635944   0.2150502   0.2340268   0.4655476  -0.0162745 </span></span>
 <span><span class="co">#&gt;  Z1:zi_sss1  Z2:zi_sss1  X0:zi_rrr2  X1:zi_rrr2  X0:zi_sss2  X1:zi_sss2 </span></span>
-<span><span class="co">#&gt;   0.0212730  -0.0252633  -0.0227138   0.0299854  -0.6517133  -0.1728089 </span></span>
+<span><span class="co">#&gt;   0.0360559   0.1164073   0.0116752  -0.0082584  -0.5360140  -0.2527986 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
 <span><span class="co">#&gt; (Intercept)       [X=1]  [Z=0]:amp1  [Z=1]:amp1  [Z=2]:amp1  [X=0]:amp2 </span></span>
-<span><span class="co">#&gt; -17.1223605  -0.6337854   0.3572215   0.2507277   0.3094776   0.6521090 </span></span>
+<span><span class="co">#&gt; -15.1674875  -0.9635944   0.2156651   0.2367880   0.4798804   0.5361411 </span></span>
 <span><span class="co">#&gt;  [X=1]:amp2  [Z=0]:acr1  [Z=1]:acr1  [Z=2]:acr1  [X=0]:acr2  [X=1]:acr2 </span></span>
-<span><span class="co">#&gt;   0.1753911  -0.0409225  -0.0849470   0.0817231   1.6056346   1.3989894</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.2529334   0.0755335  -0.1528654  -0.2450200   1.5490183   1.6034526</span></span></code></pre></div>
 <p>This example shows how dispformula and ziformula can be specified
 with a different number of components, with different periods, and with
 different group-component assignments. By default, dispformula = ~1, and
@@ -401,108 +402,108 @@ cosinor.glmm object being analysed contains them:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error    lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)   31.678467      3.3204529  25.1704987 38.186435 0.0000000</span></span>
-<span><span class="co">#&gt; X1             2.361066      0.8214273   0.7510984  3.971034 0.0040487</span></span>
-<span><span class="co">#&gt; main_rrr2    -20.868362     29.9931869 -79.6539280 37.917204 0.4865728</span></span>
-<span><span class="co">#&gt; main_sss2     -7.987882     23.3588682 -53.7704227 37.794658 0.7323783</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  18.783840     28.3609419 -36.8025850 74.370264 0.5077702</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  24.624780     28.3265225 -30.8941836 80.143744 0.3846728</span></span>
-<span><span class="co">#&gt; X0:main_sss1   2.432311      6.6124780 -10.5279081 15.392529 0.7129952</span></span>
-<span><span class="co">#&gt; X1:main_sss1   1.966886      6.7294460 -11.2225862 15.156357 0.7700722</span></span>
-<span><span class="co">#&gt; Z0:main_rrr3   1.852143      4.9447747  -7.8394372 11.543723 0.7079835</span></span>
-<span><span class="co">#&gt; Z1:main_rrr3   1.923532      4.5424663  -6.9795380 10.826603 0.6719630</span></span>
-<span><span class="co">#&gt; Z2:main_rrr3   4.268284      4.6483483  -4.8423111 13.378880 0.3584949</span></span>
-<span><span class="co">#&gt; Z0:main_sss3   4.518717     11.8764386 -18.7586751 27.796109 0.7035911</span></span>
-<span><span class="co">#&gt; Z1:main_sss3   5.774022     11.9624587 -17.6719667 29.220010 0.6293240</span></span>
-<span><span class="co">#&gt; Z2:main_sss3   5.097996     11.7968589 -18.0234226 28.219415 0.6656334</span></span>
+<span><span class="co">#&gt;                 estimate standard.error    lower.CI  upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept)   31.3365814       3.161759  25.1396476 37.533515 0.0000000</span></span>
+<span><span class="co">#&gt; X1             1.8809128       0.811089   0.2912076  3.470618 0.0203952</span></span>
+<span><span class="co">#&gt; main_rrr2    -17.5968796      29.273469 -74.9718249 39.778066 0.5477598</span></span>
+<span><span class="co">#&gt; main_sss2     -4.4269681      22.158526 -47.8568812 39.002945 0.8416478</span></span>
+<span><span class="co">#&gt; X0:main_rrr1  14.7547027      27.306358 -38.7647751 68.274180 0.5889629</span></span>
+<span><span class="co">#&gt; X1:main_rrr1  20.6300494      27.414218 -33.1008299 74.360929 0.4517318</span></span>
+<span><span class="co">#&gt; X0:main_sss1   1.7985698       6.432694 -10.8092789 14.406418 0.7797858</span></span>
+<span><span class="co">#&gt; X1:main_sss1   0.5405624       6.556236 -12.3094239 13.390549 0.9342888</span></span>
+<span><span class="co">#&gt; Z0:main_rrr3   1.6696833       4.543627  -7.2356610 10.575027 0.7132624</span></span>
+<span><span class="co">#&gt; Z1:main_rrr3   2.6963234       4.679748  -6.4758151 11.868462 0.5645013</span></span>
+<span><span class="co">#&gt; Z2:main_rrr3   3.5126344       4.556541  -5.4180214 12.443290 0.4407666</span></span>
+<span><span class="co">#&gt; Z0:main_sss3   6.2293736      11.561927 -16.4315877 28.890335 0.5900364</span></span>
+<span><span class="co">#&gt; Z1:main_sss3   4.3125756      11.445286 -18.1197731 26.744924 0.7063228</span></span>
+<span><span class="co">#&gt; Z2:main_sss3   2.3268526      11.410891 -20.0380821 24.691787 0.8384199</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;               estimate standard.error    lower.CI  upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) 31.6784668      3.3204529  25.1704987 38.186435 0.0000000</span></span>
-<span><span class="co">#&gt; [X=1]        2.3610663      0.8214273   0.7510984  3.971034 0.0040487</span></span>
-<span><span class="co">#&gt; amp2        22.3449052     35.3165029 -46.8741686 91.563979 0.5269267</span></span>
-<span><span class="co">#&gt; [X=0]:amp1  18.9406643      6.9759516   5.2680505 32.613278 0.0066248</span></span>
-<span><span class="co">#&gt; [X=1]:amp1  24.7032071      6.4809459  12.0007865 37.405628 0.0001380</span></span>
-<span><span class="co">#&gt; [Z=0]:amp3   4.8835679     21.9328549 -38.1040377 47.871173 0.8238002</span></span>
-<span><span class="co">#&gt; [Z=1]:amp3   6.0859923     20.1572340 -33.4214603 45.593445 0.7627085</span></span>
-<span><span class="co">#&gt; [Z=2]:amp3   6.6488956     27.3137469 -46.8850646 60.182856 0.8076749</span></span>
-<span><span class="co">#&gt; acr2         2.7760232      0.6296860   1.5418613  4.010185 0.0000104</span></span>
-<span><span class="co">#&gt; [X=0]:acr1  -0.1287730      1.1364661  -2.3562056  2.098660 0.9097848</span></span>
-<span><span class="co">#&gt; [X=1]:acr1  -0.0797050      0.8715775  -1.7879656  1.628556 0.9271357</span></span>
-<span><span class="co">#&gt; [Z=0]:acr3  -1.1817997      4.9901801 -10.9623729  8.598774 0.8127925</span></span>
-<span><span class="co">#&gt; [Z=1]:acr3  -1.2492237      4.1500712  -9.3832138  6.884766 0.7634049</span></span>
-<span><span class="co">#&gt; [Z=2]:acr3  -0.8737525      2.6581199  -6.0835717  4.336067 0.7423743</span></span>
+<span><span class="co">#&gt; (Intercept) 31.3365814      3.1617590  25.1396476 37.533515 0.0000000</span></span>
+<span><span class="co">#&gt; [X=1]        1.8809128      0.8110890   0.2912076  3.470618 0.0203952</span></span>
+<span><span class="co">#&gt; amp2        18.1451982     33.0103162 -46.5538326 82.844229 0.5825371</span></span>
+<span><span class="co">#&gt; [X=0]:amp1  14.8639196      6.9200363   1.3008977 28.426942 0.0317174</span></span>
+<span><span class="co">#&gt; [X=1]:amp1  20.6371303      6.1523419   8.5787617 32.695499 0.0007955</span></span>
+<span><span class="co">#&gt; [Z=0]:amp3   6.4492587     17.8897810 -28.6140678 41.512585 0.7184736</span></span>
+<span><span class="co">#&gt; [Z=1]:amp3   5.0861054     23.8296892 -41.6192272 51.791438 0.8309872</span></span>
+<span><span class="co">#&gt; [Z=2]:amp3   4.2134123     29.1408095 -52.9015248 61.328350 0.8850361</span></span>
+<span><span class="co">#&gt; acr2         2.8951304      0.8856516   1.1592852  4.630976 0.0010796</span></span>
+<span><span class="co">#&gt; [X=0]:acr1  -0.1212996      1.3907364  -2.8470929  2.604494 0.9304969</span></span>
+<span><span class="co">#&gt; [X=1]:acr1  -0.0261967      1.0050145  -1.9959889  1.943596 0.9792047</span></span>
+<span><span class="co">#&gt; [Z=0]:acr3  -1.3089179      3.9844611  -9.1183182  6.500482 0.7425294</span></span>
+<span><span class="co">#&gt; [Z=1]:acr3  -1.0120363      3.9892879  -8.8308969  6.806824 0.7997362</span></span>
+<span><span class="co">#&gt; [Z=2]:acr3  -0.5850595      2.6585269  -5.7956765  4.625558 0.8258174</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Dispersion Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                 estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)    3.5793864      1.2986812   1.0340180  6.1247549 0.0058483</span></span>
-<span><span class="co">#&gt; X1             0.2953427      0.2413469  -0.1776884  0.7683739 0.2210552</span></span>
-<span><span class="co">#&gt; disp_rrr2    -11.1586098     23.2231877 -56.6752213 34.3580017 0.6308759</span></span>
-<span><span class="co">#&gt; disp_sss2      7.7551376      7.1301465  -6.2196928 21.7299680 0.2767476</span></span>
-<span><span class="co">#&gt; Z0:disp_rrr1   8.0261438     21.9157679 -34.9279721 50.9802596 0.7141958</span></span>
-<span><span class="co">#&gt; Z1:disp_rrr1   8.2571695     21.8854802 -34.6375834 51.1519225 0.7059582</span></span>
-<span><span class="co">#&gt; Z2:disp_rrr1   9.0792188     21.9342265 -33.9110752 52.0695128 0.6789259</span></span>
-<span><span class="co">#&gt; Z0:disp_sss1  -7.9889916      5.3484862 -18.4718318  2.4938486 0.1352561</span></span>
-<span><span class="co">#&gt; Z1:disp_sss1  -8.7132935      5.2178253 -18.9400432  1.5134562 0.0949374</span></span>
-<span><span class="co">#&gt; Z2:disp_sss1  -9.4636186      5.3043646 -19.8599822  0.9327451 0.0744043</span></span>
-<span><span class="co">#&gt; X0:disp_rrr3   2.3312722      1.2571564  -0.1327091  4.7952535 0.0636818</span></span>
-<span><span class="co">#&gt; X1:disp_rrr3   2.1037008      1.2015916  -0.2513755  4.4587771 0.0799869</span></span>
-<span><span class="co">#&gt; X0:disp_sss3   0.9982237      3.0777960  -5.0341456  7.0305930 0.7456877</span></span>
-<span><span class="co">#&gt; X1:disp_sss3   0.7257099      3.1180453  -5.3855467  6.8369665 0.8159593</span></span>
+<span><span class="co">#&gt;                estimate standard.error    lower.CI  upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept)   3.0943276      1.2164836   0.7100636  5.478592 0.0109696</span></span>
+<span><span class="co">#&gt; X1            0.3705938      0.2336717  -0.0873943  0.828582 0.1127486</span></span>
+<span><span class="co">#&gt; disp_rrr2    -2.1228811     21.4369013 -44.1384356 39.892673 0.9211150</span></span>
+<span><span class="co">#&gt; disp_sss2     8.6803142      6.8410440  -4.7278856 22.088514 0.2044917</span></span>
+<span><span class="co">#&gt; Z0:disp_rrr1  0.0107691     20.3429683 -39.8607160 39.882254 0.9995776</span></span>
+<span><span class="co">#&gt; Z1:disp_rrr1 -0.1213700     20.3719277 -40.0496146 39.806875 0.9952465</span></span>
+<span><span class="co">#&gt; Z2:disp_rrr1  0.1214103     20.3670142 -39.7972041 40.040025 0.9952437</span></span>
+<span><span class="co">#&gt; Z0:disp_sss1 -7.4080300      4.5312323 -16.2890822  1.473022 0.1020738</span></span>
+<span><span class="co">#&gt; Z1:disp_sss1 -7.1358598      4.5975386 -16.1468699  1.875150 0.1206373</span></span>
+<span><span class="co">#&gt; Z2:disp_sss1 -7.7991524      4.5568768 -16.7304668  1.132162 0.0869865</span></span>
+<span><span class="co">#&gt; X0:disp_rrr3  1.9689995      1.0962859  -0.1796815  4.117680 0.0724844</span></span>
+<span><span class="co">#&gt; X1:disp_rrr3  1.6007244      1.0414258  -0.4404326  3.641881 0.1242808</span></span>
+<span><span class="co">#&gt; X0:disp_sss3 -0.0623465      2.8285165  -5.6061369  5.481444 0.9824144</span></span>
+<span><span class="co">#&gt; X1:disp_sss3 -0.3706863      2.8933929  -6.0416322  5.300260 0.8980582</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
-<span><span class="co">#&gt;               estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept)  3.5793864      1.2986812   1.0340180  6.1247549 0.0058483</span></span>
-<span><span class="co">#&gt; [X=1]        0.2953427      0.2413469  -0.1776884  0.7683739 0.2210552</span></span>
-<span><span class="co">#&gt; amp2        13.5888459     17.0840720 -19.8953200 47.0730117 0.4263749</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1  11.3244413      3.9230522   3.6354003 19.0134824 0.0038938</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1  12.0042631      4.0962304   3.9757990 20.0327272 0.0033835</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1  13.1145831      4.0750293   5.1276724 21.1014938 0.0012896</span></span>
-<span><span class="co">#&gt; [X=0]:amp3   2.5359970     21.5130660 -39.6288377 44.7008316 0.9061614</span></span>
-<span><span class="co">#&gt; [X=1]:amp3   2.2253566     22.0418349 -40.9758459 45.4265591 0.9195817</span></span>
-<span><span class="co">#&gt; acr2        -2.5342361      1.2709741  -5.0252996 -0.0431725 0.0461595</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1   0.7830784      0.4804590  -0.1586040  1.7247607 0.1031322</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1   0.8122692      0.4476534  -0.0651153  1.6896537 0.0696001</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1   0.8061256      0.4102342   0.0020812  1.6101699 0.0494099</span></span>
-<span><span class="co">#&gt; [X=0]:acr3  -0.4045681      3.6614837  -7.5809442  6.7718080 0.9120184</span></span>
-<span><span class="co">#&gt; [X=1]:acr3  -0.3321852      3.6765700  -7.5381300  6.8737597 0.9280076</span></span>
+<span><span class="co">#&gt;               estimate standard.error    lower.CI  upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept)  3.0943276      1.2164836   0.7100636  5.478592 0.0109696</span></span>
+<span><span class="co">#&gt; [X=1]        0.3705938      0.2336717  -0.0873943  0.828582 0.1127486</span></span>
+<span><span class="co">#&gt; amp2         8.9361334      5.2337336  -1.3217961 19.194063 0.0877457</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1   7.4080379      6.0085810  -4.3685645 19.184640 0.2176095</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1   7.1368919      6.0175168  -4.6572244 18.931008 0.2356146</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1   7.8000974      6.0011995  -3.9620375 19.562232 0.1936845</span></span>
+<span><span class="co">#&gt; [X=0]:amp3   1.9699863     21.0189867 -39.2264707 43.166443 0.9253283</span></span>
+<span><span class="co">#&gt; [X=1]:amp3   1.6430846     20.2526084 -38.0512986 41.337468 0.9353389</span></span>
+<span><span class="co">#&gt; acr2        -1.8106510      2.4490341  -6.6106697  2.989368 0.4597050</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1   1.5693426      0.2416609   1.0956959  2.042989 0.0000000</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   1.5878032      0.2458725   1.1059019  2.069704 0.0000000</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1   1.5552305      0.2401117   1.0846201  2.025841 0.0000000</span></span>
+<span><span class="co">#&gt; [X=0]:acr3   0.0316535      2.8258275  -5.5068667  5.570174 0.9910627</span></span>
+<span><span class="co">#&gt; [X=1]:acr3   0.2275629      4.9177963  -9.4111407  9.866266 0.9630924</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Zero-Inflation Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error  lower.CI upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -14.1131559       112.3336 -234.2829 206.0566 0.9000200</span></span>
-<span><span class="co">#&gt; X1           -0.7221281       233.7909 -458.9438 457.4995 0.9975355</span></span>
-<span><span class="co">#&gt; Z0:zi_rrr1    0.0864887       335.0221 -656.5448 656.7178 0.9997940</span></span>
-<span><span class="co">#&gt; Z1:zi_rrr1   -0.1302955       276.8663 -542.7783 542.5177 0.9996245</span></span>
-<span><span class="co">#&gt; Z2:zi_rrr1    0.0855140       336.0406 -658.5419 658.7129 0.9997970</span></span>
-<span><span class="co">#&gt; Z0:zi_sss1   -0.0008848       326.2201 -639.3805 639.3787 0.9999978</span></span>
-<span><span class="co">#&gt; Z1:zi_sss1    0.0396875       229.3260 -449.4311 449.5105 0.9998619</span></span>
-<span><span class="co">#&gt; Z2:zi_sss1    0.0616003       362.3599 -710.1508 710.2740 0.9998644</span></span>
-<span><span class="co">#&gt; X0:zi_rrr2   -0.0643732       179.3373 -351.5591 351.4303 0.9997136</span></span>
-<span><span class="co">#&gt; X1:zi_rrr2   -0.0491446       319.5712 -626.3972 626.2989 0.9998773</span></span>
-<span><span class="co">#&gt; X0:zi_sss2   -0.7277746       277.0913 -543.8168 542.3612 0.9979044</span></span>
-<span><span class="co">#&gt; X1:zi_sss2   -0.4065694       361.6864 -709.2988 708.4857 0.9991031</span></span>
+<span><span class="co">#&gt; (Intercept) -14.1073100       109.5426 -228.8069 200.5922 0.8975287</span></span>
+<span><span class="co">#&gt; X1           -0.9884944       273.8672 -537.7584 535.7814 0.9971201</span></span>
+<span><span class="co">#&gt; Z0:zi_rrr1    0.2396937       299.7735 -587.3055 587.7849 0.9993620</span></span>
+<span><span class="co">#&gt; Z1:zi_rrr1    0.2355702       261.1997 -511.7064 512.1776 0.9992804</span></span>
+<span><span class="co">#&gt; Z2:zi_rrr1    0.3856635       353.9979 -693.4374 694.2087 0.9991307</span></span>
+<span><span class="co">#&gt; Z0:zi_sss1   -0.1073924       302.8725 -593.7266 593.5119 0.9997171</span></span>
+<span><span class="co">#&gt; Z1:zi_sss1    0.1333526       216.7805 -424.7486 425.0153 0.9995092</span></span>
+<span><span class="co">#&gt; Z2:zi_sss1   -0.0084226       325.4021 -637.7848 637.7680 0.9999793</span></span>
+<span><span class="co">#&gt; X0:zi_rrr2   -0.0023536       163.1945 -319.8577 319.8530 0.9999885</span></span>
+<span><span class="co">#&gt; X1:zi_rrr2   -0.0089874       352.5488 -690.9919 690.9740 0.9999797</span></span>
+<span><span class="co">#&gt; X0:zi_sss2   -0.5050083       258.1249 -506.4204 505.4104 0.9984390</span></span>
+<span><span class="co">#&gt; X1:zi_sss2   -0.2455159       403.8549 -791.7865 791.2955 0.9995149</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error    lower.CI   upper.CI   p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -14.1131559       112.3336   -234.2829   206.0566 0.9000200</span></span>
-<span><span class="co">#&gt; [X=1]        -0.7221281       233.7909   -458.9438   457.4995 0.9975355</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1    0.0864932       334.8414   -656.1905   656.3635 0.9997939</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1    0.1362057       522.6603  -1024.2592  1024.5316 0.9997921</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1    0.1053909       532.8139  -1044.1907  1044.4015 0.9998422</span></span>
-<span><span class="co">#&gt; [X=0]:amp2    0.7306160       418.2100   -818.9459   820.4072 0.9986061</span></span>
-<span><span class="co">#&gt; [X=1]:amp2    0.4095288       485.5469   -951.2449   952.0640 0.9993270</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1    0.0102300      3773.7697  -7396.4424  7396.4629 0.9999978</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1   -2.8459248      3248.9579  -6370.6863  6364.9945 0.9993011</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1   -0.6242558      5219.4266 -10230.5123 10229.2638 0.9999046</span></span>
-<span><span class="co">#&gt; [X=0]:acr2    1.6590188       514.2565  -1006.2652  1009.5833 0.9974260</span></span>
-<span><span class="co">#&gt; [X=1]:acr2    1.6910890      1172.6227  -2296.6071  2299.9893 0.9988493</span></span></code></pre></div>
+<span><span class="co">#&gt;                estimate standard.error   lower.CI  upper.CI   p.value</span></span>
+<span><span class="co">#&gt; (Intercept) -14.1073100       109.5426  -228.8069  200.5922 0.8975287</span></span>
+<span><span class="co">#&gt; [X=1]        -0.9884944       273.8672  -537.7584  535.7814 0.9971201</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1    0.2626522       300.5694  -588.8425  589.3678 0.9993028</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1    0.2706959       455.3583  -892.2151  892.7565 0.9995257</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1    0.3857555       537.6657 -1053.4197 1054.1912 0.9994275</span></span>
+<span><span class="co">#&gt; [X=0]:amp2    0.5050138       406.5331  -796.2852  797.2952 0.9990088</span></span>
+<span><span class="co">#&gt; [X=1]:amp2    0.2456803       510.6354 -1000.5814 1001.0728 0.9996161</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1    0.4212231      1150.1241 -2253.7807 2254.6231 0.9997078</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   -0.5151080      1513.7819 -2967.4730 2966.4428 0.9997285</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1    0.0218357      1178.2468 -2309.2995 2309.3431 0.9999852</span></span>
+<span><span class="co">#&gt; [X=0]:acr2    1.5754568       652.7022 -1277.6974 1280.8483 0.9980741</span></span>
+<span><span class="co">#&gt; [X=1]:acr2    1.6073861      1868.6253 -3660.8309 3664.0457 0.9993137</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-predict-cosinor-glmm-r">Using: ‘predict.cosinor.glmm.R’<a class="anchor" aria-label="anchor" href="#using-predict-cosinor-glmm-r"></a>
@@ -752,8 +753,8 @@ family = ‘binomial’ - family = ‘poisson’</p>
 <span>  beta.acro <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-bc65043a6cbfff1c6841" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bc65043a6cbfff1c6841">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[10,10,14,2,3,0,2,17,1,1,0,22,4,0,0,14,20,0,17,14,7,1,0,14,3,0,18,1,1,0,4,9,0,0,2,1,3,18,12,0,1,13,13,3,0,0,9,0,0,3,8,1,17,4,3,12,0,19,22,3,1,0,1,4,8,13,4,1,1,0,0,5,0,24,1,1,2,2,1,20,10,0,2,0,0,0,12,2,0,15,2,6,20,0,0,4,24,1,3,2,4,3,1,1,2,0,0,4,2,2,0,1,1,1,2,1,2,1,1,1,1,1,0,3,1,3,1,2,6,2,0,0,1,2,2,5,1,0,6,1,0,2,3,3,0,1,0,0,2,1,3,2,0,2,1,0,2,1,4,6,1,0,4,3,1,2,3,4,5,1,1,4,2,2,1,2,2,2,2,2,0,1,0,1,2,1,2,6,2,3,1,1,2,2,1,1,0,1,2,2],[0.999723272972998,0.830830375927486,0.667549975394272,-0.872839183244134,0.616953791428076,0.465565435342269,-0.999957528881748,0.130802327373178,0.93792490929062,0.198016581597051,-0.433821039672244,0.579872889218066,0.996307618536098,-0.463473823874793,-0.0128736028987615,0.0918217244690645,0.720228584354283,0.120250696500638,0.381221675928716,0.953981865821127,-0.846938672438446,-0.899168240939077,0.0260547616312781,0.897942473755097,-0.95395715015657,0.368287270603646,0.758664533392654,-0.0406734198213717,0.944087094843492,0.0208068739993845,0.90874695484766,0.983721290144275,-0.194272529668161,-0.511666192246226,-0.99682774077631,0.683220281166452,0.965841241473702,0.852629331788164,0.772595693657342,-0.742887050826155,0.152814999640207,0.9073128476606,0.841374772400686,0.875097577659222,0.265263251954161,-0.100001767298384,-0.546810770525926,-0.302294556704907,0.158559634103817,-0.999971225498688,0.999034127097763,-0.450541358847728,0.646574036899065,-0.918323214321237,-0.650535079840951,-0.227074659769145,-0.558661310220827,0.11644217755725,0.53290202351491,0.993258718397455,-0.0966357060793858,-0.553545230743833,-0.56613651034449,0.994102519754739,-0.645971835525938,0.95954564060994,0.869281087754164,-0.489003644693647,0.889913170733458,-0.835248740155654,-0.593339431755698,0.963035834883713,-0.188608213105336,0.667693718349968,-0.458388924235416,0.0707061054744316,0.981941761873069,0.957187571520591,-0.689875445906542,0.442739014865,0.976240088741193,0.0451611789819576,-0.998546161306945,-0.999489927686985,0.905310195783903,-0.677925920474356,0.924592072341566,0.294321197174644,0.597882836373784,0.917238921731847,-0.732946585624026,-0.858349325731874,0.645774225504615,-0.130256529508749,0.167906192827062,-0.992460654561838,0.336106321665857,-0.888980190909707,-0.932267413516064,0.787359647296419,0.999723272972998,0.830830375927486,0.667549975394272,-0.872839183244134,0.616953791428076,0.465565435342269,-0.999957528881748,0.130802327373178,0.93792490929062,0.198016581597051,-0.433821039672244,0.579872889218066,0.996307618536098,-0.463473823874793,-0.0128736028987615,0.0918217244690645,0.720228584354283,0.120250696500638,0.381221675928716,0.953981865821127,-0.846938672438446,-0.899168240939077,0.0260547616312781,0.897942473755097,-0.95395715015657,0.368287270603646,0.758664533392654,-0.0406734198213717,0.944087094843492,0.0208068739993845,0.90874695484766,0.983721290144275,-0.194272529668161,-0.511666192246226,-0.99682774077631,0.683220281166452,0.965841241473702,0.852629331788164,0.772595693657342,-0.742887050826155,0.152814999640207,0.9073128476606,0.841374772400686,0.875097577659222,0.265263251954161,-0.100001767298384,-0.546810770525926,-0.302294556704907,0.158559634103817,-0.999971225498688,0.999034127097763,-0.450541358847728,0.646574036899065,-0.918323214321237,-0.650535079840951,-0.227074659769145,-0.558661310220827,0.11644217755725,0.53290202351491,0.993258718397455,-0.0966357060793858,-0.553545230743833,-0.56613651034449,0.994102519754739,-0.645971835525938,0.95954564060994,0.869281087754164,-0.489003644693647,0.889913170733458,-0.835248740155654,-0.593339431755698,0.963035834883713,-0.188608213105336,0.667693718349968,-0.458388924235416,0.0707061054744316,0.981941761873069,0.957187571520591,-0.689875445906542,0.442739014865,0.976240088741193,0.0451611789819576,-0.998546161306945,-0.999489927686985,0.905310195783903,-0.677925920474356,0.924592072341566,0.294321197174644,0.597882836373784,0.917238921731847,-0.732946585624026,-0.858349325731874,0.645774225504615,-0.130256529508749,0.167906192827062,-0.992460654561838,0.336106321665857,-0.888980190909707,-0.932267413516064,0.787359647296419],[0.0235239766229513,-0.556525728458436,-0.744564994040887,-0.488007950953377,0.786999376900974,0.885013460583829,0.00921631340109594,-0.991408468368997,0.346838383879556,0.980198670378928,0.900999059676365,-0.814706961029481,-0.0858552808330905,0.886110610805941,0.999917131740628,-0.995775462097519,-0.693736827823798,0.992743557013145,-0.924483657942151,-0.299864302117542,-0.531690591536283,0.437603101550396,0.99966051707384,-0.440112842151392,-0.29994292067851,0.929712044835021,-0.651481485364018,0.999172494076991,0.329696159137434,0.999783513563998,0.417347543487565,-0.179700927423547,0.980947595040802,0.85918432697079,-0.0795892908549789,0.730212330355243,-0.259134513850507,-0.52251624144563,-0.634898333705586,0.669416783263475,0.988254813236426,-0.420456176634394,-0.540452118478311,0.483946515200762,0.964176024988541,0.994987259484864,-0.837256221975593,0.953214561883411,0.987349402406698,-0.00758605132149437,-0.0439410160784885,0.89275555667139,-0.762851240287415,-0.3958313707107,-0.759476207590683,-0.973877353104962,0.8293958888627,-0.993197472452345,-0.846176951549565,-0.115918584909608,0.995319818103979,0.832819114526532,0.824311501590851,0.10844436461743,-0.763361243257248,-0.281553127467018,0.494318106559872,0.872281740882113,0.456129968928948,0.549872296145563,0.804952370469102,-0.269373311094157,0.982052413035685,-0.744436094286134,0.888751705561401,0.997497191298621,0.189183446129975,0.289468397111868,0.723928082847495,-0.896650525409074,-0.216691691429525,0.998979713464172,0.053903281339494,0.0319356298241626,0.424751044036046,0.735130224075298,-0.380958658863568,0.955706562127562,0.801583504052846,-0.398337495674457,-0.680286191703229,-0.513065721926184,-0.763528420999451,0.99148032583624,0.985802977480958,-0.12256365344868,-0.941824049669707,0.457945651983006,-0.36176991264624,0.616493946287601,0.0235239766229513,-0.556525728458436,-0.744564994040887,-0.488007950953377,0.786999376900974,0.885013460583829,0.00921631340109594,-0.991408468368997,0.346838383879556,0.980198670378928,0.900999059676365,-0.814706961029481,-0.0858552808330905,0.886110610805941,0.999917131740628,-0.995775462097519,-0.693736827823798,0.992743557013145,-0.924483657942151,-0.299864302117542,-0.531690591536283,0.437603101550396,0.99966051707384,-0.440112842151392,-0.29994292067851,0.929712044835021,-0.651481485364018,0.999172494076991,0.329696159137434,0.999783513563998,0.417347543487565,-0.179700927423547,0.980947595040802,0.85918432697079,-0.0795892908549789,0.730212330355243,-0.259134513850507,-0.52251624144563,-0.634898333705586,0.669416783263475,0.988254813236426,-0.420456176634394,-0.540452118478311,0.483946515200762,0.964176024988541,0.994987259484864,-0.837256221975593,0.953214561883411,0.987349402406698,-0.00758605132149437,-0.0439410160784885,0.89275555667139,-0.762851240287415,-0.3958313707107,-0.759476207590683,-0.973877353104962,0.8293958888627,-0.993197472452345,-0.846176951549565,-0.115918584909608,0.995319818103979,0.832819114526532,0.824311501590851,0.10844436461743,-0.763361243257248,-0.281553127467018,0.494318106559872,0.872281740882113,0.456129968928948,0.549872296145563,0.804952370469102,-0.269373311094157,0.982052413035685,-0.744436094286134,0.888751705561401,0.997497191298621,0.189183446129975,0.289468397111868,0.723928082847495,-0.896650525409074,-0.216691691429525,0.998979713464172,0.053903281339494,0.0319356298241626,0.424751044036046,0.735130224075298,-0.380958658863568,0.955706562127562,0.801583504052846,-0.398337495674457,-0.680286191703229,-0.513065721926184,-0.763528420999451,0.99148032583624,0.985802977480958,-0.12256365344868,-0.941824049669707,0.457945651983006,-0.36176991264624,0.616493946287601],[0.0449316306039691,10.8728044135496,10.3959417063743,6.97365779522806,1.73019920568913,2.07510592695326,5.98239788878709,9.25053193978965,0.676468600519001,2.61930006556213,3.85700995009392,10.1813867613673,11.8358263783157,3.92038317304105,3.02458744961768,9.17561394162476,10.5357785336673,2.769780959934,9.7469792207703,11.4183515673503,7.07065842021257,5.13496502302587,2.95023343898356,11.1296306289732,6.58180582802743,2.27966574858874,10.6448869043961,3.07770194392651,0.641677821055055,2.96025892999023,0.822241324000061,11.6549219945446,3.37340766470879,4.02582926116884,6.15216528531164,1.56347324699163,11.4993762178347,10.949960405007,10.6862518507987,4.5992644065991,2.70699682272971,11.1712202941999,10.9095192728564,0.964782466180623,2.48724680487067,3.19130907487124,7.89505025278777,3.58651572559029,2.69588992930949,6.01448842976242,11.9160518115386,3.89261407591403,10.3427931396291,6.77726115379483,7.64726810809225,8.56250314414501,4.13210896309465,9.22289382107556,10.0733914459124,11.7781129851937,3.18484906945378,4.12035240791738,4.14937499631196,0.207521592266858,7.65871401596814,11.4549025967717,0.987493185326457,3.97583716828376,0.904588733799756,4.88805825356394,4.21314480900764,11.479100712575,3.36238574143499,10.3963104486465,3.90943988319486,2.8648485140875,0.363504496403039,0.560871080495417,4.4540083380416,9.87595906946808,11.5828401977196,2.91371915582567,5.8970023971051,5.93899706751108,0.837830211035907,4.42272596620023,11.2535641053692,2.42943873815238,1.77605276741087,11.2175237210467,7.42886703740805,7.02894175238907,10.3407916361466,3.24948054738343,2.67779656872153,6.23466938361526,9.65466089453548,5.09151255246252,6.70696440897882,1.26868511550128,0.0449316306039691,10.8728044135496,10.3959417063743,6.97365779522806,1.73019920568913,2.07510592695326,5.98239788878709,9.25053193978965,0.676468600519001,2.61930006556213,3.85700995009392,10.1813867613673,11.8358263783157,3.92038317304105,3.02458744961768,9.17561394162476,10.5357785336673,2.769780959934,9.7469792207703,11.4183515673503,7.07065842021257,5.13496502302587,2.95023343898356,11.1296306289732,6.58180582802743,2.27966574858874,10.6448869043961,3.07770194392651,0.641677821055055,2.96025892999023,0.822241324000061,11.6549219945446,3.37340766470879,4.02582926116884,6.15216528531164,1.56347324699163,11.4993762178347,10.949960405007,10.6862518507987,4.5992644065991,2.70699682272971,11.1712202941999,10.9095192728564,0.964782466180623,2.48724680487067,3.19130907487124,7.89505025278777,3.58651572559029,2.69588992930949,6.01448842976242,11.9160518115386,3.89261407591403,10.3427931396291,6.77726115379483,7.64726810809225,8.56250314414501,4.13210896309465,9.22289382107556,10.0733914459124,11.7781129851937,3.18484906945378,4.12035240791738,4.14937499631196,0.207521592266858,7.65871401596814,11.4549025967717,0.987493185326457,3.97583716828376,0.904588733799756,4.88805825356394,4.21314480900764,11.479100712575,3.36238574143499,10.3963104486465,3.90943988319486,2.8648485140875,0.363504496403039,0.560871080495417,4.4540083380416,9.87595906946808,11.5828401977196,2.91371915582567,5.8970023971051,5.93899706751108,0.837830211035907,4.42272596620023,11.2535641053692,2.42943873815238,1.77605276741087,11.2175237210467,7.42886703740805,7.02894175238907,10.3407916361466,3.24948054738343,2.67779656872153,6.23466938361526,9.65466089453548,5.09151255246252,6.70696440897882,1.26868511550128],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Y<\/th>\n      <th>x<\/th>\n      <th>z<\/th>\n      <th>times<\/th>\n      <th>group<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>mesor, amp, and acro represent the parameters for the first level,
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-46feae0bb8f60f3044c6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-46feae0bb8f60f3044c6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[4,1,2,9,3,9,3,4,1,3,0,14,1,0,1,0,4,17,17,2,1,1,2,10,15,11,8,2,0,0,9,16,1,10,7,10,11,21,12,5,3,13,0,11,2,2,7,0,1,1,6,1,10,15,1,13,0,0,0,5,1,1,0,6,3,0,2,10,1,0,6,20,15,1,0,5,22,2,2,12,20,15,1,1,4,0,6,1,5,0,0,0,0,3,14,16,0,0,1,4,2,3,3,0,3,1,1,1,1,2,4,1,1,0,1,2,1,1,4,0,0,0,3,3,2,2,1,3,1,0,1,1,3,3,2,2,2,2,6,1,0,0,0,2,1,2,2,2,0,0,5,3,3,3,3,1,1,3,1,1,1,2,0,2,0,0,1,4,1,0,2,1,1,2,2,0,2,3,1,3,1,1,2,1,0,0,2,3,3,0,2,1,1,1,0,1,1,1,1,1],[0.996568918373586,0.889747078977904,-0.850998726591994,-0.68146005052759,0.999981964414419,0.678101792811941,0.364313403178115,-0.912449187260177,-0.686980220260548,-0.886896444132821,0.881460307743155,0.70131891944464,-0.9467821089419,-0.922768370408894,-0.982133396500452,-0.219364296902467,-0.943793066107647,0.52482072287863,0.0362181390308542,-0.964949116797397,-0.28097333287039,-0.972523604260646,-0.79739789273006,-0.519613347143972,-0.0831042665219821,-0.372300378548291,-0.699181191761422,-0.99997541471275,-0.997639197718178,-0.992552887149275,-0.71779472035791,-0.0223847866263957,0.998809952797362,0.974486957928833,-0.703786163327569,0.887996154858021,0.762051564915707,0.0465185629340492,0.909387444878828,-0.7347961809035,-0.989557038863567,-0.333866997245732,-0.021052628427346,-0.656882084031573,0.450599861415492,0.245087040911098,0.956831019237646,0.473479225123024,-0.85033857723076,0.86458251131586,0.995319078426349,0.663894855701977,0.934231914255444,0.757596822872505,0.721002586389237,0.608197927021266,-0.520165219343507,-0.104095031227479,-0.306530964234177,-0.709986284914372,-0.998215126638997,0.816450079347371,-0.0204165596949495,0.988722921697377,0.928735821188505,0.0340927953741575,-0.913886268621579,0.973091741080264,-0.792030318504478,-0.99130275059859,0.953946923556426,-0.178669522564,0.699409604782077,0.981778813355373,-0.815723062004392,0.975975761696122,0.181369934608148,0.873601885174248,-0.975000002323324,0.819911672988434,0.759414693341015,0.430836537405437,0.687760076408829,0.997678648389753,-0.841923044034401,-0.91788889642828,0.945226619782441,0.897899276818505,0.992664382161959,-0.95523843168096,-0.316193713093382,0.529796090949276,-0.901915700917115,-0.481482091480712,-0.023304226127997,0.022111825418588,-0.615913363012405,-0.767244751235501,-0.250134052866596,0.989363406153282,0.996568918373586,0.889747078977904,-0.850998726591994,-0.68146005052759,0.999981964414419,0.678101792811941,0.364313403178115,-0.912449187260177,-0.686980220260548,-0.886896444132821,0.881460307743155,0.70131891944464,-0.9467821089419,-0.922768370408894,-0.982133396500452,-0.219364296902467,-0.943793066107647,0.52482072287863,0.0362181390308542,-0.964949116797397,-0.28097333287039,-0.972523604260646,-0.79739789273006,-0.519613347143972,-0.0831042665219821,-0.372300378548291,-0.699181191761422,-0.99997541471275,-0.997639197718178,-0.992552887149275,-0.71779472035791,-0.0223847866263957,0.998809952797362,0.974486957928833,-0.703786163327569,0.887996154858021,0.762051564915707,0.0465185629340492,0.909387444878828,-0.7347961809035,-0.989557038863567,-0.333866997245732,-0.021052628427346,-0.656882084031573,0.450599861415492,0.245087040911098,0.956831019237646,0.473479225123024,-0.85033857723076,0.86458251131586,0.995319078426349,0.663894855701977,0.934231914255444,0.757596822872505,0.721002586389237,0.608197927021266,-0.520165219343507,-0.104095031227479,-0.306530964234177,-0.709986284914372,-0.998215126638997,0.816450079347371,-0.0204165596949495,0.988722921697377,0.928735821188505,0.0340927953741575,-0.913886268621579,0.973091741080264,-0.792030318504478,-0.99130275059859,0.953946923556426,-0.178669522564,0.699409604782077,0.981778813355373,-0.815723062004392,0.975975761696122,0.181369934608148,0.873601885174248,-0.975000002323324,0.819911672988434,0.759414693341015,0.430836537405437,0.687760076408829,0.997678648389753,-0.841923044034401,-0.91788889642828,0.945226619782441,0.897899276818505,0.992664382161959,-0.95523843168096,-0.316193713093382,0.529796090949276,-0.901915700917115,-0.481482091480712,-0.023304226127997,0.022111825418588,-0.615913363012405,-0.767244751235501,-0.250134052866596,0.989363406153282],[0.0827670884573133,0.456453870013486,-0.525167751617333,-0.73185531325183,-0.00600590092161988,-0.734967998340901,0.931276405942285,-0.409190030020578,0.726676115591237,-0.46196828612423,0.472258113613035,-0.712847650784516,0.321875190388337,0.385355075966198,0.188186055483623,0.975643021419457,-0.330536909235756,-0.851212787049837,-0.999343907974198,-0.26243704386371,0.959715575686727,-0.232804293680083,-0.603453892745469,-0.854401527076022,-0.996540857609884,-0.928112292846507,-0.714944516089939,0.00701213020869084,-0.0686733658431684,0.121814474557165,-0.69625479490364,-0.999749429271,-0.0487716945874518,0.224444132974352,-0.710411877933259,-0.459850876869196,-0.647516341422765,-0.998917425667683,-0.415950087266196,-0.678287971682847,-0.144141828889354,-0.942620192946299,0.999778368857968,-0.753993320712019,0.892726030141577,0.96950107910071,-0.290644801475355,0.880804986008198,-0.526235977554906,0.502490876660224,0.0966433242418926,0.747825929326104,-0.356666132940328,-0.65272280025558,0.692932370740486,-0.793785412795571,0.854065655898492,0.994567355423327,0.951860687267662,-0.704215503403247,0.0597206911303827,0.577416026737803,0.999791560321561,-0.149756415923332,0.370742194039624,0.99941867168048,-0.405970304363419,-0.230418018916446,0.610481756131742,0.131601127106381,-0.299975444057061,-0.983909143014106,-0.714721067786993,0.19002726553449,0.578442638568579,0.217879123785814,-0.983414941324483,0.486641291116978,0.222204850238508,-0.572490042269127,-0.650606888633815,-0.902429985116016,0.725938067122893,-0.0680978307084485,-0.539597616677324,0.396837465234414,0.326414823889267,0.440200963979868,0.120902540862532,0.29583701364045,0.948694648345937,0.848125050929913,0.431912107307944,-0.87645592905939,-0.999728419644343,-0.999755503699108,0.78781389252967,0.641354419725611,0.968211214351771,0.145464946171836,0.0827670884573133,0.456453870013486,-0.525167751617333,-0.73185531325183,-0.00600590092161988,-0.734967998340901,0.931276405942285,-0.409190030020578,0.726676115591237,-0.46196828612423,0.472258113613035,-0.712847650784516,0.321875190388337,0.385355075966198,0.188186055483623,0.975643021419457,-0.330536909235756,-0.851212787049837,-0.999343907974198,-0.26243704386371,0.959715575686727,-0.232804293680083,-0.603453892745469,-0.854401527076022,-0.996540857609884,-0.928112292846507,-0.714944516089939,0.00701213020869084,-0.0686733658431684,0.121814474557165,-0.69625479490364,-0.999749429271,-0.0487716945874518,0.224444132974352,-0.710411877933259,-0.459850876869196,-0.647516341422765,-0.998917425667683,-0.415950087266196,-0.678287971682847,-0.144141828889354,-0.942620192946299,0.999778368857968,-0.753993320712019,0.892726030141577,0.96950107910071,-0.290644801475355,0.880804986008198,-0.526235977554906,0.502490876660224,0.0966433242418926,0.747825929326104,-0.356666132940328,-0.65272280025558,0.692932370740486,-0.793785412795571,0.854065655898492,0.994567355423327,0.951860687267662,-0.704215503403247,0.0597206911303827,0.577416026737803,0.999791560321561,-0.149756415923332,0.370742194039624,0.99941867168048,-0.405970304363419,-0.230418018916446,0.610481756131742,0.131601127106381,-0.299975444057061,-0.983909143014106,-0.714721067786993,0.19002726553449,0.578442638568579,0.217879123785814,-0.983414941324483,0.486641291116978,0.222204850238508,-0.572490042269127,-0.650606888633815,-0.902429985116016,0.725938067122893,-0.0680978307084485,-0.539597616677324,0.396837465234414,0.326414823889267,0.440200963979868,0.120902540862532,0.29583701364045,0.948694648345937,0.848125050929913,0.431912107307944,-0.87645592905939,-0.999728419644343,-0.999755503699108,0.78781389252967,0.641354419725611,0.968211214351771,0.145464946171836],[0.158254531212151,0.905283928848803,7.05598456319422,7.56807192787528,11.9885295052081,10.4231829307973,2.2878221841529,6.80513213016093,4.44638466462493,6.91713968385011,0.939365856349468,10.4844305701554,5.37412111926824,5.24447381403297,5.63843522127718,3.4223899282515,6.64337889757007,10.0552058396861,9.06918668188155,6.50715723261237,3.54394349455833,6.44874095544219,7.23725556861609,7.95645602792501,8.84109927993268,8.27141474280506,7.52128840796649,5.9866077080369,6.13125977665186,5.76677224505693,7.47090975567698,8.95724463555962,11.906815957278,0.43233977816999,7.5089478911832,11.0874171573669,10.6548464884982,9.08887598477304,11.180694591254,7.42366678453982,6.27625291887671,8.34987815469503,3.04021052923054,7.63124953117222,2.10726076830178,2.52710074558854,11.4367812238634,2.05798737891018,7.05838286597282,1.00549774523824,0.184863687492907,1.61341341678053,11.3034802526236,10.6417598230764,1.46208940073848,10.2486438369378,4.04477782454342,3.19916766509414,3.59500980377197,7.49220668524504,5.8858739733696,1.1756334733218,3.03899546619505,11.7129063075408,0.725379919633269,2.93487493693829,6.79839819017798,11.5559438830242,4.74585515912622,5.74792916234583,11.4181290585548,8.65692423842847,10.4793218560517,0.365145846270025,4.8219639826566,0.41948314011097,9.34831882640719,0.970668713562191,5.57204774860293,10.8358650952578,10.6470875227824,9.85068868752569,1.55156466644257,11.8698419937864,7.08854170236737,5.22064595203847,0.635043790563941,0.870556804351509,0.231473120860755,5.42640882823616,3.61442974023521,1.93361071497202,5.14703437965363,8.04059184808284,8.95548817701638,9.04223391786218,4.2672772295773,4.67023701779544,3.48284816276282,0.278806803748012,0.158254531212151,0.905283928848803,7.05598456319422,7.56807192787528,11.9885295052081,10.4231829307973,2.2878221841529,6.80513213016093,4.44638466462493,6.91713968385011,0.939365856349468,10.4844305701554,5.37412111926824,5.24447381403297,5.63843522127718,3.4223899282515,6.64337889757007,10.0552058396861,9.06918668188155,6.50715723261237,3.54394349455833,6.44874095544219,7.23725556861609,7.95645602792501,8.84109927993268,8.27141474280506,7.52128840796649,5.9866077080369,6.13125977665186,5.76677224505693,7.47090975567698,8.95724463555962,11.906815957278,0.43233977816999,7.5089478911832,11.0874171573669,10.6548464884982,9.08887598477304,11.180694591254,7.42366678453982,6.27625291887671,8.34987815469503,3.04021052923054,7.63124953117222,2.10726076830178,2.52710074558854,11.4367812238634,2.05798737891018,7.05838286597282,1.00549774523824,0.184863687492907,1.61341341678053,11.3034802526236,10.6417598230764,1.46208940073848,10.2486438369378,4.04477782454342,3.19916766509414,3.59500980377197,7.49220668524504,5.8858739733696,1.1756334733218,3.03899546619505,11.7129063075408,0.725379919633269,2.93487493693829,6.79839819017798,11.5559438830242,4.74585515912622,5.74792916234583,11.4181290585548,8.65692423842847,10.4793218560517,0.365145846270025,4.8219639826566,0.41948314011097,9.34831882640719,0.970668713562191,5.57204774860293,10.8358650952578,10.6470875227824,9.85068868752569,1.55156466644257,11.8698419937864,7.08854170236737,5.22064595203847,0.635043790563941,0.870556804351509,0.231473120860755,5.42640882823616,3.61442974023521,1.93361071497202,5.14703437965363,8.04059184808284,8.95548817701638,9.04223391786218,4.2672772295773,4.67023701779544,3.48284816276282,0.278806803748012],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Y<\/th>\n      <th>x<\/th>\n      <th>z<\/th>\n      <th>times<\/th>\n      <th>group<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>mesor, amp, and acro represent the parameters for the first level,
 and the beta.prefix indicates a second level that can be used for data
 visualisation (if comparing two groups, for example) if desired.</p>
 <p>The simulate_cosinor function can simulate multi-component data. To
@@ -787,37 +788,37 @@ function:</p>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                    estimate standard.error   lower.CI   upper.CI p.value</span></span>
-<span><span class="co">#&gt; (Intercept)       6.9997231      0.0022503  6.9953126  7.0041335   0e+00</span></span>
-<span><span class="co">#&gt; group1           -2.6035975      0.0081087 -2.6194902 -2.5877047   0e+00</span></span>
-<span><span class="co">#&gt; group0:main_rrr1  0.0557953      0.0069145  0.0422432  0.0693474   0e+00</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  1.0673895      0.0193966  1.0293729  1.1054060   0e+00</span></span>
-<span><span class="co">#&gt; group0:main_sss1 -0.0797728      0.0025684 -0.0848067 -0.0747390   0e+00</span></span>
-<span><span class="co">#&gt; group1:main_sss1 -1.6807603      0.0087742 -1.6979575 -1.6635631   0e+00</span></span>
-<span><span class="co">#&gt; group0:main_rrr2  0.0276777      0.0048205  0.0182297  0.0371257   0e+00</span></span>
-<span><span class="co">#&gt; group1:main_rrr2  0.0787634      0.0151976  0.0489766  0.1085502   2e-07</span></span>
-<span><span class="co">#&gt; group0:main_sss2 -0.4015460      0.0031357 -0.4076918 -0.3954002   0e+00</span></span>
-<span><span class="co">#&gt; group1:main_sss2  0.9939492      0.0092934  0.9757343  1.0121640   0e+00</span></span>
-<span><span class="co">#&gt; group0:main_rrr3  0.5024508      0.0040303  0.4945515  0.5103501   0e+00</span></span>
-<span><span class="co">#&gt; group1:main_rrr3  0.2163284      0.0088852  0.1989138  0.2337430   0e+00</span></span>
-<span><span class="co">#&gt; group0:main_sss3 -0.0512928      0.0087852 -0.0685115 -0.0340741   0e+00</span></span>
-<span><span class="co">#&gt; group1:main_sss3  0.3495845      0.0229245  0.3046533  0.3945157   0e+00</span></span>
+<span><span class="co">#&gt; (Intercept)       7.0009065      0.0021767  6.9966402  7.0051729 0.0e+00</span></span>
+<span><span class="co">#&gt; group1           -2.6050463      0.0078598 -2.6204513 -2.5896414 0.0e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr1  0.0602815      0.0068084  0.0469373  0.0736257 0.0e+00</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  1.0749097      0.0184214  1.0388045  1.1110149 0.0e+00</span></span>
+<span><span class="co">#&gt; group0:main_sss1 -0.0846088      0.0025483 -0.0896033 -0.0796143 0.0e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss1 -1.6796164      0.0087031 -1.6966743 -1.6625586 0.0e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr2  0.0239794      0.0049230  0.0143306  0.0336283 1.1e-06</span></span>
+<span><span class="co">#&gt; group1:main_rrr2  0.0775028      0.0148295  0.0484375  0.1065681 2.0e-07</span></span>
+<span><span class="co">#&gt; group0:main_sss2 -0.3976505      0.0030047 -0.4035397 -0.3917613 0.0e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss2  0.9915021      0.0092098  0.9734513  1.0095530 0.0e+00</span></span>
+<span><span class="co">#&gt; group0:main_rrr3  0.4954073      0.0038627  0.4878365  0.5029781 0.0e+00</span></span>
+<span><span class="co">#&gt; group1:main_rrr3  0.2254953      0.0083698  0.2090907  0.2418998 0.0e+00</span></span>
+<span><span class="co">#&gt; group0:main_sss3 -0.0585042      0.0088026 -0.0757570 -0.0412514 0.0e+00</span></span>
+<span><span class="co">#&gt; group1:main_sss3  0.3447640      0.0223967  0.3008672  0.3886607 0.0e+00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                  estimate standard.error   lower.CI   upper.CI p.value</span></span>
-<span><span class="co">#&gt; (Intercept)     6.9997231      0.0022503  6.9953126  7.0041335   0e+00</span></span>
-<span><span class="co">#&gt; [group=1]      -2.6035975      0.0081087 -2.6194902 -2.5877047   0e+00</span></span>
-<span><span class="co">#&gt; [group=0]:amp1  0.0973490      0.0051767  0.0872029  0.1074951   0e+00</span></span>
-<span><span class="co">#&gt; [group=1]:amp1  1.9910488      0.0146653  1.9623054  2.0197922   0e+00</span></span>
-<span><span class="co">#&gt; [group=0]:amp2  0.4024988      0.0024379  0.3977206  0.4072770   0e+00</span></span>
-<span><span class="co">#&gt; [group=1]:amp2  0.9970650      0.0094356  0.9785716  1.0155584   0e+00</span></span>
-<span><span class="co">#&gt; [group=0]:amp3  0.5050621      0.0065688  0.4921875  0.5179368   0e+00</span></span>
-<span><span class="co">#&gt; [group=1]:amp3  0.4111050      0.0220536  0.3678807  0.4543292   0e+00</span></span>
-<span><span class="co">#&gt; [group=0]:acr1  0.9604548      0.0539745  0.8546668  1.0662428   0e+00</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  1.0049931      0.0085905  0.9881560  1.0218301   0e+00</span></span>
-<span><span class="co">#&gt; [group=0]:acr2  1.5019773      0.0082503  1.4858069  1.5181477   0e+00</span></span>
-<span><span class="co">#&gt; [group=1]:acr2 -1.4917187      0.0168635 -1.5247706 -1.4586668   0e+00</span></span>
-<span><span class="co">#&gt; [group=0]:acr3  0.1017328      0.0186899  0.0651012  0.1383644   1e-07</span></span>
-<span><span class="co">#&gt; [group=1]:acr3 -1.0166565      0.0319500 -1.0792773 -0.9540358   0e+00</span></span>
+<span><span class="co">#&gt; (Intercept)     7.0009065      0.0021767  6.9966402  7.0051729       0</span></span>
+<span><span class="co">#&gt; [group=1]      -2.6050463      0.0078598 -2.6204513 -2.5896414       0</span></span>
+<span><span class="co">#&gt; [group=0]:amp1  0.1038870      0.0050820  0.0939264  0.1138476       0</span></span>
+<span><span class="co">#&gt; [group=1]:amp1  1.9941270      0.0141153  1.9664615  2.0217924       0</span></span>
+<span><span class="co">#&gt; [group=0]:amp2  0.3983729      0.0025273  0.3934194  0.4033264       0</span></span>
+<span><span class="co">#&gt; [group=1]:amp2  0.9945266      0.0094010  0.9761010  1.0129522       0</span></span>
+<span><span class="co">#&gt; [group=0]:amp3  0.4988498      0.0067251  0.4856688  0.5120308       0</span></span>
+<span><span class="co">#&gt; [group=1]:amp3  0.4119591      0.0210281  0.3707448  0.4531734       0</span></span>
+<span><span class="co">#&gt; [group=0]:acr1  0.9517482      0.0500367  0.8536780  1.0498185       0</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  1.0015020      0.0082201  0.9853909  1.0176132       0</span></span>
+<span><span class="co">#&gt; [group=0]:acr2  1.5105664      0.0080346  1.4948188  1.5263141       0</span></span>
+<span><span class="co">#&gt; [group=1]:acr2 -1.4927879      0.0164977 -1.5251228 -1.4604530       0</span></span>
+<span><span class="co">#&gt; [group=0]:acr3  0.1175487      0.0184656  0.0813568  0.1537405       0</span></span>
+<span><span class="co">#&gt; [group=1]:acr3 -0.9915744      0.0327778 -1.0558176 -0.9273312       0</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>, x_str <span class="op">=</span> <span class="st">"group"</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GLMMcosinor_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>##Feature table</p>
@@ -955,128 +956,128 @@ function:</p>
 <span><span class="co"># flextable::autofit(dat)</span></span>
 <span><span class="va">dat</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-897ff494{}.cl-8972e02e{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8972e042{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 255, 0, 1.00);background-color:transparent;}.cl-8972e04c{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-89785360{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-897874bc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897874c6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-897874d0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-897ff494">
+<style>.cl-8a1bcb38{}.cl-8a102cc4{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8a102cd8{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 255, 0, 1.00);background-color:transparent;}.cl-8a102ce2{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-8a15f302{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8a161198{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1611ac{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1611ad{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-8a1bcb38">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">name</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">language</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">multicomponent</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">disp</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">zi</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">rhythmdiff</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">diff_est</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">family</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">estimates</span></p></th>
-<th class="cl-897874bc"><p class="cl-89785360"><span class="cl-8972e02e">ref</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">name</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">language</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">multicomponent</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">disp</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">zi</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">rhythmdiff</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">diff_est</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">family</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">estimates</span></p></th>
+<th class="cl-8a161198"><p class="cl-8a15f302"><span class="cl-8a102cc4">ref</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">GLMMCosinor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">&gt;</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">15</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Any</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">family</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">listed</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">in</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">glmmTMB:</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gamma,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Binomial,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Poisson,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">…</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Parsons,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2023</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">GLMMCosinor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">&gt;</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">15</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Any</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">family</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">listed</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">in</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">glmmTMB:</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gamma,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Binomial,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Poisson,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">…</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Parsons,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2023</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">CosinorPy</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Python</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">3</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Poisson,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">negative-binomial</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Moskon,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2020</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">CosinorPy</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Python</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">3</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Poisson,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">negative-binomial</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Moskon,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2020</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">RhythmCount</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Python</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">6</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Poisson,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">generalised</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Poisson,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">zero-inflated</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Poisson,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">negative</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">binomial,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">zero-inflated</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">negative-binomial</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Zenith</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Velikajne,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2022</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">RhythmCount</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Python</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">6</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Poisson,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">generalised</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Poisson,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">zero-inflated</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Poisson,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">negative</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">binomial,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">zero-inflated</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">negative-binomial</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Zenith</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Velikajne,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2022</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">FMM</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">1</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">FMM</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">phase</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">angle</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">parameters:</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">alpha,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">beta,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">gamma</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Fernández,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2022</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">FMM</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">1</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">FMM</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">phase</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">angle</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">parameters:</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">alpha,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">beta,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">gamma</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Fernández,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2022</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">CircaCompare</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">1</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Parsons,2020</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">CircaCompare</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">1</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Parsons,2020</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Cosinor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">?</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Sachs,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2014</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Cosinor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">?</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Sachs,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2014</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Cosinor2</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">?</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Mutak,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2018</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Cosinor2</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">?</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Mutak,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2018</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">DiscoRhythm</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">?</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,Acrophase</span></p></td>
-<td class="cl-897874c6"><p class="cl-89785360"><span class="cl-8972e02e">Carlucci,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2019</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">DiscoRhythm</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">?</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,Acrophase</span></p></td>
+<td class="cl-8a1611ac"><p class="cl-8a15f302"><span class="cl-8a102cc4">Carlucci,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2019</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e02e">LimoRhyde</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e02e">R</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e04c">✗</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e042">✓</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e02e">n</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">=</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">?</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Gaussian</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e02e">Amplitude,Acrophase,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Period,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">Mesor</span></p></td>
-<td class="cl-897874d0"><p class="cl-89785360"><span class="cl-8972e02e">Singer,</span><span class="cl-8972e02e"> </span><span class="cl-8972e02e">2019</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cc4">LimoRhyde</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cc4">R</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102ce2">✗</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cd8">✓</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cc4">n</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">=</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">?</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Gaussian</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cc4">Amplitude,Acrophase,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Period,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">Mesor</span></p></td>
+<td class="cl-8a1611ad"><p class="cl-8a15f302"><span class="cl-8a102cc4">Singer,</span><span class="cl-8a102cc4"> </span><span class="cl-8a102cc4">2019</span></p></td>
 </tr>
 </tbody>
 </table>
