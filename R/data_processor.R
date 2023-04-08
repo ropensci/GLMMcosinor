@@ -24,6 +24,17 @@
 #'   updated_df_and_formula,
 #'   update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))
 #' )
+
+
+# Update formula if there is a randef argument present
+#browser()
+#if (!missing(randef)) {
+#fit_model_and_process(
+#    updated_df_and_formula,
+#    update.formula(updated_df_and_formula$newformula, . ~ . + randef)
+#  )
+#}
+
 fit_model_and_process <- function(obj, formula, ...) {
   if (!missing(formula)) {
     obj$newformula <- formula
@@ -70,6 +81,10 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {RE4.12} *Where appropriate, functions used to transform input data, and associated inverse transform functions.*
 #' @srrstatsTODO {RE4.13} *Predictor variables, and associated "metadata" where applicable.*
 #' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
+#' @srrstats {G2.3} *NOT DONE For univariate character input:*
+#' @srrstats {G2.3a} *NOT DONE Use `match.arg()` or equivalent where applicable to only permit expected values.*
+#' @srrstats {G2.3b} *NOT DONE Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
+
 #'
 #' @return the model fit from glmmTMB (as well as some other inputs )
 #' @noRd
@@ -121,7 +136,6 @@ data_processor <- function(newdata,
   mf <- fit
 
   # coefs_disp <- glmmTMB::fixef(mf)$disp
-
   main_coefs <- glmmTMB::fixef(mf)$cond
   conditional_model <- get_new_coefs(main_coefs, vec_rrr, vec_sss, n_components)
 

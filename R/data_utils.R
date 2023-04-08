@@ -23,6 +23,8 @@ update_formula_and_data <- function(data, formula,
                                     ziformula = ~0) {
   # Extract only the amp.acro function from the call
   # check for missing data
+
+  #browser()
   if (!quietly) {
     if (any(is.na(data))) {
       message("\n Missing data in the following dataframe columns: \n")

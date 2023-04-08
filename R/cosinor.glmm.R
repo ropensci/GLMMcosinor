@@ -13,6 +13,10 @@
 #' @param quietly controls whether messages from amp.acro are displayed. TRUE by default
 #' @param dispformula Formula specifying a dispersion model (optional). Use the same format as the main formula
 #' @param ziformula Formula specifying a zero-inflation model (optional). Use the same format as the main formula
+#' @param randef Formula specification for random effects as per mixed models in lme4 model specification
+#' For example, randef <- .~. (1|X) will add (1|X) to the main formula. For mixed effects involving parts of the amp.acro
+#' specification, use the terms from the raw formula. For example, randef <- .~. (main_rrr1 + main_sss1 |X)
+#'
 #' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
 #'
 #' @details This defines special functions that are used in the formula to
@@ -51,6 +55,7 @@ cosinor.glmm <- function(formula,
                          quietly = TRUE,
                          dispformula = ~1,
                          ziformula = ~0,
+                         randef,
                          ...) {
   updated_df_and_formula <- update_formula_and_data(
     data = data,
@@ -60,6 +65,22 @@ cosinor.glmm <- function(formula,
     dispformula = dispformula,
     ziformula = ziformula
   )
+
+
+  # allow user to specify random effects
+  if(!missing(randef)) {
+
+    #ensure that randef is of class 'formula'
+    assertthat::assert_that(inherits(randef, "formula"),
+                          msg = "randef argument must be a formula")
+
+    #This can be enabled to restrict formula spec to a particular type
+    #assertthat::assert_that(grepl("^\\.\\s*~\\s*\\.", as.character(c(randef))),
+    #                        msg = "randef argument must begin with .~.")
+
+    # paste randef argument into the formula
+    updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula,randef)
+  }
 
   # Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1 + amp.acro1|patient_id) #passed formula with mixed model for individuals
   # Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1 + rrr1 + sss1|patient_id) #resulting formula used for model
@@ -73,6 +94,8 @@ cosinor.glmm <- function(formula,
   )
   updated_df_and_formula$Call <- NULL
 
+
+
   do.call(
     data_processor,
     c(
@@ -80,6 +103,7 @@ cosinor.glmm <- function(formula,
       cosinor.glmm.calls = list(cosinor.glmm.calls),
       ...
     )
+
   )
 }
 

@@ -362,7 +362,7 @@ object = cosinor.glmm(Y ~ group + amp.acro(times, n_components = 3, period = c(1
 ggplot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ggplot.cosinor.glmm.polar(object)
 
-testdata = simulate_cosinor(200,
+testdata = simulate_cosinor(20000,
                             mesor = 7,
                             amp = c(0.1,0.4,0.5),
                             acro = c(1,1.5, 0.1),
@@ -370,11 +370,11 @@ testdata = simulate_cosinor(200,
                             beta.amp = c(2,1, 0.4),
                             beta.acro = c(1,-1.5, -1),
                             family = "gamma",
-                            period = c(12,6,8),
+                            period = c(12,8,9),
                             n_components = 3)
 object = cosinor.glmm(Y ~ group + amp.acro(times,
                                            n_components = 3,
-                                           period = c(12,6, 8), group = 'group'
+                                           period = c(12,8,9), group = 'group'
                                            ),data = testdata, family = Gamma(link = "log"))
 plot.cosinor.glmm(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 polar_plot.cosinor.glmm(object, view = "full")
@@ -437,3 +437,14 @@ test_cosinor(object, x_str ="group", param = "amp", comparison_A = 0, comparison
 #exponential decay term to parameters, mixed models (feature table)
 #Rework mixed model specification (check out: https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
 #SRR standards
+
+
+
+#Meeting 30/03/2023
+#Add https://tbiomed.biomedcentral.com/articles/10.1186/1742-4682-11-16 citation in readme and vignette
+#
+#> obj1 <- cosinor.glmm(Y ~ X + amp.acro(time,
+#                                        +                               n_components = 3,
+#                                        +                               group = "X",
+#                                        +                               period = c(12, 9, 10)
+#                                        + ), data = vitamind, randef =  .~. + (1|X))
