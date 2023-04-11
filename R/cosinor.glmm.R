@@ -112,6 +112,7 @@ cosinor.glmm <- function(formula,
 #' Given an outcome and time variable, fit the cosinor model with optional covariate effects.
 #'
 #' @param x cosinor.glmm object
+#' @param digits Controls the number of digits displayed in the summary output
 #' @param ... passed to summary
 #'
 #' @srrstats {RE4.17} *Model objects returned by Regression Software should implement or appropriately extend a default `print` method which provides an on-screen summary of model (input) parameters and (output) coefficients.*
@@ -121,20 +122,20 @@ cosinor.glmm <- function(formula,
 #'
 #' @export
 #'
-print.cosinor.glmm <- function(x, ...) {
+print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   # cat("Call: \n")
   # print(x$Call)
   cat("\n Conditional Model \n")
   cat("\n Raw formula: \n")
   cat(deparse(x$formula), "\n")
   cat("\n Raw Coefficients: \n")
-  print(x$raw_coefficients)
+  print(round(x$raw_coefficients, digits = digits))
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
   if (x$group_check == TRUE) {
     names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
   }
-  print(t.x)
+  print(round(t.x, digits = digits))
 
   if (x$dispformula_check) {
     cat("\n***********************\n")
@@ -142,13 +143,13 @@ print.cosinor.glmm <- function(x, ...) {
     cat("\n Raw  Formula: \n")
     cat(deparse(x$disp_list$formula_disp), "\n")
     cat("\n Raw  Coefficients: \n")
-    print(x$disp_list$raw_coefficients_disp)
+    print(round(x$disp_list$raw_coefficients_disp, digits = digits))
     cat("\n Transformed  Coefficients: \n")
     td.x <- x$disp_list$coefficients_disp
     if (x$disp_list$group_check_disp == TRUE) {
       names(td.x) <- update_covnames(names(td.x), group_stats = x$disp_list$group_stats_disp)
     }
-    print(td.x)
+    print(round(td.x, digits = digits))
   }
 
   if (x$ziformula_check) {
@@ -157,13 +158,13 @@ print.cosinor.glmm <- function(x, ...) {
     cat("\n Raw  Formula: \n")
     cat(deparse(x$zi_list$formula_zi), "\n")
     cat("\n Raw  Coefficients: \n")
-    print(x$zi_list$raw_coefficients_zi)
+    print(round(x$zi_list$raw_coefficients_zi, digits = digits))
     cat("\n Transformed  Coefficients: \n")
     tzi.x <- x$zi_list$coefficients_zi
     if (x$zi_list$group_check_zi == TRUE) {
       names(tzi.x) <- update_covnames(names(tzi.x), group_stats = x$zi_list$group_stats_zi)
     }
-    print(tzi.x)
+    print(round(tzi.x, digits = digits))
   }
   invisible(x)
 }

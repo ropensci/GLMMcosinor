@@ -4,10 +4,12 @@
 \alias{print.cosinor.glmm}
 \title{Print cosinor model}
 \usage{
-\method{print}{cosinor.glmm}(x, ...)
+\method{print}{cosinor.glmm}(x, digits = getOption("digits"), ...)
 }
 \arguments{
 \item{x}{cosinor.glmm object}
+
+\item{digits}{Controls the number of digits displayed in the summary output}
 
 \item{...}{passed to summary}
 }
