@@ -38,7 +38,7 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'param' must be either 'amp' and 'acr'", fixed = TRUE
+    regex = "'arg' should be one of", fixed = TRUE
   )
 
   # Test 5
@@ -49,7 +49,7 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'param' must be either 'amp' and 'acr'", fixed = TRUE
+    regex = "'arg' should be one of ", fixed = TRUE
   )
 
   # Test 6
