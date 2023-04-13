@@ -79,7 +79,7 @@ cosinor.glmm <- function(formula,
     #                        msg = "randef argument must begin with .~.")
 
     # paste randef argument into the formula
-    updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula,randef)
+    updated_df_and_formula$newformula <- stats::update.formula(updated_df_and_formula$newformula,randef)
   }
 
   # Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1 + amp.acro1|patient_id) #passed formula with mixed model for individuals
@@ -87,7 +87,7 @@ cosinor.glmm <- function(formula,
 
   # updated_df_and_formula$newformula <- Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1|X) #Example
   # Alternatively:
-  # updated_df_and_formula$newformula <- update.formula(updated_df_and_formula$newformula, ~. + (1|X))
+  # updated_df_and_formula$newformula <- stats::update.formula(updated_df_and_formula$newformula, ~. + (1|X))
   cosinor.glmm.calls <- list(
     cosinor.glmm = match.call(),
     update_formula_and_data = updated_df_and_formula$Call
