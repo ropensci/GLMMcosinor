@@ -7,7 +7,7 @@
 test_cosinor(
   x,
   x_str,
-  param = "amp",
+  param = c("amp", "acr"),
   comparison_A = 0,
   comparison_B = 1,
   comparison_type = "levels",

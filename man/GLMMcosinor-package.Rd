@@ -6,7 +6,11 @@
 \alias{GLMMcosinor-package}
 \title{GLMMcosinor: Fit a cosinor model using a generalised mixed modelling framework}
 \description{
-Fit the cosinor model using the glmmTMB framework, allowing for a wide range of link functions and capacity of heirachical structures.
+To learn more about how to use GLMMcosinor, see the vignettes at the
+\href{https://rwparsons.github.io/GLMMcosinor/}{website} or using
+the following code:
+
+\code{browseVignettes(package = "GLMMcosinor")}
 }
 \seealso{
 Useful links:
