@@ -69,7 +69,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {RE4.2} *Model coefficients (via `coeff()` / `coefficients()`)*
 #' @srrstats {RE4.4} *The specification of the model, generally as a formula (via `formula()`)*
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#'
+#' @srrstats {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
+
 #'
 #' The following standards are covered in the glmmTMB package
 #' @srrstats {RE2.2} *Regression Software should provide different options for processing missing values in predictor and response data. For example, it should be possible to fit a model with no missing predictor data in order to generate values for all associated response points, even where submitted response values may be missing.*
@@ -79,12 +80,18 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {RE4.10} *Model Residuals, including sufficient documentation to enable interpretation of residuals, and to enable users to submit residuals to their own tests.*
 #' @srrstats {RE4.11} *Goodness-of-fit and other statistics associated such as effect sizes with model coefficients.*
 #' @srrstats {RE4.12} *Where appropriate, functions used to transform input data, and associated inverse transform functions.*
-#' @srrstatsTODO {RE4.13} *Predictor variables, and associated "metadata" where applicable.*
+#' @srrstats {RE4.13} *Predictor variables, and associated "metadata" where applicable.*
 #' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
-#' @srrstats {G2.3} *NOT DONE For univariate character input:*
-#' @srrstats {G2.3a} *NOT DONE Use `match.arg()` or equivalent where applicable to only permit expected values.*
-#' @srrstats {G2.3b} *NOT DONE Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
-
+#' @srrstats {G2.3} *For univariate character input:*
+#' @srrstats {G2.3a} *Use `match.arg()` or equivalent where applicable to only permit expected values.*
+#' @srrstats {G2.3b} *Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
+#' @srrstats {G2.14} *Where possible, all functions should provide options for users to specify how to handle missing (`NA`) data, with options minimally including:*
+#' @srrstats {G2.14a} *error on missing data*
+#' @srrstats {G2.14b} *ignore missing data with default warnings or messages issued*
+#' @srrstats {G2.14c} *replace missing data with appropriately imputed values*
+#' @srrstats {G2.15} *Functions should never assume non-missingness, and should never pass data with potential missing values to any base routines with default `na.rm = FALSE`-type parameters (such as [`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html), [`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html) or [`cor()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html)).*
+#' @srrstats {G2.16} *All functions should also provide options to handle undefined values (e.g., `NaN`, `Inf` and `-Inf`), including potentially ignoring or removing such values.*
+#'
 #'
 #' @return the model fit from glmmTMB (as well as some other inputs )
 #' @noRd

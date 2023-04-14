@@ -20,7 +20,7 @@
 #'
 #' @return Returns simulated data in a `data.frame`.
 #'
-#' @srrstatsTODO {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
+#' @srrstats {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
 #'
 #' @export
 #'
