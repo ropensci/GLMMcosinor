@@ -113,7 +113,7 @@ test_that("script works and warnings are displayed appropriately", {
   expect_true(inherits(obj, "test_cosinor"))
 })
 
-test_that("multi-component comparison works and print functions work", {
+test_that("multi-component comparison works, print functions work, and mixed model spec", {
   f_round <- function(x) {
     unname(round(x, digits = 4))
   }
@@ -156,4 +156,24 @@ test_that("multi-component comparison works and print functions work", {
   }
   testthat::expect_no_error(f)
   testthat::expect_snapshot_output(print(object, digits = 2))
+
+
+  #testing mixed model specification
+  f <- function() {
+   cosinor.glmm(Y ~ X + amp.acro(time,
+                                       n_components = 3,
+                                       group = "X",
+                                       period = c(12, 8, 9)
+  ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
+  }
+  testthat::expect_no_error(f)
+
+  object <- cosinor.glmm(Y ~ X + amp.acro(time,
+                                             n_components = 3,
+                                             group = "X",
+                                             period = c(12, 8, 9)
+  ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
+
+  testthat::expect_snapshot_output(print(object, digits = 2))
+
 })

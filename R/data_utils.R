@@ -319,6 +319,7 @@ amp.acro <- function(time_col,
       sep = " ~ "
     ))
     newformula <- stats::update.formula(newformula, ~.)
+
     # update the formula
     time_name <- paste(substitute(time_col, env))
     # create NULL vectors for group metrics. These will be updated if there is a group argument
@@ -345,16 +346,40 @@ amp.acro <- function(time_col,
       group_original = group_original
     ))
   }
-  amp.acro_iteration(
+  res <- amp.acro_iteration(
     time_col = time_col,
     n_components = n_components,
     group = group,
-    .formula = .formula,
+    .formula = lme4::nobars(.formula),
     period = period,
     .quietly = .quietly,
     .data = .data,
     .amp.acro_ind = .amp.acro_ind
   )
+
+  if (!is.null(lme4::findbars(.formula))) {
+  ranef_part <- sapply(lme4::findbars(.formula), deparse1)
+  ranef_parts_replaced <- lapply(ranef_part, function(x){
+    component_num <- regmatches(x, regexpr("(?<=amp\\.acro)[0-9]+", x, perl=TRUE))
+    if(length(component_num) == 0) return(x)
+
+    gsub("amp\\.acro[0-9]+", paste0("main_rrr", component_num, "+", "main_sss", component_num), x, perl=TRUE)
+  })
+
+  ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
+
+  main_part <- paste(paste(deparse(res$newformula),collapse = ""), ranef_part_updated, collapse = "", sep = "+")
+  res$newformula <- as.formula(main_part)
+  }
+
+  #As a test:
+  #obj <- cosinor.glmm(Y ~ X + amp.acro(time,
+  #n_components = 3,
+  #group = "X",
+  #period = c(12, 8, 9)
+  #) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
+
+  res
 }
 
 
