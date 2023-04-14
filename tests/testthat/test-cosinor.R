@@ -86,6 +86,9 @@ test_that("model returns accurate parameters", {
   testthat::expect_equal(f_round(object$coefficients[6]), 0.3197)
 })
 test_that("model output is class cosinor.glmm", {
+  withr::with_seed(
+    50,
+    {
   data(vitamind)
   object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
   expect_true(inherits(object, "cosinor.glmm"))
@@ -112,4 +115,24 @@ test_that("model output is class cosinor.glmm", {
   # test that coefficients and formula can be accessed from object
   testthat::expect_no_error(coefficients(object))
   testthat::expect_no_error(formula(object))
+
+  #testing mixed model specification
+  f <- function() {
+    cosinor.glmm(Y ~ X + amp.acro(time,
+                                  n_components = 3,
+                                  group = "X",
+                                  period = c(12, 8, 9)
+    ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
+  }
+  testthat::expect_no_error(f)
+
+  object <- cosinor.glmm(Y ~ X + amp.acro(time,
+                                          n_components = 3,
+                                          group = "X",
+                                          period = c(12, 8, 9)
+  ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
+
+  testthat::expect_snapshot_output(print(object, digits = 2))
+
+    })
 })

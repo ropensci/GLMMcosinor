@@ -21,14 +21,14 @@
 #' @srrstats {G2.1} *DONE Implement assertions on types of inputs (see the initial point on nomenclature above).*
 #' @srrstats {G2.1a} *DONE Provide explicit secondary documentation of expectations on data types of all vector inputs.*
 #' @srrstats {G2.2} *DONE Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
-<<<<<<< Updated upstream
+
 #'
-=======
+
 #
 #' @srrstats {G2.3} *For univariate character input:*
 #' @srrstats {G2.3a} *Use `match.arg()` or equivalent where applicable to only permit expected values.*
 #' @srrstats {G2.3b} *Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
->>>>>>> Stashed changes
+
 #'
 #' @srrstats {G2.4} *DONE Provide appropriate mechanisms to convert between different data types, potentially including:*
 #' @srrstats {G2.4a} *DONE explicit conversion to `integer` via `as.integer()`*
