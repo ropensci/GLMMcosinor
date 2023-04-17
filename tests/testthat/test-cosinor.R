@@ -29,12 +29,10 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_equal(f_round(object$coefficients[1]), 1.0030)
-  testthat::expect_equal(f_round(object$coefficients[2]), -0.4966)
-  testthat::expect_equal(f_round(object$coefficients[3]), 2.0181)
-  testthat::expect_equal(f_round(object$coefficients[4]), 0.9858)
-  testthat::expect_equal(f_round(object$coefficients[5]), 2.9907)
-  testthat::expect_equal(f_round(object$coefficients[6]), 0.2885)
+  testthat::expect_true(all.equal(
+    f_round(object$coefficients),
+    c(1.0030, -0.4966, 2.0181, 0.9858, 2.9907, 0.2885)
+  ))
 
   # test parameter estimation of poisson simulated data
   withr::with_seed(
@@ -45,12 +43,10 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_equal(f_round(object$coefficients[1]), 0.9980)
-  testthat::expect_equal(f_round(object$coefficients[2]), -0.4849)
-  testthat::expect_equal(f_round(object$coefficients[3]), 1.9973)
-  testthat::expect_equal(f_round(object$coefficients[4]), 0.9947)
-  testthat::expect_equal(f_round(object$coefficients[5]), 3.0045)
-  testthat::expect_equal(f_round(object$coefficients[6]), 0.2858)
+  testthat::expect_true(all.equal(
+    f_round(object$coefficients),
+    c(0.9980, -0.4849, 1.9973, 0.9947, 3.0045, 0.2858)
+  ))
 
   # test parameter estimation of Gamma(link="log") simulated data
   withr::with_seed(
@@ -61,12 +57,10 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_equal(f_round(object$coefficients[1]), 1.0028)
-  testthat::expect_equal(f_round(object$coefficients[2]), -0.4999)
-  testthat::expect_equal(f_round(object$coefficients[3]), 2.0004)
-  testthat::expect_equal(f_round(object$coefficients[4]), 1.0045)
-  testthat::expect_equal(f_round(object$coefficients[5]), 3.0063)
-  testthat::expect_equal(f_round(object$coefficients[6]), 0.2951)
+  testthat::expect_true(all.equal(
+    f_round(object$coefficients),
+    c(1.0028, -0.4999, 2.0004, 1.0045, 3.0063, 0.2951)
+  ))
 
 
   # test parameter estimation of binomial simulated data
@@ -78,12 +72,10 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_equal(f_round(object$coefficients[1]), 0.9822)
-  testthat::expect_equal(f_round(object$coefficients[2]), -0.4799)
-  testthat::expect_equal(f_round(object$coefficients[3]), 1.9368)
-  testthat::expect_equal(f_round(object$coefficients[4]), 1.0394)
-  testthat::expect_equal(f_round(object$coefficients[5]), 2.9841)
-  testthat::expect_equal(f_round(object$coefficients[6]), 0.3197)
+  testthat::expect_true(all.equal(
+    f_round(object$coefficients),
+    c(0.9822, -0.4799, 1.9368, 1.0394, 2.9841, 0.3197)
+  ))
 })
 test_that("model output is class cosinor.glmm", {
   withr::with_seed(
