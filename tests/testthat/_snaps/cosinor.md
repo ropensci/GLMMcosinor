@@ -50,7 +50,7 @@
      Conditional Model 
     
      Raw formula: 
-    Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +      group:main_sss2 + (main_rrr1 + main_sss1 | 1) + (0 + main_rrr2 +      main_sss2 | group) 
+    Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +      group:main_sss2 + (0 + main_rrr2 + main_sss2 | group) 
     
      Raw Coefficients: 
          (Intercept)           group1 group0:main_rrr1 group1:main_rrr1 

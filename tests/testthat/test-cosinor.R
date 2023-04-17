@@ -134,8 +134,7 @@ test_that("model output is class cosinor.glmm", {
           n_components = 2,
           group = "group",
           period = c(6, 12)
-        ) +
-          (amp.acro1 | 1) + (0 + amp.acro2 | group),
+        ) + (0 + amp.acro2 | group),
         data = sim_data,
         family = gaussian
       )
