@@ -89,50 +89,66 @@ test_that("model output is class cosinor.glmm", {
   withr::with_seed(
     50,
     {
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-  expect_true(inherits(object, "cosinor.glmm"))
+      data(vitamind)
+      object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+      expect_true(inherits(object, "cosinor.glmm"))
 
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"),
-    data = vitamind,
-    dispformula = ~ 0 + amp.acro(time, group = "X"),
-    ziformula = ~ 0 + amp.acro(time, group = "X")
+      object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"),
+        data = vitamind,
+        dispformula = ~ 0 + amp.acro(time, group = "X"),
+        ziformula = ~ 0 + amp.acro(time, group = "X")
+      )
+      testthat::expect_no_error(object)
+      testthat::expect_snapshot_output(print(object, digits = 2))
+      testthat::expect_true(inherits(object, "cosinor.glmm"))
+
+      #' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
+      #' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
+      #' @noRd
+
+      # check if the column names from vitamind are present in object_cols
+      vitamind_cols <- colnames(vitamind)
+      object_cols <- colnames(object$newdata)
+      testthat::expect_true(all(vitamind_cols %in% object_cols))
+
+      # test that coefficients and formula can be accessed from object
+      testthat::expect_no_error(coefficients(object))
+      testthat::expect_no_error(formula(object))
+
+      # testing mixed model specification
+      f <- function() {
+        cosinor.glmm(Y ~ X + amp.acro(time,
+          n_components = 1,
+          group = "X",
+          period = c(12)
+        ) + (1 | X) + (0 + amp.acro1 | X), data = vitamind)
+      }
+      testthat::expect_no_error(f)
+
+      sim_data <- simulate_cosinor(500,
+        mesor = 5,
+        amp = c(2, 1),
+        acro = c(1, 1.5),
+        beta.mesor = 2,
+        beta.amp = c(2, 1),
+        beta.acro = c(1, 1.5),
+        family = "gaussian",
+        period = c(12, 6),
+        n_components = 2,
+        beta.group = TRUE
+      )
+      object <- cosinor.glmm(
+        Y ~ group + amp.acro(times,
+          n_components = 2,
+          group = "group",
+          period = c(6, 12)
+        ) +
+          (amp.acro1 | 1) + (0 + amp.acro2 | group),
+        data = sim_data,
+        family = gaussian
+      )
+
+      testthat::expect_snapshot_output(print(object, digits = 2))
+    }
   )
-  testthat::expect_no_error(object)
-  testthat::expect_snapshot_output(print(object, digits = 2))
-  testthat::expect_true(inherits(object, "cosinor.glmm"))
-
-  #' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
-  #' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
-  #' @noRd
-
-  # check if the column names from vitamind are present in object_cols
-  vitamind_cols <- colnames(vitamind)
-  object_cols <- colnames(object$newdata)
-  testthat::expect_true(all(vitamind_cols %in% object_cols))
-
-  # test that coefficients and formula can be accessed from object
-  testthat::expect_no_error(coefficients(object))
-  testthat::expect_no_error(formula(object))
-
-  #testing mixed model specification
-  f <- function() {
-    cosinor.glmm(Y ~ X + amp.acro(time,
-                                  n_components = 3,
-                                  group = "X",
-                                  period = c(12, 8, 9)
-    ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
-  }
-  testthat::expect_no_error(f)
-
-  object <- cosinor.glmm(Y ~ X + amp.acro(time,
-                                          n_components = 3,
-                                          group = "X",
-                                          period = c(12, 8, 9)
-  ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
-
-  testthat::expect_snapshot_output(print(object, digits = 2))
-
-    })
 })

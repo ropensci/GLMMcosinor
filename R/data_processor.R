@@ -24,17 +24,17 @@
 #'   updated_df_and_formula,
 #'   update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))
 #' )
-
-
+#'
+#'
 # Update formula if there is a randef argument present
-#browser()
-#if (!missing(randef)) {
-#fit_model_and_process(
+# browser()
+# if (!missing(randef)) {
+# fit_model_and_process(
 #    updated_df_and_formula,
 #    update.formula(updated_df_and_formula$newformula, . ~ . + randef)
 #  )
-#}
-
+# }
+#'
 fit_model_and_process <- function(obj, formula, ...) {
   if (!missing(formula)) {
     obj$newformula <- formula

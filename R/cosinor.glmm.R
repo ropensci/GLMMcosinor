@@ -69,18 +69,19 @@ cosinor.glmm <- function(formula,
 
 
   # allow user to specify random effects
-  if(!missing(randef)) {
+  if (!missing(randef)) {
 
-    #ensure that randef is of class 'formula'
+    # ensure that randef is of class 'formula'
     assertthat::assert_that(inherits(randef, "formula"),
-                          msg = "randef argument must be a formula")
+      msg = "randef argument must be a formula"
+    )
 
-    #This can be enabled to restrict formula spec to a particular type
-    #assertthat::assert_that(grepl("^\\.\\s*~\\s*\\.", as.character(c(randef))),
+    # This can be enabled to restrict formula spec to a particular type
+    # assertthat::assert_that(grepl("^\\.\\s*~\\s*\\.", as.character(c(randef))),
     #                        msg = "randef argument must begin with .~.")
 
     # paste randef argument into the formula
-    updated_df_and_formula$newformula <- stats::update.formula(updated_df_and_formula$newformula,randef)
+    updated_df_and_formula$newformula <- stats::update.formula(updated_df_and_formula$newformula, randef)
   }
 
   # Y ~ X + rrr1 + sss1 + X:rrr1 + X:sss1 + (1 + amp.acro1|patient_id) #passed formula with mixed model for individuals
@@ -104,7 +105,6 @@ cosinor.glmm <- function(formula,
       cosinor.glmm.calls = list(cosinor.glmm.calls),
       ...
     )
-
   )
 }
 

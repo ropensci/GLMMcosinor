@@ -30,7 +30,7 @@ update_formula_and_data <- function(data, formula,
   # Extract only the amp.acro function from the call
   # check for missing data
 
-  #browser()
+  # browser()
   if (!quietly) {
     if (any(is.na(data))) {
       message("\n Missing data in the following dataframe columns: \n")
@@ -364,26 +364,28 @@ amp.acro <- function(time_col,
   )
 
   if (!is.null(lme4::findbars(.formula))) {
-  ranef_part <- sapply(lme4::findbars(.formula), deparse1)
-  ranef_parts_replaced <- lapply(ranef_part, function(x){
-    component_num <- regmatches(x, regexpr("(?<=amp\\.acro)[0-9]+", x, perl=TRUE))
-    if(length(component_num) == 0) return(x)
+    ranef_part <- sapply(lme4::findbars(.formula), deparse1)
+    ranef_parts_replaced <- lapply(ranef_part, function(x) {
+      component_num <- regmatches(x, regexpr("(?<=amp\\.acro)[0-9]+", x, perl = TRUE))
+      if (length(component_num) == 0) {
+        return(x)
+      }
 
-    gsub("amp\\.acro[0-9]+", paste0("main_rrr", component_num, "+", "main_sss", component_num), x, perl=TRUE)
-  })
+      gsub("amp\\.acro[0-9]+", paste0("main_rrr", component_num, "+", "main_sss", component_num), x, perl = TRUE)
+    })
 
-  ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
+    ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
 
-  main_part <- paste(paste(deparse(res$newformula),collapse = ""), ranef_part_updated, collapse = "", sep = "+")
-  res$newformula <- as.formula(main_part)
+    main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
+    res$newformula <- as.formula(main_part)
   }
 
-  #As a test:
-  #obj <- cosinor.glmm(Y ~ X + amp.acro(time,
-  #n_components = 3,
-  #group = "X",
-  #period = c(12, 8, 9)
-  #) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
+  # As a test:
+  # obj <- cosinor.glmm(Y ~ X + amp.acro(time,
+  # n_components = 3,
+  # group = "X",
+  # period = c(12, 8, 9)
+  # ) + (1|amp.acro1) + (X|amp.acro2), data = vitamind)
 
   res
 }

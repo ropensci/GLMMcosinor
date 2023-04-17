@@ -163,7 +163,4 @@ test_that("multi-component comparison works, print functions work", {
   }
   testthat::expect_no_error(f)
   testthat::expect_snapshot_output(print(object, digits = 2))
-
-
-
 })
