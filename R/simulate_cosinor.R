@@ -25,52 +25,66 @@
 #' @export
 #'
 simulate_cosinor <- function(n,
-                             mesor = 1,
-                             amp = 2,
-                             acro = 1.2,
-                             period = 12,
-                             n_components = 1,
-                             beta.group = TRUE,
-                             beta.mesor = 0.4,
-                             beta.amp = 0.5,
-                             beta.acro = 0.2,
+                             mesor,
+                             amp,
+                             acro,
+                             period = 24,
+                             n_components,
+                             beta.group = FALSE,
+                             beta.mesor,
+                             beta.amp,
+                             beta.acro,
                              family = c("gaussian", "poisson", "binomial", "gamma"),
                              ...) {
   # validating inputs
-  assertthat::assert_that(n == floor(n) & n > 0,
+  assertthat::assert_that(
+    assertthat::is.count(n),
     msg = "n must be an integer greater than 0"
   )
-  assertthat::assert_that(n_components == floor(n_components) & n_components > 0,
+  assertthat::assert_that(
+    assertthat::is.count(n_components),
     msg = "n_components must be an integer greater than 0"
   )
-  assertthat::assert_that(is.numeric(mesor) & length(mesor) == 1,
+  assertthat::assert_that(
+    is.numeric(mesor) & length(mesor) == 1,
     msg = "mesor must a single number"
   )
-  assertthat::assert_that(is.numeric(amp) & length(amp) == n_components,
+  assertthat::assert_that(
+    is.numeric(amp) & length(amp) == n_components,
     msg = "amp must be a vector containing numbers, with length equal to n_components"
   )
-  assertthat::assert_that(is.numeric(acro) & length(acro) == n_components,
+  assertthat::assert_that(
+    is.numeric(acro) & length(acro) == n_components,
     msg = "acro must be a vector containing numbers, with length equal to n_components"
   )
-  assertthat::assert_that(is.numeric(period) & length(period) == n_components,
-                          msg = "period must be a vector containing numbers, with length equal to n_components"
+
+  assertthat::assert_that(
+    is.numeric(period) & length(period) == n_components,
+    msg = "period must be a vector containing numbers, with length equal to n_components"
   )
 
-
-
-  assertthat::assert_that(is.numeric(beta.mesor) & length(beta.mesor) == 1,
-    msg = "beta.mesor must be a single number"
-  )
-  assertthat::assert_that(is.numeric(beta.amp) & length(beta.amp) == n_components,
-    msg = "beta.amp must be a vector containing numbers, with length equal to n_components"
-  )
-  assertthat::assert_that(is.numeric(beta.acro) & length(beta.acro) == n_components,
-    msg = "beta.acro must be a vector containing numbers, with length equal to n_components"
-  )
-
-  assertthat::assert_that(is.logical(beta.group),
+  assertthat::assert_that(
+    assertthat::is.flag(beta.group),
     msg = "beta.group argument must be logical"
   )
+
+  # check betas only if beta.group = TRUE
+  if (beta.group) {
+    assertthat::assert_that(
+      is.numeric(beta.mesor) & length(beta.mesor) == 1,
+      msg = "beta.mesor must be a single number"
+    )
+
+    assertthat::assert_that(
+      is.numeric(beta.amp) & length(beta.amp) == n_components,
+      msg = "beta.amp must be a vector containing numbers, with length equal to n_components"
+    )
+
+    assertthat::assert_that(
+      is.numeric(beta.acro) & length(beta.acro) == n_components,
+      msg = "beta.acro must be a vector containing numbers, with length equal to n_components"
+    )
+  }
 
   family = match.arg(family)
 
@@ -130,7 +144,7 @@ simulate_cosinor <- function(n,
 
     beta <- alpha / exp(mesor + beta_argument)
     nsize <- length(ttt)
-    y <- stats::rgamma(nsize, shap = alpha, rate = beta)
+    y <- stats::rgamma(nsize, shape = alpha, rate = beta)
     df <- data.frame(y, rrr, sss, ttt)
     return(df)
   }

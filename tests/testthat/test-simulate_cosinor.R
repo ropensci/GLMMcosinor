@@ -5,21 +5,16 @@
 #' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 
 
-test_that("multiplication works", {
-  # Test 1
+test_that("assess error messaging", {
+  # bad 'n'
   f <- function() {
-    simulate_cosinor(100.1,
-      mesor = c(1, 2, 4),
-      amp = c(2, 1, 0.5),
-      acro = c(1, 1.5, 0.1),
-      beta.mesor = c(1, 2, 3),
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
+    simulate_cosinor(
+      n = 100.1,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      family = "gaussian"
     )
   }
   expect_error(
@@ -27,20 +22,16 @@ test_that("multiplication works", {
     regex = "n must be an integer greater than 0", fixed = TRUE
   )
 
-  # Test 2
+  # bad 'n_components'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = 4,
-      amp = c(2, 1, 0.5),
-      acro = c(1, 1.5, 0.1),
-      beta.mesor = 3,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
       n_components = 0,
-      alpha = 5,
-      beta.group = FALSE
+      family = "gaussian"
     )
   }
   expect_error(
@@ -48,20 +39,16 @@ test_that("multiplication works", {
     regex = "n_components must be an integer greater than 0", fixed = TRUE
   )
 
-  # Test 3
+  # bad 'mesor'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = c(1, 4),
-      amp = c(2, 1, 0.5),
-      acro = c(1, 1.5, 0.1),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
+    simulate_cosinor(
+      n = 100,
+      mesor = c(1, 2),
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian"
     )
   }
   expect_error(
@@ -69,20 +56,16 @@ test_that("multiplication works", {
     regex = "mesor must a single number", fixed = TRUE
   )
 
-  # Test 4
+  # bad 'amp'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = 4,
-      amp = c(2, 1),
-      acro = c(1, 1.5, 0.1),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = c(1, 2),
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian"
     )
   }
   expect_error(
@@ -90,20 +73,16 @@ test_that("multiplication works", {
     regex = "amp must be a vector containing numbers, with length equal to n_components", fixed = TRUE
   )
 
-  # Test 5
+  # bad 'acro'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = 3,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = c(1, 2),
+      period = 24,
+      n_components = 1,
+      family = "gaussian"
     )
   }
   expect_error(
@@ -111,83 +90,16 @@ test_that("multiplication works", {
     regex = "acro must be a vector containing numbers, with length equal to n_components", fixed = TRUE
   )
 
-  # Test 6
+  # bad 'period'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = 2,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5, 2),
-      beta.mesor = c(1, 2),
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
-    )
-  }
-  expect_error(
-    f(),
-    regex = "beta.mesor must be a single number", fixed = TRUE
-  )
-
-  # Test 6
-  f <- function() {
-    simulate_cosinor(100,
-      mesor = 4,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5, 2),
-      beta.mesor = 4,
-      beta.amp = c(2, 1),
-      beta.acro = c(1, 1.5, -1),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
-    )
-  }
-  expect_error(
-    f(),
-    regex = "beta.amp must be a vector containing numbers, with length equal to n_components", fixed = TRUE
-  )
-
-  # Test 7
-  f <- function() {
-    simulate_cosinor(100,
-      mesor = 3,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5, 2),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5),
-      family = "gamma",
-      period = c(12, 6, 8),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
-    )
-  }
-  expect_error(
-    f(),
-    regex = "beta.acro must be a vector containing numbers, with length equal to n_components", fixed = TRUE
-  )
-
-  # Test 8
-  f <- function() {
-    simulate_cosinor(100,
-      mesor = 3,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5, 2),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, 0.4),
-      family = "gamma",
-      period = c(12, 6),
-      n_components = 3,
-      alpha = 5,
-      beta.group = FALSE
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = c(24, 12),
+      n_components = 1,
+      family = "gaussian"
     )
   }
   expect_error(
@@ -195,20 +107,100 @@ test_that("multiplication works", {
     regex = "period must be a vector containing numbers, with length equal to n_components", fixed = TRUE
   )
 
-  # Test 9
+  # bad 'family'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = 3,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5, 2),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, 0.4),
-      family = "gamma",
-      period = c(12, 6, 5),
-      n_components = 3,
-      beta.group = 10,
-      alpha = 5
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "bad family"
+    )
+  }
+  expect_error(
+    f(),
+    regex = '\'arg\' should be one of "gaussian", "poisson", "binomial", "gamma"', fixed = TRUE
+  )
+
+  # bad 'beta.mesor'
+  f <- function() {
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian",
+      beta.group = TRUE,
+      beta.mesor = "2",
+      beta.amp = 2,
+      beta.acro = 2
+    )
+  }
+  expect_error(
+    f(),
+    regex = "beta.mesor must be a single number", fixed = TRUE
+  )
+
+  # bad 'beta.amp'
+  f <- function() {
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian",
+      beta.group = TRUE,
+      beta.mesor = 2,
+      beta.amp = "2",
+      beta.acro = 2
+    )
+  }
+  expect_error(
+    f(),
+    regex = "beta.amp must be a vector containing numbers, with length equal to n_components", fixed = TRUE
+  )
+
+  # bad 'beta.acro'
+  f <- function() {
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian",
+      beta.group = TRUE,
+      beta.mesor = 2,
+      beta.amp = 2,
+      beta.acro = "2"
+    )
+  }
+  expect_error(
+    f(),
+    regex = "beta.acro must be a vector containing numbers, with length equal to n_components", fixed = TRUE
+  )
+
+  # bad 'beta.group'
+  f <- function() {
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian",
+      beta.group = "TRUE",
+      beta.mesor = 2,
+      beta.amp = 2,
+      beta.acro = 2
     )
   }
   expect_error(
@@ -216,24 +208,23 @@ test_that("multiplication works", {
     regex = "beta.group argument must be logical", fixed = TRUE
   )
 
-  # Test 10
+  # missing 'beta.acro'
   f <- function() {
-    simulate_cosinor(100,
-      mesor = 3,
-      amp = c(2, 1, 3),
-      acro = c(1, 1.5, 2),
-      beta.mesor = 4,
-      beta.amp = c(2, 1, 0.4),
-      beta.acro = c(1, 1.5, 0.4),
-      family = "continuous",
-      period = c(12, 6, 5),
-      n_components = 3,
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      n_components = 1,
+      family = "gaussian",
       beta.group = TRUE,
-      alpha = 5
+      beta.mesor = 2,
+      beta.amp = 2
     )
   }
   expect_error(
     f(),
-    regex = '\'arg\' should be one of "gaussian", "poisson", "binomial", "gamma"', fixed = TRUE
+    regex = '"beta.acro" is missing, with no default', fixed = TRUE
   )
 })
