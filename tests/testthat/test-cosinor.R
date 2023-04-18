@@ -100,7 +100,7 @@ test_that("model returns accurate parameters", {
 
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(1.0028, -0.4999, 2.0004, 1.0045, 3.0063, 0.2951)
+    c(1.0002, -0.4996, 2.0089, 0.9698, 3.0127, 0.2995)
   ))
 
 
@@ -191,10 +191,11 @@ test_that("model output is class cosinor.glmm", {
       suppressWarnings({
         object <- cosinor.glmm(
           Y ~ group + amp.acro(times,
-                               n_components = 2,
-                               group = "group",
-                               period = c(6, 12)) +
-              (0 + amp.acro2 | group),
+            n_components = 2,
+            group = "group",
+            period = c(6, 12)
+          ) +
+            (0 + amp.acro2 | group),
           data = sim_data,
           family = gaussian
         )

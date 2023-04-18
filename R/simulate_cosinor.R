@@ -99,121 +99,91 @@ simulate_cosinor <- function(n,
     )
   }
 
-  family = match.arg(family)
+  family <- match.arg(family)
 
 
   # generate a time vector
   ttt <- stats::runif(n, min = 0, period)
 
-  # Simulates Poisson circadian GLM
-  get_dataset_poisson <- function(amp, acr, mesor, n_components, period) {
-    lambda_argument <- 0
+  get_params <- function(amp, acro, n_components, ttt, period) {
+    param <- 0
     for (i in 1:n_components) {
-      B <- amp[i] * cos(acr[i])
-      G <- -amp[i] * sin(acr[i])
+      B <- amp[i] * cos(acro[i])
+      G <- -amp[i] * sin(acro[i])
       rrr <- cos(2 * pi * (ttt) / period[i])
       sss <- sin(2 * pi * (ttt) / period[i])
-      lambda_argument <- lambda_argument + B * rrr + G * sss
+      param <- param + B * rrr + G * sss
+    }
+    data.frame(rrr, sss, ttt, param)
+  }
+
+
+  get_dataset <- function(family, amp, acro, mesor, n_components, period, sd = 1, alpha = 1, ...) {
+    d_params <- get_params(
+      amp = amp,
+      acro = acro,
+      n_components = n_components,
+      ttt = ttt,
+      period = period
+    )
+
+    if (family == "gaussian") {
+      d_params$param <- mesor + d_params$param
+      d_params$y <- stats::rnorm(length(ttt), d_params$param, sd)
+    }
+    if (family == "poisson") {
+      d_params$param <- exp(mesor + d_params$param)
+      d_params$y <- stats::rpois(length(ttt), lambda = d_params$param)
+    }
+    if (family == "binomial") {
+      d_params$param <- exp(mesor + d_params$param) / (1 + exp(mesor + d_params$param))
+      d_params$y <- stats::rbinom(length(ttt), 1, d_params$param)
+    }
+    if (family == "gamma") {
+      d_params$param <- alpha / exp(mesor + d_params$param)
+      y <- stats::rgamma(length(ttt), shape = alpha, rate = d_params$param)
     }
 
-    lambda <- exp(mesor + lambda_argument)
-    nsize <- length(ttt)
-    y <- stats::rpois(nsize, lambda = lambda)
-    df <- data.frame(y, rrr, sss, ttt)
-    return(df)
+    with(d_params, data.frame(Y = y, x = rrr, z = sss, times = ttt))
   }
 
-  # Simulates binomial circadian data
-  get_dataset_bin <- function(amp, acr, mesor, n_components, period) {
-    PSuccess_argument <- 0
-    for (i in 1:n_components) {
-      B <- amp[i] * cos(acr[i])
-      G <- -amp[i] * sin(acr[i])
-      rrr <- cos(2 * pi * (ttt) / period[i])
-      sss <- sin(2 * pi * (ttt) / period[i])
-      PSuccess_argument <- PSuccess_argument + B * rrr + G * sss
-    }
-
-    PSuccess <- exp(mesor + PSuccess_argument) / (1 + exp(mesor + PSuccess_argument))
-    nsize <- length(ttt)
-    y <- stats::rbinom(nsize, 1, PSuccess)
-    df <- data.frame(y, rrr, sss, ttt)
-    return(df)
-  }
-
-  # Simulates gamma circadian data
-  get_dataset_gamma <- function(amp, acr, mesor, n_components, period, alpha) {
-    if (missing(alpha)) {
-      alpha <- 5
-    }
-    beta_argument <- 0
-    for (i in 1:n_components) {
-      B <- amp[i] * cos(acr[i])
-      G <- -amp[i] * sin(acr[i])
-      rrr <- cos(2 * pi * (ttt) / period[i])
-      sss <- sin(2 * pi * (ttt) / period[i])
-      beta_argument <- beta_argument + B * rrr + G * sss
-    }
-
-    beta <- alpha / exp(mesor + beta_argument)
-    nsize <- length(ttt)
-    y <- stats::rgamma(nsize, shape = alpha, rate = beta)
-    df <- data.frame(y, rrr, sss, ttt)
-    return(df)
-  }
-
-  # Simulates normal circadian data
-
-  get_dataset_gaussian <- function(amp, acr, mesor, n_components, period, sd) {
-    if (missing(sd)) {
-      sd <- 1
-    }
-    lambda_argument <- 0
-    for (i in 1:n_components) {
-      B <- amp[i] * cos(acr[i])
-      G <- -amp[i] * sin(acr[i])
-      rrr <- cos(2 * pi * (ttt) / period[i])
-      sss <- sin(2 * pi * (ttt) / period[i])
-      lambda_argument <- lambda_argument + B * rrr + G * sss
-    }
-
-    lambda <- (mesor + lambda_argument)
-    nsize <- length(ttt)
-
-    y <- stats::rnorm(nsize, lambda, sd)
-    df <- data.frame(y, rrr, sss, ttt)
-    return(df)
-  }
-
-  # assign 'get_dataset' to the correct function corresponding to family specified by user
-  if (family == "poisson") {
-    get_dataset <- get_dataset_poisson
-  }
-  if (family == "binomial") {
-    get_dataset <- get_dataset_bin
-  }
-  if (family == "gamma") {
-    get_dataset <- get_dataset_gamma
-  }
-  if (family == "gaussian") {
-    get_dataset <- get_dataset_gaussian
-  }
 
   # create dataset for only one group if beta.group = FALSE
   if (!beta.group) {
-    df <- get_dataset(amp, acro, mesor, n_components, period, ...)
-    colnames(df) <- c("Y", "x", "z", "times")
+    df <- get_dataset(
+      family = family,
+      amp = amp,
+      acro = acro,
+      mesor = mesor,
+      n_components = n_components,
+      period = period,
+      ...
+    )
   }
 
   # create dataset for two groups if beta.group = TRUE
   if (beta.group) {
-    data_A <- get_dataset(amp, acro, mesor, n_components, period, ...)
-    data_B <- get_dataset(amp = beta.amp, acr = beta.acro, mesor = beta.mesor, n_components, period, ...)
-    data_A$group <- "A"
-    data_B$group <- "B"
+    data_A <- get_dataset(
+      family = family,
+      amp = amp,
+      acro = acro,
+      mesor = mesor,
+      n_components = n_components,
+      period = period,
+      ...
+    )
+    data_B <- get_dataset(
+      family = family,
+      amp = beta.amp,
+      acr = beta.acro,
+      mesor = beta.mesor,
+      n_components = n_components,
+      period = period,
+      ...
+    )
+    data_A$group <- 0
+    data_B$group <- 1
     df <- rbind(data_A, data_B)
-    df$group <- as.numeric(as.factor(df$group)) - 1
-    colnames(df) <- c("Y", "x", "z", "times", "group")
   }
 
   return(df)
