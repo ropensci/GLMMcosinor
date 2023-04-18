@@ -234,6 +234,6 @@ test_that("multiplication works", {
   }
   expect_error(
     f(),
-    regex = 'family argument must be a string that matches one of: "poisson", "binomial", "gamma", "gaussian"', fixed = TRUE
+    regex = '\'arg\' should be one of "gaussian", "poisson", "binomial", "gamma"', fixed = TRUE
   )
 })

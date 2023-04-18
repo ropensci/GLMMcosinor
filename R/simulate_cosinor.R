@@ -34,7 +34,7 @@ simulate_cosinor <- function(n,
                              beta.mesor = 0.4,
                              beta.amp = 0.5,
                              beta.acro = 0.2,
-                             family = c("poisson"),
+                             family = c("gaussian", "poisson", "binomial", "gamma"),
                              ...) {
   # validating inputs
   assertthat::assert_that(n == floor(n) & n > 0,
@@ -52,6 +52,12 @@ simulate_cosinor <- function(n,
   assertthat::assert_that(is.numeric(acro) & length(acro) == n_components,
     msg = "acro must be a vector containing numbers, with length equal to n_components"
   )
+  assertthat::assert_that(is.numeric(period) & length(period) == n_components,
+                          msg = "period must be a vector containing numbers, with length equal to n_components"
+  )
+
+
+
   assertthat::assert_that(is.numeric(beta.mesor) & length(beta.mesor) == 1,
     msg = "beta.mesor must be a single number"
   )
@@ -61,16 +67,12 @@ simulate_cosinor <- function(n,
   assertthat::assert_that(is.numeric(beta.acro) & length(beta.acro) == n_components,
     msg = "beta.acro must be a vector containing numbers, with length equal to n_components"
   )
-  assertthat::assert_that(is.numeric(period) & length(period) == n_components,
-    msg = "period must be a vector containing numbers, with length equal to n_components"
-  )
-  assertthat::assert_that(family %in% c("poisson", "binomial", "gamma", "gaussian"),
-    msg = 'family argument must be a string that matches one of: "poisson", "binomial", "gamma", "gaussian"'
-  )
+
   assertthat::assert_that(is.logical(beta.group),
     msg = "beta.group argument must be logical"
   )
 
+  family = match.arg(family)
 
 
   # generate a time vector
