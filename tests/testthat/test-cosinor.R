@@ -36,7 +36,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
         data = comod
       )
     }
@@ -63,7 +63,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
         data = comod,
         family = poisson
       )
@@ -91,7 +91,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
         data = comod,
         family = Gamma(link = "log")
       )
@@ -120,7 +120,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
         data = comod,
         family = binomial
       )
@@ -210,4 +210,49 @@ test_that("model output is class cosinor.glmm", {
       testthat::expect_snapshot_output(print(object, digits = 2))
     }
   )
+})
+
+
+test_that("mixed model estimates parameters well", {
+  f_sample_id <- function(id_num,
+                          n = 30,
+                          mesor = rnorm(1),
+                          amp = c(1, rnorm(n = 1, mean = 5, sd = 1)),
+                          acro = c(1, rnorm(n = 1, mean = pi, sd = 1)),
+                          family = "gaussian",
+                          sd = 0.2,
+                          period = c(12, 6),
+                          n_components = 2) {
+    data <- simulate_cosinor(
+      n = n,
+      mesor = mesor,
+      amp = amp,
+      acro = acro,
+      family = family,
+      sd = sd,
+      period = period,
+      n_components = n_components
+    )
+
+    data$id <- id_num
+    data
+  }
+
+  df_mixed <- do.call("rbind", lapply(1:10, f_sample_id))
+  # df_mixed %>% ggplot(aes(times, Y, col = as.factor(id))) + geom_point() # test to see whether the mixed model data look appropriate (should show some between id differences)
+
+
+  # TODO: run this code and see that it creates a "group" parameter in the formula when it shouldn't!
+  # You may want to add a 'browser()' at line 132 of data_processor.R to see what the final formula is.
+  # I suspect there is some issue during the creation of the formula which automatically adds a "group" parameter even whenthe group being specified within amp.acro is not called "group". This is problematic since not everyone's grouping variable will use "group" as the column name!
+
+  # object <- cosinor.glmm(
+  #   Y ~ group + amp.acro(times,
+  #                        n_components = 2,
+  #                        period = c(6, 12)
+  #   ) +
+  #     (0 + amp.acro2 | id),
+  #   data = mutate(df_mixed, id = as.factor(id)),
+  #   family = gaussian
+  # )
 })

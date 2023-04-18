@@ -169,7 +169,14 @@ amp.acro <- function(time_col,
   }
 
   env <- environment() # preserve environment of amp.acro to be passed into amp.acro_iteration
-  amp.acro_iteration <- function(time_col, n_components, group, .formula, period, .quietly = TRUE, .data, .amp.acro_ind = -1) {
+  amp.acro_iteration <- function(time_col,
+                                 n_components,
+                                 group,
+                                 .formula,
+                                 period,
+                                 .quietly = TRUE,
+                                 .data,
+                                 .amp.acro_ind = -1) {
     # assess the quality of the inputs
     stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
     lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
@@ -377,7 +384,7 @@ amp.acro <- function(time_col,
     ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
-    res$newformula <- as.formula(main_part)
+    res$newformula <- stats::as.formula(main_part)
   }
 
   # As a test:

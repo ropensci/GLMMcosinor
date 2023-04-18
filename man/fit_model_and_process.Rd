@@ -35,4 +35,7 @@ res <- fit_model_and_process(
   updated_df_and_formula,
   update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))
 )
+
+
+
 }

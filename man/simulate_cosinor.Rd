@@ -6,16 +6,16 @@
 \usage{
 simulate_cosinor(
   n,
-  mesor = 1,
-  amp = 2,
-  acro = 1.2,
-  period = 12,
-  n_components = 1,
-  beta.group = TRUE,
-  beta.mesor = 0.4,
-  beta.amp = 0.5,
-  beta.acro = 0.2,
-  family = c("poisson"),
+  mesor,
+  amp,
+  acro,
+  period = 24,
+  n_components,
+  beta.group = FALSE,
+  beta.mesor,
+  beta.amp,
+  beta.acro,
+  family = c("gaussian", "poisson", "binomial", "gamma"),
   ...
 )
 }
