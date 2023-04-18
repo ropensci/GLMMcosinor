@@ -4,6 +4,19 @@
 #' @srrstats {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
 #' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 
+test_that("simulation works", {
+  df_gaussian <-
+    simulate_cosinor(
+      n = 100,
+      mesor = 1,
+      amp = 1,
+      acro = 1,
+      period = 24,
+      family = "gaussian"
+    )
+  expect_s3_class(df_gaussian, "data.frame")
+})
+
 
 test_that("assess error messaging", {
   # bad 'n'
