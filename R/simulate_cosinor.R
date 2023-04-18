@@ -36,6 +36,13 @@ simulate_cosinor <- function(n,
                              beta.acro,
                              family = c("gaussian", "poisson", "binomial", "gamma"),
                              ...) {
+  # attempt to infer n_components if missing
+  if (missing(n_components)) {
+    if (length(amp) == length(acro)) {
+      n_components <- length(amp)
+    }
+  }
+
   # validating inputs
   assertthat::assert_that(
     assertthat::is.count(n),
@@ -68,6 +75,12 @@ simulate_cosinor <- function(n,
     msg = "beta.group argument must be logical"
   )
 
+
+
+  if (!beta.group & !missing(beta.mesor) & !missing(beta.amp) & !missing(beta.acro)) {
+    beta.group <- TRUE
+    message("all betas were present but beta.group was FALSE. beta.group has been changed to be TRUE.")
+  }
   # check betas only if beta.group = TRUE
   if (beta.group) {
     assertthat::assert_that(

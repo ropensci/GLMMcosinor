@@ -12,20 +12,33 @@ test_that("model returns accurate parameters", {
     unname(round(x, digits = 4))
   }
 
-
   TrueMesor_a <- 1
   TrueMesor_b <- 0.5
   TrueAmp_a <- 2
   TrueAmp_b <- 1
   TrueAcr_a <- 3
   TrueAcr_b <- 0.3
+  TruePeriod <- 12
 
   # test parameter estimation of guassian simulated data
   withr::with_seed(
     50,
     {
-      comod <- simulate_cosinor(10000, mesor = TrueMesor_a, amp = TrueAmp_a, acro = TrueAcr_a, beta.mesor = TrueMesor_b, beta.amp = TrueAmp_b, beta.acro = TrueAcr_b, family = "gaussian")
-      object <- cosinor.glmm(Y ~ group + amp.acro(times, n_components = 1, group = "group", period = c(12)), data = comod)
+      comod <- simulate_cosinor(
+        n = 10000,
+        mesor = TrueMesor_a,
+        amp = TrueAmp_a,
+        acro = TrueAcr_a,
+        beta.mesor = TrueMesor_b,
+        beta.amp = TrueAmp_b,
+        beta.acro = TrueAcr_b,
+        family = "gaussian",
+        period = TruePeriod
+      )
+      object <- cosinor.glmm(
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        data = comod
+      )
     }
   )
 
@@ -38,8 +51,22 @@ test_that("model returns accurate parameters", {
   withr::with_seed(
     50,
     {
-      comod <- simulate_cosinor(10000, mesor = TrueMesor_a, amp = TrueAmp_a, acro = TrueAcr_a, beta.mesor = TrueMesor_b, beta.amp = TrueAmp_b, beta.acro = TrueAcr_b, family = "poisson")
-      object <- cosinor.glmm(Y ~ group + amp.acro(times, n_components = 1, group = "group", period = c(12)), data = comod, family = poisson)
+      comod <- simulate_cosinor(
+        n = 10000,
+        mesor = TrueMesor_a,
+        amp = TrueAmp_a,
+        acro = TrueAcr_a,
+        beta.mesor = TrueMesor_b,
+        beta.amp = TrueAmp_b,
+        beta.acro = TrueAcr_b,
+        family = "poisson",
+        period = TruePeriod
+      )
+      object <- cosinor.glmm(
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        data = comod,
+        family = poisson
+      )
     }
   )
 
@@ -52,8 +79,22 @@ test_that("model returns accurate parameters", {
   withr::with_seed(
     50,
     {
-      comod <- simulate_cosinor(10000, mesor = TrueMesor_a, amp = TrueAmp_a, acro = TrueAcr_a, beta.mesor = TrueMesor_b, beta.amp = TrueAmp_b, beta.acro = TrueAcr_b, family = "gamma")
-      object <- cosinor.glmm(Y ~ group + amp.acro(times, n_components = 1, group = "group", period = c(12)), data = comod, family = Gamma(link = "log"))
+      comod <- simulate_cosinor(
+        n = 10000,
+        mesor = TrueMesor_a,
+        amp = TrueAmp_a,
+        acro = TrueAcr_a,
+        beta.mesor = TrueMesor_b,
+        beta.amp = TrueAmp_b,
+        beta.acro = TrueAcr_b,
+        family = "gamma",
+        period = TruePeriod
+      )
+      object <- cosinor.glmm(
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        data = comod,
+        family = Gamma(link = "log")
+      )
     }
   )
 
@@ -67,8 +108,22 @@ test_that("model returns accurate parameters", {
   withr::with_seed(
     50,
     {
-      comod <- simulate_cosinor(10000, mesor = TrueMesor_a, amp = TrueAmp_a, acro = TrueAcr_a, beta.mesor = TrueMesor_b, beta.amp = TrueAmp_b, beta.acro = TrueAcr_b, family = "binomial")
-      object <- cosinor.glmm(Y ~ group + amp.acro(times, n_components = 1, group = "group", period = c(12)), data = comod, family = binomial)
+      comod <- simulate_cosinor(
+        n = 10000,
+        mesor = TrueMesor_a,
+        amp = TrueAmp_a,
+        acro = TrueAcr_a,
+        beta.mesor = TrueMesor_b,
+        beta.amp = TrueAmp_b,
+        beta.acro = TrueAcr_b,
+        family = "binomial",
+        period = TruePeriod
+      )
+      object <- cosinor.glmm(
+        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = TruePeriod),
+        data = comod,
+        family = binomial
+      )
     }
   )
 
@@ -82,7 +137,10 @@ test_that("model output is class cosinor.glmm", {
     50,
     {
       data(vitamind)
-      object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+      object <- cosinor.glmm(
+        Y ~ X + amp.acro(time, group = "X"),
+        data = vitamind
+      )
       expect_true(inherits(object, "cosinor.glmm"))
 
       object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"),
@@ -96,7 +154,6 @@ test_that("model output is class cosinor.glmm", {
 
       #' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
       #' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
-      #' @noRd
 
       # check if the column names from vitamind are present in object_cols
       vitamind_cols <- colnames(vitamind)
@@ -112,12 +169,13 @@ test_that("model output is class cosinor.glmm", {
         cosinor.glmm(Y ~ X + amp.acro(time,
           n_components = 1,
           group = "X",
-          period = c(12)
+          period = TruePeriod
         ) + (1 | X) + (0 + amp.acro1 | X), data = vitamind)
       }
       testthat::expect_no_error(f)
 
-      sim_data <- simulate_cosinor(500,
+      sim_data <- simulate_cosinor(
+        n = 500,
         mesor = 5,
         amp = c(2, 1),
         acro = c(1, 1.5),
@@ -129,16 +187,25 @@ test_that("model output is class cosinor.glmm", {
         n_components = 2,
         beta.group = TRUE
       )
-      object <- cosinor.glmm(
-        Y ~ group + amp.acro(times,
-          n_components = 2,
-          group = "group",
-          period = c(6, 12)
-        ) + (0 + amp.acro2 | group),
-        data = sim_data,
-        family = gaussian
-      )
 
+      suppressWarnings({
+        object <- cosinor.glmm(
+          Y ~ group + amp.acro(times,
+                               n_components = 2,
+                               group = "group",
+                               period = c(6, 12)) +
+              (0 + amp.acro2 | group),
+          data = sim_data,
+          family = gaussian
+        )
+      })
+
+      testthat::expect_equal(
+        ignore_attr = TRUE,
+        object$formula,
+        Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +
+          group:main_sss2 + (0 + main_rrr2 + main_sss2 | group)
+      )
       testthat::expect_snapshot_output(print(object, digits = 2))
     }
   )
