@@ -13,7 +13,6 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 [![pkgcheck](https://github.com/RWParsons/GLMMcosinor/workflows/pkgcheck/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions?query=workflow%3Apkgcheck)
 <!-- badges: end -->
 
-
 The goal of GLMMcosinor is to fit a generalised linear (mixed-) model
 (GLM) to circadian data that may be sourced but passing on the
 flexibility of the glmmTMB framework. For example, this includes the
@@ -27,7 +26,9 @@ comprehensive and flexible. Hence, GLMMcosinor is an improvement of
 other implementations of similar algorithms in R. See table below for
 features available within different currently available software.
 
-#### TODO add table
+## Comparison to existing methods
+
+<img src="man/figures/methods-table.png" width="700px" alt="flextable formats" align="center" />
 
 ## Installation
 
@@ -77,20 +78,14 @@ plot(model, superimpose.data = TRUE)
 polar_plot(model)
 ```
 
-``` r
-p1 <- plot(model, superimpose.data = TRUE)
-p2 <- polar_plot(model)
-cowplot::plot_grid(p1, p2, nrow=1)
-```
-
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ## Citation
 
 ``` r
 citation("GLMMcosinor")
-#> Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of package
-#> 'GLMMcosinor'
+#> Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of
+#> package 'GLMMcosinor'
 #> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
