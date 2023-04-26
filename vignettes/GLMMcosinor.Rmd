@@ -462,7 +462,19 @@ dat_list <- list(
     family = "n = ? \nGaussian",
     estimates = "Amplitude,Acrophase, Period, Mesor",
     ref = "Singer, 2019"
-  )
+  ),
+  list(
+    name = "Kronos",
+    language = "R",
+    multicomponent = TRUE,
+    disp = FALSE,
+    zi = FALSE,
+    rhythmdiff = TRUE,
+    diff_est = TRUE,
+    family = "n = ? \nGaussian",
+    estimates = "Amplitude,Acrophase, Mesor",
+    ref = "Singer, 2019"
+  )  
 )
 dat <- do.call(rbind, dat_list)
 dat <- as.data.frame(dat)
