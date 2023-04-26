@@ -1,6 +1,6 @@
 dat_list <- list(
   list(
-    name = "GLMMCosinor",
+    name = "GLMMcosinor",
     language = "R",
     multicomponent = TRUE,
     disp = TRUE,
@@ -129,6 +129,11 @@ dat <- dplyr:::mutate(
     multicomponent:diff_est,
     function(x) ifelse(x, "&#x2713;", "&#x2717;")
   )
+)
+
+dat <- rbind(
+  dplyr::filter(dat, name == "GLMMcosinor"),
+  dplyr::arrange(dplyr::filter(dat, name != "GLMMcosinor"), name)
 )
 dat <- flextable::flextable(dat)
 dat <- flextable::color(
