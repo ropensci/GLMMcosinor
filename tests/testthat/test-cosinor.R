@@ -248,7 +248,7 @@ test_that("mixed model estimates parameters well", {
                     period = c(6, 12)
       ) +
         (0 + amp.acro2 | id),
-      data = mutate(df_mixed, id = as.factor(id)),
+      data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
     )
   }
@@ -266,7 +266,7 @@ test_that("mixed model estimates parameters well", {
                     period = c(6, 12)
       ) +
         (0 + amp.acro2 | id),
-      data = mutate(df_mixed, id = as.factor(id)),
+      data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
     )
   }
