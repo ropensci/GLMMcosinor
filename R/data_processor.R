@@ -121,7 +121,6 @@ data_processor <- function(newdata,
     ziformula_val <- ~0
   }
 
-  #browser()
   # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
     formula = newformula,

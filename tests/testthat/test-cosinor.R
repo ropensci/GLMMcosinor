@@ -237,22 +237,39 @@ test_that("mixed model estimates parameters well", {
     data$id <- id_num
     data
   }
- # browser()
- # df_mixed <- do.call("rbind", lapply(1:10, f_sample_id))
-  #df_mixed %>% ggplot(aes(times, Y, col = as.factor(id))) + geom_point() # test to see whether the mixed model data look appropriate (should show some between id differences)
+  withr::with_seed(42, {
+    df_mixed <- do.call("rbind", lapply(1:10, f_sample_id))
+  })
 
+  f <- function() {
+    object <- cosinor.glmm(
+      Y ~  amp.acro(times,
+                    n_components = 2,
+                    period = c(6, 12)
+      ) +
+        (0 + amp.acro2 | id),
+      data = mutate(df_mixed, id = as.factor(id)),
+      family = gaussian
+    )
+  }
 
-  # TODO: run this code and see that it creates a "group" parameter in the formula when it shouldn't!
-  # You may want to add a 'browser()' at line 132 of data_processor.R to see what the final formula is.
-  # I suspect there is some issue during the creation of the formula which automatically adds a "group" parameter even whenthe group being specified within amp.acro is not called "group". This is problematic since not everyone's grouping variable will use "group" as the column name!
+  suppressWarnings(expect_warning(f()))
 
-  #object <- cosinor.glmm(
-  #  Y ~ group + amp.acro(times,
-  #                       n_components = 2,
-  #                       period = c(6, 12)
-  #  ) +
-  #    (0 + amp.acro2 | id),
-  #  data = mutate(df_mixed, id = as.factor(id)),
-  #  family = gaussian
-  #)
+  withr::with_seed(42, {
+    df_mixed <- do.call("rbind", lapply(1:75, f_sample_id))
+  })
+
+  f <- function() {
+    object <- cosinor.glmm(
+      Y ~  amp.acro(times,
+                    n_components = 2,
+                    period = c(6, 12)
+      ) +
+        (0 + amp.acro2 | id),
+      data = mutate(df_mixed, id = as.factor(id)),
+      family = gaussian
+    )
+  }
+
+  expect_s3_class(f(), "cosinor.glmm")
 })
