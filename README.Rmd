@@ -39,8 +39,12 @@ Existing statistical software for circadian data analyses (including `cosinor` o
 
 ## Comparison to existing methods
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, include=FALSE}
 source("vignettes/fixtures/methods-table.R")
+flextable::save_as_image(
+  dat,
+  file.path("man", "figures", "methods-table.png")
+)
 ```
 
 <img src="man/figures/methods-table.png" width="700px" alt="flextable formats" align="center" /> 

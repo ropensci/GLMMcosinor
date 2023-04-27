@@ -83,9 +83,6 @@ polar_plot(model)
 
 ``` r
 citation("GLMMcosinor")
-#> Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of
-#> package 'GLMMcosinor'
-#> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
 #>   Parsons R, Jayasinghe O (2023). _GLMMcosinor: Fit a cosinor model

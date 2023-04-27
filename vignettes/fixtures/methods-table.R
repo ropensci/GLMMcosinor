@@ -143,7 +143,3 @@ dat <- flextable::color(
 )
 dat <- ftExtra::colformat_md(dat)
 dat <- flextable::theme_zebra(dat, even_header = "#FFFFFF", even_body = "#FFFFFF")
-flextable::save_as_image(
-  dat,
-  file.path("man", "figures", "methods-table.png")
-)
