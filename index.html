@@ -77,13 +77,9 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of GLMMcosinor is to fit a generalised linear (mixed-) model (GLM) to circadian data that may be sourced but passing on the flexibility of the glmmTMB framework. For example, this includes the ability to use link functions appropriate for outcome variables that are gaussian, poisson, gamma, or binomial.</p>
-<p>Existing statistical software for circadian data analyses (including <code>cosinor</code> or <code>circacompare</code>) allow the user to fit such data to a linear model, but many are limited in due to this; GLMMcosinor aims to be comprehensive and flexible. Hence, GLMMcosinor is an improvement of other implementations of similar algorithms in R. See table below for features available within different currently available software.</p>
-<div class="section level2">
-<h2 id="comparison-to-existing-methods">Comparison to existing methods<a class="anchor" aria-label="anchor" href="#comparison-to-existing-methods"></a>
-</h2>
+<p>The goal of <a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a> is to fit a cosinor model to rhythmic data but allow the functionality of a generalised linear (mixed-) model (GLM) framework using <a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a>. For example, this includes the ability to use link functions appropriate for outcome variables that are Gaussian, Poisson, Gamma, or Binomial.</p>
+<p>Existing statistical software for circadian data analyses (including <code>cosinor</code> or <code>circacompare</code>) allow the user to fit such data using a regression model, but many are limited due to the lack being able to specify a link function, multiple components, or a heirachical structure. GLMMcosinor aims to be comprehensive and flexible and is an improvement of other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.</p>
 <p><img src="reference/figures/methods-table.png" width="700px" alt="flextable formats" align="center"></p>
-</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -131,9 +127,6 @@
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"GLMMcosinor"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of</span></span>
-<span><span class="co">#&gt; package 'GLMMcosinor'</span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To cite package 'GLMMcosinor' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Parsons R, Jayasinghe O (2023). _GLMMcosinor: Fit a cosinor model</span></span>
