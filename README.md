@@ -12,20 +12,20 @@ coverage](https://codecov.io/gh/RWParsons/GLMMcosinor/branch/main/graph/badge.sv
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
-The goal of GLMMcosinor is to fit a generalised linear (mixed-) model
-(GLM) to circadian data that may be sourced but passing on the
-flexibility of the glmmTMB framework. For example, this includes the
-ability to use link functions appropriate for outcome variables that are
-gaussian, poisson, gamma, or binomial.
+The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data
+but allow the functionality of a generalised linear (mixed-) model (GLM)
+framework using `{glmmTMB}`. For example, this includes the ability to
+use link functions appropriate for outcome variables that are Gaussian,
+Poisson, Gamma, or Binomial.
 
 Existing statistical software for circadian data analyses (including
-`cosinor` or `circacompare`) allow the user to fit such data to a linear
-model, but many are limited in due to this; GLMMcosinor aims to be
-comprehensive and flexible. Hence, GLMMcosinor is an improvement of
-other implementations of similar algorithms in R. See table below for
-features available within different currently available software.
-
-## Comparison to existing methods
+`cosinor` or `circacompare`) allow the user to fit such data using a
+regression model, but many are limited due to the lack being able to
+specify a link function, multiple components, or a heirachical
+structure. GLMMcosinor aims to be comprehensive and flexible and is an
+improvement of other implementations of the cosinor model in R or
+Python. See table below for features available within currently
+available methods.
 
 <img src="man/figures/methods-table.png" width="700px" alt="flextable formats" align="center" />
 
