@@ -31,10 +31,6 @@ The analysis assumes that the data follows the distribution specified in the 'fa
 
 \item{ziformula}{Formula specifying a zero-inflation model (optional). Use the same format as the main formula}
 
-\item{randef}{Formula specification for random effects as per mixed models in lme4 model specification
-For example, randef <- .~. (1|X) will add (1|X) to the main formula. For mixed effects involving parts of the amp.acro
-specification, use the terms from the raw formula. For example, randef <- .~. (main_rrr1 + main_sss1 |X)}
-
 \item{...}{optional additional arguments passed to glmmTMB::glmmTMB()}
 }
 \value{
