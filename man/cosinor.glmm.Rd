@@ -11,7 +11,6 @@ cosinor.glmm(
   quietly = TRUE,
   dispformula = ~1,
   ziformula = ~0,
-  randef,
   ...
 )
 }
