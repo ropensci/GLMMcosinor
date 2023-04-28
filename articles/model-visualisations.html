@@ -134,6 +134,39 @@ different plots for the same model;</p>
 <div class="section level2">
 <h2 id="polar-plots">Polar plots<a class="anchor" aria-label="anchor" href="#polar-plots"></a>
 </h2>
+<p>— taken from GLMMcosinor.Rmd</p>
+<p>The angle units in the plot can be specified with the
+<code>radial_units</code> argument. By default, the units are in radians
+where a complete revolution of the plot <span class="math inline">\((2\pi)\)</span> represents the period for that
+component. The units can be changed to degrees (where <span class="math inline">\(360^\circ\)</span> represents the period), or even
+to be expressed in the same units as the period specification and time
+variable in the data used to fit the model.</p>
+<p>By default, the function creates polar plots for all components and
+combines them together using the make_cowplot = TRUE argument. If the
+user wishes to plot just one component, they can specify this by using
+<code>component_index</code>, though by making
+<code>make_cowplot = FALSE</code>.</p>
+<p>The direction that the angle increases in can be changed with the
+clockwise argument, and the location of the <code>angle = 0</code>
+starting point can be specified with the <code>start</code> argument.
+Hence, if the user wishes to create a polar plot that resembles a clock,
+this can be done by specifying <code>clockwise = TRUE</code> and
+<code>start = "top"</code>.</p>
+<p>The argument: <code>overlay_parameter_info</code> can be used to
+create a line extending from the origin to the parameter estimate (to
+visualise the amplitude estimate), and a circular arc extending from the
+angle starting position (at 0) to the acrophase estimate.</p>
+<p>The background grid can also be customised. The argument
+<code>grid_angle_segments</code> is used to specify how many sectors the
+polar grid has, and the ‘contour_interval’ argument can be used to
+specify the distance between adjacent radial circles.</p>
+<p>If the user wishes to zoom into the confidence ellipses to show
+relevant information, they can adjust the view from the default
+<code>full</code> (which plots a full view of the polar plot) to ‘zoom’
+(which enlarges the smallest view window containing all confidence
+ellipses), or <code>zoom_origin</code> (which enlarges the smallest view
+window containing all confidence ellipses AND the origin).</p>
+<hr>
 <p>In addition to time-response plots, the GLMMcosinor package also
 allows users to create polar plots. In these plots, the plotted point
 represents the acrophase estimate, and the radius represents the

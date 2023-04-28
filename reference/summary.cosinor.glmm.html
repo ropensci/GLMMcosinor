@@ -114,22 +114,26 @@ not be the desired result for continuous covariates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Raw model coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                estimate standard.error   lower.CI  upper.CI   p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  29.6897959      0.4583696 28.7914079 30.588184 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1            1.9018623      0.7919688  0.3496320  3.454093 0.0163309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.9307876      0.6260656 -0.2962784  2.157853 0.1370874</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.5102900      0.9303406  4.6868560  8.333724 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.2009896      0.6701952  4.8874311  7.514548 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.8184618      0.8963299  3.0616875  6.575236 0.0000001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                estimate standard.error   lower.CI upper.CI    p.value    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  29.6897959      0.4583696 28.7914079 30.58818 &lt; 2.22e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1            1.9018623      0.7919688  0.3496320  3.45409   0.016331 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.9307876      0.6260656 -0.2962784  2.15785   0.137087    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.5102900      0.9303406  4.6868560  8.33372 2.6011e-12 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.2009896      0.6701952  4.8874311  7.51455 &lt; 2.22e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.8184618      0.8963299  3.0616875  6.57524 7.6257e-08 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Transformed coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               estimate standard.error   lower.CI   upper.CI   p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.6897959      0.4583696 28.7914079 30.5881839 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        1.9018623      0.7919688  0.3496320  3.4540926 0.0163309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp1   6.2704576      0.6696564  4.9579551  7.5829600 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp1   8.0994722      1.1028357  5.9379540 10.2609904 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr1  -1.4218056      0.0999356 -1.6176757 -1.2259354 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr1  -0.6371544      0.1404362 -0.9124044 -0.3619044 0.0000057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                estimate standard.error    lower.CI upper.CI    p.value    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.68979587     0.45836964 28.79140787 30.58818 &lt; 2.22e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        1.90186227     0.79196879  0.34963197  3.45409   0.016331 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp1   6.27045757     0.66965642  4.95795510  7.58296 &lt; 2.22e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp1   8.09947222     1.10283566  5.93795403 10.26099 2.0696e-13 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr1  -1.42180558     0.09993559 -1.61767574 -1.22594 &lt; 2.22e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr1  -0.63715441     0.14043625 -0.91240440 -0.36190 5.7069e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
