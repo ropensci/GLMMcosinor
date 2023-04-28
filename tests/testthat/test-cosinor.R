@@ -243,9 +243,9 @@ test_that("mixed model estimates parameters well", {
 
   f <- function() {
     object <- cosinor.glmm(
-      Y ~  amp.acro(times,
-                    n_components = 2,
-                    period = c(6, 12)
+      Y ~ amp.acro(times,
+        n_components = 2,
+        period = c(6, 12)
       ) +
         (0 + amp.acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
@@ -261,9 +261,9 @@ test_that("mixed model estimates parameters well", {
 
   f <- function() {
     object <- cosinor.glmm(
-      Y ~  amp.acro(times,
-                    n_components = 2,
-                    period = c(6, 12)
+      Y ~ amp.acro(times,
+        n_components = 2,
+        period = c(6, 12)
       ) +
         (0 + amp.acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),

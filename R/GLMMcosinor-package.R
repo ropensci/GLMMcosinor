@@ -1,4 +1,3 @@
-
 #' @description
 #' To learn more about how to use GLMMcosinor, see the vignettes at the
 #' \href{https://rwparsons.github.io/GLMMcosinor/}{website} or using

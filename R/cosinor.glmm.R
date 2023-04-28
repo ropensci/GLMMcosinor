@@ -62,7 +62,7 @@ cosinor.glmm <- function(formula,
     ziformula = ziformula
   )
 
- cosinor.glmm.calls <- list(
+  cosinor.glmm.calls <- list(
     cosinor.glmm = match.call(),
     update_formula_and_data = updated_df_and_formula$Call
   )

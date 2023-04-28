@@ -75,10 +75,10 @@ polar_plot(model)
 ```
 
 ```{r, echo=FALSE}
-p1 <- plot(model, superimpose.data = TRUE) + 
+p1 <- plot(model, superimpose.data = TRUE) +
   ggplot2::theme(legend.position = "none")
 p2 <- polar_plot(model)
-cowplot::plot_grid(p1, p2, nrow = 1, rel_widths = c(0.4,0.6))
+cowplot::plot_grid(p1, p2, nrow = 1, rel_widths = c(0.4, 0.6))
 ```
 
 ## Citation

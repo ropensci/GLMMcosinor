@@ -25,8 +25,6 @@
 #'   update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))
 #' )
 #'
-#'
-#'
 fit_model_and_process <- function(obj, formula, ...) {
   if (!missing(formula)) {
     obj$newformula <- formula

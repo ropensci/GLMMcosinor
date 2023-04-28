@@ -147,12 +147,12 @@ For instance, the following two cosinor.glmm() calls fit the same models:
 
 ```{r, message=F, warning=F}
 cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 2, group = "X", period = 12), 
+  Y ~ X + amp.acro(time, n_components = 2, group = "X", period = 12),
   data = vitamind
 )
 
 cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 2, group = c("X", "X"), period = c(12, 12)), 
+  Y ~ X + amp.acro(time, n_components = 2, group = c("X", "X"), period = c(12, 12)),
   data = vitamind
 )
 ```
@@ -215,12 +215,12 @@ different plots for the same model;
 vitamind_new <- vitamind
 
 # Z has 3 levels that aren't associated with outcome
-vitamind_new$Z <- rbinom(length(vitamind_new$X), 3, prob = 0.5) 
+vitamind_new$Z <- rbinom(length(vitamind_new$X), 3, prob = 0.5)
 object <- cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), 
+  Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)),
   data = vitamind_new
 )
-plot(object)              # defaults to include all grouping variables (all combinations of X and Z)
+plot(object) # defaults to include all grouping variables (all combinations of X and Z)
 plot(object, x_str = "X") # only shows grouping of X (defaults to first level of Z)
 plot(object, x_str = "Z") # only shows grouping of Z (defaults to first level of X)
 ```
