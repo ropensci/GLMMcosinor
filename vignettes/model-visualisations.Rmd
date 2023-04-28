@@ -73,6 +73,49 @@ plot(object, x_str = "Z")
 
 ## Polar plots
 
+
+
+--- taken from GLMMcosinor.Rmd
+
+The angle units in the plot can be specified with the `radial_units`
+argument. By default, the units are in radians where a complete
+revolution of the plot $(2\pi)$ represents the period for that component.
+The units can be changed to degrees (where $360^\circ$ represents the period),
+or even to be expressed in the same units as the period specification and time 
+variable in the data used to fit the model.
+
+By default, the function creates polar plots for all components
+and combines them together using the make_cowplot = TRUE argument. If the
+user wishes to plot just one component, they can specify this by using
+`component_index`, though by making `make_cowplot = FALSE`.
+
+The direction that the angle increases in can be changed with the
+clockwise argument, and the location of the `angle = 0` starting point can
+be specified with the `start` argument. Hence, if the user wishes to
+create a polar plot that resembles a clock, this can be done by
+specifying `clockwise = TRUE` and `start = "top"`.
+
+The argument: `overlay_parameter_info` can be used to create a line
+extending from the origin to the parameter estimate (to visualise the
+amplitude estimate), and a circular arc extending from the angle
+starting position (at 0) to the acrophase estimate.
+
+The background grid can also be customised. The argument
+`grid_angle_segments` is used to specify how many sectors the polar grid
+has, and the 'contour_interval' argument can be used to specify the
+distance between adjacent radial circles.
+
+If the user wishes to zoom into the confidence ellipses to show
+relevant information, they can adjust the view from the default `full`
+(which plots a full view of the polar plot) to 'zoom' (which enlarges
+the smallest view window containing all confidence ellipses), or
+`zoom_origin` (which enlarges the smallest view window containing all
+confidence ellipses AND the origin).
+
+---
+
+
+
 In addition to time-response plots, the GLMMcosinor package also allows
 users to create polar plots. In these plots, the plotted point
 represents the acrophase estimate, and the radius represents the
