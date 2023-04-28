@@ -252,10 +252,10 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 print.summary.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
-  print(round(x$main_output$raw.table, digits = digits))
+  printCoefmat(x$main_output$raw.table, digits = digits, has.Pvalue = TRUE)
   cat("\n")
   cat("Transformed coefficients:\n")
-  print(round(x$main_output$transformed.table, digits = digits))
+  printCoefmat(x$main_output$transformed.table, digits = digits, has.Pvalue = TRUE)
 
   # display the output from the dispersion model (if present)
 
@@ -263,20 +263,20 @@ print.summary.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     cat("\n***********************\n")
     cat("\n Dispersion Model \n")
     cat("Raw model coefficients:\n")
-    print(round(x$output_disp$raw.table, digits = digits))
+    printCoefmat(x$output_disp$raw.table, digits = digits, has.Pvalue = TRUE)
     cat("\n")
     cat("Transformed coefficients:\n")
-    print(round(x$output_disp$transformed.table, digits = digits))
+    printCoefmat(x$output_disp$transformed.table, digits = digits, has.Pvalue = TRUE)
   }
 
   if (!is.null(x$output_zi)) {
     cat("\n***********************\n")
     cat("\n Zero-Inflation Model \n")
     cat("Raw model coefficients:\n")
-    print(round(x$output_zi$raw.table, digits = digits))
+    printCoefmat(x$output_zi$raw.table, digits = digits, has.Pvalue = TRUE)
     cat("\n")
     cat("Transformed coefficients:\n")
-    print(round(x$output_zi$transformed.table, digits = digits))
+    printCoefmat(x$output_zi$transformed.table, digits = digits, has.Pvalue = TRUE)
   }
   invisible(x)
 }
