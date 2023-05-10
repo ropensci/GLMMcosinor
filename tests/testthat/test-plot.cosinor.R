@@ -128,6 +128,19 @@ test_that("polar_plot input checks work", {
     regex = "'circle_linetype' must be a character. See ?linetype for more details", fixed = TRUE
   )
 
+  #testing various inputs
+  expect_no_error(plot(object, superimpose.data = TRUE))
+  expect_no_error(plot(object, predict.ribbon = TRUE))
+
+  expect_no_error(polar_plot(object, ci_level = 0.9))
+  expect_no_error(polar_plot(object, contour_interval = 0.5))
+  expect_no_error(polar_plot(object, make_cowplot = FALSE))
+  expect_no_error(polar_plot(object, overlay_parameter_info = TRUE))
+  expect_no_error(polar_plot(object, fill_colours = c('blue','red')))
+  expect_no_error(polar_plot(object, radial_units = "degrees"))
+  expect_no_error(polar_plot(object, radial_units = "period"))
+  expect_no_error(polar_plot(object, view = "zoom"))
+  expect_no_error(polar_plot(object, view = "zoom_origin"))
   # # Test 12
   # data(vitamind)
   # object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
