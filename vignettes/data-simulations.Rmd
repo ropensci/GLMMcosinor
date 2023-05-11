@@ -94,7 +94,7 @@ object <- cosinor.glmm(Y ~ group + amp.acro(times,
   group = "group"
 ), data = testdata, family = poisson())
 summary(object)
-plot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ```
 
 
@@ -173,5 +173,5 @@ object <- cosinor.glmm(Y ~ group + amp.acro(times,
   group = "group"
 ), data = testdata, family = poisson())
 summary(object)
-plot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ```

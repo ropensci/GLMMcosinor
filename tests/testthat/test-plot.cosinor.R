@@ -129,8 +129,8 @@ test_that("polar_plot input checks work", {
   )
 
   #testing various inputs
-  expect_no_error(plot(object, superimpose.data = TRUE))
-  expect_no_error(plot(object, predict.ribbon = TRUE))
+  expect_no_error(autoplot(object, superimpose.data = TRUE))
+  expect_no_error(autoplot(object, predict.ribbon = TRUE))
 
   expect_no_error(polar_plot(object, ci_level = 0.9))
   expect_no_error(polar_plot(object, contour_interval = 0.5))
@@ -212,7 +212,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, x_str = 10)
+    autoplot(object, x_str = 10)
   }
 
   expect_error(
@@ -226,13 +226,13 @@ test_that("plot produces error messages", {
   object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 
   f <- function() {
-    plot(object, x_str = c("X", "Z"))
+    autoplot(object, x_str = c("X", "Z"))
   }
 
   expect_no_error(f())
 
   f <- function() {
-    plot(object)
+    autoplot(object)
   }
 
   # Test 3
@@ -242,7 +242,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, type = 20)
+    autoplot(object, type = 20)
   }
 
   expect_error(
@@ -254,7 +254,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, xlims = c(2, 1))
+    autoplot(object, xlims = c(2, 1))
   }
 
   expect_error(
@@ -266,7 +266,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, pred.length.out = 100.5)
+    autoplot(object, pred.length.out = 100.5)
   }
 
   expect_error(
@@ -278,7 +278,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, superimpose.data = 10)
+    autoplot(object, superimpose.data = 10)
   }
 
   expect_error(
@@ -290,7 +290,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, data_opacity = 1.5)
+    autoplot(object, data_opacity = 1.5)
   }
 
   expect_error(
@@ -302,7 +302,7 @@ test_that("plot produces error messages", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ 1 + amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
-    plot(object, predict.ribbon = 10)
+    autoplot(object, predict.ribbon = 10)
   }
 
   expect_error(

@@ -30,7 +30,7 @@ time-response plot of the fitted model:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-plot(object, x_str = "X")
+autoplot(object, x_str = "X")
 ```
 
 This function also allows users to superimpose the datapoints (that the
@@ -39,7 +39,7 @@ TRUE argument:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-plot(object, x_str = "X", superimpose.data = TRUE)
+autoplot(object, x_str = "X", superimpose.data = TRUE)
 ```
 
 If there are multiple factors in the model, the user can specify which
@@ -54,21 +54,21 @@ different plots for the same model;
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-plot(object)
+autoplot(object)
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-plot(object, x_str = "X")
+autoplot(object, x_str = "X")
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
 object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-plot(object, x_str = "Z")
+autoplot(object, x_str = "Z")
 ```
 
 ## Polar plots

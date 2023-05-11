@@ -193,7 +193,7 @@ time-response plot of the fitted model for all groups:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-plot(object)
+autoplot(object)
 ```
 
 This function also allows users to superimpose the data (that was used to fit
@@ -201,7 +201,7 @@ the model) over the fitted model, using the `superimpose.data = TRUE`:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-plot(object, superimpose.data = TRUE)
+autoplot(object, superimpose.data = TRUE)
 ```
 
 If there are multiple factors in the model, the user can specify which
@@ -220,9 +220,9 @@ object <- cosinor.glmm(
   Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)),
   data = vitamind_new
 )
-plot(object) # defaults to include all grouping variables (all combinations of X and Z)
-plot(object, x_str = "X") # only shows grouping of X (defaults to first level of Z)
-plot(object, x_str = "Z") # only shows grouping of Z (defaults to first level of X)
+autoplot(object) # defaults to include all grouping variables (all combinations of X and Z)
+autoplot(object, x_str = "X") # only shows grouping of X (defaults to first level of Z)
+autoplot(object, x_str = "Z") # only shows grouping of Z (defaults to first level of X)
 ```
 In addition to time-response plots, the GLMMcosinor package also allows
 users to create polar plots. In these plots, for a given component, 

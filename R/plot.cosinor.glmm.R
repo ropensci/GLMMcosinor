@@ -1,10 +1,14 @@
+#' @importFrom ggplot2 autoplot
+#' @export
+ggplot2::autoplot
+
 #' Plot a cosinor model
 #'
 #' Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
 #' Optionally allows for plotting by covariates
 #'
 #'
-#' @param x An \code{cosinor.glmm} object.
+#' @param object An \code{cosinor.glmm} object.
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param x_str Character vector naming covariate(s) to be plotted. Default has no value and plots all groups
 #' @param type Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")
@@ -25,13 +29,13 @@
 #' @examples
 #'
 #' model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
-#' plot(model, x_str = "X")
+#' autoplot(model, x_str = "X")
 #'
 #' @export
 #'
 #'
 
-plot.cosinor.glmm <- function(x,
+autoplot.cosinor.glmm <- function(object,
                               ci_level = 0.95,
                               x_str,
                               type = "response",
@@ -41,16 +45,17 @@ plot.cosinor.glmm <- function(x,
                               data_opacity = 0.3,
                               predict.ribbon = TRUE,
                               ...) {
+
   # Validating user inputs
-  assertthat::assert_that(inherits(x, "cosinor.glmm"),
-    msg = "'x' must be of class 'cosinor.glmm'"
+  assertthat::assert_that(inherits(object, "cosinor.glmm"),
+    msg = "'object' must be of class 'cosinor.glmm'"
   )
 
   validate_ci_level(ci_level)
 
   if (!missing(x_str)) {
     for (i in x_str) {
-      assertthat::assert_that(i %in% names(x$group_stats),
+      assertthat::assert_that(i %in% names(object$group_stats),
         msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
       )
     }
@@ -78,7 +83,7 @@ plot.cosinor.glmm <- function(x,
 
   # default to plotting all groups if x_str is missing
   if (missing(x_str)) {
-    x_str <- names(x$group_stats)
+    x_str <- names(object$group_stats)
   }
 
 
@@ -86,7 +91,7 @@ plot.cosinor.glmm <- function(x,
   if (!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
   } else {
-    timeax <- seq(0, max(x$period), length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
+    timeax <- seq(0, max(object$period), length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
   }
 
   # this is the function that generates the plots and can be looped iteratively for different x_str
@@ -126,12 +131,12 @@ plot.cosinor.glmm <- function(x,
 
   # format the newdata dataframe before passing to data_processor_plot()
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
-  colnames(newdata)[1] <- x$time_name
-  newdata_processed <- data_processor_plot(x, newdata, x_str)
-  y_name <- x$response_var # get the response data from the cosinor.glmm object
+  colnames(newdata)[1] <- object$time_name
+  newdata_processed <- data_processor_plot(object, newdata, x_str)
+  y_name <- object$response_var # get the response data from the cosinor.glmm object
 
   # get the predicted response values using the predict.cosinor.glmm() function
-  pred_obj <- stats::predict(x, newdata = newdata_processed, type = type)
+  pred_obj <- stats::predict(object, newdata = newdata_processed, type = type)
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
   # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
   # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
@@ -142,8 +147,8 @@ plot.cosinor.glmm <- function(x,
   y_max <- pred_obj$fit + zt * pred_obj$se.fit
   # get the original data from the cosinor.glmm object to be superimposed
   if (superimpose.data) {
-    original_data <- x$newdata
-    original_data_processed <- x$newdata
+    original_data <- object$newdata
+    original_data_processed <- object$newdata
     original_data_processed$levels <- ""
     for (d in x_str) {
       original_data_processed$levels <- paste0(
@@ -162,7 +167,7 @@ plot.cosinor.glmm <- function(x,
       plot_object <- ggplot2::ggplot(
         data = newdata_processed,
         ggplot2::aes(
-          x = !!rlang::sym(paste(x$time_name)),
+          x = !!rlang::sym(paste(object$time_name)),
           y = !!rlang::sym(y_name)
         )
       ) +
@@ -172,7 +177,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_line(
           data = newdata_processed,
           ggplot2::aes(
-            x = !!rlang::sym(paste(x$time_name)),
+            x = !!rlang::sym(paste(object$time_name)),
             y = !!rlang::sym(y_name),
             col = levels
           )
@@ -186,7 +191,7 @@ plot.cosinor.glmm <- function(x,
       plot_object <- ggplot2::ggplot(
         data = newdata_processed,
         ggplot2::aes(
-          x = !!rlang::sym(paste(x$time_name)),
+          x = !!rlang::sym(paste(object$time_name)),
           y = !!rlang::sym(y_name)
         )
       ) +
@@ -194,7 +199,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_point(
           data = original_data_processed,
           ggplot2::aes(
-            x = !!rlang::sym(paste(x$time_name)),
+            x = !!rlang::sym(paste(object$time_name)),
             y = !!rlang::sym(y_name)
           ),
           alpha = data_opacity
@@ -205,7 +210,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_line(
           data = newdata_processed,
           ggplot2::aes(
-            x = !!rlang::sym(paste(x$time_name)),
+            x = !!rlang::sym(paste(object$time_name)),
             y = !!rlang::sym(y_name),
             col = levels
           )
@@ -213,7 +218,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_point(
           data = original_data_processed,
           ggplot2::aes(
-            x = !!rlang::sym(paste(x$time_name)),
+            x = !!rlang::sym(paste(object$time_name)),
             y = !!rlang::sym(y_name),
             col = levels
           ),
@@ -230,7 +235,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_ribbon(
           data = newdata_processed,
           ggplot2::aes(
-            x = !!rlang::sym(x$time_name),
+            x = !!rlang::sym(object$time_name),
             ymin = y_min,
             ymax = y_max
           ),
@@ -242,7 +247,7 @@ plot.cosinor.glmm <- function(x,
         ggplot2::geom_ribbon(
           data = newdata_processed,
           ggplot2::aes(
-            x = !!rlang::sym(x$time_name),
+            x = !!rlang::sym(object$time_name),
             ymin = y_min,
             ymax = y_max,
             col = levels,
