@@ -140,7 +140,6 @@ update_formula_and_data <- function(data, formula,
 #'
 #'
 #' @return updated dataframe and formula to then be processed by data_processor()
-#' @noRd
 
 amp.acro <- function(time_col,
                      n_components = 1,
