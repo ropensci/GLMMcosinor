@@ -6,11 +6,20 @@
 #' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 
 test_that("script works and warnings are displayed appropriately", {
+
+  #Test the class output
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
-  testthat::expect_true(inherits(object, "cosinor.glmm"))
+  test_object <- test_cosinor(object, x_str = "X")
+  testthat::expect_true(inherits(test_object, "test_cosinor"))
 
-  # Test 1a
+  #Test the comparison_type variable, and test the print output
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
+  expect_no_error(test_cosinor(object, x_str = "X", comparison_type = "components", level_index = 1, comparison_A = 1, comparison_B = 2))
+  expect_no_error(print(test_cosinor(object, x_str = "X", comparison_type = "components", level_index = 1, comparison_A = 1, comparison_B = 2)))
+
+
+  #Test a simple input
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -18,8 +27,8 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_no_error(f)
 
-
-  # Test 2
+  #Testing error messages
+  # Error message test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -30,7 +39,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "is.character(x_str) is not TRUE", fixed = TRUE
   )
 
-  # Test 3
+  # Error message test 2
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -41,7 +50,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "x_str must be the name of a group in object", fixed = TRUE
   )
 
-  # Test 4
+  # Error message test 3
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -52,7 +61,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'arg' should be one of", fixed = TRUE
   )
 
-  # Test 5
+  # Error message test 4
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -63,7 +72,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'arg' should be one of ", fixed = TRUE
   )
 
-  # Test 6
+  # Error message test 5
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -74,7 +83,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'", fixed = TRUE
   )
 
-  # Test 7
+  # Error message test 6
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -85,7 +94,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model", fixed = TRUE
   )
 
-  # Test 8
+  # Error message test 7
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -96,7 +105,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'comparison_type' must be one of the following strings:'levels', or 'components'", fixed = TRUE
   )
 
-  # Test 9
+  # Error message test 8
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -107,7 +116,7 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'component_index' must be supplied and it must be a number corresponding to a component in the model", fixed = TRUE
   )
 
-  # Test 10
+  # Error message test 9
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
   f <- function() {
@@ -118,15 +127,8 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'level_index' must be supplied and it must be a number corresponding to a level in the model", fixed = TRUE
   )
 
-  #Test 11
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
-  expect_no_error(test_cosinor(object, x_str = "X", comparison_type = "components", level_index = 1, comparison_A = 1, comparison_B = 2))
-  expect_no_error(print(object))
 
-
-
-  # Test 12
+  # Error message test 10
   data(vitamind)
   obj <- test_cosinor(object, x_str = "X")
   expect_true(inherits(obj, "test_cosinor"))
