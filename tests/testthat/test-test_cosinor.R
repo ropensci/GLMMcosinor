@@ -6,6 +6,10 @@
 #' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 
 test_that("script works and warnings are displayed appropriately", {
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  testthat::expect_true(inherits(object, "cosinor.glmm"))
+
   # Test 1a
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
@@ -114,7 +118,15 @@ test_that("script works and warnings are displayed appropriately", {
     regex = "'level_index' must be supplied and it must be a number corresponding to a level in the model", fixed = TRUE
   )
 
-  # Test 11
+  #Test 11
+  data(vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
+  expect_no_error(test_cosinor(object, x_str = "X", comparison_type = "components", level_index = 1, comparison_A = 1, comparison_B = 2))
+  expect_no_error(print(object))
+
+
+
+  # Test 12
   data(vitamind)
   obj <- test_cosinor(object, x_str = "X")
   expect_true(inherits(obj, "test_cosinor"))
@@ -163,4 +175,6 @@ test_that("multi-component comparison works, print functions work", {
   }
   testthat::expect_no_error(f)
   testthat::expect_snapshot_output(print(object, digits = 2))
+
+
 })
