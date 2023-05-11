@@ -7,19 +7,19 @@
 
 test_that("script works and warnings are displayed appropriately", {
 
-  #Test the class output
+  # Test the class output
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   test_object <- test_cosinor(object, x_str = "X")
   testthat::expect_true(inherits(test_object, "test_cosinor"))
 
-  #Test the comparison_type variable, and test the print output
+  # Test the comparison_type variable, and test the print output
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
   expect_no_error(test_cosinor(object, x_str = "X", comparison_type = "components", level_index = 1, comparison_A = 1, comparison_B = 2))
   expect_no_error(print(test_cosinor(object, x_str = "X", comparison_type = "components", level_index = 1, comparison_A = 1, comparison_B = 2)))
 
 
-  #Test a simple input
+  # Test a simple input
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
   f <- function() {
@@ -27,7 +27,7 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_no_error(f)
 
-  #Testing error messages
+  # Testing error messages
   # Error message test 1
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
@@ -177,6 +177,4 @@ test_that("multi-component comparison works, print functions work", {
   }
   testthat::expect_no_error(f)
   testthat::expect_snapshot_output(print(object, digits = 2))
-
-
 })

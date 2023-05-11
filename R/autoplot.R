@@ -48,7 +48,7 @@ autoplot.cosinor.glmm <- function(object,
 
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
-                          msg = "'object' must be of class 'cosinor.glmm'"
+    msg = "'object' must be of class 'cosinor.glmm'"
   )
 
   validate_ci_level(ci_level)
@@ -56,29 +56,29 @@ autoplot.cosinor.glmm <- function(object,
   if (!missing(x_str)) {
     for (i in x_str) {
       assertthat::assert_that(i %in% names(object$group_stats),
-                              msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
+        msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
       )
     }
   }
   assertthat::assert_that(is.character(type),
-                          msg = "'type' must be a string. See type in ?predict for more information about valid inputs"
+    msg = "'type' must be a string. See type in ?predict for more information about valid inputs"
   )
   if (!missing(xlims)) {
     assertthat::assert_that(length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
-                            msg = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate"
+      msg = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate"
     )
   }
   assertthat::assert_that(pred.length.out == floor(pred.length.out) & pred.length.out > 0,
-                          msg = "'pred.length.out' must be an integer greater than 0 "
+    msg = "'pred.length.out' must be an integer greater than 0 "
   )
   assertthat::assert_that(is.logical(superimpose.data),
-                          msg = "'superimpose.data' must be a logical argument, either TRUE or FALSE"
+    msg = "'superimpose.data' must be a logical argument, either TRUE or FALSE"
   )
   assertthat::assert_that(is.numeric(data_opacity) & data_opacity >= 0 & data_opacity <= 1,
-                          msg = "'data_opacity' must be a number between 0 and 1 inclusive"
+    msg = "'data_opacity' must be a number between 0 and 1 inclusive"
   )
   assertthat::assert_that(is.logical(predict.ribbon),
-                          msg = "'predict.ribbon' must be a logical argument, either TRUE or FALSE"
+    msg = "'predict.ribbon' must be a logical argument, either TRUE or FALSE"
   )
 
   # default to plotting all groups if x_str is missing
@@ -136,7 +136,12 @@ autoplot.cosinor.glmm <- function(object,
   y_name <- object$response_var # get the response data from the cosinor.glmm object
 
   # get the predicted response values using the predict.cosinor.glmm() function
-  pred_obj <- stats::predict(object, newdata = newdata_processed, type = type)
+  pred_obj <- stats::predict(
+    object,
+    newdata = newdata_processed,
+    type = type,
+    se.fit = TRUE
+  )
   newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
   # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
   # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval

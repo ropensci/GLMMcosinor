@@ -10,7 +10,7 @@ test_that("autoplot input checks work", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
 
-  #testing various inputs
+  # testing various inputs
   expect_no_error(autoplot(object, superimpose.data = TRUE))
   expect_no_error(autoplot(object, predict.ribbon = TRUE))
 })

@@ -126,7 +126,7 @@ test_that("polar_plot input checks work", {
   expect_no_error(polar_plot(object, contour_interval = 0.5))
   expect_no_error(polar_plot(object, make_cowplot = FALSE))
   expect_no_error(polar_plot(object, overlay_parameter_info = TRUE))
-  expect_no_error(polar_plot(object, fill_colours = c('blue','red')))
+  expect_no_error(polar_plot(object, fill_colours = c("blue", "red")))
   expect_no_error(polar_plot(object, radial_units = "degrees"))
   expect_no_error(polar_plot(object, radial_units = "period"))
   expect_no_error(polar_plot(object, view = "zoom"))

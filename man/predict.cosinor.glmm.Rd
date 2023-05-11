@@ -4,14 +4,12 @@
 \alias{predict.cosinor.glmm}
 \title{Predict from a cosinor model}
 \usage{
-\method{predict}{cosinor.glmm}(object, newdata, se.fit = TRUE, ...)
+\method{predict}{cosinor.glmm}(object, newdata, ...)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
 
 \item{newdata}{Optional new data}
-
-\item{se.fit}{Logical argument indicating whether to determine standard error (default = TRUE)}
 
 \item{...}{other arguments passed to \code{glmmTMB:::predict.glmmTMB}}
 }

@@ -6,7 +6,6 @@
 #'
 #' @param object An object of class \code{cosinor.glmm}
 #' @param newdata Optional new data
-#' @param se.fit Logical argument indicating whether to determine standard error (default = TRUE)
 #' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}
 #'
 #' @return Returns predicted values from the cosinor model.
@@ -26,7 +25,7 @@
 #' @export
 #'
 
-predict.cosinor.glmm <- function(object, newdata, se.fit = TRUE, ...) {
+predict.cosinor.glmm <- function(object, newdata, ...) {
   if (missing(newdata)) {
     return(stats::predict(object$fit, ...))
   }
@@ -50,5 +49,5 @@ predict.cosinor.glmm <- function(object, newdata, se.fit = TRUE, ...) {
   # make some useful error messages here - maybe catch the messages when evaluating the code used to wrangle the data using previous call
   # and then append on that this was happening when wrangling newdata.
   # you can use capture.ouput() to evaluate some code and record any output, including error messages.
-  return(stats::predict(object$fit, newdata = nd, se.fit = se.fit, ...))
+  return(stats::predict(object$fit, newdata = nd, ...))
 }
