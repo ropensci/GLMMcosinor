@@ -273,3 +273,9 @@ test_that("mixed model estimates parameters well", {
 
   expect_s3_class(f(), "cosinor.glmm")
 })
+
+
+test_that("alternative inputs work", {
+  testthat::expect_no_error(cosinor.glmm(Y ~ amp.acro(time, group = "X", period = 12), data = vitamind))
+  testthat::expect_no_error(cosinor.glmm(Y ~ amp.acro(time, group = X, period = 12), data = vitamind))
+})

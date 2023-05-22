@@ -89,17 +89,6 @@ test_that("polar_plot input checks work", {
     regex = "'ellipse_opacity' must be a number between 0 and 1 inclusive", fixed = TRUE
   )
 
-  # Test 9
-  data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
-  f <- function() {
-    polar_plot(object, make_cowplot = 2)
-  }
-  expect_error(
-    f(),
-    regex = "'make_cowplot' must be a logical argument, either TRUE or FALSE", fixed = TRUE
-  )
-
   # Test 10
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)

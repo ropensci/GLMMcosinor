@@ -68,8 +68,6 @@ cosinor.glmm <- function(formula,
   )
   updated_df_and_formula$Call <- NULL
 
-
-
   do.call(
     data_processor,
     c(

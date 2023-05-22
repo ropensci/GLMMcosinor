@@ -30,7 +30,6 @@ update_formula_and_data <- function(data, formula,
   # Extract only the amp.acro function from the call
   # check for missing data
 
-  # browser()
   if (!quietly) {
     if (any(is.na(data))) {
       message("\n Missing data in the following dataframe columns: \n")
@@ -152,6 +151,13 @@ amp.acro <- function(time_col,
                      .data_prefix = "main_") {
   # checking dataframe
 
+
+  ## Check if 'group' is a non-string and convert it to a string if necessary
+  #if (!is.character(group)) {
+  #  group <- as.character(group)
+  #}
+
+
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
     inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data, "tbl"),
@@ -176,6 +182,7 @@ amp.acro <- function(time_col,
                                  .quietly = TRUE,
                                  .data,
                                  .amp.acro_ind = -1) {
+
     # assess the quality of the inputs
     stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
     lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
@@ -213,6 +220,17 @@ amp.acro <- function(time_col,
     assertthat::assert_that(is.vector(ttt),
       msg = "time_col must be univariate"
     )
+
+    # Check if 'group' is a non-string and convert it to a string if necessary
+    if (all(!is.character(substitute(group,env))) & !missing(group)) {
+      group_change <- as.character(substitute(group,env))
+      if(length(group_change) != 1) {
+        group <- group
+      }
+      else {
+        group <- group_change
+      }
+    }
 
     # allow the user to not have any grouping structure (if group argument is missing)
     if (missing(group)) {
