@@ -145,7 +145,7 @@ amp.acro <- function(time_col,
                      group,
                      .data,
                      .formula,
-                     period = 12,
+                     period,
                      .quietly = TRUE,
                      .amp.acro_ind = -1,
                      .data_prefix = "main_") {
@@ -182,6 +182,7 @@ amp.acro <- function(time_col,
                                  .quietly = TRUE,
                                  .data,
                                  .amp.acro_ind = -1) {
+
 
     # assess the quality of the inputs
     stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0

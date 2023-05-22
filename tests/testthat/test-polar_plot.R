@@ -2,7 +2,7 @@
 test_that("polar_plot input checks work", {
   # Test 1
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   object_bad <- lm(Y ~ X, data = vitamind)
   f <- function() {
     polar_plot(object = object_bad)
@@ -14,7 +14,7 @@ test_that("polar_plot input checks work", {
 
   # Test 2
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period = 12), data = vitamind)
   f <- function() {
     polar_plot(object, contour_interval = -1)
   }
@@ -25,7 +25,7 @@ test_that("polar_plot input checks work", {
 
   # Test 3
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period = 12), data = vitamind)
   f <- function() {
     polar_plot(object, quietly = "true")
   }
@@ -36,7 +36,7 @@ test_that("polar_plot input checks work", {
 
   # Test 4
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, radial_units = "angle")
   }
@@ -47,7 +47,7 @@ test_that("polar_plot input checks work", {
 
   # Test 5
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, clockwise = 10)
   }
@@ -58,7 +58,7 @@ test_that("polar_plot input checks work", {
 
   # Test 6
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, text_size = -1)
   }
@@ -69,7 +69,7 @@ test_that("polar_plot input checks work", {
 
   # Test 7
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, text_opacity = 2)
   }
@@ -80,7 +80,7 @@ test_that("polar_plot input checks work", {
 
   # Test 8
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, ellipse_opacity = 2)
   }
@@ -91,7 +91,7 @@ test_that("polar_plot input checks work", {
 
   # Test 10
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, component_index = 2)
   }
@@ -102,7 +102,7 @@ test_that("polar_plot input checks work", {
 
   # Test 11
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, circle_linetype = 2)
   }
@@ -133,7 +133,7 @@ test_that("polar_plot input checks work", {
 
   # Test 13
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period =12), data = vitamind)
   f <- function() {
     polar_plot(object, start = "side")
   }
@@ -144,7 +144,7 @@ test_that("polar_plot input checks work", {
 
   # Test 14
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period=12), data = vitamind)
   f <- function() {
     polar_plot(object, view = "all")
   }
@@ -155,7 +155,7 @@ test_that("polar_plot input checks work", {
 
   # Test 15
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period=12), data = vitamind)
   f <- function() {
     polar_plot(object, overlay_parameter_info = 2)
   }
@@ -170,7 +170,7 @@ test_that("polar_plot input checks work", {
 test_that("polar_plot messages work", {
   # Test 1
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X"), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp.acro(time, group = "X", period=12), data = vitamind)
   f <- function() {
     polar_plot(object, quietly = FALSE)
   }

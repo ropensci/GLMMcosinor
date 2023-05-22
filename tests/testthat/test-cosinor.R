@@ -138,15 +138,15 @@ test_that("model output is class cosinor.glmm", {
     {
       data(vitamind)
       object <- cosinor.glmm(
-        Y ~ X + amp.acro(time, group = "X"),
+        Y ~ X + amp.acro(time, group = "X", period = 12),
         data = vitamind
       )
       expect_true(inherits(object, "cosinor.glmm"))
 
-      object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"),
+      object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12),
         data = vitamind,
-        dispformula = ~ 0 + amp.acro(time, group = "X"),
-        ziformula = ~ 0 + amp.acro(time, group = "X")
+        dispformula = ~ 0 + amp.acro(time, group = "X", period = 12),
+        ziformula = ~ 0 + amp.acro(time, group = "X", period = 12)
       )
       testthat::expect_no_error(object)
       testthat::expect_snapshot_output(print(object, digits = 2))
