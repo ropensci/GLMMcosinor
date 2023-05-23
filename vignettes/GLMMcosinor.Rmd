@@ -183,7 +183,7 @@ cosinor components - that is the role of the `test_cosinor()` function.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12), data = vitamind)
 summary(object)
 ```
 
@@ -195,7 +195,7 @@ predicted values from the model on either the existing or new data.
 `plot()`.)
 
 ```{r, message=F, warning=F}
-fit <- cosinor.glmm(Y ~ X + amp.acro(X, group = NA), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp.acro(X, group = NA, period = 12), data = vitamind)
 predict(fit)
 ```
 
@@ -206,7 +206,7 @@ objects. Firstly, the `plot()` method creates a time-response plot of
 the fitted model for all groups:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period =12), data = vitamind)
 autoplot(object)
 ```
 
@@ -215,7 +215,7 @@ to fit the model) over the fitted model, using the
 `superimpose.data = TRUE`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12), data = vitamind)
 autoplot(object, superimpose.data = TRUE)
 ```
 
