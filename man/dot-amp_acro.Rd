@@ -31,6 +31,14 @@
 \item{.formula}{the formula from the original cosinor.glmm() function}
 
 \item{.quietly}{controls whether messages from amp_acro are displayed. TRUE by default}
+
+\item{.amp_acro_ind}{the index of the portion of the formula containing
+amp_acro. -1 for main formula (default), 0 for zi or disp formulae.}
+
+\item{.data_prefix}{prefix for columns to be added in the new dataframe.
+Defaults to "main_".}
+
+\item{.env}{The environment in which to evaluate column names on the data being passed.}
 }
 \value{
 updated dataframe and formula to then be processed by data_processor()

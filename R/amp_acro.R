@@ -51,6 +51,11 @@ amp_acro <- function(time_col,
 #' @param .data the dataframe from the original cosinor.glmm() function
 #' @param .formula the formula from the original cosinor.glmm() function
 #' @param .quietly controls whether messages from amp_acro are displayed. TRUE by default
+#' @param .amp_acro_ind the index of the portion of the formula containing
+#' amp_acro. -1 for main formula (default), 0 for zi or disp formulae.
+#' @param .data_prefix prefix for columns to be added in the new dataframe.
+#' Defaults to "main_".
+#' @param .env The environment in which to evaluate column names on the data being passed.
 #'
 #' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
 #' @srrstats {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*

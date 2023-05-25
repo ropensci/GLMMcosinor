@@ -47,7 +47,7 @@ Optionally allows for plotting by covariates
 }
 \examples{
 
-model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 autoplot(model, x_str = "X")
 
 }
