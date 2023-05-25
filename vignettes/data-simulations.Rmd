@@ -88,7 +88,7 @@ testdata <- simulate_cosinor(1000,
   period = c(12, 6, 8),
   n_components = 3
 )
-object <- cosinor.glmm(Y ~ group + amp.acro(times,
+object <- cosinor.glmm(Y ~ group + amp_acro(times,
   n_components = 3,
   period = c(12, 6, 8),
   group = "group"
@@ -167,7 +167,7 @@ testdata <- simulate_cosinor(1000,
   period = c(12, 6, 8),
   n_components = 3
 )
-object <- cosinor.glmm(Y ~ group + amp.acro(times,
+object <- cosinor.glmm(Y ~ group + amp_acro(times,
   n_components = 3,
   period = c(12, 6, 8),
   group = "group"

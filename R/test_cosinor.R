@@ -22,7 +22,7 @@
 #' @return Returns a `test_cosinor` object.
 #' @examples
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12

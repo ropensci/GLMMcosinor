@@ -6,24 +6,24 @@
 
 test_that("multiplication works", {
   # test 1
-  amp.acro(
+  amp_acro(
     time_col = time, n_components = 2, group = "X", period = c(24, 12), .data = vitamind,
-    .formula = Y ~ X + amp.acro(time, n_components = 2, group = "X", period = c(24, 12))
+    .formula = Y ~ X + amp_acro("time", n_components = 2, group = "X", period = c(24, 12))
   )
 
-  f <- Y ~ X + amp.acro(time, n_components = 2, group = c(NA, "X"))
+  f <- Y ~ X + amp_acro(time, n_components = 2, group = c(NA, "X"))
 
-  cosinor.glmm(Y ~ X + amp.acro(time, n_components = 2, group = c(NA, "X"), period = c(12, 24)), data = vitamind)
+  cosinor.glmm(Y ~ X + amp_acro(time, n_components = 2, group = c(NA, "X"), period = c(12, 24)), data = vitamind)
   expect(ok = TRUE, "unsuccessful multiplication of group to match n_components")
 })
 
 test_that("bad inputs return useful errors", {
   # test 2
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1.1, group = "X", period = 12,
       .data = vitamind,
-      .formula = Y ~ X + amp.acro(time, n_components = 1.1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1.1, group = "X", period = 12)
     )
   }
   expect_error( # non-count n_components
@@ -33,10 +33,10 @@ test_that("bad inputs return useful errors", {
 
   # test 3
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = -12,
       .data = vitamind,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = -12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = -12)
     )
   }
   expect_error(f(), regexp = "period > 0") # negative period
@@ -46,10 +46,10 @@ test_that("bad inputs return useful errors", {
   vitamind_mod <- vitamind
   vitamind_mod$time <- as.factor(rbinom(length(vitamind$time), 1, 0.5))
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
     )
   }
   expect_error(f(), regexp = "ttt is not a numeric or integer vector")
@@ -59,10 +59,10 @@ test_that("bad inputs return useful errors", {
   vitamind_2 <- vitamind
   vitamind_2$time <- cbind(vitamind_2$time, vitamind_2$time) # two time columns
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_2,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
     )
   }
   expect_error(f(), regexp = "time_col must be univariate")
@@ -70,10 +70,10 @@ test_that("bad inputs return useful errors", {
   # test 6
   data(vitamind)
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = "time", n_components = 1, group = "X", period = 12,
       .data = vitamind,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
     )
   }
   expect_error(f(), regexp = "time_col argument must not be a string")
@@ -81,10 +81,10 @@ test_that("bad inputs return useful errors", {
   # test 7
   data(vitamind)
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time_values, n_components = 1, group = "X", period = 12,
       .data = vitamind,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
     )
   }
   expect_error(f(), regexp = "time_col must be the name of a column in dataframe")
@@ -93,10 +93,10 @@ test_that("bad inputs return useful errors", {
   data(vitamind)
   vitamind_mod <- as.list(vitamind)
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
     )
   }
   expect_error(f(), regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
@@ -106,10 +106,10 @@ test_that("bad inputs return useful errors", {
   vitamind_mod <- vitamind
   colnames(vitamind_mod)[1] <- "rrr2"
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "rrr2", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "rrr2", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "rrr2", period = 12)
     )
   }
   expect_error(f(), regexp = "Group variable names cannot contain 'rrr' or 'sss'")
@@ -119,32 +119,32 @@ test_that("bad inputs return useful errors", {
   vitamind_two_groups <- vitamind
   vitamind_two_groups["X2"] <- vitamind_two_groups["X"]
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = c("X", "X2"), period = 12,
       .data = vitamind_two_groups,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = c("X", "X2"), period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = c("X", "X2"), period = 12)
     )
   }
-  expect_error(f(), regexp = "Grouping variable in amp.acro() must be of length 1 or the same as n_components", fixed = TRUE)
+  expect_error(f(), regexp = "Grouping variable in amp_acro() must be of length 1 or the same as n_components", fixed = TRUE)
 
   # test 11
   data(vitamind)
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = c(8, 12),
       .data = vitamind,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = c(8, 12))
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = c(8, 12))
     )
   }
-  expect_error(f(), regexp = "period value(s) in amp.acro() must be of length 1 or the same as n_components", fixed = TRUE)
+  expect_error(f(), regexp = "period value(s) in amp_acro() must be of length 1 or the same as n_components", fixed = TRUE)
 
   # test 12
   data(vitamind)
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "Z", period = c(8, 12),
       .data = vitamind,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "Z", period = c(8, 12))
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "Z", period = c(8, 12))
     )
   }
   expect_error(f(), regexp = "Grouping variable(s) not found in input data:", fixed = TRUE)
@@ -156,10 +156,10 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
   vitamind_mod <- dplyr::as_tibble(vitamind)
 
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12),
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12),
       .quietly = FALSE
     )
   }
@@ -171,10 +171,10 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
   # test 15
   vitamind_mod <- as.matrix(vitamind)
   f <- function() {
-    amp.acro(
+    amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp.acro(time, n_components = 1, group = "X", period = 12)
+      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
     )
   }
   expect(f(), ok = TRUE, "unsuccessful conversion of matrix to dataframe")

@@ -26,7 +26,7 @@
 #'
 #'
 #' @examples
-#' model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+#' model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 #' polar_plot(model)
 polar_plot.cosinor.glmm <- function(x,
                                     ci_level = 0.95,

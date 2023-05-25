@@ -29,7 +29,7 @@ objects. Firstly, the function ggplot.cosinor.glmm() creates a
 time-response plot of the fitted model:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 autoplot(object, x_str = "X")
 ```
 
@@ -38,7 +38,7 @@ fit is based on) over the fitted model, using the superimpose.data =
 TRUE argument:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 autoplot(object, x_str = "X", superimpose.data = TRUE)
 ```
 
@@ -53,21 +53,21 @@ different plots for the same model;
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 autoplot(object)
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 autoplot(object, x_str = "X")
 ```
 
 ```{r, message=F, warning=F}
 data(vitamind)
 vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-object <- cosinor.glmm(Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 autoplot(object, x_str = "Z")
 ```
 
@@ -123,7 +123,7 @@ amplitude estimate for a given component. The ellipses represent
 confidence regions.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 polar_plot(model)
 ```
 
@@ -134,7 +134,7 @@ model. The units can be changed to degrees, or even to be expressed in
 the same units as the period specification.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 polar_plot(model, radial_units = "degrees")
 ```
 
@@ -156,7 +156,7 @@ amplitude estimate), and a circular arc extending from the angle
 starting position (at 0) to the acrophase estimate.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 polar_plot(model, overlay_parameter_info = TRUE)
 ```
 
@@ -166,7 +166,7 @@ has, and the 'contour_interval' argument can be used to specify the
 distance between adjacent radial circles.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 polar_plot(model, grid_angle_segments = 12, clockwise = TRUE, start = "top", contour_interval = 1)
 ```
 
@@ -178,7 +178,7 @@ the smallest view window containing all confidence ellipses), or
 confidence ellipses AND the origin).
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 polar_plot(model,
   grid_angle_segments = 12, clockwise = TRUE, start = "top",
   view = "zoom_origin"

@@ -28,7 +28,7 @@ ggplot2::autoplot
 #' @return Returns a `ggplot` graphics object.
 #' @examples
 #'
-#' model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+#' model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
 #' autoplot(model, x_str = "X")
 #'
 #' @export

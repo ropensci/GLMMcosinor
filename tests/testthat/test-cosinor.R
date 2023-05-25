@@ -36,7 +36,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
         data = comod
       )
     }
@@ -63,7 +63,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
         data = comod,
         family = poisson
       )
@@ -91,7 +91,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
         data = comod,
         family = Gamma(link = "log")
       )
@@ -120,7 +120,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod
       )
       object <- cosinor.glmm(
-        Y ~ group + amp.acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
         data = comod,
         family = binomial
       )
@@ -138,15 +138,15 @@ test_that("model output is class cosinor.glmm", {
     {
       data(vitamind)
       object <- cosinor.glmm(
-        Y ~ X + amp.acro(time, group = "X", period = 12),
+        Y ~ X + amp_acro(time, group = "X", period = 12),
         data = vitamind
       )
       expect_true(inherits(object, "cosinor.glmm"))
 
-      object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12),
+      object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12),
         data = vitamind,
-        dispformula = ~ 0 + amp.acro(time, group = "X", period = 12),
-        ziformula = ~ 0 + amp.acro(time, group = "X", period = 12)
+        dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
+        ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
       )
       testthat::expect_no_error(object)
       testthat::expect_snapshot_output(print(object, digits = 2))
@@ -166,11 +166,11 @@ test_that("model output is class cosinor.glmm", {
 
       # testing mixed model specification
       f <- function() {
-        cosinor.glmm(Y ~ X + amp.acro(time,
+        cosinor.glmm(Y ~ X + amp_acro(time,
           n_components = 1,
           group = "X",
           period = TruePeriod
-        ) + (1 | X) + (0 + amp.acro1 | X), data = vitamind)
+        ) + (1 | X) + (0 + amp_acro1 | X), data = vitamind)
       }
       testthat::expect_no_error(f)
 
@@ -190,12 +190,12 @@ test_that("model output is class cosinor.glmm", {
 
       suppressWarnings({
         object <- cosinor.glmm(
-          Y ~ group + amp.acro(times,
+          Y ~ group + amp_acro(times,
             n_components = 2,
             group = "group",
             period = c(6, 12)
           ) +
-            (0 + amp.acro2 | group),
+            (0 + amp_acro2 | group),
           data = sim_data,
           family = gaussian
         )
@@ -243,11 +243,11 @@ test_that("mixed model estimates parameters well", {
 
   f <- function() {
     object <- cosinor.glmm(
-      Y ~ amp.acro(times,
+      Y ~ amp_acro(times,
         n_components = 2,
         period = c(6, 12)
       ) +
-        (0 + amp.acro2 | id),
+        (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
     )
@@ -261,11 +261,11 @@ test_that("mixed model estimates parameters well", {
 
   f <- function() {
     object <- cosinor.glmm(
-      Y ~ amp.acro(times,
+      Y ~ amp_acro(times,
         n_components = 2,
         period = c(6, 12)
       ) +
-        (0 + amp.acro2 | id),
+        (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
     )
@@ -276,6 +276,6 @@ test_that("mixed model estimates parameters well", {
 
 
 test_that("alternative inputs work", {
-  testthat::expect_no_error(cosinor.glmm(Y ~ amp.acro(time, group = "X", period = 12), data = vitamind))
-  testthat::expect_no_error(cosinor.glmm(Y ~ amp.acro(time, group = X, period = 12), data = vitamind))
+  testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
+  testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
 })

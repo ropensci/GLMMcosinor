@@ -26,7 +26,7 @@ vitamind2 <- vitamind
 vitamind2$patient <- sample(LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
 updated_df_and_formula <- update_formula_and_data(
   data = vitamind2,
-  formula = Y ~ X + amp.acro(time,
+  formula = Y ~ X + amp_acro(time,
     group = "X",
     period = 12
   )

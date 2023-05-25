@@ -63,7 +63,7 @@ model given the formula specified by the user.
 
 The formula argument for `cosinor.glmm()` is specified using the
 `{lme4}` style (for details see `vignette("lmer", package = "lme4")`).
-The only difference is that it allows for use of an `amp.acro()` call
+The only difference is that it allows for use of an `amp_acro()` call
 within the formula that is used to identify the circadian components and
 relevant variables in the `data.frame`. Any other combination of
 covariates can also be included in the formula as well as random effects
@@ -79,7 +79,7 @@ Here, we fit a simple cosinor model without a grouping variable.
 
 ```{r, message=F, warning=F}
 data(vitamind)
-cosinor.glmm(Y ~ amp.acro(time, period = 12), data = filter(vitamind, X == 0))
+cosinor.glmm(Y ~ amp_acro(time, period = 12), data = filter(vitamind, X == 0))
 ```
 
 The output shows the coefficients fit within the cosinor model as well
@@ -87,7 +87,7 @@ as the the (transformed) estimates for amplitude (amp) and acrophase
 (acr).
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ amp.acro(time, group = "X", period = 12), data = vitamind)
+cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
 ```
 
 In the example above, the amplitude and phase are being estimated
@@ -99,7 +99,7 @@ in the model so that we can estimate the difference in MESOR between the
 two groups.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12), data = vitamind)
+cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 ```
 
 We may also be interested in estmating the MESOR for the two groups
@@ -107,10 +107,10 @@ separately, rather than the difference between groups. To achieve this,
 we can remove the intercept term by using `0 +`.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + X + amp.acro(time, group = "X", period = 12), data = vitamind)
+cosinor.glmm(Y ~ 0 + X + amp_acro(time, group = "X", period = 12), data = vitamind)
 ```
 
-The `amp.acro()` function controls the cosinor components of the (fixed
+The `amp_acro()` function controls the cosinor components of the (fixed
 effects portion of the) model. It provides the user with the ability to
 specify grouping structures, the period of the rhythm, and the number of
 components. It includes several arguments that the user needs to
@@ -138,7 +138,7 @@ specify:
 
 ```{r, message=F, warning=F}
 cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 2, group = c("X", NA), period = c(12, 8)),
+  Y ~ X + amp_acro(time, n_components = 2, group = c("X", NA), period = c(12, 8)),
   data = vitamind
 )
 ```
@@ -160,12 +160,12 @@ models:
 
 ```{r, message=F, warning=F}
 cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 2, group = "X", period = 12),
+  Y ~ X + amp_acro(time, n_components = 2, group = "X", period = 12),
   data = vitamind
 )
 
 cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 2, group = c("X", "X"), period = c(12, 12)),
+  Y ~ X + amp_acro(time, n_components = 2, group = c("X", "X"), period = c(12, 12)),
   data = vitamind
 )
 ```
@@ -183,7 +183,7 @@ cosinor components - that is the role of the `test_cosinor()` function.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 summary(object)
 ```
 
@@ -195,7 +195,7 @@ predicted values from the model on either the existing or new data.
 `plot()`.)
 
 ```{r, message=F, warning=F}
-fit <- cosinor.glmm(Y ~ X + amp.acro(X, group = NA, period = 12), data = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp_acro(X, group = NA, period = 12), data = vitamind)
 predict(fit)
 ```
 
@@ -206,7 +206,7 @@ objects. Firstly, the `plot()` method creates a time-response plot of
 the fitted model for all groups:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period =12), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period =12), data = vitamind)
 autoplot(object)
 ```
 
@@ -215,7 +215,7 @@ to fit the model) over the fitted model, using the
 `superimpose.data = TRUE`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X", period = 12), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 autoplot(object, superimpose.data = TRUE)
 ```
 
@@ -234,7 +234,7 @@ vitamind_new <- vitamind
 # Z has 3 levels that aren't associated with outcome
 vitamind_new$Z <- rbinom(length(vitamind_new$X), 3, prob = 0.5)
 object <- cosinor.glmm(
-  Y ~ X + amp.acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)),
+  Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)),
   data = vitamind_new
 )
 autoplot(object) # defaults to include all grouping variables (all combinations of X and Z)

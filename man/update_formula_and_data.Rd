@@ -16,11 +16,11 @@ update_formula_and_data(
 \arguments{
 \item{data}{input data for fitting cosinor.glmm model.}
 
-\item{formula}{model formula, specified by user including \code{amp.acro()}.}
+\item{formula}{model formula, specified by user including \code{amp_acro()}.}
 
 \item{family}{the model family.}
 
-\item{quietly}{controls whether messages from amp.acro are displayed. TRUE by default}
+\item{quietly}{controls whether messages from amp_acro are displayed. TRUE by default}
 
 \item{dispformula}{The formula specifying the dispersion model}
 

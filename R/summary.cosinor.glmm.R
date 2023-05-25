@@ -18,7 +18,7 @@
 #' @examples
 #'
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12
@@ -238,7 +238,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #' @return `print` returns `x` invisibly.
 #' @examples
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp.acro(time,
+#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12

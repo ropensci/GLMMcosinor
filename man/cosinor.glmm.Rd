@@ -17,7 +17,7 @@ cosinor.glmm(
 \arguments{
 \item{formula}{Formula specifying the model. Indicate the time variable with
 \code{time()} and covariate effects on the amplitude and acrophase with
-\code{amp.acro()}. See details for more information.}
+\code{amp_acro()}. See details for more information.}
 
 \item{data}{Data frame where variable can be found.
 Row names corresponding to variables specified in the formula will be inherited with their attributes; details from unused columns are not inherited.
@@ -25,7 +25,7 @@ The analysis assumes that the data follows the distribution specified in the 'fa
 
 \item{family}{a family function, see \code{?family} and \code{?glmmTMB::nbinom2}}
 
-\item{quietly}{controls whether messages from amp.acro are displayed. TRUE by default}
+\item{quietly}{controls whether messages from amp_acro are displayed. TRUE by default}
 
 \item{dispformula}{Formula specifying a dispersion model (optional). Use the same format as the main formula}
 
@@ -45,12 +45,12 @@ This defines special functions that are used in the formula to
 indicate the time variable and which covariates effect the amplitude. To
 indicate the time variable wrap the name of it in the function
 \code{time()}. To indicate a variable which affects the
-acrophase/amplitude, wrap the name in \code{amp.acro()}. This will then do
+acrophase/amplitude, wrap the name in \code{amp_acro()}. This will then do
 all the transformations for you. See examples for usage.
 }
 \examples{
 
-cosinor.glmm(Y ~ X + amp.acro(time,
+cosinor.glmm(Y ~ X + amp_acro(time,
   n_components = 3,
   group = "X",
   period = c(12, 8, 9)
