@@ -29,6 +29,7 @@
 #'
 #'
 #' @return updated dataframe and formula to then be processed by data_processor()
+#' @export
 
 amp_acro <- function(time_col,
                      n_components = 1,
