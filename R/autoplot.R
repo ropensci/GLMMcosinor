@@ -40,11 +40,12 @@ autoplot.cosinor.glmm <- function(object,
                                   x_str,
                                   type = "response",
                                   xlims,
-                                  pred.length.out = 200,
+                                  pred.length.out,
                                   superimpose.data = FALSE,
                                   data_opacity = 0.3,
                                   predict.ribbon = TRUE,
                                   ...) {
+
 
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
@@ -68,9 +69,12 @@ autoplot.cosinor.glmm <- function(object,
       msg = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate"
     )
   }
+  if(!missing(pred.length.out)) {
   assertthat::assert_that(pred.length.out == floor(pred.length.out) & pred.length.out > 0,
     msg = "'pred.length.out' must be an integer greater than 0 "
   )
+  }
+
   assertthat::assert_that(is.logical(superimpose.data),
     msg = "'superimpose.data' must be a logical argument, either TRUE or FALSE"
   )
@@ -86,8 +90,17 @@ autoplot.cosinor.glmm <- function(object,
     x_str <- names(object$group_stats)
   }
 
+  # Vector of time values from the original dataset
+  time_vec <- object$newdata[[object$time_name]]
+  min_period_cycle_count <- round((max(time_vec)-min(time_vec))/min(object$period))
 
-  # generate the time values for the x-axis
+
+  #By default, the predicted length out is calculated to give sufficient resolution to the smallest period.
+  if(missing(pred.length.out)){
+    pred.length.out <- max(min_period_cycle_count*20, 400)
+  }
+
+    # generate the time values for the x-axis
   if (!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
   } else {

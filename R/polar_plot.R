@@ -4,6 +4,7 @@
 #' @param x An object of class \code{cosinor.glmm}
 #' @param ci_level The level for calculated confidence ellipses. Defaults to 0.95.
 #' @param contour_interval The distance between adjacent circular contours in the background of the polar plot.
+#' @param contour_label_frequency This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.
 #' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
 #' @param grid_angle_segments An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.
 #' @param radial_units A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component
@@ -30,7 +31,8 @@
 #' polar_plot(model)
 polar_plot <- function(x,
                        ci_level = 0.95,
-                       contour_interval = 1,
+                       contour_interval,
+                       contour_label_frequency = 1,
                        component_index,
                        grid_angle_segments = 8,
                        radial_units = "radians",
@@ -53,6 +55,7 @@ polar_plot <- function(x,
 #' @param x An \code{cosinor.glmm} object.
 #' @param ci_level The level for calculated confidence ellipses. Defaults to 0.95.
 #' @param contour_interval The distance between adjacent circular contours in the background of the polar plot.
+#' @param contour_label_frequency This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.
 #' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
 #' @param grid_angle_segments An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.
 #' @param radial_units A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component
@@ -80,6 +83,7 @@ polar_plot <- function(x,
 polar_plot.cosinor.glmm <- function(x,
                                     ci_level = 0.95,
                                     contour_interval = 1,
+                                    contour_label_frequency,
                                     component_index,
                                     grid_angle_segments = 8,
                                     radial_units = "radians",
@@ -107,6 +111,13 @@ polar_plot.cosinor.glmm <- function(x,
                             msg = "'contour_interval' must be a number greater than 0"
     )
   }
+
+  if (!missing(contour_label_frequency)) {
+    assertthat::assert_that(is.numeric(contour_label_frequency) & contour_label_frequency > 0,
+                            msg = "'contour_label_frequency' must be a number greater than 0"
+    )
+  }
+
   assertthat::assert_that(
     grid_angle_segments == floor(grid_angle_segments) & grid_angle_segments > 0,
     msg = "'grid_angle_segments' must be an integer greater than 0"
@@ -174,8 +185,7 @@ polar_plot.cosinor.glmm <- function(x,
   n_components <- x$n_components
   contour_interval_check <- !missing(contour_interval)
   fill_colours_check <- !missing(fill_colours)
-
-
+  contour_label_frequency_check <- !missing(contour_label_frequency)
   # set direction of increasing angle based on user input of clockwise argument
   direction <- ifelse(clockwise, -1, 1)
 
@@ -274,13 +284,13 @@ polar_plot.cosinor.glmm <- function(x,
 
     # determine the maximum radius in a single plot. This will be used for formatting plot features
     max_radius <- max(abs(u_est_amp), abs(l_est_amp))
-    if (contour_interval_check) {
-      if (contour_interval > max_radius) {
-        contour_interval <- max_radius / 5 # reformat the contour_interval if the user supplies an inappropriate value
-        warning("contour_interval ignored because it is too high")
-      }
-    } else {
-      contour_interval <- 1 # a default if no contour_interval argument is supplied
+    if (!contour_interval_check) {
+      contour_interval <- signif(max_radius/5, digits = 2) # a default if no contour_interval argument is supplied
+    }
+
+    # by default, the contour_labels correspond to every contour:
+    if(!contour_label_frequency_check) {
+      contour_label_frequency <- 1
     }
 
     # change 'max_period' to correspond to units specified by the user
@@ -331,6 +341,15 @@ polar_plot.cosinor.glmm <- function(x,
       contour_x_zoom <- cos(direction * mean(est_acr) + offset) * contour_labels
       contour_y_zoom <- sin(direction * mean(est_acr) + offset) * contour_labels
     }
+    contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
+   # if(length(contour_labels) > 20) {
+   #   #text_angle_offset <- rep(2*pi/(grid_angle_segments)/4, length(contour_labels))
+   #   contour_labels <- contour_labels[seq(1, length(contour_labels), length.out = round(length(contour_labels)/2))]
+   #   text_angle_offset <- 0
+   #   #text_angle_offset <- seq(0, 4*pi, length.out = length(contour_labels)) #a spiral arrangement of text
+   # } else {
+   #   text_angle_offset <- 0
+   # }
 
     # adding special symbols to time_labels (π for radians, ° for degrees )
     if (radial_units == "radians") {
@@ -351,8 +370,11 @@ polar_plot.cosinor.glmm <- function(x,
 
 
     # create the main plot object
-    if (is.na(x$group_origina[component_index])) { # TODO typo?
+    if (is.na(x$group_original[component_index])) { # TODO typo?
       group_level <- NULL
+      group_level_colour_index <- 1
+    } else {
+      group_level_colour_index <- length(group_level)
     }
 
     plot_obj <-
@@ -458,12 +480,17 @@ polar_plot.cosinor.glmm <- function(x,
     }
 
 
-
     # apply colours chosen by user input to the fill and colour aesthetics
     if (fill_colours_check) {
       plot_obj <- plot_obj +
         ggplot2::scale_fill_manual(
           values = fill_colours,
+          aesthetics = c("fill", "colour")
+        )
+      } else {
+      plot_obj <- plot_obj +
+        ggplot2::scale_fill_manual(
+          values = rainbow(group_level_colour_index),
           aesthetics = c("fill", "colour")
         )
     }

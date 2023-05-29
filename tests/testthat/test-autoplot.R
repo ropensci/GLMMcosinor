@@ -38,7 +38,7 @@ test_that("autoplot produces error messages", {
   object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
 
   f <- function() {
-    autoplot(object, x_str = c("X", "Z"))
+    autoplot(object, x_str = c("X", "Z"), pred.length.out = 200)
   }
 
   expect_no_error(f())

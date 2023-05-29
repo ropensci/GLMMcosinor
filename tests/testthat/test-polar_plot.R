@@ -174,10 +174,6 @@ test_that("polar_plot messages work", {
   f <- function() {
     polar_plot(object, quietly = FALSE)
   }
-  suppressMessages(expect_message(
-    capture.output(f()),
-    regex = "Circular contours every 1 unit(s)", fixed = TRUE
-  ))
 
   suppressMessages(expect_message(
     f(),
