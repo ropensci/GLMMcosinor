@@ -80,7 +80,7 @@ covariate effects.</p>
     <dl><dt>formula</dt>
 <dd><p>Formula specifying the model. Indicate the time variable with
 <code><a href="https://rdrr.io/r/stats/time.html" class="external-link">time()</a></code> and covariate effects on the amplitude and acrophase with
-<code><a href="amp.acro.html">amp.acro()</a></code>. See details for more information.</p></dd>
+<code><a href="amp_acro.html">amp_acro()</a></code>. See details for more information.</p></dd>
 
 
 <dt>data</dt>
@@ -94,7 +94,7 @@ The analysis assumes that the data follows the distribution specified in the 'fa
 
 
 <dt>quietly</dt>
-<dd><p>controls whether messages from amp.acro are displayed. TRUE by default</p></dd>
+<dd><p>controls whether messages from amp_acro are displayed. TRUE by default</p></dd>
 
 
 <dt>dispformula</dt>
@@ -121,7 +121,7 @@ The analysis assumes that the data follows the distribution specified in the 'fa
 indicate the time variable and which covariates effect the amplitude. To
 indicate the time variable wrap the name of it in the function
 <code><a href="https://rdrr.io/r/stats/time.html" class="external-link">time()</a></code>. To indicate a variable which affects the
-acrophase/amplitude, wrap the name in <code><a href="amp.acro.html">amp.acro()</a></code>. This will then do
+acrophase/amplitude, wrap the name in <code><a href="amp_acro.html">amp_acro()</a></code>. This will then do
 all the transformations for you. See examples for usage.</p>
     </div>
     <div class="section level2">
@@ -132,7 +132,7 @@ all the transformations for you. See examples for usage.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cosinor.glmm</span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp.acro.html">amp.acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
+<span class="r-in"><span><span class="fu">cosinor.glmm</span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
 <span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>  group <span class="op">=</span> <span class="st">"X"</span>,</span></span>
 <span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span></span></span>
@@ -144,20 +144,38 @@ all the transformations for you. See examples for usage.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 +      X:main_rrr3 + X:main_sss3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  (Intercept)           X1 X0:main_rrr1 X1:main_rrr1 X0:main_sss1 X1:main_sss1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   29.7207882    5.0427216    0.5449958   25.7817398    2.1843787    4.2067454 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr2 X1:main_rrr2 X0:main_sss2 X1:main_sss2 X0:main_rrr3 X1:main_rrr3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    8.3651420   -0.4844171   -3.6044821   24.2788845   -8.3800373  -20.4904692 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss3 X1:main_sss3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    8.7132257  -34.3472358 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   29.72079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1             5.04272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1   0.54500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  25.78174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1   2.18438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1   4.20675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr2   8.36514</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr2  -0.48442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss2  -3.60448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss2  24.27888</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr3  -8.38004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr3 -20.49047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss3   8.71323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss3 -34.34724</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       [X=1]  [X=0]:amp1  [X=1]:amp1  [X=0]:amp2  [X=1]:amp2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  29.7207882   5.0427216   2.2513398  26.1226877   9.1086713  24.2837166 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [X=0]:amp3  [X=1]:amp3  [X=0]:acr1  [X=1]:acr1  [X=0]:acr2  [X=1]:acr2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  12.0890582  39.9948989  -1.3262912  -0.1617423   0.4068516  -1.5907459 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [X=0]:acr3  [X=1]:acr3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  -2.3367046   2.1086886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.72079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        5.04272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp1   2.25134</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp1  26.12269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp2   9.10867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp2  24.28372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp3  12.08906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp3  39.99490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr1  -1.32629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr1  -0.16174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr2   0.40685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr2  -1.59075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr3  -2.33670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr3   2.10869</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

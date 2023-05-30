@@ -66,13 +66,12 @@
 <span>  <span class="va">x</span>,</span>
 <span>  ci_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  contour_interval <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  make_cowplot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  component_index <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">component_index</span>,</span>
 <span>  grid_angle_segments <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>  radial_units <span class="op">=</span> <span class="st">"radians"</span>,</span>
 <span>  clockwise <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  text_size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  text_opacity <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  text_size <span class="op">=</span> <span class="fl">3.5</span>,</span>
+<span>  text_opacity <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">fill_colours</span>,</span>
 <span>  ellipse_opacity <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  circle_linetype <span class="op">=</span> <span class="st">"dotted"</span>,</span>
@@ -95,11 +94,7 @@
 
 
 <dt>contour_interval</dt>
-<dd><p>The distance bewteen adjacent circular contours in the background of the polar plot</p></dd>
-
-
-<dt>make_cowplot</dt>
-<dd><p>A logical argument. If TRUE, plots polar plots for each component and displays the results as a single output with several plots. If make_cowplot is TRUE, specifying component_index is redundant</p></dd>
+<dd><p>The distance between adjacent circular contours in the background of the polar plot.</p></dd>
 
 
 <dt>component_index</dt>
@@ -167,7 +162,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp.acro.html">amp.acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="polar_plot.cosinor.glmm-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>

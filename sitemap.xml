@@ -43,7 +43,7 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/GLMMcosinor-package.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/amp.acro.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/amp_acro.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/autoplot.cosinor.glmm.html</loc>
@@ -52,10 +52,16 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/cosinor.glmm.html</loc>
   </url>
   <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/dot-amp_acro.html</loc>
+  </url>
+  <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/fit_model_and_process.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/plot.cosinor.glmm.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/polar_plot.cosinor.glmm.html</loc>
