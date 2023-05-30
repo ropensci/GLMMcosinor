@@ -23,9 +23,15 @@ library(GLMMcosinor)
 
 ## Using: 'simulate_cosinor.R'
 
-Simulate_cosinor allows users to simulate circadian data from four
-distributions: - family = 'gaussian' - family = 'Gamma(link = 'log')' -
-family = 'binomial' - family = 'poisson'
+Simulate_cosinor allows users to simulate circadian data from four distributions:
+
+\- family = 'gaussian'
+
+\- family = 'Gamma(link = 'log')'
+
+\- family = 'binomial'
+
+\- family = 'poisson'
 
 ```{r, message=F, warning=F, eval=F}
 simulate_cosinor(
@@ -61,23 +67,17 @@ df <- simulate_cosinor(
 DT::datatable(df)
 ```
 
-mesor, amp, and acro represent the parameters for the first level, and
-the beta.prefix indicates a second level that can be used for data
-visualisation (if comparing two groups, for example) if desired.
+'mesor', 'amp', and 'acro' represent the parameters for the first level, and the beta.prefix indicates a second level that can be used for data visualisation (if comparing two groups, for example) if desired.
 
-The simulate_cosinor function can simulate multi-component data. To do
-this, specify a vector of values for the parameter inputs (amp and
-acro). Note that the mesor term only accepts single-element inputs.
-Furthermore, ensure that n_components corresponds to the length of the
-vectors: amp, acro, beta.amp, beta.acro, and period.
+The simulate_cosinor function can simulate multi-component data. To do this, specify a vector of values for the parameter inputs ('amp' and 'acro'). Note that the mesor term only accepts single-element inputs. Furthermore, ensure that 'n_components' corresponds to the length of the vectors: 'amp', 'acro', 'beta.amp', 'beta.acro', and 'period.'
 
-Here is another example of the simulate_cosinor function. The
-cosinor.glmm object has also been included to demonstrate that the
-parameter estimates accurately reflect the inputs into the simulate
-function:
+'n_period' is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing n_periods increases the number of cycles that are simulated. 
+
+Here is another example of the simulate_cosinor function. The cosinor.glmm object has also been included to demonstrate that the parameter estimates accurately reflect the inputs into the simulate function:
 
 ```{r, message=F, warning=F}
 testdata <- simulate_cosinor(1000,
+  n_period = 2,
   mesor = 7,
   amp = c(0.1, 0.4, 0.5),
   acro = c(1, 1.5, 0.1),
@@ -85,93 +85,15 @@ testdata <- simulate_cosinor(1000,
   beta.amp = c(2, 1, 0.4),
   beta.acro = c(1, -1.5, -1),
   family = "poisson",
-  period = c(12, 6, 8),
+  period = c(12, 6, 12),
   n_components = 3
 )
 object <- cosinor.glmm(Y ~ group + amp_acro(times,
   n_components = 3,
-  period = c(12, 6, 8),
+  period = c(12, 6, 12),
   group = "group"
 ), data = testdata, family = poisson())
 summary(object)
 autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
 ```
 
-
----
-
-## Using: 'simulate_cosinor.R'
-
-Simulate_cosinor allows users to simulate circadian data from four
-distributions: - family = 'gaussian' - family = 'Gamma(link = 'log')' -
-family = 'binomial' - family = 'poisson'
-
-```{r, message=F, warning=F, eval=F}
-simulate_cosinor(
-  n = 100,
-  mesor = 1,
-  amp = 2,
-  acro = 1.2,
-  period = 12,
-  n_components = 1,
-  beta.group = TRUE,
-  beta.mesor = 0.4,
-  beta.amp = 0.5,
-  beta.acro = 0.2,
-  family = c("poisson")
-)
-```
-
-```{r, message=F, warning=F, echo=F}
-df <- simulate_cosinor(
-  n = 100,
-  mesor = 1,
-  amp = 2,
-  acro = 1.2,
-  period = 12,
-  n_components = 1,
-  beta.group = TRUE,
-  beta.mesor = 0.4,
-  beta.amp = 0.5,
-  beta.acro = 0.2,
-  family = c("poisson")
-)
-
-DT::datatable(df)
-```
-
-mesor, amp, and acro represent the parameters for the first level, and
-the beta.prefix indicates a second level that can be used for data
-visualisation (if comparing two groups, for example) if desired.
-
-The simulate_cosinor function can simulate multi-component data. To do
-this, specify a vector of values for the parameter inputs (amp and
-acro). Note that the mesor term only accepts single-element inputs.
-Furthermore, ensure that n_components corresponds to the length of the
-vectors: amp, acro, beta.amp, beta.acro, and period.
-
-Here is another example of the simulate_cosinor function. The
-cosinor.glmm object has also been included to demonstrate that the
-parameter estimates accurately reflect the inputs into the simulate
-function:
-
-```{r, message=F, warning=F}
-testdata <- simulate_cosinor(1000,
-  mesor = 7,
-  amp = c(0.1, 0.4, 0.5),
-  acro = c(1, 1.5, 0.1),
-  beta.mesor = 4.4,
-  beta.amp = c(2, 1, 0.4),
-  beta.acro = c(1, -1.5, -1),
-  family = "poisson",
-  period = c(12, 6, 8),
-  n_components = 3
-)
-object <- cosinor.glmm(Y ~ group + amp_acro(times,
-  n_components = 3,
-  period = c(12, 6, 8),
-  group = "group"
-), data = testdata, family = poisson())
-summary(object)
-autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
-```

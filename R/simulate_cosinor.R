@@ -9,13 +9,14 @@
 #' @param mesor Mesor parameter for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components
 #' @param amp Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components
 #' @param acro Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components
-#' @param period The period of data. If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(12,6) for two components
+#' @param period The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components
 #' @param n_components The number of components in the model. This must match the length of the parameter inputs
 #' @param beta.group A logical argument. TRUE if you want to simulate second group dataset. If FALSE, beta. arguments will be ignored
 #' @param beta.acro  Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components
 #' @param beta.mesor Amplitude parameter term for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components
 #' @param beta.amp Acrophase parameter for group = 1. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components
 #' @param family family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian"
+#' @param n_period is the number of periods that are simulated
 #' @param ... Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation
 #'
 #' @return Returns simulated data in a `data.frame`.
@@ -34,6 +35,7 @@ simulate_cosinor <- function(n,
                              beta.mesor,
                              beta.amp,
                              beta.acro,
+                             n_period = 1,
                              family = c("gaussian", "poisson", "binomial", "gamma"),
                              ...) {
   # attempt to infer n_components if missing
@@ -103,7 +105,7 @@ simulate_cosinor <- function(n,
 
 
   # generate a time vector
-  ttt <- stats::runif(n, min = 0, period)
+  ttt <- stats::runif(n, min = 0, n_period*max(period))
 
   get_params <- function(amp, acro, n_components, ttt, period) {
     param <- 0

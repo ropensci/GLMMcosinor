@@ -43,31 +43,32 @@ cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 
 Alternatively, the following example will have no intercept term, but
 will still generate a mesor estimate for the X group. In the output, the
-[X=0] and [X=1] refer to mesors for the levels 0 and 1 respectively
-within the group "X".
+[X=0] and [X=1] refer to estimates of mesor for the levels 0 and 1
+respectively within the group "X".
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + X + amp_acro(time, group = "X"), data = vitamind)
+cosinor.glmm(Y ~ 0 + X + amp_acro(time, group = "X", period = 12), data = vitamind)
 ```
 
 Finally, the following will have no intercept term, nor will it generate
 any mesor estimates:
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + amp_acro(time, group = "X"), data = vitamind)
+cosinor.glmm(Y ~ 0 + amp_acro(time, group = "X", period = 12), data = vitamind)
 ```
 
-Secondly, specification of the amp_acro() function. As will be described
-later, the amp_acro() function modifies the original dataset so that the
-amplitude and acrophase can be calculated. Importantly, the amp_acro()
-argument is where users specify:
+Secondly, specification of the amp_acro() function. The amp_acro()
+function modifies the original dataset and formula so that the amplitude
+and acrophase can be calculated. Importantly, the amp_acro() argument is
+where users specify:
 
 -   'group' (the name of the group covariates). Ensure that the names in
-    this argument are actually found in the dataset.
+    this argument are actually found in the dataset. The group argument
+    can be an object or a string.
 
--   'time' (the name of the time column). Again, ensure that the name
-    matches the name of the time values in the dataset. Also, ensure
-    that this argument is NOT a string.
+-   'time' (the name of the time column). Ensure that the name matches
+    the name of the time values in the dataset. The 'time' argument can
+    be an object or a string.
 
 -   'n_components' (The number of components). If the user wishes to
     have a more than one trigonometric component in the model, they can
@@ -105,25 +106,38 @@ for dispersion and zero-inflation models. These formulas are independent
 of the main formula specification:
 
 ```{r, message=F, warning=F}
-data(vitamind) # load vitamind dataset
-vitamind$Z <- rbinom(length(vitamind$X), 2, prob = 0.5) # modify dataset
-
-cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)),
-  data = vitamind,
-  dispformula = ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 11, 8)),
-  ziformula = ~ X + amp_acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
+testdata <- simulate_cosinor(1000, n_period = 6,
+  mesor = 7,
+  amp = c(0.1, 0.4, 0.5),
+  acro = c(1, 1.5, 0.1),
+  beta.mesor = 4.4,
+  beta.amp = c(2, 1, 0.4),
+  beta.acro = c(1, -1.5, -1),
+  family = "gaussian",
+  period = c(12, 6, 8),
+  n_components = 3
 )
+object <- cosinor.glmm(Y ~ group + amp_acro(times,
+  n_components = 3,
+  period = c(12, 6, 8),
+  group = "group"
+), data = testdata, family = gaussian(), 
+  dispformula = ~ group + amp_acro(times, n_components = 2, group = "group", period = c(12,6)), 
+  ziformula = ~ group + amp_acro(times, n_components = 3, group = "group", period = c(7,8,2))
+)
+
+object
+
 ```
 
 This example shows how dispformula and ziformula can be specified with a
 different number of components, with different periods, and with
 different group-component assignments. By default, dispformula = \~1,
-and ziformula = \~0
+and ziformula = \~0.
 
-Mention: - how to specify the input (specifically, amp_acro) - how to
-specify multi-component models - how to specify dispersion and
-zero-inflation models - how to specify random effects - how to interpret
-the output
+*Note that in the example above, the value for the periods and the
+number of components in the dispersion and zero-inflation formulas were
+chosen arbitrarily and purely for demonstration.*
 
 ## Using: 'summary.cosinor.glmm.R'
 
@@ -138,7 +152,7 @@ Here is an example of how to use the summary.cosinor.glmm() function:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 summary(object)
 ```
 
@@ -168,6 +182,6 @@ acosinor.glmm object.
 
 ```{r, message=F, warning=F}
 data(vitamind)
-fit <- cosinor.glmm(Y ~ X + amp_acro(X, group = NA), data = vitamind)
-predict(fit, newdata = vitamind)
+fit <- cosinor.glmm(Y ~ X + amp_acro(X, group = NA, period = 12), data = vitamind)
+df_predicted <- predict(fit, newdata = vitamind)
 ```

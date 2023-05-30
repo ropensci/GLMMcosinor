@@ -67,17 +67,6 @@ test_that("bad inputs return useful errors", {
   }
   expect_error(f(), regexp = "time_col must be univariate")
 
-  # test 6
-  data(vitamind)
-  f <- function() {
-    amp_acro(
-      time_col = "time", n_components = 1, group = "X", period = 12,
-      .data = vitamind,
-      .formula = Y ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
-    )
-  }
-  expect_error(f(), regexp = "time_col argument must not be a string")
-
   # test 7
   data(vitamind)
   f <- function() {

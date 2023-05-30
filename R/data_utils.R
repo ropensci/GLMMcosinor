@@ -68,56 +68,6 @@ update_formula_and_data <- function(data, formula,
   }
 
 
-
-  ####Experimental
-  # amp_acro_external <- function(time_col,
-  #                               n_components = 1,
-  #                               group,
-  #                               period
-  # ) {
-  #
-  #   main_output <- formula_eval(formula,
-  #                               data,
-  #                               quietly,
-  #                               amp_acro_ind = -1,
-  #                               data_prefix = "main_"
-  #   )
-  #
-  #
-  #   items_keep <- c(
-  #     "newformula",
-  #     "vec_rrr",
-  #     "vec_sss",
-  #     "n_components",
-  #     "period",
-  #     "group_stats",
-  #     "group_check",
-  #     "group"
-  #   )
-  #
-  #   if (dispformula_check) {
-  #     data <- main_output$newdata
-  #     dispformula <- formula_eval(formula = dispformula, data = data, quietly = quietly, amp_acro_ind = 0, data_prefix = "disp_")
-  #     main_output$newdata <- dispformula$newdata
-  #
-  #     dispformula <- dispformula[items_keep]
-  #     names(dispformula)[names(dispformula) == "newformula"] <- "formula"
-  #     main_output$dispformula <- dispformula
-  #   }
-  #   if (ziformula_check) {
-  #     data <- main_output$newdata
-  #     ziformula <- formula_eval(formula = ziformula, data = data, quietly = quietly, amp_acro_ind = 0, data_prefix = "zi_")
-  #     main_output$newdata <- ziformula$newdata
-  #
-  #     ziformula <- ziformula[items_keep]
-  #     names(ziformula)[names(ziformula) == "newformula"] <- "formula"
-  #     main_output$ziformula <- ziformula
-  #   }
-  #   main_output
-  # }
-
-  ######
-
   main_output <- formula_eval(formula,
     data,
     quietly,

@@ -45,9 +45,9 @@ amp_acro <- function(time_col,
 
 #' Checks the validity of user inputs and creates formula and modifies dataframe
 #'
-#' @param time_col a column of time values in the dataframe
+#' @param time_col a column of time values in the dataframe. Can be a string or an object
 #' @param n_components number of components in the model
-#' @param group a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level
+#' @param group a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level.
 #' @param period the period of each component
 #' @param .data the dataframe from the original cosinor.glmm() function
 #' @param .formula the formula from the original cosinor.glmm() function
@@ -135,15 +135,17 @@ amp_acro <- function(time_col,
     # checking time_col data
     # browser()
     # check for time column in .data (tested)
+
+    # ensure time_col is of the right class (most likely a character) (tested)
+    if (is.character(substitute(time_col, .env))) {
+      time_col <- noquote(substitute(time_col, .env))
+    }
+
+
     assertthat::assert_that((paste(substitute(time_col, .env)) %in% colnames(.data)),
                             msg = "time_col must be the name of a column in dataframe"
     )
 
-
-    # ensure time_col is of the right class (most likely a character) (tested)
-    if (assertthat::is.string(substitute(time_col, .env))) {
-      stop("time_col argument must not be a string")
-    }
 
     # ensure time_col is within the dataframe
     if (!inherits(substitute(time_col, .env), "name")) {
