@@ -33,7 +33,8 @@ test_that("model returns accurate parameters", {
         beta.amp = TrueAmp_b,
         beta.acro = TrueAcr_b,
         family = "gaussian",
-        period = TruePeriod
+        period = TruePeriod,
+        beta.group = TRUE
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
@@ -60,7 +61,8 @@ test_that("model returns accurate parameters", {
         beta.amp = TrueAmp_b,
         beta.acro = TrueAcr_b,
         family = "poisson",
-        period = TruePeriod
+        period = TruePeriod,
+        beta.group = TRUE
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
@@ -88,7 +90,8 @@ test_that("model returns accurate parameters", {
         beta.amp = TrueAmp_b,
         beta.acro = TrueAcr_b,
         family = "gamma",
-        period = TruePeriod
+        period = TruePeriod,
+        beta.group = TRUE
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
@@ -117,7 +120,8 @@ test_that("model returns accurate parameters", {
         beta.amp = TrueAmp_b,
         beta.acro = TrueAcr_b,
         family = "binomial",
-        period = TruePeriod
+        period = TruePeriod,
+        beta.group = TRUE
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
@@ -185,7 +189,7 @@ test_that("model output is class cosinor.glmm", {
         family = "gaussian",
         period = c(12, 6),
         n_components = 2,
-        beta.group = TRUE
+        beta.group = TRUE,
       )
 
       suppressWarnings({
@@ -222,7 +226,8 @@ test_that("mixed model estimates parameters well", {
                           family = "gaussian",
                           sd = 0.2,
                           period = c(12, 6),
-                          n_components = 2) {
+                          n_components = 2,
+                          beta.group = TRUE) {
     data <- simulate_cosinor(
       n = n,
       mesor = mesor,
@@ -263,7 +268,7 @@ test_that("mixed model estimates parameters well", {
     object <- cosinor.glmm(
       Y ~ amp_acro(times,
         n_components = 2,
-        period = c(6, 12)
+        period = c(12, 6)
       ) +
         (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
