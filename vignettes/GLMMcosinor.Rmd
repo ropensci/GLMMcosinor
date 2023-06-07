@@ -242,13 +242,5 @@ autoplot(object, x_str = "X") # only shows grouping of X (defaults to first leve
 autoplot(object, x_str = "Z") # only shows grouping of Z (defaults to first level of X)
 ```
 
-In addition to time-response plots, the GLMMcosinor package also allows
-users to create polar plots. In these plots, for a given component, the
-angle of the point from the pole represents the acrophase estimate, and
-the distance from the pole to the point represents the amplitude
-estimate. The ellipses represent confidence regions for both amplitude
-and acrophase.
-
-```{r}
-polar_plot(object)
+```{}
 ```
