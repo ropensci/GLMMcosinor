@@ -64,7 +64,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">polar_plot</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  ci_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  contour_interval <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">contour_interval</span>,</span>
+<span>  contour_label_frequency <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">component_index</span>,</span>
 <span>  grid_angle_segments <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>  radial_units <span class="op">=</span> <span class="st">"radians"</span>,</span>
@@ -94,6 +95,10 @@
 
 <dt>contour_interval</dt>
 <dd><p>The distance between adjacent circular contours in the background of the polar plot.</p></dd>
+
+
+<dt>contour_label_frequency</dt>
+<dd><p>This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.</p></dd>
 
 
 <dt>component_index</dt>

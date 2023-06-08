@@ -81,6 +81,7 @@ amplitude, and acrophase.</p>
 <span>  <span class="va">beta.mesor</span>,</span>
 <span>  <span class="va">beta.amp</span>,</span>
 <span>  <span class="va">beta.acro</span>,</span>
+<span>  n_period <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"poisson"</span>, <span class="st">"binomial"</span>, <span class="st">"gamma"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -105,7 +106,7 @@ amplitude, and acrophase.</p>
 
 
 <dt>period</dt>
-<dd><p>The period of data. If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(12,6) for two components</p></dd>
+<dd><p>The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components</p></dd>
 
 
 <dt>n_components</dt>
@@ -126,6 +127,10 @@ amplitude, and acrophase.</p>
 
 <dt>beta.acro</dt>
 <dd><p>Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components</p></dd>
+
+
+<dt>n_period</dt>
+<dd><p>is the number of periods that are simulated</p></dd>
 
 
 <dt>family</dt>
