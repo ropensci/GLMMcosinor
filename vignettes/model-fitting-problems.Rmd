@@ -1,0 +1,54 @@
+---
+title: "model-fitting-problems"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{model-fitting-problems}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(GLMMcosinor)
+```
+
+### "non-positive Hessian matrix" problem
+```{r}
+testdata <- simulate_cosinor(100,
+  n_period = 2,
+  mesor = 7,
+  amp = c(0.1, 0.4, 0.5),
+  acro = c(1, 1.5, 0.1),
+  beta.mesor = 4.4,
+  beta.amp = c(2, 1, 0.4),
+  beta.acro = c(1, -1.5, -1),
+  family = "poisson",
+  period = c(12, 6, 12),
+  n_components = 3
+)
+
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+                       n_components = 3,
+                       period = c(12, 6, 12),
+                       group = "group"),
+  data = testdata, family = poisson()
+)
+```
+
+Warning above is from fitting `glmmTMB()` and the vignette that's being referred to is [here](https://cran.r-project.org/web/packages/glmmTMB/vignettes/troubleshooting.html).
+
+
+The resulting `glmmTMB` object does not have values for the standard errors for the estimates so the calculations of these and the confidence intervals from the `cosinor.glmm` model fails too.
+```{r}
+summary(object$fit) # summary of `glmmTMB` object
+
+summary(object) # summary of `cosinor.glmm` object
+```
+
