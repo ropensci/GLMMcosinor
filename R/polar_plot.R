@@ -490,7 +490,7 @@ polar_plot.cosinor.glmm <- function(x,
       } else {
       plot_obj <- plot_obj +
         ggplot2::scale_fill_manual(
-          values = rainbow(group_level_colour_index),
+          values = grDevices::rainbow(group_level_colour_index),
           aesthetics = c("fill", "colour")
         )
     }

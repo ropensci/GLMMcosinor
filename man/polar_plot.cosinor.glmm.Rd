@@ -8,6 +8,7 @@
   x,
   ci_level = 0.95,
   contour_interval = 1,
+  contour_label_frequency,
   component_index,
   grid_angle_segments = 8,
   radial_units = "radians",
@@ -30,6 +31,8 @@
 \item{ci_level}{The level for calculated confidence ellipses. Defaults to 0.95.}
 
 \item{contour_interval}{The distance between adjacent circular contours in the background of the polar plot.}
+
+\item{contour_label_frequency}{This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.}
 
 \item{component_index}{A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted}
 

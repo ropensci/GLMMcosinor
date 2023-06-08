@@ -242,5 +242,5 @@ autoplot(object, x_str = "X") # only shows grouping of X (defaults to first leve
 autoplot(object, x_str = "Z") # only shows grouping of Z (defaults to first level of X)
 ```
 
-```{}
+```         
 ```

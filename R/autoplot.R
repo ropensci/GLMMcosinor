@@ -17,6 +17,7 @@ ggplot2::autoplot
 #' @param superimpose.data A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit
 #' @param data_opacity A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data
 #' @param predict.ribbon A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted
+#' @param points_per_min_cycle_length Number of datapoints for the smallest period
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
@@ -41,6 +42,7 @@ autoplot.cosinor.glmm <- function(object,
                                   type = "response",
                                   xlims,
                                   pred.length.out,
+                                  points_per_min_cycle_length = 20,
                                   superimpose.data = FALSE,
                                   data_opacity = 0.3,
                                   predict.ribbon = TRUE,
@@ -97,7 +99,7 @@ autoplot.cosinor.glmm <- function(object,
 
   #By default, the predicted length out is calculated to give sufficient resolution to the smallest period.
   if(missing(pred.length.out)){
-    pred.length.out <- max(min_period_cycle_count*20, 400)
+    pred.length.out <- max(min_period_cycle_count*points_per_min_cycle_length, 400)
   }
 
     # generate the time values for the x-axis

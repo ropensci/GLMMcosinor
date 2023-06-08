@@ -10,7 +10,8 @@
   x_str,
   type = "response",
   xlims,
-  pred.length.out = 200,
+  pred.length.out,
+  points_per_min_cycle_length = 20,
   superimpose.data = FALSE,
   data_opacity = 0.3,
   predict.ribbon = TRUE,
@@ -29,6 +30,8 @@
 \item{xlims}{A vector of length two containing the lower and upper x limit to be plotted}
 
 \item{pred.length.out}{An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear}
+
+\item{points_per_min_cycle_length}{Number of datapoints for the smallest period}
 
 \item{superimpose.data}{A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit}
 

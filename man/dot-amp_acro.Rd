@@ -18,11 +18,11 @@
 )
 }
 \arguments{
-\item{time_col}{a column of time values in the dataframe}
+\item{time_col}{a column of time values in the dataframe. Can be a string or an object}
 
 \item{n_components}{number of components in the model}
 
-\item{group}{a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level}
+\item{group}{a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level.}
 
 \item{period}{the period of each component}
 

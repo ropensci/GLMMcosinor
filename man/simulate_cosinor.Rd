@@ -15,6 +15,7 @@ simulate_cosinor(
   beta.mesor,
   beta.amp,
   beta.acro,
+  n_period = 1,
   family = c("gaussian", "poisson", "binomial", "gamma"),
   ...
 )
@@ -28,7 +29,7 @@ simulate_cosinor(
 
 \item{acro}{Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components}
 
-\item{period}{The period of data. If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(12,6) for two components}
+\item{period}{The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components}
 
 \item{n_components}{The number of components in the model. This must match the length of the parameter inputs}
 
@@ -39,6 +40,8 @@ simulate_cosinor(
 \item{beta.amp}{Acrophase parameter for group = 1. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components}
 
 \item{beta.acro}{Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components}
+
+\item{n_period}{is the number of periods that are simulated}
 
 \item{family}{family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian"}
 

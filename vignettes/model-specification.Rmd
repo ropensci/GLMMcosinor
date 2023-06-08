@@ -96,6 +96,7 @@ output:
 
 ```{r, message=F, warning=F}
 cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = "X", period = c(12)), data = vitamind)
+
 cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("X", "X", "X"), period = c(12, 12, 12)), data = vitamind)
 ```
 
@@ -185,3 +186,4 @@ data(vitamind)
 fit <- cosinor.glmm(Y ~ X + amp_acro(X, group = NA, period = 12), data = vitamind)
 df_predicted <- predict(fit, newdata = vitamind)
 ```
+
