@@ -23,29 +23,29 @@ simulate_cosinor(
 \arguments{
 \item{n}{Sample size. Integer greater than 0.}
 
-\item{mesor}{Mesor parameter for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components}
+\item{mesor}{Mesor parameter for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components.}
 
-\item{amp}{Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components}
+\item{amp}{Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components.}
 
-\item{acro}{Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components}
+\item{acro}{Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components.}
 
-\item{period}{The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components}
+\item{period}{The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components.}
 
-\item{n_components}{The number of components in the model. This must match the length of the parameter inputs}
+\item{n_components}{The number of components in the model. This must match the length of the parameter inputs.}
 
-\item{beta.group}{A logical argument. TRUE if you want to simulate second group dataset. If FALSE, beta. arguments will be ignored}
+\item{beta.group}{A logical argument. TRUE if you want to simulate second group dataset. If FALSE, beta. arguments will be ignored.}
 
-\item{beta.mesor}{Amplitude parameter term for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components}
+\item{beta.mesor}{Amplitude parameter term for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components.}
 
-\item{beta.amp}{Acrophase parameter for group = 1. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components}
+\item{beta.amp}{Acrophase parameter for group = 1. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components.}
 
-\item{beta.acro}{Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components}
+\item{beta.acro}{Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components.}
 
-\item{n_period}{is the number of periods that are simulated}
+\item{n_period}{is the number of periods that are simulated.}
 
-\item{family}{family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian"}
+\item{family}{family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian".}
 
-\item{...}{Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation}
+\item{...}{Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation.}
 }
 \value{
 Returns simulated data in a \code{data.frame}.
@@ -55,4 +55,14 @@ This function simulates data from a cosinor model with a single covariate,
 where the time scale is month, and optionally
 allows for single covariate effects on the mean,
 amplitude, and acrophase.
+}
+\examples{
+simulate_cosinor(
+  n = 100,
+  mesor = 1,
+  amp = 1,
+  acro = 1,
+  period = 24,
+  family = "gaussian"
+)
 }
