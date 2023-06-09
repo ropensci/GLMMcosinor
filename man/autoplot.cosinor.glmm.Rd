@@ -21,36 +21,53 @@
 \arguments{
 \item{object}{An \code{cosinor.glmm} object.}
 
-\item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
+\item{ci_level}{The level for calculated confidence intervals. Defaults to
+\code{0.95}.}
 
-\item{x_str}{Character vector naming covariate(s) to be plotted. Default has no value and plots all groups}
+\item{x_str}{A \code{character} vector naming variable(s) to be plotted.
+Default has no value and plots all groups.}
 
-\item{type}{Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")}
+\item{type}{A \code{character} that will be passed as an argument to
+\code{predict.cosinor.glmm()}, specifying the type of prediction
+(e.g, "response", or "link"). See \code{?glmmTMB::predict.glmmTMB} for full
+list of possible inputs.}
 
-\item{xlims}{A vector of length two containing the lower and upper x limit to be plotted}
+\item{xlims}{A vector of length two containing the limits for the x-axis.}
 
-\item{pred.length.out}{An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear}
+\item{pred.length.out}{An integer value that specifies the number of
+predicted data points. The larger the value, the more smooth the fitted line
+will appear. If missing, uses \code{points_per_min_cycle_length} to generate
+a sensible default value.}
 
-\item{points_per_min_cycle_length}{Number of datapoints for the smallest period}
+\item{points_per_min_cycle_length}{Used to determine the number of samples
+to create plot if \code{pred.length.out} is missing.
+\code{points_per_min_cycle_length} is the number of points plotted per the
+minimum cycle length (period) of all cosinor components in the model.}
 
-\item{superimpose.data}{A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit}
+\item{superimpose.data}{A \code{logical}. If \code{TRUE}, data from the
+original data used to fit the model (\code{object}) will be superimposed
+over the predicted fit.}
 
-\item{data_opacity}{A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data}
+\item{data_opacity}{A number between 0 and 1 inclusive that controls the
+opacity of the superimposed data. (Used as the \code{alpha} when calling
+\code{ggplot2::geom_point()}).}
 
-\item{predict.ribbon}{A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted}
+\item{predict.ribbon}{A code{logical}. If \code{TRUE}, a prediction interval
+is plotted.}
 
 \item{...}{Additional, ignored arguments.}
 }
 \value{
-Returns a \code{ggplot} graphics object.
+Returns a \code{ggplot} object.
 }
 \description{
 Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
 Optionally allows for plotting by covariates
 }
 \examples{
-
-model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+model <- cosinor.glmm(
+  Y ~ X + amp_acro(time, group = "X", period = 12),
+  data = vitamind
+)
 autoplot(model, x_str = "X")
-
 }

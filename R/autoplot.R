@@ -9,15 +9,31 @@ ggplot2::autoplot
 #'
 #'
 #' @param object An \code{cosinor.glmm} object.
-#' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
-#' @param x_str Character vector naming covariate(s) to be plotted. Default has no value and plots all groups
-#' @param type Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")
-#' @param xlims A vector of length two containing the lower and upper x limit to be plotted
-#' @param pred.length.out An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear
-#' @param superimpose.data A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit
-#' @param data_opacity A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data
-#' @param predict.ribbon A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted
-#' @param points_per_min_cycle_length Number of datapoints for the smallest period
+#' @param ci_level The level for calculated confidence intervals. Defaults to
+#' \code{0.95}.
+#' @param x_str A \code{character} vector naming variable(s) to be plotted.
+#' Default has no value and plots all groups.
+#' @param type A \code{character} that will be passed as an argument to
+#' \code{predict.cosinor.glmm()}, specifying the type of prediction
+#' (e.g, "response", or "link"). See \code{?glmmTMB::predict.glmmTMB} for full
+#' list of possible inputs.
+#' @param xlims A vector of length two containing the limits for the x-axis.
+#' @param pred.length.out An integer value that specifies the number of
+#' predicted data points. The larger the value, the more smooth the fitted line
+#' will appear. If missing, uses \code{points_per_min_cycle_length} to generate
+#' a sensible default value.
+#' @param superimpose.data A \code{logical}. If \code{TRUE}, data from the
+#' original data used to fit the model (\code{object}) will be superimposed
+#' over the predicted fit.
+#' @param data_opacity A number between 0 and 1 inclusive that controls the
+#' opacity of the superimposed data. (Used as the \code{alpha} when calling
+#' \code{ggplot2::geom_point()}).
+#' @param predict.ribbon A code{logical}. If \code{TRUE}, a prediction interval
+#' is plotted.
+#' @param points_per_min_cycle_length Used to determine the number of samples
+#' to create plot if \code{pred.length.out} is missing.
+#' \code{points_per_min_cycle_length} is the number of points plotted per the
+#' minimum cycle length (period) of all cosinor components in the model.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
@@ -26,16 +42,14 @@ ggplot2::autoplot
 #' @srrstats {RE6.2} *The default `plot` method should produce a plot of the `fitted` values of the model, with optional visualisation of confidence intervals or equivalent.*
 #' @srrstats {RE6.3} *Where a model object is used to generate a forecast (for example, through a `predict()` method), the default `plot` method should provide clear visual distinction between modelled (interpolated) and forecast (extrapolated) values.*
 #'
-#' @return Returns a `ggplot` graphics object.
+#' @return Returns a `ggplot` object.
 #' @examples
-#'
-#' model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+#' model <- cosinor.glmm(
+#'   Y ~ X + amp_acro(time, group = "X", period = 12),
+#'   data = vitamind
+#' )
 #' autoplot(model, x_str = "X")
-#'
 #' @export
-#'
-#'
-
 autoplot.cosinor.glmm <- function(object,
                                   ci_level = 0.95,
                                   x_str,

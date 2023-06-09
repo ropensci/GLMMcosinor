@@ -7,19 +7,54 @@
 amp_acro(time_col, n_components = 1, group, period, ...)
 }
 \arguments{
-\item{time_col}{a column of time values in the dataframe}
+\item{time_col}{A  \code{numeric} column within the \code{data.frame()}
+passed by via the \code{data} arg containing the time values.}
 
-\item{n_components}{number of components in the model}
+\item{n_components}{The Number of cosinor components in the model.}
 
-\item{group}{a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level}
+\item{group}{A vector of the names for the group factors (column names
+within the \code{data.frame()} passed by via the \code{data} arg).}
 
-\item{period}{the period of each component}
+\item{period}{A \code{numeric} value or vector containing the period.
+The number of values should be equal to \code{n_components}.}
 
-\item{...}{extra arguments controlled by GLMMcosinor.}
+\item{...}{Extra arguments for use within \code{GLMMcosinor}.}
 }
 \value{
-updated dataframe and formula to then be processed by data_processor()
+A \code{data.frame} and \code{formula} appropriate for use by
+\code{data_processor()}.
 }
 \description{
 Checks the validity of user inputs and creates formula and modifies dataframe
+}
+\examples{
+# Single component cosinor model
+cosinor.glmm(
+  Y ~ amp_acro(time_col = time, group = "X", period = 12),
+  data = vitamind
+)
+
+# 2-component cosinor model with simulated data
+sim_data <- simulate_cosinor(
+  n = 500,
+  mesor = 5,
+  amp = c(2, 1),
+  acro = c(1, 1.5),
+  beta.mesor = 2,
+  beta.amp = c(2, 1),
+  beta.acro = c(1, 1.5),
+  family = "gaussian",
+  period = c(12, 6),
+  n_components = 2,
+  beta.group = TRUE,
+)
+
+cosinor.glmm(
+  Y ~ group + amp_acro(times,
+                       n_components = 2,
+                       group = "group",
+                       period = c(12, 6)),
+  data = sim_data,
+  family = gaussian
+)
 }

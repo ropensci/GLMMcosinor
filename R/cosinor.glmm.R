@@ -3,24 +3,22 @@
 #' Given an outcome and time variable, fit the cosinor model with optional
 #' covariate effects.
 #'
-#' @param formula Formula specifying the model. Indicate the time variable with
-#'   \code{time()} and covariate effects on the amplitude and acrophase with
-#'   \code{amp_acro()}. See details for more information.
-#' @param data Data frame where variable can be found.
-#' Row names corresponding to variables specified in the formula will be inherited with their attributes; details from unused columns are not inherited.
-#' The analysis assumes that the data follows the distribution specified in the 'family' parameter.
-#' @param family a family function, see \code{?family} and \code{?glmmTMB::nbinom2}
-#' @param quietly controls whether messages from amp_acro are displayed. TRUE by default
-#' @param dispformula Formula specifying a dispersion model (optional). Use the same format as the main formula
-#' @param ziformula Formula specifying a zero-inflation model (optional). Use the same format as the main formula
-#' @param ... optional additional arguments passed to glmmTMB::glmmTMB()
-#'
-#' @details This defines special functions that are used in the formula to
-#'   indicate the time variable and which covariates effect the amplitude. To
-#'   indicate the time variable wrap the name of it in the function
-#'   \code{time()}. To indicate a variable which affects the
-#'   acrophase/amplitude, wrap the name in \code{amp_acro()}. This will then do
-#'   all the transformations for you. See examples for usage.
+#' @param formula A \code{formula} specifying the cosinor model to be fit.
+#' The cosinor portion of the formula is controlled by including
+#' \code{amp_acro()} on the right hand side of the formula.
+#' See \code{\link{amp_acro}} for more details.
+#' @param data A \code{data.frame} containing the variables used in the model.
+#' @param family A \code{family} function or a character string naming a family
+#' function. See \code{?family} and \code{?glmmTMB::family_glmmTMB} for options.
+#' @param quietly A \code{logical}. If \code{TRUE}, shows warning messages when
+#' wrangling data and fitting model. Defaults to \code{TRUE}.
+#' @param dispformula A one-sided (i.e., no response variable) \code{formula}
+#' for dispersion combining fixed and random effects, including cosinor
+#' components using \code{amp_acro()}. Defaults to \code{~1}.
+#' @param ziformula A one-sided (i.e., no response variable) \code{formula}
+#' for zero-inflation combining fixed and random effects, including cosinor
+#' components using \code{amp_acro()}. Defaults to \code{~0}.
+#' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
 #'
 #' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
@@ -32,16 +30,36 @@
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #' @srrstats {G3.0} *Statistical software should never compare floating point numbers for equality. All numeric equality comparisons should either ensure that they are made between integers, or use appropriate tolerances for approximate equality.*
 #'
-#'
-#'
 #' @examples
+#' # Single component cosinor model
+#' cosinor.glmm(
+#'   Y ~ amp_acro(time_col = time, group = "X", period = 12),
+#'   data = vitamind
+#' )
 #'
-#' cosinor.glmm(Y ~ X + amp_acro(time,
-#'   n_components = 3,
-#'   group = "X",
-#'   period = c(12, 8, 9)
-#' ), data = vitamind)
+#' # 2-component cosinor model with simulated data
+#' sim_data <- simulate_cosinor(
+#'   n = 500,
+#'   mesor = 5,
+#'   amp = c(2, 1),
+#'   acro = c(1, 1.5),
+#'   beta.mesor = 2,
+#'   beta.amp = c(2, 1),
+#'   beta.acro = c(1, 1.5),
+#'   family = "gaussian",
+#'   period = c(12, 6),
+#'   n_components = 2,
+#'   beta.group = TRUE,
+#' )
 #'
+#' cosinor.glmm(
+#'   Y ~ group + amp_acro(times,
+#'                        n_components = 2,
+#'                        group = "group",
+#'                        period = c(12, 6)),
+#'   data = sim_data,
+#'   family = gaussian
+#' )
 #' @references Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.
 #'
 #'
@@ -78,21 +96,20 @@ cosinor.glmm <- function(formula,
   )
 }
 
-#' Print cosinor model
+#' Print a \code{cosinor.glmm} model.
 #'
 #' Given an outcome and time variable, fit the cosinor model with optional covariate effects.
 #'
-#' @param x cosinor.glmm object
-#' @param digits Controls the number of digits displayed in the summary output
-#' @param ... passed to summary
+#' @param x A \code{cosinor.glmm} object.
+#' @param digits Controls the number of digits displayed in the summary output.
+#' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {RE4.17} *Model objects returned by Regression Software should implement or appropriately extend a default `print` method which provides an on-screen summary of model (input) parameters and (output) coefficients.*
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #'
-#' @return `print` returns `x` invisibly.
+#' @return \code{print(x)} returns \code{x} invisibly.
 #'
 #' @export
-#'
 print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   # cat("Call: \n")
   # print(x$Call)
@@ -160,13 +177,11 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   invisible(x)
 }
 
-#' Extract variable names from terms object, handling specials
+#' Extract variable names from terms object, handling specials.
 #'
-#' @param Terms a terms object
+#' @param Terms A \code{terms} object.
 #'
 #' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
-#'
-#' @keywords Internal
 #' @noRd
 get_varnames <- function(Terms) {
   spec <- names(attr(Terms, "specials"))
@@ -188,9 +203,9 @@ get_varnames <- function(Terms) {
   tname2
 }
 
-#' Replace covariate names with descriptive text
+#' Replace covariate names with descriptive text.
 #'
-#' @param names Coefficient names to update
+#' @param names Coefficient names to update.
 #'
 #' @noRd
 update_covnames <- function(names, group_stats) {

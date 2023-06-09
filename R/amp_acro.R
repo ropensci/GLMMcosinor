@@ -1,10 +1,13 @@
 #' Checks the validity of user inputs and creates formula and modifies dataframe
 #'
-#' @param time_col a column of time values in the dataframe
-#' @param n_components number of components in the model
-#' @param group a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level
-#' @param period the period of each component
-#' @param ... extra arguments controlled by GLMMcosinor.
+#' @param time_col A  \code{numeric} column within the \code{data.frame()}
+#' passed by via the \code{data} arg containing the time values.
+#' @param n_components The Number of cosinor components in the model.
+#' @param group A vector of the names for the group factors (column names
+#' within the \code{data.frame()} passed by via the \code{data} arg).
+#' @param period A \code{numeric} value or vector containing the period.
+#' The number of values should be equal to \code{n_components}.
+#' @param ... Extra arguments for use within \code{GLMMcosinor}.
 #'
 #' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
 #' @srrstats {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
@@ -27,9 +30,39 @@
 #' @srrstats {RE1.2} *Regression Software should document expected format (types or classes) for inputting predictor variables, including descriptions of types or classes which are not accepted.*
 #'
 #'
-#' @return updated dataframe and formula to then be processed by data_processor()
+#' @return A \code{data.frame} and \code{formula} appropriate for use by
+#' \code{data_processor()}.
 #' @export
-
+#' @examples
+#' # Single component cosinor model
+#' cosinor.glmm(
+#'   Y ~ amp_acro(time_col = time, group = "X", period = 12),
+#'   data = vitamind
+#' )
+#'
+#' # 2-component cosinor model with simulated data
+#' sim_data <- simulate_cosinor(
+#'   n = 500,
+#'   mesor = 5,
+#'   amp = c(2, 1),
+#'   acro = c(1, 1.5),
+#'   beta.mesor = 2,
+#'   beta.amp = c(2, 1),
+#'   beta.acro = c(1, 1.5),
+#'   family = "gaussian",
+#'   period = c(12, 6),
+#'   n_components = 2,
+#'   beta.group = TRUE,
+#' )
+#'
+#' cosinor.glmm(
+#'   Y ~ group + amp_acro(times,
+#'                        n_components = 2,
+#'                        group = "group",
+#'                        period = c(12, 6)),
+#'   data = sim_data,
+#'   family = gaussian
+#' )
 amp_acro <- function(time_col,
                      n_components = 1,
                      group,
@@ -38,23 +71,26 @@ amp_acro <- function(time_col,
   .amp_acro(time_col, n_components, group, period, .env = environment(), ...)
 }
 
-
-
-
-#' Checks the validity of user inputs and creates formula and modifies dataframe
-#'
-#' @param time_col a column of time values in the dataframe. Can be a string or an object
-#' @param n_components number of components in the model
-#' @param group a vector of the names of group factors. The levels of each factor should be ordered, with the first level of each factor being the reference level.
-#' @param period the period of each component
-#' @param .data the dataframe from the original cosinor.glmm() function
-#' @param .formula the formula from the original cosinor.glmm() function
-#' @param .quietly controls whether messages from amp_acro are displayed. TRUE by default
-#' @param .amp_acro_ind the index of the portion of the formula containing
-#' amp_acro. -1 for main formula (default), 0 for zi or disp formulae.
-#' @param .data_prefix prefix for columns to be added in the new dataframe.
-#' Defaults to "main_".
-#' @param .env The environment in which to evaluate column names on the data being passed.
+#' Checks the validity of user inputs and creates formula and modifies
+#' \code{data.frame}.
+#' @param time_col A  \code{numeric} column within the \code{data.frame()}
+#' passed by via the \code{data} arg containing the time values.
+#' @param n_components The Number of cosinor components in the model.
+#' @param group A vector of the names for the group factors (column names
+#' within the \code{data.frame()} passed by via the \code{data} arg).
+#' @param period A \code{numeric} value or vector containing the period.
+#' The number of values should be equal to \code{n_components}.
+#' @param .data The dataframe from the original \code{cosinor.glmm()} call.
+#' @param .formula The formula from the original \code{cosinor.glmm()} call.
+#' @param .quietly controls whether messages from \code{amp_acro()} are
+#' displayed. Defaults to \code{TRUE}.
+#' @param .amp_acro_ind The index of the portion of the formula containing
+#' amp_acro. -1 for main formula (default), 0 for \code{zi} or \code{disp}
+#' formulae.
+#' @param .data_prefix Prefix for columns to be added in the new
+#' \code{data.frame}. Defaults to \code{"main_"}.
+#' @param .env The environment in which to evaluate column names on the data
+#' being passed.
 #'
 #' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
 #' @srrstats {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
@@ -72,8 +108,8 @@ amp_acro <- function(time_col,
 #' @srrstats {RE1.2} *Regression Software should document expected format (types or classes) for inputting predictor variables, including descriptions of types or classes which are not accepted.*
 #'
 #' @noRd
-#' @return updated dataframe and formula to then be processed by data_processor()
-
+#' @return A \code{data.frame} and \code{formula} appropriate for use by
+#' \code{data_processor()}.
 .amp_acro <- function(time_col,
                       n_components = 1,
                       group,
