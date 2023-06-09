@@ -211,33 +211,33 @@ component that the group covariate describes:<br></p></li>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;               Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)   31.28505</span></span>
-<span><span class="co">#&gt; X1             1.86572</span></span>
-<span><span class="co">#&gt; main_rrr2    -17.91615</span></span>
-<span><span class="co">#&gt; main_sss2     -1.41165</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  13.67586</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  19.20016</span></span>
-<span><span class="co">#&gt; X0:main_sss1   0.21186</span></span>
-<span><span class="co">#&gt; X1:main_sss1  -1.21068</span></span>
-<span><span class="co">#&gt; Z0:main_rrr3   3.53238</span></span>
-<span><span class="co">#&gt; Z1:main_rrr3   4.21232</span></span>
-<span><span class="co">#&gt; Z0:main_sss3   4.42107</span></span>
-<span><span class="co">#&gt; Z1:main_sss3   3.28602</span></span>
+<span><span class="co">#&gt; (Intercept)   31.08824</span></span>
+<span><span class="co">#&gt; X1             2.01918</span></span>
+<span><span class="co">#&gt; main_rrr2    -15.95175</span></span>
+<span><span class="co">#&gt; main_sss2     -1.84208</span></span>
+<span><span class="co">#&gt; X0:main_rrr1  12.58357</span></span>
+<span><span class="co">#&gt; X1:main_rrr1  18.25765</span></span>
+<span><span class="co">#&gt; X0:main_sss1   1.22804</span></span>
+<span><span class="co">#&gt; X1:main_sss1  -0.25061</span></span>
+<span><span class="co">#&gt; Z0:main_rrr3   3.00123</span></span>
+<span><span class="co">#&gt; Z1:main_rrr3   3.41423</span></span>
+<span><span class="co">#&gt; Z0:main_sss3   3.96550</span></span>
+<span><span class="co">#&gt; Z1:main_sss3   2.90928</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
 <span><span class="co">#&gt;             Estimate</span></span>
-<span><span class="co">#&gt; (Intercept) 31.28505</span></span>
-<span><span class="co">#&gt; [X=1]        1.86572</span></span>
-<span><span class="co">#&gt; [X=0]:amp1  13.67750</span></span>
-<span><span class="co">#&gt; [X=1]:amp1  19.23829</span></span>
-<span><span class="co">#&gt; amp2        17.97168</span></span>
-<span><span class="co">#&gt; [Z=0]:amp3   5.65893</span></span>
-<span><span class="co">#&gt; [Z=1]:amp3   5.34243</span></span>
-<span><span class="co">#&gt; [X=0]:acr1  -0.01549</span></span>
-<span><span class="co">#&gt; [X=1]:acr1   0.06297</span></span>
-<span><span class="co">#&gt; acr2         3.06296</span></span>
-<span><span class="co">#&gt; [Z=0]:acr3  -0.89667</span></span>
-<span><span class="co">#&gt; [Z=1]:acr3  -0.66249</span></span></code></pre></div>
+<span><span class="co">#&gt; (Intercept) 31.08824</span></span>
+<span><span class="co">#&gt; [X=1]        2.01918</span></span>
+<span><span class="co">#&gt; [X=0]:amp1  12.64335</span></span>
+<span><span class="co">#&gt; [X=1]:amp1  18.25937</span></span>
+<span><span class="co">#&gt; amp2        16.05776</span></span>
+<span><span class="co">#&gt; [Z=0]:amp3   4.97319</span></span>
+<span><span class="co">#&gt; [Z=1]:amp3   4.48563</span></span>
+<span><span class="co">#&gt; [X=0]:acr1  -0.09728</span></span>
+<span><span class="co">#&gt; [X=1]:acr1   0.01373</span></span>
+<span><span class="co">#&gt; acr2         3.02662</span></span>
+<span><span class="co">#&gt; [Z=0]:acr3  -0.92293</span></span>
+<span><span class="co">#&gt; [Z=1]:acr3  -0.70571</span></span></code></pre></div>
 <p>As demonstrated in the example above, the ‘NA’ entry in the group
 argument indicates a component with no group covariate assigned.</p>
 <p>If only one group argument and and/or one period argument is
@@ -364,37 +364,37 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw Coefficients: </span></span>
 <span><span class="co">#&gt;                  Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)       7.04803</span></span>
-<span><span class="co">#&gt; group1           -2.64657</span></span>
-<span><span class="co">#&gt; group0:main_rrr1  0.10764</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  1.07808</span></span>
-<span><span class="co">#&gt; group0:main_sss1 -0.07256</span></span>
-<span><span class="co">#&gt; group1:main_sss1 -1.68409</span></span>
-<span><span class="co">#&gt; group0:main_rrr2  0.07411</span></span>
-<span><span class="co">#&gt; group1:main_rrr2  0.08241</span></span>
-<span><span class="co">#&gt; group0:main_sss2 -0.31787</span></span>
-<span><span class="co">#&gt; group1:main_sss2  1.07544</span></span>
-<span><span class="co">#&gt; group0:main_rrr3  0.51223</span></span>
-<span><span class="co">#&gt; group1:main_rrr3  0.23857</span></span>
-<span><span class="co">#&gt; group0:main_sss3 -0.01436</span></span>
-<span><span class="co">#&gt; group1:main_sss3  0.37576</span></span>
+<span><span class="co">#&gt; (Intercept)       6.96362</span></span>
+<span><span class="co">#&gt; group1           -2.53314</span></span>
+<span><span class="co">#&gt; group0:main_rrr1  0.10998</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  0.99271</span></span>
+<span><span class="co">#&gt; group0:main_sss1 -0.05374</span></span>
+<span><span class="co">#&gt; group1:main_sss1 -1.62773</span></span>
+<span><span class="co">#&gt; group0:main_rrr2  0.06038</span></span>
+<span><span class="co">#&gt; group1:main_rrr2  0.04837</span></span>
+<span><span class="co">#&gt; group0:main_sss2 -0.39285</span></span>
+<span><span class="co">#&gt; group1:main_sss2  1.00236</span></span>
+<span><span class="co">#&gt; group0:main_rrr3  0.46072</span></span>
+<span><span class="co">#&gt; group1:main_rrr3  0.16195</span></span>
+<span><span class="co">#&gt; group0:main_sss3 -0.04066</span></span>
+<span><span class="co">#&gt; group1:main_sss3  0.30723</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed Coefficients: </span></span>
 <span><span class="co">#&gt;                Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)     7.04803</span></span>
-<span><span class="co">#&gt; [group=1]      -2.64657</span></span>
-<span><span class="co">#&gt; [group=0]:amp1  0.12982</span></span>
-<span><span class="co">#&gt; [group=1]:amp1  1.99961</span></span>
-<span><span class="co">#&gt; [group=0]:amp2  0.32639</span></span>
-<span><span class="co">#&gt; [group=1]:amp2  1.07860</span></span>
-<span><span class="co">#&gt; [group=0]:amp3  0.51243</span></span>
-<span><span class="co">#&gt; [group=1]:amp3  0.44510</span></span>
-<span><span class="co">#&gt; [group=0]:acr1  0.59313</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  1.00137</span></span>
-<span><span class="co">#&gt; [group=0]:acr2  1.34175</span></span>
-<span><span class="co">#&gt; [group=1]:acr2 -1.49432</span></span>
-<span><span class="co">#&gt; [group=0]:acr3  0.02802</span></span>
-<span><span class="co">#&gt; [group=1]:acr3 -1.00511</span></span>
+<span><span class="co">#&gt; (Intercept)     6.96362</span></span>
+<span><span class="co">#&gt; [group=1]      -2.53314</span></span>
+<span><span class="co">#&gt; [group=0]:amp1  0.12241</span></span>
+<span><span class="co">#&gt; [group=1]:amp1  1.90657</span></span>
+<span><span class="co">#&gt; [group=0]:amp2  0.39746</span></span>
+<span><span class="co">#&gt; [group=1]:amp2  1.00353</span></span>
+<span><span class="co">#&gt; [group=0]:amp3  0.46251</span></span>
+<span><span class="co">#&gt; [group=1]:amp3  0.34730</span></span>
+<span><span class="co">#&gt; [group=0]:acr1  0.45456</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  1.02315</span></span>
+<span><span class="co">#&gt; [group=0]:acr2  1.41830</span></span>
+<span><span class="co">#&gt; [group=1]:acr2 -1.52258</span></span>
+<span><span class="co">#&gt; [group=0]:acr3  0.08804</span></span>
+<span><span class="co">#&gt; [group=1]:acr3 -1.08568</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -405,29 +405,29 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt;                  Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)      -0.01964</span></span>
-<span><span class="co">#&gt; group1           -0.03162</span></span>
-<span><span class="co">#&gt; group0:disp_rrr1 -0.02583</span></span>
-<span><span class="co">#&gt; group1:disp_rrr1 -0.00577</span></span>
-<span><span class="co">#&gt; group0:disp_sss1 -0.08297</span></span>
-<span><span class="co">#&gt; group1:disp_sss1 -0.07891</span></span>
-<span><span class="co">#&gt; group0:disp_rrr2 -0.07501</span></span>
-<span><span class="co">#&gt; group1:disp_rrr2 -0.05232</span></span>
-<span><span class="co">#&gt; group0:disp_sss2  0.02019</span></span>
-<span><span class="co">#&gt; group1:disp_sss2  0.09124</span></span>
+<span><span class="co">#&gt; (Intercept)       0.03522</span></span>
+<span><span class="co">#&gt; group1           -0.00261</span></span>
+<span><span class="co">#&gt; group0:disp_rrr1 -0.05346</span></span>
+<span><span class="co">#&gt; group1:disp_rrr1  0.04725</span></span>
+<span><span class="co">#&gt; group0:disp_sss1 -0.08208</span></span>
+<span><span class="co">#&gt; group1:disp_sss1 -0.06268</span></span>
+<span><span class="co">#&gt; group0:disp_rrr2  0.12493</span></span>
+<span><span class="co">#&gt; group1:disp_rrr2  0.00112</span></span>
+<span><span class="co">#&gt; group0:disp_sss2  0.07667</span></span>
+<span><span class="co">#&gt; group1:disp_sss2  0.08231</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
 <span><span class="co">#&gt;                Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)    -0.01964</span></span>
-<span><span class="co">#&gt; [group=1]      -0.03162</span></span>
-<span><span class="co">#&gt; [group=0]:amp1  0.08690</span></span>
-<span><span class="co">#&gt; [group=1]:amp1  0.07912</span></span>
-<span><span class="co">#&gt; [group=0]:amp2  0.07769</span></span>
-<span><span class="co">#&gt; [group=1]:amp2  0.10518</span></span>
-<span><span class="co">#&gt; [group=0]:acr1  1.87255</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  1.64375</span></span>
-<span><span class="co">#&gt; [group=0]:acr2 -2.87865</span></span>
-<span><span class="co">#&gt; [group=1]:acr2 -2.09146</span></span>
+<span><span class="co">#&gt; (Intercept)     0.03522</span></span>
+<span><span class="co">#&gt; [group=1]      -0.00261</span></span>
+<span><span class="co">#&gt; [group=0]:amp1  0.09795</span></span>
+<span><span class="co">#&gt; [group=1]:amp1  0.07850</span></span>
+<span><span class="co">#&gt; [group=0]:amp2  0.14658</span></span>
+<span><span class="co">#&gt; [group=1]:amp2  0.08232</span></span>
+<span><span class="co">#&gt; [group=0]:acr1  2.14814</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  0.92484</span></span>
+<span><span class="co">#&gt; [group=0]:acr2 -0.55044</span></span>
+<span><span class="co">#&gt; [group=1]:acr2 -1.55714</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ***********************</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -438,37 +438,37 @@ independent of the main formula specification:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Raw  Coefficients: </span></span>
 <span><span class="co">#&gt;                 Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)    -23.64885</span></span>
-<span><span class="co">#&gt; group1           1.42138</span></span>
-<span><span class="co">#&gt; group0:zi_rrr1  -0.00561</span></span>
-<span><span class="co">#&gt; group1:zi_rrr1  -0.00608</span></span>
-<span><span class="co">#&gt; group0:zi_sss1   0.02053</span></span>
-<span><span class="co">#&gt; group1:zi_sss1   0.05677</span></span>
-<span><span class="co">#&gt; group0:zi_rrr2  -0.01123</span></span>
-<span><span class="co">#&gt; group1:zi_rrr2  -0.01852</span></span>
-<span><span class="co">#&gt; group0:zi_sss2  -0.02050</span></span>
-<span><span class="co">#&gt; group1:zi_sss2  -0.05972</span></span>
-<span><span class="co">#&gt; group0:zi_rrr3  -0.00381</span></span>
-<span><span class="co">#&gt; group1:zi_rrr3  -0.00795</span></span>
-<span><span class="co">#&gt; group0:zi_sss3   0.00623</span></span>
-<span><span class="co">#&gt; group1:zi_sss3   0.02212</span></span>
+<span><span class="co">#&gt; (Intercept)    -22.98019</span></span>
+<span><span class="co">#&gt; group1           0.73873</span></span>
+<span><span class="co">#&gt; group0:zi_rrr1  -0.00444</span></span>
+<span><span class="co">#&gt; group1:zi_rrr1   0.02531</span></span>
+<span><span class="co">#&gt; group0:zi_sss1  -0.00731</span></span>
+<span><span class="co">#&gt; group1:zi_sss1   0.01420</span></span>
+<span><span class="co">#&gt; group0:zi_rrr2  -0.00237</span></span>
+<span><span class="co">#&gt; group1:zi_rrr2  -0.00066</span></span>
+<span><span class="co">#&gt; group0:zi_sss2  -0.00383</span></span>
+<span><span class="co">#&gt; group1:zi_sss2   0.04341</span></span>
+<span><span class="co">#&gt; group0:zi_rrr3  -0.01144</span></span>
+<span><span class="co">#&gt; group1:zi_rrr3   0.06298</span></span>
+<span><span class="co">#&gt; group0:zi_sss3   0.00897</span></span>
+<span><span class="co">#&gt; group1:zi_sss3  -0.02588</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Transformed  Coefficients: </span></span>
 <span><span class="co">#&gt;                 Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)    -23.64885</span></span>
-<span><span class="co">#&gt; [group=1]        1.42138</span></span>
-<span><span class="co">#&gt; [group=0]:amp1   0.02128</span></span>
-<span><span class="co">#&gt; [group=1]:amp1   0.05709</span></span>
-<span><span class="co">#&gt; [group=0]:amp2   0.02338</span></span>
-<span><span class="co">#&gt; [group=1]:amp2   0.06253</span></span>
-<span><span class="co">#&gt; [group=0]:amp3   0.00730</span></span>
-<span><span class="co">#&gt; [group=1]:amp3   0.02351</span></span>
-<span><span class="co">#&gt; [group=0]:acr1  -1.83735</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  -1.67753</span></span>
-<span><span class="co">#&gt; [group=0]:acr2   2.07201</span></span>
-<span><span class="co">#&gt; [group=1]:acr2   1.87143</span></span>
-<span><span class="co">#&gt; [group=0]:acr3  -2.11947</span></span>
-<span><span class="co">#&gt; [group=1]:acr3  -1.91593</span></span></code></pre></div>
+<span><span class="co">#&gt; (Intercept)    -22.98019</span></span>
+<span><span class="co">#&gt; [group=1]        0.73873</span></span>
+<span><span class="co">#&gt; [group=0]:amp1   0.00855</span></span>
+<span><span class="co">#&gt; [group=1]:amp1   0.02903</span></span>
+<span><span class="co">#&gt; [group=0]:amp2   0.00451</span></span>
+<span><span class="co">#&gt; [group=1]:amp2   0.04341</span></span>
+<span><span class="co">#&gt; [group=0]:amp3   0.01454</span></span>
+<span><span class="co">#&gt; [group=1]:amp3   0.06809</span></span>
+<span><span class="co">#&gt; [group=0]:acr1   2.11670</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  -0.51133</span></span>
+<span><span class="co">#&gt; [group=0]:acr2   2.12542</span></span>
+<span><span class="co">#&gt; [group=1]:acr2  -1.58592</span></span>
+<span><span class="co">#&gt; [group=0]:acr3  -2.47708</span></span>
+<span><span class="co">#&gt; [group=1]:acr3   0.38991</span></span></code></pre></div>
 <p>This example shows how dispformula and ziformula can be specified
 with a different number of components, with different periods, and with
 different group-component assignments. By default, dispformula = ~1, and
@@ -533,40 +533,40 @@ cosinor.glmm object being analysed contains them:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                 estimate standard.error    lower.CI upper.CI  p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)   31.2901654      3.1511464  25.1140321 37.46630  &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; X1             2.0374463      0.8199292   0.4304146  3.64448 0.012959 *  </span></span>
-<span><span class="co">#&gt; main_rrr2    -15.9269301     28.9645846 -72.6964727 40.84261 0.582404    </span></span>
-<span><span class="co">#&gt; main_sss2     -1.3612035     22.6001198 -45.6566244 42.93422 0.951973    </span></span>
-<span><span class="co">#&gt; X0:main_rrr1  12.8580196     27.2794764 -40.6087716 66.32481 0.637395    </span></span>
-<span><span class="co">#&gt; X1:main_rrr1  18.4851053     27.3737426 -35.1664442 72.13665 0.499494    </span></span>
-<span><span class="co">#&gt; X0:main_sss1   1.0582020      6.3894896 -11.4649674 13.58137 0.868459    </span></span>
-<span><span class="co">#&gt; X1:main_sss1  -0.5142061      6.5097196 -13.2730220 12.24461 0.937040    </span></span>
-<span><span class="co">#&gt; Z0:main_rrr3   4.5549105      4.4595510  -4.1856489 13.29547 0.307073    </span></span>
-<span><span class="co">#&gt; Z1:main_rrr3   3.0249756      4.6068399  -6.0042647 12.05422 0.511421    </span></span>
-<span><span class="co">#&gt; Z2:main_rrr3   2.3021114      4.4559140  -6.4313196 11.03554 0.605406    </span></span>
-<span><span class="co">#&gt; Z0:main_sss3   3.4820419     11.4346100 -18.9293818 25.89347 0.760733    </span></span>
-<span><span class="co">#&gt; Z1:main_sss3   2.7860178     11.5975467 -19.9447561 25.51679 0.810156    </span></span>
-<span><span class="co">#&gt; Z2:main_sss3   2.4943941     11.5625916 -20.1678689 25.15666 0.829198    </span></span>
+<span><span class="co">#&gt;                 estimate standard.error    lower.CI upper.CI    p.value    </span></span>
+<span><span class="co">#&gt; (Intercept)   29.8781208      3.0389513  23.9218857 35.83436 &lt; 2.22e-16 ***</span></span>
+<span><span class="co">#&gt; X1             2.3068623      0.8396782   0.6611233  3.95260  0.0060085 ** </span></span>
+<span><span class="co">#&gt; main_rrr2     -6.3911218     28.0090881 -61.2879258 48.50568  0.8195061    </span></span>
+<span><span class="co">#&gt; main_sss2     10.8058870     21.6713057 -31.6690916 53.28087  0.6180425    </span></span>
+<span><span class="co">#&gt; X0:main_rrr1   1.2492423     26.3070062 -50.3115424 52.81003  0.9621250    </span></span>
+<span><span class="co">#&gt; X1:main_rrr1   6.9790753     26.3061513 -44.5800338 58.53818  0.7907768    </span></span>
+<span><span class="co">#&gt; X0:main_sss1  -1.9775638      6.1458843 -14.0232755 10.06815  0.7476266    </span></span>
+<span><span class="co">#&gt; X1:main_sss1  -3.2639487      6.2759021 -15.5644909  9.03659  0.6030103    </span></span>
+<span><span class="co">#&gt; Z0:main_rrr3   4.3001809      4.5307464  -4.5799190 13.18028  0.3425642    </span></span>
+<span><span class="co">#&gt; Z1:main_rrr3   4.5270747      4.2538406  -3.8102997 12.86445  0.2872235    </span></span>
+<span><span class="co">#&gt; Z2:main_rrr3   8.0581186      4.5842181  -0.9267839 17.04302  0.0787823 .  </span></span>
+<span><span class="co">#&gt; Z0:main_sss3  -0.4978491     11.0586867 -22.1724768 21.17678  0.9640923    </span></span>
+<span><span class="co">#&gt; Z1:main_sss3  -2.1475864     11.1710742 -24.0424895 19.74732  0.8475501    </span></span>
+<span><span class="co">#&gt; Z2:main_sss3  -2.7268716     11.1134347 -24.5088032 19.05506  0.8061722    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
-<span><span class="co">#&gt;                 estimate standard.error     lower.CI upper.CI    p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)  31.29016541     3.15114635  25.11403205 37.46630 &lt; 2.22e-16 ***</span></span>
-<span><span class="co">#&gt; [X=1]         2.03744627     0.81992920   0.43041456  3.64448  0.0129586 *  </span></span>
-<span><span class="co">#&gt; amp2         15.98499223    30.48861006 -43.77158541 75.74157  0.6000741    </span></span>
-<span><span class="co">#&gt; [X=0]:amp1   12.90149055     6.46593801   0.22848492 25.57450  0.0460101 *  </span></span>
-<span><span class="co">#&gt; [X=1]:amp1   18.49225586     5.88343728   6.96093068 30.02358  0.0016717 ** </span></span>
-<span><span class="co">#&gt; [Z=0]:amp3    5.73339565    28.76094097 -50.63701281 62.10380  0.8419916    </span></span>
-<span><span class="co">#&gt; [Z=1]:amp3    4.11246545    27.93520734 -50.63953483 58.86447  0.8829628    </span></span>
-<span><span class="co">#&gt; [Z=2]:amp3    3.39436578    26.93484442 -49.39695921 56.18569  0.8997150    </span></span>
-<span><span class="co">#&gt; acr2          3.05633431     1.28231137   0.54305020  5.56962  0.0171509 *  </span></span>
-<span><span class="co">#&gt; [X=0]:acr1   -0.08211394     1.62232550  -3.26181350  3.09759  0.9596323    </span></span>
-<span><span class="co">#&gt; [X=1]:acr1    0.02781015     1.13010787  -2.18716057  2.24278  0.9803673    </span></span>
-<span><span class="co">#&gt; [Z=0]:acr3   -0.65269077     2.12920755  -4.82586089  3.52048  0.7591923    </span></span>
-<span><span class="co">#&gt; [Z=1]:acr3   -0.74429964     3.47853924  -7.56211128  6.07351  0.8305712    </span></span>
-<span><span class="co">#&gt; [Z=2]:acr3   -0.82546480     4.73852351 -10.11280022  8.46187  0.8617060    </span></span>
+<span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI    p.value    </span></span>
+<span><span class="co">#&gt; (Intercept)  29.8781208      3.0389513  23.9218857 35.83436 &lt; 2.22e-16 ***</span></span>
+<span><span class="co">#&gt; [X=1]         2.3068623      0.8396782   0.6611233  3.95260  0.0060085 ** </span></span>
+<span><span class="co">#&gt; amp2         12.5544268     10.3552968  -7.7415819 32.85044  0.2253717    </span></span>
+<span><span class="co">#&gt; [X=0]:amp1    2.3390949     17.0805163 -31.1381020 35.81629  0.8910741    </span></span>
+<span><span class="co">#&gt; [X=1]:amp1    7.7045995      9.5102628 -10.9351730 26.34437  0.4178624    </span></span>
+<span><span class="co">#&gt; [Z=0]:amp3    4.3289039     26.4717826 -47.5548365 56.21264  0.8701019    </span></span>
+<span><span class="co">#&gt; [Z=1]:amp3    5.0106419     21.6169132 -37.3577294 47.37901  0.8166991    </span></span>
+<span><span class="co">#&gt; [Z=2]:amp3    8.5070032     23.6124458 -37.7725400 54.78655  0.7186406    </span></span>
+<span><span class="co">#&gt; acr2         -2.1049040      2.6975538  -7.3920123  3.18220  0.4352137    </span></span>
+<span><span class="co">#&gt; [X=0]:acr1    1.0073880      5.2818960  -9.3449380 11.35971  0.8487413    </span></span>
+<span><span class="co">#&gt; [X=1]:acr1    0.4374560      2.4221304  -4.3098323  5.18474  0.8566753    </span></span>
+<span><span class="co">#&gt; [Z=0]:acr3    0.1152608      3.3608190  -6.4718234  6.70235  0.9726415    </span></span>
+<span><span class="co">#&gt; [Z=1]:acr3    0.4429482      4.2010368  -7.7909325  8.67683  0.9160284    </span></span>
+<span><span class="co">#&gt; [Z=2]:acr3    0.3263041      2.2258480  -4.0362778  4.68889  0.8834496    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -575,39 +575,39 @@ cosinor.glmm object being analysed contains them:</p>
 <span><span class="co">#&gt;  Dispersion Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                  estimate standard.error     lower.CI upper.CI  p.value  </span></span>
-<span><span class="co">#&gt; (Intercept)    2.84070077     1.20496423   0.47901428  5.20239 0.018399 *</span></span>
-<span><span class="co">#&gt; X1             0.36587591     0.23655550  -0.09776434  0.82952 0.121940  </span></span>
-<span><span class="co">#&gt; disp_rrr2      3.42918595    21.26977160 -38.25880034 45.11717 0.871917  </span></span>
-<span><span class="co">#&gt; disp_sss2      8.31901819     6.89366617  -5.19231922 21.83036 0.227524  </span></span>
-<span><span class="co">#&gt; Z0:disp_rrr1  -4.58024617    20.21277736 -44.19656183 35.03607 0.820734  </span></span>
-<span><span class="co">#&gt; Z1:disp_rrr1  -5.07365224    20.16809098 -44.60238420 34.45508 0.801375  </span></span>
-<span><span class="co">#&gt; Z2:disp_rrr1  -4.81508994    20.15883441 -44.32567934 34.69550 0.811216  </span></span>
-<span><span class="co">#&gt; Z0:disp_sss1  -5.77685069     4.76427615 -15.11466035  3.56096 0.225308  </span></span>
-<span><span class="co">#&gt; Z1:disp_sss1  -5.67149819     4.77458697 -15.02951669  3.68652 0.234892  </span></span>
-<span><span class="co">#&gt; Z2:disp_sss1  -6.02929475     4.76275529 -15.36412358  3.30553 0.205540  </span></span>
-<span><span class="co">#&gt; X0:disp_rrr3   1.66649220     1.13447744  -0.55704273  3.89003 0.141846  </span></span>
-<span><span class="co">#&gt; X1:disp_rrr3   1.11422450     1.07962762  -1.00180675  3.23026 0.302051  </span></span>
-<span><span class="co">#&gt; X0:disp_sss3  -0.65014509     2.82140251  -6.17999240  4.87970 0.817755  </span></span>
-<span><span class="co">#&gt; X1:disp_sss3  -1.06948299     2.86051583  -6.67599098  4.53703 0.708495  </span></span>
+<span><span class="co">#&gt; (Intercept)    2.83058287     1.25628370   0.36831206  5.29285 0.024250 *</span></span>
+<span><span class="co">#&gt; X1             0.42514877     0.23433703  -0.03414337  0.88444 0.069637 .</span></span>
+<span><span class="co">#&gt; disp_rrr2      1.15064435    22.29351789 -42.54384780 44.84514 0.958837  </span></span>
+<span><span class="co">#&gt; disp_sss2      8.43720873     7.04721999  -5.37508865 22.24951 0.231213  </span></span>
+<span><span class="co">#&gt; Z0:disp_rrr1  -3.35643882    21.09538200 -44.70262778 37.98975 0.873584  </span></span>
+<span><span class="co">#&gt; Z1:disp_rrr1  -2.87146409    21.09436358 -44.21565698 38.47273 0.891723  </span></span>
+<span><span class="co">#&gt; Z2:disp_rrr1  -2.88046101    21.11525925 -44.26560867 38.50469 0.891492  </span></span>
+<span><span class="co">#&gt; Z0:disp_sss1  -6.32884809     4.96977167 -16.06942157  3.41173 0.202852  </span></span>
+<span><span class="co">#&gt; Z1:disp_sss1  -6.33067783     4.92506271 -15.98362336  3.32227 0.198652  </span></span>
+<span><span class="co">#&gt; Z2:disp_sss1  -6.45986452     5.00055182 -16.26076599  3.34104 0.196416  </span></span>
+<span><span class="co">#&gt; X0:disp_rrr3   1.71273770     1.16242555  -0.56557452  3.99105 0.140639  </span></span>
+<span><span class="co">#&gt; X1:disp_rrr3   1.41831771     1.13728876  -0.81072731  3.64736 0.212359  </span></span>
+<span><span class="co">#&gt; X0:disp_sss3  -0.34437872     2.94737658  -6.12113067  5.43237 0.906985  </span></span>
+<span><span class="co">#&gt; X1:disp_sss3  -0.50082923     2.97726062  -6.33615281  5.33449 0.866412  </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                 estimate standard.error     lower.CI upper.CI    p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)   2.84070077     1.20496423   0.47901428  5.20239   0.018399 *  </span></span>
-<span><span class="co">#&gt; [X=1]         0.36587591     0.23655550  -0.09776434  0.82952   0.121940    </span></span>
-<span><span class="co">#&gt; amp2          8.99807646    12.98060597 -16.44344373 34.43960   0.488188    </span></span>
-<span><span class="co">#&gt; [Z=0]:amp1    7.37228993     5.31595330  -3.04678708 17.79137   0.165496    </span></span>
-<span><span class="co">#&gt; [Z=1]:amp1    7.60972002     5.12988015  -2.44466032 17.66410   0.137965    </span></span>
-<span><span class="co">#&gt; [Z=2]:amp1    7.71605380     5.29389195  -2.65978377 18.09189   0.144968    </span></span>
-<span><span class="co">#&gt; [X=0]:amp3    1.78882221    18.99047028 -35.43181559 39.00946   0.924954    </span></span>
-<span><span class="co">#&gt; [X=1]:amp3    1.54443844    14.50020682 -26.87544469 29.96432   0.915177    </span></span>
-<span><span class="co">#&gt; acr2         -1.17980825     2.02323357  -5.14527319  2.78566   0.559806    </span></span>
-<span><span class="co">#&gt; [Z=0]:acr1    2.24116973     0.44953203   1.36010314  3.12224 6.1782e-07 ***</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1    2.30061312     0.46029044   1.39846044  3.20277 5.7875e-07 ***</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1    2.24469266     0.42431279   1.41305488  3.07633 1.2219e-07 ***</span></span>
-<span><span class="co">#&gt; [X=0]:acr3    0.37196708     5.76511331 -10.92744739 11.67138   0.948556    </span></span>
-<span><span class="co">#&gt; [X=1]:acr3    0.76491224    10.42680447 -19.67124899 21.20107   0.941520    </span></span>
+<span><span class="co">#&gt; (Intercept)   2.83058287     1.25628370   0.36831206  5.29285   0.024250 *  </span></span>
+<span><span class="co">#&gt; [X=1]         0.42514877     0.23433703  -0.03414337  0.88444   0.069637 .  </span></span>
+<span><span class="co">#&gt; amp2          8.51530819     9.10260424  -9.32546829 26.35608   0.349541    </span></span>
+<span><span class="co">#&gt; [Z=0]:amp1    7.16379785     6.01304912  -4.62156186 18.94916   0.233506    </span></span>
+<span><span class="co">#&gt; [Z=1]:amp1    6.95145940     6.03703827  -4.88091818 18.78384   0.249540    </span></span>
+<span><span class="co">#&gt; [Z=2]:amp1    7.07297004     6.14673748  -4.97441404 19.12035   0.249861    </span></span>
+<span><span class="co">#&gt; [X=0]:amp3    1.74701664    21.18272085 -39.77035332 43.26439   0.934270    </span></span>
+<span><span class="co">#&gt; [X=1]:amp3    1.50414595    20.27475965 -38.23365275 41.24194   0.940861    </span></span>
+<span><span class="co">#&gt; acr2         -1.43525513     2.52911284  -6.39222521  3.52171   0.570379    </span></span>
+<span><span class="co">#&gt; [Z=0]:acr1    2.05842000     0.35274965   1.36704340  2.74980 5.3676e-09 ***</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1    1.99662277     0.32684387   1.35602056  2.63722 1.0039e-09 ***</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1    1.99023642     0.31202708   1.37867458  2.60180 1.7894e-10 ***</span></span>
+<span><span class="co">#&gt; [X=0]:acr3    0.19842338     4.47754436  -8.57740230  8.97425   0.964653    </span></span>
+<span><span class="co">#&gt; [X=1]:acr3    0.33944716     6.71441059 -12.82055579 13.49945   0.959680    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -616,33 +616,33 @@ cosinor.glmm object being analysed contains them:</p>
 <span><span class="co">#&gt;  Zero-Inflation Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                  estimate standard.error      lower.CI upper.CI p.value</span></span>
-<span><span class="co">#&gt; (Intercept) -1.423418e+01   1.159470e+02 -2.414861e+02 213.0177 0.90229</span></span>
-<span><span class="co">#&gt; X1          -1.075436e+00   3.056037e+02 -6.000476e+02 597.8967 0.99719</span></span>
-<span><span class="co">#&gt; Z0:zi_rrr1   1.801909e-01   3.479612e+02 -6.818112e+02 682.1716 0.99959</span></span>
-<span><span class="co">#&gt; Z1:zi_rrr1   3.443202e-01   2.856018e+02 -5.594250e+02 560.1136 0.99904</span></span>
-<span><span class="co">#&gt; Z2:zi_rrr1   3.342974e-01   3.331761e+02 -6.526788e+02 653.3474 0.99920</span></span>
-<span><span class="co">#&gt; Z0:zi_sss1  -1.310632e-01   3.197476e+02 -6.268248e+02 626.5627 0.99967</span></span>
-<span><span class="co">#&gt; Z1:zi_sss1   8.394859e-02   2.379802e+02 -4.663488e+02 466.5167 0.99972</span></span>
-<span><span class="co">#&gt; Z2:zi_sss1   7.215599e-02   3.672393e+02 -7.197036e+02 719.8479 0.99984</span></span>
-<span><span class="co">#&gt; X0:zi_rrr2  -1.073742e-02   1.732623e+02 -3.395986e+02 339.5771 0.99995</span></span>
-<span><span class="co">#&gt; X1:zi_rrr2  -5.408732e-03   3.862811e+02 -7.571024e+02 757.0916 0.99999</span></span>
-<span><span class="co">#&gt; X0:zi_sss2  -6.070399e-01   2.807442e+02 -5.508556e+02 549.6415 0.99827</span></span>
-<span><span class="co">#&gt; X1:zi_sss2  -2.141221e-01   4.423561e+02 -8.672162e+02 866.7880 0.99961</span></span>
+<span><span class="co">#&gt; (Intercept) -1.361159e+01   8.512076e+01 -1.804452e+02 153.2220 0.87295</span></span>
+<span><span class="co">#&gt; X1          -6.930552e-01   1.902950e+02 -3.736644e+02 372.2783 0.99709</span></span>
+<span><span class="co">#&gt; Z0:zi_rrr1   3.642852e-01   2.424820e+02 -4.748918e+02 475.6203 0.99880</span></span>
+<span><span class="co">#&gt; Z1:zi_rrr1   2.415915e-01   1.995927e+02 -3.909529e+02 391.4361 0.99903</span></span>
+<span><span class="co">#&gt; Z2:zi_rrr1   2.112672e-01   2.405561e+02 -4.712699e+02 471.6925 0.99930</span></span>
+<span><span class="co">#&gt; Z0:zi_sss1   5.764564e-02   2.279081e+02 -4.466341e+02 446.7494 0.99980</span></span>
+<span><span class="co">#&gt; Z1:zi_sss1  -3.017063e-03   1.636348e+02 -3.207214e+02 320.7153 0.99999</span></span>
+<span><span class="co">#&gt; Z2:zi_sss1   4.259479e-02   2.450748e+02 -4.802952e+02 480.3804 0.99986</span></span>
+<span><span class="co">#&gt; X0:zi_rrr2   3.659899e-03   1.271145e+02 -2.491361e+02 249.1435 0.99998</span></span>
+<span><span class="co">#&gt; X1:zi_rrr2   1.520819e-02   2.360799e+02 -4.626928e+02 462.7232 0.99995</span></span>
+<span><span class="co">#&gt; X0:zi_sss2  -5.083844e-01   1.978501e+02 -3.882875e+02 387.2708 0.99795</span></span>
+<span><span class="co">#&gt; X1:zi_sss2  -1.985521e-01   2.822832e+02 -5.534635e+02 553.0664 0.99944</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                  estimate standard.error      lower.CI  upper.CI p.value</span></span>
-<span><span class="co">#&gt; (Intercept)   -14.2341803    115.9469714  -241.4860684  213.0177 0.90229</span></span>
-<span><span class="co">#&gt; [X=1]          -1.0754357    305.6036678  -600.0476181  597.8967 0.99719</span></span>
-<span><span class="co">#&gt; [Z=0]:amp1      0.2228146    329.5292421  -645.6426317  646.0883 0.99946</span></span>
-<span><span class="co">#&gt; [Z=1]:amp1      0.3544062    528.4505424 -1035.3896245 1036.0984 0.99946</span></span>
-<span><span class="co">#&gt; [Z=2]:amp1      0.3419960    558.6888013 -1094.6679332 1095.3519 0.99951</span></span>
-<span><span class="co">#&gt; [X=0]:amp2      0.6071349    415.8388224  -814.4219804  815.6363 0.99884</span></span>
-<span><span class="co">#&gt; [X=1]:amp2      0.2141904    541.0773370 -1060.2779030 1060.7063 0.99968</span></span>
-<span><span class="co">#&gt; [Z=0]:acr1      0.6288517   1520.1529160 -2978.8161147 2980.0738 0.99967</span></span>
-<span><span class="co">#&gt; [Z=1]:acr1     -0.2391440   1177.9107724 -2308.9018349 2308.4235 0.99984</span></span>
-<span><span class="co">#&gt; [Z=2]:acr1     -0.2125825   1469.3254282 -2880.0375032 2879.6123 0.99988</span></span>
-<span><span class="co">#&gt; [X=0]:acr2      1.5884826    639.1887894 -1251.1985238 1254.3755 0.99802</span></span>
-<span><span class="co">#&gt; [X=1]:acr2      1.5960510   2459.9444343 -4819.8064441 4822.9986 0.99948</span></span></code></pre></div>
+<span><span class="co">#&gt; (Intercept) -1.361159e+01   8.512076e+01 -1.804452e+02  153.2220 0.87295</span></span>
+<span><span class="co">#&gt; [X=1]       -6.930552e-01   1.902950e+02 -3.736644e+02  372.2783 0.99709</span></span>
+<span><span class="co">#&gt; [Z=0]:amp1   3.688180e-01   2.427362e+02 -4.753854e+02  476.1230 0.99879</span></span>
+<span><span class="co">#&gt; [Z=1]:amp1   2.416103e-01   3.753427e+02 -7.354166e+02  735.8998 0.99949</span></span>
+<span><span class="co">#&gt; [Z=2]:amp1   2.155183e-01   3.966532e+02 -7.772105e+02  777.6415 0.99957</span></span>
+<span><span class="co">#&gt; [X=0]:amp2   5.083976e-01   2.917100e+02 -5.712327e+02  572.2495 0.99861</span></span>
+<span><span class="co">#&gt; [X=1]:amp2   1.991337e-01   3.654450e+02 -7.160598e+02  716.4581 0.99957</span></span>
+<span><span class="co">#&gt; [Z=0]:acr1  -1.569418e-01   6.172080e+02 -1.209862e+03 1209.5485 0.99980</span></span>
+<span><span class="co">#&gt; [Z=1]:acr1   1.248764e-02   1.201487e+03 -2.354858e+03 2354.8830 0.99999</span></span>
+<span><span class="co">#&gt; [Z=2]:acr1  -1.989487e-01   1.585676e+03 -3.108066e+03 3107.6684 0.99990</span></span>
+<span><span class="co">#&gt; [X=0]:acr2   1.563597e+00   5.662343e+02 -1.108235e+03 1111.3625 0.99780</span></span>
+<span><span class="co">#&gt; [X=1]:acr2   1.494350e+00   1.676948e+03 -3.285263e+03 3288.2520 0.99929</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-predict-cosinor-glmm-r">Using: ‘predict.cosinor.glmm.R’<a class="anchor" aria-label="anchor" href="#using-predict-cosinor-glmm-r"></a>
