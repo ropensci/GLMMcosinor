@@ -1,30 +1,42 @@
 #' Fit the cosinorGLMM model using the output from update_formula_and_data() and
 #' a new formula
 #'
-#' @param obj output from `update_formula_and_data()`
-#' @param formula new formula to use when fitting model (maybe with random effects)
-#' @param ... optional additional arguments passed to `glmmTMB::glmmTMB()`
+#' @param obj Output from `update_formula_and_data()`.
+#' @param formula A (optionally) new formula to use when fitting the cosinor
+#' model (maybe with random effects) or other covariates found in the data.
+#' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
-#' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
+#' @return Returns a fitted cosinor model as a \code{cosinor.glmm} object.
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #'
 #' @export
 #'
 #' @examples
+#' # Use vitamind data but add a "patient" identifier to be used as a random effect
 #' vitamind2 <- vitamind
 #' vitamind2$patient <- sample(LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
-#' updated_df_and_formula <- update_formula_and_data(
+#'
+#' # Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+#' # without yet fitting the model
+#' data_and_formula <- update_formula_and_data(
 #'   data = vitamind2,
 #'   formula = Y ~ X + amp_acro(time,
 #'     group = "X",
 #'     period = 12
 #'   )
 #' )
-#' res <- fit_model_and_process(
-#'   updated_df_and_formula,
-#'   update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))
+#'
+#' # print formula from above
+#' data_and_formula$newformula
+#'
+#' # fit model while adding random effect to cosinor model formula.
+#' mod <- fit_model_and_process(
+#'   obj = data_and_formula,
+#'   formula = update.formula(data_and_formula$newformula, . ~ . + (1 | patient))
 #' )
 #'
+#' mod
+#' mod$fit # printing the `glmmTMB` model within shows Std.Dev. of random effect
 fit_model_and_process <- function(obj, formula, ...) {
   if (!missing(formula)) {
     obj$newformula <- formula
@@ -35,19 +47,21 @@ fit_model_and_process <- function(obj, formula, ...) {
 
 #' Process and fit the data using glmmTMB after initial processing by data_utils.R.
 #'
-#'
-#' @param newdata processed dataframe with rrr and sss columns added
-#' @param newformula processed formula wwith rrr and sss components
-#' @param vec_sss a vector of sss for each component. (eg, "sss1, sss2")
-#' @param vec_rrr a vector of sss for each component. (eg, "rrr1, rrr2")
-#' @param n_components number of components specified
-#' @param group_stats a list of levels per group
-#' @param group the original group argument
-#' @param group_check binary vector indicating whether a group arg is present
-#' @param period a vector of periods for each component
-#' @param family the data distribution family
-#' @param Terms a list of  Terms from the original cosinor.glmm() call
-#' @param ... extra parameters
+#' @param newdata A processed \code{data.frame} with rrr and sss columns added.
+#' @param newformula A processed \code{formula} with rrr and sss components.
+#' @param vec_sss A vector of sss for each component.
+#' (eg, \code{c("sss1, sss2")}).
+#' @param vec_rrr A vector of sss for each component.
+#' (eg, \code{c("sss1, sss2")}).
+#' @param n_components The number of components specified in the model formula.
+#' @param group_stats A vector containing the number of levels per grouping
+#' variable.
+#' @param group The original \code{group} argument.
+#' @param group_check A \code{logical}. Whether a grouping argument is present.
+#' @param period A vector of values for the period of each component.
+#' @param family The \code{family} for fitting the model.
+#' @param Terms A \code{terms} object from the original \code{cosinor.glmm()} call.
+#' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
 #' @srrstats {RE1.0} *Regression Software should enable models to be specified via a formula interface, unless reasons for not doing so are explicitly documented.*
 #' @srrstats {RE1.3} *Regression Software which passes or otherwise transforms aspects of input data onto output structures should ensure that those output structures retain all relevant aspects of input data, notably including row and column names, and potentially information from other `attributes()`.*
@@ -60,7 +74,6 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {RE4.4} *The specification of the model, generally as a formula (via `formula()`)*
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #' @srrstats {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
-
 #'
 #' The following standards are covered in the glmmTMB package
 #' @srrstats {RE2.2} *Regression Software should provide different options for processing missing values in predictor and response data. For example, it should be possible to fit a model with no missing predictor data in order to generate values for all associated response points, even where submitted response values may be missing.*
@@ -82,10 +95,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {G2.15} *Functions should never assume non-missingness, and should never pass data with potential missing values to any base routines with default `na.rm = FALSE`-type parameters (such as [`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html), [`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html) or [`cor()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html)).*
 #' @srrstats {G2.16} *All functions should also provide options to handle undefined values (e.g., `NaN`, `Inf` and `-Inf`), including potentially ignoring or removing such values.*
 #'
-#'
-#' @return the model fit from glmmTMB (as well as some other inputs )
+#' @return A \code{cosinor.glmm} model.
 #' @noRd
-
 data_processor <- function(newdata,
                            newformula,
                            vec_sss,

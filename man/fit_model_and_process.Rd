@@ -8,11 +8,12 @@ a new formula}
 fit_model_and_process(obj, formula, ...)
 }
 \arguments{
-\item{obj}{output from \code{update_formula_and_data()}}
+\item{obj}{Output from \code{update_formula_and_data()}.}
 
-\item{formula}{new formula to use when fitting model (maybe with random effects)}
+\item{formula}{A (optionally) new formula to use when fitting the cosinor
+model (maybe with random effects) or other covariates found in the data.}
 
-\item{...}{optional additional arguments passed to \code{glmmTMB::glmmTMB()}}
+\item{...}{Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.}
 }
 \value{
 Returns a fitted cosinor model as a \code{cosinor.glmm} object.
@@ -22,18 +23,29 @@ Fit the cosinorGLMM model using the output from update_formula_and_data() and
 a new formula
 }
 \examples{
+# Use vitamind data but add a "patient" identifier to be used as a random effect
 vitamind2 <- vitamind
 vitamind2$patient <- sample(LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
-updated_df_and_formula <- update_formula_and_data(
+
+# Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+# without yet fitting the model
+data_and_formula <- update_formula_and_data(
   data = vitamind2,
   formula = Y ~ X + amp_acro(time,
     group = "X",
     period = 12
   )
 )
-res <- fit_model_and_process(
-  updated_df_and_formula,
-  update.formula(updated_df_and_formula$newformula, . ~ . + (1 | patient))
+
+# print formula from above
+data_and_formula$newformula
+
+# fit model while adding random effect to cosinor model formula.
+mod <- fit_model_and_process(
+  obj = data_and_formula,
+  formula = update.formula(data_and_formula$newformula, . ~ . + (1 | patient))
 )
 
+mod
+mod$fit # printing the `glmmTMB` model within shows Std.Dev. of random effect
 }

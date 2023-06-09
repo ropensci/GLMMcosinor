@@ -5,8 +5,7 @@
 \alias{vitamind}
 \title{Vitamin D}
 \format{
-A data frame with 3 variables: \code{X}, \code{Y},
-\code{time}.
+A data frame with 3 variables: \code{X}, \code{Y}, \code{time}.
 }
 \usage{
 vitamind
