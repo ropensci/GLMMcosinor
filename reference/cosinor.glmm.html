@@ -31,7 +31,6 @@ covariate effects."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aj
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-simulations.html">data-simulations</a>
     <a class="dropdown-item" href="../articles/mixed-models.html">mixed-models</a>
-    <a class="dropdown-item" href="../articles/model-fitting-problems.html">model-fitting-problems</a>
     <a class="dropdown-item" href="../articles/model-specification.html">model-specification</a>
     <a class="dropdown-item" href="../articles/model-visualisations.html">model-visualisations</a>
     <a class="dropdown-item" href="../articles/multiple-components.html">multiple-components</a>
@@ -79,35 +78,40 @@ covariate effects.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>formula</dt>
-<dd><p>Formula specifying the model. Indicate the time variable with
-<code><a href="https://rdrr.io/r/stats/time.html" class="external-link">time()</a></code> and covariate effects on the amplitude and acrophase with
-<code><a href="amp_acro.html">amp_acro()</a></code>. See details for more information.</p></dd>
+<dd><p>A <code>formula</code> specifying the cosinor model to be fit.
+The cosinor portion of the formula is controlled by including
+<code><a href="amp_acro.html">amp_acro()</a></code> on the right hand side of the formula.
+See <code><a href="amp_acro.html">amp_acro</a></code> for more details.</p></dd>
 
 
 <dt>data</dt>
-<dd><p>Data frame where variable can be found.
-Row names corresponding to variables specified in the formula will be inherited with their attributes; details from unused columns are not inherited.
-The analysis assumes that the data follows the distribution specified in the 'family' parameter.</p></dd>
+<dd><p>A <code>data.frame</code> containing the variables used in the model.</p></dd>
 
 
 <dt>family</dt>
-<dd><p>a family function, see <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">?family</a></code> and <code><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">?glmmTMB::nbinom2</a></code></p></dd>
+<dd><p>A <code>family</code> function or a character string naming a family
+function. See <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">?family</a></code> and <code><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">?glmmTMB::family_glmmTMB</a></code> for options.</p></dd>
 
 
 <dt>quietly</dt>
-<dd><p>controls whether messages from amp_acro are displayed. TRUE by default</p></dd>
+<dd><p>A <code>logical</code>. If <code>TRUE</code>, shows warning messages when
+wrangling data and fitting model. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt>dispformula</dt>
-<dd><p>Formula specifying a dispersion model (optional). Use the same format as the main formula</p></dd>
+<dd><p>A one-sided (i.e., no response variable) <code>formula</code>
+for dispersion combining fixed and random effects, including cosinor
+components using <code><a href="amp_acro.html">amp_acro()</a></code>. Defaults to <code>~1</code>.</p></dd>
 
 
 <dt>ziformula</dt>
-<dd><p>Formula specifying a zero-inflation model (optional). Use the same format as the main formula</p></dd>
+<dd><p>A one-sided (i.e., no response variable) <code>formula</code>
+for zero-inflation combining fixed and random effects, including cosinor
+components using <code><a href="amp_acro.html">amp_acro()</a></code>. Defaults to <code>~0</code>.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>optional additional arguments passed to glmmTMB::glmmTMB()</p></dd>
+<dd><p>Optional additional arguments passed to <code><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB::glmmTMB()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -117,67 +121,93 @@ The analysis assumes that the data follows the distribution specified in the 'fa
 <p>Returns a fitted cosinor model as a <code>cosinor.glmm</code> object.</p>
     </div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This defines special functions that are used in the formula to
-indicate the time variable and which covariates effect the amplitude. To
-indicate the time variable wrap the name of it in the function
-<code><a href="https://rdrr.io/r/stats/time.html" class="external-link">time()</a></code>. To indicate a variable which affects the
-acrophase/amplitude, wrap the name in <code><a href="amp_acro.html">amp_acro()</a></code>. This will then do
-all the transformations for you. See examples for usage.</p>
-    </div>
-    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">cosinor.glmm</span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
-<span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">3</span>,</span></span>
-<span class="r-in"><span>  group <span class="op">=</span> <span class="st">"X"</span>,</span></span>
-<span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Single component cosinor model</span></span></span>
+<span class="r-in"><span><span class="fu">cosinor.glmm</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw formula: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 +      X:main_rrr3 + X:main_sss3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X:main_rrr1 + X:main_sss1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   29.72079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1             5.04272</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1   0.54500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  25.78174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1   2.18438</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1   4.20675</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr2   8.36514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr2  -0.48442</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss2  -3.60448</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss2  24.27888</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr3  -8.38004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr3 -20.49047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss3   8.71323</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss3 -34.34724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  30.32687</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.86520</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.47625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.24438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.66701</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.72079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        5.04272</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp1   2.25134</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp1  26.12269</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp2   9.10867</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp2  24.28372</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp3  12.08906</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp3  39.99490</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr1  -1.32629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr1  -0.16174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr2   0.40685</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr2  -1.59075</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr3  -2.33670</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr3   2.10869</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 30.32687</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp    6.30404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp    7.98266</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr   -1.43312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr   -0.62444</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 2-component cosinor model with simulated data</span></span></span>
+<span class="r-in"><span><span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">500</span>,</span></span>
+<span class="r-in"><span>  mesor <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta.mesor <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="st">"gaussian"</span>,</span></span>
+<span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">cosinor.glmm</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span></span>
+<span class="r-in"><span>                       n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                       group <span class="op">=</span> <span class="st">"group"</span>,</span></span>
+<span class="r-in"><span>                       period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="va">gaussian</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Raw formula: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +      group:main_sss2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       4.91302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -2.84929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  0.99325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  1.18226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1 -1.64615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1 -1.75868</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2 -0.03018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.10932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2 -0.96562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2 -0.98721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     4.91302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -2.84929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  1.92259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  2.11913</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  0.96610</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  0.99325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  1.02790</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  0.97894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.60204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.46051</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

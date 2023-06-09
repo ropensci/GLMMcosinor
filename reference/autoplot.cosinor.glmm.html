@@ -31,7 +31,6 @@ Optionally allows for plotting by covariates"><!-- mathjax --><script src="https
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-simulations.html">data-simulations</a>
     <a class="dropdown-item" href="../articles/mixed-models.html">mixed-models</a>
-    <a class="dropdown-item" href="../articles/model-fitting-problems.html">model-fitting-problems</a>
     <a class="dropdown-item" href="../articles/model-specification.html">model-specification</a>
     <a class="dropdown-item" href="../articles/model-visualisations.html">model-visualisations</a>
     <a class="dropdown-item" href="../articles/multiple-components.html">multiple-components</a>
@@ -88,39 +87,55 @@ Optionally allows for plotting by covariates</p>
 
 
 <dt>ci_level</dt>
-<dd><p>The level for calculated confidence intervals. Defaults to 0.95.</p></dd>
+<dd><p>The level for calculated confidence intervals. Defaults to
+<code>0.95</code>.</p></dd>
 
 
 <dt>x_str</dt>
-<dd><p>Character vector naming covariate(s) to be plotted. Default has no value and plots all groups</p></dd>
+<dd><p>A <code>character</code> vector naming variable(s) to be plotted.
+Default has no value and plots all groups.</p></dd>
 
 
 <dt>type</dt>
-<dd><p>Character that will be passed as an argument to the predict.cosinor.glmm() function, specifying the type of prediction (e.g, "response", or "link")</p></dd>
+<dd><p>A <code>character</code> that will be passed as an argument to
+<code><a href="predict.cosinor.glmm.html">predict.cosinor.glmm()</a></code>, specifying the type of prediction
+(e.g, "response", or "link"). See <code><a href="https://rdrr.io/pkg/glmmTMB/man/predict.glmmTMB.html" class="external-link">?glmmTMB::predict.glmmTMB</a></code> for full
+list of possible inputs.</p></dd>
 
 
 <dt>xlims</dt>
-<dd><p>A vector of length two containing the lower and upper x limit to be plotted</p></dd>
+<dd><p>A vector of length two containing the limits for the x-axis.</p></dd>
 
 
 <dt>pred.length.out</dt>
-<dd><p>An integer value that specifies the number of predicted datapoints. The larger the value, the more smooth the fit will appear</p></dd>
+<dd><p>An integer value that specifies the number of
+predicted data points. The larger the value, the more smooth the fitted line
+will appear. If missing, uses <code>points_per_min_cycle_length</code> to generate
+a sensible default value.</p></dd>
 
 
 <dt>points_per_min_cycle_length</dt>
-<dd><p>Number of datapoints for the smallest period</p></dd>
+<dd><p>Used to determine the number of samples
+to create plot if <code>pred.length.out</code> is missing.
+<code>points_per_min_cycle_length</code> is the number of points plotted per the
+minimum cycle length (period) of all cosinor components in the model.</p></dd>
 
 
 <dt>superimpose.data</dt>
-<dd><p>A logical argument (TRUE or FALSE). If TRUE, data from the original cosinor.glmm() object will be superimposed over the predicted fit</p></dd>
+<dd><p>A <code>logical</code>. If <code>TRUE</code>, data from the
+original data used to fit the model (<code>object</code>) will be superimposed
+over the predicted fit.</p></dd>
 
 
 <dt>data_opacity</dt>
-<dd><p>A number bewteen 0 and 1 inclusive that controls the opacity of the superimposed data</p></dd>
+<dd><p>A number between 0 and 1 inclusive that controls the
+opacity of the superimposed data. (Used as the <code>alpha</code> when calling
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code>).</p></dd>
 
 
 <dt>predict.ribbon</dt>
-<dd><p>A logical argument (TRUE or FALSE). If TRUE, a prediction interval is plotted</p></dd>
+<dd><p>A codelogical. If <code>TRUE</code>, a prediction interval
+is plotted.</p></dd>
 
 
 <dt>...</dt>
@@ -131,20 +146,17 @@ Optionally allows for plotting by covariates</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a <code>ggplot</code> graphics object.</p>
+<p>Returns a <code>ggplot</code> object.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Package version inconsistency detected.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> TMB was built with Matrix version 1.5.4.1</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Current Matrix version is 1.5.4</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">model</span>, x_str <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="autoplot.cosinor.glmm-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

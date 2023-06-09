@@ -33,7 +33,6 @@ a new formula"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/li
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-simulations.html">data-simulations</a>
     <a class="dropdown-item" href="../articles/mixed-models.html">mixed-models</a>
-    <a class="dropdown-item" href="../articles/model-fitting-problems.html">model-fitting-problems</a>
     <a class="dropdown-item" href="../articles/model-specification.html">model-specification</a>
     <a class="dropdown-item" href="../articles/model-visualisations.html">model-visualisations</a>
     <a class="dropdown-item" href="../articles/multiple-components.html">multiple-components</a>
@@ -74,15 +73,16 @@ a new formula</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>obj</dt>
-<dd><p>output from <code><a href="update_formula_and_data.html">update_formula_and_data()</a></code></p></dd>
+<dd><p>Output from <code><a href="update_formula_and_data.html">update_formula_and_data()</a></code>.</p></dd>
 
 
 <dt>formula</dt>
-<dd><p>new formula to use when fitting model (maybe with random effects)</p></dd>
+<dd><p>A (optionally) new formula to use when fitting the cosinor
+model (maybe with random effects) or other covariates found in the data.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>optional additional arguments passed to <code><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB::glmmTMB()</a></code></p></dd>
+<dd><p>Optional additional arguments passed to <code><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB::glmmTMB()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -94,20 +94,78 @@ a new formula</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">vitamind2</span> <span class="op">&lt;-</span> <span class="va">vitamind</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use vitamind data but add a "patient" identifier to be used as a random effect</span></span></span>
+<span class="r-in"><span><span class="va">vitamind2</span> <span class="op">&lt;-</span> <span class="va">vitamind</span></span></span>
 <span class="r-in"><span><span class="va">vitamind2</span><span class="op">$</span><span class="va">patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">vitamind2</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">updated_df_and_formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="update_formula_and_data.html">update_formula_and_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()</span></span></span>
+<span class="r-in"><span><span class="co"># without yet fitting the model</span></span></span>
+<span class="r-in"><span><span class="va">data_and_formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="update_formula_and_data.html">update_formula_and_data</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind2</span>,</span></span>
 <span class="r-in"><span>  formula <span class="op">=</span> <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
 <span class="r-in"><span>    group <span class="op">=</span> <span class="st">"X"</span>,</span></span>
 <span class="r-in"><span>    period <span class="op">=</span> <span class="fl">12</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">fit_model_and_process</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">updated_df_and_formula</span>,</span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/update.formula.html" class="external-link">update.formula</a></span><span class="op">(</span><span class="va">updated_df_and_formula</span><span class="op">$</span><span class="va">newformula</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">patient</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># print formula from above</span></span></span>
+<span class="r-in"><span><span class="va">data_and_formula</span><span class="op">$</span><span class="va">newformula</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X + X:main_rrr1 + X:main_sss1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55e666f31cd0&gt;</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># fit model while adding random effect to cosinor model formula.</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fit_model_and_process</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  obj <span class="op">=</span> <span class="va">data_and_formula</span>,</span></span>
+<span class="r-in"><span>  formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.formula.html" class="external-link">update.formula</a></span><span class="op">(</span><span class="va">data_and_formula</span><span class="op">$</span><span class="va">newformula</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">patient</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mod</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Raw formula: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X + (1 | patient) + X:main_rrr1 + X:main_sss1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  29.68979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1            1.90186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.93079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.51029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.20099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.81846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.68979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        1.90186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp    6.27046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp    8.09947</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr   -1.42181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr   -0.63715</span>
+<span class="r-in"><span><span class="va">mod</span><span class="op">$</span><span class="va">fit</span> <span class="co"># printing the `glmmTMB` model within shows Std.Dev. of random effect</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula:          Y ~ X + (1 | patient) + X:main_rrr1 + X:main_sss1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: newdata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AIC       BIC    logLik  df.resid </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1248.0316 1274.4181 -616.0158       192 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-effects (co)variances:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Conditional model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Std.Dev. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  patient  (Intercept) 0.0002847</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             5.2653120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of obs: 200 / Conditional model: patient, 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion estimate for gaussian family (sigma^2): 27.7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Conditional model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  (Intercept)            X1  X0:main_rrr1  X1:main_rrr1  X0:main_sss1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      29.6898        1.9019        0.9308        6.5103        6.2010  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       4.8185  </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

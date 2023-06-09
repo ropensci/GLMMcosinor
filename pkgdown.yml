@@ -5,11 +5,10 @@ articles:
   GLMMcosinor: GLMMcosinor.html
   data-simulations: data-simulations.html
   mixed-models: mixed-models.html
-  model-fitting-problems: model-fitting-problems.html
   model-specification: model-specification.html
   model-visualisations: model-visualisations.html
   multiple-components: multiple-components.html
-last_built: 2023-06-09T02:13Z
+last_built: 2023-06-09T06:20Z
 urls:
   reference: https://rwparsons.github.io/GLMMcosinor/reference
   article: https://rwparsons.github.io/GLMMcosinor/articles
