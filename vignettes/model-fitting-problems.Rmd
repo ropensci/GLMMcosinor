@@ -49,20 +49,3 @@ summary(object$fit) # summary of `glmmTMB` object
 
 summary(object) # summary of `cosinor.glmm` object
 ```
-
-```{r}
-
-testdata |> 
-  ggplot(aes(times, Y)) +
-  geom_point()
-
-
-object <- cosinor.glmm(
-  Y ~ amp_acro(times, n_components = 3, period = c(12, 6, 12)),
-  data = testdata, 
-  family = poisson(),
-  # REML = TRUE,
-  control = glmmTMBControl()
-)
-```
-
