@@ -107,7 +107,8 @@ for dispersion and zero-inflation models. These formulas are independent
 of the main formula specification:
 
 ```{r, message=F, warning=F}
-testdata <- simulate_cosinor(1000, n_period = 6,
+testdata <- simulate_cosinor(1000,
+  n_period = 6,
   mesor = 7,
   amp = c(0.1, 0.4, 0.5),
   acro = c(1, 1.5, 0.1),
@@ -118,17 +119,18 @@ testdata <- simulate_cosinor(1000, n_period = 6,
   period = c(12, 6, 8),
   n_components = 3
 )
-object <- cosinor.glmm(Y ~ group + amp_acro(times,
-  n_components = 3,
-  period = c(12, 6, 8),
-  group = "group"
-), data = testdata, family = gaussian(), 
-  dispformula = ~ group + amp_acro(times, n_components = 2, group = "group", period = c(12,6)), 
-  ziformula = ~ group + amp_acro(times, n_components = 3, group = "group", period = c(7,8,2))
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 3,
+    period = c(12, 6, 8),
+    group = "group"
+  ),
+  data = testdata, family = gaussian(),
+  dispformula = ~ group + amp_acro(times, n_components = 2, group = "group", period = c(12, 6)),
+  ziformula = ~ group + amp_acro(times, n_components = 3, group = "group", period = c(7, 8, 2))
 )
 
 object
-
 ```
 
 This example shows how dispformula and ziformula can be specified with a

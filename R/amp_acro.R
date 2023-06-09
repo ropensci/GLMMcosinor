@@ -1,4 +1,3 @@
-
 #' Checks the validity of user inputs and creates formula and modifies dataframe
 #'
 #' @param time_col a column of time values in the dataframe
@@ -35,8 +34,7 @@ amp_acro <- function(time_col,
                      n_components = 1,
                      group,
                      period,
-                     ...
-) {
+                     ...) {
   .amp_acro(time_col, n_components, group, period, .env = environment(), ...)
 }
 
@@ -82,22 +80,22 @@ amp_acro <- function(time_col,
 #' @return updated dataframe and formula to then be processed by data_processor()
 
 .amp_acro <- function(time_col,
-                     n_components = 1,
-                     group,
-                     period,
-                     .data,
-                     .formula,
-                     .quietly = TRUE,
-                     .amp_acro_ind = -1,
-                     .data_prefix = "main_",
-                     .env) {
+                      n_components = 1,
+                      group,
+                      period,
+                      .data,
+                      .formula,
+                      .quietly = TRUE,
+                      .amp_acro_ind = -1,
+                      .data_prefix = "main_",
+                      .env) {
   # checking dataframe
 
 
   ## Check if 'group' is a non-string and convert it to a string if necessary
-  #if (!is.character(group)) {
+  # if (!is.character(group)) {
   #  group <- as.character(group)
-  #}
+  # }
 
 
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
@@ -124,8 +122,6 @@ amp_acro <- function(time_col,
                                  .quietly = TRUE,
                                  .data,
                                  .amp_acro_ind = -1) {
-
-
     # assess the quality of the inputs
     stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
     lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
@@ -143,7 +139,7 @@ amp_acro <- function(time_col,
 
 
     assertthat::assert_that((paste(substitute(time_col, .env)) %in% colnames(.data)),
-                            msg = "time_col must be the name of a column in dataframe"
+      msg = "time_col must be the name of a column in dataframe"
     )
 
 
@@ -163,16 +159,15 @@ amp_acro <- function(time_col,
 
     # ensure time_col is univariate (tested)
     assertthat::assert_that(is.vector(ttt),
-                            msg = "time_col must be univariate"
+      msg = "time_col must be univariate"
     )
 
     # Check if 'group' is a non-string and convert it to a string if necessary
-    if (all(!is.character(substitute(group,.env))) & !missing(group)) {
-      group_change <- as.character(substitute(group,.env))
-      if(length(group_change) != 1) {
+    if (all(!is.character(substitute(group, .env))) & !missing(group)) {
+      group_change <- as.character(substitute(group, .env))
+      if (length(group_change) != 1) {
         group <- group
-      }
-      else {
+      } else {
         group <- group_change
       }
     }
@@ -290,8 +285,8 @@ amp_acro <- function(time_col,
       left_part <- NULL
     }
     newformula <- stats::as.formula(paste(left_part, # rownames(attr(Terms, "factors"))[1],
-                                          paste(c(attr(stats::terms(.formula), "intercept"), non_acro_formula, formula_expr), collapse = " + "),
-                                          sep = " ~ "
+      paste(c(attr(stats::terms(.formula), "intercept"), non_acro_formula, formula_expr), collapse = " + "),
+      sep = " ~ "
     ))
     newformula <- stats::update.formula(newformula, ~.)
 
@@ -357,5 +352,3 @@ amp_acro <- function(time_col,
   # ) + (1|amp_acro1) + (X|amp_acro2), data = vitamind)
   res
 }
-
-

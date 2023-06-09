@@ -129,7 +129,7 @@ model. The units can be changed to degrees, or even to be expressed in
 the same units as the period specification.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period =12), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 polar_plot(model, radial_units = "degrees")
 ```
 

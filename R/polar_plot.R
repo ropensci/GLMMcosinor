@@ -1,4 +1,3 @@
-
 #' Generates a polar plot with elliptical confidence intervals
 #'
 #' @param x An object of class \code{cosinor.glmm}
@@ -101,20 +100,20 @@ polar_plot.cosinor.glmm <- function(x,
   # checking the quality of inputs
 
   assertthat::assert_that(inherits(x, "cosinor.glmm"),
-                          msg = "'x' must be of class cosinor.glmm"
+    msg = "'x' must be of class cosinor.glmm"
   )
 
   validate_ci_level(ci_level)
 
   if (!missing(contour_interval)) {
     assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
-                            msg = "'contour_interval' must be a number greater than 0"
+      msg = "'contour_interval' must be a number greater than 0"
     )
   }
 
   if (!missing(contour_label_frequency)) {
     assertthat::assert_that(is.numeric(contour_label_frequency) & contour_label_frequency > 0,
-                            msg = "'contour_label_frequency' must be a number greater than 0"
+      msg = "'contour_label_frequency' must be a number greater than 0"
     )
   }
 
@@ -123,47 +122,47 @@ polar_plot.cosinor.glmm <- function(x,
     msg = "'grid_angle_segments' must be an integer greater than 0"
   )
   assertthat::assert_that(is.logical(quietly),
-                          msg = "'quietly' must a logical argument, either TRUE or FALSE"
+    msg = "'quietly' must a logical argument, either TRUE or FALSE"
   )
   assertthat::assert_that(is.character(radial_units) & radial_units %in% c("radians", "degrees", "period"),
-                          msg = "'radial_units' must be either 'radians', 'degrees', or 'period'  "
+    msg = "'radial_units' must be either 'radians', 'degrees', or 'period'  "
   )
   assertthat::assert_that(is.logical(clockwise),
-                          msg = "'clockwise' must be a logical argument, either TRUE or FALSE "
+    msg = "'clockwise' must be a logical argument, either TRUE or FALSE "
   )
   assertthat::assert_that(is.numeric(text_size) & text_size > 0,
-                          msg = "'text_size' must be a number greater than 0"
+    msg = "'text_size' must be a number greater than 0"
   )
   assertthat::assert_that(is.numeric(text_opacity) & text_opacity >= 0 & text_opacity <= 1,
-                          msg = "'text_opacity' must be a number between 0 and 1 inclusive"
+    msg = "'text_opacity' must be a number between 0 and 1 inclusive"
   )
   assertthat::assert_that(is.numeric(ellipse_opacity) & ellipse_opacity >= 0 & ellipse_opacity <= 1,
-                          msg = "'ellipse_opacity' must be a number between 0 and 1 inclusive"
+    msg = "'ellipse_opacity' must be a number between 0 and 1 inclusive"
   )
 
-  #assertthat::assert_that(is.logical(make_cowplot),
+  # assertthat::assert_that(is.logical(make_cowplot),
   #  msg = "'make_cowplot' must be a logical argument, either TRUE or FALSE"
-  #)
+  # )
 
-  if(!missing(component_index)) {
-  assertthat::assert_that(all(component_index == floor(component_index)) & all(component_index>0) & all(component_index <= x$n_components),
-                          msg = "'component_index' must be an integer between 1 and n_components (total number of components in model) inclusive"
-  )
+  if (!missing(component_index)) {
+    assertthat::assert_that(all(component_index == floor(component_index)) & all(component_index > 0) & all(component_index <= x$n_components),
+      msg = "'component_index' must be an integer between 1 and n_components (total number of components in model) inclusive"
+    )
   }
   assertthat::assert_that(is.character(circle_linetype),
-                          msg = "'circle_linetype' must be a character. See ?linetype for more details"
+    msg = "'circle_linetype' must be a character. See ?linetype for more details"
   )
   # assertthat::assert_that(is.character(fill_colours),
   #  msg = "fill_colours must be of class character, and must be a valid colour"
   # )
   assertthat::assert_that(is.character(start) & start %in% c("right", "left", "bottom", "top"),
-                          msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'"
+    msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'"
   )
   assertthat::assert_that(is.character(view) & view %in% c("full", "zoom", "zoom_origin"),
-                          msg = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'"
+    msg = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'"
   )
   assertthat::assert_that(is.logical(overlay_parameter_info),
-                          msg = "'overlay_parameter_info' must be a logical argument, either TRUE or FALSE"
+    msg = "'overlay_parameter_info' must be a logical argument, either TRUE or FALSE"
   )
 
   sum <- summary(x, ci_level = ci_level) # get summary statistics of cosinor.glmm object
@@ -208,9 +207,9 @@ polar_plot.cosinor.glmm <- function(x,
     overlay_start <- pi / 2
   }
 
-  #if (!missing(make_cowplot) & !missing(component_index)) {
+  # if (!missing(make_cowplot) & !missing(component_index)) {
   #  make_cowplot <- FALSE
-  #}
+  # }
 
   if (!missing(component_index)) {
     make_cowplot <- FALSE
@@ -285,11 +284,11 @@ polar_plot.cosinor.glmm <- function(x,
     # determine the maximum radius in a single plot. This will be used for formatting plot features
     max_radius <- max(abs(u_est_amp), abs(l_est_amp))
     if (!contour_interval_check) {
-      contour_interval <- signif(max_radius/5, digits = 2) # a default if no contour_interval argument is supplied
+      contour_interval <- signif(max_radius / 5, digits = 2) # a default if no contour_interval argument is supplied
     }
 
     # by default, the contour_labels correspond to every contour:
-    if(!contour_label_frequency_check) {
+    if (!contour_label_frequency_check) {
       contour_label_frequency <- 1
     }
 
@@ -342,14 +341,14 @@ polar_plot.cosinor.glmm <- function(x,
       contour_y_zoom <- sin(direction * mean(est_acr) + offset) * contour_labels
     }
     contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
-   # if(length(contour_labels) > 20) {
-   #   #text_angle_offset <- rep(2*pi/(grid_angle_segments)/4, length(contour_labels))
-   #   contour_labels <- contour_labels[seq(1, length(contour_labels), length.out = round(length(contour_labels)/2))]
-   #   text_angle_offset <- 0
-   #   #text_angle_offset <- seq(0, 4*pi, length.out = length(contour_labels)) #a spiral arrangement of text
-   # } else {
-   #   text_angle_offset <- 0
-   # }
+    # if(length(contour_labels) > 20) {
+    #   #text_angle_offset <- rep(2*pi/(grid_angle_segments)/4, length(contour_labels))
+    #   contour_labels <- contour_labels[seq(1, length(contour_labels), length.out = round(length(contour_labels)/2))]
+    #   text_angle_offset <- 0
+    #   #text_angle_offset <- seq(0, 4*pi, length.out = length(contour_labels)) #a spiral arrangement of text
+    # } else {
+    #   text_angle_offset <- 0
+    # }
 
     # adding special symbols to time_labels (π for radians, ° for degrees )
     if (radial_units == "radians") {
@@ -421,7 +420,7 @@ polar_plot.cosinor.glmm <- function(x,
         alpha = text_opacity
       ) +
       ggplot2::geom_text(
-        ggplot2::aes(label = contour_labels, x = contour_labels*(cos(pi/grid_angle_segments)), y = contour_labels*(sin(pi/grid_angle_segments))),
+        ggplot2::aes(label = contour_labels, x = contour_labels * (cos(pi / grid_angle_segments)), y = contour_labels * (sin(pi / grid_angle_segments))),
         size = text_size, alpha = text_opacity
       ) +
       ggplot2::guides(colour = "none") +
@@ -487,7 +486,7 @@ polar_plot.cosinor.glmm <- function(x,
           values = fill_colours,
           aesthetics = c("fill", "colour")
         )
-      } else {
+    } else {
       plot_obj <- plot_obj +
         ggplot2::scale_fill_manual(
           values = grDevices::rainbow(group_level_colour_index),
@@ -541,7 +540,7 @@ polar_plot.cosinor.glmm <- function(x,
     )
     final_obj
   } else {
-    #final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
+    # final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
     plot_list <- NULL
     for (i in component_index) {
       assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))

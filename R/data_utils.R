@@ -195,4 +195,3 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components) {
   }
   new_coefs
 }
-

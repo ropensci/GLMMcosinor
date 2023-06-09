@@ -110,6 +110,7 @@ simulate_cosinor <- function(n,
       period = period,
       ...
     )
+
     data_B <- .get_dataset(
       family = family,
       amp = beta.amp,
@@ -163,18 +164,22 @@ simulate_cosinor <- function(n,
     assertthat::is.count(n),
     msg = "n must be an integer greater than 0"
   )
+
   assertthat::assert_that(
     assertthat::is.count(n_components),
     msg = "n_components must be an integer greater than 0"
   )
+
   assertthat::assert_that(
     is.numeric(mesor) & length(mesor) == 1,
     msg = "mesor must a single number"
   )
+
   assertthat::assert_that(
     is.numeric(amp) & length(amp) == n_components,
     msg = "amp must be a vector containing numbers, with length equal to n_components"
   )
+
   assertthat::assert_that(
     is.numeric(acro) & length(acro) == n_components,
     msg = "acro must be a vector containing numbers, with length equal to n_components"

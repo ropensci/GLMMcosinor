@@ -59,7 +59,7 @@ Alternatively, a component may have no grouping structure:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(
-  Y ~ amp_acro(time, n_components = 2, group = c("X",NA), period = c(12, 6)),
+  Y ~ amp_acro(time, n_components = 2, group = c("X", NA), period = c(12, 6)),
   data = vitamind
 )
 object

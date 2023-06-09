@@ -34,8 +34,9 @@ testdata <- simulate_cosinor(100,
 
 object <- cosinor.glmm(
   Y ~ amp_acro(times,
-               n_components = 3,
-               period = c(12, 6, 12)),
+    n_components = 3,
+    period = c(12, 6, 12)
+  ),
   data = testdata, family = poisson()
 )
 ```
@@ -49,3 +50,5 @@ summary(object$fit) # summary of `glmmTMB` object
 
 summary(object) # summary of `cosinor.glmm` object
 ```
+
+

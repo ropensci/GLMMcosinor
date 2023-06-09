@@ -6,10 +6,9 @@
 #' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 
 test_that("script works and warnings are displayed appropriately", {
-
   # Test the class output
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period =12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
   test_object <- test_cosinor(object, x_str = "X")
   testthat::expect_true(inherits(test_object, "test_cosinor"))
 
@@ -21,7 +20,7 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Test a simple input
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period =12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
   f <- function() {
     test_cosinor(object, x_str = "X")
   }
@@ -30,7 +29,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Testing error messages
   # Error message test 1
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period =12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
   f <- function() {
     test_cosinor(object, x_str = 10)
   }

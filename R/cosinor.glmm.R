@@ -103,7 +103,7 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   cat(deparse(x$formula), "\n")
   cat("\n Raw Coefficients: \n")
   stats::printCoefmat(coef_list, digits = digits)
-  #print(round(x$raw_coefficients, digits = digits))
+  # print(round(x$raw_coefficients, digits = digits))
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
   if (x$group_check == TRUE) {
@@ -112,7 +112,7 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   coef_list <- as.data.frame(t.x)
   colnames(coef_list) <- "Estimate"
   stats::printCoefmat(coef_list, digits = digits)
-  #print(round(t.x, digits = digits))
+  # print(round(t.x, digits = digits))
 
   if (x$dispformula_check) {
     coef_list <- as.data.frame(x$disp_list$raw_coefficients)
@@ -122,9 +122,9 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     cat("\n Raw  Formula: \n")
     cat(deparse(x$disp_list$formula_disp), "\n")
     cat("\n Raw  Coefficients: \n")
-    #stats::printCoefmat(as.data.frame(x$disp_list$raw_coefficients, col.names = c("Parameter","Estimate")), digits = digits)
+    # stats::printCoefmat(as.data.frame(x$disp_list$raw_coefficients, col.names = c("Parameter","Estimate")), digits = digits)
     stats::printCoefmat(coef_list, digits = digits)
-    #print(round(x$disp_list$raw_coefficients_disp, digits = digits))
+    # print(round(x$disp_list$raw_coefficients_disp, digits = digits))
     cat("\n Transformed  Coefficients: \n")
     td.x <- x$disp_list$coefficients_disp
     if (x$disp_list$group_check_disp == TRUE) {
@@ -133,7 +133,7 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     coef_list <- as.data.frame(td.x)
     colnames(coef_list) <- "Estimate"
     stats::printCoefmat(coef_list, digits = digits)
-    #print(round(td.x, digits = digits))
+    # print(round(td.x, digits = digits))
   }
 
   if (x$ziformula_check) {
@@ -145,8 +145,8 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     cat(deparse(x$zi_list$formula_zi), "\n")
     cat("\n Raw  Coefficients: \n")
     stats::printCoefmat(coef_list, digits = digits)
-    #stats::printCoefmat(as.data.frame(x$zi_list$raw_coefficients, col.names = c("Parameter","Estimate")), digits = digits)
-    #print(round(x$zi_list$raw_coefficients_zi, digits = digits))
+    # stats::printCoefmat(as.data.frame(x$zi_list$raw_coefficients, col.names = c("Parameter","Estimate")), digits = digits)
+    # print(round(x$zi_list$raw_coefficients_zi, digits = digits))
     cat("\n Transformed  Coefficients: \n")
     tzi.x <- x$zi_list$coefficients_zi
     if (x$zi_list$group_check_zi == TRUE) {
@@ -155,7 +155,7 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     coef_list <- as.data.frame(tzi.x)
     colnames(coef_list) <- "Estimate"
     stats::printCoefmat(coef_list, digits = digits)
-    #print(round(tzi.x, digits = digits))
+    # print(round(tzi.x, digits = digits))
   }
   invisible(x)
 }

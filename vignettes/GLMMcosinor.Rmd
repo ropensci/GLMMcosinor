@@ -206,7 +206,7 @@ objects. Firstly, the `plot()` method creates a time-response plot of
 the fitted model for all groups:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period =12), data = vitamind)
+object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 autoplot(object)
 ```
 

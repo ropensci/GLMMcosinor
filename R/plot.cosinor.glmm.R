@@ -256,5 +256,3 @@ plot.cosinor.glmm <- function(x,
   }
   plot_object
 }
-
-
