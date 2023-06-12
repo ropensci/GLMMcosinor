@@ -118,7 +118,7 @@ autoplot.cosinor.glmm <- function(object,
   if (!missing(xlims)) {
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
   } else {
-    timeax <- seq(0, max(object$period), length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
+    timeax <- seq(min(object$newdata[object$time_name]), max(object$newdata[object$time_name]), length.out = pred.length.out) # the fitted model has bounds corresponding to initial dataframe
   }
 
   # this is the function that generates the plots and can be looped iteratively for different x_str

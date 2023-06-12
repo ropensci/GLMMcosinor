@@ -20,6 +20,43 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
+data(vitamind)
+
+testdata_simple <- simulate_cosinor(100,
+  n_period = 2,
+  mesor = 5,
+  amp = 2,
+  acro = 1,
+  beta.mesor = 4,
+  beta.amp = 1,
+  beta.acro = 0.5,
+  family = "poisson",
+  period = c(12),
+  n_components = 1
+)
+
+testdata_two_components <- simulate_cosinor(1000,
+  n_period = 2,
+  mesor = 1,
+  amp = c(0.1, 0.4),
+  acro = c(1, 1.5),
+  beta.mesor = 1.1,
+  beta.amp = c(0.4, 0.1),
+  beta.acro = c(1, 1.2),
+  family = "poisson",
+  period = c(12, 6),
+  n_components = 2
+)
+
+testdata_period_diff <- simulate_cosinor(1000,
+  n_period = 1,
+  mesor = 7,
+  amp = c(0.1, 0.4),
+  acro = c(1, 1.5),
+  family = "poisson",
+  period = c(12, 1000),
+  n_components = 2
+)
 ```
 
 ## Plotting cosinor.glmm objects
@@ -48,28 +85,44 @@ corresponding to a group name within the original dataset. By default,
 x_str = NULL and the intercept is plotted (all group levels = 0).
 
 The following examples demonstrate how x_str can be used to produce
-different plots for the same model;
+different plots for the same model. Note how `predict.ribbon` can be set
+to `FALSE` to remove the prediction interval from the plots.
 
 ```{r, message=F, warning=F}
-data(vitamind)
-vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-autoplot(object)
+
+testdata_two_components_mod <- testdata_two_components
+testdata_two_components_mod$X <- rbinom(length(testdata_two_components$group), 2, prob = 0.5)
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+autoplot(object, predict.ribbon = FALSE)
 ```
 
 ```{r, message=F, warning=F}
-data(vitamind)
-vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-autoplot(object, x_str = "X")
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+autoplot(object, x_str = "X", predict.ribbon = FALSE)
 ```
 
 ```{r, message=F, warning=F}
-data(vitamind)
-vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
-autoplot(object, x_str = "Z")
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+autoplot(object, x_str = "group", predict.ribbon = FALSE)
 ```
+
+By default, `xmin` will be set to the minimum time value in the time vector of the original dataframe, and `xmax` will be set to the maximum time value. If we want to focus on a specific region of the plot, we can define use the `xlims` argument to specify the x-bounds.
+
+For example, on the plot above, we can adjust the xlimits: 
+
+```{r, message=F, warning=F}
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+autoplot(object, x_str = "group", predict.ribbon = TRUE, xlims = c(13,15))
+```
+
+To increase the resolution of the plots, the `pred.length.out` can be increased. If there are multiple periods, the function will automatically generate an appropriate number of points to plot such that the smallest period has sufficient resolution to appreciate cosinor behaviour. This can be adjusted using the `points_per_min_cycle_length` argument which is 20 by default.  
+
+```{r, message=F, warning=F}
+object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12,1000)), data = testdata_period_diff, family = poisson())
+
+autoplot(object, points_per_min_cycle_length = 40)
+```
+
 
 ## Polar plots
 

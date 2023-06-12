@@ -71,7 +71,7 @@ DT::datatable(df)
 
 The simulate_cosinor function can simulate multi-component data. To do this, specify a vector of values for the parameter inputs ('amp' and 'acro'). Note that the mesor term only accepts single-element inputs. Furthermore, ensure that 'n_components' corresponds to the length of the vectors: 'amp', 'acro', 'beta.amp', 'beta.acro', and 'period.'
 
-'n_period' is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing n_periods increases the number of cycles that are simulated. 
+'n_period' is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing n_periods increases the number of cycles that are simulated.
 
 Here is another example of the simulate_cosinor function. The cosinor.glmm object has also been included to demonstrate that the parameter estimates accurately reflect the inputs into the simulate function:
 
@@ -98,4 +98,3 @@ summary(object)
 autoplot(object, superimpose.data = FALSE, x_str = "group", predict.ribbon = FALSE)
 autoplot(object, superimpose.data = FALSE, x_str = "group", predict.ribbon = TRUE)
 ```
-

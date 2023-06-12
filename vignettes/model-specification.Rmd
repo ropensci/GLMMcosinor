@@ -188,4 +188,3 @@ data(vitamind)
 fit <- cosinor.glmm(Y ~ X + amp_acro(X, group = NA, period = 12), data = vitamind)
 df_predicted <- predict(fit, newdata = vitamind)
 ```
-
