@@ -1,32 +1,79 @@
 #' Generates a polar plot with elliptical confidence intervals
 #'
 #' @param x An object of class \code{cosinor.glmm}
-#' @param ci_level The level for calculated confidence ellipses. Defaults to 0.95.
-#' @param contour_interval The distance between adjacent circular contours in the background of the polar plot.
-#' @param contour_label_frequency This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.
-#' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
-#' @param grid_angle_segments An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.
-#' @param radial_units A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component
-#' @param clockwise A logical argument. If TRUE, the angles increase in a clockwise fashion
-#' @param text_size A number controlling the size of the text labels
-#' @param text_opacity A number between 0 and 1 inclusive which determines the opacity of the text labels
-#' @param fill_colours A vector containing colours (expressed as strings) that will be used to delineate levels within a group. If the model has components with different number of levels per factor, the length of this input should match the greatest number of levels. If not, or if the number of levels exceeds the length of the default argument (8), colours are generated using rainbow()
-#' @param ellipse_opacity A number between 0 and 1 inclusive which determines the opacity of the confidence ellipses
-#' @param circle_linetype A string which determines the linetype of the radial circles in background of the polar plot. See ?linetype for more details
-#' @param start A character, either "right", "left", "top", or "bottom" which determines where angle 0 is located. If start = "top", and clockwise = TRUE, the angle will rotate clockwise, starting at the '12' position on a clock
-#' @param view A character, either "full", "zoom", or "zoom_origin" which controls the view of the plots. "full" maintains a full view of the polar plot, including the background radial circles. "zoom" finds the minimum viewwindow which contains all confidence ellipses. "zoom_origin" zooms into the confidence ellipses (like "zoom"), but also keeps the origin within frame
-#' @param overlay_parameter_info A logical argument. If TRUE, more information about the acrophase and amplitude are overlayed onto the polar plots.
-#' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
+#' @param ci_level The level for calculated confidence ellipses.
+#' Defaults to 0.95.
+#' @param contour_interval The distance between adjacent circular contours in
+#' the background of the polar plot.
+#' @param contour_label_frequency This controls the frequency of labels
+#' assigned to contours. For example, \code{contour_interval = 2} means that
+#' every second contour is labelled. By default, every contour is labelled
+#' (\code{contour_label_frequency = 1}).
+#' @param component_index A number that corresponds to a particular component
+#' from the \code{cosinor.glmm()} object that will be used to create polar plot.
+#' If missing (default), then plots for all components will be arranged in the
+#' returned plot. If a single or multiple values are provided, then these
+#' components will be returned. (for example \code{component_index = 1},
+#' \code{component_index = c(1, 3)}).
+#' @param grid_angle_segments An \code{integer}. Determines the total number of
+#' segments in the background of the polar plot. For example, a value of 4 will
+#' create quadrants around the origin. Defaults to 8.
+#' @param radial_units A \code{character} specifying the angular units of the
+#' plot. Possible values are one of \code{c('radians', 'degrees', 'period')}.
+#' These units relate to the period of the component being visualised.
+#' \describe{
+#'   \item{\code{'radians'}: \eqn{[0, 2\pi]}}{}
+#'   \item{\code{'degrees'}: \eqn{[0, 360]}}{}
+#'   \item{\code{'period'}: \eqn{[0, period]}}{}
+#'  }
+#' @param clockwise A \code{logical}. If \code{TRUE}, the angles increase in a
+#' clockwise fashion. If \code{FALSE}, anti-clockwise. Defaults to \code{FALSE}.
+#' @param text_size A number controlling the font size of the text labels.
+#' Defaults to 3.
+#' @param text_opacity A \code{numeric} between 0 and 1 inclusive that
+#' controls the opacity of the text labels.
+#' @param fill_colours A \code{character} vector containing colours that will
+#' be mapped to levels within a group. If the model has components with
+#' different number of levels per factor, the length of this input should match
+#' the greatest number of levels. If not, or if the number of levels exceeds the
+#' length of the default argument (8), colours are generated using
+#' \code{rainbow()}.
+#' @param ellipse_opacity A \code{numeric} between 0 and 1 inclusive that
+#' controls the opacity of the confidence ellipses. Defaults to 0.3.
+#' @param circle_linetype A \code{character} that determines the \code{linetype}
+#' of the radial circles in background of the polar plot. See \code{?linetype}
+#' for more details.
+#' @param start A \code{character}, within
+#' \code{c("right", "left", "top", "bottom")} that determines where angle 0 is
+#' located. If \code{start = "top"}, and \code{clockwise = TRUE}, the angle
+#' will rotate clockwise, starting at the '12 o-clock' position on a clock.
+#' @param view A \code{character}, within
+#' \code{c("full", "zoom", "zoom_origin")} that controls the view of the plots.
+#' \describe{
+#'   \item{\code{'full'}: maintains a full view of the polar plot, including
+#'   the background radial circles.}{}
+#'   \item{\code{'zoom'}: finds the minimum view window which contains all
+#'   confidence ellipses.}{}
+#'   \item{\code{'zoom_origin'}: zooms into the confidence ellipses (like
+#'   "zoom"), but also keeps the origin within frame.}{}
+#' }
+#' @param overlay_parameter_info A \code{logical} argument. If \code{TRUE},
+#' more information about the acrophase and amplitude are displayed on the
+#' polar plots.
+#' @param quietly Analogous to verbose, this \code{logical} argument controls
+#' whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #'
-#' @return Returns a `ggplot` graphics object.
+#' @return Returns a \code{ggplot} object.
 #' @export
 #'
-#'
 #' @examples
-#' model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+#' model <- cosinor.glmm(
+#'   Y ~ X + amp_acro(time, group = "X", period = 12),
+#'   data = vitamind
+#' )
 #' polar_plot(model)
 polar_plot <- function(x,
                        ci_level = 0.95,
@@ -51,33 +98,80 @@ polar_plot <- function(x,
 
 #' Generates a polar plot with elliptical confidence intervals
 #'
-#' @param x An \code{cosinor.glmm} object.
-#' @param ci_level The level for calculated confidence ellipses. Defaults to 0.95.
-#' @param contour_interval The distance between adjacent circular contours in the background of the polar plot.
-#' @param contour_label_frequency This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.
-#' @param component_index A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted
-#' @param grid_angle_segments An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.
-#' @param radial_units A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component
-#' @param clockwise A logical argument. If TRUE, the angles increase in a clockwise fashion
-#' @param text_size A number controlling the size of the text labels
-#' @param text_opacity A number between 0 and 1 inclusive which determines the opacity of the text labels
-#' @param fill_colours A vector containing colours (expressed as strings) that will be used to delineate levels within a group. If the model has components with different number of levels per factor, the length of this input should match the greatest number of levels. If not, or if the number of levels exceeds the length of the default argument (8), colours are generated using rainbow()
-#' @param ellipse_opacity A number between 0 and 1 inclusive which determines the opacity of the confidence ellipses
-#' @param circle_linetype A string which determines the linetype of the radial circles in background of the polar plot. See ?linetype for more details
-#' @param start A character, either "right", "left", "top", or "bottom" which determines where angle 0 is located. If start = "top", and clockwise = TRUE, the angle will rotate clockwise, starting at the '12' position on a clock
-#' @param view A character, either "full", "zoom", or "zoom_origin" which controls the view of the plots. "full" maintains a full view of the polar plot, including the background radial circles. "zoom" finds the minimum viewwindow which contains all confidence ellipses. "zoom_origin" zooms into the confidence ellipses (like "zoom"), but also keeps the origin within frame
-#' @param overlay_parameter_info A logical argument. If TRUE, more information about the acrophase and amplitude are overlayed onto the polar plots.
-#' @param quietly Analagous to verbose, this logical argument controls whether messages are displayed in the console.
+#' @param x An object of class \code{cosinor.glmm}
+#' @param ci_level The level for calculated confidence ellipses.
+#' Defaults to 0.95.
+#' @param contour_interval The distance between adjacent circular contours in
+#' the background of the polar plot.
+#' @param contour_label_frequency This controls the frequency of labels
+#' assigned to contours. For example, \code{contour_interval = 2} means that
+#' every second contour is labelled. By default, every contour is labelled
+#' (\code{contour_label_frequency = 1}).
+#' @param component_index A number that corresponds to a particular component
+#' from the \code{cosinor.glmm()} object that will be used to create polar plot.
+#' If missing (default), then plots for all components will be arranged in the
+#' returned plot. If a single or multiple values are provided, then these
+#' components will be returned. (for example \code{component_index = 1},
+#' \code{component_index = c(1, 3)}).
+#' @param grid_angle_segments An \code{integer}. Determines the total number of
+#' segments in the background of the polar plot. For example, a value of 4 will
+#' create quadrants around the origin. Defaults to 8.
+#' @param radial_units A \code{character} specifying the angular units of the
+#' plot. Possible values are one of \code{c('radians', 'degrees', 'period')}.
+#' These units relate to the period of the component being visualised.
+#' \describe{
+#'   \item{\code{'radians'}: \eqn{[0, 2\pi]}}{}
+#'   \item{\code{'degrees'}: \eqn{[0, 360]}}{}
+#'   \item{\code{'period'}: \eqn{[0, period]}}{}
+#'  }
+#' @param clockwise A \code{logical}. If \code{TRUE}, the angles increase in a
+#' clockwise fashion. If \code{FALSE}, anti-clockwise. Defaults to \code{FALSE}.
+#' @param text_size A number controlling the font size of the text labels.
+#' Defaults to 3.
+#' @param text_opacity A \code{numeric} between 0 and 1 inclusive that
+#' controls the opacity of the text labels.
+#' @param fill_colours A \code{character} vector containing colours that will
+#' be mapped to levels within a group. If the model has components with
+#' different number of levels per factor, the length of this input should match
+#' the greatest number of levels. If not, or if the number of levels exceeds the
+#' length of the default argument (8), colours are generated using
+#' \code{rainbow()}.
+#' @param ellipse_opacity A \code{numeric} between 0 and 1 inclusive that
+#' controls the opacity of the confidence ellipses. Defaults to 0.3.
+#' @param circle_linetype A \code{character} that determines the \code{linetype}
+#' of the radial circles in background of the polar plot. See \code{?linetype}
+#' for more details.
+#' @param start A \code{character}, within
+#' \code{c("right", "left", "top", "bottom")} that determines where angle 0 is
+#' located. If \code{start = "top"}, and \code{clockwise = TRUE}, the angle
+#' will rotate clockwise, starting at the '12 o-clock' position on a clock.
+#' @param view A \code{character}, within
+#' \code{c("full", "zoom", "zoom_origin")} that controls the view of the plots.
+#' \describe{
+#'   \item{\code{'full'}: maintains a full view of the polar plot, including
+#'   the background radial circles.}{}
+#'   \item{\code{'zoom'}: finds the minimum view window which contains all
+#'   confidence ellipses.}{}
+#'   \item{\code{'zoom_origin'}: zooms into the confidence ellipses (like
+#'   "zoom"), but also keeps the origin within frame.}{}
+#' }
+#' @param overlay_parameter_info A \code{logical} argument. If \code{TRUE},
+#' more information about the acrophase and amplitude are displayed on the
+#' polar plots.
+#' @param quietly Analogous to verbose, this \code{logical} argument controls
+#' whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
 #'
-#' @return Returns a `ggplot` graphics object.
+#' @return Returns a \code{ggplot} object.
 #' @export
 #'
-#'
 #' @examples
-#' model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+#' model <- cosinor.glmm(
+#'   Y ~ X + amp_acro(time, group = "X", period = 12),
+#'   data = vitamind
+#' )
 #' polar_plot(model)
 polar_plot.cosinor.glmm <- function(x,
                                     ci_level = 0.95,
