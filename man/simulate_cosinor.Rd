@@ -28,27 +28,49 @@ rhythm) for \code{group = 0}. The mesor is independent of the cosinor
 components, so only one value is allowed even if there are multiple
 components in the data being simulated.}
 
-\item{amp}{Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components.}
+\item{amp}{A \code{numeric}. The amplitude value (for \code{group = 0} if
+grouped data are being simulated (\code{beta.group = TRUE})). If simulating
+data with multiple components, specify a vector with values for each
+component. E.g: \code{amp = c(5, 10)}.}
 
-\item{acro}{Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components.}
+\item{acro}{A \code{numeric}. The acrophase value in radians
+(for \code{group = 0} if grouped data are being simulated
+(\code{beta.group = TRUE})). If simulating data with multiple components,
+specify a vector with values for each component. E.g: \code{acr = c(0, pi)}
+for two components.}
 
-\item{period}{The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components.}
+\item{period}{The period of the rhythm data (for \code{group = 0} if
+grouped data are being simulated (\code{beta.group = TRUE})).
+If simulating data with multiple components, specify a vector with values
+for each component. E.g: \code{period = c(12, 6)} for two components.}
 
-\item{n_components}{The number of components in the model. This must match the length of the parameter inputs.}
+\item{n_components}{The number of components in the model.
+This must match the length of the inputs for \code{amp} and \code{acro}.}
 
-\item{beta.group}{A logical argument. TRUE if you want to simulate second group dataset. If FALSE, beta. arguments will be ignored.}
+\item{beta.group}{A \code{logical}. If \code{TRUE} a second group of data
+will be simulated and included in the returned data set. If \code{FALSE},
+\code{beta.acro}, \code{beta.mesor}, and \code{beta.amp} arguments will be
+ignored.}
 
-\item{beta.mesor}{Amplitude parameter term for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components.}
+\item{beta.mesor}{A \code{numeric}. The MESOR value term for \code{group = 1}.}
 
-\item{beta.amp}{Acrophase parameter for group = 1. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components.}
+\item{beta.amp}{A \code{numeric}. The amplitude value for \code{group = 1}.
+If simulating data with multiple components, specify a vector with values for
+each component. E.g: \code{amp = c(2, 8)}.}
 
-\item{beta.acro}{Mesor parameter for group = 1.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components.}
+\item{beta.acro}{A \code{numeric}. The acrophase value in radians
+(for \code{group = 1}. If simulating data with multiple components,
+specify a vector with values for each component. E.g: \code{acr = c(2, 5)}
+for two components.}
 
-\item{n_period}{is the number of periods that are simulated.}
+\item{n_period}{A \code{numeric}. The number of cycles of the rhythm to be
+simulated.}
 
-\item{family}{family of simulated dataset expressed as a string. Can take values: "poisson", "binomial", "gamma", "gaussian".}
+\item{family}{A \code{character}. The family (see \code{?family}) of the
+simulated dataset. Can handle values in \code{c("poisson", "binomial",
+"gamma", "gaussian")}.}
 
-\item{...}{Extra arguments, such as alpha parameter for the gamma simulation, or sd (standard deviation) for gaussian simulation.}
+\item{...}{Extra arguments, including \code{alpha} that controls the \code{shape} argument when sampling from a gamma distribution (when \code{family = "gamma"}; default is 1), and \code{sd} (standard deviation) which is used when sampling from a normal distribution (when \code{family = "gaussian"}; default is 1).}
 }
 \value{
 Returns simulated data in a \code{data.frame}.
