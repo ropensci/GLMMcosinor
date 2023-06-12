@@ -4,9 +4,9 @@
 #' a cosinor fit. Default prediction is the mean value, optionally can predict
 #' at a given month
 #'
-#' @param object An object of class \code{cosinor.glmm}
-#' @param newdata Optional new data
-#' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}
+#' @param object An object of class \code{cosinor.glmm}.
+#' @param newdata Optional new data.
+#' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}.
 #'
 #' @return Returns predicted values from the cosinor model.
 #'

@@ -21,9 +21,12 @@ simulate_cosinor(
 )
 }
 \arguments{
-\item{n}{Sample size. Integer greater than 0.}
+\item{n}{The sample size. An \code{integer} greater than 0.}
 
-\item{mesor}{Mesor parameter for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components.}
+\item{mesor}{A \code{numeric}. The MESOR (midline estimating statistic of
+rhythm) for \code{group = 0}. The mesor is independent of the cosinor
+components, so only one value is allowed even if there are multiple
+components in the data being simulated.}
 
 \item{amp}{Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components.}
 

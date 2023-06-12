@@ -7,11 +7,11 @@
 \method{predict}{cosinor.glmm}(object, newdata, ...)
 }
 \arguments{
-\item{object}{An object of class \code{cosinor.glmm}}
+\item{object}{An object of class \code{cosinor.glmm}.}
 
-\item{newdata}{Optional new data}
+\item{newdata}{Optional new data.}
 
-\item{...}{other arguments passed to \code{glmmTMB:::predict.glmmTMB}}
+\item{...}{other arguments passed to \code{glmmTMB:::predict.glmmTMB}.}
 }
 \value{
 Returns predicted values from the cosinor model.

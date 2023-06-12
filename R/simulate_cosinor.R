@@ -5,8 +5,11 @@
 #' allows for single covariate effects on the mean,
 #' amplitude, and acrophase.
 #'
-#' @param n Sample size. Integer greater than 0.
-#' @param mesor Mesor parameter for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: mesor = c(1,2) for two components.
+#' @param n The sample size. An \code{integer} greater than 0.
+#' @param mesor A \code{numeric}. The MESOR (midline estimating statistic of
+#' rhythm) for \code{group = 0}. The mesor is independent of the cosinor
+#' components, so only one value is allowed even if there are multiple
+#' components in the data being simulated.
 #' @param amp Amplitude parameter term for group = 0.If multiple components, specify the parameters for each component as a vector. E.g: amp = c(1,2) for two components.
 #' @param acro Acrophase parameter for group = 0. In units of radians.If multiple components, specify the parameters for each component as a vector. E.g: acr = c(1,2) for two components.
 #' @param period The period of data. If multiple components, specify the parameters for each component as a vector. E.g: period = c(12,6) for two components.
@@ -33,7 +36,6 @@
 #' @srrstats {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
 #'
 #' @export
-#'
 simulate_cosinor <- function(n,
                              mesor,
                              amp,
@@ -64,6 +66,8 @@ simulate_cosinor <- function(n,
     message("all betas were present but beta.group was FALSE. beta.group has been changed to be TRUE.")
   }
 
+  family <- match.arg(family)
+
   .validate_simulate_cosinor_inputs(
     n,
     mesor,
@@ -75,11 +79,8 @@ simulate_cosinor <- function(n,
     beta.mesor,
     beta.amp,
     beta.acro,
-    n_period,
-    family
+    n_period
   )
-
-  family <- match.arg(family)
 
   # generate a time vector
   ttt <- stats::runif(n, min = 0, n_period * max(period))
@@ -142,7 +143,6 @@ simulate_cosinor <- function(n,
 #' @param beta.amp Arg from \code{simulate_cosinor()}.
 #' @param beta.acro Arg from \code{simulate_cosinor()}.
 #' @param n_period Arg from \code{simulate_cosinor()}.
-#' @param family Arg from \code{simulate_cosinor()}.
 #'
 #' @return \code{NULL}
 #'
@@ -157,8 +157,7 @@ simulate_cosinor <- function(n,
                                               beta.mesor,
                                               beta.amp,
                                               beta.acro,
-                                              n_period,
-                                              family) {
+                                              n_period) {
   # validating inputs
   assertthat::assert_that(
     assertthat::is.count(n),
