@@ -70,7 +70,11 @@ simulated.}
 simulated dataset. Can handle values in \code{c("poisson", "binomial",
 "gamma", "gaussian")}.}
 
-\item{...}{Extra arguments, including \code{alpha} that controls the \code{shape} argument when sampling from a gamma distribution (when \code{family = "gamma"}; default is 1), and \code{sd} (standard deviation) which is used when sampling from a normal distribution (when \code{family = "gaussian"}; default is 1).}
+\item{...}{Extra arguments, including \code{alpha} that controls the
+\code{shape} argument when sampling from a gamma distribution
+(when \code{family = "gamma"}; default is 1), and \code{sd}
+(standard deviation) which is used when sampling from a normal distribution
+(when \code{family = "gaussian"}; default is 1).}
 }
 \value{
 Returns simulated data in a \code{data.frame}.
