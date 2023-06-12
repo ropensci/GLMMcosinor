@@ -69,15 +69,15 @@
 <span>  <span class="va">contour_label_frequency</span>,</span>
 <span>  <span class="va">component_index</span>,</span>
 <span>  grid_angle_segments <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>  radial_units <span class="op">=</span> <span class="st">"radians"</span>,</span>
+<span>  radial_units <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"radians"</span>, <span class="st">"degrees"</span>, <span class="st">"period"</span><span class="op">)</span>,</span>
 <span>  clockwise <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  text_size <span class="op">=</span> <span class="fl">3.5</span>,</span>
 <span>  text_opacity <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">fill_colours</span>,</span>
 <span>  ellipse_opacity <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  circle_linetype <span class="op">=</span> <span class="st">"dotted"</span>,</span>
-<span>  start <span class="op">=</span> <span class="st">"right"</span>,</span>
-<span>  view <span class="op">=</span> <span class="st">"full"</span>,</span>
+<span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"left"</span>, <span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
+<span>  view <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"full"</span>, <span class="st">"zoom"</span>, <span class="st">"zoom_origin"</span><span class="op">)</span>,</span>
 <span>  overlay_parameter_info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quietly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -87,71 +87,126 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <code>cosinor.glmm</code> object.</p></dd>
+<dd><p>An object of class <code>cosinor.glmm</code></p></dd>
 
 
 <dt>ci_level</dt>
-<dd><p>The level for calculated confidence ellipses. Defaults to 0.95.</p></dd>
+<dd><p>The level for calculated confidence ellipses.
+Defaults to 0.95.</p></dd>
 
 
 <dt>contour_interval</dt>
-<dd><p>The distance between adjacent circular contours in the background of the polar plot.</p></dd>
+<dd><p>The distance between adjacent circular contours in
+the background of the polar plot.</p></dd>
 
 
 <dt>contour_label_frequency</dt>
-<dd><p>This controls the frequency of labels assigned to contours. For example, contour_interval = 2 means that every second contour is labelled. By default, every contour is labelled.</p></dd>
+<dd><p>This controls the frequency of labels
+assigned to contours. For example, <code>contour_interval = 2</code> means that
+every second contour is labelled. By default, every contour is labelled
+(<code>contour_label_frequency = 1</code>).</p></dd>
 
 
 <dt>component_index</dt>
-<dd><p>A number that corresponds to a particular component from the cosinor.glmm() object that will be used to create polar plot. If make_cowplot is FALSE, then component_index controls which component is plotted</p></dd>
+<dd><p>A number that corresponds to a particular component
+from the <code><a href="cosinor.glmm.html">cosinor.glmm()</a></code> object that will be used to create polar plot.
+If missing (default), then plots for all components will be arranged in the
+returned plot. If a single or multiple values are provided, then these
+components will be returned. (for example <code>component_index = 1</code>,
+<code>component_index = c(1, 3)</code>).</p></dd>
 
 
 <dt>grid_angle_segments</dt>
-<dd><p>An integer that determines the total number of segments in the background of the polar plot. For example, a value of 4 will create quadrants around the origin.</p></dd>
+<dd><p>An <code>integer</code>. Determines the total number of
+segments in the background of the polar plot. For example, a value of 4 will
+create quadrants around the origin. Defaults to 8.</p></dd>
 
 
 <dt>radial_units</dt>
-<dd><p>A string controlling the angle units. Valid arguments are: 'radians', 'degrees', or 'period'. Radians plots from 0 to 2*pi; degrees plots from 0 to 360, and period plots from 0 to the maximum period in the component</p></dd>
+<dd><p>A <code>character</code> specifying the angular units of the
+plot. Possible values are one of <code>c('radians', 'degrees', 'period')</code>.
+These units relate to the period of the component being visualised.</p><dl><dt><code>'radians'</code>: \([0, 2\pi]\)</dt>
+<dd></dd>
+
+<dt><code>'degrees'</code>: \([0, 360]\)</dt>
+<dd></dd>
+
+<dt><code>'period'</code>: \([0, period]\)</dt>
+<dd></dd>
+
+
+</dl></dd>
 
 
 <dt>clockwise</dt>
-<dd><p>A logical argument. If TRUE, the angles increase in a clockwise fashion</p></dd>
+<dd><p>A <code>logical</code>. If <code>TRUE</code>, the angles increase in a
+clockwise fashion. If <code>FALSE</code>, anti-clockwise. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt>text_size</dt>
-<dd><p>A number controlling the size of the text labels</p></dd>
+<dd><p>A number controlling the font size of the text labels.
+Defaults to 3.</p></dd>
 
 
 <dt>text_opacity</dt>
-<dd><p>A number between 0 and 1 inclusive which determines the opacity of the text labels</p></dd>
+<dd><p>A <code>numeric</code> between 0 and 1 inclusive that
+controls the opacity of the text labels.</p></dd>
 
 
 <dt>fill_colours</dt>
-<dd><p>A vector containing colours (expressed as strings) that will be used to delineate levels within a group. If the model has components with different number of levels per factor, the length of this input should match the greatest number of levels. If not, or if the number of levels exceeds the length of the default argument (8), colours are generated using rainbow()</p></dd>
+<dd><p>A <code>character</code> vector containing colours that will
+be mapped to levels within a group. If the model has components with
+different number of levels per factor, the length of this input should match
+the greatest number of levels. If not, or if the number of levels exceeds the
+length of the default argument (8), colours are generated using
+<code><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow()</a></code>.</p></dd>
 
 
 <dt>ellipse_opacity</dt>
-<dd><p>A number between 0 and 1 inclusive which determines the opacity of the confidence ellipses</p></dd>
+<dd><p>A <code>numeric</code> between 0 and 1 inclusive that
+controls the opacity of the confidence ellipses. Defaults to 0.3.</p></dd>
 
 
 <dt>circle_linetype</dt>
-<dd><p>A string which determines the linetype of the radial circles in background of the polar plot. See ?linetype for more details</p></dd>
+<dd><p>A <code>character</code> that determines the <code>linetype</code>
+of the radial circles in background of the polar plot. See <code>?linetype</code>
+for more details.</p></dd>
 
 
 <dt>start</dt>
-<dd><p>A character, either "right", "left", "top", or "bottom" which determines where angle 0 is located. If start = "top", and clockwise = TRUE, the angle will rotate clockwise, starting at the '12' position on a clock</p></dd>
+<dd><p>A <code>character</code>, within
+<code>c("right", "left", "top", "bottom")</code> that determines where angle 0 is
+located. If <code>start = "top"</code>, and <code>clockwise = TRUE</code>, the angle
+will rotate clockwise, starting at the '12 o-clock' position on a clock.</p></dd>
 
 
 <dt>view</dt>
-<dd><p>A character, either "full", "zoom", or "zoom_origin" which controls the view of the plots. "full" maintains a full view of the polar plot, including the background radial circles. "zoom" finds the minimum viewwindow which contains all confidence ellipses. "zoom_origin" zooms into the confidence ellipses (like "zoom"), but also keeps the origin within frame</p></dd>
+<dd><p>A <code>character</code>, within
+<code>c("full", "zoom", "zoom_origin")</code> that controls the view of the plots.</p><dl><dt><code>'full'</code>: maintains a full view of the polar plot, including
+the background radial circles.</dt>
+<dd></dd>
+
+<dt><code>'zoom'</code>: finds the minimum view window which contains all
+confidence ellipses.</dt>
+<dd></dd>
+
+<dt><code>'zoom_origin'</code>: zooms into the confidence ellipses (like
+"zoom"), but also keeps the origin within frame.</dt>
+<dd></dd>
+
+
+</dl></dd>
 
 
 <dt>overlay_parameter_info</dt>
-<dd><p>A logical argument. If TRUE, more information about the acrophase and amplitude are overlayed onto the polar plots.</p></dd>
+<dd><p>A <code>logical</code> argument. If <code>TRUE</code>,
+more information about the acrophase and amplitude are displayed on the
+polar plots.</p></dd>
 
 
 <dt>quietly</dt>
-<dd><p>Analagous to verbose, this logical argument controls whether messages are displayed in the console.</p></dd>
+<dd><p>Analogous to verbose, this <code>logical</code> argument controls
+whether messages are displayed in the console.</p></dd>
 
 
 <dt>...</dt>
@@ -162,12 +217,15 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a <code>ggplot</code> graphics object.</p>
+<p>Returns a <code>ggplot</code> object.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="polar_plot.cosinor.glmm-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
