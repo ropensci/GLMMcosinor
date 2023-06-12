@@ -41,7 +41,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "'radial_units' must be either 'radians', 'degrees', or 'period'", fixed = TRUE
+    regex = 'should be one of "radians", "degrees", "period"', fixed = TRUE
   )
 
   # Test 5
@@ -138,7 +138,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "'start' argument must be either 'right', 'left', 'bottom', or 'top'", fixed = TRUE
+    regex = 'should be one of "right", "left", "top", "bottom"', fixed = TRUE
   )
 
   # Test 14
@@ -149,7 +149,7 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'", fixed = TRUE
+    regex = 'should be one of "full", "zoom", "zoom_origin"', fixed = TRUE
   )
 
   # Test 15

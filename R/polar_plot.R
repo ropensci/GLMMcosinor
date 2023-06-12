@@ -81,15 +81,15 @@ polar_plot <- function(x,
                        contour_label_frequency = 1,
                        component_index,
                        grid_angle_segments = 8,
-                       radial_units = "radians",
+                       radial_units = c("radians", "degrees", "period"),
                        clockwise = FALSE,
                        text_size = 3,
                        text_opacity = 0.5,
                        fill_colours,
                        ellipse_opacity = 0.3,
                        circle_linetype = "dotted",
-                       start = "right",
-                       view = "full",
+                       start = c("right", "left", "top", "bottom"),
+                       view = c("full", "zoom", "zoom_origin"),
                        overlay_parameter_info = FALSE,
                        quietly = TRUE,
                        ...) {
@@ -179,25 +179,27 @@ polar_plot.cosinor.glmm <- function(x,
                                     contour_label_frequency,
                                     component_index,
                                     grid_angle_segments = 8,
-                                    radial_units = "radians",
+                                    radial_units = c("radians", "degrees", "period"),
                                     clockwise = FALSE,
                                     text_size = 3.5,
                                     text_opacity = 1,
                                     fill_colours,
                                     ellipse_opacity = 0.3,
                                     circle_linetype = "dotted",
-                                    start = "right",
-                                    view = "full",
+                                    start = c("right", "left", "top", "bottom"),
+                                    view = c("full", "zoom", "zoom_origin"),
                                     overlay_parameter_info = FALSE,
                                     quietly = TRUE,
                                     ...) {
   # checking the quality of inputs
-
   assertthat::assert_that(inherits(x, "cosinor.glmm"),
     msg = "'x' must be of class cosinor.glmm"
   )
 
   validate_ci_level(ci_level)
+  radial_units <- match.arg(radial_units)
+  start <- match.arg(start)
+  view <- match.arg(view)
 
   if (!missing(contour_interval)) {
     assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
@@ -218,9 +220,6 @@ polar_plot.cosinor.glmm <- function(x,
   assertthat::assert_that(is.logical(quietly),
     msg = "'quietly' must a logical argument, either TRUE or FALSE"
   )
-  assertthat::assert_that(is.character(radial_units) & radial_units %in% c("radians", "degrees", "period"),
-    msg = "'radial_units' must be either 'radians', 'degrees', or 'period'  "
-  )
   assertthat::assert_that(is.logical(clockwise),
     msg = "'clockwise' must be a logical argument, either TRUE or FALSE "
   )
@@ -234,10 +233,6 @@ polar_plot.cosinor.glmm <- function(x,
     msg = "'ellipse_opacity' must be a number between 0 and 1 inclusive"
   )
 
-  # assertthat::assert_that(is.logical(make_cowplot),
-  #  msg = "'make_cowplot' must be a logical argument, either TRUE or FALSE"
-  # )
-
   if (!missing(component_index)) {
     assertthat::assert_that(all(component_index == floor(component_index)) & all(component_index > 0) & all(component_index <= x$n_components),
       msg = "'component_index' must be an integer between 1 and n_components (total number of components in model) inclusive"
@@ -245,15 +240,6 @@ polar_plot.cosinor.glmm <- function(x,
   }
   assertthat::assert_that(is.character(circle_linetype),
     msg = "'circle_linetype' must be a character. See ?linetype for more details"
-  )
-  # assertthat::assert_that(is.character(fill_colours),
-  #  msg = "fill_colours must be of class character, and must be a valid colour"
-  # )
-  assertthat::assert_that(is.character(start) & start %in% c("right", "left", "bottom", "top"),
-    msg = "'start' argument must be either 'right', 'left', 'bottom', or 'top'"
-  )
-  assertthat::assert_that(is.character(view) & view %in% c("full", "zoom", "zoom_origin"),
-    msg = "'view' argument must be either 'full', 'zoom', or 'zoom_origin'"
   )
   assertthat::assert_that(is.logical(overlay_parameter_info),
     msg = "'overlay_parameter_info' must be a logical argument, either TRUE or FALSE"
@@ -300,10 +286,6 @@ polar_plot.cosinor.glmm <- function(x,
     offset <- 0
     overlay_start <- pi / 2
   }
-
-  # if (!missing(make_cowplot) & !missing(component_index)) {
-  #  make_cowplot <- FALSE
-  # }
 
   if (!missing(component_index)) {
     make_cowplot <- FALSE
@@ -463,7 +445,7 @@ polar_plot.cosinor.glmm <- function(x,
 
 
     # create the main plot object
-    if (is.na(x$group_original[component_index])) { # TODO typo?
+    if (is.na(x$group_original[component_index])) {
       group_level <- NULL
       group_level_colour_index <- 1
     } else {
@@ -514,7 +496,9 @@ polar_plot.cosinor.glmm <- function(x,
         alpha = text_opacity
       ) +
       ggplot2::geom_text(
-        ggplot2::aes(label = contour_labels, x = contour_labels * (cos(pi / grid_angle_segments)), y = contour_labels * (sin(pi / grid_angle_segments))),
+        ggplot2::aes(label = contour_labels,
+                     x = contour_labels * (cos(pi / grid_angle_segments)),
+                     y = contour_labels * (sin(pi / grid_angle_segments))),
         size = text_size, alpha = text_opacity
       ) +
       ggplot2::guides(colour = "none") +
