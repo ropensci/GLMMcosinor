@@ -79,7 +79,7 @@ continuous covariates.</p>
 <span>  param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"amp"</span>, <span class="st">"acr"</span><span class="op">)</span>,</span>
 <span>  comparison_A <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  comparison_B <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  comparison_type <span class="op">=</span> <span class="st">"levels"</span>,</span>
+<span>  comparison_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"levels"</span>, <span class="st">"components"</span><span class="op">)</span>,</span>
 <span>  component_index <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  level_index <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  ci_level <span class="op">=</span> <span class="fl">0.95</span></span>
@@ -89,40 +89,55 @@ continuous covariates.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An object of class <code>cosinor.glmm</code></p></dd>
+<dd><p>An <code>cosinor.glmm</code> object.</p></dd>
 
 
 <dt>x_str</dt>
-<dd><p>Character naming the covariate whose amplitude/acrophase will be tested</p></dd>
+<dd><p>A <code>character</code>. The name of the grouping variable within
+which differences in the selected cosinor characteristic (amplitude or
+acrophase) will be tested.</p></dd>
 
 
 <dt>param</dt>
-<dd><p>Character string naming the parameter to test, either "amp" for
-amplitude or "acr" for acrophase</p></dd>
+<dd><p>A <code>character</code>. Either <code>"amp"</code> or <code>"acr"</code> for
+testing differences in amplitude or acrophase, respectively.</p></dd>
 
 
 <dt>comparison_A</dt>
-<dd><p>A number, referring to the level (within a group) or component number that is to be compared to comparison_B</p></dd>
+<dd><p>An <code>integer</code>. Refers to the level (within the
+grouping variable) or component number that is to act as the reference group
+for the comparison.</p></dd>
 
 
 <dt>comparison_B</dt>
-<dd><p>A number, referring to the level (within a group) or component number that is to be compared to comparison_A</p></dd>
+<dd><p>An <code>integer</code>. Refers to the level (within the
+grouping variable) or component number that is to act as the comparator group
+for the comparison.</p></dd>
 
 
 <dt>comparison_type</dt>
-<dd><p>A string that is either: "levels" (default), or "components". If "levels", then comparison_A and comparison_B will refer to the two levels that are being compared. If comparison_type = "components", then comparison_A component will be compared to comparison_B component</p></dd>
+<dd><p>A <code>character</code>. Indicates whether the comparison
+to be performed is to be between levels of a grouping variable
+(<code>"levels"</code>) or indices of components in a multiple-component cosinor
+model (<code>"components"</code>).</p></dd>
 
 
 <dt>component_index</dt>
-<dd><p>If comparison_type = "levels", this controls which single component the levels are being compared to. Note that component_index must be an integer, and must refer to a component within the model</p></dd>
+<dd><p>An <code>integer</code>. If
+<code>comparison_type = "levels"</code>, <code>component_index</code> indicates which
+component is being compared between the levels of the grouping variable.</p></dd>
 
 
 <dt>level_index</dt>
-<dd><p>If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model</p></dd>
+<dd><p>An <code>integer</code>. If
+<code>comparison_type = "components"</code>, <code>level_index</code> indicates which
+level of the grouping variable is being used for the comparison between
+components.</p></dd>
 
 
 <dt>ci_level</dt>
-<dd><p>The level for calculated confidence intervals. Defaults to 0.95.</p></dd>
+<dd><p>The level for calculated confidence intervals. Defaults to
+<code>0.95</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -134,30 +149,62 @@ amplitude or "acr" for acrophase</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mod_grouped</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
 <span class="r-in"><span>  group <span class="op">=</span> <span class="st">"X"</span>,</span></span>
 <span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  period <span class="op">=</span> <span class="fl">12</span></span></span>
 <span class="r-in"><span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">test_cosinor</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"X"</span>, <span class="st">"amp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">test_cosinor</span><span class="op">(</span><span class="va">mod_grouped</span>, <span class="st">"X"</span>, <span class="st">"amp"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test Details: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter being tested:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Amplitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comparison type:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> levels</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Grouping variable used for comparison between groups: X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reference group: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comparator group: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cosinor.glmm model only has a single component and to compare between groups.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Global test: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  P-value: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Individual tests: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Individual tests:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.79</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  P-value: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Estimate and confidence interval[1] "1.83 (-0.17 to 3.83)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimate and 95% confidence interval:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.83 (-0.17 to 3.83)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">data_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">10000</span>,</span></span>
+<span class="r-in"><span>  mesor <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="st">"gaussian"</span>,</span></span>
+<span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mod_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">2</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">data_2_component</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># test_cosinor(mod_2_component, param = "amp", comparison_type = "components")</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
