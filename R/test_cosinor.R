@@ -35,13 +35,31 @@
 #'
 #' @return Returns a \code{test_cosinor} object.
 #' @examples
-#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
+#' mod_grouped <- cosinor.glmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12
 #' ), data = vitamind)
 #'
-#' test_cosinor(fit, "X", "amp")
+#' test_cosinor(mod_grouped, "X", "amp")
+#'
+#' data_2_component <- simulate_cosinor(
+#'   n = 10000,
+#'   mesor = 5,
+#'   amp = c(2, 5),
+#'   acro = c(0, pi),
+#'   family = "gaussian",
+#'   n_components = 2,
+#'   period = c(10, 12)
+#' )
+#'
+#' mod_2_component <- cosinor.glmm(
+#'   Y ~ amp_acro(times, n_components = 2, period = c(10,12)),
+#'   data = data_2_component
+#' )
+#'
+#' # test_cosinor(mod_2_component, param = "amp", comparison_type = "components")
+#'
 #' @export
 test_cosinor <- function(x,
                          x_str,
@@ -117,13 +135,29 @@ test_cosinor <- function(x,
     statistic = ind.Z[, ],
     df = NULL,
     conf.int = interval,
+    ci_level = ci_level,
     p.value = 2 * stats::pnorm(-abs(ind.Z))[, ],
     names = x_str
   ), class = "sub_test_cosinor")
 
+  test_details <- list(
+    x = x,
+    x_str = x_str,
+    param = param,
+    comparison_A = comparison_A,
+    comparison_B = comparison_B,
+    comparison_type = comparison_type,
+    component_index = component_index,
+    level_index = level_index,
+    ci_level = ci_level
+  )
 
   structure(
-    list(global.test = global.test, ind.test = ind.test),
+    list(
+      global.test = global.test,
+      ind.test = ind.test,
+      test_details = test_details
+    ),
     class = "test_cosinor"
   )
 }
@@ -199,10 +233,12 @@ test_cosinor <- function(x,
 #' @export
 #'
 print.test_cosinor <- function(x, ...) {
-  cat("Global test: \n")
-  # TODO: add the parameter being tested
+  cat("Test Details: \n")
+  .print_details(x$test_details)
+
+  cat("\n\n\nGlobal test: \n")
   print(x$global.test, ...)
-  cat("\n Individual tests: \n")
+  cat("\n\n\nIndividual tests:\n")
   print(x$ind.test, ...)
 
   invisible(x)
@@ -218,14 +254,14 @@ print.test_cosinor <- function(x, ...) {
 print.sub_test_cosinor <- function(x, ...) {
   if (length(x$statistic) == 1) {
     cat("Statistic: \n")
-    print(round(x$statistic, 2))
-    cat("\n\n P-value: \n")
-    print(round(x$p.value, 4))
+    cat(round(x$statistic, 2))
+    cat("\n\nP-value: \n")
+    cat(round(x$p.value, 4))
 
     if (!is.null(x$conf.int)) {
       ci <- round(x$conf.int, 2)
-      cat("\n Estimate and confidence interval")
-      print(paste0(ci[1], " (", ci[2], " to ", ci[3], ")"))
+      cat(paste0("\n\nEstimate and ", x$ci_level*100, "% confidence interval:\n"))
+      cat(paste0(ci[1], " (", ci[2], " to ", ci[3], ")"))
     }
   } else {
     ci <- round(x$conf.int, 2)
@@ -239,4 +275,55 @@ print.sub_test_cosinor <- function(x, ...) {
     rownames(msat) <- x$names
   }
   invisible(x)
+}
+
+#' Print extra details about \code{test_cosinor} comparison.
+#'
+#' @param test_details A \code{list} of details from \code{test_cosinor}.
+#'
+#' @return \code{.print_details(x)} returns \code{x} invisibly.
+#' @noRd
+.print_details <- function(test_details) {
+  # Print parameter being assessed
+  cat(paste0("Parameter being tested:\n",
+             switch(test_details$param,
+                    amp = "Amplitude",
+                    acr = "Acrophase")))
+
+  # Print type of comparison
+  cat("\n\nComparison type:\n")
+  cat(test_details$comparison_type)
+
+  # If comparison is on levels of a factor...
+  #     - specify factor variable
+  #     - levels being compared
+  #     - the component being held constant
+  if (test_details$comparison_type == "levels") {
+    cat(paste0(
+      "\n\nGrouping variable used for comparison between groups: ",
+      test_details$x_str,
+      "\nReference group: ", test_details$comparison_A,
+      "\nComparator group: ", test_details$comparison_B
+    ))
+
+    if (test_details$component_index == "") {
+      cat("\n\ncosinor.glmm model only has a single component and to compare between groups.\n")
+    } else {
+      cat(paste0("\n\ncosinor.glmm model has", test_details$x$n_components, " components. Component ", test_details$component_index, " is being used for comparison between groups.\n"))
+    }
+  }
+
+  # If comparison is on components of the model...
+  #     - specify the component indices being compared
+  #     - the grouping variable (if there is one) being held constant and its value
+  if(test_details$comparison_type == "components") {
+    cat(paste0(
+      "\n\nComponent indices used for comparison between groups: ",
+      test_details$x_str,
+      "\nReference component: ", test_details$comparison_A,
+      "\nComparator component: ", test_details$comparison_B
+    ))
+  }
+
+  invisible(test_details)
 }
