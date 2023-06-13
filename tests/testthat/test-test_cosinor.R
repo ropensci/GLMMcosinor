@@ -101,7 +101,7 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'comparison_type' must be one of the following strings:'levels', or 'components'", fixed = TRUE
+    regex = 'should be one of "levels", "components"', fixed = TRUE
   )
 
   # Error message test 8

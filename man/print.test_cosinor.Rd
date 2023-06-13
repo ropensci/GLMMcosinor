@@ -7,12 +7,12 @@
 \method{print}{test_cosinor}(x, ...)
 }
 \arguments{
-\item{x}{test_cosinor object}
+\item{x}{A \code{test_cosinor} object.}
 
 \item{...}{Arguments passed to \code{print}}
 }
 \value{
-\code{print} returns \code{x} invisibly.
+\code{print(x)} returns \code{x} invisibly.
 }
 \description{
 Print results of test of cosinor model

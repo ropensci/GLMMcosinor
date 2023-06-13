@@ -10,31 +10,46 @@ test_cosinor(
   param = c("amp", "acr"),
   comparison_A = 0,
   comparison_B = 1,
-  comparison_type = "levels",
+  comparison_type = c("levels", "components"),
   component_index = 1,
   level_index = 0,
   ci_level = 0.95
 )
 }
 \arguments{
-\item{x}{An object of class \code{cosinor.glmm}}
+\item{x}{An \code{cosinor.glmm} object.}
 
-\item{x_str}{Character naming the covariate whose amplitude/acrophase will be tested}
+\item{x_str}{A \code{character}. The name of the grouping variable within
+which differences in the selected cosinor characteristic (amplitude or
+acrophase) will be tested.}
 
-\item{param}{Character string naming the parameter to test, either "amp" for
-amplitude or "acr" for acrophase}
+\item{param}{A \code{character}. Either \code{"amp"} or \code{"acr"} for
+testing differences in amplitude or acrophase, respectively.}
 
-\item{comparison_A}{A number, referring to the level (within a group) or component number that is to be compared to comparison_B}
+\item{comparison_A}{An \code{integer}. Refers to the level (within the
+grouping variable) or component number that is to act as the reference group
+for the comparison.}
 
-\item{comparison_B}{A number, referring to the level (within a group) or component number that is to be compared to comparison_A}
+\item{comparison_B}{An \code{integer}. Refers to the level (within the
+grouping variable) or component number that is to act as the comparator group
+for the comparison.}
 
-\item{comparison_type}{A string that is either: "levels" (default), or "components". If "levels", then comparison_A and comparison_B will refer to the two levels that are being compared. If comparison_type = "components", then comparison_A component will be compared to comparison_B component}
+\item{comparison_type}{A \code{character}. Indicates whether the comparison
+to be performed is to be between levels of a grouping variable
+(\code{"levels"}) or indices of components in a multiple-component cosinor
+model (\code{"components"}).}
 
-\item{component_index}{If comparison_type = "levels", this controls which single component the levels are being compared to. Note that component_index must be an integer, and must refer to a component within the model}
+\item{component_index}{An \code{integer}. If
+\code{comparison_type = "levels"}, \code{component_index} indicates which
+component is being compared between the levels of the grouping variable.}
 
-\item{level_index}{If comparison_type = "components", this controls which single level the components are being compared to. Note that level_index must be an integer, and must refer to a level within the model}
+\item{level_index}{An \code{integer}. If
+\code{comparison_type = "components"}, \code{level_index} indicates which
+level of the grouping variable is being used for the comparison between
+components.}
 
-\item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
+\item{ci_level}{The level for calculated confidence intervals. Defaults to
+\code{0.95}.}
 }
 \value{
 Returns a \code{test_cosinor} object.
@@ -47,12 +62,11 @@ group with covariates equal to 0. This may not be the desired result for
 continuous covariates.
 }
 \examples{
-
 fit <- cosinor.glmm(Y ~ X + amp_acro(time,
   group = "X",
   n_components = 1,
   period = 12
 ), data = vitamind)
-test_cosinor(fit, "X", "amp")
 
+test_cosinor(fit, "X", "amp")
 }
