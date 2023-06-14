@@ -71,8 +71,8 @@ autoplot(object, x_str = "X")
 ```
 
 This function also allows users to superimpose the datapoints (that the
-fit is based on) over the fitted model, using the `superimpose.data =
-TRUE` argument:
+fit is based on) over the fitted model, using the
+`superimpose.data = TRUE` argument:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
@@ -106,16 +106,24 @@ object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(
 autoplot(object, x_str = "group", predict.ribbon = FALSE)
 ```
 
-By default, `xmin` will be set to the minimum time value in the time vector of the original dataframe, and `xmax` will be set to the maximum time value. If we want to focus on a specific region of the plot, we can define use the `xlims` argument to specify the x-bounds.
+By default, `xmin` will be set to the minimum time value in the time
+vector of the original dataframe, and `xmax` will be set to the maximum
+time value. If we want to focus on a specific region of the plot, we can
+define use the `xlims` argument to specify the x-bounds.
 
-For example, on the plot above, we can adjust the xlimits: 
+For example, on the plot above, we can adjust the xlimits:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
 autoplot(object, x_str = "group", predict.ribbon = TRUE, xlims = c(13,15))
 ```
 
-To increase the resolution of the plots, the `pred.length.out` can be increased. If there are multiple periods, the function will automatically generate an appropriate number of points to plot such that the smallest period has sufficient resolution to appreciate cosinor behaviour. This can be adjusted using the `points_per_min_cycle_length` argument which is 20 by default.  
+To increase the resolution of the plots, the `pred.length.out` can be
+increased. If there are multiple periods, the function will
+automatically generate an appropriate number of points to plot such that
+the smallest period has sufficient resolution to appreciate cosinor
+behaviour. This can be adjusted using the `points_per_min_cycle_length`
+argument which is 20 by default.
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12,1000)), data = testdata_period_diff, family = poisson())
@@ -123,8 +131,8 @@ object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12,1000)
 autoplot(object, points_per_min_cycle_length = 40)
 ```
 
-
 ## Polar plots
+
 In addition to time-response plots, the GLMMcosinor package also allows
 users to create polar plots. In these plots, the plotted point
 represents the acrophase estimate, and the radius represents the
@@ -142,7 +150,7 @@ model.
 By default, the function creates polar plots for all components and
 combines them together using the make_cowplot = TRUE argument. If the
 user wishes to plot just one component, they can specify this by using
-`component_index`. 
+`component_index`.
 
 The direction that the angle increases in can be changed with the
 clockwise argument, and the location of the `angle = 0` starting point
@@ -160,8 +168,11 @@ The background grid can also be customised. The argument
 has, and the 'contour_interval' argument can be used to specify the
 distance between adjacent radial circles.
 
-The argument `contour_label_frequency` determines the frequency of contour labels. For example, setting `contour_label_frequency = 2` means that every second contour is labelled. This is useful to avoid cluttered labels when the contour density is high. By default, `contour_label_frequency = 1` which means every contour is labelled.  
-
+The argument `contour_label_frequency` determines the frequency of
+contour labels. For example, setting `contour_label_frequency = 2` means
+that every second contour is labelled. This is useful to avoid cluttered
+labels when the contour density is high. By default,
+`contour_label_frequency = 1` which means every contour is labelled.
 
 If the user wishes to zoom into the confidence ellipses to show relevant
 information, they can adjust the view from the default `full` (which
