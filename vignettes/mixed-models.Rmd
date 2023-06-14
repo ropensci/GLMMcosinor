@@ -17,4 +17,54 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
+data(vitamind)
+```
+
+GLMMcossinor allows specification of mixed models accounting for fixed and/or random effects. Mixed model specification follows the lme4 format. See [Fitting Linear Mixed-Effects Models Using lme4](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf) for details about how to specify mixed models.
+
+To add a random effects term to the intercept of the vitamind model, we can add a `(1|amp_acro1)` term to the formula, after the `amp_acro()` function. `amp_acro1` indicates that the random effect is the first (and only) component of the model.
+
+```{obj <- cosinor.glmm(Y ~ X + amp_acro(time,}
+n_components = 1,
+group = "X",
+period = 12
+) + (1|amp_acro1), data = vitamind)
+
+obj
+```
+
+If the model has two components, but we only wish to add a random effect to the second one, we would specify:
+
+```{r}
+obj <- cosinor.glmm(Y ~ X + amp_acro(time,
+n_components = 2,
+group = "X",
+period = c(12,8)
+) + (1|amp_acro2), data = vitamind)
+
+obj
+```
+
+Alternatively, we could assign random effects to *both* components:
+
+```{r}
+obj <- cosinor.glmm(Y ~ X + amp_acro(time,
+n_components = 2,
+group = "X",
+period = c(12,8)
+) + (1|amp_acro1) + (1|amp_acro2), data = vitamind)
+
+obj
+```
+
+We could also assign random effects to the group:
+
+```{r}
+obj <- cosinor.glmm(Y ~ X + amp_acro(time,
+n_components = 1,
+group = "X",
+period = 12
+) + (1|X), data = vitamind)
+
+obj
 ```

@@ -374,12 +374,5 @@ amp_acro <- function(time_col,
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
     res$newformula <- stats::as.formula(main_part)
   }
-
-  # As a test:
-  # obj <- cosinor.glmm(Y ~ X + amp_acro(time,
-  # n_components = 3,
-  # group = "X",
-  # period = c(12, 8, 9)
-  # ) + (1|amp_acro1) + (X|amp_acro2), data = vitamind)
   res
 }
