@@ -32,7 +32,8 @@ testdata_simple <- simulate_cosinor(1000,
   beta.acro = 0.5,
   family = "poisson",
   period = c(12),
-  n_components = 1
+  n_components = 1, 
+  beta.group = TRUE
 )
 
 testdata_two_components <- simulate_cosinor(1000,
@@ -45,7 +46,8 @@ testdata_two_components <- simulate_cosinor(1000,
   beta.acro = c(1, -1.5),
   family = "poisson",
   period = c(12, 6),
-  n_components = 2
+  n_components = 2, 
+  beta.group = TRUE
 )
 
 testdata_multicomponent <- simulate_cosinor(1000,
@@ -58,7 +60,8 @@ testdata_multicomponent <- simulate_cosinor(1000,
   beta.acro = c(1, -1.5, -1),
   family = "poisson",
   period = c(12, 6, 12),
-  n_components = 3
+  n_components = 3, 
+  beta.group = TRUE
 )
 ```
 

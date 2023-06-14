@@ -20,84 +20,177 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
+library(dplyr)
 #' @srrstats {G2.0a} Provide explicit secondary documentation of any expectations on lengths of inputs
 #' @srrstats {G2.1a} *Provide explicit secondary documentation of expectations on data types of all vector inputs.*
+
+
+testdata_simple <- simulate_cosinor(1000,
+  n_period = 2,
+  mesor = 5,
+  amp = 2,
+  acro = 1,
+  beta.mesor = 4,
+  beta.amp = 1,
+  beta.acro = 0.5,
+  family = "poisson",
+  period = c(12),
+  n_components = 1, 
+  beta.group = TRUE
+)
+
+testdata_two_components <- simulate_cosinor(1000,
+  n_period = 10,
+  mesor = 7,
+  amp = c(0.1, 0.4),
+  acro = c(1, 1.5),
+  beta.mesor = 4.4,
+  beta.amp = c(2, 1),
+  beta.acro = c(1, -1.5),
+  family = "poisson",
+  period = c(12, 6),
+  n_components = 2, 
+  beta.group = TRUE
+)
+
+testdata_multicomponent <- simulate_cosinor(1000,
+  n_period = 10,
+  mesor = 7,
+  amp = c(0.1, 0.4, 0.5),
+  acro = c(1, 1.5, 0.1),
+  beta.mesor = 4.4,
+  beta.amp = c(2, 1, 0.4),
+  beta.acro = c(1, -1.5, -1),
+  family = "poisson",
+  period = c(12, 6, 12),
+  n_components = 3, 
+  beta.group = TRUE
+)
+
 ```
 
-## Using: 'cosinor.glmm.R'
+## `cosinor.glmm()`
 
-cosinor.glmm() generates a regression model with parameter estimates
-based on a data set and formula specified by the user.
+`cosinor.glmm()` wrangles the data appropriately to fit the cosinor
+model given the formula specified by the user.
 
-The formula argument for cosinor.glmm() is constructed in two parts:
+The formula argument for `cosinor.glmm()` is specified using the
+`{lme4}` style (for details see `vignette("lmer", package = "lme4")`).
+The only difference is that it allows for use of an `amp_acro()` call
+within the formula that is used to identify the circadian components and
+relevant variables in the `data.frame`. Any other combination of
+covariates can also be included in the formula as well as random effects
+and zero-inflation (`ziformula`) and dispersion (`dispformula`)
+formulae. For detailed examples of how to specify models, see the
+[mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html),
+[model-specification](https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html)
+and
+[multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
+vignettes.
 
-Firstly: specification of any intercept or covariate mesor terms. By
-default, an intercept term is included but this can be removed by
-including a 0 in the formula. For example, the following formula has an
-intercept and X listed as a covariate mesor term:
+The following examples use data simulated by the the `simulate_cosinor`
+function. Since the purpose of GLMMCosinor package is to fit models to
+non-Gaussian cosinor distributions, the data will be simulated from a
+Poisson distribution in these demonstrations. But, GLMMCosinor can also
+fit models to data from *any* distribution supported by the `glmmTMB`
+package, including Gaussian data.
+
+Here, we fit a simple cosinor model to "testdata_simple" - simulated
+data from a Poisson distribution loaded in this vignette. In this
+example, there is no grouping variable.
 
 ```{r, message=F, warning=F}
-data(vitamind)
-cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+cosinor.glmm(Y ~ amp_acro(times, period = 12), data = filter(testdata_simple, group == 0), family = poisson())
 ```
 
-Alternatively, the following example will have no intercept term, but
-will still generate a mesor estimate for the X group. In the output, the
-[X=0] and [X=1] refer to estimates of mesor for the levels 0 and 1
-respectively within the group "X".
+The output shows the coefficients fit within the cosinor model as well
+as the the (transformed) estimates for amplitude (amp) and acrophase
+(acr). The '(Intercept)' is the MESOR (Midline Statistic Of Rhythm) or
+rhythm-adjusted mean, 'amp' is the amplitude estimate, and 'acr' is the
+acrophase estimate.
+
+Now, we can add a grouping variable by adding the name of the group in
+the amp_acro() function:
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + X + amp_acro(time, group = "X", period = 12), data = vitamind)
+cosinor.glmm(Y ~ amp_acro(times, period = 12, group = "group"), data = testdata_simple, family = poisson())
 ```
 
-Finally, the following will have no intercept term, nor will it generate
-any mesor estimates:
+In the example above, the amplitude and phase are being estimated
+separately for the two groups but the **intercept term is shared**. This
+represents a shared estimate of the MESOR for both groups.
+
+Similarly to a normal regression model with `{lme4}` or `{glmmTMB}`, we
+can add a term for the group in the model so that we can estimate the
+difference in MESOR between the two groups.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + amp_acro(time, group = "X", period = 12), data = vitamind)
+cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group"), data = testdata_simple, family = poisson())
 ```
 
-Secondly, specification of the amp_acro() function. The amp_acro()
-function modifies the original dataset and formula so that the amplitude
-and acrophase can be calculated. Importantly, the amp_acro() argument is
-where users specify:
+*Note that in the example data used, the group name was called "group";
+if the group name was "X", then the formula would be:*
 
--   'group' (the name of the group covariates). Ensure that the names in
-    this argument are actually found in the dataset. The group argument
-    can be an object or a string.
+cosinor.glmm(Y \~ X+ amp_acro(times, period = 12, group = "X"), data =
+testdata_simple, family = poisson())
 
--   'time' (the name of the time column). Ensure that the name matches
-    the name of the time values in the dataset. The 'time' argument can
-    be an object or a string.
-
--   'n_components' (The number of components). If the user wishes to
-    have a more than one trigonometric component in the model, they can
-    specify the number of such components here. Note that this value
-    will need to match the length of the group argument and the period
-    argument. For example, if n_components = 3, then the group argument
-    should have 3 characters, where the position of each character
-    corresponds to the component that the group covariate describes:\
+We may also be interested in estmating the MESOR for the two groups
+separately, rather than the difference between groups. To achieve this,
+we can remove the intercept term by using `0 +`.
 
 ```{r, message=F, warning=F}
-data(vitamind)
-vitamind$Z <- rbinom(length(vitamind$X), 1, prob = 0.5)
-cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)), data = vitamind)
+cosinor.glmm(Y ~ 0 + group + amp_acro(times, period = 12, group = "group"), data = testdata_simple, family = poisson())
 ```
 
-As demonstrated in the example above, the 'NA' entry in the group
-argument indicates a component with no group covariate assigned.
+The `amp_acro()` function controls the cosinor components of the (fixed
+effects portion of the) model. It provides the user with the ability to
+specify grouping structures, the period of the rhythm, and the number of
+components. It includes several arguments that the user needs to
+specify:
 
-If only one group argument and and/or one period argument is supplied,
-but there is more than one component specified, then it will be assumed
-that the one group and one period specified applies to all components:
+-   `group` (the name of the grouping variable in the dataset). This
+    should be a column within the dataset being passed to
+    `cosinor.glmm()` as the `data` argument.
 
-For instance, the following two cosinor.glmm() calls produce the same
-output:
+-   `time` (the name of the time column). Again, ensure that the name
+    matches the name of the time values in the dataset. Also, ensure
+    that this argument is NOT a string.
+
+-   `n_components` (the number of components). If the user wishes to fit
+    a multicomponent cosinor model, they can specify the number of
+    components here. The value of n_components will need to match the
+    length of the `group` and `period` arguments as these will be
+    combined for each component. If a multicomponent model where one
+    component is grouped and other aren't, the vector input for group
+    must still be the same length as `n_components` but have the
+    non-grouped components represented as `group = NA`.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = "X", period = c(12)), data = vitamind)
+cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", NA)), data = testdata_two_components, family = poisson())
 
-cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("X", "X", "X"), period = c(12, 12, 12)), data = vitamind)
+```
+
+In the example above, we have a multicomponent cosinor model with two
+components. The first component is grouped by the "group" variable in
+the input data whereas the second component is not grouped. In the
+resulting output, we can see that each component is represented by the
+suffixes (1 and 2). The first component has the grouping structure but
+the second is represented only by the `amp2` and `acr2` (transformed)
+parameter estimates.
+
+If a multicomponent model is specified (`n_components > 1`) but the
+length of `group` or `period` is 1, then it will be assumed that the one
+`group`/`period` values specified apply to all components:
+
+For instance, the following two cosinor.glmm() calls fit the same
+models:
+
+```{r, message=F, warning=F}
+
+cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = 12, group = "group"), data = testdata_two_components, family = poisson())
+
+
+cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 12), group = c("group","group")), data = testdata_two_components, family = poisson())
 ```
 
 ### Dispersion and zero-inflation model specification
@@ -107,7 +200,7 @@ for dispersion and zero-inflation models. These formulas are independent
 of the main formula specification:
 
 ```{r, message=F, warning=F}
-testdata <- simulate_cosinor(1000,
+testdata_disp_zi <- simulate_cosinor(1000,
   n_period = 6,
   mesor = 7,
   amp = c(0.1, 0.4, 0.5),
@@ -119,18 +212,18 @@ testdata <- simulate_cosinor(1000,
   period = c(12, 6, 8),
   n_components = 3
 )
-object <- cosinor.glmm(
+object_disp_zi <- cosinor.glmm(
   Y ~ group + amp_acro(times,
     n_components = 3,
     period = c(12, 6, 8),
     group = "group"
   ),
-  data = testdata, family = gaussian(),
+  data = testdata_disp_zi, family = gaussian(),
   dispformula = ~ group + amp_acro(times, n_components = 2, group = "group", period = c(12, 6)),
   ziformula = ~ group + amp_acro(times, n_components = 3, group = "group", period = c(7, 8, 2))
 )
 
-object
+object_disp_zi
 ```
 
 This example shows how dispformula and ziformula can be specified with a
@@ -142,49 +235,36 @@ and ziformula = \~0.
 number of components in the dispersion and zero-inflation formulas were
 chosen arbitrarily and purely for demonstration.*
 
-## Using: 'summary.cosinor.glmm.R'
+### Using: 'summary.cosinor.glmm.R'
 
-The summary.cosinor.glmm() function provides summary statistics for an
-object produced by the cosinor.glmm() function. It outputs the
-estimates, confidence intervals, and tests for both the raw parameters
-and the transformed (mesor, amplitude, and acrophase) parameters.
-Currently, the summary statistics do not represent a comparison between
-any groups - that is the role of the test_cosinor() function.
+The `summary()` method for `cosinor.glmm` objects provides a more
+detailed summary of the model and its parameter estimates and
+uncertainty. It outputs the estimates, standard errors, confidence
+intervals, and p-values for both the raw model parameters and the
+transformed (amplitude, and acrophase) parameters. The summary
+statistics do not represent a comparison between any groups for the
+cosinor components - that is the role of the `test_cosinor()` function.
 
-Here is an example of how to use the summary.cosinor.glmm() function:
+Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-data(vitamind)
-object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+object <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group"), data = testdata_simple, family = poisson())
 summary(object)
 ```
 
 The summary statistics for dispersion and zero-inflation models will
 also be provided by the summary.cosinor.glmm() function, if the original
-cosinor.glmm object being analysed contains them:
+cosinor.glmm object being analysed contains them. The following
+demonstration uses the model specified in the
+`Dispersion and zero-inflation model specification` section of this
+vignette:
 
 ```{r, message=F, warning=F}
-data(vitamind) # load vitamind dataset
-vitamind$Z <- rbinom(length(vitamind$X), 2, prob = 0.5) # modify dataset
-
-object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("X", NA, "Z"), period = c(12, 10, 8)),
-  data = vitamind,
-  dispformula = ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 11, 8)),
-  ziformula = ~ X + amp_acro(time, n_components = 2, group = c("Z", "X"), period = c(12, 8))
-)
-
-summary(object)
+summary(object_disp_zi)
 ```
 
-## Using: 'predict.cosinor.glmm.R'
+*Note that this dataset was not simulated with consideration of
+dispersion or zero-inflation characteristics, hence the lack of
+significant P-values in the model summary for the dispersion and
+zero-inflation models.*
 
-The predict.cosinor.glmm() function allows users to generate predicted
-values given a time variable and optional covariates. It is used in the
-plot.cosinor.glmm() function to generate the fitted line based on
-acosinor.glmm object.
-
-```{r, message=F, warning=F}
-data(vitamind)
-fit <- cosinor.glmm(Y ~ X + amp_acro(X, group = NA, period = 12), data = vitamind)
-df_predicted <- predict(fit, newdata = vitamind)
-```

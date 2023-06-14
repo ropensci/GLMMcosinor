@@ -67,7 +67,7 @@ dat_list <- list(
     zi = FALSE,
     rhythmdiff = TRUE,
     diff_est = TRUE,
-    family = "n = ? \nGaussian",
+    family = "n = 1 \nGaussian",
     estimates = "Amplitude,Acrophase, Mesor",
     ref = "Sachs, 2014"
   ),
@@ -79,7 +79,7 @@ dat_list <- list(
     zi = FALSE,
     rhythmdiff = TRUE,
     diff_est = TRUE,
-    family = "n = ? \nGaussian",
+    family = "n = 1 \nGaussian",
     estimates = "Amplitude,Acrophase, Mesor",
     ref = "Mutak, 2018"
   ),
@@ -103,7 +103,7 @@ dat_list <- list(
     zi = FALSE,
     rhythmdiff = TRUE,
     diff_est = TRUE,
-    family = "n = ? \nGaussian",
+    family = "n = 1 \nGaussian",
     estimates = "Amplitude,Acrophase, Period, Mesor",
     ref = "Singer, 2019"
   ),
@@ -115,7 +115,7 @@ dat_list <- list(
     zi = FALSE,
     rhythmdiff = TRUE,
     diff_est = TRUE,
-    family = "n = ? \nGaussian",
+    family = "n = 1 \nGaussian",
     estimates = "Amplitude,Acrophase, Mesor",
     ref = "Singer, 2019"
   )
