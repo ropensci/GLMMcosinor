@@ -71,8 +71,8 @@ autoplot(object, x_str = "X")
 ```
 
 This function also allows users to superimpose the datapoints (that the
-fit is based on) over the fitted model, using the superimpose.data =
-TRUE argument:
+fit is based on) over the fitted model, using the `superimpose.data =
+TRUE` argument:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
@@ -125,6 +125,11 @@ autoplot(object, points_per_min_cycle_length = 40)
 
 
 ## Polar plots
+In addition to time-response plots, the GLMMcosinor package also allows
+users to create polar plots. In these plots, the plotted point
+represents the acrophase estimate, and the radius represents the
+amplitude estimate for a given component. The ellipses represent
+confidence regions.
 
 The angle units in the plot can be specified with the `radial_units`
 argument. By default, the units are in radians where a complete
@@ -137,7 +142,7 @@ model.
 By default, the function creates polar plots for all components and
 combines them together using the make_cowplot = TRUE argument. If the
 user wishes to plot just one component, they can specify this by using
-`component_index`, though by making `make_cowplot = FALSE`.
+`component_index`. 
 
 The direction that the angle increases in can be changed with the
 clockwise argument, and the location of the `angle = 0` starting point
@@ -155,6 +160,9 @@ The background grid can also be customised. The argument
 has, and the 'contour_interval' argument can be used to specify the
 distance between adjacent radial circles.
 
+The argument `contour_label_frequency` determines the frequency of contour labels. For example, setting `contour_label_frequency = 2` means that every second contour is labelled. This is useful to avoid cluttered labels when the contour density is high. By default, `contour_label_frequency = 1` which means every contour is labelled.  
+
+
 If the user wishes to zoom into the confidence ellipses to show relevant
 information, they can adjust the view from the default `full` (which
 plots a full view of the polar plot) to 'zoom' (which enlarges the
@@ -163,12 +171,6 @@ smallest view window containing all confidence ellipses), or
 confidence ellipses AND the origin).
 
 ------------------------------------------------------------------------
-
-In addition to time-response plots, the GLMMcosinor package also allows
-users to create polar plots. In these plots, the plotted point
-represents the acrophase estimate, and the radius represents the
-amplitude estimate for a given component. The ellipses represent
-confidence regions.
 
 ```{r, message=F, warning=F}
 model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
