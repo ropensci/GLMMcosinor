@@ -95,7 +95,13 @@ Defaults to 0.95.</p></dd>
 
 
 <dt>n_breaks</dt>
-<dd><p>The number of concentric circles that will be plotted using the scales::breaks_pretty method. By default, 5 breaks will be generated. The number of breaks may be adjusted to result in an even interval. For example, if n_breaks is 3, but the maximum plot radius is 8, instead of plotting circles in intervals in 1.6, this interval will be rounded to 2 to result in the sequence: 0,2,4,6,8.</p></dd>
+<dd><p>The number of concentric circles that will be plotted using
+the <code><a href="https://scales.r-lib.org/reference/breaks_pretty.html" class="external-link">scales::breaks_pretty()</a></code> function. By default, 5 breaks will be
+used. The number of breaks may be adjusted to result in an even interval.
+For example, if n_breaks is 3, but the maximum plot radius is 8, instead of
+plotting circles in intervals in 1.6, this interval will be rounded to 2
+to result in the sequence: 0, 2, 4, 6, 8. See <code><a href="https://scales.r-lib.org/reference/breaks_pretty.html" class="external-link">?scales::breaks_pretty</a></code>
+for more details.</p></dd>
 
 
 <dt>component_index</dt>
