@@ -1,7 +1,5 @@
 
-
-
-#' Test for differences in a cosinor model between levels
+#' Test for differences in a cosinor model between components
 #'
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor
@@ -17,12 +15,9 @@
 #' acrophase) will be tested.
 #' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
 #' testing differences in amplitude or acrophase, respectively.
-#' @param comparison_A An \code{integer}. Refers to the level (within the
-#' grouping variable) or component number that is to act as the reference group
+#' @param comparison_A An \code{integer}. Refers to the component number that is to act as the reference group.
 #' for the comparison.
-#' @param comparison_B An \code{integer}. Refers to the level (within the
-#' grouping variable) or component number that is to act as the comparator group
-#' for the comparison.
+#' @param comparison_B An \code{integer}. Refers to the component number that is to act as the comparator group
 #' @param level_index An \code{integer}. If
 #' \code{comparison_type = "components"}, \code{level_index} indicates which
 #' level of the grouping variable is being used for the comparison between
@@ -123,12 +118,10 @@ test_cosinor_components <- function(x,
 #' acrophase) will be tested.
 #' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
 #' testing differences in amplitude or acrophase, respectively.
-#' @param comparison_A An \code{integer}. Refers to the level (within the
-#' grouping variable) or component number that is to act as the reference group
-#' for the comparison.
-#' @param comparison_B An \code{integer}. Refers to the level (within the
-#' grouping variable) or component number that is to act as the comparator group
-#' for the comparison.
+#' @param comparison_A An \code{integer, or string}. Refers to the first level within the
+#' grouping variable \code{x_str} that is to act as the reference group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.
+#' @param comparison_B An \code{integer, or string}. Refers to the second level within the
+#' grouping variable \code{x_str} that is to act as the comparator group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.
 #' @param component_index An \code{integer}. If
 #' \code{comparison_type = "levels"}, \code{component_index} indicates which
 #' component is being compared between the levels of the grouping variable.
@@ -161,8 +154,8 @@ test_cosinor_components <- function(x,
 test_cosinor_levels <- function(x,
                                 x_str,
                                 param = "amp",
-                                comparison_A = 0,
-                                comparison_B = 1,
+                                comparison_A,
+                                comparison_B,
                                 component_index = 1,
                                 ci_level = 0.95) {
   # Validating the inputs
@@ -187,10 +180,25 @@ test_cosinor_levels <- function(x,
     msg = "x_str must be the name of a group in object"
   )
 
+
+
+  #If there are no levels supplied, the first two levels will be compared
+  if(missing(comparison_A) & missing(comparison_B)) {
+    comparison_A <- x$group_stats[[x_str]][1]
+    comparison_B <- x$group_stats[[x_str]][2]
+  }
+
   assertthat::assert_that(
-    comparison_A %in% x$group_stats[[x_str]] & comparison_B %in% x$group_stats[[x_str]],
-    msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'"
+    comparison_A %in% x$group_stats[[x_str]],
+    msg = "'comparison_A' must correspond to a level within the group specified by 'x_str'"
   )
+
+  assertthat::assert_that(
+    comparison_B %in% x$group_stats[[x_str]],
+    msg = "'comparison_B' must correspond to a level within the group specified by 'x_str'"
+  )
+
+
   assertthat::assert_that(
     component_index %in% 1:x$n_components,
     msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model"

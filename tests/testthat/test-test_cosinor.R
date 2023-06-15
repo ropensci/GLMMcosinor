@@ -77,11 +77,11 @@ test_that("script works and warnings are displayed appropriately", {
   data(vitamind)
   object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
   f <- function() {
-    test_cosinor_levels(object, x_str = "X", comparison_A = 4)
+    test_cosinor_levels(object, x_str = "X", comparison_A = 4, )
   }
   expect_error(
     f(),
-    regex = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'", fixed = TRUE
+    regex = "'comparison_A' must correspond to a level within the group specified by 'x_str'", fixed = TRUE
   )
 
   # Error message test 6
