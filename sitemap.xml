@@ -88,7 +88,10 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/summary.cosinor.glmm.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/test_cosinor.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/test_cosinor_components.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/test_cosinor_levels.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/update_formula_and_data.html</loc>
