@@ -64,7 +64,7 @@
 test_cosinor <- function(x,
                          x_str,
                          param = c("amp", "acr"),
-                         comparison_A = 0,
+                         comparison_A = 0, # TODO handle the text labels for the factor variable used for grouping - i.e using data made with : sim_data %>% mutate(group = ifelse(group == 1, "control", "treatment"))
                          comparison_B = 1,
                          comparison_type = c("levels", "components"),
                          component_index = 1,
