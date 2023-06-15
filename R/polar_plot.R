@@ -459,6 +459,12 @@ polar_plot.cosinor.glmm <- function(x,
           x0 = 0,
           y0 = 0,
           r = seq(from = 0, to = max_plot_radius, by = contour_interval)
+          # r = scales::breaks_pretty(n=5)(c(0, max_plot_radius))
+          # TODO use breaks_pretty for defining number of contours
+          #     - replace contour_interval and contour_label_frequency with `n_breaks` which defines the n in the line above.
+          #     - will need to update the geom_text for the labels around the outside to be the maximum of the produced vector from the line above
+          #     - will need to use the same for the geom_text that produces the "axis-labels"
+          #     - run `use_package("scales")` to add scales dependencies in same commit
         ),
         alpha = 0.01,
         linetype = 20
