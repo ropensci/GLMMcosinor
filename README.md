@@ -21,13 +21,13 @@ Poisson, Gamma, or Binomial.
 Existing statistical software for circadian data analyses (including
 `cosinor` or `circacompare`) allow the user to fit such data using a
 regression model, but many are limited due to the lack being able to
-specify a link function, multiple components, or a heirachical
-structure. GLMMcosinor aims to be comprehensive and flexible and is an
-improvement of other implementations of the cosinor model in R or
+specify a link function, multiple components, or a hierarchical
+structure. `GLMMcosinor` aims to be comprehensive and flexible and is an
+improvement on other implementations of the cosinor model in R or
 Python. See table below for features available within currently
 available methods.
 
-<img src="man/figures/methods-table.png" width="700px" alt="flextable formats" align="center" />
+<img src="man/figures/methods-table.png" width="=900px" alt="flextable formats" align="center" />
 
 ## Installation
 
@@ -49,31 +49,35 @@ library(GLMMcosinor)
 
 ``` r
 data(vitamind)
-model <- cosinor.glmm(Y ~ X + amp.acro(time, group = "X"), data = vitamind)
+model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 summary(model)
 #> 
 #>  Conditional Model 
 #> Raw model coefficients:
-#>                estimate standard.error   lower.CI  upper.CI   p.value
-#> (Intercept)  29.6897959      0.4583696 28.7914079 30.588184 0.0000000
-#> X1            1.9018623      0.7919688  0.3496320  3.454093 0.0163309
-#> X0:main_rrr1  0.9307876      0.6260656 -0.2962784  2.157853 0.1370874
-#> X1:main_rrr1  6.5102900      0.9303406  4.6868560  8.333724 0.0000000
-#> X0:main_sss1  6.2009896      0.6701952  4.8874311  7.514548 0.0000000
-#> X1:main_sss1  4.8184618      0.8963299  3.0616875  6.575236 0.0000001
+#>                estimate standard.error   lower.CI upper.CI    p.value    
+#> (Intercept)  29.6897959      0.4583696 28.7914079 30.58818 < 2.22e-16 ***
+#> X1            1.9018623      0.7919688  0.3496320  3.45409   0.016331 *  
+#> X0:main_rrr1  0.9307876      0.6260656 -0.2962784  2.15785   0.137087    
+#> X1:main_rrr1  6.5102900      0.9303406  4.6868560  8.33372 2.6011e-12 ***
+#> X0:main_sss1  6.2009896      0.6701952  4.8874311  7.51455 < 2.22e-16 ***
+#> X1:main_sss1  4.8184618      0.8963299  3.0616875  6.57524 7.6257e-08 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Transformed coefficients:
-#>               estimate standard.error   lower.CI   upper.CI   p.value
-#> (Intercept) 29.6897959      0.4583696 28.7914079 30.5881839 0.0000000
-#> [X=1]        1.9018623      0.7919688  0.3496320  3.4540926 0.0163309
-#> [X=0]:amp1   6.2704576      0.6696564  4.9579551  7.5829600 0.0000000
-#> [X=1]:amp1   8.0994722      1.1028357  5.9379540 10.2609904 0.0000000
-#> [X=0]:acr1  -1.4218056      0.0999356 -1.6176757 -1.2259354 0.0000000
-#> [X=1]:acr1  -0.6371544      0.1404362 -0.9124044 -0.3619044 0.0000057
+#>                estimate standard.error    lower.CI upper.CI    p.value    
+#> (Intercept) 29.68979587     0.45836964 28.79140787 30.58818 < 2.22e-16 ***
+#> [X=1]        1.90186227     0.79196879  0.34963197  3.45409   0.016331 *  
+#> [X=0]:amp1   6.27045757     0.66965642  4.95795510  7.58296 < 2.22e-16 ***
+#> [X=1]:amp1   8.09947222     1.10283566  5.93795403 10.26099 2.0696e-13 ***
+#> [X=0]:acr1  -1.42180558     0.09993559 -1.61767574 -1.22594 < 2.22e-16 ***
+#> [X=1]:acr1  -0.63715441     0.14043625 -0.91240440 -0.36190 5.7069e-06 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 ``` r
-plot(model, superimpose.data = TRUE)
+autoplot(model, superimpose.data = TRUE)
 polar_plot(model)
 ```
 
