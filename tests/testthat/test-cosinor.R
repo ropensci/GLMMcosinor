@@ -4,6 +4,12 @@
 #' @srrstats {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
 #' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 #' @srrstats {G5.5} *Correctness tests should be run with a fixed random seed*
+#' @srrstats {G5.4} **Correctness tests** *to test that statistical algorithms produce expected results to some fixed test data sets (potentially through comparisons using binding frameworks such as [RStata](https://github.com/lbraglia/RStata)).*
+#' @srrstats {G5.4a} *For new methods, it can be difficult to separate out correctness of the method from the correctness of the implementation, as there may not be reference for comparison. In this case, testing may be implemented against simple, trivial cases or against multiple implementations such as an initial R implementation compared with results from a C/C++ implementation.*
+#' @srrstats {G5.6} **Parameter recovery tests** *to test that the implementation produce expected results given data with known properties. For instance, a linear regression algorithm should return expected coefficient values for a simulated data set generated from a linear model.*
+#' @srrstats {G5.6a} *Parameter recovery tests should generally be expected to succeed within a defined tolerance rather than recovering exact values.*
+#' @srrstats {G5.6b} *Parameter recovery tests should be run with multiple random seeds when either data simulation or the algorithm contains a random component. (When long-running, such tests may be part of an extended, rather than regular, test suite; see G4.10-4.12, below).*
+#' @srrstats {G5.9b} *Running under different random seeds or initial conditions does not meaningfully change results*
 
 
 
@@ -46,6 +52,34 @@ test_that("model returns accurate parameters", {
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
     c(1.0030, -0.4966, 2.0181, 0.9858, 2.9907, 0.2885)
+  ))
+
+  # test another parameter estimation of gaussian simulated data
+  withr::with_seed(
+    100,
+    {
+      comod <- simulate_cosinor(
+        n = 10000,
+        mesor = TrueMesor_a,
+        amp = TrueAmp_a,
+        acro = TrueAcr_a,
+        beta.mesor = TrueMesor_b,
+        beta.amp = TrueAmp_b,
+        beta.acro = TrueAcr_b,
+        family = "gaussian",
+        period = TruePeriod,
+        beta.group = TRUE
+      )
+      object <- cosinor.glmm(
+        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+        data = comod
+      )
+    }
+  )
+
+  testthat::expect_true(all.equal(
+    f_round(object$coefficients),
+    c(0.9905, -0.4932, 1.9785, 1.0203, 2.9900, 0.2906)
   ))
 
   # test parameter estimation of poisson simulated data
