@@ -7,8 +7,7 @@
 polar_plot(
   x,
   ci_level = 0.95,
-  contour_interval,
-  contour_label_frequency = 1,
+  n_breaks = 5,
   component_index,
   grid_angle_segments = 8,
   radial_units = c("radians", "degrees", "period"),
@@ -31,13 +30,7 @@ polar_plot(
 \item{ci_level}{The level for calculated confidence ellipses.
 Defaults to 0.95.}
 
-\item{contour_interval}{The distance between adjacent circular contours in
-the background of the polar plot.}
-
-\item{contour_label_frequency}{This controls the frequency of labels
-assigned to contours. For example, \code{contour_interval = 2} means that
-every second contour is labelled. By default, every contour is labelled
-(\code{contour_label_frequency = 1}).}
+\item{n_breaks}{The number of concentric circles that will be plotted using the scales::breaks_pretty method. By default, 5 breaks will be generated. The number of breaks may be adjusted to result in an even interval. For example, if n_breaks is 3, but the maximum plot radius is 8, instead of plotting circles in intervals in 1.6, this interval will be rounded to 2 to result in the sequence: 0,2,4,6,8.}
 
 \item{component_index}{A number that corresponds to a particular component
 from the \code{cosinor.glmm()} object that will be used to create polar plot.

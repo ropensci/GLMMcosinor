@@ -165,14 +165,8 @@ starting position (at 0) to the acrophase estimate.
 
 The background grid can also be customised. The argument
 `grid_angle_segments` is used to specify how many sectors the polar grid
-has, and the 'contour_interval' argument can be used to specify the
-distance between adjacent radial circles.
-
-The argument `contour_label_frequency` determines the frequency of
-contour labels. For example, setting `contour_label_frequency = 2` means
-that every second contour is labelled. This is useful to avoid cluttered
-labels when the contour density is high. By default,
-`contour_label_frequency = 1` which means every contour is labelled.
+has, and the \`n_breaks\` argument can be used to specify the number of
+concentric circles that make up the polar grid.
 
 If the user wishes to zoom into the confidence ellipses to show relevant
 information, they can adjust the view from the default `full` (which
@@ -222,13 +216,13 @@ polar_plot(model, overlay_parameter_info = TRUE)
 ```
 
 The background grid can also be customised. The argument
-'grid_angle_segments' is used to specify how many sectors the polar grid
-has, and the 'contour_interval' argument can be used to specify the
-distance between adjacent radial circles.
+`grid_angle_segments` is used to specify how many sectors the polar grid
+has, and the `n_breaks` argument can be used to specify the number of
+concentric circles.
 
 ```{r, message=F, warning=F}
 model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
-polar_plot(model, grid_angle_segments = 12, clockwise = TRUE, start = "top", contour_interval = 1)
+polar_plot(model, grid_angle_segments = 12, clockwise = TRUE, start = "top", n_breaks = 5)
 ```
 
 If the user wishes to zoom into the confidence ellipses to show

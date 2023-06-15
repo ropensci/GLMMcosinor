@@ -21,6 +21,7 @@ Imports:
     glmmTMB,
     lme4,
     rlang,
+    scales,
     stats
 Suggests:
     covr,

@@ -26,7 +26,7 @@ test_that("model returns accurate parameters", {
   TrueAcr_b <- 0.3
   TruePeriod <- 12
 
-  # test parameter estimation of guassian simulated data
+  # test parameter estimation of Gaussian simulated data
   withr::with_seed(
     50,
     {
@@ -54,7 +54,7 @@ test_that("model returns accurate parameters", {
     c(1.0030, -0.4966, 2.0181, 0.9858, 2.9907, 0.2885)
   ))
 
-  # test another parameter estimation of gaussian simulated data
+  # test another parameter estimation of Gaussian simulated data
   withr::with_seed(
     100,
     {

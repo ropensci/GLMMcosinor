@@ -3,12 +3,7 @@
 #' @param x An object of class \code{cosinor.glmm}
 #' @param ci_level The level for calculated confidence ellipses.
 #' Defaults to 0.95.
-#' @param contour_interval The distance between adjacent circular contours in
-#' the background of the polar plot.
-#' @param contour_label_frequency This controls the frequency of labels
-#' assigned to contours. For example, \code{contour_interval = 2} means that
-#' every second contour is labelled. By default, every contour is labelled
-#' (\code{contour_label_frequency = 1}).
+#' @param n_breaks The number of concentric circles that will be plotted using the scales::breaks_pretty method. By default, 5 breaks will be generated. The number of breaks may be adjusted to result in an even interval. For example, if n_breaks is 3, but the maximum plot radius is 8, instead of plotting circles in intervals in 1.6, this interval will be rounded to 2 to result in the sequence: 0,2,4,6,8.
 #' @param component_index A number that corresponds to a particular component
 #' from the \code{cosinor.glmm()} object that will be used to create polar plot.
 #' If missing (default), then plots for all components will be arranged in the
@@ -77,8 +72,7 @@
 #' polar_plot(model)
 polar_plot <- function(x,
                        ci_level = 0.95,
-                       contour_interval,
-                       contour_label_frequency = 1,
+                       n_breaks = 5,
                        component_index,
                        grid_angle_segments = 8,
                        radial_units = c("radians", "degrees", "period"),
@@ -101,12 +95,7 @@ polar_plot <- function(x,
 #' @param x An object of class \code{cosinor.glmm}
 #' @param ci_level The level for calculated confidence ellipses.
 #' Defaults to 0.95.
-#' @param contour_interval The distance between adjacent circular contours in
-#' the background of the polar plot.
-#' @param contour_label_frequency This controls the frequency of labels
-#' assigned to contours. For example, \code{contour_interval = 2} means that
-#' every second contour is labelled. By default, every contour is labelled
-#' (\code{contour_label_frequency = 1}).
+#' @param n_breaks The number of concentric circles that will be plotted using the scales::breaks_pretty method. By default, 5 breaks will be generated. The number of breaks may be adjusted to result in an even interval. For example, if n_breaks is 3, but the maximum plot radius is 8, instead of plotting circles in intervals in 1.6, this interval will be rounded to 2 to result in the sequence: 0,2,4,6,8.
 #' @param component_index A number that corresponds to a particular component
 #' from the \code{cosinor.glmm()} object that will be used to create polar plot.
 #' If missing (default), then plots for all components will be arranged in the
@@ -175,8 +164,7 @@ polar_plot <- function(x,
 #' polar_plot(model)
 polar_plot.cosinor.glmm <- function(x,
                                     ci_level = 0.95,
-                                    contour_interval = 1,
-                                    contour_label_frequency,
+                                    n_breaks = 5,
                                     component_index,
                                     grid_angle_segments = 8,
                                     radial_units = c("radians", "degrees", "period"),
@@ -201,17 +189,6 @@ polar_plot.cosinor.glmm <- function(x,
   start <- match.arg(start)
   view <- match.arg(view)
 
-  if (!missing(contour_interval)) {
-    assertthat::assert_that(is.numeric(contour_interval) & contour_interval > 0,
-      msg = "'contour_interval' must be a number greater than 0"
-    )
-  }
-
-  if (!missing(contour_label_frequency)) {
-    assertthat::assert_that(is.numeric(contour_label_frequency) & contour_label_frequency > 0,
-      msg = "'contour_label_frequency' must be a number greater than 0"
-    )
-  }
 
   assertthat::assert_that(
     grid_angle_segments == floor(grid_angle_segments) & grid_angle_segments > 0,
@@ -262,9 +239,8 @@ polar_plot.cosinor.glmm <- function(x,
 
   # check if there is a contour argument & store this check in local environment
   n_components <- x$n_components
-  contour_interval_check <- !missing(contour_interval)
+
   fill_colours_check <- !missing(fill_colours)
-  contour_label_frequency_check <- !missing(contour_label_frequency)
   # set direction of increasing angle based on user input of clockwise argument
   direction <- ifelse(clockwise, -1, 1)
 
@@ -359,14 +335,7 @@ polar_plot.cosinor.glmm <- function(x,
 
     # determine the maximum radius in a single plot. This will be used for formatting plot features
     max_radius <- max(abs(u_est_amp), abs(l_est_amp))
-    if (!contour_interval_check) {
-      contour_interval <- signif(max_radius / 5, digits = 2) # a default if no contour_interval argument is supplied
-    }
 
-    # by default, the contour_labels correspond to every contour:
-    if (!contour_label_frequency_check) {
-      contour_label_frequency <- 1
-    }
 
     # change 'max_period' to correspond to units specified by the user
     # conversion_factor is used to convert from radians (default acrophase output) to whatever radial_units is
@@ -386,7 +355,8 @@ polar_plot.cosinor.glmm <- function(x,
 
 
     # create a sequence of labels for the contours.
-    contour_labels <- signif(seq(from = 0, to = max_radius + contour_interval, by = contour_interval), 3)
+    contour_labels <- scales::breaks_pretty(n=n_breaks)(c(0, max_radius))
+
 
     # determine largest contour, and use this as a plot limit
     max_plot_radius <- max(contour_labels)
@@ -416,7 +386,7 @@ polar_plot.cosinor.glmm <- function(x,
       contour_x_zoom <- cos(direction * mean(est_acr) + offset) * contour_labels
       contour_y_zoom <- sin(direction * mean(est_acr) + offset) * contour_labels
     }
-    contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
+ #   contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
     # if(length(contour_labels) > 20) {
     #   #text_angle_offset <- rep(2*pi/(grid_angle_segments)/4, length(contour_labels))
     #   contour_labels <- contour_labels[seq(1, length(contour_labels), length.out = round(length(contour_labels)/2))]
@@ -458,13 +428,7 @@ polar_plot.cosinor.glmm <- function(x,
         ggplot2::aes(
           x0 = 0,
           y0 = 0,
-          r = seq(from = 0, to = max_plot_radius, by = contour_interval)
-          # r = scales::breaks_pretty(n=5)(c(0, max_plot_radius))
-          # TODO use breaks_pretty for defining number of contours
-          #     - replace contour_interval and contour_label_frequency with `n_breaks` which defines the n in the line above.
-          #     - will need to update the geom_text for the labels around the outside to be the maximum of the produced vector from the line above
-          #     - will need to use the same for the geom_text that produces the "axis-labels"
-          #     - run `use_package("scales")` to add scales dependencies in same commit
+           r = scales::breaks_pretty(n=5)(c(0, max_plot_radius))
         ),
         alpha = 0.01,
         linetype = 20
@@ -600,9 +564,9 @@ polar_plot.cosinor.glmm <- function(x,
     }
 
     # OPTIONAL: print information about the polar grid
-    if (!quietly) {
+    if (!quietly & length(contour_labels)>1) {
       message(
-        "Circular contours every ", signif(contour_interval, 5), " unit(s)"
+        "Concentric circles every ", contour_labels[2]-contour_labels[1], " unit(s)"
       )
       message("Angle in units of ", radial_units)
     }
