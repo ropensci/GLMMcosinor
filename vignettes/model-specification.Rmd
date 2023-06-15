@@ -35,7 +35,7 @@ testdata_simple <- simulate_cosinor(1000,
   beta.acro = 0.5,
   family = "poisson",
   period = c(12),
-  n_components = 1, 
+  n_components = 1,
   beta.group = TRUE
 )
 
@@ -49,7 +49,7 @@ testdata_two_components <- simulate_cosinor(1000,
   beta.acro = c(1, -1.5),
   family = "poisson",
   period = c(12, 6),
-  n_components = 2, 
+  n_components = 2,
   beta.group = TRUE
 )
 
@@ -63,10 +63,9 @@ testdata_multicomponent <- simulate_cosinor(1000,
   beta.acro = c(1, -1.5, -1),
   family = "poisson",
   period = c(12, 6, 12),
-  n_components = 3, 
+  n_components = 3,
   beta.group = TRUE
 )
-
 ```
 
 ## `cosinor.glmm()`
@@ -166,8 +165,7 @@ specify:
     non-grouped components represented as `group = NA`.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", NA)), data = testdata_two_components, family = poisson())
-
+cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 6), group = c("group", NA)), data = testdata_two_components, family = poisson())
 ```
 
 In the example above, we have a multicomponent cosinor model with two
@@ -190,7 +188,7 @@ models:
 cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = 12, group = "group"), data = testdata_two_components, family = poisson())
 
 
-cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 12), group = c("group","group")), data = testdata_two_components, family = poisson())
+cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 12), group = c("group", "group")), data = testdata_two_components, family = poisson())
 ```
 
 ### Dispersion and zero-inflation model specification

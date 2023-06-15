@@ -37,10 +37,10 @@ If the model has two components, but we only wish to add a random effect to the 
 
 ```{r}
 obj <- cosinor.glmm(Y ~ X + amp_acro(time,
-n_components = 2,
-group = "X",
-period = c(12,8)
-) + (1|amp_acro2), data = vitamind)
+  n_components = 2,
+  group = "X",
+  period = c(12, 8)
+) + (1 | amp_acro2), data = vitamind)
 
 obj
 ```
@@ -49,10 +49,10 @@ Alternatively, we could assign random effects to *both* components:
 
 ```{r}
 obj <- cosinor.glmm(Y ~ X + amp_acro(time,
-n_components = 2,
-group = "X",
-period = c(12,8)
-) + (1|amp_acro1) + (1|amp_acro2), data = vitamind)
+  n_components = 2,
+  group = "X",
+  period = c(12, 8)
+) + (1 | amp_acro1) + (1 | amp_acro2), data = vitamind)
 
 obj
 ```
@@ -61,10 +61,10 @@ We could also assign random effects to the group:
 
 ```{r}
 obj <- cosinor.glmm(Y ~ X + amp_acro(time,
-n_components = 1,
-group = "X",
-period = 12
-) + (1|X), data = vitamind)
+  n_components = 1,
+  group = "X",
+  period = 12
+) + (1 | X), data = vitamind)
 
 obj
 ```

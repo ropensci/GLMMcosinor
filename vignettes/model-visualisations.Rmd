@@ -92,17 +92,17 @@ to `FALSE` to remove the prediction interval from the plots.
 
 testdata_two_components_mod <- testdata_two_components
 testdata_two_components_mod$X <- rbinom(length(testdata_two_components$group), 2, prob = 0.5)
-object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 6), group = c("group", "X")), data = testdata_two_components_mod, family = poisson())
 autoplot(object, predict.ribbon = FALSE)
 ```
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 6), group = c("group", "X")), data = testdata_two_components_mod, family = poisson())
 autoplot(object, x_str = "X", predict.ribbon = FALSE)
 ```
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 6), group = c("group", "X")), data = testdata_two_components_mod, family = poisson())
 autoplot(object, x_str = "group", predict.ribbon = FALSE)
 ```
 
@@ -114,8 +114,8 @@ define use the `xlims` argument to specify the x-bounds.
 For example, on the plot above, we can adjust the xlimits:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12,6), group =c("group", "X")), data = testdata_two_components_mod, family = poisson())
-autoplot(object, x_str = "group", predict.ribbon = TRUE, xlims = c(13,15))
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 6), group = c("group", "X")), data = testdata_two_components_mod, family = poisson())
+autoplot(object, x_str = "group", predict.ribbon = TRUE, xlims = c(13, 15))
 ```
 
 To increase the resolution of the plots, the `pred.length.out` can be
@@ -126,7 +126,7 @@ behaviour. This can be adjusted using the `points_per_min_cycle_length`
 argument which is 20 by default.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12,1000)), data = testdata_period_diff, family = poisson())
+object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12, 1000)), data = testdata_period_diff, family = poisson())
 
 autoplot(object, points_per_min_cycle_length = 40)
 ```

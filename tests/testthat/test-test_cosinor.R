@@ -161,7 +161,7 @@ test_that("multi-component comparison works, print functions work", {
 
   f <- function() {
     test_cosinor_components(object,
-      x_str = "group",,
+      x_str = "group", ,
       comparison_A = 1,
       comparison_B = 2,
       level_index = 1

@@ -138,7 +138,7 @@ NULL
 #' @srrstatsNA {G5.9} **Noise susceptibility tests** *Packages should test for expected stochastic behaviour, such as through the following conditions:*
 #' @srrstatsNA {G5.9a} *Adding trivial noise (for example, at the scale of `.Machine$double.eps`) to data does not meaningfully change results*
 #'
-#'#' @srrstatsNA {RE7.0} *Tests with noiseless, exact relationships between predictor (independent) data.*
+#' #' @srrstatsNA {RE7.0} *Tests with noiseless, exact relationships between predictor (independent) data.*
 #' @srrstatsNA {RE7.0a} In particular, these tests should confirm ability to reject perfectly noiseless input data.
 #' @srrstatsNA {RE7.1} *Tests with noiseless, exact relationships between predictor (independent) and response (dependent) data.*
 #' @srrstatsNA {RE7.1a} *In particular, these tests should confirm that model fitting is at least as fast or (preferably) faster than testing with equivalent noisy data (see RE2.4b).*
@@ -149,8 +149,8 @@ NULL
 #' @srrstatsNA {G5.11a} *When any downloads of additional data necessary for extended tests fail, the tests themselves should not fail, rather be skipped and implicitly succeed with an appropriate diagnostic message.*
 #' @srrstatsNA {G5.12} *Any conditions necessary to run extended tests such as platform requirements, memory, expected runtime, and artefacts produced that may need manual inspection, should be described in developer documentation such as a `CONTRIBUTING.md` or `tests/README.md` file.*
 #'
-#'Add justifciation
-#'#' @srrstatsNA {RE7.4} Extending directly from **RE4.15**, where appropriate, tests should demonstrate and confirm that forecast errors, confidence intervals, or equivalent values increase with forecast horizons.
+#' Add justifciation
+#' #' @srrstatsNA {RE7.4} Extending directly from **RE4.15**, where appropriate, tests should demonstrate and confirm that forecast errors, confidence intervals, or equivalent values increase with forecast horizons.
 #' @srrstatsNA {G3.1} *Statistical software which relies on covariance calculations should enable users to choose between different algorithms for calculating covariances, and should not rely solely on covariances from the `stats::cov` function.* # glmmTMB:::vcov.glmmTMB() does not offer any options for alternate algorithms to calculate the variance-covariance matrix.
 #' Any non-applicable standards can have their tags changed from `@srrstatsTODO`
 #' to `@srrstatsNA`, and placed together in this block, along with explanations

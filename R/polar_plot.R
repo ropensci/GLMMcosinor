@@ -367,7 +367,7 @@ polar_plot.cosinor.glmm <- function(x,
 
 
     # create a sequence of labels for the contours.
-    contour_labels <- scales::breaks_pretty(n=n_breaks)(c(0, max_radius))
+    contour_labels <- scales::breaks_pretty(n = n_breaks)(c(0, max_radius))
 
 
     # determine largest contour, and use this as a plot limit
@@ -398,7 +398,7 @@ polar_plot.cosinor.glmm <- function(x,
       contour_x_zoom <- cos(direction * mean(est_acr) + offset) * contour_labels
       contour_y_zoom <- sin(direction * mean(est_acr) + offset) * contour_labels
     }
- #   contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
+    #   contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
     # if(length(contour_labels) > 20) {
     #   #text_angle_offset <- rep(2*pi/(grid_angle_segments)/4, length(contour_labels))
     #   contour_labels <- contour_labels[seq(1, length(contour_labels), length.out = round(length(contour_labels)/2))]
@@ -440,7 +440,7 @@ polar_plot.cosinor.glmm <- function(x,
         ggplot2::aes(
           x0 = 0,
           y0 = 0,
-           r = scales::breaks_pretty(n=5)(c(0, max_plot_radius))
+          r = scales::breaks_pretty(n = 5)(c(0, max_plot_radius))
         ),
         alpha = 0.01,
         linetype = 20
@@ -478,9 +478,11 @@ polar_plot.cosinor.glmm <- function(x,
         alpha = text_opacity
       ) +
       ggplot2::geom_text(
-        ggplot2::aes(label = contour_labels,
-                     x = contour_labels * (cos(pi / grid_angle_segments)),
-                     y = contour_labels * (sin(pi / grid_angle_segments))),
+        ggplot2::aes(
+          label = contour_labels,
+          x = contour_labels * (cos(pi / grid_angle_segments)),
+          y = contour_labels * (sin(pi / grid_angle_segments))
+        ),
         size = text_size, alpha = text_opacity
       ) +
       ggplot2::guides(colour = "none") +
@@ -576,9 +578,9 @@ polar_plot.cosinor.glmm <- function(x,
     }
 
     # OPTIONAL: print information about the polar grid
-    if (!quietly & length(contour_labels)>1) {
+    if (!quietly & length(contour_labels) > 1) {
       message(
-        "Concentric circles every ", contour_labels[2]-contour_labels[1], " unit(s)"
+        "Concentric circles every ", contour_labels[2] - contour_labels[1], " unit(s)"
       )
       message("Angle in units of ", radial_units)
     }

@@ -57,9 +57,10 @@
 #'
 #' cosinor.glmm(
 #'   Y ~ group + amp_acro(times,
-#'                        n_components = 2,
-#'                        group = "group",
-#'                        period = c(12, 6)),
+#'     n_components = 2,
+#'     group = "group",
+#'     period = c(12, 6)
+#'   ),
 #'   data = sim_data,
 #'   family = gaussian
 #' )

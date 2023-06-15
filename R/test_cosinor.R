@@ -34,33 +34,32 @@
 #' @export
 #'
 #' @examples
-#'  data_2_component <- simulate_cosinor(
+#' data_2_component <- simulate_cosinor(
 #'   n = 10000,
 #'   mesor = 5,
 #'   amp = c(2, 5),
 #'   acro = c(0, pi),
 #'   beta.mesor = 4,
-#'   beta.amp = c(3,4),
-#'   beta.acro = c(0, pi/2),
+#'   beta.amp = c(3, 4),
+#'   beta.acro = c(0, pi / 2),
 #'   family = "gaussian",
 #'   n_components = 2,
 #'   period = c(10, 12),
 #'   beta.group = TRUE
 #' )
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
 #'   data = data_2_component
 #' )
 #' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
 test_cosinor_components <- function(x,
-                                   x_str,
-                                   param = "amp",
-                                   comparison_A = 1,
-                                   comparison_B = 2,
-                                   level_index = 0,
-                                   ci_level = 0.95) {
-
-  #Validating the inputs
+                                    x_str,
+                                    param = "amp",
+                                    comparison_A = 1,
+                                    comparison_B = 2,
+                                    level_index = 0,
+                                    ci_level = 0.95) {
+  # Validating the inputs
 
 
   if (param == "amp" | param == "acr") {
@@ -84,26 +83,28 @@ test_cosinor_components <- function(x,
   )
 
 
-    assertthat::assert_that(
-      comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
-      msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model"
-    )
-    assertthat::assert_that(
-      level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
-        level_index %in% x$group_stats[[x$group_original[comparison_B]]],
-      msg = "'level_index' must be supplied and it must be a number corresponding to a level in the model"
-    )
+  assertthat::assert_that(
+    comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
+    msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model"
+  )
+  assertthat::assert_that(
+    level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
+      level_index %in% x$group_stats[[x$group_original[comparison_B]]],
+    msg = "'level_index' must be supplied and it must be a number corresponding to a level in the model"
+  )
 
   # passing these inputs into the internal function
 
-  test_obj <- .test_cosinor(x = x,
-               x_str = x_str,
-               param = param,
-               comparison_A = comparison_A,
-               comparison_B = comparison_B,
-               level_index = level_index,
-               ci_level = ci_level,
-               comparison_type = "components")
+  test_obj <- .test_cosinor(
+    x = x,
+    x_str = x_str,
+    param = param,
+    comparison_A = comparison_A,
+    comparison_B = comparison_B,
+    level_index = level_index,
+    ci_level = ci_level,
+    comparison_type = "components"
+  )
   test_obj
 }
 
@@ -139,33 +140,32 @@ test_cosinor_components <- function(x,
 #' @export
 #'
 #' @examples
-#'  data_2_component <- simulate_cosinor(
+#' data_2_component <- simulate_cosinor(
 #'   n = 10000,
 #'   mesor = 5,
 #'   amp = c(2, 5),
 #'   acro = c(0, pi),
 #'   beta.mesor = 4,
-#'   beta.amp = c(3,4),
-#'   beta.acro = c(0, pi/2),
+#'   beta.amp = c(3, 4),
+#'   beta.acro = c(0, pi / 2),
 #'   family = "gaussian",
 #'   n_components = 2,
 #'   period = c(10, 12),
 #'   beta.group = TRUE
 #' )
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
 #'   data = data_2_component
 #' )
 #' test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
 test_cosinor_levels <- function(x,
-                                   x_str,
-                                   param = "amp",
-                                   comparison_A = 0,
-                                   comparison_B = 1,
-                                   component_index = 1,
-                                   ci_level = 0.95) {
-
-  #Validating the inputs
+                                x_str,
+                                param = "amp",
+                                comparison_A = 0,
+                                comparison_B = 1,
+                                component_index = 1,
+                                ci_level = 0.95) {
+  # Validating the inputs
 
   if (param == "amp" | param == "acr") {
   } else {
@@ -187,25 +187,27 @@ test_cosinor_levels <- function(x,
     msg = "x_str must be the name of a group in object"
   )
 
-    assertthat::assert_that(
-      comparison_A %in% x$group_stats[[x_str]] & comparison_B %in% x$group_stats[[x_str]],
-      msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'"
-    )
-    assertthat::assert_that(
-      component_index %in% 1:x$n_components,
-      msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model"
-    )
+  assertthat::assert_that(
+    comparison_A %in% x$group_stats[[x_str]] & comparison_B %in% x$group_stats[[x_str]],
+    msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'"
+  )
+  assertthat::assert_that(
+    component_index %in% 1:x$n_components,
+    msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model"
+  )
 
 
   # passing these inputs into the internal function
-  test_obj <- .test_cosinor(x = x,
-                           x_str = x_str,
-                           param = param,
-                           comparison_A = comparison_A,
-                           comparison_B = comparison_B,
-                           component_index = component_index,
-                           ci_level = ci_level,
-                           comparison_type = "levels")
+  test_obj <- .test_cosinor(
+    x = x,
+    x_str = x_str,
+    param = param,
+    comparison_A = comparison_A,
+    comparison_B = comparison_B,
+    component_index = component_index,
+    ci_level = ci_level,
+    comparison_type = "levels"
+  )
   test_obj
 }
 
@@ -262,15 +264,15 @@ test_cosinor_levels <- function(x,
 #'   amp = c(2, 5),
 #'   acro = c(0, pi),
 #'   beta.mesor = 4,
-#'   beta.amp = c(3,4),
-#'   beta.acro = c(0, pi/2),
+#'   beta.amp = c(3, 4),
+#'   beta.acro = c(0, pi / 2),
 #'   family = "gaussian",
 #'   n_components = 2,
 #'   period = c(10, 12)
 #' )
 #'
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
 #'   data = data_2_component
 #' )
 #'
@@ -278,15 +280,14 @@ test_cosinor_levels <- function(x,
 #'
 #' @noRd
 .test_cosinor <- function(x,
-                         x_str,
-                         param,
-                         comparison_A, # TODO handle the text labels for the factor variable used for grouping - i.e using data made with : sim_data %>% mutate(group = ifelse(group == 1, "control", "treatment"))
-                         comparison_B,
-                         comparison_type,
-                         component_index,
-                         level_index,
-                         ci_level) {
-
+                          x_str,
+                          param,
+                          comparison_A, # TODO handle the text labels for the factor variable used for grouping - i.e using data made with : sim_data %>% mutate(group = ifelse(group == 1, "control", "treatment"))
+                          comparison_B,
+                          comparison_type,
+                          component_index,
+                          level_index,
+                          ci_level) {
   summary.fit <- summary.cosinor.glmm(x)
   index <- matrix(0, ncol = length(x$coefficients), nrow = length(x_str))
   colnames(index) <- names(x$coefficients)
@@ -341,20 +342,20 @@ test_cosinor_levels <- function(x,
     names = x_str
   ), class = "sub_test_cosinor")
 
-  if(comparison_type == "components") {
-  test_details <- list(
-    x = x,
-    x_str = x_str,
-    param = param,
-    comparison_A = comparison_A,
-    comparison_B = comparison_B,
-    comparison_type = comparison_type,
-    level_index = level_index,
-    ci_level = ci_level
-  )
+  if (comparison_type == "components") {
+    test_details <- list(
+      x = x,
+      x_str = x_str,
+      param = param,
+      comparison_A = comparison_A,
+      comparison_B = comparison_B,
+      comparison_type = comparison_type,
+      level_index = level_index,
+      ci_level = ci_level
+    )
   }
 
-  if(comparison_type == "levels") {
+  if (comparison_type == "levels") {
     test_details <- list(
       x = x,
       x_str = x_str,
@@ -414,7 +415,7 @@ print.sub_test_cosinor <- function(x, ...) {
 
     if (!is.null(x$conf.int)) {
       ci <- round(x$conf.int, 2)
-      cat(paste0("\n\nEstimate and ", x$ci_level*100, "% confidence interval:\n"))
+      cat(paste0("\n\nEstimate and ", x$ci_level * 100, "% confidence interval:\n"))
       cat(paste0(ci[1], " (", ci[2], " to ", ci[3], ")"))
     }
   } else {
@@ -439,10 +440,13 @@ print.sub_test_cosinor <- function(x, ...) {
 #' @noRd
 .print_details <- function(test_details) {
   # Print parameter being assessed
-  cat(paste0("Parameter being tested:\n",
-             switch(test_details$param,
-                    amp = "Amplitude",
-                    acr = "Acrophase")))
+  cat(paste0(
+    "Parameter being tested:\n",
+    switch(test_details$param,
+      amp = "Amplitude",
+      acr = "Acrophase"
+    )
+  ))
 
   # Print type of comparison
   cat("\n\nComparison type:\n")
@@ -470,7 +474,7 @@ print.sub_test_cosinor <- function(x, ...) {
   # If comparison is on components of the model...
   #     - specify the component indices being compared
   #     - the grouping variable (if there is one) being held constant and its value
-  if(test_details$comparison_type == "components") {
+  if (test_details$comparison_type == "components") {
     cat(paste0(
       "\n\nComponent indices used for comparison between groups: ",
       test_details$x_str,
