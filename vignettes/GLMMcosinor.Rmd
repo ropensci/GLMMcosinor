@@ -239,7 +239,7 @@ uncertainty. It outputs the estimates, standard errors, confidence
 intervals, and p-values for both the raw model parameters and the
 transformed (amplitude, and acrophase) parameters. The summary
 statistics do not represent a comparison between any groups for the
-cosinor components - that is the role of the `test_cosinor()` function.
+cosinor components - that is the role of the `test_cosinor_components()` and `test_cosinor_levels()` functions. 
 
 Here is an example of how to use `summary()`:
 

@@ -1,4 +1,217 @@
-#' Test for differences in a cosinor model
+
+
+
+#' Test for differences in a cosinor model between levels
+#'
+#'
+#' Given a time variable and optional covariates, generate inference a cosinor
+#' fit. For the covariate named (or vector of covariates), this function
+#' performs a Wald test comparing the group with covariates equal to 1 to the
+#' group with covariates equal to 0. This may not be the desired result for
+#' continuous covariates.
+#'
+#'
+#' @param x An \code{cosinor.glmm} object.
+#' @param x_str A \code{character}. The name of the grouping variable within
+#' which differences in the selected cosinor characteristic (amplitude or
+#' acrophase) will be tested.
+#' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
+#' testing differences in amplitude or acrophase, respectively.
+#' @param comparison_A An \code{integer}. Refers to the level (within the
+#' grouping variable) or component number that is to act as the reference group
+#' for the comparison.
+#' @param comparison_B An \code{integer}. Refers to the level (within the
+#' grouping variable) or component number that is to act as the comparator group
+#' for the comparison.
+#' @param level_index An \code{integer}. If
+#' \code{comparison_type = "components"}, \code{level_index} indicates which
+#' level of the grouping variable is being used for the comparison between
+#' components.
+#' @param ci_level The level for calculated confidence intervals. Defaults to
+#' \code{0.95}.
+#'
+#' @return Returns a \code{test_cosinor} object.
+#' @export
+#'
+#' @examples
+#'  data_2_component <- simulate_cosinor(
+#'   n = 10000,
+#'   mesor = 5,
+#'   amp = c(2, 5),
+#'   acro = c(0, pi),
+#'   beta.mesor = 4,
+#'   beta.amp = c(3,4),
+#'   beta.acro = c(0, pi/2),
+#'   family = "gaussian",
+#'   n_components = 2,
+#'   period = c(10, 12),
+#'   beta.group = TRUE
+#' )
+#' mod_2_component <- cosinor.glmm(
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+#'   data = data_2_component
+#' )
+#' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
+test_cosinor_components <- function(x,
+                                   x_str,
+                                   param = "amp",
+                                   comparison_A = 1,
+                                   comparison_B = 2,
+                                   level_index = 0,
+                                   ci_level = 0.95) {
+
+  #Validating the inputs
+
+
+  if (param == "amp" | param == "acr") {
+  } else {
+    # Display an error message if the parameter is invalid
+    stop("Invalid parameter. Expected 'amp' or 'acro'.")
+  }
+
+  validate_ci_level(ci_level)
+
+  assertthat::assert_that(
+    inherits(x, "cosinor.glmm"),
+    msg = "'x' must be of class 'cosinor.glmm'"
+  )
+
+  stopifnot(is.character(x_str))
+
+  assertthat::assert_that(
+    length(grep(x_str, names(x$coefficients))) > 0,
+    msg = "x_str must be the name of a group in object"
+  )
+
+
+    assertthat::assert_that(
+      comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
+      msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model"
+    )
+    assertthat::assert_that(
+      level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
+        level_index %in% x$group_stats[[x$group_original[comparison_B]]],
+      msg = "'level_index' must be supplied and it must be a number corresponding to a level in the model"
+    )
+
+  # passing these inputs into the internal function
+
+  test_obj <- .test_cosinor(x = x,
+               x_str = x_str,
+               param = param,
+               comparison_A = comparison_A,
+               comparison_B = comparison_B,
+               level_index = level_index,
+               ci_level = ci_level,
+               comparison_type = "components")
+  test_obj
+}
+
+
+#' Test for differences in a cosinor model between levels
+#'
+#' Given a time variable and optional covariates, generate inference a cosinor
+#' fit. For the covariate named (or vector of covariates), this function
+#' performs a Wald test comparing the group with covariates equal to 1 to the
+#' group with covariates equal to 0. This may not be the desired result for
+#' continuous covariates.
+#'
+#' @param x An \code{cosinor.glmm} object.
+#' @param x_str A \code{character}. The name of the grouping variable within
+#' which differences in the selected cosinor characteristic (amplitude or
+#' acrophase) will be tested.
+#' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
+#' testing differences in amplitude or acrophase, respectively.
+#' @param comparison_A An \code{integer}. Refers to the level (within the
+#' grouping variable) or component number that is to act as the reference group
+#' for the comparison.
+#' @param comparison_B An \code{integer}. Refers to the level (within the
+#' grouping variable) or component number that is to act as the comparator group
+#' for the comparison.
+#' @param component_index An \code{integer}. If
+#' \code{comparison_type = "levels"}, \code{component_index} indicates which
+#' component is being compared between the levels of the grouping variable.
+#' @param ci_level The level for calculated confidence intervals. Defaults to
+#' \code{0.95}.
+#'
+#'
+#' @return Returns a \code{test_cosinor} object.
+#' @export
+#'
+#' @examples
+#'  data_2_component <- simulate_cosinor(
+#'   n = 10000,
+#'   mesor = 5,
+#'   amp = c(2, 5),
+#'   acro = c(0, pi),
+#'   beta.mesor = 4,
+#'   beta.amp = c(3,4),
+#'   beta.acro = c(0, pi/2),
+#'   family = "gaussian",
+#'   n_components = 2,
+#'   period = c(10, 12),
+#'   beta.group = TRUE
+#' )
+#' mod_2_component <- cosinor.glmm(
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+#'   data = data_2_component
+#' )
+#' test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
+test_cosinor_levels <- function(x,
+                                   x_str,
+                                   param = "amp",
+                                   comparison_A = 0,
+                                   comparison_B = 1,
+                                   component_index = 1,
+                                   ci_level = 0.95) {
+
+  #Validating the inputs
+
+  if (param == "amp" | param == "acr") {
+  } else {
+    # Display an error message if the parameter is invalid
+    stop("Invalid parameter. Expected 'amp' or 'acr'.")
+  }
+
+  validate_ci_level(ci_level)
+
+  assertthat::assert_that(
+    inherits(x, "cosinor.glmm"),
+    msg = "'x' must be of class 'cosinor.glmm'"
+  )
+
+  stopifnot(is.character(x_str))
+
+  assertthat::assert_that(
+    length(grep(x_str, names(x$coefficients))) > 0,
+    msg = "x_str must be the name of a group in object"
+  )
+
+    assertthat::assert_that(
+      comparison_A %in% x$group_stats[[x_str]] & comparison_B %in% x$group_stats[[x_str]],
+      msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'"
+    )
+    assertthat::assert_that(
+      component_index %in% 1:x$n_components,
+      msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model"
+    )
+
+
+  # passing these inputs into the internal function
+  test_obj <- .test_cosinor(x = x,
+                           x_str = x_str,
+                           param = param,
+                           comparison_A = comparison_A,
+                           comparison_B = comparison_B,
+                           component_index = component_index,
+                           ci_level = ci_level,
+                           comparison_type = "levels")
+  test_obj
+}
+
+
+
+#' Test for differences in a cosinor model. This function has been replaced with a more user-friendly and intuitive way of specifying comparisons: \code{test_cosinor_components} and \code{test_cosinor_levels}. These external functions use this internal function.
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. For the covariate named (or vector of covariates), this function
@@ -48,43 +261,31 @@
 #'   mesor = 5,
 #'   amp = c(2, 5),
 #'   acro = c(0, pi),
+#'   beta.mesor = 4,
+#'   beta.amp = c(3,4),
+#'   beta.acro = c(0, pi/2),
 #'   family = "gaussian",
 #'   n_components = 2,
 #'   period = c(10, 12)
 #' )
 #'
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ amp_acro(times, n_components = 2, period = c(10,12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
 #'   data = data_2_component
 #' )
 #'
-#' # test_cosinor(mod_2_component, param = "amp", comparison_type = "components")
+#' test_cosinor(mod_2_component, param = "amp", comparison_type = "components")
 #'
-#' @export
-test_cosinor <- function(x,
+#' @noRd
+.test_cosinor <- function(x,
                          x_str,
-                         param = c("amp", "acr"),
-                         comparison_A = 0, # TODO handle the text labels for the factor variable used for grouping - i.e using data made with : sim_data %>% mutate(group = ifelse(group == 1, "control", "treatment"))
-                         comparison_B = 1,
-                         comparison_type = c("levels", "components"),
-                         component_index = 1,
-                         level_index = 0,
-                         ci_level = 0.95) {
-
-  param <- match.arg(param)
-  comparison_type <- match.arg(comparison_type)
-
-  .validate_test_cosinor_inputs(
-    x,
-    x_str,
-    param,
-    comparison_A,
-    comparison_B,
-    comparison_type,
-    component_index,
-    level_index,
-    ci_level
-  )
+                         param,
+                         comparison_A, # TODO handle the text labels for the factor variable used for grouping - i.e using data made with : sim_data %>% mutate(group = ifelse(group == 1, "control", "treatment"))
+                         comparison_B,
+                         comparison_type,
+                         component_index,
+                         level_index,
+                         ci_level) {
 
   summary.fit <- summary.cosinor.glmm(x)
   index <- matrix(0, ncol = length(x$coefficients), nrow = length(x_str))
@@ -140,6 +341,7 @@ test_cosinor <- function(x,
     names = x_str
   ), class = "sub_test_cosinor")
 
+  if(comparison_type == "components") {
   test_details <- list(
     x = x,
     x_str = x_str,
@@ -147,10 +349,23 @@ test_cosinor <- function(x,
     comparison_A = comparison_A,
     comparison_B = comparison_B,
     comparison_type = comparison_type,
-    component_index = component_index,
     level_index = level_index,
     ci_level = ci_level
   )
+  }
+
+  if(comparison_type == "levels") {
+    test_details <- list(
+      x = x,
+      x_str = x_str,
+      param = param,
+      comparison_A = comparison_A,
+      comparison_B = comparison_B,
+      comparison_type = comparison_type,
+      component_index = component_index,
+      ci_level = ci_level
+    )
+  }
 
   structure(
     list(
@@ -162,67 +377,6 @@ test_cosinor <- function(x,
   )
 }
 
-#' Validate args passed to \code{test_cosinor()}.
-#'
-#' @param x Arg from \code{test_cosinor()}.
-#' @param x_str Arg from \code{test_cosinor()}.
-#' @param param Arg from \code{test_cosinor()}.
-#' @param comparison_A Arg from \code{test_cosinor()}.
-#' @param comparison_B Arg from \code{test_cosinor()}.
-#' @param comparison_type Arg from \code{test_cosinor()}.
-#' @param component_index Arg from \code{test_cosinor()}.
-#' @param level_index Arg from \code{test_cosinor()}.
-#' @param ci_level Arg from \code{test_cosinor()}.
-#'
-#' @return \code{NULL}
-#'
-#' @noRd
-.validate_test_cosinor_inputs <- function(x,
-                                          x_str,
-                                          param,
-                                          comparison_A,
-                                          comparison_B,
-                                          comparison_type,
-                                          component_index,
-                                          level_index,
-                                          ci_level) {
-  validate_ci_level(ci_level)
-
-  assertthat::assert_that(
-    inherits(x, "cosinor.glmm"),
-    msg = "'x' must be of class 'cosinor.glmm'"
-  )
-
-  stopifnot(is.character(x_str))
-
-  assertthat::assert_that(
-    length(grep(x_str, names(x$coefficients))) > 0,
-    msg = "x_str must be the name of a group in object"
-  )
-
-  if (comparison_type == "levels") {
-    assertthat::assert_that(
-      comparison_A %in% x$group_stats[[x_str]] & comparison_B %in% x$group_stats[[x_str]],
-      msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to levels within group specified by 'x_str'"
-    )
-    assertthat::assert_that(
-      component_index %in% 1:x$n_components,
-      msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model"
-    )
-  }
-
-  if (comparison_type == "components") {
-    assertthat::assert_that(
-      comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
-      msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model"
-    )
-    assertthat::assert_that(
-      level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
-        level_index %in% x$group_stats[[x$group_original[comparison_B]]],
-      msg = "'level_index' must be supplied and it must be a number corresponding to a level in the model"
-    )
-  }
-}
 
 #' Print results of test of cosinor model
 #'
