@@ -3,7 +3,13 @@
 #' @param x An object of class \code{cosinor.glmm}
 #' @param ci_level The level for calculated confidence ellipses.
 #' Defaults to 0.95.
-#' @param n_breaks The number of concentric circles that will be plotted using the scales::breaks_pretty method. By default, 5 breaks will be generated. The number of breaks may be adjusted to result in an even interval. For example, if n_breaks is 3, but the maximum plot radius is 8, instead of plotting circles in intervals in 1.6, this interval will be rounded to 2 to result in the sequence: 0,2,4,6,8.
+#' @param n_breaks The number of concentric circles that will be plotted using
+#' the \code{scales::breaks_pretty()} function. By default, 5 breaks will be
+#' used. The number of breaks may be adjusted to result in an even interval.
+#' For example, if n_breaks is 3, but the maximum plot radius is 8, instead of
+#' plotting circles in intervals in 1.6, this interval will be rounded to 2
+#' to result in the sequence: 0, 2, 4, 6, 8. See \code{?scales::breaks_pretty}
+#' for more details.
 #' @param component_index A number that corresponds to a particular component
 #' from the \code{cosinor.glmm()} object that will be used to create polar plot.
 #' If missing (default), then plots for all components will be arranged in the
@@ -95,7 +101,13 @@ polar_plot <- function(x,
 #' @param x An object of class \code{cosinor.glmm}
 #' @param ci_level The level for calculated confidence ellipses.
 #' Defaults to 0.95.
-#' @param n_breaks The number of concentric circles that will be plotted using the scales::breaks_pretty method. By default, 5 breaks will be generated. The number of breaks may be adjusted to result in an even interval. For example, if n_breaks is 3, but the maximum plot radius is 8, instead of plotting circles in intervals in 1.6, this interval will be rounded to 2 to result in the sequence: 0,2,4,6,8.
+#' @param n_breaks The number of concentric circles that will be plotted using
+#' the \code{scales::breaks_pretty()} function. By default, 5 breaks will be
+#' used. The number of breaks may be adjusted to result in an even interval.
+#' For example, if n_breaks is 3, but the maximum plot radius is 8, instead of
+#' plotting circles in intervals in 1.6, this interval will be rounded to 2
+#' to result in the sequence: 0, 2, 4, 6, 8. See \code{?scales::breaks_pretty}
+#' for more details.
 #' @param component_index A number that corresponds to a particular component
 #' from the \code{cosinor.glmm()} object that will be used to create polar plot.
 #' If missing (default), then plots for all components will be arranged in the
