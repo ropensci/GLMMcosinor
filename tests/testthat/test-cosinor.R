@@ -10,6 +10,7 @@
 #' @srrstats {G5.6a} *Parameter recovery tests should generally be expected to succeed within a defined tolerance rather than recovering exact values.*
 #' @srrstats {G5.6b} *Parameter recovery tests should be run with multiple random seeds when either data simulation or the algorithm contains a random component. (When long-running, such tests may be part of an extended, rather than regular, test suite; see G4.10-4.12, below).*
 #' @srrstats {G5.9b} *Running under different random seeds or initial conditions does not meaningfully change results*
+#' @srrstats {G2.11} *Software should ensure that `data.frame`-like tabular objects which have columns which do not themselves have standard class attributes (typically, `vector`) are appropriately processed, and do not error without reason. This behaviour should be tested. Again, columns created by the [`units` package](https://github.com/r-quantities/units/) provide a good test case.*
 
 
 
@@ -317,4 +318,7 @@ test_that("mixed model estimates parameters well", {
 test_that("alternative inputs work", {
   testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
   testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
+#  testthat::expect_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = units::set_units#(vitamind$Y, "units")),
+#                         regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
+
 })

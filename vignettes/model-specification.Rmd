@@ -23,6 +23,7 @@ library(GLMMcosinor)
 library(dplyr)
 #' @srrstats {G2.0a} Provide explicit secondary documentation of any expectations on lengths of inputs
 #' @srrstats {G2.1a} *Provide explicit secondary documentation of expectations on data types of all vector inputs.*
+#' @srrstats {RE1.1} *Regression Software should document how formula interfaces are converted to matrix representations of input data.*
 
 
 testdata_simple <- simulate_cosinor(1000,

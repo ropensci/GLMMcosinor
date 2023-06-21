@@ -160,9 +160,6 @@ amp_acro <- function(time_col,
     stopifnot(all(period > 0)) # ensure all periods are greater than 0
     stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
 
-    # checking time_col data
-    # browser()
-    # check for time column in .data (tested)
 
     # ensure time_col is of the right class (most likely a character) (tested)
     if (is.character(substitute(time_col, .env))) {
@@ -183,11 +180,11 @@ amp_acro <- function(time_col,
     # extract the time vector
     ttt <- eval(substitute(time_col, .env), envir = .data) # extract vector of "time" values from .data
 
+
     # ensure ttt contains numeric values only (tested)
     if (!assertthat::assert_that(is.numeric(ttt))) {
       stop("time column in dataframe must contain numeric values")
     }
-
 
     # ensure time_col is univariate (tested)
     assertthat::assert_that(is.vector(ttt),
@@ -203,6 +200,8 @@ amp_acro <- function(time_col,
         group <- group_change
       }
     }
+
+
 
     # allow the user to not have any grouping structure (if group argument is missing)
     if (missing(group)) {
@@ -313,6 +312,7 @@ amp_acro <- function(time_col,
 
     if (.amp_acro_ind == -1) {
       left_part <- all.vars(.formula, max.names = 1)
+
     } else {
       left_part <- NULL
     }

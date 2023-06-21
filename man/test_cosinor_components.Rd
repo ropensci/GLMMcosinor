@@ -2,7 +2,7 @@
 % Please edit documentation in R/test_cosinor.R
 \name{test_cosinor_components}
 \alias{test_cosinor_components}
-\title{Test for differences in a cosinor model between levels}
+\title{Test for differences in a cosinor model between components}
 \usage{
 test_cosinor_components(
   x,
@@ -24,13 +24,10 @@ acrophase) will be tested.}
 \item{param}{A \code{character}. Either \code{"amp"} or \code{"acr"} for
 testing differences in amplitude or acrophase, respectively.}
 
-\item{comparison_A}{An \code{integer}. Refers to the level (within the
-grouping variable) or component number that is to act as the reference group
+\item{comparison_A}{An \code{integer}. Refers to the component number that is to act as the reference group.
 for the comparison.}
 
-\item{comparison_B}{An \code{integer}. Refers to the level (within the
-grouping variable) or component number that is to act as the comparator group
-for the comparison.}
+\item{comparison_B}{An \code{integer}. Refers to the component number that is to act as the comparator group}
 
 \item{level_index}{An \code{integer}. If
 \code{comparison_type = "components"}, \code{level_index} indicates which
@@ -39,11 +36,6 @@ components.}
 
 \item{ci_level}{The level for calculated confidence intervals. Defaults to
 \code{0.95}.}
-
-\item{comparison_type}{A \code{character}. Indicates whether the comparison
-to be performed is to be between levels of a grouping variable
-(\code{"levels"}) or indices of components in a multiple-component cosinor
-model (\code{"components"}).}
 }
 \value{
 Returns a \code{test_cosinor} object.
@@ -56,21 +48,21 @@ group with covariates equal to 0. This may not be the desired result for
 continuous covariates.
 }
 \examples{
- data_2_component <- simulate_cosinor(
+data_2_component <- simulate_cosinor(
   n = 10000,
   mesor = 5,
   amp = c(2, 5),
   acro = c(0, pi),
   beta.mesor = 4,
-  beta.amp = c(3,4),
-  beta.acro = c(0, pi/2),
+  beta.amp = c(3, 4),
+  beta.acro = c(0, pi / 2),
   family = "gaussian",
   n_components = 2,
   period = c(10, 12),
   beta.group = TRUE
 )
 mod_2_component <- cosinor.glmm(
-  Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+  Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
   data = data_2_component
 )
 test_cosinor_components(mod_2_component, param = "amp", x_str = "group")

@@ -8,8 +8,8 @@ test_cosinor_levels(
   x,
   x_str,
   param = "amp",
-  comparison_A = 0,
-  comparison_B = 1,
+  comparison_A,
+  comparison_B,
   component_index = 1,
   ci_level = 0.95
 )
@@ -24,13 +24,11 @@ acrophase) will be tested.}
 \item{param}{A \code{character}. Either \code{"amp"} or \code{"acr"} for
 testing differences in amplitude or acrophase, respectively.}
 
-\item{comparison_A}{An \code{integer}. Refers to the level (within the
-grouping variable) or component number that is to act as the reference group
-for the comparison.}
+\item{comparison_A}{An \code{integer, or string}. Refers to the first level within the
+grouping variable \code{x_str} that is to act as the reference group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.}
 
-\item{comparison_B}{An \code{integer}. Refers to the level (within the
-grouping variable) or component number that is to act as the comparator group
-for the comparison.}
+\item{comparison_B}{An \code{integer, or string}. Refers to the second level within the
+grouping variable \code{x_str} that is to act as the comparator group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.}
 
 \item{component_index}{An \code{integer}. If
 \code{comparison_type = "levels"}, \code{component_index} indicates which
@@ -50,21 +48,21 @@ group with covariates equal to 0. This may not be the desired result for
 continuous covariates.
 }
 \examples{
- data_2_component <- simulate_cosinor(
+data_2_component <- simulate_cosinor(
   n = 10000,
   mesor = 5,
   amp = c(2, 5),
   acro = c(0, pi),
   beta.mesor = 4,
-  beta.amp = c(3,4),
-  beta.acro = c(0, pi/2),
+  beta.amp = c(3, 4),
+  beta.acro = c(0, pi / 2),
   family = "gaussian",
   n_components = 2,
   period = c(10, 12),
   beta.group = TRUE
 )
 mod_2_component <- cosinor.glmm(
-  Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10,12)),
+  Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
   data = data_2_component
 )
 test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
