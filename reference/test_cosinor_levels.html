@@ -77,8 +77,8 @@ continuous covariates.</p>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">x_str</span>,</span>
 <span>  param <span class="op">=</span> <span class="st">"amp"</span>,</span>
-<span>  comparison_A <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  comparison_B <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">comparison_A</span>,</span>
+<span>  <span class="va">comparison_B</span>,</span>
 <span>  component_index <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  ci_level <span class="op">=</span> <span class="fl">0.95</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -102,15 +102,13 @@ testing differences in amplitude or acrophase, respectively.</p></dd>
 
 
 <dt>comparison_A</dt>
-<dd><p>An <code>integer</code>. Refers to the level (within the
-grouping variable) or component number that is to act as the reference group
-for the comparison.</p></dd>
+<dd><p>An <code>integer, or string</code>. Refers to the first level within the
+grouping variable <code>x_str</code> that is to act as the reference group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.</p></dd>
 
 
 <dt>comparison_B</dt>
-<dd><p>An <code>integer</code>. Refers to the level (within the
-grouping variable) or component number that is to act as the comparator group
-for the comparison.</p></dd>
+<dd><p>An <code>integer, or string</code>. Refers to the second level within the
+grouping variable <code>x_str</code> that is to act as the comparator group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.</p></dd>
 
 
 <dt>component_index</dt>
@@ -133,21 +131,21 @@ component is being compared between the levels of the grouping variable.</p></dd
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="va">data_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fl">10000</span>,</span></span>
 <span class="r-in"><span>  mesor <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  beta.mesor <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  family <span class="op">=</span> <span class="st">"gaussian"</span>,</span></span>
 <span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">data_2_component</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">test_cosinor_levels</span><span class="op">(</span><span class="va">mod_2_component</span>, param <span class="op">=</span> <span class="st">"amp"</span>, x_str <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></span></span>
@@ -168,7 +166,7 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Global test: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 321.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170.55</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
@@ -176,13 +174,13 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Individual tests:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13.06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate and 95% confidence interval:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.16 (1.03 to 1.29)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.82 (0.7 to 0.95)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

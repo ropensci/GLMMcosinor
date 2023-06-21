@@ -104,10 +104,6 @@ The number of values should be equal to <code>n_components</code>.</p></dd>
 <span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu">amp_acro</span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Package version inconsistency detected.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> TMB was built with Matrix version 1.5.4.1</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Current Matrix version is 1.5.4</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -147,9 +143,10 @@ The number of values should be equal to <code>n_components</code>.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu">amp_acro</span><span class="op">(</span><span class="va">times</span>,</span></span>
-<span class="r-in"><span>                       n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                       group <span class="op">=</span> <span class="st">"group"</span>,</span></span>
-<span class="r-in"><span>                       period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    group <span class="op">=</span> <span class="st">"group"</span>,</span></span>
+<span class="r-in"><span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span></span>
 <span class="r-in"><span>  family <span class="op">=</span> <span class="va">gaussian</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -161,29 +158,29 @@ The number of values should be equal to <code>n_components</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       4.92732</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -2.97825</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  0.89487</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  0.98703</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1 -1.71847</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1 -1.63702</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2  0.08407</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.13740</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2 -1.02100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2 -1.09906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       5.08657</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -3.16599</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  1.11209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  1.07351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1 -1.60459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1 -1.70685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2  0.09320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.06343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2 -1.03479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2 -0.95507</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     4.92732</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -2.97825</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  1.93751</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  1.91156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  1.02445</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  1.10762</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  1.09070</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  1.02822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.48864</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.44643</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     5.08657</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -3.16599</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  1.95230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  2.01637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  1.03898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  0.95717</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  0.96474</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  1.00937</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.48098</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.50448</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

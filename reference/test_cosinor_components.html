@@ -3,7 +3,7 @@
 fit. For the covariate named (or vector of covariates), this function
 performs a Wald test comparing the group with covariates equal to 1 to the
 group with covariates equal to 0. This may not be the desired result for
-continuous covariates."><title>Test for differences in a cosinor model between levels — test_cosinor_components • GLMMcosinor</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Test for differences in a cosinor model between levels — test_cosinor_components"><meta property="og:description" content="Given a time variable and optional covariates, generate inference a cosinor
+continuous covariates."><title>Test for differences in a cosinor model between components — test_cosinor_components • GLMMcosinor</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Test for differences in a cosinor model between components — test_cosinor_components"><meta property="og:description" content="Given a time variable and optional covariates, generate inference a cosinor
 fit. For the covariate named (or vector of covariates), this function
 performs a Wald test comparing the group with covariates equal to 1 to the
 group with covariates equal to 0. This may not be the desired result for
@@ -58,7 +58,7 @@ continuous covariates."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Test for differences in a cosinor model between levels</h1>
+      <img src="" class="logo" alt=""><h1>Test for differences in a cosinor model between components</h1>
       <small class="dont-index">Source: <a href="https://github.com/RWParsons/GLMMcosinor/blob/HEAD/R/test_cosinor.R" class="external-link"><code>R/test_cosinor.R</code></a></small>
       <div class="d-none name"><code>test_cosinor_components.Rd</code></div>
     </div>
@@ -102,15 +102,12 @@ testing differences in amplitude or acrophase, respectively.</p></dd>
 
 
 <dt>comparison_A</dt>
-<dd><p>An <code>integer</code>. Refers to the level (within the
-grouping variable) or component number that is to act as the reference group
+<dd><p>An <code>integer</code>. Refers to the component number that is to act as the reference group.
 for the comparison.</p></dd>
 
 
 <dt>comparison_B</dt>
-<dd><p>An <code>integer</code>. Refers to the level (within the
-grouping variable) or component number that is to act as the comparator group
-for the comparison.</p></dd>
+<dd><p>An <code>integer</code>. Refers to the component number that is to act as the comparator group</p></dd>
 
 
 <dt>level_index</dt>
@@ -124,13 +121,6 @@ components.</p></dd>
 <dd><p>The level for calculated confidence intervals. Defaults to
 <code>0.95</code>.</p></dd>
 
-
-<dt>comparison_type</dt>
-<dd><p>A <code>character</code>. Indicates whether the comparison
-to be performed is to be between levels of a grouping variable
-(<code>"levels"</code>) or indices of components in a multiple-component cosinor
-model (<code>"components"</code>).</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -141,21 +131,21 @@ model (<code>"components"</code>).</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="va">data_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fl">10000</span>,</span></span>
 <span class="r-in"><span>  mesor <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  beta.mesor <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  family <span class="op">=</span> <span class="st">"gaussian"</span>,</span></span>
 <span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">data_2_component</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">test_cosinor_components</span><span class="op">(</span><span class="va">mod_2_component</span>, param <span class="op">=</span> <span class="st">"amp"</span>, x_str <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></span></span>
@@ -173,7 +163,7 @@ model (<code>"components"</code>).</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Global test: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2303.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2225.88</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
@@ -181,13 +171,13 @@ model (<code>"components"</code>).</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Individual tests:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47.18</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate and 95% confidence interval:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3.01 (2.89 to 3.13)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2.99 (2.86 to 3.11)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
