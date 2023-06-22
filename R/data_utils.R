@@ -89,7 +89,13 @@ update_formula_and_data <- function(data, formula,
 
   if (dispformula_check) {
     data <- main_output$newdata
-    dispformula <- formula_eval(formula = dispformula, data = data, quietly = quietly, amp_acro_ind = 0, data_prefix = "disp_")
+    dispformula <- formula_eval(
+      formula = dispformula,
+      data = data,
+      quietly = quietly,
+      amp_acro_ind = 0,
+      data_prefix = "disp_"
+    )
     main_output$newdata <- dispformula$newdata
 
     dispformula <- dispformula[items_keep]
@@ -167,8 +173,10 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components) {
   }
 
   mu.coef <- c(!mu_inv) # invert 'mu_inv' to get a Boolean vector for mesor terms
-  r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) # a matrix of rrr coefficients
-  s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) # a matrix of sss coefficients
+  # a matrix of rrr coefficients
+  r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
+  # a matrix of sss coefficients
+  s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
 
   # Calculate the parameter estimates for all components
   amp <- NULL

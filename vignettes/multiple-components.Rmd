@@ -17,10 +17,6 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
-```
-GLMMCosinor allows specification of multi-component cosinor models. This is useful if there are multiple explanatory variables affecting the dependent variable, given that their period is known. The plot below shows a 3-component model with the simulated data overlayed: 
-
-```{r, message=F, warning=F}
 testdata <- simulate_cosinor(1000,
   n_period = 2,
   mesor = 7,
@@ -33,17 +29,15 @@ testdata <- simulate_cosinor(1000,
   period = c(12, 6, 12),
   n_components = 3
 )
-object <- cosinor.glmm(Y ~ group + amp_acro(times,
-  n_components = 3,
-  period = c(12, 6, 12),
-  group = "group"
-), data = testdata, family = poisson())
-autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE, data_opacity = 0.08)
 ```
 
-To generate a multi-component model, set n_components in the amp_acro() part of the formula to the desired number of components. Then, optionally assign groups to each component in the 'group' argument. If only one group entry is supplied but n_component is greater than 1, then the single group entry will be matched to each component. 
+GLMMCosinor allows specification of multi-component cosinor models. This is useful if there are multiple explanatory variables with known periods affecting the response variable.
 
-The 'period' argument must also match the length of n_components, where the order of the periods corresponds to their assigned component. For example, if n_components = 2, and period = c(12,6), then the first component has a period of 12 and the second a period of 6. Similarly to the 'group' argument, if only one period is supplied despite 'n_components' being greater than 1, then this period will be matched to each component. 
+## Generating a two-component model
+
+To generate a multi-component model, set `n_components` in the `amp_acro()` part of the formula to the desired number of components. Then, optionally assign groups to each component in the `group` argument. If only one group entry is supplied but `n_components` is greater than 1, then the single group entry will be matched to each component.
+
+The `period` argument must also match the length of `n_components`, where the order of the periods corresponds to their assigned component. For example, if `n_components = 2`, and `period = c(12,6)`, then the first component has a `period` of 12 and the second a period of 6. Similarly to the `group` argument, if only one period is supplied despite `n_components` being greater than 1, then this period will be matched to each component.
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(
@@ -53,7 +47,6 @@ object <- cosinor.glmm(
 
 autoplot(object)
 ```
-
 
 Alternatively, a component may have no grouping structure:
 
@@ -66,5 +59,21 @@ object
 autoplot(object)
 ```
 
-In the example above, we have a multicomponent cosinor model with two components. The first component is grouped by the X variable in the input data whereas the second component is not grouped. In the resulting output, we can see that each component is represented by the suffixes (1 and 2). The first component has the grouping structure but the second is represented only by the amp2 and acr2 (transformed) parameter estimates.
+In the example above, we have a multicomponent cosinor model with two components. The first component is grouped by the `X` variable in the input data whereas the second component is not grouped. In the resulting output, we can see that each component is represented by the suffixes 1 and 2. The first component has the grouping structure but the second is represented only by the `amp2` and `acr2` which represent transformed parameter estimates.
 
+## Generating a three-component model
+
+The plot below shows a 3-component model with the simulated data overlayed:
+
+```{r, message=F, warning=F}
+object <- cosinor.glmm(Y ~ group + amp_acro(times,
+  n_components = 3,
+  period = c(12, 6, 12),
+  group = "group"
+), data = testdata, family = poisson())
+autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE, data_opacity = 0.08)
+```
+
+## Generating models with n-components
+
+Generating a model with `n` components simply involves setting `n_components` to be the number of desired components and ensuring that the `period` argument is a vector where each element corresponds the period of its respective component.
