@@ -22,7 +22,8 @@
 
 #' @return Returns a \code{list}.
 #' @export
-update_formula_and_data <- function(data, formula,
+update_formula_and_data <- function(data,
+                                    formula,
                                     family = "gaussian",
                                     quietly = TRUE,
                                     dispformula = ~1,
@@ -40,10 +41,8 @@ update_formula_and_data <- function(data, formula,
 
   # formatting data to be evaluated in amp_acro()
   # check for dispformula and/or ziformula argument
-  dispformula_check <- (!missing(dispformula) & dispformula != ~1)
-  ziformula_check <- (!missing(ziformula) & ziformula != ~0)
-
-
+  dispformula_check <- !missing(dispformula) & dispformula != ~1
+  ziformula_check <- !missing(ziformula) & ziformula != ~0
 
 
   formula_eval <- function(formula,
@@ -67,8 +66,8 @@ update_formula_and_data <- function(data, formula,
     ))
   }
 
-
-  main_output <- formula_eval(formula,
+  main_output <- formula_eval(
+    formula,
     data,
     quietly,
     amp_acro_ind = -1,
