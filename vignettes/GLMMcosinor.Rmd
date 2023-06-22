@@ -135,8 +135,19 @@ vignettes.
 ## An overview of the statistical methods used for parameter estimation
 
 The `{GLMMcosinor}` package provides estimates of amplitude ($A$),
-acrophase ($\phi$), and MESOR ($M$). In the single-component case, these
-parameters correspond to the following regression model:
+acrophase ($\phi$), and MESOR ($M$).
+
+-   MESOR ($M$) is the Midline Estimating Statistic of Rhythm, and may
+    also referred to as the equilbrium point
+
+-   Amplitude ($A$) is the difference between the MESOR and the maximal
+    response
+
+-   Acrophase ($\phi$) is the phase at which the maximal response
+    occurs.
+
+In the single-component case, these parameters correspond to the
+following regression model:
 
 $$Y(t) = M + Acos(\frac{2\pi t}{\tau} - \phi) + e(t)$$ where $e(t)$ is
 the error term.
@@ -316,7 +327,7 @@ the
 [mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html)
 article for more details.
 
-## Using `summary()` and testing for differences between estimates 
+## Using `summary()` and testing for differences between estimates
 
 The `summary()` method for `cosinor.glmm` objects provides a more
 detailed summary of the model and its parameter estimates and
