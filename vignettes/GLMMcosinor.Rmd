@@ -21,6 +21,9 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(GLMMcosinor)
 library(dplyr)
+  withr::with_seed(
+    50,
+    {
 
 testdata_simple <- simulate_cosinor(1000,
   n_period = 2,
@@ -63,6 +66,7 @@ testdata_multicomponent <- simulate_cosinor(1000,
   n_components = 3,
   beta.group = TRUE
 )
+})
 ```
 
 ```{r srr, eval = FALSE, echo = FALSE}
@@ -78,7 +82,7 @@ object <- cosinor.glmm(Y ~ X + amp_acro(time,
   group = "X"
 ), data = vitamind)
 
-autoplot(object, superimpose.data = TRUE, x_str = "X", predict.ribbon = FALSE, data_opacity = 0.08)
+autoplot(object, superimpose.data = TRUE, x_str = "X", predict.ribbon = FALSE, data_opacity = 0.2)
 ```
 
 ## Introduction
@@ -134,16 +138,15 @@ The `{GLMMcosinor}` package provides estimates of amplitude ($A$),
 acrophase ($\phi$), and MESOR ($M$). In the single-component case, these
 parameters correspond to the following regression model:
 
-$$Y(t) = M + Acos(\frac{2\pi t}{\tau} + \phi) + e(t)$$ where $e(t)$ is
+$$Y(t) = M + Acos(\frac{2\pi t}{\tau} - \phi) + e(t)$$ where $e(t)$ is
 the error term.
 
 This model can be equivalently expressed as a generalised linear model:
 
 $$Y(t) = M + \beta x + \gamma z + e(t)$$
 
-Where $x =cos(\frac{2\pi t}{τ}\times \pi)$,
-$z =sin(\frac{2\pi t}{τ}\times \pi)$, $\beta = A cos(\phi)$,
-$\gamma = -A sin(\phi)$
+Where $x =cos(\frac{2\pi t}{τ})$, $z =sin(\frac{2\pi t}{τ})$,
+$\beta = A cos(\phi)$, $\gamma = A sin(\phi)$
 
 In our code, the `amp_acro()` function will modify the dataset supplied
 in the `cosinor.glmm()` call by creating two transformed columns of
@@ -159,7 +162,7 @@ tables in the output. But, to get the estimates for amplitude ($A$) and
 acrophase ($\phi$), the estimates for $\hat\beta$ and $\hat\gamma$ must
 be transformed as per the following equations:
 
-$$\hat\phi = \arctan(\frac{-\hat\gamma}{\hat\beta}) $$
+$$\hat\phi = \arctan(\frac{\hat\gamma}{\hat\beta}) $$
 
 $$\hat A = (\hat\beta ^2 + \hat\gamma ^ 2) ^ \frac{1}{2} $$
 
@@ -261,11 +264,11 @@ Under the 'Transformed Coefficients' heading:
 
 -   `[X=1]:amp = 8.09947` is the amplitude estimate for group 1
 
--   `[X=0]:acr = 1.42181` is the acrophase estimate in radians for
-    group 0 \*\*
+-   `[X=0]:acr = 1.42181` is the acrophase estimate in radians for group
+    0 \*\*
 
--   `[X=1]:acr = 0.63715` is the acrophase estimate in radians for
-    group 1
+-   `[X=1]:acr = 0.63715` is the acrophase estimate in radians for group
+    1
 
 \* Hence, the MESOR estimate for group 1 would be
 `29.6898 + 1.90186 = 31.59166`. This is due to the behaviour of the
@@ -280,13 +283,18 @@ cosinor.glmm(Y ~ 0 + X + amp_acro(time, period = 12, group = "X"), data = vitami
 Note how now, `[X=1] = 31.59165` and this represents the estimate for
 the MESOR for group 1, rather than the difference.
 
-\*\* Note how the acrophase is provided in units of radians. Since the period is 12, an acrophase of 1.42181 radians corresponds to a time of $\frac{1.42181}{2 \pi} \times 12 = 2.715457$. This means the maximum response occurs at 2.715 time units. We can check this visually using the `autoplot()` function, looking at the `[X=0]` level (red line)
+\*\* Note how the acrophase is provided in units of radians. Since the
+period is 12, an acrophase of 1.42181 radians corresponds to a time of
+$\frac{1.42181}{2 \pi} \times 12 = 2.715457$. This means the maximum
+response occurs at 2.715 time units. We can check this visually using
+the `autoplot()` function, looking at the `[X=0]` level (red line)
 
 ```{r}
 object <- cosinor.glmm(Y ~ 0 + X + amp_acro(time, period = 12, group = "X"), data = vitamind)
 autoplot(object, predict.ribbon = FALSE)
 
 ```
+
 ## More advanced `cosinor.glmm()` model specification
 
 The `cosinor.glmm()` function allows you to specify different types of
@@ -308,7 +316,7 @@ the
 [mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html)
 article for more details.
 
-## Using `summary()`
+## Using `summary()` and testing for differences between estimates 
 
 The `summary()` method for `cosinor.glmm` objects provides a more
 detailed summary of the model and its parameter estimates and
@@ -325,6 +333,62 @@ Here is an example of how to use `summary()`:
 object <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group"), data = testdata_simple, family = poisson())
 summary(object)
 ```
+
+If we wanted to test the difference between the amplitude estimate for
+component 1 between `group 1` and `group 2`, we can use the
+`test_cosinor_levels()` function:
+
+```{r}
+test_cosinor_levels(object, x_str = "group", param = "amp" )
+```
+
+The estimate here is the estimate of the difference between the inputted
+values, along with its confidence interval. The real parameters for
+`amp` in the first component were 2 and 1 for groups 0 and 1
+respectively, and so the difference is approximately -1.
+
+Now, consider an example where the difference is not so clear.
+
+```{r}
+  withr::with_seed(
+    50,
+    {
+testdata_summary <- simulate_cosinor(100,
+  n_period = 10,
+  mesor = 7,
+  amp = c(0.1, 0.5),
+  acro = c(1, 1),
+  beta.mesor = 4.4,
+  beta.amp = c(0.1, 0.46),
+  beta.acro = c(0.5, -1.5),
+  family = "poisson",
+  period = c(12, 6),
+  n_components = 2,
+  beta.group = TRUE
+)
+})
+object <- cosinor.glmm(Y ~ group + amp_acro(times, period = c(12,6),n_components = 2, group = "group"), data = testdata_summary, family = poisson())
+test_cosinor_levels(object, x_str = "group", param = "amp", component_index = 1)
+```
+
+In this example, there is no significant difference in the estimate of
+`amp` for the first component between the reference group and the
+comparator group. Also notice how if we are comparing between levels, we
+should keep the component the same, and that is what `component_index`
+sets. Likewise, when we test between components using
+`test_cosinor_components()`, we can indicate which level this comparison
+occurs using `level_index`. Furthermore, there may be multiple `groups`,
+in which case we can fix the `group` using the `x_str` argument.
+
+As an example of testing the difference between components for the same
+level:
+
+```{r}
+test_cosinor_components(object, x_str = "group", param = "acr", level_index = 1)
+```
+
+In this situation, there is a significant difference between the
+acrophase for the comparator group between its two components.
 
 ## Using `predict()`
 

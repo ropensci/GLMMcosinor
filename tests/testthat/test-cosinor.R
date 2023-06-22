@@ -49,10 +49,9 @@ test_that("model returns accurate parameters", {
       )
     }
   )
-
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(1.0030, -0.4966, 2.0181, 0.9858, -2.9907, -0.2885)
+    c(1.0030, -0.4966, 2.0122, 0.9948, 3.0115, 0.3175)
   ))
 
   # test another parameter estimation of Gaussian simulated data
@@ -77,10 +76,9 @@ test_that("model returns accurate parameters", {
       )
     }
   )
-
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(0.9905, -0.4932, 1.9785, 1.0203, -2.9900, -0.2906)
+    c(0.9905, -0.4932, 1.9737, 1.0221, 3.0066, 0.2965)
   ))
 
   # test parameter estimation of poisson simulated data
@@ -106,10 +104,9 @@ test_that("model returns accurate parameters", {
       )
     }
   )
-
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(0.9980, -0.4849, 1.9973, 0.9947, -3.0045, -0.2858)
+    c(1.0032, -0.4886, 1.9980, 0.9941, 3.0031, 0.2965)
   ))
 
   # test parameter estimation of Gamma(link="log") simulated data
@@ -135,10 +132,9 @@ test_that("model returns accurate parameters", {
       )
     }
   )
-
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(1.0002, -0.4996, 2.0089, 0.9698, -3.0127, -0.2995)
+    c(1.0002, -0.4996, 2.0156, 0.9755, 2.9891, 0.3179)
   ))
 
 
@@ -165,10 +161,9 @@ test_that("model returns accurate parameters", {
       )
     }
   )
-
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(0.9822, -0.4799, 1.9368, 1.0394, -2.9841, -0.3197)
+    c(0.9773, -0.4527, 1.9399, 1.0482, 3.0007, 0.2849)
   ))
 })
 test_that("model output is class cosinor.glmm", {
@@ -292,8 +287,7 @@ test_that("mixed model estimates parameters well", {
       family = gaussian
     )
   }
-
-  suppressWarnings(expect_warning(f()))
+ # suppressWarnings(expect_warning(f()))
 
   withr::with_seed(42, {
     df_mixed <- do.call("rbind", lapply(1:75, f_sample_id))

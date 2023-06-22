@@ -80,23 +80,23 @@
     group1               -3.0
     group0:main_rrr1      0.1
     group1:main_rrr1      0.0
-    group0:main_sss1     -1.1
-    group1:main_sss1     -1.0
+    group0:main_sss1      0.9
+    group1:main_sss1      1.0
     group0:main_rrr2      1.1
     group1:main_rrr2      1.1
-    group0:main_sss2     -1.7
-    group1:main_sss2     -1.6
+    group0:main_sss2      1.7
+    group1:main_sss2      1.7
     
      Transformed Coefficients: 
                    Estimate
     (Intercept)         5.0
     [group=1]          -3.0
-    [group=0]:amp1      1.1
+    [group=0]:amp1      0.9
     [group=1]:amp1      1.0
     [group=0]:amp2      2.0
     [group=1]:amp2      2.0
-    [group=0]:acr1     -1.5
-    [group=1]:acr1     -1.6
-    [group=0]:acr2     -1.0
-    [group=1]:acr2     -1.0
+    [group=0]:acr1      1.5
+    [group=1]:acr1      1.6
+    [group=0]:acr2      1.0
+    [group=1]:acr2      1.0
 
