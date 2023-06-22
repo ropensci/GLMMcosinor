@@ -23,6 +23,7 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
   # print(round(x$raw_coefficients, digits = digits))
   cat("\n Transformed Coefficients: \n")
   t.x <- x$coefficients
+
   if (x$group_check == TRUE) {
     names(t.x) <- update_covnames(names(t.x), group_stats = x$group_stats)
   }
@@ -66,6 +67,7 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     # print(round(x$zi_list$raw_coefficients_zi, digits = digits))
     cat("\n Transformed  Coefficients: \n")
     tzi.x <- x$zi_list$coefficients_zi
+
     if (x$zi_list$group_check_zi == TRUE) {
       names(tzi.x) <- update_covnames(names(tzi.x), group_stats = x$zi_list$group_stats_zi)
     }

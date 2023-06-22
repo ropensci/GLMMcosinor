@@ -21,8 +21,8 @@
     [X=1]            1.9
     [X=0]:amp        6.2
     [X=1]:amp        8.1
-    [X=0]:acr       -1.4
-    [X=1]:acr       -0.6
+    [X=0]:acr        1.4
+    [X=1]:acr        0.6
     
     ***********************
     
@@ -43,7 +43,7 @@
     [X=0]:amp      0.5
     [X=1]:amp      0.1
     [X=0]:acr      0.0
-    [X=1]:acr      2.6
+    [X=1]:acr     -2.6
     
     ***********************
     
@@ -63,8 +63,8 @@
               Estimate
     [X=0]:amp      0.2
     [X=1]:amp      0.2
-    [X=0]:acr     -2.6
-    [X=1]:acr     -1.3
+    [X=0]:acr      2.6
+    [X=1]:acr      1.3
 
 ---
 
@@ -95,8 +95,8 @@
     [group=1]:amp1      1.0
     [group=0]:amp2      2.0
     [group=1]:amp2      2.0
-    [group=0]:acr1      1.5
-    [group=1]:acr1      1.6
-    [group=0]:acr2      1.0
-    [group=1]:acr2      1.0
+    [group=0]:acr1     -1.5
+    [group=1]:acr1     -1.6
+    [group=0]:acr2     -1.0
+    [group=1]:acr2     -1.0
 

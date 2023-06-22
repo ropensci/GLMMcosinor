@@ -204,6 +204,7 @@ cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 12), g
 
 For a detailed explanation of how to specify multi-component models, see
 [multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
+
 \### Dispersion and zero-inflation model specification
 
 The `cosinor.glmm()` function optionally allows users to specify
@@ -246,7 +247,7 @@ and `ziformula = ~0`.
 number of components in the dispersion and zero-inflation formulas were
 chosen arbitrarily and purely for demonstration.*
 
-### Using: 'summary.cosinor.glmm.R'
+## Using: 'summary.cosinor.glmm.R'
 
 The `summary()` method for `cosinor.glmm` objects provides a more
 detailed summary of the model and its parameter estimates and

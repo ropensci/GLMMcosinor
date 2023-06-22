@@ -155,7 +155,7 @@ validate_ci_level <- function(ci_level) {
 }
 
 # calculate the parameters from the raw estimates
-get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components) {
+get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
@@ -181,6 +181,7 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components) {
   # Calculate the parameter estimates for all components
   amp <- NULL
   acr <- NULL
+  acr_adjusted <- NULL
   for (i in 1:n_components) {
     beta.s <- coefs[s.coef[i, ]]
     beta.r <- coefs[r.coef[i, ]]
@@ -191,8 +192,10 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components) {
     amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
     names(amp[[i]]) <- gsub(vec_rrr[i], paste0("amp", i), names(beta.r))
 
-    acr[[i]] <- -atan2(groups.s, groups.r)
+    acr[[i]] <- atan2(groups.s, groups.r)
+    #acr[[i]] <- -atan2(groups.s, groups.r)
     names(acr[[i]]) <- gsub(vec_sss[i], paste0("acr", i), names(beta.s))
+
   }
   new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
@@ -202,4 +205,5 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components) {
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
   new_coefs
+
 }

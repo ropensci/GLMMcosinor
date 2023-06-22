@@ -235,9 +235,9 @@ rhythm period, and the number of components. The arguments of
 
 ### Understanding the output
 
-The most important output from the `cosinor.glmm()` function is likely
-to be the parameter estimates for MESOR, amplitude, and acrophase under
-the 'Transformed Coefficients' heading. A detailed explanation of the
+The most relevant output from the `cosinor.glmm()` function is likely to
+be the parameter estimates for MESOR, amplitude, and acrophase under the
+'Transformed Coefficients' heading. A detailed explanation of the
 difference between the raw coefficients and the transformed coefficients
 is found in this vignette, in the **'An overview of the statistical
 methods used for parameter estimation'** section.
@@ -261,9 +261,11 @@ Under the 'Transformed Coefficients' heading:
 
 -   `[X=1]:amp = 8.09947` is the amplitude estimate for group 1
 
--   `[X=0]:acr = -1.42181` is the acrophase estimate for group 0
+-   `[X=0]:acr = 1.42181` is the acrophase estimate in radians for
+    group 0 \*\*
 
--   `[X=1]:acr = -0.63715` is the acrophase estimate for group 1
+-   `[X=1]:acr = 0.63715` is the acrophase estimate in radians for
+    group 1
 
 \* Hence, the MESOR estimate for group 1 would be
 `29.6898 + 1.90186 = 31.59166`. This is due to the behaviour of the
@@ -278,6 +280,13 @@ cosinor.glmm(Y ~ 0 + X + amp_acro(time, period = 12, group = "X"), data = vitami
 Note how now, `[X=1] = 31.59165` and this represents the estimate for
 the MESOR for group 1, rather than the difference.
 
+\*\* Note how the acrophase is provided in units of radians. Since the period is 12, an acrophase of 1.42181 radians corresponds to a time of $\frac{1.42181}{2 \pi} \times 12 = 2.715457$. This means the maximum response occurs at 2.715 time units. We can check this visually using the `autoplot()` function, looking at the `[X=0]` level (red line)
+
+```{r}
+object <- cosinor.glmm(Y ~ 0 + X + amp_acro(time, period = 12, group = "X"), data = vitamind)
+autoplot(object, predict.ribbon = FALSE)
+
+```
 ## More advanced `cosinor.glmm()` model specification
 
 The `cosinor.glmm()` function allows you to specify different types of

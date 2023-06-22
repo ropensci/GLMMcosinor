@@ -27,8 +27,8 @@
     [group=1]:amp1      1.0
     [group=0]:amp2      2.1
     [group=1]:amp2      1.0
-    [group=0]:acr1      3.0
-    [group=1]:acr1      0.4
-    [group=0]:acr2      3.0
-    [group=1]:acr2      0.3
+    [group=0]:acr1     -3.0
+    [group=1]:acr1     -0.4
+    [group=0]:acr2     -3.0
+    [group=1]:acr2     -0.3
 

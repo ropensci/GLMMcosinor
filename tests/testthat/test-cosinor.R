@@ -52,7 +52,7 @@ test_that("model returns accurate parameters", {
 
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(1.0030, -0.4966, 2.0181, 0.9858, 2.9907, 0.2885)
+    c(1.0030, -0.4966, 2.0181, 0.9858, -2.9907, -0.2885)
   ))
 
   # test another parameter estimation of Gaussian simulated data
@@ -80,7 +80,7 @@ test_that("model returns accurate parameters", {
 
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(0.9905, -0.4932, 1.9785, 1.0203, 2.9900, 0.2906)
+    c(0.9905, -0.4932, 1.9785, 1.0203, -2.9900, -0.2906)
   ))
 
   # test parameter estimation of poisson simulated data
@@ -109,7 +109,7 @@ test_that("model returns accurate parameters", {
 
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(0.9980, -0.4849, 1.9973, 0.9947, 3.0045, 0.2858)
+    c(0.9980, -0.4849, 1.9973, 0.9947, -3.0045, -0.2858)
   ))
 
   # test parameter estimation of Gamma(link="log") simulated data
@@ -138,7 +138,7 @@ test_that("model returns accurate parameters", {
 
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(1.0002, -0.4996, 2.0089, 0.9698, 3.0127, 0.2995)
+    c(1.0002, -0.4996, 2.0089, 0.9698, -3.0127, -0.2995)
   ))
 
 
@@ -168,7 +168,7 @@ test_that("model returns accurate parameters", {
 
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
-    c(0.9822, -0.4799, 1.9368, 1.0394, 2.9841, 0.3197)
+    c(0.9822, -0.4799, 1.9368, 1.0394, -2.9841, -0.3197)
   ))
 })
 test_that("model output is class cosinor.glmm", {
