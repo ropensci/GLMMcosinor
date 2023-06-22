@@ -88,139 +88,155 @@ Jayasinghe and Rex Parsons</h4>
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <p>GLMMcossinor allows specification of mixed models accounting for
-fixed and/or random effects. Mixed model specification follows the lme4
-format. See <a href="https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf" class="external-link">Fitting
-Linear Mixed-Effects Models Using lme4</a> for details about how to
+fixed and/or random effects. Mixed model specification follows the
+<a href="https://github.com/lme4/lme4/" class="external-link">lme4</a> format. See their vignette, <a href="https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf" class="external-link">Fitting
+Linear Mixed-Effects Models Using lme4</a>, for details about how to
 specify mixed models.</p>
-<p>To add a random effects term to the intercept of the vitamind model,
-we can add a <code>(1|amp_acro1)</code> term to the formula, after the
-<code><a href="../reference/amp_acro.html">amp_acro()</a></code> function. <code>amp_acro1</code> indicates that
-the random effect is the first (and only) component of the model.</p>
-<pre class="obj"><code>n_components = 1,
-group = "X",
-period = 12
-) + (1|amp_acro1), data = vitamind)
-
-obj</code></pre>
-<p>If the model has two components, but we only wish to add a random
-effect to the second one, we would specify:</p>
+<div class="section level3">
+<h3 id="data-with-subject-level-differences">Data with subject-level differences<a class="anchor" aria-label="anchor" href="#data-with-subject-level-differences"></a>
+</h3>
+<p>To illustrate an example of using a model with random effects on the
+cosinor components, we will first simulate some data with
+<code>id</code>-level differences in amplitude and acrophase.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_sample_id</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id_num</span>,</span>
+<span>                        <span class="va">n</span> <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>                        <span class="va">mesor</span>,</span>
+<span>                        <span class="va">amp</span>,</span>
+<span>                        <span class="va">acro</span>,</span>
+<span>                        <span class="va">family</span> <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>                        <span class="va">sd</span> <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>                        <span class="va">period</span>,</span>
+<span>                        <span class="va">n_components</span>,</span>
+<span>                        <span class="va">beta.group</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span></span>
+<span>    n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>    mesor <span class="op">=</span> <span class="va">mesor</span>,</span>
+<span>    amp <span class="op">=</span> <span class="va">amp</span>,</span>
+<span>    acro <span class="op">=</span> <span class="va">acro</span>,</span>
+<span>    family <span class="op">=</span> <span class="va">family</span>,</span>
+<span>    sd <span class="op">=</span> <span class="va">sd</span>,</span>
+<span>    period <span class="op">=</span> <span class="va">period</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="va">n_components</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="va">data</span><span class="op">$</span><span class="va">subject</span> <span class="op">&lt;-</span> <span class="va">id_num</span></span>
+<span>  <span class="va">data</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">dat_mixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span></span>
+<span>  <span class="st">"rbind"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="fu">f_sample_id</span><span class="op">(</span></span>
+<span>      id_num <span class="op">=</span> <span class="va">x</span>,</span>
+<span>      mesor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>      amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>      acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>      period <span class="op">=</span> <span class="fl">24</span>,</span>
+<span>      n_components <span class="op">=</span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">subject</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>A quick graph shows how there are individual differences in terms of
+MESOR, amplitude and phase.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  group <span class="op">=</span> <span class="st">"X"</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">amp_acro2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite</span></span>
-<span><span class="co">#&gt; Hessian matrix. See vignette('troubleshooting')</span></span>
-<span></span>
-<span><span class="va">obj</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Conditional Model </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Raw formula: </span></span>
-<span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 +      (1 | main_rrr2 + main_sss2) </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Raw Coefficients: </span></span>
-<span><span class="co">#&gt;              Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)  29.98311</span></span>
-<span><span class="co">#&gt; X1            1.72717</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  2.13806</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  6.77127</span></span>
-<span><span class="co">#&gt; X0:main_sss1  6.15242</span></span>
-<span><span class="co">#&gt; X1:main_sss1  4.33051</span></span>
-<span><span class="co">#&gt; X0:main_rrr2 -0.04999</span></span>
-<span><span class="co">#&gt; X1:main_rrr2 -0.93685</span></span>
-<span><span class="co">#&gt; X0:main_sss2 -1.54880</span></span>
-<span><span class="co">#&gt; X1:main_sss2 -0.36383</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Transformed Coefficients: </span></span>
-<span><span class="co">#&gt;             Estimate</span></span>
-<span><span class="co">#&gt; (Intercept) 29.98311</span></span>
-<span><span class="co">#&gt; [X=1]        1.72717</span></span>
-<span><span class="co">#&gt; [X=0]:amp1   6.51333</span></span>
-<span><span class="co">#&gt; [X=1]:amp1   8.03763</span></span>
-<span><span class="co">#&gt; [X=0]:amp2   1.54960</span></span>
-<span><span class="co">#&gt; [X=1]:amp2   1.00501</span></span>
-<span><span class="co">#&gt; [X=0]:acr1  -1.23634</span></span>
-<span><span class="co">#&gt; [X=1]:acr1  -0.56899</span></span>
-<span><span class="co">#&gt; [X=0]:acr2   1.60306</span></span>
-<span><span class="co">#&gt; [X=1]:acr2   2.77116</span></span></code></pre></div>
-<p>Alternatively, we could assign random effects to <em>both</em>
-components:</p>
+<code class="sourceCode R"><span><span class="va">dat_mixed</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">times</span>, <span class="va">Y</span>, col <span class="op">=</span> <span class="va">subject</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mixed-models_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="a-single-component-model-with-random-effects">A single component model with random effects<a class="anchor" aria-label="anchor" href="#a-single-component-model-with-random-effects"></a>
+</h3>
+<p>For the model, we should include a random effect for the MESOR,
+amplitude and acrophase as these are clustered within individuals.</p>
+<p>In the model formula, we can use the special <code>amp_acro[n]</code>
+which represents the n<sup>th</sup> cosinor component. In this case, we
+only have one component so we use <code>amp_acro1</code>. Following the
+<a href="https://github.com/lme4/lme4/" class="external-link">lme4</a>-style mixed model formula, we add our random effect
+for this component and the intercept term (MESOR) clustered within
+subjects by using <code>(1 + amp_acro1 | subject)</code>. The code below
+fits this model</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  group <span class="op">=</span> <span class="st">"X"</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">amp_acro1</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">amp_acro2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">obj</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Conditional Model </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Raw formula: </span></span>
-<span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2 +      (1 | main_rrr1 + main_sss1) + (1 | main_rrr2 + main_sss2) </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Raw Coefficients: </span></span>
-<span><span class="co">#&gt;              Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)  29.98311</span></span>
-<span><span class="co">#&gt; X1            1.72717</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  2.13807</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  6.77127</span></span>
-<span><span class="co">#&gt; X0:main_sss1  6.15241</span></span>
-<span><span class="co">#&gt; X1:main_sss1  4.33054</span></span>
-<span><span class="co">#&gt; X0:main_rrr2 -0.04999</span></span>
-<span><span class="co">#&gt; X1:main_rrr2 -0.93680</span></span>
-<span><span class="co">#&gt; X0:main_sss2 -1.54880</span></span>
-<span><span class="co">#&gt; X1:main_sss2 -0.36383</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Transformed Coefficients: </span></span>
-<span><span class="co">#&gt;             Estimate</span></span>
-<span><span class="co">#&gt; (Intercept) 29.98311</span></span>
-<span><span class="co">#&gt; [X=1]        1.72717</span></span>
-<span><span class="co">#&gt; [X=0]:amp1   6.51333</span></span>
-<span><span class="co">#&gt; [X=1]:amp1   8.03764</span></span>
-<span><span class="co">#&gt; [X=0]:amp2   1.54960</span></span>
-<span><span class="co">#&gt; [X=1]:amp2   1.00497</span></span>
-<span><span class="co">#&gt; [X=0]:acr1  -1.23634</span></span>
-<span><span class="co">#&gt; [X=1]:acr1  -0.56899</span></span>
-<span><span class="co">#&gt; [X=0]:acr2   1.60306</span></span>
-<span><span class="co">#&gt; [X=1]:acr2   2.77115</span></span></code></pre></div>
-<p>We could also assign random effects to the group:</p>
+<code class="sourceCode R"><span><span class="va">mixed_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">1</span>, period <span class="op">=</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">amp_acro1</span> <span class="op">|</span> <span class="va">subject</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">dat_mixed</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This works by replacing the amp_acro1 with the relevant cosinor
+components when the data is rearranged and the formula created. The
+formula created can be accessed using <code>.$formula</code>, and shows
+the <code>amp_acro1</code> is replaced by the <code>main_rrr1</code> and
+<code>main_sss1</code> (the cosine and sine components of time that also
+appear in the fixed effects).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  group <span class="op">=</span> <span class="st">"X"</span>,</span>
-<span>  period <span class="op">=</span> <span class="fl">12</span></span>
-<span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">X</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">obj</span></span>
+<code class="sourceCode R"><span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">formula</span></span>
+<span><span class="co">#&gt; Y ~ main_rrr1 + main_sss1 + (1 + main_rrr1 + main_sss1 | subject)</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x55595a1e9108&gt;</span></span></code></pre></div>
+<p>The summary of the model shows that the input means for MESOR,
+amplitude and acrophase are similar to what we specified in the
+simulation (0, 3, and 1.5, respectively).</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
+<span><span class="co">#&gt; Raw model coefficients:</span></span>
+<span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI  p.value    </span></span>
+<span><span class="co">#&gt; (Intercept) -0.03878840     0.16465350 -0.36150333  0.28393 0.813762    </span></span>
+<span><span class="co">#&gt; main_rrr1    0.17803653     0.10294545 -0.02373285  0.37981 0.083733 .  </span></span>
+<span><span class="co">#&gt; main_sss1   -2.77437185     0.09459531 -2.95977525 -2.58897  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Raw formula: </span></span>
-<span><span class="co">#&gt; Y ~ X + X:main_rrr1 + X:main_sss1 + (1 | X) </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Raw Coefficients: </span></span>
-<span><span class="co">#&gt;              Estimate</span></span>
-<span><span class="co">#&gt; (Intercept)  29.68979</span></span>
-<span><span class="co">#&gt; X1            1.90186</span></span>
-<span><span class="co">#&gt; X0:main_rrr1  0.93079</span></span>
-<span><span class="co">#&gt; X1:main_rrr1  6.51029</span></span>
-<span><span class="co">#&gt; X0:main_sss1  6.20099</span></span>
-<span><span class="co">#&gt; X1:main_sss1  4.81846</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Transformed Coefficients: </span></span>
-<span><span class="co">#&gt;             Estimate</span></span>
-<span><span class="co">#&gt; (Intercept) 29.68979</span></span>
-<span><span class="co">#&gt; [X=1]        1.90186</span></span>
-<span><span class="co">#&gt; [X=0]:amp    6.27046</span></span>
-<span><span class="co">#&gt; [X=1]:amp    8.09947</span></span>
-<span><span class="co">#&gt; [X=0]:acr   -1.42181</span></span>
-<span><span class="co">#&gt; [X=1]:acr   -0.63715</span></span></code></pre></div>
-  </main>
+<span><span class="co">#&gt; Transformed coefficients:</span></span>
+<span><span class="co">#&gt;               estimate standard.error   lower.CI upper.CI p.value    </span></span>
+<span><span class="co">#&gt; (Intercept) -0.0387884      0.1646535 -0.3615033  0.28393 0.81376    </span></span>
+<span><span class="co">#&gt; amp1         2.7800784      0.0930876  2.5976301  2.96253 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; acr1         1.5067124      0.0375208  1.4331729  1.58025 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
+<p>We can see that the predicted values from the model closely resemble
+the patterns we see in the input data.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">dat_mixed</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">times</span>, y <span class="op">=</span> <span class="va">Y</span>, col <span class="op">=</span> <span class="va">subject</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">times</span>, y <span class="op">=</span> <span class="va">pred</span>, col <span class="op">=</span> <span class="va">subject</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mixed-models_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>This looks like a good model fit for these data. We can highlight the
+importance of using a mixed model in this situation rather than a fixed
+effects only model by creating that (bad) model and comparing the two by
+using the Akaike information criterion using <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC()</a></code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fixed_effects_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">1</span>, period <span class="op">=</span> <span class="fl">24</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">dat_mixed</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fixed_effects_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2668.425</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 85.14295</span></span></code></pre></div>
+<p>Aside from not being able to be useful to see the differences between
+subjects from the model, we end up with much worse model fit and likely
+biased and/or imprecise estimates of our fixed effects that we are
+interested in!</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
