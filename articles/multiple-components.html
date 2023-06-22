@@ -87,13 +87,8 @@ Jayasinghe and Rex Parsons</h4>
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span></code></pre></div>
-<p>GLMMCosinor allows specification of multi-component cosinor models.
-This is useful if there are multiple explanatory variables affecting the
-dependent variable, given that their period is known. The plot below
-shows a 3-component model with the simulated data overlayed:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">testdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span>
+<span><span class="va">testdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
 <span>  n_period <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  mesor <span class="op">=</span> <span class="fl">7</span>,</span>
 <span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
@@ -105,36 +100,37 @@ shows a 3-component model with the simulated data overlayed:</p>
 <span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
 <span>  n_components <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
-<span>  group <span class="op">=</span> <span class="st">"group"</span></span>
-<span><span class="op">)</span>, data <span class="op">=</span> <span class="va">testdata</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>, x_str <span class="op">=</span> <span class="st">"group"</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span>, data_opacity <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span></span></code></pre></div>
-<p><img src="multiple-components_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<p>To generate a multi-component model, set n_components in the
-amp_acro() part of the formula to the desired number of components.
-Then, optionally assign groups to each component in the ‘group’
-argument. If only one group entry is supplied but n_component is greater
-than 1, then the single group entry will be matched to each
-component.</p>
-<p>The ‘period’ argument must also match the length of n_components,
-where the order of the periods corresponds to their assigned component.
-For example, if n_components = 2, and period = c(12,6), then the first
-component has a period of 12 and the second a period of 6. Similarly to
-the ‘group’ argument, if only one period is supplied despite
-‘n_components’ being greater than 1, then this period will be matched to
-each component.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; all betas were present but beta.group was FALSE. beta.group has been changed to be TRUE.</span></span></code></pre></div>
+<p>GLMMCosinor allows specification of multi-component cosinor models.
+This is useful if there are multiple explanatory variables with known
+periods affecting the response variable.</p>
+<div class="section level2">
+<h2 id="generating-a-two-component-model">Generating a two-component model<a class="anchor" aria-label="anchor" href="#generating-a-two-component-model"></a>
+</h2>
+<p>To generate a multi-component model, set <code>n_components</code> in
+the <code><a href="../reference/amp_acro.html">amp_acro()</a></code> part of the formula to the desired number of
+components. Then, optionally assign groups to each component in the
+<code>group</code> argument. If only one group entry is supplied but
+<code>n_components</code> is greater than 1, then the single group entry
+will be matched to each component.</p>
+<p>The <code>period</code> argument must also match the length of
+<code>n_components</code>, where the order of the periods corresponds to
+their assigned component. For example, if <code>n_components = 2</code>,
+and <code>period = c(12,6)</code>, then the first component has a
+<code>period</code> of 12 and the second a period of 6. Similarly to the
+<code>group</code> argument, if only one period is supplied despite
+<code>n_components</code> being greater than 1, then this period will be
+matched to each component.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">vitamind</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div>
-<p><img src="multiple-components_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="multiple-components_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>Alternatively, a component may have no grouping structure:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="cn">NA</span><span class="op">)</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">vitamind</span></span>
@@ -166,15 +162,39 @@ each component.</p>
 <span><span class="co">#&gt; [X=1]:acr1  -0.61833</span></span>
 <span><span class="co">#&gt; acr2        -0.22191</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div>
-<p><img src="multiple-components_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="multiple-components_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>In the example above, we have a multicomponent cosinor model with two
-components. The first component is grouped by the X variable in the
-input data whereas the second component is not grouped. In the resulting
-output, we can see that each component is represented by the suffixes (1
-and 2). The first component has the grouping structure but the second is
-represented only by the amp2 and acr2 (transformed) parameter
-estimates.</p>
-  </main>
+components. The first component is grouped by the <code>X</code>
+variable in the input data whereas the second component is not grouped.
+In the resulting output, we can see that each component is represented
+by the suffixes 1 and 2. The first component has the grouping structure
+but the second is represented only by the <code>amp2</code> and
+<code>acr2</code> which represent transformed parameter estimates.</p>
+</div>
+<div class="section level2">
+<h2 id="generating-a-three-component-model">Generating a three-component model<a class="anchor" aria-label="anchor" href="#generating-a-three-component-model"></a>
+</h2>
+<p>The plot below shows a 3-component model with the simulated data
+overlayed:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
+<span>  n_components <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"group"</span></span>
+<span><span class="op">)</span>, data <span class="op">=</span> <span class="va">testdata</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>, x_str <span class="op">=</span> <span class="st">"group"</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span>, data_opacity <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span></span></code></pre></div>
+<p><img src="multiple-components_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="generating-models-with-n-components">Generating models with n-components<a class="anchor" aria-label="anchor" href="#generating-models-with-n-components"></a>
+</h2>
+<p>Generating a model with <code>n</code> components simply involves
+setting <code>n_components</code> to be the number of desired components
+and ensuring that the <code>period</code> argument is a vector where
+each element corresponds the period of its respective component.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
