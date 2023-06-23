@@ -169,14 +169,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
   }
   expect(f(), ok = TRUE, "unsuccessful conversion of matrix to dataframe")
 
-  #Testing mixed model specification
-  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 1, period = 24) + (1  + amp_acro1*treatment*hospital:patient| subject), data = dat_mixed))
-
-  #Testing mixed model specification
-  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 1, period = 24) + (amp_acro1*treatment*hospital:patient + 1| subject), data = dat_mixed))
-
-  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 2, period = c(12,6)) + (amp_acro1*treatment*hospital:patient + 1 + amp_acro2*treatment| subject), data = dat_mixed))
-
+  library(dplyr)
 
   withr::with_seed(
     50,
@@ -226,6 +219,15 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
   f_round <- function(x) {
     unname(round(x, digits = 4))
   }
+
+
+  #Testing mixed model specification
+  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 1, period = 24) + (1  + amp_acro1*treatment*hospital:patient| subject), data = dat_mixed))
+
+  #Testing mixed model specification
+  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 1, period = 24) + (amp_acro1*treatment*hospital:patient + 1| subject), data = dat_mixed))
+
+  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 2, period = c(12,6)) + (amp_acro1*treatment*hospital:patient + 1 + amp_acro2*treatment| subject), data = dat_mixed))
 
   testthat::expect_true(all.equal(
     f_round(mixed_mod$coefficients),
