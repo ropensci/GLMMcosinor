@@ -361,23 +361,29 @@ amp_acro <- function(time_col,
   if (!is.null(lme4::findbars(.formula))) {
     ranef_part <- sapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
-      component_num <- regmatches(x, regexpr("(?<=amp_acro)[0-9]+", x, perl = TRUE))
+      component_num <- regmatches(x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE))[[1]]
       if (length(component_num) == 0) {
         return(x)
+      } else {
+      for (i in 1:length(component_num)) {
+
+        string_match <- paste0(".*amp_acro",component_num[i] ,"\\s([^+|]*).*")
+        ranef_part_addition <- gsub(string_match, "\\1",ranef_part)
+        ranef_part_group <-  gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
+
+        rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
+        sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
+
+        x <- gsub(paste0("amp_acro",component_num[i]," ",ranef_part_addition), paste0(rrr_part ,"+", sss_part), x, fixed = TRUE)
       }
-      gsub("amp_acro[0-9]+", paste0("(main_rrr", component_num, "+", "main_sss)", component_num), x, perl = TRUE)
-      string_match <- paste0("amp_acro\\d+\\s*(.*?)\\s*\\|.*")
-      ranef_part_addition <- sub(string_match, "\\1",ranef_part)
-      ranef_part_group <-  sub(".*\\|\\s*(.*)", "\\1", ranef_part)
-
-      rrr_part <- paste0("main_rrr", component_num, ranef_part_addition)
-      sss_part <- paste0("main_sss", component_num, ranef_part_addition)
-
-      ranef_part <- paste0("(",rrr_part," + ", sss_part, ") | ",ranef_part_group)
+        return(x)
+      }
 
     })
 
-    ranef_part_updated <- unlist(ranef_parts_replaced)
+
+    #ranef_part_updated <- unlist(ranef_parts_replaced)
+    ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
     res$newformula <- stats::as.formula(main_part)

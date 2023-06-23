@@ -168,4 +168,71 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
     )
   }
   expect(f(), ok = TRUE, "unsuccessful conversion of matrix to dataframe")
+
+  #Testing mixed model specification
+  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 1, period = 24) + (1  + amp_acro1*treatment*hospital:patient| subject), data = dat_mixed))
+
+  #Testing mixed model specification
+  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 1, period = 24) + (amp_acro1*treatment*hospital:patient + 1| subject), data = dat_mixed))
+
+  testthat::expect_no_error(update_formula_and_data(formula = Y ~ amp_acro(times,n_components = 2, period = c(12,6)) + (amp_acro1*treatment*hospital:patient + 1 + amp_acro2*treatment| subject), data = dat_mixed))
+
+
+  withr::with_seed(
+    50,
+    {
+   f_sample_id <- function(id_num,
+                          n = 30,
+                          mesor,
+                          amp,
+                          acro,
+                          family = "gaussian",
+                          sd = 0.2,
+                          period,
+                          n_components,
+                          beta.group = TRUE) {
+    data <- simulate_cosinor(
+      n = n,
+      mesor = mesor,
+      amp = amp,
+      acro = acro,
+      family = family,
+      sd = sd,
+      period = period,
+      n_components = n_components
+    )
+    data$subject <- id_num
+    data
+  }
+
+  dat_mixed <- do.call(
+    "rbind",
+    lapply(1:30, function(x){
+      f_sample_id(
+        id_num = x,
+        mesor = rnorm(1, mean = 0, sd = 1),
+        amp = rnorm(1, mean = 3, sd = 0.5),
+        acro = rnorm(1, mean = 1.5, sd = 0.2),
+        period = 24,
+        n_components = 1
+      )
+    })
+  ) |>
+    mutate(subject = as.factor(subject))
+  mixed_mod <- cosinor.glmm(
+    Y ~ amp_acro(times, n_components = 1, period = 24) + (1 + amp_acro1 | subject),
+    data = dat_mixed
+  )
+  f_round <- function(x) {
+    unname(round(x, digits = 4))
+  }
+
+  testthat::expect_true(all.equal(
+    f_round(mixed_mod$coefficients),
+    c(-0.0932, 2.8613, 1.5077)
+  ))
+
+    })
+
+
 })
