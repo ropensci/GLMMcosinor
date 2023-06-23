@@ -231,7 +231,6 @@ amp_acro <- function(time_col,
       }
     }
     group_original <- group
-
     # show error message if user uses 'rrr' or 'sss' in their grouping variable name (tested)
     if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
       stop("Group variable names cannot contain 'rrr' or 'sss'")
@@ -367,9 +366,14 @@ amp_acro <- function(time_col,
         return(x)
       }
 
-      gsub("amp_acro[0-9]+", paste0("main_rrr", component_num, "+", "main_sss", component_num), x, perl = TRUE)
-    })
+#      gsub("amp_acro[0-9]+", paste0("(main_rrr", component_num, "+", "main_sss", component_num), x, perl = TRUE)
 
+      rrr_part <- gsub("amp_acro[0-9]+", paste0("main_rrr", component_num), x, perl = TRUE)
+      sss_part <- gsub("amp_acro[0-9]+", paste0("main_sss", component_num), x, perl = TRUE)
+      paste0(rrr_part," + ", sss_part)
+
+
+    })
     ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")

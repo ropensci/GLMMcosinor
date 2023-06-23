@@ -138,7 +138,7 @@ The `{GLMMcosinor}` package provides estimates of amplitude ($A$),
 acrophase ($\phi$), and MESOR ($M$).
 
 -   MESOR ($M$) is the Midline Estimating Statistic of Rhythm, and may
-    also referred to as the equilbrium point
+    also be referred to as the equilbrium point
 
 -   Amplitude ($A$) is the difference between the MESOR and the maximal
     response
