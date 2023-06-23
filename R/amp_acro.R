@@ -365,16 +365,19 @@ amp_acro <- function(time_col,
       if (length(component_num) == 0) {
         return(x)
       }
+      gsub("amp_acro[0-9]+", paste0("(main_rrr", component_num, "+", "main_sss)", component_num), x, perl = TRUE)
+      string_match <- paste0("amp_acro\\d+\\s*(.*?)\\s*\\|.*")
+      ranef_part_addition <- sub(string_match, "\\1",ranef_part)
+      ranef_part_group <-  sub(".*\\|\\s*(.*)", "\\1", ranef_part)
 
-#      gsub("amp_acro[0-9]+", paste0("(main_rrr", component_num, "+", "main_sss", component_num), x, perl = TRUE)
+      rrr_part <- paste0("main_rrr", component_num, ranef_part_addition)
+      sss_part <- paste0("main_sss", component_num, ranef_part_addition)
 
-      rrr_part <- gsub("amp_acro[0-9]+", paste0("main_rrr", component_num), x, perl = TRUE)
-      sss_part <- gsub("amp_acro[0-9]+", paste0("main_sss", component_num), x, perl = TRUE)
-      paste0(rrr_part," + ", sss_part)
-
+      ranef_part <- paste0("(",rrr_part," + ", sss_part, ") | ",ranef_part_group)
 
     })
-    ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
+
+    ranef_part_updated <- unlist(ranef_parts_replaced)
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
     res$newformula <- stats::as.formula(main_part)
