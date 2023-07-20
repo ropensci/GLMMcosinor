@@ -287,7 +287,7 @@ test_that("mixed model estimates parameters well", {
       family = gaussian
     )
   }
- # suppressWarnings(expect_warning(f()))
+  # suppressWarnings(expect_warning(f()))
 
   withr::with_seed(42, {
     df_mixed <- do.call("rbind", lapply(1:75, f_sample_id))
@@ -312,7 +312,6 @@ test_that("mixed model estimates parameters well", {
 test_that("alternative inputs work", {
   testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
   testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
-#  testthat::expect_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = units::set_units#(vitamind$Y, "units")),
-#                         regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
-
+  #  testthat::expect_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = units::set_units#(vitamind$Y, "units")),
+  #                         regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
 })

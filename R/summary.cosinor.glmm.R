@@ -104,7 +104,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 
     # calculate parameters amp and acr
     amp <- sqrt(groups.r^2 + groups.s^2)
-    #acr <- -atan2(groups.s, groups.r)
+    # acr <- -atan2(groups.s, groups.r)
     acr <- atan2(groups.s, groups.r)
 
 
@@ -143,7 +143,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
     a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
 
-    #b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
+    # b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
     b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (groups.s / groups.r^2)
     b_s <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
 

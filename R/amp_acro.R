@@ -311,7 +311,6 @@ amp_acro <- function(time_col,
 
     if (.amp_acro_ind == -1) {
       left_part <- all.vars(.formula, max.names = 1)
-
     } else {
       left_part <- NULL
     }
@@ -365,24 +364,22 @@ amp_acro <- function(time_col,
       if (length(component_num) == 0) {
         return(x)
       } else {
-      for (i in 1:length(component_num)) {
+        for (i in 1:length(component_num)) {
+          string_match <- paste0(".*amp_acro", component_num[i], "\\s([^+|]*).*")
+          ranef_part_addition <- gsub(string_match, "\\1", ranef_part)
+          ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
 
-        string_match <- paste0(".*amp_acro",component_num[i] ,"\\s([^+|]*).*")
-        ranef_part_addition <- gsub(string_match, "\\1",ranef_part)
-        ranef_part_group <-  gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
+          rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
+          sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
 
-        rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
-        sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
-
-        x <- gsub(paste0("amp_acro",component_num[i]," ",ranef_part_addition), paste0(rrr_part ,"+", sss_part), x, fixed = TRUE)
-      }
+          x <- gsub(paste0("amp_acro", component_num[i], " ", ranef_part_addition), paste0(rrr_part, "+", sss_part), x, fixed = TRUE)
+        }
         return(x)
       }
-
     })
 
 
-    #ranef_part_updated <- unlist(ranef_parts_replaced)
+    # ranef_part_updated <- unlist(ranef_parts_replaced)
     ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")

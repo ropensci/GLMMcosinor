@@ -157,7 +157,7 @@ data_processor <- function(newdata,
 
   if (dispformula_check) {
     disp_coefs <- glmmTMB::fixef(mf)$disp
-    dispersion_model<- get_new_coefs(disp_coefs, dispformula$vec_rrr, dispformula$vec_sss, dispformula$n_components, period)
+    dispersion_model <- get_new_coefs(disp_coefs, dispformula$vec_rrr, dispformula$vec_sss, dispformula$n_components, period)
 
 
     disp_list <- c(
@@ -165,7 +165,7 @@ data_processor <- function(newdata,
       list(
         coefficients = dispersion_model,
         raw_coefficients = disp_coefs,
-        group = dispformula$group_disp #currently not being used
+        group = dispformula$group_disp # currently not being used
       )
     )
     names(disp_list) <- paste0(names(disp_list), "_disp")
@@ -182,7 +182,7 @@ data_processor <- function(newdata,
       list(
         coefficients = zi_model,
         raw_coefficients = zi_coefs,
-        group = ziformula$group_zi #currently not being used
+        group = ziformula$group_zi # currently not being used
       )
     )
     names(zi_list) <- paste0(names(zi_list), "_zi")
@@ -219,7 +219,8 @@ data_processor <- function(newdata,
       zi_list = zi_list,
       response_var = response_var,
       newdata = newdata,
-      group_original = group_original    ),
+      group_original = group_original
+    ),
     class = "cosinor.glmm"
   )
 }

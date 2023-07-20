@@ -182,8 +182,8 @@ test_cosinor_levels <- function(x,
 
 
 
-  #If there are no levels supplied, the first two levels will be compared
-  if(missing(comparison_A) & missing(comparison_B)) {
+  # If there are no levels supplied, the first two levels will be compared
+  if (missing(comparison_A) & missing(comparison_B)) {
     comparison_A <- x$group_stats[[x_str]][1]
     comparison_B <- x$group_stats[[x_str]][2]
   }

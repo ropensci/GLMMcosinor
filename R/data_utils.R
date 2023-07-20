@@ -192,11 +192,10 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
     names(amp[[i]]) <- gsub(vec_rrr[i], paste0("amp", i), names(beta.r))
 
     acr[[i]] <- atan2(groups.s, groups.r)
-    #acr[[i]] <- atan2(-groups.s, groups.r)
-    #acr[[i]] <- -atan2(groups.s, groups.r)
+    # acr[[i]] <- atan2(-groups.s, groups.r)
+    # acr[[i]] <- -atan2(groups.s, groups.r)
 
     names(acr[[i]]) <- gsub(vec_sss[i], paste0("acr", i), names(beta.s))
-
   }
   new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
@@ -206,5 +205,4 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
   new_coefs
-
 }
