@@ -1,15 +1,18 @@
-Package: GLMMcosinor
 Type: Package
+Package: GLMMcosinor
 Title: Fit a cosinor model using a generalised mixed modelling framework
 Version: 0.0.9000
 Authors@R: c(
-    person("Rex", "Parsons", role = c("aut", "cre"),
-           email = "rex.parsons94@gmail.com",
+    person("Rex", "Parsons", , "rex.parsons94@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6053-8174")),
-    person("Oliver", "Jayasinghe", role = "aut")
+    person("Oliver", "Jayasinghe", role = "aut"),
+    person("Nicole", "White", role = "aut",
+           comment = c(ORCID = "0000-0002-9292-0773"))
   )
-Description: Fit the cosinor model using the glmmTMB framework, allowing for a
-    wide range of link functions and capacity of heirachical structures.
+Description: Fit the cosinor model using the glmmTMB framework, allowing
+    for a wide range of link functions and capacity of heirachical
+    structures.
+License: GPL (>= 3)
 URL: https://github.com/RWParsons/GLMMcosinor,
     https://rwparsons.github.io/GLMMcosinor/
 BugReports: https://github.com/RWParsons/GLMMcosinor/issues
@@ -34,10 +37,11 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr,
     withr
-License: GPL (>= 3)
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE, roclets = c ("namespace", "rd",
+    "srr::srr_stats_roclet"))
 RoxygenNote: 7.2.3
-Roxygen: list(markdown = TRUE, roclets = c ("namespace", "rd", "srr::srr_stats_roclet"))
-Config/testthat/edition: 3

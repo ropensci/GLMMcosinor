@@ -111,8 +111,7 @@ object
 
 The output shows the estimates for the raw coefficients in addition to
 the transformed estimates for amplitude (amp) and acrophase (acr) and
-MESOR (`(Intercept)`). The previous section of this vignette: **'An
-overview of the statistical methods used for parameter estimation'**
+MESOR (`(Intercept)`). The previous section of this vignette: [An overview of the statistical methods used for parameter estimation](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html#an-overview-of-the-statistical-methods-used-for-parameter-estimation)
 outlines the difference between the raw coefficients and the transformed
 coefficients.
 

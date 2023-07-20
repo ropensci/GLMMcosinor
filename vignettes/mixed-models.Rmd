@@ -21,7 +21,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-GLMMcossinor allows specification of mixed models accounting for fixed and/or random effects. Mixed model specification follows the `{lme4}` format. See their vignette, [Fitting Linear Mixed-Effects Models Using lme4](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf), for details about how to specify mixed models.
+`{GLMMcosinor}` allows specification of mixed models accounting for fixed and/or random effects. Mixed model specification follows the `{lme4}` format. See their vignette, [Fitting Linear Mixed-Effects Models Using lme4](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf), for details about how to specify mixed models.
 
 ### Data with subject-level differences
 
