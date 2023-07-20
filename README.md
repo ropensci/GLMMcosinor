@@ -65,13 +65,13 @@ summary(model)
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Transformed coefficients:
-#>                estimate standard.error    lower.CI upper.CI    p.value    
-#> (Intercept) 29.68979587     0.45836964 28.79140787 30.58818 < 2.22e-16 ***
-#> [X=1]        1.90186227     0.79196879  0.34963197  3.45409   0.016331 *  
-#> [X=0]:amp1   6.27045757     0.66965642  4.95795510  7.58296 < 2.22e-16 ***
-#> [X=1]:amp1   8.09947222     1.10283566  5.93795403 10.26099 2.0696e-13 ***
-#> [X=0]:acr1  -1.42180558     0.09993559 -1.61767574 -1.22594 < 2.22e-16 ***
-#> [X=1]:acr1  -0.63715441     0.14043625 -0.91240440 -0.36190 5.7069e-06 ***
+#>               estimate standard.error   lower.CI upper.CI    p.value    
+#> (Intercept) 29.6897959      0.4583696 28.7914079 30.58818 < 2.22e-16 ***
+#> [X=1]        1.9018623      0.7919688  0.3496320  3.45409   0.016331 *  
+#> [X=0]:amp1   6.2704576      0.6696564  4.9579551  7.58296 < 2.22e-16 ***
+#> [X=1]:amp1   8.0994722      1.1028357  5.9379540 10.26099 2.0696e-13 ***
+#> [X=0]:acr1   1.4218056      0.1000725  1.2256670  1.61794 < 2.22e-16 ***
+#> [X=1]:acr1   0.6371544      0.1360809  0.3704408  0.90387 2.8385e-06 ***
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -87,6 +87,9 @@ polar_plot(model)
 
 ``` r
 citation("GLMMcosinor")
+#> Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of
+#> package 'GLMMcosinor'
+#> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
 #>   Parsons R, Jayasinghe O (2023). _GLMMcosinor: Fit a cosinor model
