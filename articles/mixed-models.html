@@ -98,9 +98,9 @@ Jayasinghe and Rex Parsons</h4>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
-<p>GLMMcossinor allows specification of mixed models accounting for
-fixed and/or random effects. Mixed model specification follows the
-<a href="https://github.com/lme4/lme4/" class="external-link">lme4</a> format. See their vignette, <a href="https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf" class="external-link">Fitting
+<p><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a> allows specification of mixed models
+accounting for fixed and/or random effects. Mixed model specification
+follows the <a href="https://github.com/lme4/lme4/" class="external-link">lme4</a> format. See their vignette, <a href="https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf" class="external-link">Fitting
 Linear Mixed-Effects Models Using lme4</a>, for details about how to
 specify mixed models.</p>
 <div class="section level3">
@@ -188,7 +188,7 @@ appear in the fixed effects).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; Y ~ main_rrr1 + main_sss1 + (1 + main_rrr1 + main_sss1 | subject)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55da7983dbb0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55a7d4cc3c80&gt;</span></span></code></pre></div>
 <p>The summary of the model shows that the input means for MESOR,
 amplitude and acrophase are similar to what we specified in the
 simulation (0, 3, and 1.5, respectively).</p>
@@ -197,18 +197,18 @@ simulation (0, 3, and 1.5, respectively).</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
-<span><span class="co">#&gt; (Intercept) -0.16530804     0.16945723 -0.49743811  0.16682 0.32930    </span></span>
-<span><span class="co">#&gt; main_rrr1    0.11412447     0.10914016 -0.09978631  0.32804 0.29571    </span></span>
-<span><span class="co">#&gt; main_sss1    3.05065745     0.08459272  2.88485876  3.21646 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI  p.value    </span></span>
+<span><span class="co">#&gt; (Intercept) -0.10783823     0.17383752 -0.44855350  0.23288 0.535034    </span></span>
+<span><span class="co">#&gt; main_rrr1    0.21347672     0.09751109  0.02235850  0.40459 0.028578 *  </span></span>
+<span><span class="co">#&gt; main_sss1    2.82053738     0.09003144  2.64407901  2.99700  &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
-<span><span class="co">#&gt; (Intercept) -0.16530804     0.16945723 -0.49743811  0.16682  0.3293    </span></span>
-<span><span class="co">#&gt; amp1         3.05279139     0.08444759  2.88727715  3.21831  &lt;2e-16 ***</span></span>
-<span><span class="co">#&gt; acr1         1.53340397     0.03569413  1.46344476  1.60336  &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept) -0.10783823     0.17383752 -0.44855350  0.23288 0.53503    </span></span>
+<span><span class="co">#&gt; amp1         2.82860450     0.09090705  2.65042996  3.00678 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; acr1         1.49525381     0.03473049  1.42718331  1.56332 &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>We can see that the predicted values from the model closely resemble
@@ -231,9 +231,9 @@ using the Akaike information criterion using <code><a href="https://rdrr.io/r/st
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fixed_effects_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2727.407</span></span>
+<span><span class="co">#&gt; [1] 2748.796</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 103.4288</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 127.5967</span></span></code></pre></div>
 <p>Aside from not being able to be useful to see the differences between
 subjects from the model, we end up with much worse model fit and likely
 biased and/or imprecise estimates of our fixed effects that we are
@@ -247,7 +247,7 @@ interested in!</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Rex Parsons, Oliver Jayasinghe.</p>
+<p>Developed by Rex Parsons, Oliver Jayasinghe, Nicole White.</p>
 </div>
 
 <div class="pkgdown-footer-right">
