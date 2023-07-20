@@ -65,7 +65,7 @@ testdata_three_components <- simulate_cosinor(1000,
 })
 ```
 
-`{GLMMCosinor}` allows specification of multi-component cosinor models. This is useful if there are multiple explanatory variables with known periods affecting the response variable.
+`{GLMMcosinor}` allows specification of multi-component cosinor models. This is useful if there are multiple explanatory variables with known periods affecting the response variable.
 
 ## Generating a two-component model
 
