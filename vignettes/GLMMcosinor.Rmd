@@ -175,7 +175,7 @@ be transformed as per the following equations:
 
 $$\hat\phi = \arctan(\frac{\hat\gamma}{\hat\beta}) $$
 
-$$\hat A = (\hat\beta ^2 + \hat\gamma ^ 2) ^ \frac{1}{2} $$
+$$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$
 
 These transformations are handled by the internal function
 `get_new_coefs()` inside the `data_utils.R` script. The result of these
