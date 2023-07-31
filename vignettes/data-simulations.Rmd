@@ -19,8 +19,6 @@ knitr::opts_chunk$set(
 library(GLMMcosinor)
 ```
 
---- taken from GLMMcosinor.Rmd
-
 ## Using: 'simulate_cosinor.R'
 
 `simulate_cosinor` allows users to simulate circadian data from Gaussian, Gamma, Binomial, or Poisson distributions. It also supports generation of multi-component data, with support for a grouping variable with two levels.
