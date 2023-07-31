@@ -202,7 +202,6 @@ amp_acro <- function(time_col,
     }
 
 
-
     # allow the user to not have any grouping structure (if group argument is missing)
     if (missing(group)) {
       group <- 0
@@ -214,6 +213,12 @@ amp_acro <- function(time_col,
       } else {
         group_check <- TRUE
         check_group_var(.data = .data, group = group)
+        # if the user supplies a group argument in cosinor.glmm() call, but only
+        # one level exists in the group, then reassign group_check <- false
+        if (length(unique(.data[[group]])) == 1){
+          group <- 0
+          group_check <- FALSE
+        }
       }
     }
 

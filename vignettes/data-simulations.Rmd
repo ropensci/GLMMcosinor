@@ -23,15 +23,75 @@ library(GLMMcosinor)
 
 ## Using: 'simulate_cosinor.R'
 
-Simulate_cosinor allows users to simulate circadian data from four distributions:
+`simulate_cosinor` allows users to simulate circadian data from Gaussian, Gamma, Binomial, or Poisson distributions. It also supports generation of multi-component data, with support for a grouping variable with two levels.
 
-\- family = 'gaussian'
+### Understanding the inputs for a simple model
 
-\- family = 'Gamma(link = 'log')'
+`n` specifies the number of datapoints.
 
-\- family = 'binomial'
+`mesor`, `amp`, and `acro` represent the parameters that will be used to simulate the dataset. Note that `acro` should be expressed in units of radians.
 
-\- family = 'poisson'
+`period` determines the period of the dataset
+
+`n_components` corresponds to the number of components in the simulated dataset. Details about how to specify a multi-component model are included later in this vignette
+
+The `family` argument determines the distribution that the data is simulated from. Currently, `simulate_cosinor` supports simulations from Gaussian, Gamma, Binomial, and Poisson distributions:
+
+-   `family = 'gaussian'`
+
+-   `family = 'gamma'`
+
+-   `family = 'binomial'`
+
+-   `family = 'poisson'`
+
+Note that the `…` parameter controls extra arguments such as standard deviation, and the shape parameter for a Gamma distribution:
+
+-   `sdv` controls the standard deviation when sampling from a normal distribution. `sdv` is set to 1 by default
+
+-   `alpha` controls the shape parameter for the Gamma distribution. `alpha` is set to 1 by default
+
+`n_period` is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing n_periods increases the number of cycles that are simulated.
+
+Consider the following example of a single-component Poisson data-set with no grouping variable:
+
+```{r, message=F, warning=F, eval=F}
+testdata <- simulate_cosinor(
+  n = 200,
+  mesor = 1,
+  amp = 2,
+  acro = 1.2,
+  period = 12,
+  n_period = 3,
+  family = c("poisson")
+)
+
+testdata
+```
+
+Now, let's fit a `cosinor.glmm()` model to this simulated dataset to see how it matches with our original parameters:
+
+```{r, message=F, warning=F, eval=F}
+object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 1, period = 12), data = testdata, family = poisson())
+summary(object)
+autoplot(object, superimpose.data = TRUE)
+```
+
+### Simulated grouped cosinor data
+
+The `simulate_cosinor()` function can simulate grouped data from two levels with their own parameters when `beta.group = TRUE`. The reference group is specified by the parameters `mesor`, `amp`, `acro`. The treatment group is specified in the same manner, but with the `beta` prefix. For example:
+
+-   `beta.mesor`
+
+-   `beta.amp`
+
+-   `beta.acro`
+
+Similarly, the standard deviation (`sdv)` for the Gaussian distribution or the `alpha` parameter for the Gamma distribution are specified as:
+
+-   `beta.sdv` (1 by default)
+
+-   `beta.alpha` (1 by default)
 
 ```{r, message=F, warning=F, eval=F}
 simulate_cosinor(
@@ -40,44 +100,79 @@ simulate_cosinor(
   amp = 2,
   acro = 1.2,
   period = 12,
-  n_components = 1,
   beta.group = TRUE,
   beta.mesor = 0.4,
   beta.amp = 0.5,
   beta.acro = 0.2,
+  n_period = 3,
+  n_components = 1,
   family = c("poisson")
 )
+
 ```
 
 ```{r, message=F, warning=F, echo=F}
-df <- simulate_cosinor(
+testdata <- simulate_cosinor(
   n = 100,
   mesor = 1,
   amp = 2,
   acro = 1.2,
   period = 12,
-  n_components = 1,
   beta.group = TRUE,
   beta.mesor = 0.4,
   beta.amp = 0.5,
   beta.acro = 0.2,
+  n_components = 1,
+  n_period = 3,
+  family = c("gaussian")
+)
+
+DT::datatable(testdata)
+object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 1, period = 12, group = "group"), data = testdata, family = gaussian())
+summary(object)
+autoplot(object, superimpose.data = TRUE)
+```
+
+### Simulating multi-component cosinor data
+
+To simulate multi-component data with the number of components corresponding to `n_components` , specify a vector of values for the parameter inputs, `amp`, `acro`, and `period`. Since only one `mesor` is provided for a multi-component cosinor curve, the `mesor` argument in `simualte_cosinor` will only accept single-element inputs. For example:
+
+```{r, message=F, warning=F, eval=F}
+testdata <- simulate_cosinor(
+  n = 200,
+  mesor = 1,
+  amp = c(0.2, 1),
+  acro = c(1.2, 2),
+  period = c(12, 6),
+  n_components = 2,
+  n_period = 2,
   family = c("poisson")
 )
 
-DT::datatable(df)
+testdata
+object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12,6)), data = testdata, family = poisson())
+summary(object)
+autoplot(object, superimpose.data = TRUE)
 ```
 
-'mesor', 'amp', and 'acro' represent the parameters for the first level, and the beta.prefix indicates a second level that can be used for data visualisation (if comparing two groups, for example) if desired.
+In this example:
 
-The simulate_cosinor function can simulate multi-component data. To do this, specify a vector of values for the parameter inputs ('amp' and 'acro'). Note that the mesor term only accepts single-element inputs. Furthermore, ensure that 'n_components' corresponds to the length of the vectors: 'amp', 'acro', 'beta.amp', 'beta.acro', and 'period.'
+-   `mesor = 1` suggests that the intercept of the overall cosinor curve (accounting for all components) is 1
 
-'n_period' is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing n_periods increases the number of cycles that are simulated.
+-   `amp=c(0.2,1)` indicates that the amplitude of the first component is 0.2, and the second is 1
 
-Here is another example of the simulate_cosinor function. The cosinor.glmm object has also been included to demonstrate that the parameter estimates accurately reflect the inputs into the simulate function:
+-   `acro = c(1.2, 2)` indicates that the acrophase of the first component is 1.2 radians, and the second is 2 radians
+
+-   `period = c(12, 6)` indicates that the period of the first component is 12 units, and the second is 6 units.
+
+-   `n_components = 2`, because we are specifying a two-component dataset
+
+To simulate a dataset with more than two components, specify more elements in the vector inputs for these parameters. Ensure that the number of inputs for each parameter corresponds to the number of components specified in `n_components`. For example, if `n_components = 3`, then `amp`, `acro`, `period` must all have 3 elements corresponding to each of the three components.
+
+The following are examples of a multi-component cosinor dataset with mutliple groups. The first one is from a Poisson distribution, and the second is from a Gamma distribution
 
 ```{r, message=F, warning=F, fig.show = "hold"}
 testdata <- simulate_cosinor(100,
-  n_period = 2,
   mesor = 7,
   amp = c(0.1, 0.4, 0.5),
   acro = c(1, 1.5, 0.1),
@@ -86,6 +181,7 @@ testdata <- simulate_cosinor(100,
   beta.acro = c(1, -1.5, -1),
   family = "poisson",
   period = c(12, 6, 8),
+  n_period = 2,
   n_components = 3
 )
 
@@ -95,6 +191,32 @@ object <- cosinor.glmm(Y ~ group + amp_acro(times,
   group = "group"
 ), data = testdata, family = poisson())
 summary(object)
-autoplot(object, superimpose.data = FALSE, x_str = "group", predict.ribbon = FALSE)
-autoplot(object, superimpose.data = FALSE, x_str = "group", predict.ribbon = TRUE)
+autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+
+```
+
+```{r, message=F, warning=F, fig.show = "hold"}
+testdata <- simulate_cosinor(500,
+  mesor = 1,
+  amp = c(0.5, 0.5, 0.5),
+  acro = c(0, 5, 10),
+  alpha = 2,
+  beta.mesor = 2,
+  beta.amp = c(0.2, 0.2, 0.2),
+  beta.acro = c(2.5, 7.5, 12.5),
+  beta.alpha = 3,
+  family = "gamma",
+  period = c(12, 6, 8),
+  n_period = 2,
+  n_components = 3
+)
+
+object <- cosinor.glmm(Y ~ group + amp_acro(times,
+  n_components = 3,
+  period = c(12, 6, 8),
+  group = "group"
+), data = testdata, family = Gamma(link = 'log'))
+summary(object)
+autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+
 ```

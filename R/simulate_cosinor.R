@@ -44,9 +44,10 @@
 #' simulated.
 #' @param ... Extra arguments, including \code{alpha} that controls the
 #' \code{shape} argument when sampling from a gamma distribution
-#' (when \code{family = "gamma"}; default is 1), and \code{sd}
+#' (when \code{family = "gamma"}; default is 1), and \code{sdv}
 #' (standard deviation) which is used when sampling from a normal distribution
-#' (when \code{family = "gaussian"}; default is 1).
+#' (when \code{family = "gaussian"}; default is 1). To specify these parameters
+#' for the beta (treatment) group, use \code{beta.alpha} and \code{beta.sdv}
 #'
 #' @return Returns simulated data in a \code{data.frame}.
 #'
@@ -113,6 +114,8 @@ simulate_cosinor <- function(n,
 
   # create dataset for only one group if beta.group = FALSE
   if (!beta.group) {
+    if (!"sdv" %in% names(list(...))){sdv = 1} else {sdv = list(...)$sdv}
+    if (!"alpha" %in% names(list(...))){alpha = 1} else{alpha = list(...)$alpha}
     df <- .get_dataset(
       family = family,
       amp = amp,
@@ -123,10 +126,15 @@ simulate_cosinor <- function(n,
       period = period,
       ...
     )
+    # label the group
+    df$group <- 0
   }
 
   # create dataset for two groups if beta.group = TRUE
   if (beta.group) {
+    if (!"sdv" %in% names(list(...))){sdv = 1} else {sdv = list(...)$sdv}
+    if (!"alpha" %in% names(list(...))){alpha = 1} else{alpha = list(...)$alpha}
+
     data_A <- .get_dataset(
       family = family,
       amp = amp,
@@ -135,8 +143,13 @@ simulate_cosinor <- function(n,
       mesor = mesor,
       n_components = n_components,
       period = period,
-      ...
+      sdv = sdv,
+      alpha = alpha
     )
+
+    if (!"beta.sdv" %in% names(list(...))){beta.sdv = 1}else{beta.sdv = list(...)$beta.sdv}
+    if (!"beta.alpha" %in% names(list(...))){beta.alpha = 1}else{beta.alpha = list(...)$beta.alpha}
+
 
     data_B <- .get_dataset(
       family = family,
@@ -146,7 +159,8 @@ simulate_cosinor <- function(n,
       mesor = beta.mesor,
       n_components = n_components,
       period = period,
-      ...
+      sdv = beta.sdv,
+      alpha = beta.alpha
     )
     data_A$group <- 0
     data_B$group <- 1
@@ -243,13 +257,13 @@ simulate_cosinor <- function(n,
 #' @param mesor Arg from \code{simulate_cosinor()}.
 #' @param n_components Arg from \code{simulate_cosinor()}.
 #' @param period Arg from \code{simulate_cosinor()}.
-#' @param sd Standard deviation (used when \code{family = "gaussian")}.
+#' @param sdv Standard deviation (used when \code{family = "gaussian")}.
 #' @param alpha Used when sampling from gamma distribution.
 #' @param ... Optional, unused args.
 #'
 #' @return A \code{data.frame}.
 #' @noRd
-.get_dataset <- function(family, amp, acro, ttt, mesor, n_components, period, sd = 1, alpha = 1, ...) {
+.get_dataset <- function(family, amp, acro, ttt, mesor, n_components, period, sdv, alpha) {
   d_params <- .get_params(
     amp = amp,
     acro = acro,
@@ -260,7 +274,7 @@ simulate_cosinor <- function(n,
 
   if (family == "gaussian") {
     d_params$param <- mesor + d_params$param
-    d_params$Y <- stats::rnorm(n = length(ttt), mean = d_params$param, sd = sd)
+    d_params$Y <- stats::rnorm(n = length(ttt), mean = d_params$param, sd = sdv)
   }
   if (family == "poisson") {
     d_params$param <- exp(mesor + d_params$param)

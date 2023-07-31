@@ -124,7 +124,7 @@ update_formula_and_data <- function(data,
 #' @noRd
 
 
-# (tested)
+# check the group inputs
 check_group_var <- function(.data, group) {
   grouping_vars <- group[!group %in% c(0, NA)]
   if (!all(grouping_vars %in% colnames(.data))) {
