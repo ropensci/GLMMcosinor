@@ -253,8 +253,8 @@ The most relevant output from the `cosinor.glmm()` function is likely to
 be the parameter estimates for MESOR, amplitude, and acrophase under the
 'Transformed Coefficients' heading. A detailed explanation of the
 difference between the raw coefficients and the transformed coefficients
-is found in this vignette, in the **'An overview of the statistical
-methods used for parameter estimation'** section.
+is found in this vignette, in the section titled **'An overview of the
+statistical methods used for parameter estimation'**.
 
 The following example looks at a grouped single-component model based on
 a Gaussian distribution from the `vitamind` dataset.
