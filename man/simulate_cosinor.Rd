@@ -74,7 +74,8 @@ simulated dataset. Can handle values in \code{c("poisson", "binomial",
 \code{shape} argument when sampling from a gamma distribution
 (when \code{family = "gamma"}; default is 1), and \code{sd}
 (standard deviation) which is used when sampling from a normal distribution
-(when \code{family = "gaussian"}; default is 1).}
+(when \code{family = "gaussian"}; default is 1). To specify these parameters
+for the beta (treatment) group, use \code{beta.alpha} and \code{beta.sd}}
 }
 \value{
 Returns simulated data in a \code{data.frame}.

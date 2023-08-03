@@ -45,7 +45,7 @@ The `family` argument determines the distribution that the data is simulated fro
 
 Note that the `…` parameter controls extra arguments such as standard deviation, and the shape parameter for a Gamma distribution:
 
--   `sdv` controls the standard deviation when sampling from a normal distribution. `sdv` is set to 1 by default
+-   `sd` controls the standard deviation when sampling from a normal distribution. `sd` is set to 1 by default
 
 -   `alpha` controls the shape parameter for the Gamma distribution. `alpha` is set to 1 by default
 
@@ -85,9 +85,9 @@ The `simulate_cosinor()` function can simulate grouped data from two levels with
 
 -   `beta.acro`
 
-Similarly, the standard deviation (`sdv)` for the Gaussian distribution or the `alpha` parameter for the Gamma distribution are specified as:
+Similarly, the standard deviation (`sd)` for the Gaussian distribution or the `alpha` parameter for the Gamma distribution are specified as:
 
--   `beta.sdv` (1 by default)
+-   `beta.sd` (1 by default)
 
 -   `beta.alpha` (1 by default)
 

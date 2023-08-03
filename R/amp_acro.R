@@ -215,10 +215,11 @@ amp_acro <- function(time_col,
         check_group_var(.data = .data, group = group)
         # if the user supplies a group argument in cosinor.glmm() call, but only
         # one level exists in the group, then reassign group_check <- false
-        if (length(unique(.data[[group]])) == 1){
-          group <- 0
-          group_check <- FALSE
-        }
+        #browser()
+        # if (length(unique(.data[[group]])) == 1){
+        #  group <- 0
+        #  group_check <- FALSE
+        #}
       }
     }
 

@@ -264,7 +264,7 @@ test_that("mixed model estimates parameters well", {
       amp = amp,
       acro = acro,
       family = family,
-      sd = sd,
+      sdv = sd,
       period = period,
       n_components = n_components
     )
