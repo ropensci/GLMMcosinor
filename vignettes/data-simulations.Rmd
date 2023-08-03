@@ -21,7 +21,7 @@ library(GLMMcosinor)
 
 ## Using: 'simulate_cosinor.R'
 
-`simulate_cosinor` allows users to simulate circadian data from Gaussian, Gamma, Binomial, or Poisson distributions. It also supports generation of multi-component data, with support for a grouping variable with two levels.
+`simulate_cosinor` allows users to simulate circadian data from Gaussian, Gamma, Binomial, or Poisson distributions. It also supports generation of multi-component data, as well as simulation of grouped data with two levels.
 
 ### Understanding the inputs for a simple model
 
@@ -49,7 +49,7 @@ Note that the `…` parameter controls extra arguments such as standard deviatio
 
 -   `alpha` controls the shape parameter for the Gamma distribution. `alpha` is set to 1 by default
 
-`n_period` is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing n_periods increases the number of cycles that are simulated.
+`n_period` is the number of periods that are simulated. By default, the maximum period supplied defines the upper limit of the time vector used in the simulation. Thus, increasing `n_period` increases the number of cycles that are simulated.
 
 Consider the following example of a single-component Poisson data-set with no grouping variable:
 
