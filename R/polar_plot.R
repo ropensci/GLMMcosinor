@@ -65,7 +65,7 @@
 #' whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#' @srrstats {G1.4}
 #'
 #' @return Returns a \code{ggplot} object.
 #' @export
@@ -163,7 +163,7 @@ polar_plot <- function(x,
 #' whether messages are displayed in the console.
 #' @param ... Additional, ignored arguments.
 #'
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#' @srrstats {G1.4}
 #'
 #' @return Returns a \code{ggplot} object.
 #' @export
@@ -179,15 +179,22 @@ polar_plot.cosinor.glmm <- function(x,
                                     n_breaks = 5,
                                     component_index,
                                     grid_angle_segments = 8,
-                                    radial_units = c("radians", "degrees", "period"),
+                                    radial_units = c("radians",
+                                                     "degrees",
+                                                     "period"),
                                     clockwise = FALSE,
                                     text_size = 3.5,
                                     text_opacity = 1,
                                     fill_colours,
                                     ellipse_opacity = 0.3,
                                     circle_linetype = "dotted",
-                                    start = c("right", "left", "top", "bottom"),
-                                    view = c("full", "zoom", "zoom_origin"),
+                                    start = c("right",
+                                              "left",
+                                              "top",
+                                              "bottom"),
+                                    view = c("full",
+                                             "zoom",
+                                             "zoom_origin"),
                                     overlay_parameter_info = FALSE,
                                     quietly = TRUE,
                                     ...) {
@@ -580,7 +587,9 @@ polar_plot.cosinor.glmm <- function(x,
     # OPTIONAL: print information about the polar grid
     if (!quietly & length(contour_labels) > 1) {
       message(
-        "Concentric circles every ", contour_labels[2] - contour_labels[1], " unit(s)"
+        "Concentric circles every ",
+        contour_labels[2] - contour_labels[1],
+        " unit(s)"
       )
       message("Angle in units of ", radial_units)
     }

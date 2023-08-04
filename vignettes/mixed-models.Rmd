@@ -85,7 +85,9 @@ In the model formula, we can use the special `amp_acro[n]` which represents the 
 
 ```{r}
 mixed_mod <- cosinor.glmm(
-  Y ~ amp_acro(times, n_components = 1, period = 24) + (1 + amp_acro1 | subject),
+  Y ~ amp_acro(times, 
+               n_components = 1, 
+               period = 24) + (1 + amp_acro1 | subject),
   data = dat_mixed
 )
 ```

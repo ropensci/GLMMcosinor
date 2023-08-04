@@ -36,11 +36,11 @@ ggplot2::autoplot
 #' minimum cycle length (period) of all cosinor components in the model.
 #' @param ... Additional, ignored arguments.
 #'
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#' @srrstats {RE6.1} *Where the default `plot` method is **NOT** a generic `plot` method dispatched on the class of return objects (that is, through an S3-type `plot.<myclass>` function or equivalent), that method dispatch (or equivalent) should nevertheless exist in order to explicitly direct users to the appropriate function.*
-#' @srrstats {RE6.0} *Model objects returned by Regression Software (see* **RE4***) should have default `plot` methods, either through explicit implementation, extension of methods for existing model objects, or through ensuring default methods work appropriately.*
-#' @srrstats {RE6.2} *The default `plot` method should produce a plot of the `fitted` values of the model, with optional visualisation of confidence intervals or equivalent.*
-#' @srrstats {RE6.3} *Where a model object is used to generate a forecast (for example, through a `predict()` method), the default `plot` method should provide clear visual distinction between modelled (interpolated) and forecast (extrapolated) values.*
+#' @srrstats {G1.4}
+#' @srrstats {RE6.1}
+#' @srrstats {RE6.0}
+#' @srrstats {RE6.2}
+#' @srrstats {RE6.3}
 #'
 #' @return Returns a `ggplot` object.
 #' @examples
@@ -111,7 +111,8 @@ autoplot.cosinor.glmm <- function(object,
 
   # By default, the predicted length out is calculated to give sufficient resolution to the smallest period.
   if (missing(pred.length.out)) {
-    pred.length.out <- max(min_period_cycle_count * points_per_min_cycle_length, 400)
+    pred.length.out <- max(min_period_cycle_count * points_per_min_cycle_length,
+                           400)
   }
 
   # generate the time values for the x-axis

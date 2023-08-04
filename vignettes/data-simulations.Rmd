@@ -70,7 +70,11 @@ testdata
 Now, let's fit a `cosinor.glmm()` model to this simulated dataset to see how it matches with our original parameters:
 
 ```{r, message=F, warning=F, eval=F}
-object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 1, period = 12), data = testdata, family = poisson())
+object <- cosinor.glmm(Y ~ amp_acro(times, 
+                                    n_components = 1, 
+                                    period = 12), 
+                       data = testdata, 
+                       family = poisson())
 summary(object)
 autoplot(object, superimpose.data = TRUE)
 ```
@@ -126,7 +130,12 @@ testdata <- simulate_cosinor(
 )
 
 DT::datatable(testdata)
-object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 1, period = 12, group = "group"), data = testdata, family = gaussian())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, 
+                                            n_components = 1, 
+                                            period = 12, 
+                                            group = "group"), 
+                       data = testdata, 
+                       family = gaussian())
 summary(object)
 autoplot(object, superimpose.data = TRUE)
 ```
@@ -148,7 +157,11 @@ testdata <- simulate_cosinor(
 )
 
 testdata
-object <- cosinor.glmm(Y ~ amp_acro(times, n_components = 2, period = c(12,6)), data = testdata, family = poisson())
+object <- cosinor.glmm(Y ~ amp_acro(times, 
+                                    n_components = 2, 
+                                    period = c(12,6)), 
+                       data = testdata, 
+                       family = poisson())
 summary(object)
 autoplot(object, superimpose.data = TRUE)
 ```
@@ -189,7 +202,10 @@ object <- cosinor.glmm(Y ~ group + amp_acro(times,
   group = "group"
 ), data = testdata, family = poisson())
 summary(object)
-autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+autoplot(object, 
+         superimpose.data = TRUE, 
+         x_str = "group", 
+         predict.ribbon = FALSE)
 
 ```
 
@@ -215,6 +231,9 @@ object <- cosinor.glmm(Y ~ group + amp_acro(times,
   group = "group"
 ), data = testdata, family = Gamma(link = 'log'))
 summary(object)
-autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE)
+autoplot(object, 
+         superimpose.data = TRUE,
+         x_str = "group",
+         predict.ribbon = FALSE)
 
 ```

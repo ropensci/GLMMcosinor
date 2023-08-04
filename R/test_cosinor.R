@@ -1,4 +1,3 @@
-
 #' Test for differences in a cosinor model between components
 #'
 #'

@@ -11,8 +11,8 @@
 #' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
 #' @param ... Currently unused
 #'
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#' @srrstats {RE4.18} *Regression Software may also implement `summary` methods for model objects, and in particular should implement distinct `summary` methods for any cases in which calculation of summary statistics is computationally non-trivial (for example, for bootstrapped estimates of confidence intervals).*
+#' @srrstats {G1.4}
+#' @srrstats {RE4.18}
 #'
 #' @return Returns a summary of the `cosinor.glmm` model as a `summary.cosinor.glmm` object.
 #' @examples
@@ -28,16 +28,18 @@
 #' @export
 
 summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
-  # get the fitted model from the cosinor.glmm() output, along with n_components, vec_rrr, and vec_sss
+  # get the fitted model from the cosinor.glmm() output, along with
+  #n_components, vec_rrr, and vec_sss
   mf <- object$fit
   n_components <- object$n_components
   vec_rrr <- object$vec_rrr
   vec_sss <- object$vec_sss
 
   validate_ci_level(ci_level)
-  # TODO: validate summary outputs with test-script using parts of the simulation study code
 
-  # this function can be looped if there is disp or zi formula present. 'model_index' is a string: 'cond', 'disp', or 'zi'
+
+  # this function can be looped if there is disp or zi formula present.
+  #'model_index' is a string: 'cond', 'disp', or 'zi'
   sub_summary.cosinor.glmm <- function(model_index) {
     if (model_index == "disp") {
       n_components <- object$disp_list$n_components_disp
@@ -46,10 +48,12 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
       n_components <- object$zi_list$n_components_zi
     }
 
-    args <- match.call()[-1] # get the arguments from the function wrapping this function
+    # get the arguments from the function wrapping this function
+    args <- match.call()[-1]
     coefs <- glmmTMB::fixef(mf)[[model_index]]
 
-    # reassign vec_rrr and vec_sss to those in the disp or zi model, if necessary
+    # reassign vec_rrr and vec_sss to those in the disp or zi model, if
+    #necessary
     if (model_index == "disp") {
       vec_rrr <- object$disp_list$vec_rrr_disp
       vec_sss <- object$disp_list$vec_sss_disp
@@ -60,14 +64,15 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
       vec_sss <- object$zi_list$vec_sss_zi
     }
 
-    # create objects r.coef, s.coef, and mu.coef. This will be Boolean vectors that indicate
-    # the position of particular coefficients in coefs.
+    # create objects r.coef, s.coef, and mu.coef. This will be Boolean vectors
+    #that indicate the position of particular coefficients in coefs.
     r.coef <- NULL
     s.coef <- NULL
     mu.coef <- NULL
     mu_inv <- rep(0, length(names(coefs)))
 
-    # put a '|' between adjecent elements of vec_rrr and vec_sss, used for indexing.
+    # put a '|' between adjecent elements of vec_rrr and vec_sss, used for
+    #indexing.
     if (length(vec_rrr) > 1) {
       vec_rrr_spec <- vec_rrr[1]
       vec_sss_spec <- vec_sss[1]
@@ -85,13 +90,17 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     r.coef <- grepl(vec_rrr_spec, names(coefs))
     s.coef <- grepl(vec_sss_spec, names(coefs))
 
-    mu_inv_carry <- r.coef + s.coef # Keep track of non-mesor terms
-    mu_inv <- mu_inv_carry + mu_inv # Ultimately,every non-mesor term will be true
+    # Keep track of non-mesor terms
+    mu_inv_carry <- r.coef + s.coef
+    # Ultimately, every non-mesor term will be true
+    mu_inv <- mu_inv_carry + mu_inv
 
-
-    mu.coef <- c(!mu_inv) # invert 'mu_inv' to get a Boolean vector for mesor terms
-    r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef)))) # a matrix of rrr coefficients
-    s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef)))) # a matrix of sss coefficients
+    # invert 'mu_inv' to get a Boolean vector for mesor terms a matrix of rrr
+    #coefficients
+    mu.coef <- c(!mu_inv)
+    r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
+    # a matrix of sss coefficients
+    s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
 
     # generate coefs containing sss, and rrr, respectively
     beta.s <- coefs[s.coef]
@@ -169,7 +178,8 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 
     rawmat <- cbind(
       estimate = coefs,
-      standard.error = raw.se, ## ?This could be changed to determine p-val between groups?
+      ## ?This could be changed to determine p-val between groups?
+      standard.error = raw.se,
       lower.CI = coefs - zt * raw.se,
       upper.CI = coefs + zt * raw.se,
       p.value = 2 * stats::pnorm(-abs(coefs / raw.se))
@@ -215,7 +225,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     output_zi <- NULL
   }
 
-  # here, the outputs from main_output are renamed to remove the main_output tag.
+  # here, the outputs from main_output are renamed to remove the main_output tag
   # this was done to remain cohesive with other parts of the package.
   structure(list(
     transformed.table = main_output$transformed.table,
@@ -236,8 +246,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #' @param digits Controls the number of digits displayed in the summary output
 #' @param ... Currently unused
 #'
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#'
+#' @srrstats {G1.4}
 #' @return `print` returns `x` invisibly.
 #' @examples
 #'
@@ -252,13 +261,18 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #'
 
 # check if there is dispersion or zi (as opposed to default) then print
-print.summary.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
+print.summary.cosinor.glmm <- function(x,
+                                       digits = getOption("digits"), ...) {
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
-  stats::printCoefmat(x$main_output$raw.table, digits = digits, has.Pvalue = TRUE)
+  stats::printCoefmat(x$main_output$raw.table,
+                      digits = digits,
+                      has.Pvalue = TRUE)
   cat("\n")
   cat("Transformed coefficients:\n")
-  stats::printCoefmat(x$main_output$transformed.table, digits = digits, has.Pvalue = TRUE)
+  stats::printCoefmat(x$main_output$transformed.table,
+                      digits = digits,
+                      has.Pvalue = TRUE)
 
   # display the output from the dispersion model (if present)
 
@@ -266,20 +280,28 @@ print.summary.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     cat("\n***********************\n")
     cat("\n Dispersion Model \n")
     cat("Raw model coefficients:\n")
-    stats::printCoefmat(x$output_disp$raw.table, digits = digits, has.Pvalue = TRUE)
+    stats::printCoefmat(x$output_disp$raw.table,
+                        digits = digits,
+                        has.Pvalue = TRUE)
     cat("\n")
     cat("Transformed coefficients:\n")
-    stats::printCoefmat(x$output_disp$transformed.table, digits = digits, has.Pvalue = TRUE)
+    stats::printCoefmat(x$output_disp$transformed.table,
+                        digits = digits,
+                        has.Pvalue = TRUE)
   }
 
   if (!is.null(x$output_zi)) {
     cat("\n***********************\n")
     cat("\n Zero-Inflation Model \n")
     cat("Raw model coefficients:\n")
-    stats::printCoefmat(x$output_zi$raw.table, digits = digits, has.Pvalue = TRUE)
+    stats::printCoefmat(x$output_zi$raw.table,
+                        digits = digits,
+                        has.Pvalue = TRUE)
     cat("\n")
     cat("Transformed coefficients:\n")
-    stats::printCoefmat(x$output_zi$transformed.table, digits = digits, has.Pvalue = TRUE)
+    stats::printCoefmat(x$output_zi$transformed.table,
+                        digits = digits,
+                        has.Pvalue = TRUE)
   }
   invisible(x)
 }

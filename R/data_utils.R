@@ -7,18 +7,17 @@
 #' @param dispformula The formula specifying the dispersion model
 #' @param ziformula The formula specifying the zero-inflation model
 #'
-#' @srrstats {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
-#' @srrstats {G2.14b} *ignore missing data with default warnings or messages issued*
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#' @srrstats {G2.6} *Software which accepts one-dimensional input should ensure values are appropriately pre-processed regardless of class structures.*
-#' @srrstats {G2.7} *Software should accept as input as many of the above standard tabular forms as possible, including extension to domain-specific forms.*
-#'
-#' @srrstats {RE2.0} *Regression Software should document any transformations applied to input data, for example conversion of label-values to `factor`, and should provide ways to explicitly avoid any default transformations (with error or warning conditions where appropriate).*
-#' @srrstats {RE2.1} *Regression Software should implement explicit parameters controlling the processing of missing values, ideally distinguishing `NA` or `NaN` values from `Inf` values (for example, through use of `na.omit()` and related functions from the `stats` package).*
-#' @srrstats {G2.8} *Software should provide appropriate conversion or dispatch routines as part of initial pre-processing to ensure that all other sub-functions of a package receive inputs of a single defined class or type.*
-#' @srrstats {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
-#' @srrstats {G2.10} *Software should ensure that extraction or filtering of single columns from tabular inputs should not presume any particular default behaviour, and should ensure all column-extraction operations behave consistently regardless of the class of tabular data used as input.*
-#' @srrstats {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
+#' @srrstats {G2.13}
+#' @srrstats {G2.14b}
+#' @srrstats {G1.4}
+#' @srrstats {G2.6}
+#' @srrstats {G2.7}
+#' @srrstats {RE2.0}
+#' @srrstats {RE2.1}
+#' @srrstats {G2.8}
+#' @srrstats {G2.9}
+#' @srrstats {G2.10}
+#' @srrstats {G2.13}
 
 #' @return Returns a \code{list}.
 #' @export
@@ -103,7 +102,11 @@ update_formula_and_data <- function(data,
   }
   if (ziformula_check) {
     data <- main_output$newdata
-    ziformula <- formula_eval(formula = ziformula, data = data, quietly = quietly, amp_acro_ind = 0, data_prefix = "zi_")
+    ziformula <- formula_eval(formula = ziformula,
+                              data = data,
+                              quietly = quietly,
+                              amp_acro_ind = 0,
+                              data_prefix = "zi_")
     main_output$newdata <- ziformula$newdata
 
     ziformula <- ziformula[items_keep]
@@ -118,7 +121,7 @@ update_formula_and_data <- function(data,
 #'
 #' @param .data dataframe
 #' @param group group argument specified in the cosinor.glmm call
-#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
+#' @srrstats {G1.4a}
 #'
 #' @return nothing if successful, an error message if not
 #' @noRd
@@ -140,8 +143,7 @@ check_group_var <- function(.data, group) {
 #' Checks that the `ci_level` values provided are reasonable
 #'
 #' @param ci_level Confidence level.
-#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
-#'
+#' @srrstats {G1.4a}
 #' @return nothing if successful, an error message if not
 #' @noRd
 

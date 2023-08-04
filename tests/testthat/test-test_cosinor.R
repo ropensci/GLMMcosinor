@@ -1,28 +1,46 @@
-#' @srrstats {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
-#' @srrstats {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
-#' @srrstats {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
-#' @srrstats {G5.2} *Appropriate error and warning behaviour of all functions should be explicitly demonstrated through tests. In particular,*
-#' @srrstats {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
-#' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
+#' @srrstats {G5.0}
+#' @srrstats {G5.0}
+#' @srrstats {G5.1}
+#' @srrstats {G5.2}
+#' @srrstats {G5.2a}
+#' @srrstats {G5.2b}
 
 test_that("script works and warnings are displayed appropriately", {
   # Test the class output
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   test_object <- test_cosinor_levels(object, x_str = "X")
   testthat::expect_true(inherits(test_object, "test_cosinor"))
 
   # Test the comparison_type variable, and test the print output
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      n_components = 2,
+                                      period = c(12, 11)),
+                         data = vitamind)
 
-  expect_no_error(test_cosinor_components(object, x_str = "X", level_index = 1, comparison_A = 1, comparison_B = 2))
+  expect_no_error(test_cosinor_components(object,
+                                          x_str = "X",
+                                          level_index = 1,
+                                          comparison_A = 1,
+                                          comparison_B = 2))
 
-  expect_no_error(print(test_cosinor_components(object, x_str = "X", level_index = 1, comparison_A = 1, comparison_B = 2)))
+  expect_no_error(print(test_cosinor_components(object,
+                                                x_str = "X",
+                                                level_index = 1,
+                                                comparison_A = 1,
+                                                comparison_B = 2)))
 
 
   # Test a simple input
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
     test_cosinor_levels(object, x_str = "X")
   }
@@ -31,7 +49,10 @@ test_that("script works and warnings are displayed appropriately", {
   # Testing error messages
   # Error message test 1
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
     test_cosinor_levels(object, x_str = 10)
   }
@@ -42,7 +63,10 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 2
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
     test_cosinor_levels(object, x_str = "Y")
   }
@@ -53,9 +77,14 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 3
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
-    test_cosinor_levels(object, x_str = "X", param = "phase")
+    test_cosinor_levels(object,
+                        x_str = "X",
+                        param = "phase")
   }
   expect_error(
     f(),
@@ -64,7 +93,10 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 4
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
     test_cosinor_levels(object, x_str = "X", param = "phase")
   }
@@ -75,9 +107,14 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 5
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
-    test_cosinor_levels(object, x_str = "X", comparison_A = 4, )
+    test_cosinor_levels(object,
+                        x_str = "X",
+                        comparison_A = 4, )
   }
   expect_error(
     f(),
@@ -86,9 +123,14 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 6
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
-    test_cosinor_components(object, x_str = "X", comparison_A = 4)
+    test_cosinor_components(object,
+                            x_str = "X",
+                            comparison_A = 4)
   }
   expect_error(
     f(),
@@ -99,9 +141,14 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 7
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
   f <- function() {
-    test_cosinor_levels(object, x_str = "X", component_index = 10)
+    test_cosinor_levels(object,
+                        x_str = "X",
+                        component_index = 10)
   }
   expect_error(
     f(),
@@ -110,9 +157,17 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Error message test 9
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", n_components = 2, period = c(12, 11)), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      n_components = 2,
+                                      period = c(12, 11)),
+                         data = vitamind)
   f <- function() {
-    test_cosinor_components(object, x_str = "X", level_index = 10, comparison_A = 1, comparison_B = 2)
+    test_cosinor_components(object,
+                            x_str = "X",
+                            level_index = 10,
+                            comparison_A = 1,
+                            comparison_B = 2)
   }
   expect_error(
     f(),
@@ -155,13 +210,17 @@ test_that("multi-component comparison works, print functions work", {
         period = c(10, 12),
         beta.group = TRUE
       )
-      object <- cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)), data = comod)
+      object <- cosinor.glmm(Y ~ group + amp_acro(times,
+                                                  n_components = 2,
+                                                  group = "group",
+                                                  period = c(10, 12)),
+                             data = comod)
     }
   )
 
   f <- function() {
     test_cosinor_components(object,
-      x_str = "group", ,
+      x_str = "group",
       comparison_A = 1,
       comparison_B = 2,
       level_index = 1

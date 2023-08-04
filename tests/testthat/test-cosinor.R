@@ -1,17 +1,16 @@
-#' @srrstats {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
-#' @srrstats {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
-#' @srrstats {G5.2} *Appropriate error and warning behaviour of all functions should be explicitly demonstrated through tests. In particular,*
-#' @srrstats {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
-#' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
-#' @srrstats {G5.5} *Correctness tests should be run with a fixed random seed*
-#' @srrstats {G5.4} **Correctness tests** *to test that statistical algorithms produce expected results to some fixed test data sets (potentially through comparisons using binding frameworks such as [RStata](https://github.com/lbraglia/RStata)).*
-#' @srrstats {G5.4a} *For new methods, it can be difficult to separate out correctness of the method from the correctness of the implementation, as there may not be reference for comparison. In this case, testing may be implemented against simple, trivial cases or against multiple implementations such as an initial R implementation compared with results from a C/C++ implementation.*
-#' @srrstats {G5.6} **Parameter recovery tests** *to test that the implementation produce expected results given data with known properties. For instance, a linear regression algorithm should return expected coefficient values for a simulated data set generated from a linear model.*
-#' @srrstats {G5.6a} *Parameter recovery tests should generally be expected to succeed within a defined tolerance rather than recovering exact values.*
-#' @srrstats {G5.6b} *Parameter recovery tests should be run with multiple random seeds when either data simulation or the algorithm contains a random component. (When long-running, such tests may be part of an extended, rather than regular, test suite; see G4.10-4.12, below).*
-#' @srrstats {G5.9b} *Running under different random seeds or initial conditions does not meaningfully change results*
-#' @srrstats {G2.11} *Software should ensure that `data.frame`-like tabular objects which have columns which do not themselves have standard class attributes (typically, `vector`) are appropriately processed, and do not error without reason. This behaviour should be tested. Again, columns created by the [`units` package](https://github.com/r-quantities/units/) provide a good test case.*
-
+#' @srrstats {G5.0}
+#' @srrstats {G5.1}
+#' @srrstats {G5.2}
+#' @srrstats {G5.2a}
+#' @srrstats {G5.2b}
+#' @srrstats {G5.5}
+#' @srrstats {G5.4}
+#' @srrstats {G5.4a}
+#' @srrstats {G5.6}
+#' @srrstats {G5.6a}
+#' @srrstats {G5.6b}
+#' @srrstats {G5.9b}
+#' @srrstats {G2.11}
 
 
 test_that("model returns accurate parameters", {
@@ -44,7 +43,10 @@ test_that("model returns accurate parameters", {
         beta.group = TRUE
       )
       object <- cosinor.glmm(
-        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times,
+                             n_components = 1,
+                             group = "group",
+                             period = 12),
         data = comod
       )
     }
@@ -71,7 +73,10 @@ test_that("model returns accurate parameters", {
         beta.group = TRUE
       )
       object <- cosinor.glmm(
-        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times,
+                             n_components = 1,
+                             group = "group",
+                             period = 12),
         data = comod
       )
     }
@@ -98,7 +103,10 @@ test_that("model returns accurate parameters", {
         beta.group = TRUE
       )
       object <- cosinor.glmm(
-        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times,
+                             n_components = 1,
+                             group = "group",
+                             period = 12),
         data = comod,
         family = poisson
       )
@@ -126,7 +134,10 @@ test_that("model returns accurate parameters", {
         beta.group = TRUE
       )
       object <- cosinor.glmm(
-        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times,
+                             n_components = 1,
+                             group = "group",
+                             period = 12),
         data = comod,
         family = Gamma(link = "log")
       )
@@ -155,7 +166,10 @@ test_that("model returns accurate parameters", {
         beta.group = TRUE
       )
       object <- cosinor.glmm(
-        Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+        Y ~ group + amp_acro(times,
+                             n_components = 1,
+                             group = "group",
+                             period = 12),
         data = comod,
         family = binomial
       )
@@ -177,7 +191,9 @@ test_that("model output is class cosinor.glmm", {
       )
       expect_true(inherits(object, "cosinor.glmm"))
 
-      object <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12),
+      object <- cosinor.glmm(Y ~ X + amp_acro(time,
+                                              group = "X",
+                                              period = 12),
         data = vitamind,
         dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
         ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
@@ -186,8 +202,8 @@ test_that("model output is class cosinor.glmm", {
       testthat::expect_snapshot_output(print(object, digits = 2))
       testthat::expect_true(inherits(object, "cosinor.glmm"))
 
-      #' @srrstats {RE7.2} Demonstrate that output objects retain aspects of input data such as row or case names (see **RE1.3**).
-      #' @srrstats {RE7.3} Demonstrate and test expected behaviour when objects returned from regression software are submitted to the accessor methods of **RE4.2**--**RE4.7**.
+      #' @srrstats {RE7.2}
+      #' @srrstats {RE7.3}
 
       # check if the column names from vitamind are present in object_cols
       vitamind_cols <- colnames(vitamind)
@@ -312,6 +328,5 @@ test_that("mixed model estimates parameters well", {
 test_that("alternative inputs work", {
   testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
   testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
-  #  testthat::expect_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = units::set_units#(vitamind$Y, "units")),
-  #                         regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
+
 })

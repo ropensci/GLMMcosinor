@@ -1,14 +1,16 @@
-#' @srrstats {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
-#' @srrstats {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
-#' @srrstats {G5.2} *Appropriate error and warning behaviour of all functions should be explicitly demonstrated through tests. In particular,*
-#' @srrstats {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
-#' @srrstats {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
-
+#' @srrstats {G5.0}
+#' @srrstats {G5.1}
+#' @srrstats {G5.2}
+#' @srrstats {G5.2a}
+#' @srrstats {G5.2b}
 
 
 test_that("autoplot input checks work", {
   data(vitamind)
-  object <- cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ amp_acro(time,
+                                      group = "X",
+                                      period = 12),
+                         data = vitamind)
 
   # testing various inputs
   expect_no_error(autoplot(object, superimpose.data = TRUE))
@@ -18,11 +20,17 @@ test_that("autoplot input checks work", {
 
 test_that("autoplot produces error messages", {
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
 
   # Test 1
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, x_str = 10)
   }
@@ -35,7 +43,11 @@ test_that("autoplot produces error messages", {
   # Test 2
   data(vitamind)
   vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-  object <- cosinor.glmm(Y ~ X + amp_acro(time, n_components = 3, group = c("Z", NA, "X"), period = c(12, 10, 8)), data = vitamind)
+  object <- cosinor.glmm(Y ~ X + amp_acro(time,
+                                          n_components = 3,
+                                          group = c("Z", NA, "X"),
+                                          period = c(12, 10, 8)),
+                         data = vitamind)
 
   f <- function() {
     autoplot(object, x_str = c("X", "Z"), pred.length.out = 200)
@@ -52,7 +64,10 @@ test_that("autoplot produces error messages", {
 
   # Test 4
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, type = 20)
   }
@@ -64,7 +79,10 @@ test_that("autoplot produces error messages", {
 
   # Test 5
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, xlims = c(2, 1))
   }
@@ -76,7 +94,10 @@ test_that("autoplot produces error messages", {
 
   # Test 6
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, pred.length.out = 100.5)
   }
@@ -88,7 +109,10 @@ test_that("autoplot produces error messages", {
 
   # Test 7
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, superimpose.data = 10)
   }
@@ -100,7 +124,10 @@ test_that("autoplot produces error messages", {
 
   # Test 8
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, data_opacity = 1.5)
   }
@@ -112,7 +139,10 @@ test_that("autoplot produces error messages", {
 
   # Test 9
   data(vitamind)
-  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X", period = 12), data = vitamind)
+  object <- cosinor.glmm(Y ~ 1 + amp_acro(time,
+                                          group = "X",
+                                          period = 12),
+                         data = vitamind)
   f <- function() {
     autoplot(object, predict.ribbon = 10)
   }

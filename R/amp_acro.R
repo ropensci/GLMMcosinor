@@ -9,26 +9,20 @@
 #' The number of values should be equal to \code{n_components}.
 #' @param ... Extra arguments for use within \code{GLMMcosinor}.
 #'
-#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
-#' @srrstats {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
-#' @srrstats {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
-#' @srrstats {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
-#
-#' @srrstats {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
-#' @srrstats {G2.4a} *explicit conversion to `integer` via `as.integer()`*
-#' @srrstats {G2.4b} *explicit conversion to continuous via `as.numeric()`*
-#' @srrstats {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
-#' @srrstats {G2.4d} *explicit conversion to factor via `as.factor()`*
-#' @srrstats {G2.5} *Where inputs are expected to be of `factor` type, secondary documentation should explicitly state whether these should be `ordered` or not, and those inputs should provide appropriate error or other routines to ensure inputs follow these expectations.*
-#'
-#'
-#' @srrstats {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
-#' @srrstats {G2.6} *Software which accepts one-dimensional input should ensure values are appropriately pre-processed regardless of class structures.*
-#'
-#' @srrstats {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
-#'
-#' @srrstats {RE1.2} *Regression Software should document expected format (types or classes) for inputting predictor variables, including descriptions of types or classes which are not accepted.*
-#'
+#' @srrstats {G1.4a}
+#' @srrstats {G2.0}
+#' @srrstats {G2.1}
+#' @srrstats {G2.2}
+#' @srrstats {G2.4}
+#' @srrstats {G2.4a}
+#' @srrstats {G2.4b}
+#' @srrstats {G2.4c}
+#' @srrstats {G2.4d}
+#' @srrstats {G2.5}
+#' @srrstats {G2.9}
+#' @srrstats {G2.6}
+#' @srrstats {G5.0}
+#' @srrstats {RE1.2}
 #'
 #' @return A \code{data.frame} and \code{formula} appropriate for use by
 #' \code{data_processor()}.
@@ -93,20 +87,20 @@ amp_acro <- function(time_col,
 #' @param .env The environment in which to evaluate column names on the data
 #' being passed.
 #'
-#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
-#' @srrstats {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
-#' @srrstats {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
-#' @srrstats {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
-#' @srrstats {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
-#' @srrstats {G2.4a} *explicit conversion to `integer` via `as.integer()`*
-#' @srrstats {G2.4b} *explicit conversion to continuous via `as.numeric()`*
-#' @srrstats {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
-#' @srrstats {G2.4d} *explicit conversion to factor via `as.factor()`*
-#' @srrstats {G2.5} *Where inputs are expected to be of `factor` type, secondary documentation should explicitly state whether these should be `ordered` or not, and those inputs should provide appropriate error or other routines to ensure inputs follow these expectations.*
-#' @srrstats {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
-#' @srrstats {G2.6} *Software which accepts one-dimensional input should ensure values are appropriately pre-processed regardless of class structures.*
-#' @srrstats {G5.0} *Where applicable or practicable, tests should use standard data sets with known properties (for example, the [NIST Standard Reference Datasets](https://www.itl.nist.gov/div898/strd/), or data sets provided by other widely-used R packages).*
-#' @srrstats {RE1.2} *Regression Software should document expected format (types or classes) for inputting predictor variables, including descriptions of types or classes which are not accepted.*
+#' @srrstats {G1.4a}
+#' @srrstats {G2.0}
+#' @srrstats {G2.1}
+#' @srrstats {G2.2}
+#' @srrstats {G2.4}
+#' @srrstats {G2.4a}
+#' @srrstats {G2.4b}
+#' @srrstats {G2.4c}
+#' @srrstats {G2.4d}
+#' @srrstats {G2.5}
+#' @srrstats {G2.9}
+#' @srrstats {G2.6}
+#' @srrstats {G5.0}
+#' @srrstats {RE1.2}
 #'
 #' @noRd
 #' @return A \code{data.frame} and \code{formula} appropriate for use by
@@ -145,7 +139,6 @@ amp_acro <- function(time_col,
     }
   }
 
-  # env <- environment() # preserve environment of amp_acro to be passed into amp_acro_iteration
   amp_acro_iteration <- function(time_col,
                                  n_components,
                                  group,
@@ -309,7 +302,6 @@ amp_acro <- function(time_col,
       if (group[i] == 0) {
         acpart_combined <- NULL
         formula_expr <- paste(formula_expr, "+", rrr_names, "+", sss_names)
-        # formula_expr <- str2expression(noquote(paste("update(newformula, .~. +", rrr_names, "+", sss_names, ")")))
       }
 
       # newformula <- eval(formula_expr)
@@ -321,7 +313,11 @@ amp_acro <- function(time_col,
       left_part <- NULL
     }
     newformula <- stats::as.formula(paste(left_part, # rownames(attr(Terms, "factors"))[1],
-      paste(c(attr(stats::terms(.formula), "intercept"), non_acro_formula, formula_expr), collapse = " + "),
+      paste(c(attr(stats::terms(.formula),
+                   "intercept"),
+              non_acro_formula,
+              formula_expr),
+            collapse = " + "),
       sep = " ~ "
     ))
     newformula <- stats::update.formula(newformula, ~.)
@@ -364,13 +360,13 @@ amp_acro <- function(time_col,
   )
 
   if (!is.null(lme4::findbars(.formula))) {
-    ranef_part <- sapply(lme4::findbars(.formula), deparse1)
+    ranef_part <- lapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
       component_num <- regmatches(x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE))[[1]]
       if (length(component_num) == 0) {
         return(x)
       } else {
-        for (i in 1:length(component_num)) {
+        for (i in seq_along(1:length(component_num))) {
           string_match <- paste0(".*amp_acro", component_num[i], "\\s([^+|]*).*")
           ranef_part_addition <- gsub(string_match, "\\1", ranef_part)
           ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
@@ -386,7 +382,9 @@ amp_acro <- function(time_col,
 
 
     # ranef_part_updated <- unlist(ranef_parts_replaced)
-    ranef_part_updated <- paste(sprintf("(%s)", ranef_parts_replaced), collapse = "+")
+    ranef_part_updated <- paste(sprintf("(%s)",
+                                        ranef_parts_replaced),
+                                collapse = "+")
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
     res$newformula <- stats::as.formula(main_part)

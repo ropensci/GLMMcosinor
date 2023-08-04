@@ -142,7 +142,9 @@ dat <- flextable::color(
   col = function(x) ifelse(x == "&#x2713;", "green", "red")
 )
 dat <- ftExtra::colformat_md(dat)
-dat <- flextable::theme_zebra(dat, even_header = "#FFFFFF", even_body = "#FFFFFF")
+dat <- flextable::theme_zebra(dat,
+                              even_header = "#FFFFFF",
+                              even_body = "#FFFFFF")
 dat <- flextable::set_header_labels(
   dat,
   values = list(

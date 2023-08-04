@@ -4,8 +4,8 @@
 #' @param digits Controls the number of digits displayed in the summary output.
 #' @param ... Additional, ignored arguments.
 #'
-#' @srrstats {RE4.17} *Model objects returned by Regression Software should implement or appropriately extend a default `print` method which provides an on-screen summary of model (input) parameters and (output) coefficients.*
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
+#' @srrstats {RE4.17}
+#' @srrstats {G1.4}
 #'
 #' @return \code{print(x)} returns \code{x} invisibly.
 #'

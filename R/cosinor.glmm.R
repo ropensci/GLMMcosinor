@@ -23,12 +23,12 @@
 #'
 #' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
 #'
-#' @srrstats {G2.14} *Where possible, all functions should provide options for users to specify how to handle missing (`NA`) data, with options minimally including:*
-#' @srrstats {G2.14a} *error on missing data*
-#' @srrstats {G2.14b} *ignore missing data with default warnings or messages issued*
-#' @srrstats {G2.14c} *replace missing data with appropriately imputed values*
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#' @srrstats {G3.0} *Statistical software should never compare floating point numbers for equality. All numeric equality comparisons should either ensure that they are made between integers, or use appropriate tolerances for approximate equality.*
+#' @srrstats {G2.14}
+#' @srrstats {G2.14a}
+#' @srrstats {G2.14b}
+#' @srrstats {G2.14c}
+#' @srrstats {G1.4}
+#' @srrstats {G3.0}
 #'
 #' @examples
 #' # Single component cosinor model
@@ -101,7 +101,7 @@ cosinor.glmm <- function(formula,
 #'
 #' @param Terms A \code{terms} object.
 #'
-#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
+#' @srrstats {G1.4a}
 #' @noRd
 get_varnames <- function(Terms) {
   spec <- names(attr(Terms, "specials"))
@@ -149,13 +149,22 @@ update_covnames <- function(names, group_stats) {
   }
 
   # get the names that covnames does not get:
-  covnames_inv <- grep(paste0("(Intercept|", paste(covnames, collapse = "|"), ")"), invert = TRUE, names, value = TRUE)
+  covnames_inv <- grep(paste0("(Intercept|",
+                              paste(covnames,
+                                    collapse = "|"), ")"),
+                       invert = TRUE,
+                       names,
+                       value = TRUE)
   lack <- names
   for (i in seq_along(covnames)) {
     var <- group_names_together[i] # var is a group name corresponding to that in covnames
     var_number <- unlist(group_stats)[[i]] # get the group level
-    lack <- gsub(paste0(covnames[i]), paste0("[", var, "=", var_number, "]"), lack)
-    lack <- gsub(paste0("^", covnames[i], "$"), paste0("[", var, "=", var_number, "]"), lack)
+    lack <- gsub(paste0(covnames[i]),
+                 paste0("[", var, "=", var_number, "]"),
+                 lack)
+    lack <- gsub(paste0("^", covnames[i], "$"),
+                 paste0("[", var, "=", var_number, "]"),
+                 lack)
   }
 
   lack

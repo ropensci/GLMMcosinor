@@ -70,9 +70,9 @@ testdata_multicomponent <- simulate_cosinor(1000,
 ```
 
 ```{r srr, eval = FALSE, echo = FALSE}
-#' @srrstats {G1.0} *Statistical Software should list at least one primary reference from published academic literature.*
-#' @srrstats {G1.1} *Statistical Software should document whether the algorithm(s) it implements are:* - *The first implementation of a novel algorithm*; or - *The first implementation within **R** of an algorithm which has previously been implemented in other languages or contexts*; or - *An improvement on other implementations of similar algorithms in **R***.
-#' @srrstats {G1.3} *All statistical terminology should be clarified and unambiguously defined.*
+#' @srrstats {G1.0} 
+#' @srrstats {G1.1} 
+#' @srrstats {G1.3} 
 ```
 
 ```{r, message=F, warning=F}
@@ -82,7 +82,11 @@ object <- cosinor.glmm(Y ~ X + amp_acro(time,
   group = "X"
 ), data = vitamind)
 
-autoplot(object, superimpose.data = TRUE, x_str = "X", predict.ribbon = FALSE, data_opacity = 0.2)
+autoplot(object, 
+         superimpose.data = TRUE, 
+         x_str = "X", 
+         predict.ribbon = FALSE, 
+         data_opacity = 0.2)
 ```
 
 ## Introduction
@@ -288,7 +292,10 @@ beginning of the formula:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-cosinor.glmm(Y ~ 0 + X + amp_acro(time, period = 12, group = "X"), data = vitamind)
+cosinor.glmm(Y ~ 0 + X + amp_acro(time, 
+                                  period = 12, 
+                                  group = "X"), 
+             data = vitamind)
 ```
 
 Note how now, `[X=1] = 31.59165` and this represents the estimate for
@@ -301,7 +308,10 @@ response occurs at 2.715 time units. We can check this visually using
 the `autoplot()` function, looking at the `[X=0]` level (red line)
 
 ```{r}
-object <- cosinor.glmm(Y ~ 0 + X + amp_acro(time, period = 12, group = "X"), data = vitamind)
+object <- cosinor.glmm(Y ~ 0 + X + amp_acro(time, 
+                                            period = 12, 
+                                            group = "X"), 
+                       data = vitamind)
 autoplot(object, predict.ribbon = FALSE)
 
 ```
@@ -378,7 +388,12 @@ testdata_summary <- simulate_cosinor(100,
   beta.group = TRUE
 )
 })
-object <- cosinor.glmm(Y ~ group + amp_acro(times, period = c(12,6),n_components = 2, group = "group"), data = testdata_summary, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, 
+                                            period = c(12,6),
+                                            n_components = 2, 
+                                            group = "group"), 
+                       data = testdata_summary, 
+                       family = poisson())
 test_cosinor_levels(object, x_str = "group", param = "amp", component_index = 1)
 ```
 
@@ -409,7 +424,11 @@ predicted values from the model on either the existing or new data.
 `plot()`.)
 
 ```{r, message=F, warning=F}
-fit <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = NA), data = testdata_simple, family = poisson())
+fit <- cosinor.glmm(Y ~ group + amp_acro(times, 
+                                         period = 12, 
+                                         group = NA), 
+                    data = testdata_simple, 
+                    family = poisson())
 head(predict(fit))
 ```
 
@@ -420,7 +439,11 @@ The `{GLMMcosinor}` package includes two ways to visualise
 time-response plot of the fitted model for all groups:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group"), data = testdata_simple, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, 
+                                            period = 12, 
+                                            group = "group"), 
+                       data = testdata_simple, 
+                       family = poisson())
 
 autoplot(object, superimpose.data = TRUE)
 ```

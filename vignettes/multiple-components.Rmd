@@ -76,7 +76,12 @@ The `period` argument must also match the length of `n_components`, where the or
 For example:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, n_components = 2, period = c(12, 6), group = c("group", "group")), data = testdata_two_components, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
+                                            n_components = 2, 
+                                            period = c(12, 6), 
+                                            group = c("group", "group")), 
+                       data = testdata_two_components, 
+                       family = poisson())
 object
 
 ```
@@ -102,7 +107,12 @@ If a multicomponent model has one component that is grouped with other component
 For example, if wanted only the first component to have a grouped component, we would specify the `group` argument as `group = c("group", NA))` . Here, the first component is grouped by `group`, and the second component is not grouped. The data was simulated such that the second component was the same for both groups.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, n_components = 2, period = c(12, 6), group = c("group", NA)), data = testdata_two_components_grouped, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
+                                            n_components = 2, 
+                                            period = c(12, 6), 
+                                            group = c("group", NA)), 
+                       data = testdata_two_components_grouped, 
+                       family = poisson())
 object
 ```
 
@@ -131,7 +141,12 @@ autoplot(object, superimpose.data = TRUE)
 In this example, it is not strictly necessary to specify `group = c("group", NA))` since specifying `group = c("group","group")`still yields accurate estimates:
 
 ```{r}
-object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, n_components = 2, period = c(12, 6), group = c("group", "group")), data = testdata_two_components_grouped, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
+                                            n_components = 2, 
+                                            period = c(12, 6), 
+                                            group = c("group", "group")), 
+                       data = testdata_two_components_grouped, 
+                       family = poisson())
 object
 ```
 
@@ -142,10 +157,20 @@ models:
 
 ```{r, message=F, warning=F}
 
-cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = 12, group = "group"), data = testdata_two_components, family = poisson())
+cosinor.glmm(Y ~ group + amp_acro(times, 
+                                  n_components = 2,
+                                  period = 12, 
+                                  group = "group"), 
+             data = testdata_two_components, 
+             family = poisson())
 
 
-cosinor.glmm(Y ~ group + amp_acro(times, n_components = 2, period = c(12, 12), group = c("group", "group")), data = testdata_two_components, family = poisson())
+cosinor.glmm(Y ~ group + amp_acro(times, 
+                                  n_components = 2, 
+                                  period = c(12, 12), 
+                                  group = c("group", "group")), 
+             data = testdata_two_components, 
+             family = poisson())
 ```
 
 ## Generating a three-component model
@@ -157,8 +182,13 @@ object <- cosinor.glmm(Y ~ group + amp_acro(times,
   n_components = 3,
   period = c(12, 6, 12),
   group = "group"
-), data = testdata_three_components, family = poisson())
-autoplot(object, superimpose.data = TRUE, x_str = "group", predict.ribbon = FALSE, data_opacity = 0.08)
+), data = testdata_three_components, 
+family = poisson())
+autoplot(object, 
+         superimpose.data = TRUE, 
+         x_str = "group", 
+         predict.ribbon = FALSE, 
+         data_opacity = 0.08)
 ```
 
 ## Generating models with n-components

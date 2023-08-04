@@ -60,7 +60,7 @@
 #'   period = 24,
 #'   family = "gaussian"
 #' )
-#' @srrstats {G5.1} *Data sets created within, and used to test, a package should be exported (or otherwise made generally available) so that users can confirm tests and run examples.*
+#' @srrstats {G5.1}
 #'
 #' @export
 simulate_cosinor <- function(n,
@@ -114,8 +114,10 @@ simulate_cosinor <- function(n,
 
   # create dataset for only one group if beta.group = FALSE
   if (!beta.group) {
-    if (!"sd" %in% names(list(...))){sd_val = 1} else {sd_val = list(...)$sd}
-    if (!"alpha" %in% names(list(...))){alpha_val = 1} else{alpha = list(...)$alpha}
+    if (!"sd" %in% names(list(...))){sd_val <- 1}
+    else {sd_val <- list(...)$sd}
+    if (!"alpha" %in% names(list(...))){alpha_val <- 1}
+    else{alpha <- list(...)$alpha}
     df <- .get_dataset(
       family = family,
       amp = amp,
@@ -133,8 +135,10 @@ simulate_cosinor <- function(n,
 
   # create dataset for two groups if beta.group = TRUE
   if (beta.group) {
-    if (!"sd" %in% names(list(...))){sd_val = 1} else {sd_val = list(...)$sd}
-    if (!"alpha" %in% names(list(...))){alpha_val = 1} else{alpha_val = list(...)$alpha}
+    if (!"sd" %in% names(list(...))){sd_val <- 1}
+    else {sd_val <- list(...)$sd}
+    if (!"alpha" %in% names(list(...))){alpha_val <- 1}
+    else{alpha_val <- list(...)$alpha}
 
     data_A <- .get_dataset(
       family = family,
@@ -148,8 +152,10 @@ simulate_cosinor <- function(n,
       alpha_val = alpha_val
     )
 
-    if (!"beta.sd" %in% names(list(...))){beta.sd_val = 1}else{beta.sd_val = list(...)$beta.sd}
-    if (!"beta.alpha" %in% names(list(...))){beta.alpha_val = 1}else{beta.alpha_val = list(...)$beta.alpha}
+    if (!"beta.sd" %in% names(list(...))){beta.sd_val <- 1}
+    else{beta.sd_val <- list(...)$beta.sd}
+    if (!"beta.alpha" %in% names(list(...))){beta.alpha_val <- 1}
+    else{beta.alpha_val <- list(...)$beta.alpha}
 
 
     data_B <- .get_dataset(
@@ -264,7 +270,15 @@ simulate_cosinor <- function(n,
 #'
 #' @return A \code{data.frame}.
 #' @noRd
-.get_dataset <- function(family, amp, acro, ttt, mesor, n_components, period, sd_val, alpha_val) {
+.get_dataset <- function(family,
+                         amp,
+                         acro,
+                         ttt,
+                         mesor,
+                         n_components,
+                         period,
+                         sd_val,
+                         alpha_val) {
   d_params <- .get_params(
     amp = amp,
     acro = acro,
@@ -275,19 +289,26 @@ simulate_cosinor <- function(n,
 
   if (family == "gaussian") {
     d_params$param <- mesor + d_params$param
-    d_params$Y <- stats::rnorm(n = length(ttt), mean = d_params$param, sd = sd_val)
+    d_params$Y <- stats::rnorm(n = length(ttt),
+                               mean = d_params$param,
+                               sd = sd_val)
   }
   if (family == "poisson") {
     d_params$param <- exp(mesor + d_params$param)
-    d_params$Y <- stats::rpois(n = length(ttt), lambda = d_params$param)
+    d_params$Y <- stats::rpois(n = length(ttt),
+                               lambda = d_params$param)
   }
   if (family == "binomial") {
     d_params$param <- exp(mesor + d_params$param) / (1 + exp(mesor + d_params$param))
-    d_params$Y <- stats::rbinom(n = length(ttt), size = 1, prob = d_params$param)
+    d_params$Y <- stats::rbinom(n = length(ttt),
+                                size = 1,
+                                prob = d_params$param)
   }
   if (family == "gamma") {
     d_params$param <- alpha_val / exp(mesor + d_params$param)
-    d_params$Y <- stats::rgamma(n = length(ttt), shape = alpha_val, rate = d_params$param)
+    d_params$Y <- stats::rgamma(n = length(ttt),
+                                shape = alpha_val,
+                                rate = d_params$param)
   }
 
   with(d_params, data.frame(Y, times = ttt))

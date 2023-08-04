@@ -7,8 +7,7 @@
 #' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
 #' @return Returns a fitted cosinor model as a \code{cosinor.glmm} object.
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#'
+#' @srrstats {G1.4}
 #' @export
 #'
 #' @examples
@@ -63,37 +62,37 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @param Terms A \code{terms} object from the original \code{cosinor.glmm()} call.
 #' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
-#' @srrstats {RE1.0} *Regression Software should enable models to be specified via a formula interface, unless reasons for not doing so are explicitly documented.*
-#' @srrstats {RE1.3} *Regression Software which passes or otherwise transforms aspects of input data onto output structures should ensure that those output structures retain all relevant aspects of input data, notably including row and column names, and potentially information from other `attributes()`.*
-#' @srrstats {RE1.3a} *Where otherwise relevant information is not transferred, this should be explicitly documented.*
-#' @srrstats {RE1.4} *Regression Software should document any assumptions made with regard to input data; for example distributional assumptions, or assumptions that predictor data have mean values of zero. Implications of violations of these assumptions should be both documented and tested.*
-#' @srrstats {RE2.0} *Regression Software should document any transformations applied to input data, for example conversion of label-values to `factor`, and should provide ways to explicitly avoid any default transformations (with error or warning conditions where appropriate).*
-#' @srrstats {RE2.1} *Regression Software should implement explicit parameters controlling the processing of missing values, ideally distinguishing `NA` or `NaN` values from `Inf` values (for example, through use of `na.omit()` and related functions from the `stats` package).*
-#' @srrstats {RE4.0} *Regression Software should return some form of "model" object, generally through using or modifying existing class structures for model objects (such as `lm`, `glm`, or model objects from other packages), or creating a new class of model objects.*
-#' @srrstats {RE4.2} *Model coefficients (via `coeff()` / `coefficients()`)*
-#' @srrstats {RE4.4} *The specification of the model, generally as a formula (via `formula()`)*
-#' @srrstats {G1.4} *Software should use [`roxygen2`](https://roxygen2.r-lib.org/) to document all functions.*
-#' @srrstats {G2.13} *Statistical Software should implement appropriate checks for missing data as part of initial pre-processing prior to passing data to analytic algorithms.*
+#' @srrstats {RE1.0}
+#' @srrstats {RE1.3}
+#' @srrstats {RE1.3a}
+#' @srrstats {RE1.4}
+#' @srrstats {RE2.0}
+#' @srrstats {RE2.1}
+#' @srrstats {RE4.0}
+#' @srrstats {RE4.2}
+#' @srrstats {RE4.4}
+#' @srrstats {G1.4}
+#' @srrstats {G2.13}
 #'
 #' The following standards are covered in the glmmTMB package
-#' @srrstats {RE2.2} *Regression Software should provide different options for processing missing values in predictor and response data. For example, it should be possible to fit a model with no missing predictor data in order to generate values for all associated response points, even where submitted response values may be missing.*
-#' @srrstats {RE3.0} *Issue appropriate warnings or other diagnostic messages for models which fail to converge.*
-#' @srrstats {RE3.1} *Enable such messages to be optionally suppressed, yet should ensure that the resultant model object nevertheless includes sufficient data to identify lack of convergence.*
-#' @srrstats {RE4.8} *Response variables, and associated "metadata" where applicable.*
-#' @srrstats {RE4.10} *Model Residuals, including sufficient documentation to enable interpretation of residuals, and to enable users to submit residuals to their own tests.*
-#' @srrstats {RE4.11} *Goodness-of-fit and other statistics associated such as effect sizes with model coefficients.*
-#' @srrstats {RE4.12} *Where appropriate, functions used to transform input data, and associated inverse transform functions.*
-#' @srrstats {RE4.13} *Predictor variables, and associated "metadata" where applicable.*
-#' @srrstats {G1.4a} *All internal (non-exported) functions should also be documented in standard [`roxygen2`](https://roxygen2.r-lib.org/) format, along with a final `@noRd` tag to suppress automatic generation of `.Rd` files.*
-#' @srrstats {G2.3} *For univariate character input:*
-#' @srrstats {G2.3a} *Use `match.arg()` or equivalent where applicable to only permit expected values.*
-#' @srrstats {G2.3b} *Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
-#' @srrstats {G2.14} *Where possible, all functions should provide options for users to specify how to handle missing (`NA`) data, with options minimally including:*
-#' @srrstats {G2.14a} *error on missing data*
-#' @srrstats {G2.14b} *ignore missing data with default warnings or messages issued*
-#' @srrstats {G2.14c} *replace missing data with appropriately imputed values*
-#' @srrstats {G2.15} *Functions should never assume non-missingness, and should never pass data with potential missing values to any base routines with default `na.rm = FALSE`-type parameters (such as [`mean()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html), [`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html) or [`cor()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/cor.html)).*
-#' @srrstats {G2.16} *All functions should also provide options to handle undefined values (e.g., `NaN`, `Inf` and `-Inf`), including potentially ignoring or removing such values.*
+#' @srrstats {RE2.2}
+#' @srrstats {RE3.0}
+#' @srrstats {RE3.1}
+#' @srrstats {RE4.8}
+#' @srrstats {RE4.10}
+#' @srrstats {RE4.11}
+#' @srrstats {RE4.12}
+#' @srrstats {RE4.13}
+#' @srrstats {G1.4a}
+#' @srrstats {G2.3}
+#' @srrstats {G2.3a}
+#' @srrstats {G2.3b}
+#' @srrstats {G2.14}
+#' @srrstats {G2.14a}
+#' @srrstats {G2.14b}
+#' @srrstats {G2.14c}
+#' @srrstats {G2.15}
+#' @srrstats {G2.16}
 #'
 #' @return A \code{cosinor.glmm} model.
 #' @noRd
@@ -145,7 +144,11 @@ data_processor <- function(newdata,
 
   # coefs_disp <- glmmTMB::fixef(mf)$disp
   main_coefs <- glmmTMB::fixef(mf)$cond
-  conditional_model <- get_new_coefs(main_coefs, vec_rrr, vec_sss, n_components, period)
+  conditional_model <- get_new_coefs(main_coefs,
+                                     vec_rrr,
+                                     vec_sss,
+                                     n_components,
+                                     period)
   items_keep <- c(
     "formula",
     "vec_rrr",
@@ -175,7 +178,11 @@ data_processor <- function(newdata,
 
   if (ziformula_check) {
     zi_coefs <- glmmTMB::fixef(mf)$zi
-    zi_model <- get_new_coefs(zi_coefs, ziformula$vec_rrr, ziformula$vec_sss, ziformula$n_components, period)
+    zi_model <- get_new_coefs(zi_coefs,
+                              ziformula$vec_rrr,
+                              ziformula$vec_sss,
+                              ziformula$n_components,
+                              period)
 
     zi_list <- c(
       ziformula[items_keep],
