@@ -39,7 +39,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 
 
   # this function can be looped if there is disp or zi formula present.
-  #'model_index' is a string: 'cond', 'disp', or 'zi'
+  # note that 'model_index' is a string: 'cond', 'disp', or 'zi'
   sub_summary.cosinor.glmm <- function(model_index) {
     if (model_index == "disp") {
       n_components <- object$disp_list$n_components_disp
