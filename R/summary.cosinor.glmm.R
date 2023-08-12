@@ -30,7 +30,7 @@
 
 summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
   # get the fitted model from the cosinor.glmm() output, along with
-  #n_components, vec_rrr, and vec_sss
+  # n_components, vec_rrr, and vec_sss
   mf <- object$fit
   n_components <- object$n_components
   vec_rrr <- object$vec_rrr
@@ -54,7 +54,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     coefs <- glmmTMB::fixef(mf)[[model_index]]
 
     # reassign vec_rrr and vec_sss to those in the disp or zi model, if
-    #necessary
+    # necessary
     if (model_index == "disp") {
       vec_rrr <- object$disp_list$vec_rrr_disp
       vec_sss <- object$disp_list$vec_sss_disp
@@ -66,14 +66,14 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     }
 
     # create objects r.coef, s.coef, and mu.coef. This will be Boolean vectors
-    #that indicate the position of particular coefficients in coefs.
+    # that indicate the position of particular coefficients in coefs.
     r.coef <- NULL
     s.coef <- NULL
     mu.coef <- NULL
     mu_inv <- rep(0, length(names(coefs)))
 
     # put a '|' between adjecent elements of vec_rrr and vec_sss, used for
-    #indexing.
+    # indexing.
     if (length(vec_rrr) > 1) {
       vec_rrr_spec <- vec_rrr[1]
       vec_sss_spec <- vec_sss[1]
@@ -97,7 +97,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     mu_inv <- mu_inv_carry + mu_inv
 
     # invert 'mu_inv' to get a Boolean vector for mesor terms a matrix of rrr
-    #coefficients
+    # coefficients
     mu.coef <- c(!mu_inv)
     r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
     # a matrix of sss coefficients
@@ -267,13 +267,15 @@ print.summary.cosinor.glmm <- function(x,
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
   stats::printCoefmat(x$main_output$raw.table,
-                      digits = digits,
-                      has.Pvalue = TRUE)
+    digits = digits,
+    has.Pvalue = TRUE
+  )
   cat("\n")
   cat("Transformed coefficients:\n")
   stats::printCoefmat(x$main_output$transformed.table,
-                      digits = digits,
-                      has.Pvalue = TRUE)
+    digits = digits,
+    has.Pvalue = TRUE
+  )
 
   # display the output from the dispersion model (if present)
 
@@ -282,13 +284,15 @@ print.summary.cosinor.glmm <- function(x,
     cat("\n Dispersion Model \n")
     cat("Raw model coefficients:\n")
     stats::printCoefmat(x$output_disp$raw.table,
-                        digits = digits,
-                        has.Pvalue = TRUE)
+      digits = digits,
+      has.Pvalue = TRUE
+    )
     cat("\n")
     cat("Transformed coefficients:\n")
     stats::printCoefmat(x$output_disp$transformed.table,
-                        digits = digits,
-                        has.Pvalue = TRUE)
+      digits = digits,
+      has.Pvalue = TRUE
+    )
   }
 
   if (!is.null(x$output_zi)) {
@@ -296,13 +300,15 @@ print.summary.cosinor.glmm <- function(x,
     cat("\n Zero-Inflation Model \n")
     cat("Raw model coefficients:\n")
     stats::printCoefmat(x$output_zi$raw.table,
-                        digits = digits,
-                        has.Pvalue = TRUE)
+      digits = digits,
+      has.Pvalue = TRUE
+    )
     cat("\n")
     cat("Transformed coefficients:\n")
     stats::printCoefmat(x$output_zi$transformed.table,
-                        digits = digits,
-                        has.Pvalue = TRUE)
+      digits = digits,
+      has.Pvalue = TRUE
+    )
   }
   invisible(x)
 }

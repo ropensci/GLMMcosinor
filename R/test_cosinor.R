@@ -42,8 +42,10 @@
 #'   beta.group = TRUE
 #' )
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group",
-#'   period = c(10, 12)),
+#'   Y ~ group + amp_acro(times,
+#'     n_components = 2, group = "group",
+#'     period = c(10, 12)
+#'   ),
 #'   data = data_2_component
 #' )
 #' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
@@ -151,8 +153,10 @@ test_cosinor_components <- function(x,
 #'   beta.group = TRUE
 #' )
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group",
-#'   period = c(10, 12)),
+#'   Y ~ group + amp_acro(times,
+#'     n_components = 2, group = "group",
+#'     period = c(10, 12)
+#'   ),
 #'   data = data_2_component
 #' )
 #' test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
@@ -288,8 +292,10 @@ test_cosinor_levels <- function(x,
 #' )
 #'
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group",
-#'   period = c(10, 12)),
+#'   Y ~ group + amp_acro(times,
+#'     n_components = 2, group = "group",
+#'     period = c(10, 12)
+#'   ),
 #'   data = data_2_component
 #' )
 #'
@@ -325,16 +331,22 @@ test_cosinor_levels <- function(x,
     }
 
     for (i in seq_along(x_str)) {
-      index[i, paste0(x_str[i],
-                      comparison_A, ":", param, component_index)] <- -1
-      index[i, paste0(x_str[i],
-                      comparison_B, ":", param, component_index)] <- 1
+      index[i, paste0(
+        x_str[i],
+        comparison_A, ":", param, component_index
+      )] <- -1
+      index[i, paste0(
+        x_str[i],
+        comparison_B, ":", param, component_index
+      )] <- 1
     }
   }
 
   diff.est <- index %*% x$coefficients
   diff.var <- index[
-    , grep("(amp|acr)", names(x$coefficients)), drop = FALSE] %*%
+    , grep("(amp|acr)", names(x$coefficients)),
+    drop = FALSE
+  ] %*%
     summary.fit$transformed.covariance %*%
     t(index[, grep("(amp|acr)", names(x$coefficients)), drop = FALSE])
 
@@ -440,7 +452,8 @@ print.sub_test_cosinor <- function(x, ...) {
     if (!is.null(x$conf.int)) {
       ci <- round(x$conf.int, 2)
       cat(paste0(
-        "\n\nEstimate and ", x$ci_level * 100, "% confidence interval:\n"))
+        "\n\nEstimate and ", x$ci_level * 100, "% confidence interval:\n"
+      ))
       cat(paste0(ci[1], " (", ci[2], " to ", ci[3], ")"))
     }
   } else {
@@ -493,9 +506,11 @@ print.sub_test_cosinor <- function(x, ...) {
       cat("\n\ncosinor.glmm model only has a single component and to compare
           between groups.\n")
     } else {
-      cat(paste0("\n\ncosinor.glmm model has", test_details$x$n_components,
-                 " components. Component ", test_details$component_index,
-                 " is being used for comparison between groups.\n"))
+      cat(paste0(
+        "\n\ncosinor.glmm model has", test_details$x$n_components,
+        " components. Component ", test_details$component_index,
+        " is being used for comparison between groups.\n"
+      ))
     }
   }
 

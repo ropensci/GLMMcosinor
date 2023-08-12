@@ -112,25 +112,28 @@ autoplot.cosinor.glmm <- function(object,
   time_vec <- object$newdata[[object$time_name]]
   min_period_cycle_count <- round(
     (max(time_vec) - min(time_vec)) / min(object$period)
-    )
+  )
 
 
   # By default, the predicted length out is calculated to give sufficient
   # resolution to the smallest period.
   if (missing(pred.length.out)) {
-    pred.length.out <- max(min_period_cycle_count * points_per_min_cycle_length,
-                           400)
+    pred.length.out <- max(
+      min_period_cycle_count * points_per_min_cycle_length,
+      400
+    )
   }
 
   # generate the time values for the x-axis
   if (!missing(xlims)) {
-  # with multiple periods, largest is used for timeax simulation
+    # with multiple periods, largest is used for timeax simulation
     timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out)
   } else {
-  # the fitted model has bounds corresponding to initial dataframe
+    # the fitted model has bounds corresponding to initial dataframe
     timeax <- seq(min(object$newdata[object$time_name]),
-                  max(object$newdata[object$time_name]),
-                  length.out = pred.length.out)
+      max(object$newdata[object$time_name]),
+      length.out = pred.length.out
+    )
   }
 
 
@@ -168,8 +171,10 @@ autoplot.cosinor.glmm <- function(object,
 
       newdata$levels <- ""
       for (d in x_str) {
-        newdata$levels <- paste0(newdata$levels,
-                                 "[", d, "=", newdata[, d], "] ")
+        newdata$levels <- paste0(
+          newdata$levels,
+          "[", d, "=", newdata[, d], "] "
+        )
       }
     }
     newdata

@@ -52,7 +52,8 @@ update_formula_and_data <- function(data,
                            data_prefix = "main_") {
     Terms <- stats::terms(formula, specials = c("amp_acro"))
     amp_acro_text <- attr(
-      Terms, "term.labels")[attr(Terms, "special")$amp_acro + amp_acro_ind]
+      Terms, "term.labels"
+    )[attr(Terms, "special")$amp_acro + amp_acro_ind]
     e <- str2lang(amp_acro_text)
     e$.data <- data # add data that will be called to amp_acro()
     e$.formula <- formula # add formula that will be called to amp_acro()
@@ -104,11 +105,13 @@ update_formula_and_data <- function(data,
   }
   if (ziformula_check) {
     data <- main_output$newdata
-    ziformula <- formula_eval(formula = ziformula,
-                              data = data,
-                              quietly = quietly,
-                              amp_acro_ind = 0,
-                              data_prefix = "zi_")
+    ziformula <- formula_eval(
+      formula = ziformula,
+      data = data,
+      quietly = quietly,
+      amp_acro_ind = 0,
+      data_prefix = "zi_"
+    )
     main_output$newdata <- ziformula$newdata
 
     ziformula <- ziformula[items_keep]

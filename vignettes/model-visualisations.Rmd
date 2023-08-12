@@ -66,10 +66,13 @@ objects. Firstly, the function ggplot.cosinor.glmm() creates a
 time-response plot of the fitted model:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                        group = "X", 
-                                        period = 12), 
-                       data = vitamind)
+object <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
 autoplot(object, x_str = "X")
 ```
 
@@ -78,10 +81,13 @@ fit is based on) over the fitted model, using the
 `superimpose.data = TRUE` argument:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                        group = "X", 
-                                        period = 12), 
-                       data = vitamind)
+object <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
 autoplot(object, x_str = "X", superimpose.data = TRUE)
 ```
 
@@ -95,37 +101,46 @@ different plots for the same model. Note how `predict.ribbon` can be set
 to `FALSE` to remove the prediction interval from the plots.
 
 ```{r, message=F, warning=F}
-
 testdata_two_components_mod <- testdata_two_components
-testdata_two_components_mod$X <- rbinom(length(testdata_two_components$group), 
-                                        2, 
-                                        prob = 0.5)
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", "X")), 
-                       data = testdata_two_components_mod, 
-                       family = poisson())
+testdata_two_components_mod$X <- rbinom(length(testdata_two_components$group),
+  2,
+  prob = 0.5
+)
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "X")
+  ),
+  data = testdata_two_components_mod,
+  family = poisson()
+)
 autoplot(object, predict.ribbon = FALSE)
 ```
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", "X")), 
-                       data = testdata_two_components_mod, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "X")
+  ),
+  data = testdata_two_components_mod,
+  family = poisson()
+)
 autoplot(object, x_str = "X", predict.ribbon = FALSE)
 ```
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", "X")), 
-                       data = testdata_two_components_mod, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "X")
+  ),
+  data = testdata_two_components_mod,
+  family = poisson()
+)
 autoplot(object, x_str = "group", predict.ribbon = FALSE)
 ```
 
@@ -137,12 +152,15 @@ define use the `xlims` argument to specify the x-bounds.
 For example, on the plot above, we can adjust the xlimits:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", "X")), 
-                       data = testdata_two_components_mod, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "X")
+  ),
+  data = testdata_two_components_mod,
+  family = poisson()
+)
 autoplot(object, x_str = "group", predict.ribbon = TRUE, xlims = c(13, 15))
 ```
 
@@ -154,11 +172,14 @@ behaviour. This can be adjusted using the `points_per_min_cycle_length`
 argument which is 20 by default.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ amp_acro(times, 
-                                    n_components = 2, 
-                                    period = c(12, 1000)), 
-                       data = testdata_period_diff, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ amp_acro(times,
+    n_components = 2,
+    period = c(12, 1000)
+  ),
+  data = testdata_period_diff,
+  family = poisson()
+)
 
 autoplot(object, points_per_min_cycle_length = 40)
 ```
@@ -210,10 +231,13 @@ confidence ellipses AND the origin).
 ------------------------------------------------------------------------
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                       group = "X", 
-                                       period = 12), 
-                      data = vitamind)
+model <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
 polar_plot(model)
 ```
 
@@ -224,10 +248,13 @@ model. The units can be changed to degrees, or even to be expressed in
 the same units as the period specification.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                       group = "X",
-                                       period = 12), 
-                      data = vitamind)
+model <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
 polar_plot(model, radial_units = "degrees")
 ```
 
@@ -249,10 +276,13 @@ amplitude estimate), and a circular arc extending from the angle
 starting position (at 0) to the acrophase estimate.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                       group = "X", 
-                                       period = 12), 
-                      data = vitamind)
+model <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
 polar_plot(model, overlay_parameter_info = TRUE)
 ```
 
@@ -262,15 +292,19 @@ has, and the `n_breaks` argument can be used to specify the number of
 concentric circles.
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                       group = "X", 
-                                       period = 12),
-                      data = vitamind)
-polar_plot(model, 
-           grid_angle_segments = 12, 
-           clockwise = TRUE, 
-           start = "top",
-           n_breaks = 5)
+model <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
+polar_plot(model,
+  grid_angle_segments = 12,
+  clockwise = TRUE,
+  start = "top",
+  n_breaks = 5
+)
 ```
 
 If the user wishes to zoom into the confidence ellipses to show
@@ -281,13 +315,16 @@ the smallest view window containing all confidence ellipses), or
 confidence ellipses AND the origin).
 
 ```{r, message=F, warning=F}
-model <- cosinor.glmm(Y ~ X + amp_acro(time, 
-                                       group = "X", 
-                                       period = 12), 
-                      data = vitamind)
+model <- cosinor.glmm(
+  Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  ),
+  data = vitamind
+)
 polar_plot(model,
-  grid_angle_segments = 12, 
-  clockwise = TRUE, 
+  grid_angle_segments = 12,
+  clockwise = TRUE,
   start = "top",
   view = "zoom_origin"
 )

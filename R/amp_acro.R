@@ -126,8 +126,10 @@ amp_acro <- function(time_col,
 
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
-    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data,
-                                                                         "tbl"),
+    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(
+      .data,
+      "tbl"
+    ),
     msg = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
   )
 
@@ -214,11 +216,11 @@ amp_acro <- function(time_col,
         check_group_var(.data = .data, group = group)
         # if the user supplies a group argument in cosinor.glmm() call, but only
         # one level exists in the group, then reassign group_check <- false
-        #browser()
+        # browser()
         # if (length(unique(.data[[group]])) == 1){
         #  group <- 0
         #  group_check <- FALSE
-        #}
+        # }
       }
     }
 
@@ -226,9 +228,9 @@ amp_acro <- function(time_col,
     # group argument present in amp_acro()
 
     # ensure the length of the grouping variable matches the value of
-    #n_components. (tested) if one grouping variable is supplied but
-    #n_components > 1, then the one grouping variable is repeated to match the
-    #value of n_components
+    # n_components. (tested) if one grouping variable is supplied but
+    # n_components > 1, then the one grouping variable is repeated to match the
+    # value of n_components
     if (length(group) != n_components) {
       if (length(group) == 1) {
         group <- rep(group, n_components)
@@ -238,7 +240,7 @@ amp_acro <- function(time_col,
     }
     group_original <- group
     # show error message if user uses 'rrr' or 'sss' in their grouping variable
-    #name (tested)
+    # name (tested)
     if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
       stop("Group variable names cannot contain 'rrr' or 'sss'")
     }
@@ -298,7 +300,8 @@ amp_acro <- function(time_col,
       # add a warning message that columns have been added to the dataframe
       if (!.quietly) {
         message(paste(
-          rrr_names, "and", sss_names, "have been added to dataframe"))
+          rrr_names, "and", sss_names, "have been added to dataframe"
+        ))
       }
 
       # if grouping variable is not 0 (NA), create interaction terms in the
@@ -326,13 +329,20 @@ amp_acro <- function(time_col,
     }
     newformula <- stats::as.formula(
       paste(left_part, # rownames(attr(Terms, "factors"))[1],
-      paste(c(attr(stats::terms(.formula),
-                   "intercept"),
-              non_acro_formula,
-              formula_expr),
-            collapse = " + "),
-      sep = " ~ "
-    ))
+        paste(
+          c(
+            attr(
+              stats::terms(.formula),
+              "intercept"
+            ),
+            non_acro_formula,
+            formula_expr
+          ),
+          collapse = " + "
+        ),
+        sep = " ~ "
+      )
+    )
     newformula <- stats::update.formula(newformula, ~.)
 
     # update the formula
@@ -377,28 +387,36 @@ amp_acro <- function(time_col,
     ranef_part <- lapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
       component_num <- regmatches(
-        x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE))[[1]]
+        x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE)
+      )[[1]]
       if (length(component_num) == 0) {
         return(x)
       } else {
         for (i in seq_along(1:length(component_num))) {
           string_match <- paste0(
-            ".*amp_acro", component_num[i], "\\s([^+|]*).*")
+            ".*amp_acro", component_num[i], "\\s([^+|]*).*"
+          )
           ranef_part_addition <- gsub(string_match, "\\1", ranef_part)
           ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
 
           rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
           sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
 
-          x <- gsub(paste0("amp_acro",
-                           component_num[i],
-                           " ",
-                           ranef_part_addition),
-                    paste0(rrr_part,
-                           "+",
-                           sss_part),
-                    x,
-                    fixed = TRUE)
+          x <- gsub(
+            paste0(
+              "amp_acro",
+              component_num[i],
+              " ",
+              ranef_part_addition
+            ),
+            paste0(
+              rrr_part,
+              "+",
+              sss_part
+            ),
+            x,
+            fixed = TRUE
+          )
         }
         return(x)
       }
@@ -406,12 +424,18 @@ amp_acro <- function(time_col,
 
 
     # ranef_part_updated <- unlist(ranef_parts_replaced)
-    ranef_part_updated <- paste(sprintf("(%s)",
-                                        ranef_parts_replaced),
-                                collapse = "+")
+    ranef_part_updated <- paste(
+      sprintf(
+        "(%s)",
+        ranef_parts_replaced
+      ),
+      collapse = "+"
+    )
 
     main_part <- paste(paste(deparse(res$newformula), collapse = ""),
-                       ranef_part_updated, collapse = "", sep = "+")
+      ranef_part_updated,
+      collapse = "", sep = "+"
+    )
     res$newformula <- stats::as.formula(main_part)
   }
   res

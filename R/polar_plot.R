@@ -179,22 +179,28 @@ polar_plot.cosinor.glmm <- function(x,
                                     n_breaks = 5,
                                     component_index,
                                     grid_angle_segments = 8,
-                                    radial_units = c("radians",
-                                                     "degrees",
-                                                     "period"),
+                                    radial_units = c(
+                                      "radians",
+                                      "degrees",
+                                      "period"
+                                    ),
                                     clockwise = FALSE,
                                     text_size = 3.5,
                                     text_opacity = 1,
                                     fill_colours,
                                     ellipse_opacity = 0.3,
                                     circle_linetype = "dotted",
-                                    start = c("right",
-                                              "left",
-                                              "top",
-                                              "bottom"),
-                                    view = c("full",
-                                             "zoom",
-                                             "zoom_origin"),
+                                    start = c(
+                                      "right",
+                                      "left",
+                                      "top",
+                                      "bottom"
+                                    ),
+                                    view = c(
+                                      "full",
+                                      "zoom",
+                                      "zoom_origin"
+                                    ),
                                     overlay_parameter_info = FALSE,
                                     quietly = TRUE,
                                     ...) {
@@ -312,10 +318,10 @@ polar_plot.cosinor.glmm <- function(x,
       group <- x_str
       level <- x$group_stats[[group]]
 
-    # create an index that will be used to grab the correct transformed
-    # summary stats
+      # create an index that will be used to grab the correct transformed
+      # summary stats
       string_index <- paste0("[", group, "=")
-    # create an index that grabs the corresponding raw summary stats
+      # create an index that grabs the corresponding raw summary stats
       string_index_raw <- paste0(group)
     } else {
       group <- NULL
@@ -391,7 +397,7 @@ polar_plot.cosinor.glmm <- function(x,
     # the polar plot)
     time_labels <- signif(
       seq(from = 0, to = max_period, by = max_period / grid_angle_segments), 3
-      )
+    )
 
 
     # create a sequence of labels for the contours.
@@ -405,13 +411,17 @@ polar_plot.cosinor.glmm <- function(x,
     # where they should be placed
     dial_pos_full_x <- round(
       max_plot_radius * cos(
-        direction * time_labels * 2 * pi / max_period + offset),
-      digits = 5)
+        direction * time_labels * 2 * pi / max_period + offset
+      ),
+      digits = 5
+    )
 
     dial_pos_full_y <- round(
       max_plot_radius * sin(
-        direction * time_labels * 2 * pi / max_period + offset),
-      digits = 5)
+        direction * time_labels * 2 * pi / max_period + offset
+      ),
+      digits = 5
+    )
 
     # determining the bounds to plot if zoom = TRUE
     # designed to find the minimum plot window that contains

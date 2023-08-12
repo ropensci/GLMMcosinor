@@ -21,55 +21,56 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(GLMMcosinor)
 library(dplyr)
-#' @srrstats {G2.0a} 
-#' @srrstats {G2.1a} 
-#' @srrstats {RE1.1} 
+#' @srrstats {G2.0a}
+#' @srrstats {G2.1a}
+#' @srrstats {RE1.1}
 
-  withr::with_seed(
-    50,
-    {
-testdata_simple <- simulate_cosinor(1000,
-  n_period = 2,
-  mesor = 5,
-  amp = 2,
-  acro = 1,
-  beta.mesor = 4,
-  beta.amp = 1,
-  beta.acro = 0.5,
-  family = "poisson",
-  period = c(12),
-  n_components = 1,
-  beta.group = TRUE
-)
+withr::with_seed(
+  50,
+  {
+    testdata_simple <- simulate_cosinor(1000,
+      n_period = 2,
+      mesor = 5,
+      amp = 2,
+      acro = 1,
+      beta.mesor = 4,
+      beta.amp = 1,
+      beta.acro = 0.5,
+      family = "poisson",
+      period = c(12),
+      n_components = 1,
+      beta.group = TRUE
+    )
 
-testdata_simple_gaussian <- simulate_cosinor(1000,
-  n_period = 2,
-  mesor = 5,
-  amp = 2,
-  acro = 1,
-  beta.mesor = 4,
-  beta.amp = 1,
-  beta.acro = 0.5,
-  family = "gaussian",
-  period = c(12),
-  n_components = 1,
-  beta.group = TRUE
-)
+    testdata_simple_gaussian <- simulate_cosinor(1000,
+      n_period = 2,
+      mesor = 5,
+      amp = 2,
+      acro = 1,
+      beta.mesor = 4,
+      beta.amp = 1,
+      beta.acro = 0.5,
+      family = "gaussian",
+      period = c(12),
+      n_components = 1,
+      beta.group = TRUE
+    )
 
-testdata_two_components <- simulate_cosinor(1000,
-  n_period = 10,
-  mesor = 7,
-  amp = c(0.1, 0.4),
-  acro = c(1, 1.5),
-  beta.mesor = 4.4,
-  beta.amp = c(2, 1),
-  beta.acro = c(1, -1.5),
-  family = "poisson",
-  period = c(12, 6),
-  n_components = 2,
-  beta.group = TRUE
+    testdata_two_components <- simulate_cosinor(1000,
+      n_period = 10,
+      mesor = 7,
+      amp = c(0.1, 0.4),
+      acro = c(1, 1.5),
+      beta.mesor = 4.4,
+      beta.amp = c(2, 1),
+      beta.acro = c(1, -1.5),
+      family = "poisson",
+      period = c(12, 6),
+      n_components = 2,
+      beta.group = TRUE
+    )
+  }
 )
-})
 ```
 
 ## `cosinor.glmm()`
@@ -104,10 +105,13 @@ data from a Poisson distribution loaded in this vignette. In this
 example, there is no grouping variable.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ amp_acro(times, 
-                                    period = 12), 
-                       data = filter(testdata_simple, group == 0), 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ amp_acro(times,
+    period = 12
+  ),
+  data = filter(testdata_simple, group == 0),
+  family = poisson()
+)
 object
 ```
 
@@ -139,11 +143,14 @@ Now, we can add a grouping variable by adding the name of the group in
 the `amp_acro()` function:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ amp_acro(times, 
-                                    period = 12, 
-                                    group = "group"), 
-                       data = testdata_simple_gaussian, 
-                       family = gaussian)
+object <- cosinor.glmm(
+  Y ~ amp_acro(times,
+    period = 12,
+    group = "group"
+  ),
+  data = testdata_simple_gaussian,
+  family = gaussian
+)
 object
 ```
 
@@ -175,11 +182,14 @@ can add a term for the group in the model so that we can estimate the
 **difference in MESOR** between the two groups.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            period = 12, 
-                                            group = "group"), 
-                       data = testdata_simple_gaussian, 
-                       family = gaussian())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    period = 12,
+    group = "group"
+  ),
+  data = testdata_simple_gaussian,
+  family = gaussian()
+)
 object
 ```
 
@@ -210,11 +220,14 @@ separately, rather than the difference between groups. To achieve this,
 we can remove the intercept term by using `0 +`.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ 0 + group + amp_acro(times, 
-                                      period = 12, 
-                                      group = "group"), 
-             data = testdata_simple, 
-             family = poisson())
+cosinor.glmm(
+  Y ~ 0 + group + amp_acro(times,
+    period = 12,
+    group = "group"
+  ),
+  data = testdata_simple,
+  family = poisson()
+)
 ```
 
 ### Specifying more complicated models using the `amp_acro()` function
@@ -241,12 +254,16 @@ value of `n_components` will need to match the length of the `group` and
 For example:
 
 ```{r, message=F, warning=F}
-cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
-                                  n_components = 2, 
-                                  period = c(12, 6), 
-                                  group = c("group", "group")), 
-             data = testdata_two_components, 
-             family = poisson())
+cosinor.glmm(
+  Y ~ group + amp_acro(
+    time_col = times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "group")
+  ),
+  data = testdata_two_components,
+  family = poisson()
+)
 ```
 
 In the output, the suffix on the estimates for amplitude and acrophase
@@ -305,14 +322,16 @@ object_disp_zi <- cosinor.glmm(
     group = "group"
   ),
   data = testdata_disp_zi, family = gaussian(),
-  dispformula = ~ group + amp_acro(times, 
-                                   n_components = 2, 
-                                   group = "group", 
-                                   period = c(12, 6)),
-  ziformula = ~ group + amp_acro(times, 
-                                 n_components = 3, 
-                                 group = "group", 
-                                 period = c(7, 8, 2))
+  dispformula = ~ group + amp_acro(times,
+    n_components = 2,
+    group = "group",
+    period = c(12, 6)
+  ),
+  ziformula = ~ group + amp_acro(times,
+    n_components = 3,
+    group = "group",
+    period = c(7, 8, 2)
+  )
 )
 
 object_disp_zi
@@ -340,11 +359,14 @@ role of the `test_cosinor()` function.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            period = 12, 
-                                            group = "group"), 
-                       data = testdata_simple, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    period = 12,
+    group = "group"
+  ),
+  data = testdata_simple,
+  family = poisson()
+)
 summary(object)
 ```
 

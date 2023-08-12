@@ -21,58 +21,58 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(GLMMcosinor)
 library(dplyr)
-  withr::with_seed(
-    50,
-    {
+withr::with_seed(
+  50,
+  {
+    testdata_simple <- simulate_cosinor(1000,
+      n_period = 2,
+      mesor = 5,
+      amp = 2,
+      acro = 1,
+      beta.mesor = 4,
+      beta.amp = 1,
+      beta.acro = 0.5,
+      family = "poisson",
+      period = c(12),
+      n_components = 1,
+      beta.group = TRUE
+    )
 
-testdata_simple <- simulate_cosinor(1000,
-  n_period = 2,
-  mesor = 5,
-  amp = 2,
-  acro = 1,
-  beta.mesor = 4,
-  beta.amp = 1,
-  beta.acro = 0.5,
-  family = "poisson",
-  period = c(12),
-  n_components = 1,
-  beta.group = TRUE
-)
+    testdata_two_components <- simulate_cosinor(1000,
+      n_period = 10,
+      mesor = 7,
+      amp = c(0.1, 0.4),
+      acro = c(1, 1.5),
+      beta.mesor = 4.4,
+      beta.amp = c(2, 1),
+      beta.acro = c(1, -1.5),
+      family = "poisson",
+      period = c(12, 6),
+      n_components = 2,
+      beta.group = TRUE
+    )
 
-testdata_two_components <- simulate_cosinor(1000,
-  n_period = 10,
-  mesor = 7,
-  amp = c(0.1, 0.4),
-  acro = c(1, 1.5),
-  beta.mesor = 4.4,
-  beta.amp = c(2, 1),
-  beta.acro = c(1, -1.5),
-  family = "poisson",
-  period = c(12, 6),
-  n_components = 2,
-  beta.group = TRUE
+    testdata_multicomponent <- simulate_cosinor(1000,
+      n_period = 10,
+      mesor = 7,
+      amp = c(0.1, 0.4, 0.5),
+      acro = c(1, 1.5, 0.1),
+      beta.mesor = 4.4,
+      beta.amp = c(2, 1, 0.4),
+      beta.acro = c(1, -1.5, -1),
+      family = "poisson",
+      period = c(12, 6, 12),
+      n_components = 3,
+      beta.group = TRUE
+    )
+  }
 )
-
-testdata_multicomponent <- simulate_cosinor(1000,
-  n_period = 10,
-  mesor = 7,
-  amp = c(0.1, 0.4, 0.5),
-  acro = c(1, 1.5, 0.1),
-  beta.mesor = 4.4,
-  beta.amp = c(2, 1, 0.4),
-  beta.acro = c(1, -1.5, -1),
-  family = "poisson",
-  period = c(12, 6, 12),
-  n_components = 3,
-  beta.group = TRUE
-)
-})
 ```
 
 ```{r srr, eval = FALSE, echo = FALSE}
-#' @srrstats {G1.0} 
-#' @srrstats {G1.1} 
-#' @srrstats {G1.3} 
+#' @srrstats {G1.0}
+#' @srrstats {G1.1}
+#' @srrstats {G1.3}
 ```
 
 ```{r, message=F, warning=F}
@@ -82,11 +82,12 @@ object <- cosinor.glmm(Y ~ X + amp_acro(time,
   group = "X"
 ), data = vitamind)
 
-autoplot(object, 
-         superimpose.data = TRUE, 
-         x_str = "X", 
-         predict.ribbon = FALSE, 
-         data_opacity = 0.2)
+autoplot(object,
+  superimpose.data = TRUE,
+  x_str = "X",
+  predict.ribbon = FALSE,
+  data_opacity = 0.2
+)
 ```
 
 ## Introduction
@@ -191,7 +192,6 @@ For example, consider the following model and its output:
 ```{r, message=F, warning=F}
 data(vitamind)
 cosinor.glmm(Y ~ X + amp_acro(time, period = 12, group = "X"), data = vitamind)
-
 ```
 
 Notice how both the raw and transformed coefficients are provided as
@@ -224,7 +224,6 @@ The `cosinor.glmm()` function is used to fit cosinor models to a variety
 of distributions using the `glmmTMB()` function.
 
 ```{r}
-
 formula <- Y ~ amp_acro(time, period = 12)
 data <- vitamind
 family <- gaussian
@@ -292,10 +291,13 @@ beginning of the formula:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-cosinor.glmm(Y ~ 0 + X + amp_acro(time, 
-                                  period = 12, 
-                                  group = "X"), 
-             data = vitamind)
+cosinor.glmm(
+  Y ~ 0 + X + amp_acro(time,
+    period = 12,
+    group = "X"
+  ),
+  data = vitamind
+)
 ```
 
 Note how now, `[X=1] = 31.59165` and this represents the estimate for
@@ -308,12 +310,14 @@ response occurs at 2.715 time units. We can check this visually using
 the `autoplot()` function, looking at the `[X=0]` level (red line)
 
 ```{r}
-object <- cosinor.glmm(Y ~ 0 + X + amp_acro(time, 
-                                            period = 12, 
-                                            group = "X"), 
-                       data = vitamind)
+object <- cosinor.glmm(
+  Y ~ 0 + X + amp_acro(time,
+    period = 12,
+    group = "X"
+  ),
+  data = vitamind
+)
 autoplot(object, predict.ribbon = FALSE)
-
 ```
 
 ## More advanced `cosinor.glmm()` model specification
@@ -351,8 +355,9 @@ functions.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group")
-                       , data = testdata_simple, family = poisson())
+object <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group"),
+  data = testdata_simple, family = poisson()
+)
 summary(object)
 ```
 
@@ -361,7 +366,7 @@ component 1 between `group 1` and `group 2`, we can use the
 `test_cosinor_levels()` function:
 
 ```{r}
-test_cosinor_levels(object, x_str = "group", param = "amp" )
+test_cosinor_levels(object, x_str = "group", param = "amp")
 ```
 
 The estimate here is the estimate of the difference between the inputted
@@ -372,29 +377,33 @@ respectively, and so the difference is approximately -1.
 Now, consider an example where the difference is not so clear.
 
 ```{r}
-  withr::with_seed(
-    50,
-    {
-testdata_summary <- simulate_cosinor(100,
-  n_period = 10,
-  mesor = 7,
-  amp = c(0.1, 0.5),
-  acro = c(1, 1),
-  beta.mesor = 4.4,
-  beta.amp = c(0.1, 0.46),
-  beta.acro = c(0.5, -1.5),
-  family = "poisson",
-  period = c(12, 6),
-  n_components = 2,
-  beta.group = TRUE
+withr::with_seed(
+  50,
+  {
+    testdata_summary <- simulate_cosinor(100,
+      n_period = 10,
+      mesor = 7,
+      amp = c(0.1, 0.5),
+      acro = c(1, 1),
+      beta.mesor = 4.4,
+      beta.amp = c(0.1, 0.46),
+      beta.acro = c(0.5, -1.5),
+      family = "poisson",
+      period = c(12, 6),
+      n_components = 2,
+      beta.group = TRUE
+    )
+  }
 )
-})
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            period = c(12,6),
-                                            n_components = 2, 
-                                            group = "group"), 
-                       data = testdata_summary, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    period = c(12, 6),
+    n_components = 2,
+    group = "group"
+  ),
+  data = testdata_summary,
+  family = poisson()
+)
 test_cosinor_levels(object, x_str = "group", param = "amp", component_index = 1)
 ```
 
@@ -425,11 +434,14 @@ predicted values from the model on either the existing or new data.
 `plot()`.)
 
 ```{r, message=F, warning=F}
-fit <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                         period = 12, 
-                                         group = NA), 
-                    data = testdata_simple, 
-                    family = poisson())
+fit <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    period = 12,
+    group = NA
+  ),
+  data = testdata_simple,
+  family = poisson()
+)
 head(predict(fit))
 ```
 
@@ -440,11 +452,14 @@ The `{GLMMcosinor}` package includes two ways to visualise
 time-response plot of the fitted model for all groups:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, 
-                                            period = 12, 
-                                            group = "group"), 
-                       data = testdata_simple, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    period = 12,
+    group = "group"
+  ),
+  data = testdata_simple,
+  family = poisson()
+)
 
 autoplot(object, superimpose.data = TRUE)
 ```

@@ -17,52 +17,53 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(GLMMcosinor)
-  withr::with_seed(
-    50,
-    {
-testdata_two_components <- simulate_cosinor(1000,
-  n_period = 10,
-  mesor = 7,
-  amp = c(0.1, 0.4),
-  acro = c(1, 1.5),
-  beta.mesor = 4.4,
-  beta.amp = c(2, 1),
-  beta.acro = c(1, -1.5),
-  family = "poisson",
-  period = c(12, 6),
-  n_components = 2,
-  beta.group = TRUE
-)
+withr::with_seed(
+  50,
+  {
+    testdata_two_components <- simulate_cosinor(1000,
+      n_period = 10,
+      mesor = 7,
+      amp = c(0.1, 0.4),
+      acro = c(1, 1.5),
+      beta.mesor = 4.4,
+      beta.amp = c(2, 1),
+      beta.acro = c(1, -1.5),
+      family = "poisson",
+      period = c(12, 6),
+      n_components = 2,
+      beta.group = TRUE
+    )
 
-testdata_two_components_grouped <- simulate_cosinor(1000,
-  n_period = 5,
-  mesor = 3.7,
-  amp = c(0.1, 0.4),
-  acro = c(1, 1.5),
-  beta.mesor = 4,
-  beta.amp = c(2, 0.4),
-  beta.acro = c(1, 1.5),
-  family = "poisson",
-  period = c(12, 6),
-  n_components = 2,
-  beta.group = TRUE
-)
+    testdata_two_components_grouped <- simulate_cosinor(1000,
+      n_period = 5,
+      mesor = 3.7,
+      amp = c(0.1, 0.4),
+      acro = c(1, 1.5),
+      beta.mesor = 4,
+      beta.amp = c(2, 0.4),
+      beta.acro = c(1, 1.5),
+      family = "poisson",
+      period = c(12, 6),
+      n_components = 2,
+      beta.group = TRUE
+    )
 
 
-testdata_three_components <- simulate_cosinor(1000,
-  n_period = 2,
-  mesor = 7,
-  amp = c(0.1, 0.4, 0.5),
-  acro = c(1, 1.5, 0.1),
-  beta.mesor = 4.4,
-  beta.amp = c(2, 1, 0.4),
-  beta.acro = c(1, -1.5, -1),
-  family = "poisson",
-  period = c(12, 6, 12),
-  n_components = 3, 
-  beta.group = TRUE
+    testdata_three_components <- simulate_cosinor(1000,
+      n_period = 2,
+      mesor = 7,
+      amp = c(0.1, 0.4, 0.5),
+      acro = c(1, 1.5, 0.1),
+      beta.mesor = 4.4,
+      beta.amp = c(2, 1, 0.4),
+      beta.acro = c(1, -1.5, -1),
+      family = "poisson",
+      period = c(12, 6, 12),
+      n_components = 3,
+      beta.group = TRUE
+    )
+  }
 )
-})
 ```
 
 `{GLMMcosinor}` allows specification of multi-component cosinor models. This is useful if there are multiple explanatory variables with known periods affecting the response variable.
@@ -76,14 +77,17 @@ The `period` argument must also match the length of `n_components`, where the or
 For example:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", "group")), 
-                       data = testdata_two_components, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(
+    time_col = times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "group")
+  ),
+  data = testdata_two_components,
+  family = poisson()
+)
 object
-
 ```
 
 In the output, the suffix on the estimates for amplitude and acrophase represents its component:
@@ -107,12 +111,16 @@ If a multicomponent model has one component that is grouped with other component
 For example, if wanted only the first component to have a grouped component, we would specify the `group` argument as `group = c("group", NA))` . Here, the first component is grouped by `group`, and the second component is not grouped. The data was simulated such that the second component was the same for both groups.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", NA)), 
-                       data = testdata_two_components_grouped, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(
+    time_col = times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", NA)
+  ),
+  data = testdata_two_components_grouped,
+  family = poisson()
+)
 object
 ```
 
@@ -141,12 +149,16 @@ autoplot(object, superimpose.data = TRUE)
 In this example, it is not strictly necessary to specify `group = c("group", NA))` since specifying `group = c("group","group")`still yields accurate estimates:
 
 ```{r}
-object <- cosinor.glmm(Y ~ group + amp_acro(time_col = times, 
-                                            n_components = 2, 
-                                            period = c(12, 6), 
-                                            group = c("group", "group")), 
-                       data = testdata_two_components_grouped, 
-                       family = poisson())
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(
+    time_col = times,
+    n_components = 2,
+    period = c(12, 6),
+    group = c("group", "group")
+  ),
+  data = testdata_two_components_grouped,
+  family = poisson()
+)
 object
 ```
 
@@ -156,21 +168,26 @@ For instance, the following two `cosinor.glmm()` calls fit the same
 models:
 
 ```{r, message=F, warning=F}
+cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2,
+    period = 12,
+    group = "group"
+  ),
+  data = testdata_two_components,
+  family = poisson()
+)
 
-cosinor.glmm(Y ~ group + amp_acro(times, 
-                                  n_components = 2,
-                                  period = 12, 
-                                  group = "group"), 
-             data = testdata_two_components, 
-             family = poisson())
 
-
-cosinor.glmm(Y ~ group + amp_acro(times, 
-                                  n_components = 2, 
-                                  period = c(12, 12), 
-                                  group = c("group", "group")), 
-             data = testdata_two_components, 
-             family = poisson())
+cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2,
+    period = c(12, 12),
+    group = c("group", "group")
+  ),
+  data = testdata_two_components,
+  family = poisson()
+)
 ```
 
 ## Generating a three-component model
@@ -178,17 +195,21 @@ cosinor.glmm(Y ~ group + amp_acro(times,
 The plot below shows a 3-component model with the simulated data overlayed:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times,
-  n_components = 3,
-  period = c(12, 6, 12),
-  group = "group"
-), data = testdata_three_components, 
-family = poisson())
-autoplot(object, 
-         superimpose.data = TRUE, 
-         x_str = "group", 
-         predict.ribbon = FALSE, 
-         data_opacity = 0.08)
+object <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 3,
+    period = c(12, 6, 12),
+    group = "group"
+  ),
+  data = testdata_three_components,
+  family = poisson()
+)
+autoplot(object,
+  superimpose.data = TRUE,
+  x_str = "group",
+  predict.ribbon = FALSE,
+  data_opacity = 0.08
+)
 ```
 
 ## Generating models with n-components

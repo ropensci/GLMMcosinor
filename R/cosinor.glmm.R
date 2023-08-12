@@ -151,24 +151,33 @@ update_covnames <- function(names, group_stats) {
   }
 
   # get the names that covnames does not get:
-  covnames_inv <- grep(paste0("(Intercept|",
-                              paste(covnames,
-                                    collapse = "|"), ")"),
-                       invert = TRUE,
-                       names,
-                       value = TRUE)
+  covnames_inv <- grep(
+    paste0(
+      "(Intercept|",
+      paste(covnames,
+        collapse = "|"
+      ), ")"
+    ),
+    invert = TRUE,
+    names,
+    value = TRUE
+  )
   lack <- names
   for (i in seq_along(covnames)) {
     # var is a group name corresponding to that in covnames
     var <- group_names_together[i]
     # get the group level
     var_number <- unlist(group_stats)[[i]]
-    lack <- gsub(paste0(covnames[i]),
-                 paste0("[", var, "=", var_number, "]"),
-                 lack)
-    lack <- gsub(paste0("^", covnames[i], "$"),
-                 paste0("[", var, "=", var_number, "]"),
-                 lack)
+    lack <- gsub(
+      paste0(covnames[i]),
+      paste0("[", var, "=", var_number, "]"),
+      lack
+    )
+    lack <- gsub(
+      paste0("^", covnames[i], "$"),
+      paste0("[", var, "=", var_number, "]"),
+      lack
+    )
   }
 
   lack

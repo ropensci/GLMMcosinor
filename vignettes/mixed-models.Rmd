@@ -54,7 +54,7 @@ f_sample_id <- function(id_num,
 
 dat_mixed <- do.call(
   "rbind",
-  lapply(1:30, function(x){
+  lapply(1:30, function(x) {
     f_sample_id(
       id_num = x,
       mesor = rnorm(1, mean = 0, sd = 1),
@@ -64,14 +64,14 @@ dat_mixed <- do.call(
       n_components = 1
     )
   })
-) |> 
+) |>
   mutate(subject = as.factor(subject))
 ```
 
 A quick graph shows how there are individual differences in terms of MESOR, amplitude and phase.
 
 ```{r}
-dat_mixed |> 
+dat_mixed |>
   ggplot(aes(times, Y, col = subject)) +
   geom_point() +
   geom_line() +
@@ -86,9 +86,10 @@ In the model formula, we can use the special `amp_acro[n]` which represents the 
 
 ```{r}
 mixed_mod <- cosinor.glmm(
-  Y ~ amp_acro(times, 
-               n_components = 1, 
-               period = 24) + (1 + amp_acro1 | subject),
+  Y ~ amp_acro(times,
+    n_components = 1,
+    period = 24
+  ) + (1 + amp_acro1 | subject),
   data = dat_mixed
 )
 ```
@@ -108,8 +109,8 @@ summary(mixed_mod)
 We can see that the predicted values from the model closely resemble the patterns we see in the input data.
 
 ```{r}
-data.frame(pred = predict(mixed_mod)) |> 
-  cbind(dat_mixed) |> 
+data.frame(pred = predict(mixed_mod)) |>
+  cbind(dat_mixed) |>
   ggplot() +
   geom_point(aes(x = times, y = Y, col = subject)) +
   geom_line(aes(x = times, y = pred, col = subject))

@@ -44,9 +44,10 @@ test_that("model returns accurate parameters", {
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times,
-                             n_components = 1,
-                             group = "group",
-                             period = 12),
+          n_components = 1,
+          group = "group",
+          period = 12
+        ),
         data = comod
       )
     }
@@ -74,9 +75,10 @@ test_that("model returns accurate parameters", {
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times,
-                             n_components = 1,
-                             group = "group",
-                             period = 12),
+          n_components = 1,
+          group = "group",
+          period = 12
+        ),
         data = comod
       )
     }
@@ -104,9 +106,10 @@ test_that("model returns accurate parameters", {
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times,
-                             n_components = 1,
-                             group = "group",
-                             period = 12),
+          n_components = 1,
+          group = "group",
+          period = 12
+        ),
         data = comod,
         family = poisson
       )
@@ -135,9 +138,10 @@ test_that("model returns accurate parameters", {
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times,
-                             n_components = 1,
-                             group = "group",
-                             period = 12),
+          n_components = 1,
+          group = "group",
+          period = 12
+        ),
         data = comod,
         family = Gamma(link = "log")
       )
@@ -167,9 +171,10 @@ test_that("model returns accurate parameters", {
       )
       object <- cosinor.glmm(
         Y ~ group + amp_acro(times,
-                             n_components = 1,
-                             group = "group",
-                             period = 12),
+          n_components = 1,
+          group = "group",
+          period = 12
+        ),
         data = comod,
         family = binomial
       )
@@ -191,9 +196,11 @@ test_that("model output is class cosinor.glmm", {
       )
       expect_true(inherits(object, "cosinor.glmm"))
 
-      object <- cosinor.glmm(Y ~ X + amp_acro(time,
-                                              group = "X",
-                                              period = 12),
+      object <- cosinor.glmm(
+        Y ~ X + amp_acro(time,
+          group = "X",
+          period = 12
+        ),
         data = vitamind,
         dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
         ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
@@ -327,8 +334,11 @@ test_that("mixed model estimates parameters well", {
 
 test_that("alternative inputs work", {
   testthat::expect_no_error(cosinor.glmm(
-    Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
+    Y ~ amp_acro(time, group = "X", period = 12),
+    data = vitamind
+  ))
   testthat::expect_no_error(cosinor.glmm(
-    Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
-
+    Y ~ amp_acro(time, group = X, period = 12),
+    data = vitamind
+  ))
 })

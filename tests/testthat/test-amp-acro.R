@@ -14,20 +14,26 @@ test_that("multiplication works", {
     period = c(24, 12),
     .data = vitamind,
     .formula = Y ~ X + amp_acro("time",
-                                n_components = 2,
-                                group = "X",
-                                period = c(24, 12))
+      n_components = 2,
+      group = "X",
+      period = c(24, 12)
+    )
   )
 
   f <- Y ~ X + amp_acro(time, n_components = 2, group = c(NA, "X"))
 
-  cosinor.glmm(Y ~ X + amp_acro(time,
-                                n_components = 2,
-                                group = c(NA, "X"),
-                                period = c(12, 24)),
-               data = vitamind)
-  expect(ok = TRUE,
-         "unsuccessful multiplication of group to match n_components")
+  cosinor.glmm(
+    Y ~ X + amp_acro(time,
+      n_components = 2,
+      group = c(NA, "X"),
+      period = c(12, 24)
+    ),
+    data = vitamind
+  )
+  expect(
+    ok = TRUE,
+    "unsuccessful multiplication of group to match n_components"
+  )
 })
 
 test_that("bad inputs return useful errors", {
@@ -37,9 +43,10 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1.1, group = "X", period = 12,
       .data = vitamind,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1.1,
-                                  group = "X",
-                                  period = 12)
+        n_components = 1.1,
+        group = "X",
+        period = 12
+      )
     )
   }
   expect_error( # non-count n_components
@@ -53,9 +60,10 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "X", period = -12,
       .data = vitamind,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = -12)
+        n_components = 1,
+        group = "X",
+        period = -12
+      )
     )
   }
   expect_error(f(), regexp = "period > 0") # negative period
@@ -69,9 +77,10 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = 12)
+        n_components = 1,
+        group = "X",
+        period = 12
+      )
     )
   }
   expect_error(f(), regexp = "ttt is not a numeric or integer vector")
@@ -85,9 +94,10 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_2,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = 12)
+        n_components = 1,
+        group = "X",
+        period = 12
+      )
     )
   }
   expect_error(f(), regexp = "time_col must be univariate")
@@ -99,13 +109,15 @@ test_that("bad inputs return useful errors", {
       time_col = time_values, n_components = 1, group = "X", period = 12,
       .data = vitamind,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = 12)
+        n_components = 1,
+        group = "X",
+        period = 12
+      )
     )
   }
   expect_error(f(),
-               regexp = "time_col must be the name of a column in dataframe")
+    regexp = "time_col must be the name of a column in dataframe"
+  )
 
   # test 8
   data(vitamind)
@@ -115,13 +127,15 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = 12)
+        n_components = 1,
+        group = "X",
+        period = 12
+      )
     )
   }
   expect_error(f(),
-               regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
+    regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
+  )
 
   # test 9
   data(vitamind)
@@ -132,13 +146,15 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "rrr2", period = 12,
       .data = vitamind_mod,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "rrr2",
-                                  period = 12)
+        n_components = 1,
+        group = "rrr2",
+        period = 12
+      )
     )
   }
   expect_error(f(),
-               regexp = "Group variable names cannot contain 'rrr' or 'sss'")
+    regexp = "Group variable names cannot contain 'rrr' or 'sss'"
+  )
 
   # test 10
   data(vitamind)
@@ -149,14 +165,16 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = c("X", "X2"), period = 12,
       .data = vitamind_two_groups,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = c("X", "X2"),
-                                  period = 12)
+        n_components = 1,
+        group = c("X", "X2"),
+        period = 12
+      )
     )
   }
   expect_error(f(),
-               regexp = "Grouping variable in amp_acro() must be of length 1 or the same as n_components",
-               fixed = TRUE)
+    regexp = "Grouping variable in amp_acro() must be of length 1 or the same as n_components",
+    fixed = TRUE
+  )
 
   # test 11
   data(vitamind)
@@ -165,14 +183,16 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "X", period = c(8, 12),
       .data = vitamind,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = c(8, 12))
+        n_components = 1,
+        group = "X",
+        period = c(8, 12)
+      )
     )
   }
   expect_error(f(),
-               regexp = "period value(s) in amp_acro() must be of length 1 or the same as n_components",
-               fixed = TRUE)
+    regexp = "period value(s) in amp_acro() must be of length 1 or the same as n_components",
+    fixed = TRUE
+  )
 
   # test 12
   data(vitamind)
@@ -181,13 +201,16 @@ test_that("bad inputs return useful errors", {
       time_col = time, n_components = 1, group = "Z", period = c(8, 12),
       .data = vitamind,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "Z",
-                                  period = c(8, 12))
+        n_components = 1,
+        group = "Z",
+        period = c(8, 12)
+      )
     )
   }
-  expect_error(f(), regexp = "Grouping variable(s) not found in input data:",
-               fixed = TRUE)
+  expect_error(f(),
+    regexp = "Grouping variable(s) not found in input data:",
+    fixed = TRUE
+  )
 })
 
 test_that("matrix, or tibble inputs are converted to dataframe ", {
@@ -200,17 +223,20 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = 12),
+        n_components = 1,
+        group = "X",
+        period = 12
+      ),
       .quietly = FALSE
     )
   }
   suppressMessages(expect_message(f(),
-                                  regexp = "main_rrr1 and main_sss1 have been added to dataframe"))
+    regexp = "main_rrr1 and main_sss1 have been added to dataframe"
+  ))
   # test 14
   suppressMessages(expect_message(f(),
-                                  regexp = "Data has been reformatted as dataframe"))
+    regexp = "Data has been reformatted as dataframe"
+  ))
 
 
   # test 15
@@ -220,9 +246,10 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
       .formula = Y ~ X + amp_acro(time,
-                                  n_components = 1,
-                                  group = "X",
-                                  period = 12)
+        n_components = 1,
+        group = "X",
+        period = 12
+      )
     )
   }
   expect(f(), ok = TRUE, "unsuccessful conversion of matrix to dataframe")
@@ -272,8 +299,9 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
         mutate(subject = as.factor(subject))
       mixed_mod <- cosinor.glmm(
         Y ~ amp_acro(times,
-                     n_components = 1,
-                     period = 24) + (1 + amp_acro1 | subject),
+          n_components = 1,
+          period = 24
+        ) + (1 + amp_acro1 | subject),
         data = dat_mixed
       )
       f_round <- function(x) {
@@ -285,28 +313,37 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
       testthat::expect_no_error(
         update_formula_and_data(
           formula = Y ~ amp_acro(times,
-                                 n_components = 1,
-                                 period = 24) +
+            n_components = 1,
+            period = 24
+          ) +
             (1 + amp_acro1 * treatment * hospital:patient | subject),
-          data = dat_mixed))
+          data = dat_mixed
+        )
+      )
 
       # Testing mixed model specification
       testthat::expect_no_error(
         update_formula_and_data(
           formula = Y ~ amp_acro(times,
-                                 n_components = 1,
-                                 period = 24) +
+            n_components = 1,
+            period = 24
+          ) +
             (amp_acro1 * treatment * hospital:patient + 1 | subject),
-          data = dat_mixed))
+          data = dat_mixed
+        )
+      )
 
       testthat::expect_no_error(
         update_formula_and_data(
           formula = Y ~ amp_acro(times,
-                                 n_components = 2,
-                                 period = c(12, 6)) +
+            n_components = 2,
+            period = c(12, 6)
+          ) +
             (amp_acro1 * treatment * hospital:patient + 1 +
-               amp_acro2 * treatment | subject),
-          data = dat_mixed))
+              amp_acro2 * treatment | subject),
+          data = dat_mixed
+        )
+      )
 
       testthat::expect_true(all.equal(
         f_round(mixed_mod$coefficients),

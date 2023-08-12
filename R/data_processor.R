@@ -14,7 +14,9 @@
 #' # Use vitamind data but add a "patient" identifier used as a random effect
 #' vitamind2 <- vitamind
 #' vitamind2$patient <- sample(
-#'     LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
+#'   LETTERS[1:5],
+#'   size = nrow(vitamind2), replace = TRUE
+#' )
 #'
 #' # Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
 #' # without yet fitting the model
@@ -33,7 +35,8 @@
 #' mod <- fit_model_and_process(
 #'   obj = data_and_formula,
 #'   formula = update.formula(
-#'   data_and_formula$newformula, . ~ . + (1 | patient))
+#'     data_and_formula$newformula, . ~ . + (1 | patient)
+#'   )
 #' )
 #'
 #' mod
@@ -148,11 +151,13 @@ data_processor <- function(newdata,
 
   # coefs_disp <- glmmTMB::fixef(mf)$disp
   main_coefs <- glmmTMB::fixef(mf)$cond
-  conditional_model <- get_new_coefs(main_coefs,
-                                     vec_rrr,
-                                     vec_sss,
-                                     n_components,
-                                     period)
+  conditional_model <- get_new_coefs(
+    main_coefs,
+    vec_rrr,
+    vec_sss,
+    n_components,
+    period
+  )
   items_keep <- c(
     "formula",
     "vec_rrr",
@@ -164,11 +169,13 @@ data_processor <- function(newdata,
 
   if (dispformula_check) {
     disp_coefs <- glmmTMB::fixef(mf)$disp
-    dispersion_model <- get_new_coefs(disp_coefs,
-                                      dispformula$vec_rrr,
-                                      dispformula$vec_sss,
-                                      dispformula$n_components,
-                                      period)
+    dispersion_model <- get_new_coefs(
+      disp_coefs,
+      dispformula$vec_rrr,
+      dispformula$vec_sss,
+      dispformula$n_components,
+      period
+    )
 
 
     disp_list <- c(
@@ -186,11 +193,13 @@ data_processor <- function(newdata,
 
   if (ziformula_check) {
     zi_coefs <- glmmTMB::fixef(mf)$zi
-    zi_model <- get_new_coefs(zi_coefs,
-                              ziformula$vec_rrr,
-                              ziformula$vec_sss,
-                              ziformula$n_components,
-                              period)
+    zi_model <- get_new_coefs(
+      zi_coefs,
+      ziformula$vec_rrr,
+      ziformula$vec_sss,
+      ziformula$n_components,
+      period
+    )
 
     zi_list <- c(
       ziformula[items_keep],

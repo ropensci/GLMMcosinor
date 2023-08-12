@@ -46,7 +46,9 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
     td.x <- x$disp_list$coefficients_disp
     if (x$disp_list$group_check_disp == TRUE) {
       names(td.x) <- update_covnames(
-        names(td.x), group_stats = x$disp_list$group_stats_disp)
+        names(td.x),
+        group_stats = x$disp_list$group_stats_disp
+      )
     }
     coef_list <- as.data.frame(td.x)
     colnames(coef_list) <- "Estimate"
@@ -69,7 +71,9 @@ print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
 
     if (x$zi_list$group_check_zi == TRUE) {
       names(tzi.x) <- update_covnames(
-        names(tzi.x), group_stats = x$zi_list$group_stats_zi)
+        names(tzi.x),
+        group_stats = x$zi_list$group_stats_zi
+      )
     }
     coef_list <- as.data.frame(tzi.x)
     colnames(coef_list) <- "Estimate"
