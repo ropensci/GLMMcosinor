@@ -88,52 +88,52 @@ Jayasinghe and Rex Parsons</h4>
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span>
-<span>  <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_seed.html" class="external-link">with_seed</a></span><span class="op">(</span></span>
-<span>    <span class="fl">50</span>,</span>
-<span>    <span class="op">{</span></span>
-<span><span class="va">testdata_two_components</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
-<span>  n_period <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  mesor <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
-<span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
-<span>  beta.mesor <span class="op">=</span> <span class="fl">4.4</span>,</span>
-<span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1.5</span><span class="op">)</span>,</span>
-<span>  family <span class="op">=</span> <span class="st">"poisson"</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_seed.html" class="external-link">with_seed</a></span><span class="op">(</span></span>
+<span>  <span class="fl">50</span>,</span>
+<span>  <span class="op">{</span></span>
+<span>    <span class="va">testdata_two_components</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
+<span>      n_period <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>      mesor <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>      amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
+<span>      acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>      beta.mesor <span class="op">=</span> <span class="fl">4.4</span>,</span>
+<span>      beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>      beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>      family <span class="op">=</span> <span class="st">"poisson"</span>,</span>
+<span>      period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>      n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      beta.group <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span></span>
 <span></span>
-<span><span class="va">testdata_two_components_grouped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
-<span>  n_period <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  mesor <span class="op">=</span> <span class="fl">3.7</span>,</span>
-<span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
-<span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
-<span>  beta.mesor <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
-<span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
-<span>  family <span class="op">=</span> <span class="st">"poisson"</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<span>    <span class="va">testdata_two_components_grouped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
+<span>      n_period <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>      mesor <span class="op">=</span> <span class="fl">3.7</span>,</span>
+<span>      amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
+<span>      acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>      beta.mesor <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>      beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
+<span>      beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>      family <span class="op">=</span> <span class="st">"poisson"</span>,</span>
+<span>      period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>      n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      beta.group <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span></span>
 <span></span>
-<span></span>
-<span><span class="va">testdata_three_components</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
-<span>  n_period <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  mesor <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>  amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
-<span>  beta.mesor <span class="op">=</span> <span class="fl">4.4</span>,</span>
-<span>  beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
-<span>  beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
-<span>  family <span class="op">=</span> <span class="st">"poisson"</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="va">testdata_three_components</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_cosinor.html">simulate_cosinor</a></span><span class="op">(</span><span class="fl">1000</span>,</span>
+<span>      n_period <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      mesor <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>      amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>      acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span>      beta.mesor <span class="op">=</span> <span class="fl">4.4</span>,</span>
+<span>      beta.amp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
+<span>      beta.acro <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>      family <span class="op">=</span> <span class="st">"poisson"</span>,</span>
+<span>      period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>      n_components <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>      beta.group <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a> allows specification of multi-component
 cosinor models. This is useful if there are multiple explanatory
 variables with known periods affecting the response variable.</p>
@@ -156,12 +156,16 @@ and <code>period = c(12,6)</code>, then the first component has a
 matched to each component.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">times</span>, </span>
-<span>                                            n_components <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                                            period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                                            group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                       data <span class="op">=</span> <span class="va">testdata_two_components</span>, </span>
-<span>                       family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span></span>
+<span>    time_col <span class="op">=</span> <span class="va">times</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"group"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">testdata_two_components</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
@@ -174,7 +178,7 @@ matched to each component.</p>
 <span><span class="co">#&gt; (Intercept)       6.99894</span></span>
 <span><span class="co">#&gt; group1           -2.60342</span></span>
 <span><span class="co">#&gt; group0:main_rrr1  0.05248</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  1.08251</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  1.08250</span></span>
 <span><span class="co">#&gt; group0:main_sss1  0.08753</span></span>
 <span><span class="co">#&gt; group1:main_sss1  1.68129</span></span>
 <span><span class="co">#&gt; group0:main_rrr2  0.02926</span></span>
@@ -221,12 +225,16 @@ grouped by <code>group</code>, and the second component is not grouped.
 The data was simulated such that the second component was the same for
 both groups.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">times</span>, </span>
-<span>                                            n_components <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                                            period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                                            group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                       data <span class="op">=</span> <span class="va">testdata_two_components_grouped</span>, </span>
-<span>                       family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span></span>
+<span>    time_col <span class="op">=</span> <span class="va">times</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">testdata_two_components_grouped</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
@@ -286,12 +294,16 @@ and <code>group 1</code></p></li>
 <code>group = c("group","group")</code>still yields accurate
 estimates:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">times</span>, </span>
-<span>                                            n_components <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                                            period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                                            group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                       data <span class="op">=</span> <span class="va">testdata_two_components_grouped</span>, </span>
-<span>                       family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span></span>
+<span>    time_col <span class="op">=</span> <span class="va">times</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"group"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">testdata_two_components_grouped</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">object</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
@@ -337,13 +349,15 @@ matches <code>n_components</code>. The same applies for
 <p>For instance, the following two <code><a href="../reference/cosinor.glmm.html">cosinor.glmm()</a></code> calls fit
 the same models:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, </span>
-<span>                                  n_components <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                                  period <span class="op">=</span> <span class="fl">12</span>, </span>
-<span>                                  group <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span>, </span>
-<span>             data <span class="op">=</span> <span class="va">testdata_two_components</span>, </span>
-<span>             family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    period <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>    group <span class="op">=</span> <span class="st">"group"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">testdata_two_components</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -377,12 +391,15 @@ the same models:</p>
 <span><span class="co">#&gt; [group=1]:acr2  1.22948</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, </span>
-<span>                                  n_components <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                                  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">12</span><span class="op">)</span>, </span>
-<span>                                  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>             data <span class="op">=</span> <span class="va">testdata_two_components</span>, </span>
-<span>             family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"group"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">testdata_two_components</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -421,17 +438,21 @@ the same models:</p>
 <p>The plot below shows a 3-component model with the simulated data
 overlayed:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
-<span>  n_components <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
-<span>  group <span class="op">=</span> <span class="st">"group"</span></span>
-<span><span class="op">)</span>, data <span class="op">=</span> <span class="va">testdata_three_components</span>, </span>
-<span>family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, </span>
-<span>         superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>         x_str <span class="op">=</span> <span class="st">"group"</span>, </span>
-<span>         predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>         data_opacity <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
+<span>    n_components <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>    group <span class="op">=</span> <span class="st">"group"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">testdata_three_components</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>,</span>
+<span>  superimpose.data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  x_str <span class="op">=</span> <span class="st">"group"</span>,</span>
+<span>  predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  data_opacity <span class="op">=</span> <span class="fl">0.08</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-components_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level2">
