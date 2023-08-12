@@ -11,9 +11,10 @@
 #' @export
 #'
 #' @examples
-#' # Use vitamind data but add a "patient" identifier to be used as a random effect
+#' # Use vitamind data but add a "patient" identifier used as a random effect
 #' vitamind2 <- vitamind
-#' vitamind2$patient <- sample(LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
+#' vitamind2$patient <- sample(
+#'     LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
 #'
 #' # Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
 #' # without yet fitting the model
@@ -31,7 +32,8 @@
 #' # fit model while adding random effect to cosinor model formula.
 #' mod <- fit_model_and_process(
 #'   obj = data_and_formula,
-#'   formula = update.formula(data_and_formula$newformula, . ~ . + (1 | patient))
+#'   formula = update.formula(
+#'   data_and_formula$newformula, . ~ . + (1 | patient))
 #' )
 #'
 #' mod
@@ -44,7 +46,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 }
 
 
-#' Process and fit the data using glmmTMB after initial processing by data_utils.R.
+#' Process and fit the data using glmmTMB after initial processing
+#' by data_utils.R.
 #'
 #' @param newdata A processed \code{data.frame} with rrr and sss columns added.
 #' @param newformula A processed \code{formula} with rrr and sss components.
@@ -59,7 +62,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @param group_check A \code{logical}. Whether a grouping argument is present.
 #' @param period A vector of values for the period of each component.
 #' @param family The \code{family} for fitting the model.
-#' @param Terms A \code{terms} object from the original \code{cosinor.glmm()} call.
+#' @param Terms A \code{terms} object from the original \code{cosinor.glmm()}
+#' call.
 #' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
 #' @srrstats {RE1.0}
@@ -160,7 +164,11 @@ data_processor <- function(newdata,
 
   if (dispformula_check) {
     disp_coefs <- glmmTMB::fixef(mf)$disp
-    dispersion_model <- get_new_coefs(disp_coefs, dispformula$vec_rrr, dispformula$vec_sss, dispformula$n_components, period)
+    dispersion_model <- get_new_coefs(disp_coefs,
+                                      dispformula$vec_rrr,
+                                      dispformula$vec_sss,
+                                      dispformula$n_components,
+                                      period)
 
 
     disp_list <- c(

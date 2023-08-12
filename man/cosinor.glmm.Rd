@@ -78,5 +78,6 @@ cosinor.glmm(
 )
 }
 \references{
-Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.
+Tong, YL. Parameter Estimation in Studying Circadian
+Rhythms, Biometrics (1976). 32(1):85--94.
 }

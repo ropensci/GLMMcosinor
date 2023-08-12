@@ -126,7 +126,8 @@ amp_acro <- function(time_col,
 
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
-    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data, "tbl"),
+    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(.data,
+                                                                         "tbl"),
     msg = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
   )
 
@@ -148,10 +149,14 @@ amp_acro <- function(time_col,
                                  .data,
                                  .amp_acro_ind = -1) {
     # assess the quality of the inputs
-    stopifnot(assertthat::is.count(n_components)) # Ensure n_components is an integer > 0
-    lapply(period, function(period) stopifnot(assertthat::is.number(period))) # ensure period is numeric
-    stopifnot(all(period > 0)) # ensure all periods are greater than 0
-    stopifnot(inherits(.formula, "formula")) # check that .formula is of class 'formula'
+    # Ensure n_components is an integer > 0
+    stopifnot(assertthat::is.count(n_components))
+    # ensure period is numeric
+    lapply(period, function(period) stopifnot(assertthat::is.number(period)))
+    # ensure all periods are greater than 0
+    stopifnot(all(period > 0))
+    # check that .formula is of class 'formula'
+    stopifnot(inherits(.formula, "formula"))
 
 
     # ensure time_col is of the right class (most likely a character) (tested)
@@ -160,7 +165,8 @@ amp_acro <- function(time_col,
     }
 
 
-    assertthat::assert_that((paste(substitute(time_col, .env)) %in% colnames(.data)),
+    assertthat::assert_that(
+      (paste(substitute(time_col, .env)) %in% colnames(.data)),
       msg = "time_col must be the name of a column in dataframe"
     )
 
@@ -171,8 +177,8 @@ amp_acro <- function(time_col,
     }
 
     # extract the time vector
-    ttt <- eval(substitute(time_col, .env), envir = .data) # extract vector of "time" values from .data
-
+    # extract vector of "time" values from .data
+    ttt <- eval(substitute(time_col, .env), envir = .data)
 
     # ensure ttt contains numeric values only (tested)
     if (!assertthat::assert_that(is.numeric(ttt))) {
@@ -195,7 +201,7 @@ amp_acro <- function(time_col,
     }
 
 
-    # allow the user to not have any grouping structure (if group argument is missing)
+    # allow the user to not have any grouping structure
     if (missing(group)) {
       group <- 0
       group_check <- FALSE
@@ -219,9 +225,10 @@ amp_acro <- function(time_col,
     # "group_check" variable is passed to cosinor.glmm to indicate if there is a
     # group argument present in amp_acro()
 
-    # ensure the length of the grouping variable matches the value of n_components. (tested)
-    # if one grouping variable is supplied but n_components > 1, then the one grouping
-    # variable is repeated to match the value of n_components
+    # ensure the length of the grouping variable matches the value of
+    #n_components. (tested) if one grouping variable is supplied but
+    #n_components > 1, then the one grouping variable is repeated to match the
+    #value of n_components
     if (length(group) != n_components) {
       if (length(group) == 1) {
         group <- rep(group, n_components)
@@ -230,14 +237,15 @@ amp_acro <- function(time_col,
       }
     }
     group_original <- group
-    # show error message if user uses 'rrr' or 'sss' in their grouping variable name (tested)
+    # show error message if user uses 'rrr' or 'sss' in their grouping variable
+    #name (tested)
     if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
       stop("Group variable names cannot contain 'rrr' or 'sss'")
     }
 
     # ensure the length of the period matches the value of n_components (tested)
-    # if one period is supplied but n_components > 1, then the period is repeated to
-    # match the value of n_components
+    # if one period is supplied but n_components > 1, then the period is
+    # repeated to match the value of n_components
 
     if (length(period) != n_components) {
       if (length(period) == 1) {
@@ -255,7 +263,8 @@ amp_acro <- function(time_col,
       }
     }
 
-    # create a vector with just the named groups, disregarding 'zero'/NA elements
+    # create a vector with just the named groups, disregarding 'zero'/NA
+    # elements
     group_names <- group[group != 0]
 
     # Formatting the group columns in .data as factors
@@ -288,17 +297,20 @@ amp_acro <- function(time_col,
 
       # add a warning message that columns have been added to the dataframe
       if (!.quietly) {
-        message(paste(rrr_names, "and", sss_names, "have been added to dataframe"))
+        message(paste(
+          rrr_names, "and", sss_names, "have been added to dataframe"))
       }
 
-      # if grouping variable is not 0 (NA), create interaction terms in the formula
+      # if grouping variable is not 0 (NA), create interaction terms in the
+      # formula
       if (group[i] != 0) {
         acpart <- paste((rep(group[i], 2)), c(rrr_names, sss_names), sep = ":")
         acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
         formula_expr <- paste(formula_expr, "+", acpart_combined)
       }
 
-      # if grouping variable is 0 (or NA), do not create interaction terms in the formula
+      # if grouping variable is 0 (or NA), do not create interaction terms
+      # in the formula
       if (group[i] == 0) {
         acpart_combined <- NULL
         formula_expr <- paste(formula_expr, "+", rrr_names, "+", sss_names)
@@ -312,7 +324,8 @@ amp_acro <- function(time_col,
     } else {
       left_part <- NULL
     }
-    newformula <- stats::as.formula(paste(left_part, # rownames(attr(Terms, "factors"))[1],
+    newformula <- stats::as.formula(
+      paste(left_part, # rownames(attr(Terms, "factors"))[1],
       paste(c(attr(stats::terms(.formula),
                    "intercept"),
               non_acro_formula,
@@ -324,7 +337,8 @@ amp_acro <- function(time_col,
 
     # update the formula
     time_name <- paste(substitute(time_col, .env))
-    # create NULL vectors for group metrics. These will be updated if there is a group argument
+    # create NULL vectors for group metrics. These will be updated if there is
+    # a group argument
     group_stats <- NULL
     if (group_check == TRUE) {
       for (i in group_names) {
@@ -362,19 +376,29 @@ amp_acro <- function(time_col,
   if (!is.null(lme4::findbars(.formula))) {
     ranef_part <- lapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
-      component_num <- regmatches(x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE))[[1]]
+      component_num <- regmatches(
+        x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE))[[1]]
       if (length(component_num) == 0) {
         return(x)
       } else {
         for (i in seq_along(1:length(component_num))) {
-          string_match <- paste0(".*amp_acro", component_num[i], "\\s([^+|]*).*")
+          string_match <- paste0(
+            ".*amp_acro", component_num[i], "\\s([^+|]*).*")
           ranef_part_addition <- gsub(string_match, "\\1", ranef_part)
           ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
 
           rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
           sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
 
-          x <- gsub(paste0("amp_acro", component_num[i], " ", ranef_part_addition), paste0(rrr_part, "+", sss_part), x, fixed = TRUE)
+          x <- gsub(paste0("amp_acro",
+                           component_num[i],
+                           " ",
+                           ranef_part_addition),
+                    paste0(rrr_part,
+                           "+",
+                           sss_part),
+                    x,
+                    fixed = TRUE)
         }
         return(x)
       }
@@ -386,7 +410,8 @@ amp_acro <- function(time_col,
                                         ranef_parts_replaced),
                                 collapse = "+")
 
-    main_part <- paste(paste(deparse(res$newformula), collapse = ""), ranef_part_updated, collapse = "", sep = "+")
+    main_part <- paste(paste(deparse(res$newformula), collapse = ""),
+                       ranef_part_updated, collapse = "", sep = "+")
     res$newformula <- stats::as.formula(main_part)
   }
   res

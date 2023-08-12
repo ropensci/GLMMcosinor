@@ -104,7 +104,8 @@ test_that("bad inputs return useful errors", {
                                   period = 12)
     )
   }
-  expect_error(f(), regexp = "time_col must be the name of a column in dataframe")
+  expect_error(f(),
+               regexp = "time_col must be the name of a column in dataframe")
 
   # test 8
   data(vitamind)
@@ -119,7 +120,8 @@ test_that("bad inputs return useful errors", {
                                   period = 12)
     )
   }
-  expect_error(f(), regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
+  expect_error(f(),
+               regexp = "'data' must be of class 'data.frame', 'matrix', or 'tibble'")
 
   # test 9
   data(vitamind)
@@ -135,7 +137,8 @@ test_that("bad inputs return useful errors", {
                                   period = 12)
     )
   }
-  expect_error(f(), regexp = "Group variable names cannot contain 'rrr' or 'sss'")
+  expect_error(f(),
+               regexp = "Group variable names cannot contain 'rrr' or 'sss'")
 
   # test 10
   data(vitamind)
@@ -151,7 +154,9 @@ test_that("bad inputs return useful errors", {
                                   period = 12)
     )
   }
-  expect_error(f(), regexp = "Grouping variable in amp_acro() must be of length 1 or the same as n_components", fixed = TRUE)
+  expect_error(f(),
+               regexp = "Grouping variable in amp_acro() must be of length 1 or the same as n_components",
+               fixed = TRUE)
 
   # test 11
   data(vitamind)
@@ -165,7 +170,9 @@ test_that("bad inputs return useful errors", {
                                   period = c(8, 12))
     )
   }
-  expect_error(f(), regexp = "period value(s) in amp_acro() must be of length 1 or the same as n_components", fixed = TRUE)
+  expect_error(f(),
+               regexp = "period value(s) in amp_acro() must be of length 1 or the same as n_components",
+               fixed = TRUE)
 
   # test 12
   data(vitamind)
@@ -279,7 +286,8 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
         update_formula_and_data(
           formula = Y ~ amp_acro(times,
                                  n_components = 1,
-                                 period = 24) + (1 + amp_acro1 * treatment * hospital:patient | subject),
+                                 period = 24) +
+            (1 + amp_acro1 * treatment * hospital:patient | subject),
           data = dat_mixed))
 
       # Testing mixed model specification
@@ -287,14 +295,17 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
         update_formula_and_data(
           formula = Y ~ amp_acro(times,
                                  n_components = 1,
-                                 period = 24) + (amp_acro1 * treatment * hospital:patient + 1 | subject),
+                                 period = 24) +
+            (amp_acro1 * treatment * hospital:patient + 1 | subject),
           data = dat_mixed))
 
       testthat::expect_no_error(
         update_formula_and_data(
           formula = Y ~ amp_acro(times,
                                  n_components = 2,
-                                 period = c(12, 6)) + (amp_acro1 * treatment * hospital:patient + 1 + amp_acro2 * treatment | subject),
+                                 period = c(12, 6)) +
+            (amp_acro1 * treatment * hospital:patient + 1 +
+               amp_acro2 * treatment | subject),
           data = dat_mixed))
 
       testthat::expect_true(all.equal(

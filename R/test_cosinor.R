@@ -1,6 +1,4 @@
 #' Test for differences in a cosinor model between components
-#'
-#'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. For the covariate named (or vector of covariates), this function
 #' performs a Wald test comparing the group with covariates equal to 1 to the
@@ -14,9 +12,11 @@
 #' acrophase) will be tested.
 #' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
 #' testing differences in amplitude or acrophase, respectively.
-#' @param comparison_A An \code{integer}. Refers to the component number that is to act as the reference group.
+#' @param comparison_A An \code{integer}. Refers to the component number that is
+#'  to act as the reference group.
 #' for the comparison.
-#' @param comparison_B An \code{integer}. Refers to the component number that is to act as the comparator group
+#' @param comparison_B An \code{integer}. Refers to the component number that is
+#' to act as the comparator group
 #' @param level_index An \code{integer}. If
 #' \code{comparison_type = "components"}, \code{level_index} indicates which
 #' level of the grouping variable is being used for the comparison between
@@ -42,7 +42,8 @@
 #'   beta.group = TRUE
 #' )
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group",
+#'   period = c(10, 12)),
 #'   data = data_2_component
 #' )
 #' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
@@ -117,10 +118,14 @@ test_cosinor_components <- function(x,
 #' acrophase) will be tested.
 #' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
 #' testing differences in amplitude or acrophase, respectively.
-#' @param comparison_A An \code{integer, or string}. Refers to the first level within the
-#' grouping variable \code{x_str} that is to act as the reference group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.
-#' @param comparison_B An \code{integer, or string}. Refers to the second level within the
-#' grouping variable \code{x_str} that is to act as the comparator group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.
+#' @param comparison_A An \code{integer, or string}. Refers to the first level
+#' within the grouping variable \code{x_str} that is to act as the reference
+#' group in the comparison. Ensure that it corresponds to the name of the level
+#' in the original dataset.
+#' @param comparison_B An \code{integer, or string}. Refers to the second level
+#' within the grouping variable \code{x_str} that is to act as the comparator
+#' group in the comparison. Ensure that it corresponds to the name of the level
+#' in the original dataset.
 #' @param component_index An \code{integer}. If
 #' \code{comparison_type = "levels"}, \code{component_index} indicates which
 #' component is being compared between the levels of the grouping variable.
@@ -146,7 +151,8 @@ test_cosinor_components <- function(x,
 #'   beta.group = TRUE
 #' )
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group",
+#'   period = c(10, 12)),
 #'   data = data_2_component
 #' )
 #' test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
@@ -189,7 +195,8 @@ test_cosinor_levels <- function(x,
 
   assertthat::assert_that(
     comparison_A %in% x$group_stats[[x_str]],
-    msg = "'comparison_A' must correspond to a level within the group specified by 'x_str'"
+    msg = "'comparison_A' must correspond to a level within the group
+    specified by 'x_str'"
   )
 
   assertthat::assert_that(
@@ -220,7 +227,9 @@ test_cosinor_levels <- function(x,
 
 
 
-#' Test for differences in a cosinor model. This function has been replaced with a more user-friendly and intuitive way of specifying comparisons: \code{test_cosinor_components} and \code{test_cosinor_levels}. These external functions use this internal function.
+#' Test for differences in a cosinor model. This function has been replaced
+#' with a more user-friendly and intuitive way of specifying comparisons: \code{test_cosinor_components} and \code{test_cosinor_levels}. These external
+#' functions use this internal function.
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. For the covariate named (or vector of covariates), this function
@@ -279,7 +288,8 @@ test_cosinor_levels <- function(x,
 #' )
 #'
 #' mod_2_component <- cosinor.glmm(
-#'   Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
+#'   Y ~ group + amp_acro(times, n_components = 2, group = "group",
+#'   period = c(10, 12)),
 #'   data = data_2_component
 #' )
 #'
@@ -289,12 +299,15 @@ test_cosinor_levels <- function(x,
 .test_cosinor <- function(x,
                           x_str,
                           param,
-                          comparison_A, # TODO handle the text labels for the factor variable used for grouping - i.e using data made with : sim_data %>% mutate(group = ifelse(group == 1, "control", "treatment"))
+                          comparison_A,
                           comparison_B,
                           comparison_type,
                           component_index,
                           level_index,
                           ci_level) {
+  # TODO handle the text labels for the factor variable used for grouping - i.e
+  # using data made with : sim_data %>% mutate(group = ifelse(group == 1,
+  # "control", "treatment"))
   summary.fit <- summary.cosinor.glmm(x)
   index <- matrix(0, ncol = length(x$coefficients), nrow = length(x_str))
   colnames(index) <- names(x$coefficients)
@@ -312,20 +325,24 @@ test_cosinor_levels <- function(x,
     }
 
     for (i in seq_along(x_str)) {
-      index[i, paste0(x_str[i], comparison_A, ":", param, component_index)] <- -1
-      index[i, paste0(x_str[i], comparison_B, ":", param, component_index)] <- 1
+      index[i, paste0(x_str[i],
+                      comparison_A, ":", param, component_index)] <- -1
+      index[i, paste0(x_str[i],
+                      comparison_B, ":", param, component_index)] <- 1
     }
   }
 
   diff.est <- index %*% x$coefficients
-  diff.var <- index[, grep("(amp|acr)", names(x$coefficients)), drop = FALSE] %*%
+  diff.var <- index[
+    , grep("(amp|acr)", names(x$coefficients)), drop = FALSE] %*%
     summary.fit$transformed.covariance %*%
     t(index[, grep("(amp|acr)", names(x$coefficients)), drop = FALSE])
 
   glob.chi <- (diff.est %*% solve(diff.var) %*% t(diff.est))[1, 1]
   ind.Z <- diff.est / sqrt(diag(diff.var))
 
-  zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F) # get the quantile corresponding to ci_level
+  # get the quantile corresponding to ci_level
+  zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F)
 
   interval <- cbind(
     diff.est,
@@ -422,7 +439,8 @@ print.sub_test_cosinor <- function(x, ...) {
 
     if (!is.null(x$conf.int)) {
       ci <- round(x$conf.int, 2)
-      cat(paste0("\n\nEstimate and ", x$ci_level * 100, "% confidence interval:\n"))
+      cat(paste0(
+        "\n\nEstimate and ", x$ci_level * 100, "% confidence interval:\n"))
       cat(paste0(ci[1], " (", ci[2], " to ", ci[3], ")"))
     }
   } else {
@@ -472,15 +490,19 @@ print.sub_test_cosinor <- function(x, ...) {
     ))
 
     if (test_details$component_index == "") {
-      cat("\n\ncosinor.glmm model only has a single component and to compare between groups.\n")
+      cat("\n\ncosinor.glmm model only has a single component and to compare
+          between groups.\n")
     } else {
-      cat(paste0("\n\ncosinor.glmm model has", test_details$x$n_components, " components. Component ", test_details$component_index, " is being used for comparison between groups.\n"))
+      cat(paste0("\n\ncosinor.glmm model has", test_details$x$n_components,
+                 " components. Component ", test_details$component_index,
+                 " is being used for comparison between groups.\n"))
     }
   }
 
   # If comparison is on components of the model...
   #     - specify the component indices being compared
-  #     - the grouping variable (if there is one) being held constant and its value
+  #     - the grouping variable (if there is one) being held constant
+  #       and its value
   if (test_details$comparison_type == "components") {
     cat(paste0(
       "\n\nComponent indices used for comparison between groups: ",

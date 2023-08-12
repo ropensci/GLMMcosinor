@@ -2,7 +2,12 @@
 % Please edit documentation in R/test_cosinor.R
 \name{test_cosinor_components}
 \alias{test_cosinor_components}
-\title{Test for differences in a cosinor model between components}
+\title{Test for differences in a cosinor model between components
+Given a time variable and optional covariates, generate inference a cosinor
+fit. For the covariate named (or vector of covariates), this function
+performs a Wald test comparing the group with covariates equal to 1 to the
+group with covariates equal to 0. This may not be the desired result for
+continuous covariates.}
 \usage{
 test_cosinor_components(
   x,
@@ -24,10 +29,12 @@ acrophase) will be tested.}
 \item{param}{A \code{character}. Either \code{"amp"} or \code{"acr"} for
 testing differences in amplitude or acrophase, respectively.}
 
-\item{comparison_A}{An \code{integer}. Refers to the component number that is to act as the reference group.
+\item{comparison_A}{An \code{integer}. Refers to the component number that is
+to act as the reference group.
 for the comparison.}
 
-\item{comparison_B}{An \code{integer}. Refers to the component number that is to act as the comparator group}
+\item{comparison_B}{An \code{integer}. Refers to the component number that is
+to act as the comparator group}
 
 \item{level_index}{An \code{integer}. If
 \code{comparison_type = "components"}, \code{level_index} indicates which
@@ -41,6 +48,7 @@ components.}
 Returns a \code{test_cosinor} object.
 }
 \description{
+Test for differences in a cosinor model between components
 Given a time variable and optional covariates, generate inference a cosinor
 fit. For the covariate named (or vector of covariates), this function
 performs a Wald test comparing the group with covariates equal to 1 to the
@@ -62,7 +70,8 @@ data_2_component <- simulate_cosinor(
   beta.group = TRUE
 )
 mod_2_component <- cosinor.glmm(
-  Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
+  Y ~ group + amp_acro(times, n_components = 2, group = "group",
+  period = c(10, 12)),
   data = data_2_component
 )
 test_cosinor_components(mod_2_component, param = "amp", x_str = "group")

@@ -61,7 +61,8 @@
 #'   data = sim_data,
 #'   family = gaussian
 #' )
-#' @references Tong, YL. Parameter Estimation in Studying Circadian Rhythms, Biometrics (1976). 32(1):85--94.
+#' @references Tong, YL. Parameter Estimation in Studying Circadian
+#' Rhythms, Biometrics (1976). 32(1):85--94.
 #'
 #'
 #' @export
@@ -133,9 +134,10 @@ update_covnames <- function(names, group_stats) {
   group_names <- names(group_stats) # get the group names
   group_names_together <- NULL # a vector of the group_names of each level
 
-  # creates a vector of group names corresponding to the number of levels in each group
-  # Example: if groups are "X" and "Z" with 2 and 3 levels respectively, this 'for loop'
-  # would create the vector: c("X","X","Z","Z","Z")
+  # creates a vector of group names corresponding to the number of levels in
+  # each group. Example: if groups are "X" and "Z" with 2 and 3 levels
+  # respectively, this 'for loop' would create the vector:
+  # c("X","X","Z","Z","Z")
   covnames <- NULL
   for (i in group_names) {
     group_names_together <- append(
@@ -157,8 +159,10 @@ update_covnames <- function(names, group_stats) {
                        value = TRUE)
   lack <- names
   for (i in seq_along(covnames)) {
-    var <- group_names_together[i] # var is a group name corresponding to that in covnames
-    var_number <- unlist(group_stats)[[i]] # get the group level
+    # var is a group name corresponding to that in covnames
+    var <- group_names_together[i]
+    # get the group level
+    var_number <- unlist(group_stats)[[i]]
     lack <- gsub(paste0(covnames[i]),
                  paste0("[", var, "=", var_number, "]"),
                  lack)

@@ -29,7 +29,7 @@
 #' will be simulated and included in the returned data set. If \code{FALSE},
 #' \code{beta.acro}, \code{beta.mesor}, and \code{beta.amp} arguments will be
 #' ignored.
-#' @param beta.mesor A \code{numeric}. The MESOR value term for \code{group = 1}.
+#' @param beta.mesor A \code{numeric}. The MESOR value term for \code{group = 1}
 #' @param beta.amp  A \code{numeric}. The amplitude value for \code{group = 1}.
 #' If simulating data with multiple components, specify a vector with values for
 #' each component. E.g: \code{amp = c(2, 8)}.
@@ -74,7 +74,10 @@ simulate_cosinor <- function(n,
                              beta.amp,
                              beta.acro,
                              n_period = 1,
-                             family = c("gaussian", "poisson", "binomial", "gamma"),
+                             family = c("gaussian",
+                                        "poisson",
+                                        "binomial",
+                                        "gamma"),
                              ...) {
   # attempt to infer n_components if missing
   if (missing(n_components)) {
@@ -88,7 +91,8 @@ simulate_cosinor <- function(n,
     msg = "beta.group argument must be logical"
   )
 
-  if (!beta.group & !missing(beta.mesor) & !missing(beta.amp) & !missing(beta.acro)) {
+  if (!beta.group & !missing(beta.mesor) &
+      !missing(beta.amp) & !missing(beta.acro)) {
     beta.group <- TRUE
     message("all betas were present but beta.group was FALSE. beta.group has been changed to be TRUE.")
   }
@@ -299,7 +303,8 @@ simulate_cosinor <- function(n,
                                lambda = d_params$param)
   }
   if (family == "binomial") {
-    d_params$param <- exp(mesor + d_params$param) / (1 + exp(mesor + d_params$param))
+    d_params$param <- exp(
+      mesor + d_params$param) / (1 + exp(mesor + d_params$param))
     d_params$Y <- stats::rbinom(n = length(ttt),
                                 size = 1,
                                 prob = d_params$param)

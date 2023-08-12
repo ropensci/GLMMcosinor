@@ -24,11 +24,15 @@ acrophase) will be tested.}
 \item{param}{A \code{character}. Either \code{"amp"} or \code{"acr"} for
 testing differences in amplitude or acrophase, respectively.}
 
-\item{comparison_A}{An \code{integer, or string}. Refers to the first level within the
-grouping variable \code{x_str} that is to act as the reference group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.}
+\item{comparison_A}{An \code{integer, or string}. Refers to the first level
+within the grouping variable \code{x_str} that is to act as the reference
+group in the comparison. Ensure that it corresponds to the name of the level
+in the original dataset.}
 
-\item{comparison_B}{An \code{integer, or string}. Refers to the second level within the
-grouping variable \code{x_str} that is to act as the comparator group in the comparison. Ensure that it corresponds to the name of the level in the original dataset.}
+\item{comparison_B}{An \code{integer, or string}. Refers to the second level
+within the grouping variable \code{x_str} that is to act as the comparator
+group in the comparison. Ensure that it corresponds to the name of the level
+in the original dataset.}
 
 \item{component_index}{An \code{integer}. If
 \code{comparison_type = "levels"}, \code{component_index} indicates which
@@ -62,7 +66,8 @@ data_2_component <- simulate_cosinor(
   beta.group = TRUE
 )
 mod_2_component <- cosinor.glmm(
-  Y ~ group + amp_acro(times, n_components = 2, group = "group", period = c(10, 12)),
+  Y ~ group + amp_acro(times, n_components = 2, group = "group",
+  period = c(10, 12)),
   data = data_2_component
 )
 test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")

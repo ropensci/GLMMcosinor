@@ -2,21 +2,30 @@
 % Please edit documentation in R/summary.cosinor.glmm.R
 \name{summary.cosinor.glmm}
 \alias{summary.cosinor.glmm}
-\title{Summarize a cosinor model}
+\title{Summarize a cosinor model
+Given a time variable and optional covariates, generate inference a cosinor
+fit. Gives estimates, confidence intervals, and tests for the raw parameters,
+and for the mean, amplitude, and acrophase parameters. If the model includes
+covariates, the function returns the estimates of the mean, amplitude, and
+acrophase for the group with covariates equal to 1 and equal to 0. This may
+not be the desired result for continuous covariates.}
 \usage{
 \method{summary}{cosinor.glmm}(object, ci_level = 0.95, ...)
 }
 \arguments{
 \item{object}{An object of class \code{cosinor.glmm}}
 
-\item{ci_level}{The level for calculated confidence intervals. Defaults to 0.95.}
+\item{ci_level}{The level for calculated confidence intervals. Defaults to
+0.95.}
 
 \item{...}{Currently unused}
 }
 \value{
-Returns a summary of the \code{cosinor.glmm} model as a \code{summary.cosinor.glmm} object.
+Returns a summary of the \code{cosinor.glmm} model as
+a \code{summary.cosinor.glmm} object.
 }
 \description{
+Summarize a cosinor model
 Given a time variable and optional covariates, generate inference a cosinor
 fit. Gives estimates, confidence intervals, and tests for the raw parameters,
 and for the mean, amplitude, and acrophase parameters. If the model includes

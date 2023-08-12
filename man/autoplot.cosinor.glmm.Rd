@@ -61,7 +61,8 @@ is plotted.}
 Returns a \code{ggplot} object.
 }
 \description{
-Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
+Given a cosinor.glmm model fit, generate a plot of the data with the fitted
+values.
 Optionally allows for plotting by covariates
 }
 \examples{

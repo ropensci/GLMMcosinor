@@ -3,7 +3,8 @@
 #' @param data input data for fitting cosinor.glmm model.
 #' @param formula model formula, specified by user including \code{amp_acro()}.
 #' @param family the model family.
-#' @param quietly controls whether messages from amp_acro are displayed. TRUE by default
+#' @param quietly controls whether messages from amp_acro are displayed.
+#' TRUE by default
 #' @param dispformula The formula specifying the dispersion model
 #' @param ziformula The formula specifying the zero-inflation model
 #'
@@ -50,7 +51,8 @@ update_formula_and_data <- function(data,
                            amp_acro_ind = -1,
                            data_prefix = "main_") {
     Terms <- stats::terms(formula, specials = c("amp_acro"))
-    amp_acro_text <- attr(Terms, "term.labels")[attr(Terms, "special")$amp_acro + amp_acro_ind]
+    amp_acro_text <- attr(
+      Terms, "term.labels")[attr(Terms, "special")$amp_acro + amp_acro_ind]
     e <- str2lang(amp_acro_text)
     e$.data <- data # add data that will be called to amp_acro()
     e$.formula <- formula # add formula that will be called to amp_acro()
@@ -169,11 +171,14 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
     r.coef[[i]] <- grepl(paste0(vec_rrr[i]), names(coefs))
     s.coef[[i]] <- grepl(paste0(vec_sss[i]), names(coefs))
 
-    mu_inv_carry <- r.coef[[i]] + s.coef[[i]] # Keep track of non-mesor terms
-    mu_inv <- mu_inv_carry + mu_inv # Ultimately,every non-mesor term will be true
+    # Keep track of non-mesor terms
+    mu_inv_carry <- r.coef[[i]] + s.coef[[i]]
+    # Ultimately,every non-mesor term will be true
+    mu_inv <- mu_inv_carry + mu_inv
   }
 
-  mu.coef <- c(!mu_inv) # invert 'mu_inv' to get a Boolean vector for mesor terms
+  # invert 'mu_inv' to get a Boolean vector for mesor terms
+  mu.coef <- c(!mu_inv)
   # a matrix of rrr coefficients
   r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
   # a matrix of sss coefficients

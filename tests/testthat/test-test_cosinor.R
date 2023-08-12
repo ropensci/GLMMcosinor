@@ -118,7 +118,8 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'comparison_A' must correspond to a level within the group specified by 'x_str'", fixed = TRUE
+    regex = "'comparison_A' must correspond to a level within the group
+    specified by 'x_str'", fixed = TRUE
   )
 
   # Error message test 6

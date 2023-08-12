@@ -23,9 +23,10 @@ Fit the cosinorGLMM model using the output from update_formula_and_data() and
 a new formula
 }
 \examples{
-# Use vitamind data but add a "patient" identifier to be used as a random effect
+# Use vitamind data but add a "patient" identifier used as a random effect
 vitamind2 <- vitamind
-vitamind2$patient <- sample(LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
+vitamind2$patient <- sample(
+    LETTERS[1:5], size = nrow(vitamind2), replace = TRUE)
 
 # Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
 # without yet fitting the model
@@ -43,7 +44,8 @@ data_and_formula$newformula
 # fit model while adding random effect to cosinor model formula.
 mod <- fit_model_and_process(
   obj = data_and_formula,
-  formula = update.formula(data_and_formula$newformula, . ~ . + (1 | patient))
+  formula = update.formula(
+  data_and_formula$newformula, . ~ . + (1 | patient))
 )
 
 mod

@@ -7,7 +7,8 @@ dat_list <- list(
     zi = TRUE,
     rhythmdiff = FALSE,
     diff_est = TRUE,
-    family = "n > 15 \nAny family avilable in {glmmTMB}: Gaussian, gamma, binomial, Poisson, ...",
+    family = "n > 15 \nAny family avilable in {glmmTMB}:
+    Gaussian, gamma, binomial, Poisson, ...",
     estimates = "Amplitude, acrophase, MESOR",
     ref = "Parsons, 2023"
   ),
@@ -31,7 +32,8 @@ dat_list <- list(
     zi = TRUE,
     rhythmdiff = FALSE,
     diff_est = TRUE,
-    family = "n = 6 \nPoisson, generalised-Poisson, zero-inflated Poisson, negative binomial, zero-inflated negative-binomial",
+    family = "n = 6 \nPoisson, generalised-Poisson, zero-inflated
+    Poisson, negative binomial, zero-inflated negative-binomial",
     estimates = "Amplitude, acrophase, MESOR, Zenith",
     ref = "Velikajne, 2022"
   ),
@@ -56,7 +58,8 @@ dat_list <- list(
     rhythmdiff = FALSE,
     diff_est = TRUE,
     family = "n = 1 \nGaussian",
-    estimates = "Amplitude, acrophase, MESOR, and exponential decay of any of these characteristics or the differences in them between groups",
+    estimates = "Amplitude, acrophase, MESOR, and exponential decay of
+    any of these characteristics or the differences in them between groups",
     ref = "Parsons, 2020"
   ),
   list(

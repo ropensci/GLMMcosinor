@@ -326,7 +326,9 @@ test_that("mixed model estimates parameters well", {
 
 
 test_that("alternative inputs work", {
-  testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
-  testthat::expect_no_error(cosinor.glmm(Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
+  testthat::expect_no_error(cosinor.glmm(
+    Y ~ amp_acro(time, group = "X", period = 12), data = vitamind))
+  testthat::expect_no_error(cosinor.glmm(
+    Y ~ amp_acro(time, group = X, period = 12), data = vitamind))
 
 })

@@ -89,7 +89,8 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate", fixed = TRUE
+    regex = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate",
+    fixed = TRUE
   )
 
   # Test 6
@@ -119,7 +120,8 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = "'superimpose.data' must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'superimpose.data' must be a logical argument, either TRUE or FALSE",
+    fixed = TRUE
   )
 
   # Test 8
@@ -134,7 +136,8 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = "data_opacity' must be a number between 0 and 1 inclusive", fixed = TRUE
+    regex = "data_opacity' must be a number between 0 and 1 inclusive",
+    fixed = TRUE
   )
 
   # Test 9
@@ -149,41 +152,8 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = "'predict.ribbon' must be a logical argument, either TRUE or FALSE", fixed = TRUE
+    regex = "'predict.ribbon' must be a logical argument, either TRUE or FALSE",
+    fixed = TRUE
   )
 })
 
-
-# test_that("plot gives appropriate plot output", {
-#  # Test 1
-#  data(vitamind)
-#  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X"), data = vitamind)
-#  f <- function() {
-#    plot(object)
-#  }
-#  vdiffr::expect_doppelganger("vitamind_plot", f)
-#
-#  # Test 2
-#  data(vitamind)
-#  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = NA), data = vitamind)
-#  f <- function() {
-#    plot(object)
-#  }
-#  vdiffr::expect_doppelganger("vitamind_plot_no_group", f)
-#
-#  # Test 3
-#  data(vitamind)
-#  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X"), data = vitamind)
-#  f <- function() {
-#    plot(object, superimpose.data = TRUE)
-#  }
-#  vdiffr::expect_doppelganger("vitamind_plot_si_data", f)
-#
-#  # Test 5
-#  data(vitamind)
-#  object <- cosinor.glmm(Y ~ 1 + amp_acro(time, group = "X"), data = vitamind)
-#  f <- function() {
-#    plot(object, superimpose.data = TRUE, predict.ribbon = TRUE)
-#  }
-#  vdiffr::expect_doppelganger("vitamind_plot_si_data_and_pred_ribbon", f)
-# })

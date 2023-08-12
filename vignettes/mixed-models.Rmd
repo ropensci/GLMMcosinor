@@ -26,6 +26,7 @@ library(ggplot2)
 ### Data with subject-level differences
 
 To illustrate an example of using a model with random effects on the cosinor components, we will first simulate some data with `id`-level differences in amplitude and acrophase.
+
 ```{r}
 f_sample_id <- function(id_num,
                         n = 30,
@@ -68,6 +69,7 @@ dat_mixed <- do.call(
 ```
 
 A quick graph shows how there are individual differences in terms of MESOR, amplitude and phase.
+
 ```{r}
 dat_mixed |> 
   ggplot(aes(times, Y, col = subject)) +
@@ -75,7 +77,6 @@ dat_mixed |>
   geom_line() +
   theme_bw()
 ```
-
 
 ### A single component model with random effects
 
@@ -93,16 +94,19 @@ mixed_mod <- cosinor.glmm(
 ```
 
 This works by replacing the amp_acro1 with the relevant cosinor components when the data is rearranged and the formula created. The formula created can be accessed using `.$formula`, and shows the `amp_acro1` is replaced by the `main_rrr1` and `main_sss1` (the cosine and sine components of time that also appear in the fixed effects).
+
 ```{r}
 mixed_mod$formula
 ```
 
 The summary of the model shows that the input means for MESOR, amplitude and acrophase are similar to what we specified in the simulation (0, 3, and 1.5, respectively).
+
 ```{r}
 summary(mixed_mod)
 ```
 
 We can see that the predicted values from the model closely resemble the patterns we see in the input data.
+
 ```{r}
 data.frame(pred = predict(mixed_mod)) |> 
   cbind(dat_mixed) |> 
@@ -111,7 +115,7 @@ data.frame(pred = predict(mixed_mod)) |>
   geom_line(aes(x = times, y = pred, col = subject))
 ```
 
-This looks like a good model fit for these data. We can highlight the importance of using a mixed model in this situation rather than a fixed effects only model by creating that (bad) model and comparing the two by using the Akaike information criterion using `AIC()`. 
+This looks like a good model fit for these data. We can highlight the importance of using a mixed model in this situation rather than a fixed effects only model by creating that (bad) model and comparing the two by using the Akaike information criterion using `AIC()`.
 
 ```{r}
 fixed_effects_mod <- cosinor.glmm(
@@ -122,4 +126,5 @@ fixed_effects_mod <- cosinor.glmm(
 AIC(fixed_effects_mod$fit)
 AIC(mixed_mod$fit)
 ```
+
 Aside from not being able to be useful to see the differences between subjects from the model, we end up with much worse model fit and likely biased and/or imprecise estimates of our fixed effects that we are interested in!

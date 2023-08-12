@@ -4,7 +4,8 @@ ggplot2::autoplot
 
 #' Plot a cosinor model
 #'
-#' Given a cosinor.glmm model fit, generate a plot of the data with the fitted values.
+#' Given a cosinor.glmm model fit, generate a plot of the data with the fitted
+#' values.
 #' Optionally allows for plotting by covariates
 #'
 #'
@@ -79,12 +80,14 @@ autoplot.cosinor.glmm <- function(object,
     msg = "'type' must be a string. See type in ?predict for more information about valid inputs"
   )
   if (!missing(xlims)) {
-    assertthat::assert_that(length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
+    assertthat::assert_that(
+      length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
       msg = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate"
     )
   }
   if (!missing(pred.length.out)) {
-    assertthat::assert_that(pred.length.out == floor(pred.length.out) & pred.length.out > 0,
+    assertthat::assert_that(
+      pred.length.out == floor(pred.length.out) & pred.length.out > 0,
       msg = "'pred.length.out' must be an integer greater than 0 "
     )
   }
@@ -92,7 +95,8 @@ autoplot.cosinor.glmm <- function(object,
   assertthat::assert_that(is.logical(superimpose.data),
     msg = "'superimpose.data' must be a logical argument, either TRUE or FALSE"
   )
-  assertthat::assert_that(is.numeric(data_opacity) & data_opacity >= 0 & data_opacity <= 1,
+  assertthat::assert_that(
+    is.numeric(data_opacity) & data_opacity >= 0 & data_opacity <= 1,
     msg = "'data_opacity' must be a number between 0 and 1 inclusive"
   )
   assertthat::assert_that(is.logical(predict.ribbon),
@@ -106,10 +110,13 @@ autoplot.cosinor.glmm <- function(object,
 
   # Vector of time values from the original dataset
   time_vec <- object$newdata[[object$time_name]]
-  min_period_cycle_count <- round((max(time_vec) - min(time_vec)) / min(object$period))
+  min_period_cycle_count <- round(
+    (max(time_vec) - min(time_vec)) / min(object$period)
+    )
 
 
-  # By default, the predicted length out is calculated to give sufficient resolution to the smallest period.
+  # By default, the predicted length out is calculated to give sufficient
+  # resolution to the smallest period.
   if (missing(pred.length.out)) {
     pred.length.out <- max(min_period_cycle_count * points_per_min_cycle_length,
                            400)
@@ -117,12 +124,18 @@ autoplot.cosinor.glmm <- function(object,
 
   # generate the time values for the x-axis
   if (!missing(xlims)) {
-    timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out) # with multiple periods, largest is used for timeax simulation
+  # with multiple periods, largest is used for timeax simulation
+    timeax <- seq(xlims[1], xlims[2], length.out = pred.length.out)
   } else {
-    timeax <- seq(min(object$newdata[object$time_name]), max(object$newdata[object$time_name]), length.out = pred.length.out) # the fitted model has bounds corresponding to initial dataframe
+  # the fitted model has bounds corresponding to initial dataframe
+    timeax <- seq(min(object$newdata[object$time_name]),
+                  max(object$newdata[object$time_name]),
+                  length.out = pred.length.out)
   }
 
-  # this is the function that generates the plots and can be looped iteratively for different x_str
+
+  # this is the function that generates the plots and can be looped iteratively
+  # for different x_str
   data_processor_plot <- function(x, newdata, x_str) {
     # get the names of the covariates (factors)
     covars <- names(x$group_stats)
@@ -135,11 +148,15 @@ autoplot.cosinor.glmm <- function(object,
 
     # process the data. This step mimics the first step of a cosinor.glmm() call
     newdata <- update_formula_and_data(
-      data = newdata, # pass new dataset that's being used for prediction in this function
-      formula = eval(x$cosinor.glmm.calls$cosinor.glmm$formula) # get the formula that was originally to cosinor.glmm()
-    )$newdata # only keep the newdata that's returned from update_formula_and_data()
+      # pass new dataset that's being used for prediction in this function
+      data = newdata,
+      # get the formula that was originally to cosinor.glmm()
+      formula = eval(x$cosinor.glmm.calls$cosinor.glmm$formula)
+    )$newdata
+    # only keep the newdata that's returned from update_formula_and_data()
 
-    # repeat dataset for every level in x_str (factor), with an additional column in each corresponding to factor name and level
+    # repeat dataset for every level in x_str (factor), with an additional
+    # column in each corresponding to factor name and level
     if (!is.null(x_str)) {
       for (d in x_str) {
         for (k in unlist(x$group_stats[[d]])[-1]) {
@@ -151,7 +168,8 @@ autoplot.cosinor.glmm <- function(object,
 
       newdata$levels <- ""
       for (d in x_str) {
-        newdata$levels <- paste0(newdata$levels, "[", d, "=", newdata[, d], "] ")
+        newdata$levels <- paste0(newdata$levels,
+                                 "[", d, "=", newdata[, d], "] ")
       }
     }
     newdata
@@ -161,7 +179,9 @@ autoplot.cosinor.glmm <- function(object,
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
   newdata_processed <- data_processor_plot(object, newdata, x_str)
-  y_name <- object$response_var # get the response data from the cosinor.glmm object
+
+  # get the response data from the cosinor.glmm object
+  y_name <- object$response_var
 
   # get the predicted response values using the predict.cosinor.glmm() function
   pred_obj <- stats::predict(
@@ -170,9 +190,10 @@ autoplot.cosinor.glmm <- function(object,
     type = type,
     se.fit = TRUE
   )
-  newdata_processed[[y_name]] <- pred_obj$fit # adjust Y-axis name to correspond to whatever is in the dataframe
-  # newdata_processed$y_min <- pred_obj$fit - 1.96 * pred_obj$se.fit # determine the upper predicted interval
-  # newdata_processed$y_max <- pred_obj$fit + 1.96 * pred_obj$se.fit # determine the lower predicted interval
+
+  # adjust Y-axis name to correspond to whatever is in the dataframe
+  newdata_processed[[y_name]] <- pred_obj$fit
+
 
   zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F)
 

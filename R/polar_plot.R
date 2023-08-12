@@ -222,15 +222,20 @@ polar_plot.cosinor.glmm <- function(x,
   assertthat::assert_that(is.numeric(text_size) & text_size > 0,
     msg = "'text_size' must be a number greater than 0"
   )
-  assertthat::assert_that(is.numeric(text_opacity) & text_opacity >= 0 & text_opacity <= 1,
+  assertthat::assert_that(
+    is.numeric(text_opacity) & text_opacity >= 0 & text_opacity <= 1,
     msg = "'text_opacity' must be a number between 0 and 1 inclusive"
   )
-  assertthat::assert_that(is.numeric(ellipse_opacity) & ellipse_opacity >= 0 & ellipse_opacity <= 1,
+  assertthat::assert_that(
+    is.numeric(ellipse_opacity) & ellipse_opacity >= 0 & ellipse_opacity <= 1,
     msg = "'ellipse_opacity' must be a number between 0 and 1 inclusive"
   )
 
   if (!missing(component_index)) {
-    assertthat::assert_that(all(component_index == floor(component_index)) & all(component_index > 0) & all(component_index <= x$n_components),
+    assertthat::assert_that(
+      all(component_index == floor(component_index)) &
+        all(component_index > 0) &
+        all(component_index <= x$n_components),
       msg = "'component_index' must be an integer between 1 and n_components (total number of components in model) inclusive"
     )
   }
@@ -241,7 +246,8 @@ polar_plot.cosinor.glmm <- function(x,
     msg = "'overlay_parameter_info' must be a logical argument, either TRUE or FALSE"
   )
 
-  sum <- summary(x, ci_level = ci_level) # get summary statistics of cosinor.glmm object
+  # get summary statistics of cosinor.glmm object
+  sum <- summary(x, ci_level = ci_level)
 
 
   # convert user input for zoom level into logical arguments
@@ -263,11 +269,13 @@ polar_plot.cosinor.glmm <- function(x,
   # set direction of increasing angle based on user input of clockwise argument
   direction <- ifelse(clockwise, -1, 1)
 
-  # convert user input for starting position (on Cartesian plane) into logical arguments
-  # by default, ggplot() ellipse and circle functions use unit circle angles where 0 degrees
-  # starts at the '3pm' position and rotates counterclockwise
-  # However, the ggforce function geom_arc() starts at upwards 12pm position, also rotating coutnerclockwise
-  # Hence, offset, and overlay_param_offset are different to ultimately describe the same angle position
+  # convert user input for starting position (on Cartesian plane) into logical
+  # arguments by default, ggplot() ellipse and circle functions use unit circle
+  # angles where 0 degrees starts at the '3pm' position and rotates
+  # counterclockwise. However, the ggforce function geom_arc() starts at upwards
+  # 12pm position, also rotating coutnerclockwise. Hence, offset, and
+  # overlay_param_offset are different to ultimately describe the same
+  # angle position
   if (start == "top") {
     offset <- pi / 2
     overlay_start <- 0
@@ -289,10 +297,13 @@ polar_plot.cosinor.glmm <- function(x,
   }
 
 
-  # get ggplot for a single component. Function will then be looped for multiple components
+  # get ggplot for a single component. Function will then be looped for
+  # multiple components
   sub_ggplot.cosinor.glmm.polar <- function(comp, ...) {
-    component_index <- comp # get the component that is going to plotted
-    args <- match.call()[-1] # get the arguments from the function wrapping this function
+    # get the component that is going to plotted
+    component_index <- comp
+    # get the arguments from the function wrapping this function
+    args <- match.call()[-1]
     period <- x$period[component_index]
     max_period <- period
     group_check <- (x$group[component_index] != 0)
@@ -300,8 +311,12 @@ polar_plot.cosinor.glmm <- function(x,
       x_str <- x$group_original[component_index]
       group <- x_str
       level <- x$group_stats[[group]]
-      string_index <- paste0("[", group, "=") # create an index that will be used to grab the correct transformed summary stats
-      string_index_raw <- paste0(group) # create an index that grabs the corresponding raw summary stats
+
+    # create an index that will be used to grab the correct transformed
+    # summary stats
+      string_index <- paste0("[", group, "=")
+    # create an index that grabs the corresponding raw summary stats
+      string_index_raw <- paste0(group)
     } else {
       group <- NULL
       string_index <- ""
@@ -347,17 +362,20 @@ polar_plot.cosinor.glmm <- function(x,
     est_rrr <- est_amp * cos(direction * (est_acr) + offset)
     est_sss <- est_amp * sin(direction * (est_acr) + offset)
 
-    # for confidence ellipses, get the long_axis width "a_trans" (amplitude), and the short-axis height "b_trans" (acrophase)
-    # note that both values are halved because they are technically radii,
+    # for confidence ellipses, get the long_axis width "a_trans" (amplitude),
+    # and the short-axis height "b_trans" (acrophase)
+    # Note that both values are halved because they are technically radii
     a_trans <- est_amp - l_est_amp
     b_trans <- tan((u_est_acr - l_est_acr) / 2) * est_amp
 
-    # determine the maximum radius in a single plot. This will be used for formatting plot features
+    # determine the maximum radius in a single plot. This will be used
+    # for formatting plot features
     max_radius <- max(abs(u_est_amp), abs(l_est_amp))
 
 
     # change 'max_period' to correspond to units specified by the user
-    # conversion_factor is used to convert from radians (default acrophase output) to whatever radial_units is
+    # conversion_factor is used to convert from radians (
+    # default acrophase output) to whatever radial_units is
     if (radial_units == "radians") {
       max_period <- 2 * pi
       conversion_factor <- 1
@@ -369,8 +387,11 @@ polar_plot.cosinor.glmm <- function(x,
       conversion_factor <- (1 / 2 * pi) * max_period
     }
 
-    # create a sequence of labels for time (to be inserted around the polar plot)
-    time_labels <- signif(seq(from = 0, to = max_period, by = max_period / grid_angle_segments), 3)
+    # create a sequence of labels for time (to be inserted around
+    # the polar plot)
+    time_labels <- signif(
+      seq(from = 0, to = max_period, by = max_period / grid_angle_segments), 3
+      )
 
 
     # create a sequence of labels for the contours.
@@ -380,12 +401,21 @@ polar_plot.cosinor.glmm <- function(x,
     # determine largest contour, and use this as a plot limit
     max_plot_radius <- max(contour_labels)
 
-    # convert time_labels to polar coordinates to determine position of where they should be placed
-    dial_pos_full_x <- round(max_plot_radius * cos(direction * time_labels * 2 * pi / max_period + offset), digits = 5)
-    dial_pos_full_y <- round(max_plot_radius * sin(direction * time_labels * 2 * pi / max_period + offset), digits = 5)
+    # convert time_labels to polar coordinates to determine position of
+    # where they should be placed
+    dial_pos_full_x <- round(
+      max_plot_radius * cos(
+        direction * time_labels * 2 * pi / max_period + offset),
+      digits = 5)
+
+    dial_pos_full_y <- round(
+      max_plot_radius * sin(
+        direction * time_labels * 2 * pi / max_period + offset),
+      digits = 5)
 
     # determining the bounds to plot if zoom = TRUE
-    # designed to find the minimum plot window that contains all confidence ellipses.
+    # designed to find the minimum plot window that contains
+    # all confidence ellipses.
     if (zoom) {
       xmax_zoom <- max(est_rrr) + max(max(a_trans), max(b_trans))
       xmin_zoom <- min(est_rrr) - max(max(a_trans), max(b_trans))
@@ -405,15 +435,6 @@ polar_plot.cosinor.glmm <- function(x,
       contour_x_zoom <- cos(direction * mean(est_acr) + offset) * contour_labels
       contour_y_zoom <- sin(direction * mean(est_acr) + offset) * contour_labels
     }
-    #   contour_labels <- contour_labels[seq(contour_labels[1], length(contour_labels), contour_label_frequency)]
-    # if(length(contour_labels) > 20) {
-    #   #text_angle_offset <- rep(2*pi/(grid_angle_segments)/4, length(contour_labels))
-    #   contour_labels <- contour_labels[seq(1, length(contour_labels), length.out = round(length(contour_labels)/2))]
-    #   text_angle_offset <- 0
-    #   #text_angle_offset <- seq(0, 4*pi, length.out = length(contour_labels)) #a spiral arrangement of text
-    # } else {
-    #   text_angle_offset <- 0
-    # }
 
     # adding special symbols to time_labels (π for radians, ° for degrees )
     if (radial_units == "radians") {
@@ -506,7 +527,8 @@ polar_plot.cosinor.glmm <- function(x,
     if (x$group_check) {
       plot_obj <- plot_obj + ggplot2::labs(fill = "Group level", colour = NULL)
     }
-    # OPTIONAL: overlays lines connecting the parameter estimates to the origin, and displays estimates in plot
+    # OPTIONAL: overlays lines connecting the parameter estimates to the
+    # origin, and displays estimates in plot
     if (overlay_parameter_info) {
       radius_sequence <- seq(
         0.65 * min(l_est_amp),
@@ -563,7 +585,8 @@ polar_plot.cosinor.glmm <- function(x,
         )
     }
 
-    # if the view argument is 'zoom', or 'zoom_origin', apply transformed view_limits
+    # if the view argument is 'zoom', or 'zoom_origin', apply
+    # transformed view_limits
     if (zoom) {
       plot_obj <- plot_obj +
         ggplot2::geom_text(
@@ -581,7 +604,8 @@ polar_plot.cosinor.glmm <- function(x,
           ylim = c(ymin_zoom, ymax_zoom)
         )
     } else {
-      plot_obj <- plot_obj + ggplot2::coord_fixed() # plot full polar plot if view = "full"
+      # plot full polar plot if view = "full"
+      plot_obj <- plot_obj + ggplot2::coord_fixed()
     }
 
     # OPTIONAL: print information about the polar grid

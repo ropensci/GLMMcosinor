@@ -1,5 +1,4 @@
 #' Summarize a cosinor model
-#'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. Gives estimates, confidence intervals, and tests for the raw parameters,
 #' and for the mean, amplitude, and acrophase parameters. If the model includes
@@ -8,13 +7,15 @@
 #' not be the desired result for continuous covariates.
 #'
 #' @param object An object of class \code{cosinor.glmm}
-#' @param ci_level The level for calculated confidence intervals. Defaults to 0.95.
+#' @param ci_level The level for calculated confidence intervals. Defaults to
+#' 0.95.
 #' @param ... Currently unused
 #'
 #' @srrstats {G1.4}
 #' @srrstats {RE4.18}
 #'
-#' @return Returns a summary of the `cosinor.glmm` model as a `summary.cosinor.glmm` object.
+#' @return Returns a summary of the `cosinor.glmm` model as
+#' a `summary.cosinor.glmm` object.
 #' @examples
 #'
 #'

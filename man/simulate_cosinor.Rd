@@ -52,7 +52,7 @@ will be simulated and included in the returned data set. If \code{FALSE},
 \code{beta.acro}, \code{beta.mesor}, and \code{beta.amp} arguments will be
 ignored.}
 
-\item{beta.mesor}{A \code{numeric}. The MESOR value term for \code{group = 1}.}
+\item{beta.mesor}{A \code{numeric}. The MESOR value term for \code{group = 1}}
 
 \item{beta.amp}{A \code{numeric}. The amplitude value for \code{group = 1}.
 If simulating data with multiple components, specify a vector with values for

@@ -97,7 +97,8 @@ NULL
 #' No instance of converstion from a factor:
 #' @srrstatsNA {G2.4e}
 #'
-# glmmTMB:::vcov.glmmTMB() does not offer any options for alternate algorithms to calculate the variance-covariance matrix:
+# glmmTMB:::vcov.glmmTMB() does not offer any options for alternate algorithms
+# to calculate the variance-covariance matrix:
 #' @srrstatsNA {G3.1a}
 #' @srrstatsNA {G3.1}
 #'
@@ -110,15 +111,19 @@ NULL
 #' @srrstatsNA {G5.11a}
 #' @srrstatsNA {G5.12}
 #'
-#' There are no such functions in our package, although there may be in the glmmTMB package
+#' There are no such functions in our package, although there may be in
+#' the glmmTMB package
 #' @srrstatsNA {G5.3}
 #'
-# There outputs that will be featured in the paper have not been chosen yet, although they will most likely be accessible through a seeded simulate_cosinor output
+# There outputs that will be featured in the paper have not been chosen yet,
+# although they will most likely be accessible through a seeded
+# simulate_cosinor output
 #' @srrstatsNA {G5.4c}
 #' There are currently no algorithm performance tests in this package
 #' @srrstatsNA {G5.7}
 #'
-#' The following standards are not directly met in our package, but may be met in the glmmTMB package
+#' The following standards are not directly met in our package, but may be met
+#' in the glmmTMB package
 #' @srrstatsNA {G5.8}
 #' @srrstatsNA {G5.8a}
 #' @srrstatsNA {G5.8b}
@@ -127,7 +132,8 @@ NULL
 #' @srrstatsNA {G5.9}
 #' @srrstatsNA {G5.9a}
 
-#' The following regression standards are not directly applicable to our package, although they may be applicable within the glmmTMB package
+#' The following regression standards are not directly applicable to our
+#' package, although they may be applicable within the glmmTMB package
 #' @srrstatsNA {RE2.3}
 #' @srrstatsNA {RE2.4}
 #' @srrstatsNA {RE2.4a}
