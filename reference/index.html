@@ -129,12 +129,23 @@ a new formula</dd>
           
           <code><a href="summary.cosinor.glmm.html">summary(<i>&lt;cosinor.glmm&gt;</i>)</a></code> 
         </dt>
-        <dd>Summarize a cosinor model</dd>
+        <dd>Summarize a cosinor model
+Given a time variable and optional covariates, generate inference a cosinor
+fit. Gives estimates, confidence intervals, and tests for the raw parameters,
+and for the mean, amplitude, and acrophase parameters. If the model includes
+covariates, the function returns the estimates of the mean, amplitude, and
+acrophase for the group with covariates equal to 1 and equal to 0. This may
+not be the desired result for continuous covariates.</dd>
       </dl><dl><dt>
           
           <code><a href="test_cosinor_components.html">test_cosinor_components()</a></code> 
         </dt>
-        <dd>Test for differences in a cosinor model between components</dd>
+        <dd>Test for differences in a cosinor model between components
+Given a time variable and optional covariates, generate inference a cosinor
+fit. For the covariate named (or vector of covariates), this function
+performs a Wald test comparing the group with covariates equal to 1 to the
+group with covariates equal to 0. This may not be the desired result for
+continuous covariates.</dd>
       </dl><dl><dt>
           
           <code><a href="test_cosinor_levels.html">test_cosinor_levels()</a></code> 
