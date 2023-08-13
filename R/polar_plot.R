@@ -242,14 +242,18 @@ polar_plot.cosinor.glmm <- function(x,
       all(component_index == floor(component_index)) &
         all(component_index > 0) &
         all(component_index <= x$n_components),
-      msg = "'component_index' must be an integer between 1 and n_components (total number of components in model) inclusive"
+      msg = paste("'component_index' must be an integer between 1 and",
+                  "n_components (total number of components in model)",
+                  "inclusive")
     )
   }
   assertthat::assert_that(is.character(circle_linetype),
-    msg = "'circle_linetype' must be a character. See ?linetype for more details"
-  )
+    msg = paste("'circle_linetype' must be a character. See ?linetype",
+                "for more details"
+  ))
   assertthat::assert_that(is.logical(overlay_parameter_info),
-    msg = "'overlay_parameter_info' must be a logical argument, either TRUE or FALSE"
+    msg = paste("'overlay_parameter_info' must be a logical argument,",
+                "either TRUE or FALSE")
   )
 
   # get summary statistics of cosinor.glmm object

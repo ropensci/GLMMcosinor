@@ -172,7 +172,8 @@ test_that("bad inputs return useful errors", {
     )
   }
   expect_error(f(),
-    regexp = "Grouping variable in amp_acro() must be of length 1 or the same as n_components",
+    regexp = paste("Grouping variable in amp_acro() must be of",
+                   "length 1 or the same as n_components"),
     fixed = TRUE
   )
 
@@ -190,7 +191,8 @@ test_that("bad inputs return useful errors", {
     )
   }
   expect_error(f(),
-    regexp = "period value(s) in amp_acro() must be of length 1 or the same as n_components",
+    regexp = paste("period value(s) in amp_acro() must be of",
+                   "length 1 or the same as n_components"),
     fixed = TRUE
   )
 

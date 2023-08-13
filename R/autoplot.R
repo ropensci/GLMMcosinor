@@ -72,17 +72,21 @@ autoplot.cosinor.glmm <- function(object,
   if (!missing(x_str)) {
     for (i in x_str) {
       assertthat::assert_that(i %in% names(object$group_stats),
-        msg = "'x_str' must be string corresponding to a group name in cosinor.glmm object"
+        msg = paste("'x_str' must be string corresponding to a group name",
+                    "in cosinor.glmm object")
       )
     }
   }
   assertthat::assert_that(is.character(type),
-    msg = "'type' must be a string. See type in ?predict for more information about valid inputs"
+    msg = paste("'type' must be a string. See type in ?predict for more",
+                "information about valid inputs")
   )
   if (!missing(xlims)) {
     assertthat::assert_that(
       length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
-      msg = "'xlims' must be a vector with the first element being the lower x coordinate, and the second being the upper x coordinate"
+      msg = paste("'xlims' must be a vector with the first element being the",
+                  "lower x coordinate, and the second being the upper",
+                  "x coordinate")
     )
   }
   if (!missing(pred.length.out)) {

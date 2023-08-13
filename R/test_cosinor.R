@@ -82,12 +82,14 @@ test_cosinor_components <- function(x,
 
   assertthat::assert_that(
     comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
-    msg = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model"
+    msg = paste("'comparison_A' and 'comparison_B' must be numbers",
+                "corresponding to a component in the model")
   )
   assertthat::assert_that(
     level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
       level_index %in% x$group_stats[[x$group_original[comparison_B]]],
-    msg = "'level_index' must be supplied and it must be a number corresponding to a level in the model"
+    msg = paste("'level_index' must be supplied and it must be a number",
+                "corresponding to a level in the model")
   )
 
   # passing these inputs into the internal function
@@ -205,13 +207,15 @@ test_cosinor_levels <- function(x,
 
   assertthat::assert_that(
     comparison_B %in% x$group_stats[[x_str]],
-    msg = "'comparison_B' must correspond to a level within the group specified by 'x_str'"
+    msg = paste("'comparison_B' must correspond to a level within the",
+                "group specified by 'x_str'")
   )
 
 
   assertthat::assert_that(
     component_index %in% 1:x$n_components,
-    msg = "'component_index' must be supplied and it must be a number corresponding to a component in the model"
+    msg = paste("'component_index' must be supplied and it must be a",
+                "number corresponding to a component in the model")
   )
 
 
@@ -232,7 +236,8 @@ test_cosinor_levels <- function(x,
 
 
 #' Test for differences in a cosinor model. This function has been replaced
-#' with a more user-friendly and intuitive way of specifying comparisons: \code{test_cosinor_components} and \code{test_cosinor_levels}. These external
+#' with a more user-friendly and intuitive way of specifying comparisons:
+#'  \code{test_cosinor_components} and \code{test_cosinor_levels}. These external
 #' functions use this internal function.
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor

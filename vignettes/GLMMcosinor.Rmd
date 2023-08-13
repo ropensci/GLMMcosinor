@@ -355,7 +355,9 @@ functions.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(Y ~ group + amp_acro(times, period = 12, group = "group"),
+object <- cosinor.glmm(Y ~ group + amp_acro(times, 
+                                            period = 12, 
+                                            group = "group"),
   data = testdata_simple, family = poisson()
 )
 summary(object)

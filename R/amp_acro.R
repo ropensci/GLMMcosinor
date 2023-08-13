@@ -235,7 +235,8 @@ amp_acro <- function(time_col,
       if (length(group) == 1) {
         group <- rep(group, n_components)
       } else {
-        stop("Grouping variable in amp_acro() must be of length 1 or the same as n_components")
+        stop(paste("Grouping variable in amp_acro() must be of length 1 or",
+                    "the same as n_components"))
       }
     }
     group_original <- group
@@ -253,7 +254,8 @@ amp_acro <- function(time_col,
       if (length(period) == 1) {
         period <- rep(period, n_components)
       } else {
-        stop("period value(s) in amp_acro() must be of length 1 or the same as n_components")
+        stop(paste("period value(s) in amp_acro() must be of length 1 or",
+                   "the same as n_components"))
       }
     }
 

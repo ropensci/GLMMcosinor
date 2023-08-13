@@ -167,7 +167,8 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'comparison_A' and 'comparison_B' must be numbers corresponding to a component in the model", fixed = TRUE
+    regex = paste("'comparison_A' and 'comparison_B' must be numbers",
+                  "corresponding to a component in the model"), fixed = TRUE
   )
 
 
@@ -189,7 +190,9 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'component_index' must be supplied and it must be a number corresponding to a component in the model", fixed = TRUE
+    regex = paste("'component_index' must be supplied and it must be a",
+                  "number corresponding to a component in the model"),
+    fixed = TRUE
   )
 
   # Error message test 9
@@ -212,7 +215,8 @@ test_that("script works and warnings are displayed appropriately", {
   }
   expect_error(
     f(),
-    regex = "'level_index' must be supplied and it must be a number corresponding to a level in the model", fixed = TRUE
+    regex = paste("'level_index' must be supplied and it must be a number",
+                  "corresponding to a level in the model"), fixed = TRUE
   )
 
 
