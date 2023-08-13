@@ -149,8 +149,10 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-in"><span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>,</span></span>
-<span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span></span>
+<span class="r-in"><span>    n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>,</span></span>
+<span class="r-in"><span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">data_2_component</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">test_cosinor_levels</span><span class="op">(</span><span class="va">mod_2_component</span>, param <span class="op">=</span> <span class="st">"amp"</span>, x_str <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></span></span>
@@ -171,7 +173,7 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Global test: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 234.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 234.04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
@@ -185,7 +187,7 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate and 95% confidence interval:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.96 (0.84 to 1.09)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.99 (0.86 to 1.11)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
