@@ -394,7 +394,7 @@ amp_acro <- function(time_col,
       if (length(component_num) == 0) {
         return(x)
       } else {
-        for (i in seq_along(1:length(component_num))) {
+        for (i in seq_len(length(component_num))) {
           string_match <- paste0(
             ".*amp_acro", component_num[i], "\\s([^+|]*).*"
           )

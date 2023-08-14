@@ -237,8 +237,8 @@ test_cosinor_levels <- function(x,
 
 #' Test for differences in a cosinor model. This function has been replaced
 #' with a more user-friendly and intuitive way of specifying comparisons:
-#'  \code{test_cosinor_components} and \code{test_cosinor_levels}. These external
-#' functions use this internal function.
+#'  \code{test_cosinor_components} and \code{test_cosinor_levels}.
+#' These external functions use this internal function.
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. For the covariate named (or vector of covariates), this function

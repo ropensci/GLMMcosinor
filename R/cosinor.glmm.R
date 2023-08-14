@@ -108,7 +108,8 @@ get_varnames <- function(Terms) {
   spec <- names(attr(Terms, "specials"))
   tname <- attr(Terms, "term.labels")
 
-  dex <- unlist(sapply(spec, function(sp) {
+  #dex <- unlist(sapply(spec, function(sp) {
+  dex <- unlist(lapply(spec, function(sp) {
     attr(Terms, "specials")[[sp]] - 1
   }))
 
