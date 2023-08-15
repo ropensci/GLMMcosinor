@@ -120,7 +120,7 @@ dat_list <- list(
     diff_est = TRUE,
     family = "n = 1 \nGaussian",
     estimates = "Amplitude, acrophase, MESOR",
-    ref = "Singer, 2019"
+    ref = "Bastiaanssen, 2023"
   )
 )
 dat <- do.call(rbind, dat_list)
