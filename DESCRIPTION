@@ -27,6 +27,7 @@ Imports:
     scales,
     stats
 Suggests:
+    cosinor,
     covr,
     dplyr,
     DT,

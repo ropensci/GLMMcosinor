@@ -149,7 +149,7 @@ NULL
 #' @srrstatsNA {RE4.15}
 #' @srrstatsNA {RE4.16}
 #' @srrstatsNA {RE5.0}
-# @srrstatsNA {RE7.0}
+#' @srrstatsNA {RE7.0}
 #' @srrstatsNA {RE7.0a}
 #' @srrstatsNA {RE7.1}
 #' @srrstatsNA {RE7.1a}

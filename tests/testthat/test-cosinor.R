@@ -6,6 +6,7 @@
 #' @srrstats {G5.5}
 #' @srrstats {G5.4}
 #' @srrstats {G5.4a}
+#' @srrstats {G5.4b}
 #' @srrstats {G5.6}
 #' @srrstats {G5.6a}
 #' @srrstats {G5.6b}
@@ -50,12 +51,24 @@ test_that("model returns accurate parameters", {
         ),
         data = comod
       )
+      cosinor_lm_mod <- cosinor::cosinor.lm(Y ~ time(times) + group + amp.acro(group), data = comod)
     }
   )
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
     c(1.0030, -0.4966, 2.0122, 0.9948, 3.0115, 0.3175)
   ))
+
+  # test similarity to cosinor::cosinor.lm()
+  comparison_df <- cbind(
+    cosinor_lm_mod$coefficients,
+    object$coefficients
+  )
+
+  comparison_df <- as.data.frame(comparison_df[rownames(comparison_df) != "acr", ])
+  expect_equal(comparison_df$V1, comparison_df$V2, tolerance = 0.1)
+
+
 
   # test another parameter estimation of Gaussian simulated data
   withr::with_seed(
