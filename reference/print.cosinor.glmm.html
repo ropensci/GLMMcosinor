@@ -34,6 +34,9 @@
     <a class="dropdown-item" href="../articles/multiple-components.html">multiple-components</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -86,6 +89,36 @@
 <p><code>print(x)</code> returns <code>x</code> invisibly.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Single component cosinor model</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Raw formula: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X:main_rrr1 + X:main_sss1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  30.32687</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.86520</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.47625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.24438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.66701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 30.32687</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp    6.30404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp    7.98266</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr    1.43312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr    0.62444</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
