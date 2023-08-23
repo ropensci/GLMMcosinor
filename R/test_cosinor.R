@@ -426,8 +426,33 @@ test_cosinor_levels <- function(x,
 #' @param ... Arguments passed to \code{print}
 #'
 #' @return \code{print(x)} returns \code{x} invisibly.
+#' @examples
+#' data_2_component <- simulate_cosinor(
+#'   n = 10000,
+#'   mesor = 5,
+#'   amp = c(2, 5),
+#'   acro = c(0, pi),
+#'   beta.mesor = 4,
+#'   beta.amp = c(3, 4),
+#'   beta.acro = c(0, pi / 2),
+#'   family = "gaussian",
+#'   n_components = 2,
+#'   period = c(10, 12),
+#'   beta.group = TRUE
+#' )
+#' mod_2_component <- cosinor.glmm(
+#'   Y ~ group + amp_acro(times,
+#'                        n_components = 2, group = "group",
+#'                        period = c(10, 12)
+#'   ),
+#'   data = data_2_component
+#' )
+#' test_cosinor_levels(
+#'   mod_2_component,
+#'   param = "amp",
+#'   x_str = "group"
+#' )
 #' @export
-#'
 print.test_cosinor <- function(x, ...) {
   cat("Test Details: \n")
   .print_details(x$test_details)
@@ -446,6 +471,34 @@ print.test_cosinor <- function(x, ...) {
 #' @param ... Additional, ignored arguments.
 #'
 #' @return \code{print(x)} returns \code{x} invisibly.
+#'
+#' @examples
+#' data_2_component <- simulate_cosinor(
+#'   n = 10000,
+#'   mesor = 5,
+#'   amp = c(2, 5),
+#'   acro = c(0, pi),
+#'   beta.mesor = 4,
+#'   beta.amp = c(3, 4),
+#'   beta.acro = c(0, pi / 2),
+#'   family = "gaussian",
+#'   n_components = 2,
+#'   period = c(10, 12),
+#'   beta.group = TRUE
+#' )
+#' mod_2_component <- cosinor.glmm(
+#'   Y ~ group + amp_acro(times,
+#'     n_components = 2, group = "group",
+#'     period = c(10, 12)
+#'   ),
+#'   data = data_2_component
+#' )
+#' test_output <- test_cosinor_levels(
+#'   mod_2_component,
+#'   param = "amp",
+#'    x_str = "group"
+#' )
+#' print(test_output$global.test)
 #' @export
 print.sub_test_cosinor <- function(x, ...) {
   if (length(x$statistic) == 1) {

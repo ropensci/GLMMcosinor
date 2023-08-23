@@ -149,7 +149,6 @@ data_processor <- function(newdata,
   # in preparation for transforming the raw coefficients
   mf <- fit
 
-  # coefs_disp <- glmmTMB::fixef(mf)$disp
   main_coefs <- glmmTMB::fixef(mf)$cond
   conditional_model <- get_new_coefs(
     main_coefs,

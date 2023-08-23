@@ -33,3 +33,35 @@ Returns a \code{list}.
 \description{
 Update data and formula for fitting cosinor.glmm model
 }
+\examples{
+# Use vitamind data but add a "patient" identifier used as a random effect
+vitamind2 <- vitamind
+vitamind2$patient <- sample(
+  LETTERS[1:5],
+  size = nrow(vitamind2), replace = TRUE
+)
+
+# Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+# without yet fitting the model
+data_and_formula <- update_formula_and_data(
+  data = vitamind2,
+  formula = Y ~ X + amp_acro(time,
+    group = "X",
+    period = 12
+  )
+)
+
+# print formula from above
+data_and_formula$newformula
+
+# fit model while adding random effect to cosinor model formula.
+mod <- fit_model_and_process(
+  obj = data_and_formula,
+  formula = update.formula(
+    data_and_formula$newformula, . ~ . + (1 | patient)
+  )
+)
+
+mod
+mod$fit # printing the `glmmTMB` model within shows Std.Dev. of random effect
+}

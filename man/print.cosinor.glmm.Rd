@@ -19,3 +19,10 @@
 \description{
 Print a brief summary of the \code{cosinor.glmm} model.
 }
+\examples{
+# Single component cosinor model
+cosinor.glmm(
+  Y ~ amp_acro(time_col = time, group = "X", period = 12),
+  data = vitamind
+)
+}

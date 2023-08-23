@@ -17,3 +17,31 @@
 \description{
 Print test of model
 }
+\examples{
+data_2_component <- simulate_cosinor(
+  n = 10000,
+  mesor = 5,
+  amp = c(2, 5),
+  acro = c(0, pi),
+  beta.mesor = 4,
+  beta.amp = c(3, 4),
+  beta.acro = c(0, pi / 2),
+  family = "gaussian",
+  n_components = 2,
+  period = c(10, 12),
+  beta.group = TRUE
+)
+mod_2_component <- cosinor.glmm(
+  Y ~ group + amp_acro(times,
+    n_components = 2, group = "group",
+    period = c(10, 12)
+  ),
+  data = data_2_component
+)
+test_output <- test_cosinor_levels(
+  mod_2_component,
+  param = "amp",
+   x_str = "group"
+)
+print(test_output$global.test)
+}

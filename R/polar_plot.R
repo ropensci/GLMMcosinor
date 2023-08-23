@@ -649,7 +649,6 @@ polar_plot.cosinor.glmm <- function(x,
     )
     final_obj
   } else {
-    # final_obj <- sub_ggplot.cosinor.glmm.polar(component_index)
     plot_list <- NULL
     for (i in component_index) {
       assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))

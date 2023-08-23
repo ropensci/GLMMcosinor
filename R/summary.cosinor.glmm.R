@@ -153,7 +153,6 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
     a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
 
-    # b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
     b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (groups.s / groups.r^2)
     b_s <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
 
@@ -179,7 +178,6 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 
     rawmat <- cbind(
       estimate = coefs,
-      ## ?This could be changed to determine p-val between groups?
       standard.error = raw.se,
       lower.CI = coefs - zt * raw.se,
       upper.CI = coefs + zt * raw.se,

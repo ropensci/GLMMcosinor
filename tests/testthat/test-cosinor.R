@@ -51,7 +51,10 @@ test_that("model returns accurate parameters", {
         ),
         data = comod
       )
-      cosinor_lm_mod <- cosinor::cosinor.lm(Y ~ time(times) + group + amp.acro(group), data = comod)
+      cosinor_lm_mod <- cosinor::cosinor.lm(
+        Y ~ time(times) + group + amp.acro(group),
+        data = comod
+      )
     }
   )
   testthat::expect_true(all.equal(
@@ -65,7 +68,9 @@ test_that("model returns accurate parameters", {
     object$coefficients
   )
 
-  comparison_df <- as.data.frame(comparison_df[rownames(comparison_df) != "acr", ])
+  comparison_df <- as.data.frame(
+    comparison_df[rownames(comparison_df) != "acr", ]
+  )
   expect_equal(comparison_df$V1, comparison_df$V2, tolerance = 0.1)
 
 
@@ -323,7 +328,6 @@ test_that("mixed model estimates parameters well", {
       family = gaussian
     )
   }
-  # suppressWarnings(expect_warning(f()))
 
   withr::with_seed(42, {
     df_mixed <- do.call("rbind", lapply(1:75, f_sample_id))

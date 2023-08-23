@@ -118,12 +118,6 @@ amp_acro <- function(time_col,
   # checking dataframe
 
 
-  ## Check if 'group' is a non-string and convert it to a string if necessary
-  # if (!is.character(group)) {
-  #  group <- as.character(group)
-  # }
-
-
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
     inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(
@@ -214,13 +208,6 @@ amp_acro <- function(time_col,
       } else {
         group_check <- TRUE
         check_group_var(.data = .data, group = group)
-        # if the user supplies a group argument in cosinor.glmm() call, but only
-        # one level exists in the group, then reassign group_check <- false
-        # browser()
-        # if (length(unique(.data[[group]])) == 1){
-        #  group <- 0
-        #  group_check <- FALSE
-        # }
       }
     }
 
@@ -276,7 +263,6 @@ amp_acro <- function(time_col,
       .data[[i]] <- factor(.data[[i]])
     }
     # get the terms and variable names from the amp_acro call
-    # Terms <- stats::terms(.formula)
     Terms <- stats::terms(.formula, specials = "amp_acro")
     Terms$factors <- group_names
     varnames <- get_varnames(Terms)
@@ -320,8 +306,6 @@ amp_acro <- function(time_col,
         acpart_combined <- NULL
         formula_expr <- paste(formula_expr, "+", rrr_names, "+", sss_names)
       }
-
-      # newformula <- eval(formula_expr)
     }
 
     if (.amp_acro_ind == -1) {
@@ -330,7 +314,7 @@ amp_acro <- function(time_col,
       left_part <- NULL
     }
     newformula <- stats::as.formula(
-      paste(left_part, # rownames(attr(Terms, "factors"))[1],
+      paste(left_part,
         paste(
           c(
             attr(
@@ -357,7 +341,6 @@ amp_acro <- function(time_col,
         single_group_level <- levels(as.factor(.data[[i]]))
         group_stats[[i]] <- as.array(single_group_level)
       }
-      # colnames(group_stats) = group_names
     }
     return(list(
       newdata = .data,
@@ -425,7 +408,6 @@ amp_acro <- function(time_col,
     })
 
 
-    # ranef_part_updated <- unlist(ranef_parts_replaced)
     ranef_part_updated <- paste(
       sprintf(
         "(%s)",
