@@ -10,6 +10,9 @@
 coverage](https://codecov.io/gh/RWParsons/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data
@@ -92,8 +95,8 @@ citation("GLMMcosinor")
 #> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
-#>   Parsons R, Jayasinghe O (2023). _GLMMcosinor: Fit a cosinor model
-#>   using a generalised mixed modelling framework_.
+#>   Parsons R, Jayasinghe O, White N (2023). _GLMMcosinor: Fit a cosinor
+#>   model using a generalised mixed modelling framework_.
 #>   https://github.com/RWParsons/GLMMcosinor,
 #>   https://rwparsons.github.io/GLMMcosinor/.
 #> 
@@ -102,7 +105,7 @@ citation("GLMMcosinor")
 #>   @Manual{,
 #>     title = {GLMMcosinor: Fit a cosinor model using a generalised mixed modelling
 #> framework},
-#>     author = {Rex Parsons and Oliver Jayasinghe},
+#>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White},
 #>     year = {2023},
 #>     note = {https://github.com/RWParsons/GLMMcosinor,
 #> https://rwparsons.github.io/GLMMcosinor/},

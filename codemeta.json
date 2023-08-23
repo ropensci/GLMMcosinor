@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.0 (2022-04-22 ucrt)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31 ucrt)",
   "author": [
     {
       "@type": "Person",
@@ -27,6 +27,12 @@
       "@type": "Person",
       "givenName": "Oliver",
       "familyName": "Jayasinghe"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Nicole",
+      "familyName": "White",
+      "@id": "https://orcid.org/0000-0002-9292-0773"
     }
   ],
   "maintainer": [
@@ -39,6 +45,18 @@
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "cosinor",
+      "name": "cosinor",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=cosinor"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "covr",
@@ -74,6 +92,30 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=DT"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "flextable",
+      "name": "flextable",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=flextable"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ftExtra",
+      "name": "ftExtra",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ftExtra"
     },
     {
       "@type": "SoftwareApplication",
@@ -200,6 +242,18 @@
     },
     "6": {
       "@type": "SoftwareApplication",
+      "identifier": "lme4",
+      "name": "lme4",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=lme4"
+    },
+    "7": {
+      "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
       "provider": {
@@ -210,14 +264,27 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    "7": {
+    "8": {
+      "@type": "SoftwareApplication",
+      "identifier": "scales",
+      "name": "scales",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=scales"
+    },
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
     "SystemRequirements": null
   },
-  "fileSize": "214.23KB",
+  "fileSize": "624.963KB",
+  "releaseNotes": "https://github.com/RWParsons/GLMMcosinor/blob/master/NEWS.md",
   "readme": "https://github.com/RWParsons/GLMMcosinor/blob/main/README.md",
-  "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main", "https://github.com/RWParsons/GLMMcosinor/actions?query=workflow%3Apkgcheck"]
+  "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main"]
 }

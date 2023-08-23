@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/RWParsons/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 
