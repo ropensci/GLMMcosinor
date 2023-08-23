@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/RWParsons/GLMMcosinor",
   "issueTracker": "https://github.com/RWParsons/GLMMcosinor/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.9000",
+  "version": "0.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -283,7 +283,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "624.963KB",
+  "fileSize": "625.596KB",
   "releaseNotes": "https://github.com/RWParsons/GLMMcosinor/blob/master/NEWS.md",
   "readme": "https://github.com/RWParsons/GLMMcosinor/blob/main/README.md",
   "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main"]
