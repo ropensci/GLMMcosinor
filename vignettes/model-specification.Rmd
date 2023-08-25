@@ -18,12 +18,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(GLMMcosinor)
-library(dplyr)
+```{r srr, eval = FALSE, echo = FALSE}
 #' @srrstats {G2.0a}
 #' @srrstats {G2.1a}
 #' @srrstats {RE1.1}
+```
+
+```{r setup}
+library(GLMMcosinor)
+library(dplyr)
 
 withr::with_seed(
   50,
@@ -127,11 +130,15 @@ We would interpret the output as follows:
 
 -   `Amplitude estimate = 1.08228`
 
--   `Acrophase estimate = 0.99913`. Note that this estimate is in
-    radians to align with conventions. To interpret this, we can express
-    `0.99913 radians` as a fraction of the total $2\pi$ and multiply by the period to get the time when the response is a maximal. Hence, $\frac{0.99913}{2\pi} \times 12 = 1.908$ in
-    the units of the `time_col` column in the original dataframe. This
-    is saying that the peak response would occur after 1.908 time-units and every 12 time-units after this. We can confirm this by plotting:
+-   `Acrophase estimate = 0.99913`. 
+
+Note that this estimate is in radians to align with conventions. To interpret 
+this, we can express `0.99913 radians` as a fraction of the total $2\pi$ and 
+multiply by the period to get the time when the response is a maximal. Hence,
+$\frac{0.99913}{2\pi} \times 12 = 1.908$ in the units of the `time_col` column
+in the original dataframe. This is saying that the peak response would occur
+after 1.908 time-units and every 12 time-units after this. We can confirm this
+by plotting:
 
 ```{r}
 autoplot(object, superimpose.data = TRUE)
