@@ -1,3 +1,5 @@
+# GLMMcosinor (development version)
+
 # GLMMcosinor 0.1.0
 
 * First development version of `{GLMMcosinor}` for submission to rOpenSci.
