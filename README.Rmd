@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 ```
 
 
-# GLMMcosinor
+# GLMMcosinor <a href='https://rwparsons.github.io/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml)

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GLMMcosinor
+# GLMMcosinor <a href='https://rwparsons.github.io/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
