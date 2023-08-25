@@ -2,7 +2,7 @@
 % Please edit documentation in R/amp_acro.R
 \name{amp_acro}
 \alias{amp_acro}
-\title{Checks the validity of user inputs and creates formula and modifies dataframe}
+\title{Used to specify a cosinor component in the model formula.}
 \usage{
 amp_acro(time_col, n_components = 1, group, period, ...)
 }
@@ -25,7 +25,8 @@ A \code{data.frame} and \code{formula} appropriate for use by
 \code{data_processor()}.
 }
 \description{
-Checks the validity of user inputs and creates formula and modifies dataframe
+Checks the validity of user inputs before creating an updated formula
+and associated modifications to the \code{data.frame}.
 }
 \examples{
 # Single component cosinor model

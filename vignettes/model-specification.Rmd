@@ -130,7 +130,7 @@ We would interpret the output as follows:
 
 -   `Amplitude estimate = 1.08228`
 
--   `Acrophase estimate = 0.99913`. 
+-   `Acrophase estimate = 0.99913`
 
 Note that this estimate is in radians to align with conventions. To interpret 
 this, we can express `0.99913 radians` as a fraction of the total $2\pi$ and 

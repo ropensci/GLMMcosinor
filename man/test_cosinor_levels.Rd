@@ -2,7 +2,8 @@
 % Please edit documentation in R/test_cosinor.R
 \name{test_cosinor_levels}
 \alias{test_cosinor_levels}
-\title{Test for differences in a cosinor model between levels}
+\title{Test for differences in a cosinor model between levels of the grouping
+variable.}
 \usage{
 test_cosinor_levels(
   x,

@@ -1,4 +1,9 @@
-#' Checks the validity of user inputs and creates formula and modifies dataframe
+
+
+#' Used to specify a cosinor component in the model formula.
+#'
+#' Checks the validity of user inputs before creating an updated formula
+#' and associated modifications to the \code{data.frame}.
 #'
 #' @param time_col A  \code{numeric} column within the \code{data.frame()}
 #' passed by via the \code{data} arg containing the time values.

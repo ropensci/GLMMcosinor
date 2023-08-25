@@ -1,5 +1,8 @@
 # GLMMcosinor (development version)
 
+* Fix small typos in vignettes/docs and make plot legend title consistent across
+`autoplot()` and `polar_plot()`
+
 # GLMMcosinor 0.1.0
 
 * First development version of `{GLMMcosinor}` for submission to rOpenSci.

@@ -2,12 +2,7 @@
 % Please edit documentation in R/test_cosinor.R
 \name{test_cosinor_components}
 \alias{test_cosinor_components}
-\title{Test for differences in a cosinor model between components
-Given a time variable and optional covariates, generate inference a cosinor
-fit. For the covariate named (or vector of covariates), this function
-performs a Wald test comparing the group with covariates equal to 1 to the
-group with covariates equal to 0. This may not be the desired result for
-continuous covariates.}
+\title{Test for differences in a cosinor model between components.}
 \usage{
 test_cosinor_components(
   x,
@@ -48,7 +43,6 @@ components.}
 Returns a \code{test_cosinor} object.
 }
 \description{
-Test for differences in a cosinor model between components
 Given a time variable and optional covariates, generate inference a cosinor
 fit. For the covariate named (or vector of covariates), this function
 performs a Wald test comparing the group with covariates equal to 1 to the

@@ -1,4 +1,5 @@
-#' Test for differences in a cosinor model between components
+#' Test for differences in a cosinor model between components.
+#'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. For the covariate named (or vector of covariates), this function
 #' performs a Wald test comparing the group with covariates equal to 1 to the
@@ -108,7 +109,8 @@ test_cosinor_components <- function(x,
 }
 
 
-#' Test for differences in a cosinor model between levels
+#' Test for differences in a cosinor model between levels of the grouping
+#' variable.
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor
 #' fit. For the covariate named (or vector of covariates), this function
@@ -237,7 +239,7 @@ test_cosinor_levels <- function(x,
 
 #' Test for differences in a cosinor model. This function has been replaced
 #' with a more user-friendly and intuitive way of specifying comparisons:
-#'  \code{test_cosinor_components} and \code{test_cosinor_levels}.
+#' \code{test_cosinor_components} and \code{test_cosinor_levels}.
 #' These external functions use this internal function.
 #'
 #' Given a time variable and optional covariates, generate inference a cosinor

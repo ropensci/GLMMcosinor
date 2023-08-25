@@ -539,7 +539,7 @@ polar_plot.cosinor.glmm <- function(x,
       )
 
     if (x$group_check) {
-      plot_obj <- plot_obj + ggplot2::labs(fill = "Group level", colour = NULL)
+      plot_obj <- plot_obj + ggplot2::labs(fill = "levels", colour = NULL)
     }
     # OPTIONAL: overlays lines connecting the parameter estimates to the
     # origin, and displays estimates in plot
