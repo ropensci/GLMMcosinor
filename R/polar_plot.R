@@ -637,7 +637,7 @@ polar_plot.cosinor.glmm <- function(x,
   }
 
   # plot multiple component plots in cowplot or plot a single component plot
-  if (make_cowplot == TRUE) {
+  if (make_cowplot == TRUE & n_components > 1) {
     plot_list <- NULL
     for (i in 1:n_components) {
       assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
@@ -648,7 +648,20 @@ polar_plot.cosinor.glmm <- function(x,
       labels = paste("Component", 1:n_components)
     )
     final_obj
-  } else {
+  }
+  if (make_cowplot == TRUE & n_components == 1) {
+    plot_list <- NULL
+    for (i in 1:n_components) {
+      assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
+      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cosinor.glmm.polar(i))
+    }
+    final_obj <- cowplot::plot_grid(
+      plotlist = plot_list
+    )
+    final_obj
+  }
+
+  else {
     plot_list <- NULL
     for (i in component_index) {
       assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
