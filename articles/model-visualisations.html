@@ -167,14 +167,14 @@ the fit is based on) over the fitted model, using the
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, x_str <span class="op">=</span> <span class="st">"X"</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="model-visualisations_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>If there are multiple factors in the model, the user can specify
-which covariate to be plotted using the x_str argument which accepts a
-string corresponding to a group name within the original dataset. By
-default, x_str = NULL and the intercept is plotted (all group levels =
-0).</p>
-<p>The following examples demonstrate how x_str can be used to produce
-different plots for the same model. Note how <code>predict.ribbon</code>
-can be set to <code>FALSE</code> to remove the prediction interval from
-the plots.</p>
+which covariate to be plotted using the <code>x_str</code> argument
+which accepts a string corresponding to a group name within the original
+dataset. By default, <code>x_str = NULL</code> and the intercept is
+plotted (all <code>group levels = 0</code>).</p>
+<p>The following examples demonstrate how <code>x_str</code> can be used
+to produce different plots for the same model. Note how
+<code>predict.ribbon</code> can be set to <code>FALSE</code> to remove
+the prediction interval from the plots.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">testdata_two_components_mod</span> <span class="op">&lt;-</span> <span class="va">testdata_two_components</span></span>
 <span><span class="va">testdata_two_components_mod</span><span class="op">$</span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">testdata_two_components</span><span class="op">$</span><span class="va">group</span><span class="op">)</span>,</span>
@@ -221,7 +221,7 @@ in the time vector of the original dataframe, and <code>xmax</code> will
 be set to the maximum time value. If we want to focus on a specific
 region of the plot, we can define use the <code>xlims</code> argument to
 specify the x-bounds.</p>
-<p>For example, on the plot above, we can adjust the xlimits:</p>
+<p>For example, on the plot above, we can adjust the x-limits:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
@@ -257,41 +257,11 @@ default.</p>
 <div class="section level2">
 <h2 id="polar-plots">Polar plots<a class="anchor" aria-label="anchor" href="#polar-plots"></a>
 </h2>
-<p>In addition to time-response plots, the GLMMcosinor package also
-allows users to create polar plots. In these plots, the plotted point
-represents the acrophase estimate, and the radius represents the
-amplitude estimate for a given component. The ellipses represent
-confidence regions.</p>
-<p>The angle units in the plot can be specified with the
-<code>radial_units</code> argument. By default, the units are in radians
-where a complete revolution of the plot <span class="math inline">\((2\pi)\)</span> represents the period for that
-component. The units can be changed to degrees (where <span class="math inline">\(360^\circ\)</span> represents the period), or even
-to be expressed in the same units as the period specification and time
-variable in the data used to fit the model.</p>
-<p>By default, the function creates polar plots for all components and
-combines them together using the make_cowplot = TRUE argument. If the
-user wishes to plot just one component, they can specify this by using
-<code>component_index</code>.</p>
-<p>The direction that the angle increases in can be changed with the
-clockwise argument, and the location of the <code>angle = 0</code>
-starting point can be specified with the <code>start</code> argument.
-Hence, if the user wishes to create a polar plot that resembles a clock,
-this can be done by specifying <code>clockwise = TRUE</code> and
-<code>start = "top"</code>.</p>
-<p>The argument: <code>overlay_parameter_info</code> can be used to
-create a line extending from the origin to the parameter estimate (to
-visualise the amplitude estimate), and a circular arc extending from the
-angle starting position (at 0) to the acrophase estimate.</p>
-<p>The background grid can also be customised. The argument
-<code>grid_angle_segments</code> is used to specify how many sectors the
-polar grid has, and the `n_breaks` argument can be used to specify the
-number of concentric circles that make up the polar grid.</p>
-<p>If the user wishes to zoom into the confidence ellipses to show
-relevant information, they can adjust the view from the default
-<code>full</code> (which plots a full view of the polar plot) to ‘zoom’
-(which enlarges the smallest view window containing all confidence
-ellipses), or <code>zoom_origin</code> (which enlarges the smallest view
-window containing all confidence ellipses AND the origin).</p>
+<p>In addition to time-response plots, the <code>GLMMcosinor</code>
+package also allows users to create polar plots. In these plots, the
+plotted point represents the acrophase estimate, and the radius
+represents the amplitude estimate for a given component. The ellipses
+represent confidence regions.</p>
 <hr>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
@@ -303,11 +273,11 @@ window containing all confidence ellipses AND the origin).</p>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="model-visualisations_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>The angle units in the plot can be specified with the ‘radial_units’
-argument. By default, the units are in radians where a complete
-revolution of the plot (2*pi) represents the maximum period from the
-model. The units can be changed to degrees, or even to be expressed in
-the same units as the period specification.</p>
+<p>The angle units in the plot can be specified with the
+<code>radial_units</code> argument. By default, the units are in radians
+where a complete revolution of the plot <span class="math inline">\((2\pi)\)</span> represents the maximum period from
+the model. The units can be changed to degrees, or even to be expressed
+in the same units as the period specification.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span>
@@ -319,19 +289,21 @@ the same units as the period specification.</p>
 <span><span class="fu"><a href="../reference/polar_plot.html">polar_plot</a></span><span class="op">(</span><span class="va">model</span>, radial_units <span class="op">=</span> <span class="st">"degrees"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="model-visualisations_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>By default, the function creates creates polar plots for all
-components and stiches them together using the make_cowplot = TRUE
-argument. If the user wishes to plot just one component, they can
-specify this by using ‘component_index’, though the ‘make_cowplot’
-argument must be FALSE for this to register.</p>
+components and stiches them together using the
+<code>make_cowplot = TRUE</code> argument. If the user wishes to plot
+just one component, they can specify this by using
+<code>component_index</code>, though the <code>make_cowplot</code>
+argument must be <code>FALSE</code> for this to register.</p>
 <p>The direction that the angle increases in can be changed with the
 clockwise argument, and the location of the angle = 0 starting point can
-be specified with the ‘start’ argument. Hence, if the user wishes to
-create a polar plot that resembles a clock, this can be done by
-specifying clockwise = TRUE and start = “top”.</p>
-<p>The argument: overlay_parameter_info can be used to create a line
-extending from the origin to the parameter estimate (to visualise the
-amplitude estimate), and a circular arc extending from the angle
-starting position (at 0) to the acrophase estimate.</p>
+be specified with the <code>start</code> argument. Hence, if the user
+wishes to create a polar plot that resembles a clock, this can be done
+by specifying <code>clockwise = TRUE</code> and
+<code>start = "top"</code>.</p>
+<p>The argument: <code>overlay_parameter_info</code> can be used to
+create a line extending from the origin to the parameter estimate (to
+visualise the amplitude estimate), and a circular arc extending from the
+angle starting position (at 0) to the acrophase estimate.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span>
@@ -362,11 +334,12 @@ specify the number of concentric circles.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="model-visualisations_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>If the user wishes to zoom into the confidence ellipses to show
-releveant information, they can adjust the view from the default ‘full’
-(which plots a full view of the polar plot) to ‘zoom’ (which enlarges
-the smallest view window containing all confidence ellipses), or
-‘zoom_origin’ (which enlarges the smallest view window containing all
-confidence ellipses AND the origin).</p>
+releveant information, they can adjust the view from the default
+<code>full</code> (which plots a full view of the polar plot) to
+<code>zoom</code> (which enlarges the smallest view window containing
+all confidence ellipses), or <code>zoom_origin</code> (which enlarges
+the smallest view window containing all confidence ellipses AND the
+origin).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span>
