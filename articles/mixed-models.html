@@ -201,7 +201,7 @@ appear in the fixed effects).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; Y ~ main_rrr1 + main_sss1 + (1 + main_rrr1 + main_sss1 | subject)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55633ce099a8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x555c0eddbe00&gt;</span></span></code></pre></div>
 <p>The summary of the model shows that the input means for MESOR,
 amplitude and acrophase are similar to what we specified in the
 simulation (0, 3, and 1.5, respectively).</p>
@@ -211,17 +211,17 @@ simulation (0, 3, and 1.5, respectively).</p>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI  p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)  0.11843817     0.15051014 -0.17655629  0.41343 0.431334    </span></span>
-<span><span class="co">#&gt; main_rrr1    0.21035961     0.08881058  0.03629407  0.38443 0.017854 *  </span></span>
-<span><span class="co">#&gt; main_sss1    2.92046541     0.08709736  2.74975772  3.09117  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept)  0.21025232     0.19752786 -0.17689518  0.59740 0.287139    </span></span>
+<span><span class="co">#&gt; main_rrr1    0.32136732     0.13553927  0.05571522  0.58702 0.017739 *  </span></span>
+<span><span class="co">#&gt; main_sss1    2.98808284     0.10291504  2.78637308  3.18979  &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)  0.11843817     0.15051014 -0.17655629  0.41343 0.43133    </span></span>
-<span><span class="co">#&gt; amp1         2.92803166     0.08672606  2.75805169  3.09801 &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; acr1         1.49889103     0.03020080  1.43969856  1.55808 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept)  0.21025232     0.19752786 -0.17689518  0.59740 0.28714    </span></span>
+<span><span class="co">#&gt; amp1         3.00531463     0.09971847  2.80987002  3.20076 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; acr1         1.46365848     0.04407475  1.37727355  1.55004 &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>We can see that the predicted values from the model closely resemble
@@ -244,9 +244,9 @@ using the Akaike information criterion using <code><a href="https://rdrr.io/r/st
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fixed_effects_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2509.622</span></span>
+<span><span class="co">#&gt; [1] 2980.55</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 158.9614</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 224.5539</span></span></code></pre></div>
 <p>Aside from not being able to be useful to see the differences between
 subjects from the model, we end up with much worse model fit and likely
 biased and/or imprecise estimates of our fixed effects that we are
