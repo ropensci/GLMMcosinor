@@ -61,7 +61,7 @@ testdata <- simulate_cosinor(
   acro = 1.2,
   period = 12,
   n_period = 3,
-  family = c("poisson")
+  family = "poisson"
 )
 
 testdata
@@ -111,7 +111,7 @@ simulate_cosinor(
   beta.acro = 0.2,
   n_period = 3,
   n_components = 1,
-  family = c("poisson")
+  family = "poisson"
 )
 ```
 
@@ -128,7 +128,7 @@ testdata <- simulate_cosinor(
   beta.acro = 0.2,
   n_components = 1,
   n_period = 3,
-  family = c("gaussian")
+  family = "gaussian"
 )
 
 DT::datatable(testdata)
@@ -158,7 +158,7 @@ testdata <- simulate_cosinor(
   period = c(12, 6),
   n_components = 2,
   n_period = 2,
-  family = c("poisson")
+  family = "poisson"
 )
 
 testdata

@@ -174,11 +174,18 @@ autoplot.cosinor.glmm <- function(object,
       }
 
       newdata$levels <- ""
+      i = 1 #used as a counter for formatting purposes
       for (d in x_str) {
         newdata$levels <- paste0(
           newdata$levels,
-          "[", d, "=", newdata[, d], "] "
+           d, "=", newdata[, d]
+
         )
+        # if there are multiple group levels, separate them by "|"
+        if (i < length(x_str)) {
+          newdata$levels <- paste0(newdata$levels, " | ")
+        }
+        i = i + 1
       }
     }
     newdata
@@ -213,15 +220,23 @@ autoplot.cosinor.glmm <- function(object,
     original_data <- object$newdata
     original_data_processed <- object$newdata
     original_data_processed$levels <- ""
+    i = 1 #used as a counter for formatting purposes
     for (d in x_str) {
       original_data_processed$levels <- paste0(
         original_data_processed$levels,
-        "[",
+
         d,
         "=",
-        original_data_processed[, d],
-        "] "
+        original_data_processed[, d]
       )
+      # if there are multiple group levels, separate them by "|"
+      if (i < length(x_str)) {
+        original_data_processed$levels <- paste0(
+          original_data_processed$levels, " | ")
+      }
+      i = i + 1
+
+
     }
   }
   # get the plot object

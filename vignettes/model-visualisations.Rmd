@@ -92,11 +92,12 @@ autoplot(object, x_str = "X", superimpose.data = TRUE)
 ```
 
 If there are multiple factors in the model, the user can specify which
-covariate to be plotted using the x_str argument which accepts a string
-corresponding to a group name within the original dataset. By default,
-x_str = NULL and the intercept is plotted (all group levels = 0).
+covariate to be plotted using the `x_str` argument which accepts a
+string corresponding to a group name within the original dataset. By
+default, `x_str = NULL` and the intercept is plotted (all
+`group levels = 0`).
 
-The following examples demonstrate how x_str can be used to produce
+The following examples demonstrate how `x_str` can be used to produce
 different plots for the same model. Note how `predict.ribbon` can be set
 to `FALSE` to remove the prediction interval from the plots.
 
@@ -149,7 +150,7 @@ vector of the original dataframe, and `xmax` will be set to the maximum
 time value. If we want to focus on a specific region of the plot, we can
 define use the `xlims` argument to specify the x-bounds.
 
-For example, on the plot above, we can adjust the xlimits:
+For example, on the plot above, we can adjust the x-limits:
 
 ```{r, message=F, warning=F}
 object <- cosinor.glmm(
@@ -186,47 +187,11 @@ autoplot(object, points_per_min_cycle_length = 40)
 
 ## Polar plots
 
-In addition to time-response plots, the GLMMcosinor package also allows
-users to create polar plots. In these plots, the plotted point
+In addition to time-response plots, the `GLMMcosinor` package also
+allows users to create polar plots. In these plots, the plotted point
 represents the acrophase estimate, and the radius represents the
 amplitude estimate for a given component. The ellipses represent
 confidence regions.
-
-The angle units in the plot can be specified with the `radial_units`
-argument. By default, the units are in radians where a complete
-revolution of the plot $(2\pi)$ represents the period for that
-component. The units can be changed to degrees (where $360^\circ$
-represents the period), or even to be expressed in the same units as the
-period specification and time variable in the data used to fit the
-model.
-
-By default, the function creates polar plots for all components and
-combines them together using the make_cowplot = TRUE argument. If the
-user wishes to plot just one component, they can specify this by using
-`component_index`.
-
-The direction that the angle increases in can be changed with the
-clockwise argument, and the location of the `angle = 0` starting point
-can be specified with the `start` argument. Hence, if the user wishes to
-create a polar plot that resembles a clock, this can be done by
-specifying `clockwise = TRUE` and `start = "top"`.
-
-The argument: `overlay_parameter_info` can be used to create a line
-extending from the origin to the parameter estimate (to visualise the
-amplitude estimate), and a circular arc extending from the angle
-starting position (at 0) to the acrophase estimate.
-
-The background grid can also be customised. The argument
-`grid_angle_segments` is used to specify how many sectors the polar grid
-has, and the \`n_breaks\` argument can be used to specify the number of
-concentric circles that make up the polar grid.
-
-If the user wishes to zoom into the confidence ellipses to show relevant
-information, they can adjust the view from the default `full` (which
-plots a full view of the polar plot) to 'zoom' (which enlarges the
-smallest view window containing all confidence ellipses), or
-`zoom_origin` (which enlarges the smallest view window containing all
-confidence ellipses AND the origin).
 
 ------------------------------------------------------------------------
 
@@ -241,9 +206,9 @@ model <- cosinor.glmm(
 polar_plot(model)
 ```
 
-The angle units in the plot can be specified with the 'radial_units'
+The angle units in the plot can be specified with the `radial_units`
 argument. By default, the units are in radians where a complete
-revolution of the plot (2\*pi) represents the maximum period from the
+revolution of the plot $(2\pi)$ represents the maximum period from the
 model. The units can be changed to degrees, or even to be expressed in
 the same units as the period specification.
 
@@ -259,18 +224,18 @@ polar_plot(model, radial_units = "degrees")
 ```
 
 By default, the function creates creates polar plots for all components
-and stiches them together using the make_cowplot = TRUE argument. If the
-user wishes to plot just one component, they can specify this by using
-'component_index', though the 'make_cowplot' argument must be FALSE for
-this to register.
+and stiches them together using the `make_cowplot = TRUE` argument. If
+the user wishes to plot just one component, they can specify this by
+using `component_index`, though the `make_cowplot` argument must be
+`FALSE` for this to register.
 
 The direction that the angle increases in can be changed with the
 clockwise argument, and the location of the angle = 0 starting point can
-be specified with the 'start' argument. Hence, if the user wishes to
+be specified with the `start` argument. Hence, if the user wishes to
 create a polar plot that resembles a clock, this can be done by
-specifying clockwise = TRUE and start = "top".
+specifying `clockwise = TRUE` and `start = "top"`.
 
-The argument: overlay_parameter_info can be used to create a line
+The argument: `overlay_parameter_info` can be used to create a line
 extending from the origin to the parameter estimate (to visualise the
 amplitude estimate), and a circular arc extending from the angle
 starting position (at 0) to the acrophase estimate.
@@ -308,10 +273,10 @@ polar_plot(model,
 ```
 
 If the user wishes to zoom into the confidence ellipses to show
-releveant information, they can adjust the view from the default 'full'
-(which plots a full view of the polar plot) to 'zoom' (which enlarges
+releveant information, they can adjust the view from the default `full`
+(which plots a full view of the polar plot) to `zoom` (which enlarges
 the smallest view window containing all confidence ellipses), or
-'zoom_origin' (which enlarges the smallest view window containing all
+`zoom_origin` (which enlarges the smallest view window containing all
 confidence ellipses AND the origin).
 
 ```{r, message=F, warning=F}
