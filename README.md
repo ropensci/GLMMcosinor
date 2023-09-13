@@ -13,6 +13,8 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Status at rOpenSci Software Peer
+Review](https://badges.ropensci.org/603_status.svg)](https://github.com/ropensci/software-review/issues/603)
 <!-- badges: end -->
 
 The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data

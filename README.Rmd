@@ -29,6 +29,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/RWParsons/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/603_status.svg)](https://github.com/ropensci/software-review/issues/603)
 <!-- badges: end -->
 
 
