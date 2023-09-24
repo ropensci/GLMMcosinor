@@ -360,7 +360,7 @@ amp_acro <- function(time_col,
       time_name = time_name,
       response_var = left_part,
       group_original = group_original
-    ))
+      ))
   }
   res <- amp_acro_iteration(
     time_col = time_col,
@@ -373,6 +373,7 @@ amp_acro <- function(time_col,
     .amp_acro_ind = .amp_acro_ind
   )
 
+  #if a mixed model is specified, handle formula accordingly
   if (!is.null(lme4::findbars(.formula))) {
     ranef_part <- lapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
@@ -386,8 +387,8 @@ amp_acro <- function(time_col,
           string_match <- paste0(
             ".*amp_acro", component_num[i], "\\s([^+|]*).*"
           )
-          ranef_part_addition <- gsub(string_match, "\\1", ranef_part)
-          ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
+          ranef_part_addition <- gsub(string_match, "\\1", x)
+          ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", x)
 
           rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
           sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
@@ -407,11 +408,16 @@ amp_acro <- function(time_col,
             x,
             fixed = TRUE
           )
+          #x$group <- ranef_part_group
         }
         return(x)
       }
     })
 
+    #ranef_groups is stored, and will be part of the eventual output. This is
+    #a vector containing the names of the variables with mixed effects.
+
+    ranef_groups <- unique(gsub(".*\\|\\s*", "", ranef_parts_replaced))
 
     ranef_part_updated <- paste(
       sprintf(
@@ -426,6 +432,13 @@ amp_acro <- function(time_col,
       collapse = "", sep = "+"
     )
     res$newformula <- stats::as.formula(main_part)
+    res$ranef_groups <- ranef_groups
+    #
+
+    #res$mixedef <- append(res$mixdef, )
+    #
+  } else {
+    res$ranef_groups <- NA
   }
   res
 }

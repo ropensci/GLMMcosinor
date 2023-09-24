@@ -91,6 +91,12 @@ update_formula_and_data <- function(data,
     e$.quietly <- quietly
     e$.amp_acro_ind <- amp_acro_ind
     e$.data_prefix <- data_prefix
+
+    #
+    ranef_part <- lapply(lme4::findbars(formula), deparse1)
+    ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
+    #
+    #e$subject <- ranef_part_group
     updated_df_and_formula <- eval(e) # evaluate amp_acro call
     c(updated_df_and_formula, list(
       Terms = Terms, family = family,

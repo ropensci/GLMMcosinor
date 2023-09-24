@@ -190,4 +190,53 @@ test_that("autoplot produces error messages", {
     regex = "'predict.ribbon' must be a logical argument, either TRUE or FALSE",
     fixed = TRUE
   )
+
+  library(dplyr)
+  f_sample_id <- function(id_num,
+                          n = 30,
+                          mesor,
+                          amp,
+                          acro,
+                          family = "gaussian",
+                          sd = 0.2,
+                          period,
+                          n_components,
+                          beta.group = TRUE) {
+    data <- simulate_cosinor(
+      n = n,
+      mesor = mesor,
+      amp = amp,
+      acro = acro,
+      family = family,
+      sd = sd,
+      period = period,
+      n_components = n_components
+    )
+    data$subject <- id_num
+    data
+  }
+
+  dat_mixed <- do.call(
+    "rbind",
+    lapply(1:30, function(x) {
+      f_sample_id(
+        id_num = x,
+        mesor = rnorm(1, mean = 0, sd = 1),
+        amp = rnorm(1, mean = 3, sd = 0.5),
+        acro = rnorm(1, mean = 1.5, sd = 0.2),
+        period = 24,
+        n_components = 1
+      )
+    })
+  ) |>
+    mutate(subject = as.factor(subject))
+  mixed_mod <- cosinor.glmm(
+    Y ~ amp_acro(times,
+                 n_components = 1,
+                 period = 24
+    ) + (1 + amp_acro1 | subject),
+    data = dat_mixed
+  )
+
+  expect_no_error(autoplot(mixed_mod))
 })

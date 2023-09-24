@@ -25,13 +25,13 @@
 #' @export
 #'
 
+
 predict.cosinor.glmm <- function(object, newdata, ...) {
   if (missing(newdata)) {
     return(stats::predict(object$fit, ...))
   }
 
   # all(names(newdata) %in% names(object$fit$frame))
-
 
   # pass new dataset that's being used for prediction in this function
   nd <- update_formula_and_data(
