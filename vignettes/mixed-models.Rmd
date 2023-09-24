@@ -100,7 +100,7 @@ This works by replacing the amp_acro1 with the relevant cosinor components when 
 mixed_mod$formula
 ```
 
-The mixed model can also be plotted using `autoplot`, but some of the plotting features that are available for fixed-effects models may not be available for mixed-effect model.
+The mixed model can also be plotted using `autoplot`, but some of the plotting features that are available for fixed-effects models may not be available for mixed-effect models.
 
 ```{r}
 autoplot(mixed_mod)
