@@ -189,7 +189,7 @@ fits this model</p>
 <span>  data <span class="op">=</span> <span class="va">dat_mixed</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in checkMatrixPackageVersion(): Package version inconsistency detected.</span></span>
-<span><span class="co">#&gt; TMB was built with Matrix version 1.6.1</span></span>
+<span><span class="co">#&gt; TMB was built with Matrix version 1.6.1.1</span></span>
 <span><span class="co">#&gt; Current Matrix version is 1.5.4.1</span></span>
 <span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span></code></pre></div>
 <p>This works by replacing the amp_acro1 with the relevant cosinor
@@ -201,52 +201,58 @@ appear in the fixed effects).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; Y ~ main_rrr1 + main_sss1 + (1 + main_rrr1 + main_sss1 | subject)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x555c0eddbe00&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x561ea8a4f2c0&gt;</span></span></code></pre></div>
+<p>The mixed model can also be plotted using <code>autoplot</code>, but
+some of the plotting features that are available for fixed-effects
+models may not be available for mixed-effect model.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mixed-models_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>The summary of the model shows that the input means for MESOR,
 amplitude and acrophase are similar to what we specified in the
 simulation (0, 3, and 1.5, respectively).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
-<span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI  p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)  0.21025232     0.19752786 -0.17689518  0.59740 0.287139    </span></span>
-<span><span class="co">#&gt; main_rrr1    0.32136732     0.13553927  0.05571522  0.58702 0.017739 *  </span></span>
-<span><span class="co">#&gt; main_sss1    2.98808284     0.10291504  2.78637308  3.18979  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
+<span><span class="co">#&gt; (Intercept) -0.13101834     0.20680905 -0.53635663  0.27432 0.52639    </span></span>
+<span><span class="co">#&gt; main_rrr1    0.07191361     0.10282908 -0.12962769  0.27345 0.48433    </span></span>
+<span><span class="co">#&gt; main_sss1    2.90929884     0.11456713  2.68475138  3.13385 &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)  0.21025232     0.19752786 -0.17689518  0.59740 0.28714    </span></span>
-<span><span class="co">#&gt; amp1         3.00531463     0.09971847  2.80987002  3.20076 &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; acr1         1.46365848     0.04407475  1.37727355  1.55004 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept) -0.13101834     0.20680905 -0.53635663  0.27432 0.52639    </span></span>
+<span><span class="co">#&gt; amp1         2.91018750     0.11464180  2.68549371  3.13488 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; acr1         1.54608282     0.03536796  1.47676289  1.61540 &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>We can see that the predicted values from the model closely resemble
 the patterns we see in the input data.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">dat_mixed</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">times</span>, y <span class="op">=</span> <span class="va">Y</span>, col <span class="op">=</span> <span class="va">subject</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">times</span>, y <span class="op">=</span> <span class="va">pred</span>, col <span class="op">=</span> <span class="va">subject</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixed-models_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="mixed-models_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>This looks like a good model fit for these data. We can highlight the
 importance of using a mixed model in this situation rather than a fixed
 effects only model by creating that (bad) model and comparing the two by
 using the Akaike information criterion using <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fixed_effects_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>, n_components <span class="op">=</span> <span class="fl">1</span>, period <span class="op">=</span> <span class="fl">24</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">dat_mixed</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fixed_effects_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2980.55</span></span>
+<span><span class="co">#&gt; [1] 3014.409</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 224.5539</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 252.9265</span></span></code></pre></div>
 <p>Aside from not being able to be useful to see the differences between
 subjects from the model, we end up with much worse model fit and likely
 biased and/or imprecise estimates of our fixed effects that we are
