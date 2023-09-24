@@ -327,6 +327,47 @@ if(any(!is.na(object$ranef_groups))) {
   selected_group <- object$ranef_groups
 }
 
+  ##
+  if (superimpose.data) {
+    original_data <- object$newdata
+    original_data_processed <- object$newdata
+    original_data_processed$levels <- ""
+    i = 1 #used as a counter for formatting purposes
+    for (d in x_str) {
+      original_data_processed$levels <- paste0(
+        original_data_processed$levels,
+
+        d,
+        "=",
+        original_data_processed[, d]
+      )
+      # if there are multiple group levels, separate them by "|"
+      if (i < length(x_str)) {
+        original_data_processed$levels <- paste0(
+          original_data_processed$levels, " | ")
+      }
+      i = i + 1
+
+
+    }
+
+
+     # original_data_processed[[selected_group]] <- paste0(
+     #   original_data_processed[[selected_group]],
+#
+     #   selected_group,
+     #   "=",
+     #   original_data_processed[, selected_group]
+     # )
+     # # if there are multiple group levels, separate them by "|"
+     # if (i < length(x_str)) {
+     #   original_data_processed$levels <- paste0(
+     #     original_data_processed$levels, " | ")
+     # }
+     # i = i + 1
+
+
+  }
 
   ##plotting
 
@@ -340,6 +381,20 @@ if(any(!is.na(object$ranef_groups))) {
         col = !!rlang::sym(selected_group)
       )
     )
+  if(superimpose.data){
+    plot_object <- plot_object + ggplot2::geom_line() +
+      ggplot2::geom_point(
+        data = original_data_processed,
+        ggplot2::aes(
+          x = !!rlang::sym(paste(object$time_name)),
+          y = !!rlang::sym(y_name),
+          col = !!rlang::sym(selected_group)
+        ),
+        alpha = data_opacity
+      ) +
+      ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+  }
+
   }
 
    else {
@@ -353,9 +408,24 @@ if(any(!is.na(object$ranef_groups))) {
         linetype = !!rlang::sym(x_str)
       )
     )
+
+
+  if(superimpose.data){
+    plot_object <- plot_object + ggplot2::geom_line() +
+      ggplot2::geom_point(
+        data = original_data_processed,
+        ggplot2::aes(
+          x = !!rlang::sym(paste(object$time_name)),
+          y = !!rlang::sym(y_name),
+          col = !!rlang::sym(selected_group),
+          linetype = !!rlang::sym(x_str)
+        ),
+        alpha = data_opacity
+      ) +
+      ggplot2::facet_grid(rows = ggplot2::vars(NULL))
   }
 
-
+}
 
 
 }
