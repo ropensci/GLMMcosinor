@@ -117,7 +117,7 @@ model (maybe with random effects) or other covariates found in the data.</p></dd
 <span class="r-in"><span><span class="co"># print formula from above</span></span></span>
 <span class="r-in"><span><span class="va">data_and_formula</span><span class="op">$</span><span class="va">newformula</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X + X:main_rrr1 + X:main_sss1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56071ca1fa70&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55cf4f937170&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit model while adding random effect to cosinor model formula.</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">fit_model_and_process</span><span class="op">(</span></span></span>
@@ -136,44 +136,44 @@ model (maybe with random effects) or other covariates found in the data.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  29.68979</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1            1.90186</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.93079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.51029</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.20099</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.81846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  29.63331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1            1.92475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_rrr1  0.89190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_rrr1  6.73259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X0:main_sss1  6.17774</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  4.73623</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.68979</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        1.90186</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp    6.27046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp    8.09947</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr    1.42181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr    0.63715</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.63331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]        1.92475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:amp    6.24179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:amp    8.23163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=0]:acr    1.42741</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [X=1]:acr    0.61306</span>
 <span class="r-in"><span><span class="va">mod</span><span class="op">$</span><span class="va">fit</span> <span class="co"># printing the `glmmTMB` model within shows Std.Dev. of random effect</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula:          Y ~ X + (1 | patient) + X:main_rrr1 + X:main_sss1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data: newdata</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       AIC       BIC    logLik  df.resid </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1248.0316 1274.4181 -616.0158       192 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1246.9872 1273.3738 -615.4936       192 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-effects (co)variances:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conditional model:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Std.Dev. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  patient  (Intercept) 0.0002859</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             5.2653124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Std.Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  patient  (Intercept) 0.8124  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             5.2073  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of obs: 200 / Conditional model: patient, 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion estimate for gaussian family (sigma^2): 27.7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion estimate for gaussian family (sigma^2): 27.1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conditional model:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  (Intercept)            X1  X0:main_rrr1  X1:main_rrr1  X0:main_sss1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      29.6898        1.9019        0.9308        6.5103        6.2010  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      29.6333        1.9247        0.8919        6.7326        6.1777  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1:main_sss1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       4.8185  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       4.7362  </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
