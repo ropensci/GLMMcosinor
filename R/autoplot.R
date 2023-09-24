@@ -418,7 +418,7 @@ if(any(!is.na(object$ranef_groups))) {
           x = !!rlang::sym(paste(object$time_name)),
           y = !!rlang::sym(y_name),
           col = !!rlang::sym(selected_group),
-          linetype = !!rlang::sym(x_str)
+          shape = !!rlang::sym(x_str)
         ),
         alpha = data_opacity
       ) +
