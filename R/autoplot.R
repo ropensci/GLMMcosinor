@@ -290,7 +290,7 @@ if(any(!is.na(object$ranef_groups))) {
   if(length(unique(object$ranef_groups))>1) {
   selected_group <- utils::select.list(
     object$ranef_groups,
-    title = "Select a random varialbe to plot:",
+    title = "Select a random variable to plot:",
     multiple = FALSE
   )
 

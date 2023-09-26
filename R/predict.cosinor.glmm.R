@@ -32,7 +32,12 @@ predict.cosinor.glmm <- function(object, newdata, ...) {
   }
 
   # all(names(newdata) %in% names(object$fit$frame))
+  #TODO: modify dataset to include NA in random effects columns for which you
+  # want a population estimate instead of a random effect. Population effect by
+  # default, and the user should specify which variables they want as random
+  # effects. This should be done in the autoplot script
 
+  browser()
   # pass new dataset that's being used for prediction in this function
   nd <- update_formula_and_data(
     data = newdata,
