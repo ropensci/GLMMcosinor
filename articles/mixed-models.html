@@ -201,12 +201,16 @@ appear in the fixed effects).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; Y ~ main_rrr1 + main_sss1 + (1 + main_rrr1 + main_sss1 | subject)</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5617b1c02dc8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x558e53b32750&gt;</span></span></code></pre></div>
 <p>The mixed model can also be plotted using <code>autoplot</code>, but
 some of the plotting features that are available for fixed-effects
 models may not be available for mixed-effect models.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mixed_mod</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mixed_mod</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
+<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
+<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
+<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
 <p><img src="mixed-models_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>The summary of the model shows that the input means for MESOR,
 amplitude and acrophase are similar to what we specified in the
@@ -217,17 +221,17 @@ simulation (0, 3, and 1.5, respectively).</p>
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
-<span><span class="co">#&gt; (Intercept) -0.08447782     0.16870243 -0.41512851  0.24617 0.61655    </span></span>
-<span><span class="co">#&gt; main_rrr1    0.02994442     0.12895566 -0.22280403  0.28269 0.81638    </span></span>
-<span><span class="co">#&gt; main_sss1    3.02156132     0.09433542  2.83666729  3.20646 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept) -0.12377012     0.17106018 -0.45904192  0.21150 0.46934    </span></span>
+<span><span class="co">#&gt; main_rrr1    0.10710440     0.13488946 -0.15727409  0.37148 0.42719    </span></span>
+<span><span class="co">#&gt; main_sss1    2.96981334     0.08891014  2.79555266  3.14407 &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                estimate standard.error    lower.CI upper.CI p.value    </span></span>
-<span><span class="co">#&gt; (Intercept) -0.08447782     0.16870243 -0.41512851  0.24617 0.61655    </span></span>
-<span><span class="co">#&gt; amp1         3.02170970     0.09416819  2.83714344  3.20628 &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; acr1         1.56088640     0.04263397  1.47732536  1.64445 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept) -0.12377012     0.17106018 -0.45904192  0.21150 0.46934    </span></span>
+<span><span class="co">#&gt; amp1         2.97174404     0.08822344  2.79882928  3.14466 &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; acr1         1.53474760     0.04520523  1.44614698  1.62335 &lt; 2e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>We can see that the predicted values from the model closely resemble
@@ -250,9 +254,9 @@ using the Akaike information criterion using <code><a href="https://rdrr.io/r/st
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fixed_effects_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2739.875</span></span>
+<span><span class="co">#&gt; [1] 2824.917</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">mixed_mod</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 173.3477</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 240.2015</span></span></code></pre></div>
 <p>Aside from not being able to be useful to see the differences between
 subjects from the model, we end up with much worse model fit and likely
 biased and/or imprecise estimates of our fixed effects that we are
