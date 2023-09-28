@@ -165,11 +165,7 @@ Jayasinghe and Rex Parsons</h4>
 <span>  x_str <span class="op">=</span> <span class="st">"X"</span>,</span>
 <span>  predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  data_opacity <span class="op">=</span> <span class="fl">0.2</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
-<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
-<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
-<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="GLMMcosinor_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -195,140 +191,140 @@ full list - see <code><a href="https://rdrr.io/r/stats/family.html" class="exter
 <p>The table below shows what features are available within GLMMcosinor
 and other methods.</p>
 <div class="tabwid">
-<style>.cl-b854856c{}.cl-b84b8606{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b84b8610{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b84b861a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 255, 0, 1.00);background-color:transparent;}.cl-b84b861b{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-b84f7130{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b84f89cc{width:0.75in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b84f89d6{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b84f89d7{width:0.75in;background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-b854856c">
+<style>.cl-28d3b0de{}.cl-28c69c32{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-28c69c46{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-28c69c50{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 255, 0, 1.00);background-color:transparent;}.cl-28c69c5a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-28cc4baa{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-28cc6b58{width:0.75in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-28cc6b6c{width:0.75in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-28cc6b6d{width:0.75in;background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-28d3b0de">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Software</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Language</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Multicomponent</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Dispersion model</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Zero-inflated model</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Differential rhythmicity</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Parameter estimates for differences</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Family (available link functions)</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Estimated parameters</span></p></th>
-<th class="cl-b84f89cc"><p class="cl-b84f7130"><span class="cl-b84b8606">Reference</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Software</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Language</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Multicomponent</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Dispersion model</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Zero-inflated model</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Differential rhythmicity</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Parameter estimates for differences</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Family (available link functions)</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Estimated parameters</span></p></th>
+<th class="cl-28cc6b58"><p class="cl-28cc4baa"><span class="cl-28c69c32">Reference</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">GLMMcosinor</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">&gt;</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">15</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Any</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">family</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">avilable</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">in</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">{glmmTMB}:</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">gamma,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">binomial,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Poisson,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">…</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Parsons,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2023</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">GLMMcosinor</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">&gt;</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">15</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Any</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">family</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">avilable</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">in</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">{glmmTMB}:</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">gamma,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">binomial,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Poisson,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">…</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Parsons,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2023</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">CircaCompare</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">and</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">exponential</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">decay</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">of</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">any</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">of</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">these</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">characteristics</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">or</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">the</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">differences</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">in</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">them</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">between</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">groups</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Parsons,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2020</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">CircaCompare</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">and</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">exponential</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">decay</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">of</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">any</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">of</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">these</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">characteristics</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">or</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">the</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">differences</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">in</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">them</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">between</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">groups</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Parsons,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2020</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Cosinor</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Sachs,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2014</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Cosinor</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Sachs,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2014</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Cosinor2</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Mutak,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2018</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Cosinor2</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Mutak,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2018</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">CosinorPy</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Python</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">3</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Poisson,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">negative-binomial</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Moskon,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2020</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">CosinorPy</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Python</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">3</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Poisson,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">negative-binomial</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Moskon,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2020</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">DiscoRhythm</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Carlucci,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2019</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">DiscoRhythm</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Carlucci,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2019</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">FMM</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">FMM</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">phase</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">angle</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">parameters:</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">alpha,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">beta,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">gamma</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Fernández,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2022</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">FMM</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">FMM</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">phase</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">angle</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">parameters:</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">alpha,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">beta,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">gamma</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Fernández,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2022</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Kronos</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Bastiaanssen,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2023</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Kronos</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Bastiaanssen,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2023</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">LimoRhyde</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">R</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">1</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Gaussian</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">period</span></p></td>
-<td class="cl-b84f89d6"><p class="cl-b84f7130"><span class="cl-b84b8610">Singer,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2019</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">LimoRhyde</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">R</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">1</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Gaussian</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">period</span></p></td>
+<td class="cl-28cc6b6c"><p class="cl-28cc4baa"><span class="cl-28c69c46">Singer,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2019</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">RhythmCount</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Python</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861b">✗</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b861a">✓</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">n</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">=</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">6</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Poisson,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">generalised-Poisson,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">zero-inflated</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Poisson,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">negative</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">binomial,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">zero-inflated</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">negative-binomial</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Amplitude,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">acrophase,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">MESOR,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">Zenith</span></p></td>
-<td class="cl-b84f89d7"><p class="cl-b84f7130"><span class="cl-b84b8610">Velikajne,</span><span class="cl-b84b8610"> </span><span class="cl-b84b8610">2022</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">RhythmCount</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Python</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c5a">✗</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c50">✓</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">n</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">=</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">6</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Poisson,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">generalised-Poisson,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">zero-inflated</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Poisson,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">negative</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">binomial,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">zero-inflated</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">negative-binomial</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Amplitude,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">acrophase,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">MESOR,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">Zenith</span></p></td>
+<td class="cl-28cc6b6d"><p class="cl-28cc4baa"><span class="cl-28c69c46">Velikajne,</span><span class="cl-28c69c46"> </span><span class="cl-28c69c46">2022</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -620,11 +616,7 @@ function, looking at the <code>[X=0]</code> level (red line)</p>
 <span>  <span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">vitamind</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
-<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
-<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
-<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GLMMcosinor_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 </div>
@@ -669,12 +661,12 @@ role of the <code><a href="../reference/test_cosinor_components.html">test_cosin
 <span><span class="co">#&gt;  Conditional Model </span></span>
 <span><span class="co">#&gt; Raw model coefficients:</span></span>
 <span><span class="co">#&gt;                      estimate standard.error     lower.CI upper.CI    p.value</span></span>
-<span><span class="co">#&gt; (Intercept)       4.998454143    0.003463730  4.991665357  5.00524 &lt; 2.22e-16</span></span>
+<span><span class="co">#&gt; (Intercept)       4.998454142    0.003463730  4.991665356  5.00524 &lt; 2.22e-16</span></span>
 <span><span class="co">#&gt; group1           -1.002150001    0.005937109 -1.013786521 -0.99051 &lt; 2.22e-16</span></span>
 <span><span class="co">#&gt; group0:main_rrr1  1.082281784    0.003347565  1.075720677  1.08884 &lt; 2.22e-16</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  0.876651962    0.006198710  0.864502713  0.88880 &lt; 2.22e-16</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  0.876651963    0.006198710  0.864502714  0.88880 &lt; 2.22e-16</span></span>
 <span><span class="co">#&gt; group0:main_sss1  1.682350718    0.003919418  1.674668800  1.69003 &lt; 2.22e-16</span></span>
-<span><span class="co">#&gt; group1:main_sss1  0.481951764    0.005936670  0.470316105  0.49359 &lt; 2.22e-16</span></span>
+<span><span class="co">#&gt; group1:main_sss1  0.481951763    0.005936670  0.470316104  0.49359 &lt; 2.22e-16</span></span>
 <span><span class="co">#&gt;                     </span></span>
 <span><span class="co">#&gt; (Intercept)      ***</span></span>
 <span><span class="co">#&gt; group1           ***</span></span>
@@ -687,12 +679,12 @@ role of the <code><a href="../reference/test_cosinor_components.html">test_cosin
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Transformed coefficients:</span></span>
 <span><span class="co">#&gt;                    estimate standard.error     lower.CI upper.CI    p.value    </span></span>
-<span><span class="co">#&gt; (Intercept)     4.998454143    0.003463730  4.991665357  5.00524 &lt; 2.22e-16 ***</span></span>
+<span><span class="co">#&gt; (Intercept)     4.998454142    0.003463730  4.991665356  5.00524 &lt; 2.22e-16 ***</span></span>
 <span><span class="co">#&gt; [group=1]      -1.002150001    0.005937109 -1.013786521 -0.99051 &lt; 2.22e-16 ***</span></span>
 <span><span class="co">#&gt; [group=0]:amp1  2.000409408    0.004275553  1.992029478  2.00879 &lt; 2.22e-16 ***</span></span>
 <span><span class="co">#&gt; [group=1]:amp1  1.000398004    0.007530397  0.985638697  1.01516 &lt; 2.22e-16 ***</span></span>
 <span><span class="co">#&gt; [group=0]:acr1  0.999134804    0.002034131  0.995147980  1.00312 &lt; 2.22e-16 ***</span></span>
-<span><span class="co">#&gt; [group=1]:acr1  0.502662068    0.007562019  0.487840783  0.51748 &lt; 2.22e-16 ***</span></span>
+<span><span class="co">#&gt; [group=1]:acr1  0.502662067    0.007562019  0.487840782  0.51748 &lt; 2.22e-16 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>If we wanted to test the difference between the amplitude estimate
@@ -881,11 +873,7 @@ fitted model for all groups:</p>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
-<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
-<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
-<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GLMMcosinor_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>This function also allows users to superimpose the data (that was
 used to fit the model) over the fitted model, using the

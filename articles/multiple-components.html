@@ -188,7 +188,7 @@ matched to each component.</p>
 <span><span class="co">#&gt; (Intercept)       6.99894</span></span>
 <span><span class="co">#&gt; group1           -2.60342</span></span>
 <span><span class="co">#&gt; group0:main_rrr1  0.05248</span></span>
-<span><span class="co">#&gt; group1:main_rrr1  1.08250</span></span>
+<span><span class="co">#&gt; group1:main_rrr1  1.08251</span></span>
 <span><span class="co">#&gt; group0:main_sss1  0.08753</span></span>
 <span><span class="co">#&gt; group1:main_sss1  1.68129</span></span>
 <span><span class="co">#&gt; group0:main_rrr2  0.02926</span></span>
@@ -222,11 +222,7 @@ amplitude of <code>group 1</code> for the second component</p></li>
 <li><p><em>Similarly for acrophase estimates</em></p></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
-<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
-<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
-<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-components_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>If a multicomponent model has one component that is grouped with
 other components that aren’t, the vector input for <code>group</code>
@@ -301,11 +297,7 @@ and <code>group 1</code></p></li>
 <code>group 0</code> and <code>group 1</code></p></li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
-<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
-<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
-<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, superimpose.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-components_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>In this example, it is not strictly necessary to specify
 <code>group = c("group", NA))</code> since specifying
@@ -470,11 +462,7 @@ overlayed:</p>
 <span>  x_str <span class="op">=</span> <span class="st">"group"</span>,</span>
 <span>  predict.ribbon <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  data_opacity <span class="op">=</span> <span class="fl">0.08</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Called from: predict.cosinor.glmm(object, newdata = newdata_processed, type = type, </span></span>
-<span><span class="co">#&gt;     se.fit = TRUE)</span></span>
-<span><span class="co">#&gt; debug: nd &lt;- update_formula_and_data(data = newdata, formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula))$newdata</span></span>
-<span><span class="co">#&gt; debug: return(stats::predict(object$fit, newdata = nd, ...))</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-components_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level2">
