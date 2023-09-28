@@ -33,6 +33,9 @@ ggplot2::autoplot
 #' is plotted.
 #' @param points_per_min_cycle_length Used to determine the number of samples
 #' to create plot if \code{pred.length.out} is missing.
+#' @param ranef_plot Specify the random effects variables that you wish to plot
+#'  if unspecified, a population estimate for the random effect will be used to
+#'  generate the plot
 #' \code{points_per_min_cycle_length} is the number of points plotted per the
 #' minimum cycle length (period) of all cosinor components in the model.
 #' @param ... Additional, ignored arguments.
@@ -180,9 +183,14 @@ autoplot.cosinor.glmm <- function(object,
     )$newdata
     # only keep the newdata that's returned from update_formula_and_data()
 
+    if(!is.null(ranef_plot)) {
+      for (d in x_str) {
+        newdata <- newdata[,-which(names(newdata) == d)]
+      }
+    }
     # repeat dataset for every level in x_str (factor), with an additional
     # column in each corresponding to factor name and level
-    if (!is.null(x_str)) {
+    if (!is.null(x_str) && is.null(ranef_plot)) {
       for (d in x_str) {
         for (k in unlist(x$group_stats[[d]])[-1]) {
           tdat <- newdata
@@ -232,7 +240,13 @@ autoplot.cosinor.glmm <- function(object,
          appendvec[[i]] <- j
          for (k in new_ranef_groups) {
            appendvec[[k]] <- unique(
-             object$newdata[object$newdata$subject == 1, k])
+             object$newdata[object$newdata[[i]] == j, k])
+         }
+         if(!is.null(x_str)) {
+           for (d in x_str) {
+           appendvec[[d]] <- unique(
+             object$newdata[object$newdata[[i]] == j, d])
+           }
          }
 
          replicated_dfs[[j]] <- appendvec
@@ -422,7 +436,7 @@ if(!is.null(ranef_plot)) {
         ggplot2::aes(
           x = !!rlang::sym(paste(object$time_name)),
           y = !!rlang::sym(y_name),
-          col = !!rlang::sym(ranef_plot),
+          col = !!rlang::sym(max_unique_col),
           shape = !!rlang::sym(x_str)
         ),
         alpha = data_opacity
