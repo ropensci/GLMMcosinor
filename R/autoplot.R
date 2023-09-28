@@ -61,6 +61,7 @@ autoplot.cosinor.glmm <- function(object,
                                   superimpose.data = FALSE,
                                   data_opacity = 0.3,
                                   predict.ribbon = TRUE,
+                                  ranef_plot = NULL,
                                   ...) {
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cosinor.glmm"),
@@ -137,14 +138,14 @@ autoplot.cosinor.glmm <- function(object,
   #be 400*30*30 = 360000 rows. Instead, this code restricts the number of data
   #points to 10000. In future versions, this could be set to a variable that
   #the user can input
-  ranef_scale <- 1
-  for (i in object$ranef_groups) {
-  ranef_scale <- ranef_scale*length(levels(object$newdata[[i]]))
-  }
-
-  if(ranef_scale*pred.length.out >= 10000) {
-    pred.length.out <- 10000 %/% (ranef_scale)
-  }
+  #ranef_scale <- 1
+  #for (i in object$ranef_groups) {
+  #ranef_scale <- ranef_scale*length(levels(object$newdata[[i]]))
+  #}
+#
+  #if(ranef_scale*pred.length.out >= 10000) {
+  #  pred.length.out <- 10000 %/% (ranef_scale)
+  #}
 
   # generate the time values for the x-axis
   if (!missing(xlims)) {
@@ -206,56 +207,60 @@ autoplot.cosinor.glmm <- function(object,
       }
     }
 
-    ##
-    #ranef_part <- lapply(lme4::findbars(object$formula), deparse1)
-    #ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
-    ##
-   # ## Here, 'x_str' is taken to be the string corresponding to the subjects
-   # if (!is.null(ranef_part)) {
-   #   if(is.null(x_str)) {
-   #     x_str <- ranef_part_group[1]
-   #   }
-    #
-   #   ###
-   #   mixed_plot <- TRUE
-   #   mixed_effects_vec <- NULL
-   #   replicated_dfs <- NULL
 
+    #adding the random effect variables in the dataframe
     if(any(!is.na(object$ranef_groups))) {
    replicated_dfs_total <- NULL
     data_ranef <- newdata
+
+    unique_counts <- sapply(object$newdata[ranef_plot],
+                            function(col) length(unique(col)))
+
+    # Identify the column with the maximum number of unique values
+    max_unique_col <- names(unique_counts)[which.max(unique_counts)]
+    # Create a new vector excluding the max_unique_col
+    new_ranef_groups <- ranef_plot[ranef_plot != max_unique_col]
+
    for (i in x$ranef_groups) {
      replicated_dfs <- NULL
      subjects <- as.factor(levels(x$newdata[[i]]))
-     for (j in subjects){
+
+     #
+     if (!is.null(ranef_plot) && i %in% ranef_plot && i == max_unique_col) {
+       for (j in subjects){
+         appendvec <- data_ranef
+         appendvec[[i]] <- j
+         for (k in new_ranef_groups) {
+           appendvec[[k]] <- unique(
+             object$newdata[object$newdata$subject == 1, k])
+         }
+
+         replicated_dfs[[j]] <- appendvec
+       }
+     } else {
        appendvec <- data_ranef
-       appendvec[[i]] <- j
-       replicated_dfs[[j]] <- appendvec
+       appendvec[[i]] <- rep(NA, length(ncol(appendvec)))
+       replicated_dfs[[i]] <- appendvec
      }
+
+
+
      replicated_dfs_total <- do.call(rbind,replicated_dfs)
      data_ranef <- replicated_dfs_total
-
    }
    #combined_df <- do.call(rbind, replicated_dfs_total)
    newdata <- data_ranef
     }
-   #   subjects <- as.factor(levels(object$newdata[[x_str]]))
-   #   for (m in subjects) {
-  #
-   #     appendvec <- newdata
-   #     appendvec$x_str <- m
-   #     replicated_dfs[[m]] <- appendvec
-   #   }
-   #   combined_df <- do.call(rbind, replicated_dfs)
-   #   ###
-   #   newdata <- combined_df
-   # }
-    ##
-
     newdata
   }
 
   # format the newdata dataframe before passing to data_processor_plot()
+  unique_counts <- sapply(object$newdata[ranef_plot],
+                          function(col) length(unique(col)))
+
+  # Identify the column with the maximum number of unique values
+  max_unique_col <- names(unique_counts)[which.max(unique_counts)]
+
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
   newdata_processed <- data_processor_plot(object, newdata, x_str)
@@ -282,50 +287,50 @@ autoplot.cosinor.glmm <- function(object,
   # get the original data from the cosinor.glmm object to be superimposed
 
 
-
 ##
+
 
 if(any(!is.na(object$ranef_groups))) {
   # Prompt the user to choose from ranef_groups
-  if(length(unique(object$ranef_groups))>1) {
-  selected_group <- utils::select.list(
-    object$ranef_groups,
-    title = "Select a random variable to plot:",
-    multiple = FALSE
-  )
-
-  # Check if the selected_group is valid
-  if (selected_group %in% object$ranef_groups) {
-    cat("You selected:", selected_group, "\n")
-
-    # Determine the other groups
-    other_groups <- setdiff(object$ranef_groups, selected_group)
-
-    # Create an empty list to store user-defined values for other groups
-    other_values <- list()
-
-    # Prompt the user to input numbers for other groups
-    for (group in other_groups) {
-      fixed_number <- as.numeric(readline(paste("Enter the desired subject number from", group, ": ")))
-      # Check if fixed_number is a valid number within unique elements of ranef_groups
-      if (!is.na(fixed_number) && fixed_number %in% levels(object$newdata[[group]])) {
-        cat("You entered:", fixed_number, "for", group, "\n")
-        other_values[[group]] <- fixed_number
-      } else {
-        cat("Invalid input. Please enter a valid number within unique elements of ranef_groups.\n")
-      }
-      newdata_processed <-
-        newdata_processed[newdata_processed[[group]] == fixed_number,]
-
-    }
-
-    # Your plotting code for the selected group and other_values goes here
-  } else {
-    cat("Invalid selection. Please choose a valid group.\n")
-  }
-  } else {
-  selected_group <- object$ranef_groups
-}
+#   if(length(unique(object$ranef_groups))>1) {
+#   selected_group <- utils::select.list(
+#     object$ranef_groups,
+#     title = "Select a random variable to plot:",
+#     multiple = FALSE
+#   )
+#
+#   # Check if the selected_group is valid
+#   if (selected_group %in% object$ranef_groups) {
+#     cat("You selected:", selected_group, "\n")
+#
+#     # Determine the other groups
+#     other_groups <- setdiff(object$ranef_groups, selected_group)
+#
+#     # Create an empty list to store user-defined values for other groups
+#     other_values <- list()
+#
+#     # Prompt the user to input numbers for other groups
+#     for (group in other_groups) {
+#       fixed_number <- as.numeric(readline(paste("Enter the desired subject number from", group, ": ")))
+#       # Check if fixed_number is a valid number within unique elements of ranef_groups
+#       if (!is.na(fixed_number) && fixed_number %in% levels(object$newdata[[group]])) {
+#         cat("You entered:", fixed_number, "for", group, "\n")
+#         other_values[[group]] <- fixed_number
+#       } else {
+#         cat("Invalid input. Please enter a valid number within unique elements of ranef_groups.\n")
+#       }
+#       newdata_processed <-
+#         newdata_processed[newdata_processed[[group]] == fixed_number,]
+#
+#     }
+#
+#     # Your plotting code for the selected group and other_values goes here
+#   } else {
+#     cat("Invalid selection. Please choose a valid group.\n")
+#   }
+#   } else {
+#   selected_group <- object$ranef_groups
+# }
 
   ##
   if (superimpose.data) {
@@ -370,7 +375,7 @@ if(any(!is.na(object$ranef_groups))) {
   }
 
   ##plotting
-
+if(!is.null(ranef_plot)) {
   if (missing(x_str) || is.null(x_str)) {
   plot_object <- ggplot2::ggplot() +
     ggplot2::geom_line(
@@ -378,7 +383,7 @@ if(any(!is.na(object$ranef_groups))) {
       ggplot2::aes(
         x = !!rlang::sym(paste(object$time_name)),
         y = !!rlang::sym(y_name),
-        col = !!rlang::sym(selected_group)
+        col = !!rlang::sym(max_unique_col)
       )
     )
   if(superimpose.data){
@@ -388,7 +393,7 @@ if(any(!is.na(object$ranef_groups))) {
         ggplot2::aes(
           x = !!rlang::sym(paste(object$time_name)),
           y = !!rlang::sym(y_name),
-          col = !!rlang::sym(selected_group)
+          col = !!rlang::sym(max_unique_col)
         ),
         alpha = data_opacity
       ) +
@@ -404,7 +409,7 @@ if(any(!is.na(object$ranef_groups))) {
       ggplot2::aes(
         x = !!rlang::sym(paste(object$time_name)),
         y = !!rlang::sym(y_name),
-        col = !!rlang::sym(selected_group),
+        col = !!rlang::sym(max_unique_col),
         linetype = !!rlang::sym(x_str)
       )
     )
@@ -417,7 +422,7 @@ if(any(!is.na(object$ranef_groups))) {
         ggplot2::aes(
           x = !!rlang::sym(paste(object$time_name)),
           y = !!rlang::sym(y_name),
-          col = !!rlang::sym(selected_group),
+          col = !!rlang::sym(ranef_plot),
           shape = !!rlang::sym(x_str)
         ),
         alpha = data_opacity
@@ -426,11 +431,63 @@ if(any(!is.na(object$ranef_groups))) {
   }
 
 }
-
-
 }
-##
-else {
+  else {
+
+    if (missing(x_str) || is.null(x_str)) {
+      plot_object <- ggplot2::ggplot() +
+        ggplot2::geom_line(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(object$time_name)),
+            y = !!rlang::sym(y_name)
+          )
+        )
+      if(superimpose.data){
+        plot_object <- plot_object + ggplot2::geom_line() +
+          ggplot2::geom_point(
+            data = original_data_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name)
+            ),
+            alpha = data_opacity
+          ) +
+          ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+      }
+
+    }
+
+    else {
+      plot_object <- ggplot2::ggplot() +
+        ggplot2::geom_line(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(object$time_name)),
+            y = !!rlang::sym(y_name),
+            col = !!rlang::sym(x_str)
+          )
+        )
+
+
+      if(superimpose.data){
+        plot_object <- plot_object + ggplot2::geom_line() +
+          ggplot2::geom_point(
+            data = original_data_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name),
+              col = !!rlang::sym(x_str)
+            ),
+            alpha = data_opacity
+          ) +
+          ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+      }
+
+    }
+  }
+
+  } else {
   if (superimpose.data) {
     original_data <- object$newdata
     original_data_processed <- object$newdata

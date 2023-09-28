@@ -37,7 +37,6 @@ predict.cosinor.glmm <- function(object, newdata, ...) {
   # default, and the user should specify which variables they want as random
   # effects. This should be done in the autoplot script
 
-  browser()
   # pass new dataset that's being used for prediction in this function
   nd <- update_formula_and_data(
     data = newdata,
