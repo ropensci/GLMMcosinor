@@ -33,9 +33,8 @@ ggplot2::autoplot
 #' is plotted.
 #' @param points_per_min_cycle_length Used to determine the number of samples
 #' to create plot if \code{pred.length.out} is missing.
-#' @param ranef_plot Specify the random effects variables that you wish to plot
-#'  if unspecified, a population estimate for the random effect will be used to
-#'  generate the plot
+#' @param ranef_plot Specify the random effects variables that you wish to plot.
+#'  If not specified, only the fixed effects will be visualised.
 #' \code{points_per_min_cycle_length} is the number of points plotted per the
 #' minimum cycle length (period) of all cosinor components in the model.
 #' @param ... Additional, ignored arguments.

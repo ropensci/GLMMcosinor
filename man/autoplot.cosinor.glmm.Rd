@@ -15,6 +15,7 @@
   superimpose.data = FALSE,
   data_opacity = 0.3,
   predict.ribbon = TRUE,
+  ranef_plot = NULL,
   ...
 )
 }
@@ -40,9 +41,7 @@ will appear. If missing, uses \code{points_per_min_cycle_length} to generate
 a sensible default value.}
 
 \item{points_per_min_cycle_length}{Used to determine the number of samples
-to create plot if \code{pred.length.out} is missing.
-\code{points_per_min_cycle_length} is the number of points plotted per the
-minimum cycle length (period) of all cosinor components in the model.}
+to create plot if \code{pred.length.out} is missing.}
 
 \item{superimpose.data}{A \code{logical}. If \code{TRUE}, data from the
 original data used to fit the model (\code{object}) will be superimposed
@@ -54,6 +53,11 @@ opacity of the superimposed data. (Used as the \code{alpha} when calling
 
 \item{predict.ribbon}{A code{logical}. If \code{TRUE}, a prediction interval
 is plotted.}
+
+\item{ranef_plot}{Specify the random effects variables that you wish to plot.
+If not specified, only the fixed effects will be visualised.
+\code{points_per_min_cycle_length} is the number of points plotted per the
+minimum cycle length (period) of all cosinor components in the model.}
 
 \item{...}{Additional, ignored arguments.}
 }
