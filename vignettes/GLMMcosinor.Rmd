@@ -182,11 +182,6 @@ $$\hat\phi = \arctan(\frac{\hat\gamma}{\hat\beta}) $$
 
 $$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$
 
-These transformations are handled by the internal function
-`get_new_coefs()` inside the `data_utils.R` script. The result of these
-transformations is what is presented in the 'Transformed Coefficients'
-table as part of the `cosinor.glmm()` output.
-
 For example, consider the following model and its output:
 
 ```{r, message=F, warning=F}
