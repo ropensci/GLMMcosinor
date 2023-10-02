@@ -82,6 +82,7 @@ Optionally allows for plotting by covariates</p>
 <span>  superimpose.data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  data_opacity <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  predict.ribbon <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ranef_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -122,9 +123,7 @@ a sensible default value.</p></dd>
 
 <dt>points_per_min_cycle_length</dt>
 <dd><p>Used to determine the number of samples
-to create plot if <code>pred.length.out</code> is missing.
-<code>points_per_min_cycle_length</code> is the number of points plotted per the
-minimum cycle length (period) of all cosinor components in the model.</p></dd>
+to create plot if <code>pred.length.out</code> is missing.</p></dd>
 
 
 <dt>superimpose.data</dt>
@@ -142,6 +141,13 @@ opacity of the superimposed data. (Used as the <code>alpha</code> when calling
 <dt>predict.ribbon</dt>
 <dd><p>A codelogical. If <code>TRUE</code>, a prediction interval
 is plotted.</p></dd>
+
+
+<dt>ranef_plot</dt>
+<dd><p>Specify the random effects variables that you wish to plot.
+If not specified, only the fixed effects will be visualised.
+<code>points_per_min_cycle_length</code> is the number of points plotted per the
+minimum cycle length (period) of all cosinor components in the model.</p></dd>
 
 
 <dt>...</dt>
