@@ -67,12 +67,12 @@
 #'
 #' @export
 cglmm <- function(formula,
-                         data,
-                         family = stats::gaussian(),
-                         quietly = TRUE,
-                         dispformula = ~1,
-                         ziformula = ~0,
-                         ...) {
+                  data,
+                  family = stats::gaussian(),
+                  quietly = TRUE,
+                  dispformula = ~1,
+                  ziformula = ~0,
+                  ...) {
   updated_df_and_formula <- update_formula_and_data(
     data = data,
     formula = formula,
@@ -108,7 +108,7 @@ get_varnames <- function(Terms) {
   spec <- names(attr(Terms, "specials"))
   tname <- attr(Terms, "term.labels")
 
-  #dex <- unlist(sapply(spec, function(sp) {
+  # dex <- unlist(sapply(spec, function(sp) {
   dex <- unlist(lapply(spec, function(sp) {
     attr(Terms, "specials")[[sp]] - 1
   }))

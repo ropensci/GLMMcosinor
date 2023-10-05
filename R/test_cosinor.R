@@ -83,14 +83,18 @@ test_cosinor_components <- function(x,
 
   assertthat::assert_that(
     comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
-    msg = paste("'comparison_A' and 'comparison_B' must be numbers",
-                "corresponding to a component in the model")
+    msg = paste(
+      "'comparison_A' and 'comparison_B' must be numbers",
+      "corresponding to a component in the model"
+    )
   )
   assertthat::assert_that(
     level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
       level_index %in% x$group_stats[[x$group_original[comparison_B]]],
-    msg = paste("'level_index' must be supplied and it must be a number",
-                "corresponding to a level in the model")
+    msg = paste(
+      "'level_index' must be supplied and it must be a number",
+      "corresponding to a level in the model"
+    )
   )
 
   # passing these inputs into the internal function
@@ -209,15 +213,19 @@ test_cosinor_levels <- function(x,
 
   assertthat::assert_that(
     comparison_B %in% x$group_stats[[x_str]],
-    msg = paste("'comparison_B' must correspond to a level within the",
-                "group specified by 'x_str'")
+    msg = paste(
+      "'comparison_B' must correspond to a level within the",
+      "group specified by 'x_str'"
+    )
   )
 
 
   assertthat::assert_that(
     component_index %in% 1:x$n_components,
-    msg = paste("'component_index' must be supplied and it must be a",
-                "number corresponding to a component in the model")
+    msg = paste(
+      "'component_index' must be supplied and it must be a",
+      "number corresponding to a component in the model"
+    )
   )
 
 
@@ -444,8 +452,8 @@ test_cosinor_levels <- function(x,
 #' )
 #' mod_2_component <- cglmm(
 #'   Y ~ group + amp_acro(times,
-#'                        n_components = 2, group = "group",
-#'                        period = c(10, 12)
+#'     n_components = 2, group = "group",
+#'     period = c(10, 12)
 #'   ),
 #'   data = data_2_component
 #' )
@@ -498,7 +506,7 @@ print.cglmmTest <- function(x, ...) {
 #' test_output <- test_cosinor_levels(
 #'   mod_2_component,
 #'   param = "amp",
-#'    x_str = "group"
+#'   x_str = "group"
 #' )
 #' print(test_output$global.test)
 #' @export

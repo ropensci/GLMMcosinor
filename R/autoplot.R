@@ -54,17 +54,17 @@ ggplot2::autoplot
 #' autoplot(model, x_str = "X")
 #' @export
 autoplot.cglmm <- function(object,
-                                  ci_level = 0.95,
-                                  x_str,
-                                  type = "response",
-                                  xlims,
-                                  pred.length.out,
-                                  points_per_min_cycle_length = 20,
-                                  superimpose.data = FALSE,
-                                  data_opacity = 0.3,
-                                  predict.ribbon = TRUE,
-                                  ranef_plot = NULL,
-                                  ...) {
+                           ci_level = 0.95,
+                           x_str,
+                           type = "response",
+                           xlims,
+                           pred.length.out,
+                           points_per_min_cycle_length = 20,
+                           superimpose.data = FALSE,
+                           data_opacity = 0.3,
+                           predict.ribbon = TRUE,
+                           ranef_plot = NULL,
+                           ...) {
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cglmm"),
     msg = "'object' must be of class 'cglmm'"
@@ -76,21 +76,27 @@ autoplot.cglmm <- function(object,
   if (!missing(x_str)) {
     for (i in x_str) {
       assertthat::assert_that(i %in% names(object$group_stats),
-        msg = paste("'x_str' must be string corresponding to a group name",
-                    "in cglmm object")
+        msg = paste(
+          "'x_str' must be string corresponding to a group name",
+          "in cglmm object"
+        )
       )
     }
   }
   assertthat::assert_that(is.character(type),
-    msg = paste("'type' must be a string. See type in ?predict for more",
-                "information about valid inputs")
+    msg = paste(
+      "'type' must be a string. See type in ?predict for more",
+      "information about valid inputs"
+    )
   )
   if (!missing(xlims)) {
     assertthat::assert_that(
       length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
-      msg = paste("'xlims' must be a vector with the first element being the",
-                  "lower x coordinate, and the second being the upper",
-                  "x coordinate")
+      msg = paste(
+        "'xlims' must be a vector with the first element being the",
+        "lower x coordinate, and the second being the upper",
+        "x coordinate"
+      )
     )
   }
   if (!missing(pred.length.out)) {
@@ -133,21 +139,21 @@ autoplot.cglmm <- function(object,
   }
 
 
-  #if there are multiple random effects groups, the time vector must be scaled
-  #appropriately. Otherwise, the number of simulated datapoints may be
-  #extremely large. For example, if pred.length.out = 400, and there are two
-  #random effects groups with 30 subjects each, then the final dataframe will
-  #be 400*30*30 = 360000 rows. Instead, this code restricts the number of data
-  #points to 10000. In future versions, this could be set to a variable that
-  #the user can input
-  #ranef_scale <- 1
-  #for (i in object$ranef_groups) {
-  #ranef_scale <- ranef_scale*length(levels(object$newdata[[i]]))
-  #}
-#
-  #if(ranef_scale*pred.length.out >= 10000) {
+  # if there are multiple random effects groups, the time vector must be scaled
+  # appropriately. Otherwise, the number of simulated datapoints may be
+  # extremely large. For example, if pred.length.out = 400, and there are two
+  # random effects groups with 30 subjects each, then the final dataframe will
+  # be 400*30*30 = 360000 rows. Instead, this code restricts the number of data
+  # points to 10000. In future versions, this could be set to a variable that
+  # the user can input
+  # ranef_scale <- 1
+  # for (i in object$ranef_groups) {
+  # ranef_scale <- ranef_scale*length(levels(object$newdata[[i]]))
+  # }
+  #
+  # if(ranef_scale*pred.length.out >= 10000) {
   #  pred.length.out <- 10000 %/% (ranef_scale)
-  #}
+  # }
 
   # generate the time values for the x-axis
   if (!missing(xlims)) {
@@ -182,9 +188,9 @@ autoplot.cglmm <- function(object,
     )$newdata
     # only keep the newdata that's returned from update_formula_and_data()
 
-    if(!is.null(ranef_plot)) {
+    if (!is.null(ranef_plot)) {
       for (d in x_str) {
-        newdata <- newdata[,-which(names(newdata) == d)]
+        newdata <- newdata[, -which(names(newdata) == d)]
       }
     }
     # repeat dataset for every level in x_str (factor), with an additional
@@ -199,77 +205,82 @@ autoplot.cglmm <- function(object,
       }
 
       newdata$levels <- ""
-      i = 1 #used as a counter for formatting purposes
+      i <- 1 # used as a counter for formatting purposes
       for (d in x_str) {
         newdata$levels <- paste0(
           newdata$levels,
-           d, "=", newdata[, d]
-
+          d, "=", newdata[, d]
         )
         # if there are multiple group levels, separate them by "|"
         if (i < length(x_str)) {
           newdata$levels <- paste0(newdata$levels, " | ")
         }
-        i = i + 1
+        i <- i + 1
       }
     }
 
 
-    #adding the random effect variables in the dataframe
-    if(any(!is.na(object$ranef_groups))) {
-   replicated_dfs_total <- NULL
-    data_ranef <- newdata
+    # adding the random effect variables in the dataframe
+    if (any(!is.na(object$ranef_groups))) {
+      replicated_dfs_total <- NULL
+      data_ranef <- newdata
 
-    unique_counts <- sapply(object$newdata[ranef_plot],
-                            function(col) length(unique(col)))
+      unique_counts <- sapply(
+        object$newdata[ranef_plot],
+        function(col) length(unique(col))
+      )
 
-    # Identify the column with the maximum number of unique values
-    max_unique_col <- names(unique_counts)[which.max(unique_counts)]
-    # Create a new vector excluding the max_unique_col
-    new_ranef_groups <- ranef_plot[ranef_plot != max_unique_col]
+      # Identify the column with the maximum number of unique values
+      max_unique_col <- names(unique_counts)[which.max(unique_counts)]
+      # Create a new vector excluding the max_unique_col
+      new_ranef_groups <- ranef_plot[ranef_plot != max_unique_col]
 
-   for (i in x$ranef_groups) {
-     replicated_dfs <- NULL
-     subjects <- as.factor(levels(x$newdata[[i]]))
+      for (i in x$ranef_groups) {
+        replicated_dfs <- NULL
+        subjects <- as.factor(levels(x$newdata[[i]]))
 
-     #
-     if (!is.null(ranef_plot) && i %in% ranef_plot && i == max_unique_col) {
-       for (j in subjects){
-         appendvec <- data_ranef
-         appendvec[[i]] <- j
-         for (k in new_ranef_groups) {
-           appendvec[[k]] <- unique(
-             object$newdata[object$newdata[[i]] == j, k])
-         }
-         if(!is.null(x_str)) {
-           for (d in x_str) {
-           appendvec[[d]] <- unique(
-             object$newdata[object$newdata[[i]] == j, d])
-           }
-         }
+        #
+        if (!is.null(ranef_plot) && i %in% ranef_plot && i == max_unique_col) {
+          for (j in subjects) {
+            appendvec <- data_ranef
+            appendvec[[i]] <- j
+            for (k in new_ranef_groups) {
+              appendvec[[k]] <- unique(
+                object$newdata[object$newdata[[i]] == j, k]
+              )
+            }
+            if (!is.null(x_str)) {
+              for (d in x_str) {
+                appendvec[[d]] <- unique(
+                  object$newdata[object$newdata[[i]] == j, d]
+                )
+              }
+            }
 
-         replicated_dfs[[j]] <- appendvec
-       }
-     } else {
-       appendvec <- data_ranef
-       appendvec[[i]] <- rep(NA, length(ncol(appendvec)))
-       replicated_dfs[[i]] <- appendvec
-     }
+            replicated_dfs[[j]] <- appendvec
+          }
+        } else {
+          appendvec <- data_ranef
+          appendvec[[i]] <- rep(NA, length(ncol(appendvec)))
+          replicated_dfs[[i]] <- appendvec
+        }
 
 
 
-     replicated_dfs_total <- do.call(rbind,replicated_dfs)
-     data_ranef <- replicated_dfs_total
-   }
-   #combined_df <- do.call(rbind, replicated_dfs_total)
-   newdata <- data_ranef
+        replicated_dfs_total <- do.call(rbind, replicated_dfs)
+        data_ranef <- replicated_dfs_total
+      }
+      # combined_df <- do.call(rbind, replicated_dfs_total)
+      newdata <- data_ranef
     }
     newdata
   }
 
   # format the newdata dataframe before passing to data_processor_plot()
-  unique_counts <- sapply(object$newdata[ranef_plot],
-                          function(col) length(unique(col)))
+  unique_counts <- sapply(
+    object$newdata[ranef_plot],
+    function(col) length(unique(col))
+  )
 
   # Identify the column with the maximum number of unique values
   max_unique_col <- names(unique_counts)[which.max(unique_counts)]
@@ -300,164 +311,248 @@ autoplot.cglmm <- function(object,
   # get the original data from the cglmm object to be superimposed
 
 
-##
-
-
-if(any(!is.na(object$ranef_groups))) {
-  # Prompt the user to choose from ranef_groups
-#   if(length(unique(object$ranef_groups))>1) {
-#   selected_group <- utils::select.list(
-#     object$ranef_groups,
-#     title = "Select a random variable to plot:",
-#     multiple = FALSE
-#   )
-#
-#   # Check if the selected_group is valid
-#   if (selected_group %in% object$ranef_groups) {
-#     cat("You selected:", selected_group, "\n")
-#
-#     # Determine the other groups
-#     other_groups <- setdiff(object$ranef_groups, selected_group)
-#
-#     # Create an empty list to store user-defined values for other groups
-#     other_values <- list()
-#
-#     # Prompt the user to input numbers for other groups
-#     for (group in other_groups) {
-#       fixed_number <- as.numeric(readline(paste("Enter the desired subject number from", group, ": ")))
-#       # Check if fixed_number is a valid number within unique elements of ranef_groups
-#       if (!is.na(fixed_number) && fixed_number %in% levels(object$newdata[[group]])) {
-#         cat("You entered:", fixed_number, "for", group, "\n")
-#         other_values[[group]] <- fixed_number
-#       } else {
-#         cat("Invalid input. Please enter a valid number within unique elements of ranef_groups.\n")
-#       }
-#       newdata_processed <-
-#         newdata_processed[newdata_processed[[group]] == fixed_number,]
-#
-#     }
-#
-#     # Your plotting code for the selected group and other_values goes here
-#   } else {
-#     cat("Invalid selection. Please choose a valid group.\n")
-#   }
-#   } else {
-#   selected_group <- object$ranef_groups
-# }
-
   ##
-  if (superimpose.data) {
-    original_data <- object$newdata
-    original_data_processed <- object$newdata
-    original_data_processed$levels <- ""
-    i = 1 #used as a counter for formatting purposes
-    for (d in x_str) {
-      original_data_processed$levels <- paste0(
-        original_data_processed$levels,
 
-        d,
-        "=",
-        original_data_processed[, d]
-      )
-      # if there are multiple group levels, separate them by "|"
-      if (i < length(x_str)) {
+
+  if (any(!is.na(object$ranef_groups))) {
+    # Prompt the user to choose from ranef_groups
+    #   if(length(unique(object$ranef_groups))>1) {
+    #   selected_group <- utils::select.list(
+    #     object$ranef_groups,
+    #     title = "Select a random variable to plot:",
+    #     multiple = FALSE
+    #   )
+    #
+    #   # Check if the selected_group is valid
+    #   if (selected_group %in% object$ranef_groups) {
+    #     cat("You selected:", selected_group, "\n")
+    #
+    #     # Determine the other groups
+    #     other_groups <- setdiff(object$ranef_groups, selected_group)
+    #
+    #     # Create an empty list to store user-defined values for other groups
+    #     other_values <- list()
+    #
+    #     # Prompt the user to input numbers for other groups
+    #     for (group in other_groups) {
+    #       fixed_number <- as.numeric(readline(paste("Enter the desired subject number from", group, ": ")))
+    #       # Check if fixed_number is a valid number within unique elements of ranef_groups
+    #       if (!is.na(fixed_number) && fixed_number %in% levels(object$newdata[[group]])) {
+    #         cat("You entered:", fixed_number, "for", group, "\n")
+    #         other_values[[group]] <- fixed_number
+    #       } else {
+    #         cat("Invalid input. Please enter a valid number within unique elements of ranef_groups.\n")
+    #       }
+    #       newdata_processed <-
+    #         newdata_processed[newdata_processed[[group]] == fixed_number,]
+    #
+    #     }
+    #
+    #     # Your plotting code for the selected group and other_values goes here
+    #   } else {
+    #     cat("Invalid selection. Please choose a valid group.\n")
+    #   }
+    #   } else {
+    #   selected_group <- object$ranef_groups
+    # }
+
+    ##
+    if (superimpose.data) {
+      original_data <- object$newdata
+      original_data_processed <- object$newdata
+      original_data_processed$levels <- ""
+      i <- 1 # used as a counter for formatting purposes
+      for (d in x_str) {
         original_data_processed$levels <- paste0(
-          original_data_processed$levels, " | ")
+          original_data_processed$levels,
+          d,
+          "=",
+          original_data_processed[, d]
+        )
+        # if there are multiple group levels, separate them by "|"
+        if (i < length(x_str)) {
+          original_data_processed$levels <- paste0(
+            original_data_processed$levels, " | "
+          )
+        }
+        i <- i + 1
       }
-      i = i + 1
 
 
+      # original_data_processed[[selected_group]] <- paste0(
+      #   original_data_processed[[selected_group]],
+      #
+      #   selected_group,
+      #   "=",
+      #   original_data_processed[, selected_group]
+      # )
+      # # if there are multiple group levels, separate them by "|"
+      # if (i < length(x_str)) {
+      #   original_data_processed$levels <- paste0(
+      #     original_data_processed$levels, " | ")
+      # }
+      # i = i + 1
     }
 
-
-     # original_data_processed[[selected_group]] <- paste0(
-     #   original_data_processed[[selected_group]],
-#
-     #   selected_group,
-     #   "=",
-     #   original_data_processed[, selected_group]
-     # )
-     # # if there are multiple group levels, separate them by "|"
-     # if (i < length(x_str)) {
-     #   original_data_processed$levels <- paste0(
-     #     original_data_processed$levels, " | ")
-     # }
-     # i = i + 1
-
-
-  }
-
-  ##plotting
-if(!is.null(ranef_plot)) {
-  if (missing(x_str) || is.null(x_str)) {
-  plot_object <- ggplot2::ggplot() +
-    ggplot2::geom_line(
-      data = newdata_processed,
-      ggplot2::aes(
-        x = !!rlang::sym(paste(object$time_name)),
-        y = !!rlang::sym(y_name),
-        col = !!rlang::sym(max_unique_col)
-      )
-    )
-  if(superimpose.data){
-    plot_object <- plot_object + ggplot2::geom_line() +
-      ggplot2::geom_point(
-        data = original_data_processed,
-        ggplot2::aes(
-          x = !!rlang::sym(paste(object$time_name)),
-          y = !!rlang::sym(y_name),
-          col = !!rlang::sym(max_unique_col)
-        ),
-        alpha = data_opacity
-      ) +
-      ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-  }
-
-  }
-
-   else {
-  plot_object <- ggplot2::ggplot() +
-    ggplot2::geom_line(
-      data = newdata_processed,
-      ggplot2::aes(
-        x = !!rlang::sym(paste(object$time_name)),
-        y = !!rlang::sym(y_name),
-        col = !!rlang::sym(max_unique_col),
-        linetype = !!rlang::sym(x_str)
-      )
-    )
+    ## plotting
+    if (!is.null(ranef_plot)) {
+      if (missing(x_str) || is.null(x_str)) {
+        plot_object <- ggplot2::ggplot() +
+          ggplot2::geom_line(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name),
+              col = !!rlang::sym(max_unique_col)
+            )
+          )
+        if (superimpose.data) {
+          plot_object <- plot_object + ggplot2::geom_line() +
+            ggplot2::geom_point(
+              data = original_data_processed,
+              ggplot2::aes(
+                x = !!rlang::sym(paste(object$time_name)),
+                y = !!rlang::sym(y_name),
+                col = !!rlang::sym(max_unique_col)
+              ),
+              alpha = data_opacity
+            ) +
+            ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+        }
+      } else {
+        plot_object <- ggplot2::ggplot() +
+          ggplot2::geom_line(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name),
+              col = !!rlang::sym(max_unique_col),
+              linetype = !!rlang::sym(x_str)
+            )
+          )
 
 
-  if(superimpose.data){
-    plot_object <- plot_object + ggplot2::geom_line() +
-      ggplot2::geom_point(
-        data = original_data_processed,
-        ggplot2::aes(
-          x = !!rlang::sym(paste(object$time_name)),
-          y = !!rlang::sym(y_name),
-          col = !!rlang::sym(max_unique_col),
-          shape = !!rlang::sym(x_str)
-        ),
-        alpha = data_opacity
-      ) +
-      ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-  }
+        if (superimpose.data) {
+          plot_object <- plot_object + ggplot2::geom_line() +
+            ggplot2::geom_point(
+              data = original_data_processed,
+              ggplot2::aes(
+                x = !!rlang::sym(paste(object$time_name)),
+                y = !!rlang::sym(y_name),
+                col = !!rlang::sym(max_unique_col),
+                shape = !!rlang::sym(x_str)
+              ),
+              alpha = data_opacity
+            ) +
+            ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+        }
+      }
+    } else {
+      if (missing(x_str) || is.null(x_str)) {
+        plot_object <- ggplot2::ggplot() +
+          ggplot2::geom_line(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name)
+            )
+          )
+        if (superimpose.data) {
+          plot_object <- plot_object + ggplot2::geom_line() +
+            ggplot2::geom_point(
+              data = original_data_processed,
+              ggplot2::aes(
+                x = !!rlang::sym(paste(object$time_name)),
+                y = !!rlang::sym(y_name)
+              ),
+              alpha = data_opacity
+            ) +
+            ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+        }
+      } else {
+        plot_object <- ggplot2::ggplot() +
+          ggplot2::geom_line(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name),
+              col = !!rlang::sym(x_str)
+            )
+          )
 
-}
-}
-  else {
 
-    if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(
+        if (superimpose.data) {
+          plot_object <- plot_object + ggplot2::geom_line() +
+            ggplot2::geom_point(
+              data = original_data_processed,
+              ggplot2::aes(
+                x = !!rlang::sym(paste(object$time_name)),
+                y = !!rlang::sym(y_name),
+                col = !!rlang::sym(x_str)
+              ),
+              alpha = data_opacity
+            ) +
+            ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+        }
+      }
+    }
+  } else {
+    if (superimpose.data) {
+      original_data <- object$newdata
+      original_data_processed <- object$newdata
+      original_data_processed$levels <- ""
+      i <- 1 # used as a counter for formatting purposes
+      for (d in x_str) {
+        original_data_processed$levels <- paste0(
+          original_data_processed$levels,
+          d,
+          "=",
+          original_data_processed[, d]
+        )
+        # if there are multiple group levels, separate them by "|"
+        if (i < length(x_str)) {
+          original_data_processed$levels <- paste0(
+            original_data_processed$levels, " | "
+          )
+        }
+        i <- i + 1
+      }
+    }
+    # get the plot object
+    if (!superimpose.data) {
+      if (missing(x_str) || is.null(x_str)) {
+        plot_object <- ggplot2::ggplot(
           data = newdata_processed,
           ggplot2::aes(
             x = !!rlang::sym(paste(object$time_name)),
             y = !!rlang::sym(y_name)
           )
-        )
-      if(superimpose.data){
-        plot_object <- plot_object + ggplot2::geom_line() +
+        ) +
+          ggplot2::geom_line()
+      } else {
+        plot_object <- ggplot2::ggplot() +
+          ggplot2::geom_line(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name),
+              col = levels
+            )
+          )
+      }
+    }
+
+    # superimpose original data from cglmm() object
+    if (superimpose.data) {
+      if (missing(x_str) || is.null(x_str)) {
+        plot_object <- ggplot2::ggplot(
+          data = newdata_processed,
+          ggplot2::aes(
+            x = !!rlang::sym(paste(object$time_name)),
+            y = !!rlang::sym(y_name)
+          )
+        ) +
+          ggplot2::geom_line() +
           ggplot2::geom_point(
             data = original_data_processed,
             ggplot2::aes(
@@ -467,160 +562,59 @@ if(!is.null(ranef_plot)) {
             alpha = data_opacity
           ) +
           ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-      }
-
-    }
-
-    else {
-      plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(
-          data = newdata_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(paste(object$time_name)),
-            y = !!rlang::sym(y_name),
-            col = !!rlang::sym(x_str)
-          )
-        )
-
-
-      if(superimpose.data){
-        plot_object <- plot_object + ggplot2::geom_line() +
+      } else {
+        plot_object <- ggplot2::ggplot() +
+          ggplot2::geom_line(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(paste(object$time_name)),
+              y = !!rlang::sym(y_name),
+              col = levels
+            )
+          ) +
           ggplot2::geom_point(
             data = original_data_processed,
             ggplot2::aes(
               x = !!rlang::sym(paste(object$time_name)),
               y = !!rlang::sym(y_name),
-              col = !!rlang::sym(x_str)
+              col = levels
             ),
             alpha = data_opacity
           ) +
           ggplot2::facet_grid(rows = ggplot2::vars(NULL))
       }
-
     }
-  }
 
-  } else {
-  if (superimpose.data) {
-    original_data <- object$newdata
-    original_data_processed <- object$newdata
-    original_data_processed$levels <- ""
-    i = 1 #used as a counter for formatting purposes
-    for (d in x_str) {
-      original_data_processed$levels <- paste0(
-        original_data_processed$levels,
-
-        d,
-        "=",
-        original_data_processed[, d]
-      )
-      # if there are multiple group levels, separate them by "|"
-      if (i < length(x_str)) {
-        original_data_processed$levels <- paste0(
-          original_data_processed$levels, " | ")
+    # plot the prediction interval
+    if (predict.ribbon) {
+      if (missing(x_str) || is.null(x_str)) {
+        plot_object <- plot_object +
+          ggplot2::geom_ribbon(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(object$time_name),
+              ymin = y_min,
+              ymax = y_max
+            ),
+            alpha = 0.5
+          ) +
+          ggplot2::facet_grid(rows = ggplot2::vars(NULL))
+      } else {
+        plot_object <- plot_object +
+          ggplot2::geom_ribbon(
+            data = newdata_processed,
+            ggplot2::aes(
+              x = !!rlang::sym(object$time_name),
+              ymin = y_min,
+              ymax = y_max,
+              col = levels,
+              fill = levels
+            ),
+            alpha = 0.5
+          ) +
+          ggplot2::facet_grid(rows = ggplot2::vars(NULL))
       }
-      i = i + 1
-
-
     }
   }
-  # get the plot object
-  if (!superimpose.data) {
-    if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot(
-        data = newdata_processed,
-        ggplot2::aes(
-          x = !!rlang::sym(paste(object$time_name)),
-          y = !!rlang::sym(y_name)
-        )
-      ) +
-        ggplot2::geom_line()
-    } else {
-      plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(
-          data = newdata_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(paste(object$time_name)),
-            y = !!rlang::sym(y_name),
-            col = levels
-          )
-        )
-    }
-  }
-
-  # superimpose original data from cglmm() object
-  if (superimpose.data) {
-    if (missing(x_str) || is.null(x_str)) {
-      plot_object <- ggplot2::ggplot(
-        data = newdata_processed,
-        ggplot2::aes(
-          x = !!rlang::sym(paste(object$time_name)),
-          y = !!rlang::sym(y_name)
-        )
-      ) +
-        ggplot2::geom_line() +
-        ggplot2::geom_point(
-          data = original_data_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(paste(object$time_name)),
-            y = !!rlang::sym(y_name)
-          ),
-          alpha = data_opacity
-        ) +
-        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-    } else {
-      plot_object <- ggplot2::ggplot() +
-        ggplot2::geom_line(
-          data = newdata_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(paste(object$time_name)),
-            y = !!rlang::sym(y_name),
-            col = levels
-          )
-        ) +
-        ggplot2::geom_point(
-          data = original_data_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(paste(object$time_name)),
-            y = !!rlang::sym(y_name),
-            col = levels
-          ),
-          alpha = data_opacity
-        ) +
-        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-    }
-  }
-
-  # plot the prediction interval
-  if (predict.ribbon) {
-    if (missing(x_str) || is.null(x_str)) {
-      plot_object <- plot_object +
-        ggplot2::geom_ribbon(
-          data = newdata_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(object$time_name),
-            ymin = y_min,
-            ymax = y_max
-          ),
-          alpha = 0.5
-        ) +
-        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-    } else {
-      plot_object <- plot_object +
-        ggplot2::geom_ribbon(
-          data = newdata_processed,
-          ggplot2::aes(
-            x = !!rlang::sym(object$time_name),
-            ymin = y_min,
-            ymax = y_max,
-            col = levels,
-            fill = levels
-          ),
-          alpha = 0.5
-        ) +
-        ggplot2::facet_grid(rows = ggplot2::vars(NULL))
-    }
-  }
-}
   plot_object
 }

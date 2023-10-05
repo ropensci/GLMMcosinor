@@ -261,7 +261,7 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 
 # check if there is dispersion or zi (as opposed to default) then print
 print.cglmmSummary <- function(x,
-                                       digits = getOption("digits"), ...) {
+                               digits = getOption("digits"), ...) {
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
   stats::printCoefmat(x$main_output$raw.table,

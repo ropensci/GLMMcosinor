@@ -32,7 +32,7 @@ predict.cglmm <- function(object, newdata, ...) {
   }
 
   # all(names(newdata) %in% names(object$fit$frame))
-  #TODO: modify dataset to include NA in random effects columns for which you
+  # TODO: modify dataset to include NA in random effects columns for which you
   # want a population estimate instead of a random effect. Population effect by
   # default, and the user should specify which variables they want as random
   # effects. This should be done in the autoplot script

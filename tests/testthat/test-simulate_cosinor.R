@@ -83,8 +83,10 @@ test_that("assess error messaging", {
   }
   expect_error(
     f(),
-    regex = paste("amp must be a vector containing numbers, with",
-                  "length equal to n_components"), fixed = TRUE
+    regex = paste(
+      "amp must be a vector containing numbers, with",
+      "length equal to n_components"
+    ), fixed = TRUE
   )
 
   # bad 'acro'
@@ -101,8 +103,10 @@ test_that("assess error messaging", {
   }
   expect_error(
     f(),
-    regex = paste("acro must be a vector containing numbers, with",
-                  "length equal to n_components"), fixed = TRUE
+    regex = paste(
+      "acro must be a vector containing numbers, with",
+      "length equal to n_components"
+    ), fixed = TRUE
   )
 
   # bad 'period'
@@ -119,8 +123,10 @@ test_that("assess error messaging", {
   }
   expect_error(
     f(),
-    regex = paste("period must be a vector containing numbers, with",
-                  "length equal to n_components"), fixed = TRUE
+    regex = paste(
+      "period must be a vector containing numbers, with",
+      "length equal to n_components"
+    ), fixed = TRUE
   )
 
   # bad 'family'
@@ -137,8 +143,10 @@ test_that("assess error messaging", {
   }
   expect_error(
     f(),
-    regex = paste('\'arg\' should be one of "gaussian", "poisson",',
-                  '"binomial", "gamma"'), fixed = TRUE
+    regex = paste(
+      '\'arg\' should be one of "gaussian", "poisson",',
+      '"binomial", "gamma"'
+    ), fixed = TRUE
   )
 
   # bad 'beta.mesor'
@@ -180,8 +188,10 @@ test_that("assess error messaging", {
   }
   expect_error(
     f(),
-    regex = paste("beta.amp must be a vector containing numbers,",
-                  "with length equal to n_components"), fixed = TRUE
+    regex = paste(
+      "beta.amp must be a vector containing numbers,",
+      "with length equal to n_components"
+    ), fixed = TRUE
   )
 
   # bad 'beta.acro'
@@ -202,8 +212,10 @@ test_that("assess error messaging", {
   }
   expect_error(
     f(),
-    regex = paste("beta.acro must be a vector containing numbers,",
-                  "with length equal to n_components"), fixed = TRUE
+    regex = paste(
+      "beta.acro must be a vector containing numbers,",
+      "with length equal to n_components"
+    ), fixed = TRUE
   )
 
   # bad 'beta.group'

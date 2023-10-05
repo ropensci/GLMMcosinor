@@ -138,9 +138,11 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = paste("'component_index' must be an integer between 1",
-                  "and n_components (total number of components in model)",
-                  "inclusive"), fixed = TRUE
+    regex = paste(
+      "'component_index' must be an integer between 1",
+      "and n_components (total number of components in model)",
+      "inclusive"
+    ), fixed = TRUE
   )
 
   # Test 9
@@ -157,8 +159,10 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = paste("'circle_linetype' must be a character.",
-                  "See ?linetype for more details"), fixed = TRUE
+    regex = paste(
+      "'circle_linetype' must be a character.",
+      "See ?linetype for more details"
+    ), fixed = TRUE
   )
 
   expect_no_error(polar_plot(object, ci_level = 0.9))
@@ -220,8 +224,10 @@ test_that("polar_plot input checks work", {
   }
   expect_error(
     f(),
-    regex = paste("'overlay_parameter_info' must be a logical argument,",
-                  "either TRUE or FALSE"), fixed = TRUE
+    regex = paste(
+      "'overlay_parameter_info' must be a logical argument,",
+      "either TRUE or FALSE"
+    ), fixed = TRUE
   )
 })
 

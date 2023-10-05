@@ -227,8 +227,10 @@ amp_acro <- function(time_col,
       if (length(group) == 1) {
         group <- rep(group, n_components)
       } else {
-        stop(paste("Grouping variable in amp_acro() must be of length 1 or",
-                    "the same as n_components"))
+        stop(paste(
+          "Grouping variable in amp_acro() must be of length 1 or",
+          "the same as n_components"
+        ))
       }
     }
     group_original <- group
@@ -246,8 +248,10 @@ amp_acro <- function(time_col,
       if (length(period) == 1) {
         period <- rep(period, n_components)
       } else {
-        stop(paste("period value(s) in amp_acro() must be of length 1 or",
-                   "the same as n_components"))
+        stop(paste(
+          "period value(s) in amp_acro() must be of length 1 or",
+          "the same as n_components"
+        ))
       }
     }
 
@@ -360,7 +364,7 @@ amp_acro <- function(time_col,
       time_name = time_name,
       response_var = left_part,
       group_original = group_original
-      ))
+    ))
   }
   res <- amp_acro_iteration(
     time_col = time_col,
@@ -373,7 +377,7 @@ amp_acro <- function(time_col,
     .amp_acro_ind = .amp_acro_ind
   )
 
-  #if a mixed model is specified, handle formula accordingly
+  # if a mixed model is specified, handle formula accordingly
   if (!is.null(lme4::findbars(.formula))) {
     ranef_part <- lapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
@@ -408,14 +412,14 @@ amp_acro <- function(time_col,
             x,
             fixed = TRUE
           )
-          #x$group <- ranef_part_group
+          # x$group <- ranef_part_group
         }
         return(x)
       }
     })
 
-    #ranef_groups is stored, and will be part of the eventual output. This is
-    #a vector containing the names of the variables with mixed effects.
+    # ranef_groups is stored, and will be part of the eventual output. This is
+    # a vector containing the names of the variables with mixed effects.
 
     ranef_groups <- unique(gsub(".*\\|\\s*", "", ranef_parts_replaced))
 
@@ -435,7 +439,7 @@ amp_acro <- function(time_col,
     res$ranef_groups <- ranef_groups
     #
 
-    #res$mixedef <- append(res$mixdef, )
+    # res$mixedef <- append(res$mixdef, )
     #
   } else {
     res$ranef_groups <- NA

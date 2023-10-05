@@ -124,7 +124,6 @@ data_processor <- function(newdata,
                            group_original,
                            ranef_groups,
                            ...) {
-
   group_names <- names(group_stats)
   if (dispformula_check) {
     dispformula_val <- dispformula$formula

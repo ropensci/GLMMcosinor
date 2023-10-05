@@ -96,8 +96,10 @@ simulate_cosinor <- function(n,
   if (!beta.group & !missing(beta.mesor) &
     !missing(beta.amp) & !missing(beta.acro)) {
     beta.group <- TRUE
-    message(paste("all betas were present but beta.group was FALSE.",
-                  "beta.group has been changed to be TRUE."))
+    message(paste(
+      "all betas were present but beta.group was FALSE.",
+      "beta.group has been changed to be TRUE."
+    ))
   }
 
   family <- match.arg(family)
@@ -248,20 +250,26 @@ simulate_cosinor <- function(n,
 
   assertthat::assert_that(
     is.numeric(amp) & length(amp) == n_components,
-    msg = paste("amp must be a vector containing numbers, with length",
-                "equal to n_components")
+    msg = paste(
+      "amp must be a vector containing numbers, with length",
+      "equal to n_components"
+    )
   )
 
   assertthat::assert_that(
     is.numeric(acro) & length(acro) == n_components,
-    msg = paste("acro must be a vector containing numbers, with",
-                "length equal to n_components")
+    msg = paste(
+      "acro must be a vector containing numbers, with",
+      "length equal to n_components"
+    )
   )
 
   assertthat::assert_that(
     is.numeric(period) & length(period) == n_components,
-    msg = paste("period must be a vector containing numbers, with",
-                "length equal to n_components")
+    msg = paste(
+      "period must be a vector containing numbers, with",
+      "length equal to n_components"
+    )
   )
 
   if (beta.group) {
@@ -272,14 +280,18 @@ simulate_cosinor <- function(n,
 
     assertthat::assert_that(
       is.numeric(beta.amp) & length(beta.amp) == n_components,
-      msg = paste("beta.amp must be a vector containing numbers,",
-                  "with length equal to n_components")
+      msg = paste(
+        "beta.amp must be a vector containing numbers,",
+        "with length equal to n_components"
+      )
     )
 
     assertthat::assert_that(
       is.numeric(beta.acro) & length(beta.acro) == n_components,
-      msg = paste("beta.acro must be a vector containing numbers,",
-                  "with length equal to n_components")
+      msg = paste(
+        "beta.acro must be a vector containing numbers,",
+        "with length equal to n_components"
+      )
     )
   }
 }

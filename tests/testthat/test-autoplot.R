@@ -46,8 +46,10 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = paste("'x_str' must be string corresponding to a group",
-                  "name in cglmm object"), fixed = TRUE
+    regex = paste(
+      "'x_str' must be string corresponding to a group",
+      "name in cglmm object"
+    ), fixed = TRUE
   )
 
   # Test 2
@@ -90,8 +92,10 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = paste("'type' must be a string. See type in ?predict",
-                  "for more information about valid inputs"), fixed = TRUE
+    regex = paste(
+      "'type' must be a string. See type in ?predict",
+      "for more information about valid inputs"
+    ), fixed = TRUE
   )
 
   # Test 5
@@ -109,9 +113,11 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = paste("'xlims' must be a vector with the first element",
-                  "being the lower x coordinate, and the second being",
-                  "the upper x coordinate"),
+    regex = paste(
+      "'xlims' must be a vector with the first element",
+      "being the lower x coordinate, and the second being",
+      "the upper x coordinate"
+    ),
     fixed = TRUE
   )
 
@@ -148,8 +154,10 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     f(),
-    regex = paste("'superimpose.data' must be a logical argument,",
-                  "either TRUE or FALSE"),
+    regex = paste(
+      "'superimpose.data' must be a logical argument,",
+      "either TRUE or FALSE"
+    ),
     fixed = TRUE
   )
 
@@ -232,8 +240,8 @@ test_that("autoplot produces error messages", {
     mutate(subject = as.factor(subject))
   mixed_mod <- cglmm(
     Y ~ amp_acro(times,
-                 n_components = 1,
-                 period = 24
+      n_components = 1,
+      period = 24
     ) + (1 + amp_acro1 | subject),
     data = dat_mixed
   )
