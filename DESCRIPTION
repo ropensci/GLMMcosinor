@@ -1,6 +1,6 @@
 Type: Package
 Package: GLMMcosinor
-Title: Fit a cosinor model using a generalised mixed modelling framework
+Title: Fit A Cosinor Model Using A Generalised Mixed Modelling Framework
 Version: 0.1.0.9000
 Authors@R: c(
     person("Rex", "Parsons", , "rex.parsons94@gmail.com", role = c("aut", "cre"),
