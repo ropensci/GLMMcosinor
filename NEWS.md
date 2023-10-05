@@ -3,6 +3,8 @@
 * Fix small typos in vignettes/docs and make plot legend title consistent across
 `autoplot()` and `polar_plot()`
 
+* Rename functions to be `snake_case` and all S3 class names to `camelCase`.
+
 # GLMMcosinor 0.1.0
 
 * First development version of `{GLMMcosinor}` for submission to rOpenSci.
