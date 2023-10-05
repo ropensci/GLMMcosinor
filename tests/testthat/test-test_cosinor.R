@@ -9,7 +9,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Test the class output
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -20,7 +20,7 @@ test_that("script works and warnings are displayed appropriately", {
 
   # Test the comparison_type variable, and test the print output
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       n_components = 2,
       period = c(12, 11)
@@ -46,7 +46,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Test a simple input
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -61,7 +61,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 1
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -78,7 +78,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 2
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -95,7 +95,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 3
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -115,7 +115,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 4
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -132,7 +132,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 5
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -153,7 +153,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 6
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -178,7 +178,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 7
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -202,7 +202,7 @@ test_that("script works and warnings are displayed appropriately", {
   # Error message test 9
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       n_components = 2,
       period = c(12, 11)

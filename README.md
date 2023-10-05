@@ -54,7 +54,10 @@ library(GLMMcosinor)
 
 ``` r
 data(vitamind)
-model <- cglmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+model <- cglmm(
+  vit_d ~ X + amp_acro(time, group = "X", period = 12), 
+  data = vitamind
+)
 summary(model)
 #> 
 #>  Conditional Model 
@@ -97,16 +100,16 @@ citation("GLMMcosinor")
 #> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
-#>   Parsons R, Jayasinghe O, White N (2023). _GLMMcosinor: Fit a cosinor
-#>   model using a generalised mixed modelling framework_.
+#>   Parsons R, Jayasinghe O, White N (2023). _GLMMcosinor: Fit A Cosinor
+#>   Model Using A Generalised Mixed Modelling Framework_.
 #>   https://github.com/RWParsons/GLMMcosinor,
 #>   https://rwparsons.github.io/GLMMcosinor/.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {GLMMcosinor: Fit a cosinor model using a generalised mixed modelling
-#> framework},
+#>     title = {GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling
+#> Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White},
 #>     year = {2023},
 #>     note = {https://github.com/RWParsons/GLMMcosinor,

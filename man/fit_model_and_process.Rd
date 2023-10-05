@@ -34,7 +34,7 @@ vitamind2$patient <- sample(
 # without yet fitting the model
 data_and_formula <- update_formula_and_data(
   data = vitamind2,
-  formula = Y ~ X + amp_acro(time,
+  formula = vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   )

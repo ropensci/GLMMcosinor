@@ -4,7 +4,7 @@ test_that("summary print works", {
     {
       data(vitamind)
       object <- cglmm(
-        Y ~ amp_acro(time,
+        vit_d ~ amp_acro(time,
           group = "X",
           period = 12
         ),

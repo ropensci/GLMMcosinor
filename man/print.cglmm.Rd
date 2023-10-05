@@ -22,7 +22,7 @@ Print a brief summary of the \code{cglmm} model.
 \examples{
 # Single component cosinor model
 cglmm(
-  Y ~ amp_acro(time_col = time, group = "X", period = 12),
+  vit_d ~ amp_acro(time_col = time, group = "X", period = 12),
   data = vitamind
 )
 }

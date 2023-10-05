@@ -23,7 +23,7 @@ at a given month
 }
 \examples{
 
-fit <- cglmm(Y ~ X + amp_acro(time,
+fit <- cglmm(vit_d ~ X + amp_acro(time,
   group = "X",
   n_components = 1,
   period = 12

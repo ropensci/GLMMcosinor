@@ -71,7 +71,7 @@ Optionally allows for plotting by covariates
 }
 \examples{
 model <- cglmm(
-  Y ~ X + amp_acro(time, group = "X", period = 12),
+  vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )
 autoplot(model, x_str = "X")

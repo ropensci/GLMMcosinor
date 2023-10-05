@@ -8,7 +8,7 @@
 test_that("autoplot input checks work", {
   data(vitamind)
   object <- cglmm(
-    Y ~ amp_acro(time,
+    vit_d ~ amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -24,7 +24,7 @@ test_that("autoplot input checks work", {
 test_that("autoplot produces error messages", {
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -34,7 +34,7 @@ test_that("autoplot produces error messages", {
   # Test 1
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -56,7 +56,7 @@ test_that("autoplot produces error messages", {
   data(vitamind)
   vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
   object <- cglmm(
-    Y ~ X + amp_acro(time,
+    vit_d ~ X + amp_acro(time,
       n_components = 3,
       group = c("Z", NA, "X"),
       period = c(12, 10, 8)
@@ -80,7 +80,7 @@ test_that("autoplot produces error messages", {
   # Test 4
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -101,7 +101,7 @@ test_that("autoplot produces error messages", {
   # Test 5
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -124,7 +124,7 @@ test_that("autoplot produces error messages", {
   # Test 6
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -142,7 +142,7 @@ test_that("autoplot produces error messages", {
   # Test 7
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -164,7 +164,7 @@ test_that("autoplot produces error messages", {
   # Test 8
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),
@@ -183,7 +183,7 @@ test_that("autoplot produces error messages", {
   # Test 9
   data(vitamind)
   object <- cglmm(
-    Y ~ 1 + amp_acro(time,
+    vit_d ~ 1 + amp_acro(time,
       group = "X",
       period = 12
     ),

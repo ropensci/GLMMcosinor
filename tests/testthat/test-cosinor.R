@@ -209,13 +209,13 @@ test_that("model output is class cglmm", {
     {
       data(vitamind)
       object <- cglmm(
-        Y ~ X + amp_acro(time, group = "X", period = 12),
+        vit_d ~ X + amp_acro(time, group = "X", period = 12),
         data = vitamind
       )
       expect_true(inherits(object, "cglmm"))
 
       object <- cglmm(
-        Y ~ X + amp_acro(time,
+        vit_d ~ X + amp_acro(time,
           group = "X",
           period = 12
         ),
@@ -241,7 +241,7 @@ test_that("model output is class cglmm", {
 
       # testing mixed model specification
       f <- function() {
-        cglmm(Y ~ X + amp_acro(time,
+        cglmm(vit_d ~ X + amp_acro(time,
           n_components = 1,
           group = "X",
           period = TruePeriod
@@ -351,11 +351,11 @@ test_that("mixed model estimates parameters well", {
 
 test_that("alternative inputs work", {
   testthat::expect_no_error(cglmm(
-    Y ~ amp_acro(time, group = "X", period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   ))
   testthat::expect_no_error(cglmm(
-    Y ~ amp_acro(time, group = X, period = 12),
+    vit_d ~ amp_acro(time, group = X, period = 12),
     data = vitamind
   ))
 })

@@ -114,7 +114,7 @@ Generates a polar plot with elliptical confidence intervals
 }
 \examples{
 model <- cglmm(
-  Y ~ X + amp_acro(time, group = "X", period = 12),
+  vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )
 polar_plot(model)

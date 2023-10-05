@@ -67,7 +67,7 @@ time-response plot of the fitted model:
 
 ```{r, message=F, warning=F}
 object <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),
@@ -82,7 +82,7 @@ fit is based on) over the fitted model, using the
 
 ```{r, message=F, warning=F}
 object <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),
@@ -197,7 +197,7 @@ confidence regions.
 
 ```{r, message=F, warning=F}
 model <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),
@@ -214,7 +214,7 @@ the same units as the period specification.
 
 ```{r, message=F, warning=F}
 model <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),
@@ -242,7 +242,7 @@ starting position (at 0) to the acrophase estimate.
 
 ```{r, message=F, warning=F}
 model <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),
@@ -258,7 +258,7 @@ concentric circles.
 
 ```{r, message=F, warning=F}
 model <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),
@@ -281,7 +281,7 @@ confidence ellipses AND the origin).
 
 ```{r, message=F, warning=F}
 model <- cglmm(
-  Y ~ X + amp_acro(time,
+  vit_d ~ X + amp_acro(time,
     group = "X",
     period = 12
   ),

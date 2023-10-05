@@ -285,7 +285,7 @@ test_cosinor_levels <- function(x,
 #'
 #' @return Returns a \code{test_cosinor} object.
 #' @examples
-#' mod_grouped <- cglmm(Y ~ X + amp_acro(time,
+#' mod_grouped <- cglmm(vit_d ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12

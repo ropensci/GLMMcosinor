@@ -13,7 +13,7 @@ test_that("multiplication works", {
     group = "X",
     period = c(24, 12),
     .data = vitamind,
-    .formula = Y ~ X + amp_acro("time",
+    .formula = vit_d ~ X + amp_acro("time",
       n_components = 2,
       group = "X",
       period = c(24, 12)
@@ -23,7 +23,7 @@ test_that("multiplication works", {
   f <- Y ~ X + amp_acro(time, n_components = 2, group = c(NA, "X"))
 
   cglmm(
-    Y ~ X + amp_acro(time,
+    vit_d ~ X + amp_acro(time,
       n_components = 2,
       group = c(NA, "X"),
       period = c(12, 24)
@@ -42,7 +42,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1.1, group = "X", period = 12,
       .data = vitamind,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1.1,
         group = "X",
         period = 12
@@ -59,7 +59,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = -12,
       .data = vitamind,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = -12
@@ -76,7 +76,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = 12
@@ -93,7 +93,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_2,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = 12
@@ -108,7 +108,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time_values, n_components = 1, group = "X", period = 12,
       .data = vitamind,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = 12
@@ -126,7 +126,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = 12
@@ -145,7 +145,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "rrr2", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "rrr2",
         period = 12
@@ -164,7 +164,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = c("X", "X2"), period = 12,
       .data = vitamind_two_groups,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = c("X", "X2"),
         period = 12
@@ -185,7 +185,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = c(8, 12),
       .data = vitamind,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = c(8, 12)
@@ -206,7 +206,7 @@ test_that("bad inputs return useful errors", {
     amp_acro(
       time_col = time, n_components = 1, group = "Z", period = c(8, 12),
       .data = vitamind,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "Z",
         period = c(8, 12)
@@ -228,7 +228,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = 12
@@ -251,7 +251,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
     amp_acro(
       time_col = time, n_components = 1, group = "X", period = 12,
       .data = vitamind_mod,
-      .formula = Y ~ X + amp_acro(time,
+      .formula = vit_d ~ X + amp_acro(time,
         n_components = 1,
         group = "X",
         period = 12

@@ -1,7 +1,7 @@
 
 
-vitamind <- read.csv("data-raw/vitamind.csv")
-
-# vitamind <- dplyr::rename([newname] = Y) # rename to something better than Y?
+vitamind <- read.csv("data-raw/vitamind.csv") |>
+  dplyr::rename(vit_d = Y) |>
+  dplyr::select(vit_d, time, X)
 
 usethis::use_data(vitamind, overwrite = TRUE)

@@ -77,7 +77,7 @@ withr::with_seed(
 
 ```{r, message=F, warning=F}
 data(vitamind)
-object <- cglmm(Y ~ X + amp_acro(time,
+object <- cglmm(vit_d ~ X + amp_acro(time,
   n_components = 1, period = 12,
   group = "X"
 ), data = vitamind)
@@ -186,7 +186,7 @@ For example, consider the following model and its output:
 
 ```{r, message=F, warning=F}
 data(vitamind)
-cglmm(Y ~ X + amp_acro(time, period = 12, group = "X"), data = vitamind)
+cglmm(vit_d ~ X + amp_acro(time, period = 12, group = "X"), data = vitamind)
 ```
 
 Notice how both the raw and transformed coefficients are provided as
@@ -219,7 +219,7 @@ The `cglmm()` function is used to fit cosinor models to a variety
 of distributions using the `glmmTMB()` function.
 
 ```{r}
-formula <- Y ~ amp_acro(time, period = 12)
+formula <- vit_d ~ amp_acro(time, period = 12)
 data <- vitamind
 family <- gaussian
 
@@ -259,7 +259,7 @@ a Gaussian distribution from the `vitamind` dataset.
 
 ```{r, message=F, warning=F}
 data(vitamind)
-cglmm(Y ~ X + amp_acro(time, period = 12, group = "X"), data = vitamind)
+cglmm(vit_d ~ X + amp_acro(time, period = 12, group = "X"), data = vitamind)
 ```
 
 Under the 'Transformed Coefficients' heading:
@@ -287,7 +287,7 @@ beginning of the formula:
 ```{r, message=F, warning=F}
 data(vitamind)
 cglmm(
-  Y ~ 0 + X + amp_acro(time,
+  vit_d ~ 0 + X + amp_acro(time,
     period = 12,
     group = "X"
   ),
@@ -306,7 +306,7 @@ the `autoplot()` function, looking at the `[X=0]` level (red line)
 
 ```{r}
 object <- cglmm(
-  Y ~ 0 + X + amp_acro(time,
+  vit_d ~ 0 + X + amp_acro(time,
     period = 12,
     group = "X"
   ),
@@ -350,9 +350,8 @@ functions.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cglmm(Y ~ group + amp_acro(times, 
-                                            period = 12, 
-                                            group = "group"),
+object <- cglmm(
+  Y ~ group + amp_acro(times, period = 12, group = "group"),
   data = testdata_simple, family = poisson()
 )
 summary(object)

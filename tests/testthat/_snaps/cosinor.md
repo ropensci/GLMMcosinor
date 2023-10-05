@@ -4,7 +4,7 @@
      Conditional Model 
     
      Raw formula: 
-    Y ~ X + X:main_rrr1 + X:main_sss1 
+    vit_d ~ X + X:main_rrr1 + X:main_sss1 
     
      Raw Coefficients: 
                  Estimate
