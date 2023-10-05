@@ -166,7 +166,7 @@ and <code>period = c(12,6)</code>, then the first component has a
 matched to each component.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span></span>
 <span>    time_col <span class="op">=</span> <span class="va">times</span>,</span>
 <span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -235,7 +235,7 @@ grouped by <code>group</code>, and the second component is not grouped.
 The data was simulated such that the second component was the same for
 both groups.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span></span>
 <span>    time_col <span class="op">=</span> <span class="va">times</span>,</span>
 <span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -304,7 +304,7 @@ and <code>group 1</code></p></li>
 <code>group = c("group","group")</code>still yields accurate
 estimates:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span></span>
 <span>    time_col <span class="op">=</span> <span class="va">times</span>,</span>
 <span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -356,10 +356,10 @@ but <code>group = "group"</code>, then the one element in this
 <code>group = c("group","group")</code>which now has a length that
 matches <code>n_components</code>. The same applies for
 <code>period</code>.</p>
-<p>For instance, the following two <code><a href="../reference/cosinor.glmm.html">cosinor.glmm()</a></code> calls fit
-the same models:</p>
+<p>For instance, the following two <code><a href="../reference/cglmm.html">cglmm()</a></code> calls fit the
+same models:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
 <span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    period <span class="op">=</span> <span class="fl">12</span>,</span>
@@ -401,7 +401,7 @@ the same models:</p>
 <span><span class="co">#&gt; [group=1]:acr2  1.22948</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="../reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
 <span>    n_components <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">12</span><span class="op">)</span>,</span>
@@ -448,7 +448,7 @@ the same models:</p>
 <p>The plot below shows a 3-component model with the simulated data
 overlayed:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="../reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span>
 <span>    n_components <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">12</span><span class="op">)</span>,</span>

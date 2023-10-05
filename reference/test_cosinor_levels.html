@@ -93,7 +93,7 @@ continuous covariates.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>An <code>cosinor.glmm</code> object.</p></dd>
+<dd><p>An <code>cglmm</code> object.</p></dd>
 
 
 <dt>x_str</dt>
@@ -154,7 +154,7 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  beta.group <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mod_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="cosinor.glmm.html">cosinor.glmm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">mod_2_component</span> <span class="op">&lt;-</span> <span class="fu"><a href="cglmm.html">cglmm</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="va">group</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">times</span>,</span></span>
 <span class="r-in"><span>    n_components <span class="op">=</span> <span class="fl">2</span>, group <span class="op">=</span> <span class="st">"group"</span>,</span></span>
 <span class="r-in"><span>    period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span></span></span>
@@ -173,13 +173,13 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reference group: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comparator group: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cosinor.glmm model has2 components. Component 1 is being used for comparison between groups.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cglmm model has2 components. Component 1 is being used for comparison between groups.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Global test: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 232.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 218.91</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
@@ -187,13 +187,13 @@ component is being compared between the levels of the grouping variable.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Individual tests:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P-value: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimate and 95% confidence interval:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.97 (0.85 to 1.1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.94 (0.81 to 1.06)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

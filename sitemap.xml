@@ -46,10 +46,10 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/amp_acro.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/autoplot.cosinor.glmm.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/autoplot.cglmm.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/cosinor.glmm.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/cglmm.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/fit_model_and_process.html</loc>
@@ -58,22 +58,22 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/polar_plot.cosinor.glmm.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/polar_plot.cglmm.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/polar_plot.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/predict.cosinor.glmm.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/predict.cglmm.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cosinor.glmm.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cglmm.html</loc>
+  </url>
+  <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cglmmSummary.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.sub_test_cosinor.html</loc>
-  </url>
-  <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.summary.cosinor.glmm.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.test_cosinor.html</loc>
@@ -85,7 +85,7 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/simulate_cosinor.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/summary.cosinor.glmm.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/summary.cglmm.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/test_cosinor_components.html</loc>
