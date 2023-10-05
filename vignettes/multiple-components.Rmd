@@ -77,7 +77,7 @@ The `period` argument must also match the length of `n_components`, where the or
 For example:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(
     time_col = times,
     n_components = 2,
@@ -111,7 +111,7 @@ If a multicomponent model has one component that is grouped with other component
 For example, if wanted only the first component to have a grouped component, we would specify the `group` argument as `group = c("group", NA))` . Here, the first component is grouped by `group`, and the second component is not grouped. The data was simulated such that the second component was the same for both groups.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(
     time_col = times,
     n_components = 2,
@@ -149,7 +149,7 @@ autoplot(object, superimpose.data = TRUE)
 In this example, it is not strictly necessary to specify `group = c("group", NA))` since specifying `group = c("group","group")`still yields accurate estimates:
 
 ```{r}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(
     time_col = times,
     n_components = 2,
@@ -164,11 +164,11 @@ object
 
 If a multicomponent model is specified (`n_components > 1`) but the length of `group` or `period` is 1, then it will be assumed that the one `group` and/or `period` values specified apply to [all]{.underline} components. For example, if `n_components = 2` , but `group = "group"`, then the one element in this `group` vector will be replicated to produce `group = c("group","group")`which now has a length that matches `n_components`. The same applies for `period`.
 
-For instance, the following two `cosinor.glmm()` calls fit the same
+For instance, the following two `cglmm()` calls fit the same
 models:
 
 ```{r, message=F, warning=F}
-cosinor.glmm(
+cglmm(
   Y ~ group + amp_acro(times,
     n_components = 2,
     period = 12,
@@ -179,7 +179,7 @@ cosinor.glmm(
 )
 
 
-cosinor.glmm(
+cglmm(
   Y ~ group + amp_acro(times,
     n_components = 2,
     period = c(12, 12),
@@ -195,7 +195,7 @@ cosinor.glmm(
 The plot below shows a 3-component model with the simulated data overlayed:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(times,
     n_components = 3,
     period = c(12, 6, 12),

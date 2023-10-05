@@ -85,7 +85,7 @@ For the model, we should include a random effect for the MESOR, amplitude and ac
 In the model formula, we can use the special `amp_acro[n]` which represents the n<sup>th</sup> cosinor component. In this case, we only have one component so we use `amp_acro1`. Following the `{lme4}`-style mixed model formula, we add our random effect for this component and the intercept term (MESOR) clustered within subjects by using `(1 + amp_acro1 | subject)`. The code below fits this model
 
 ```{r}
-mixed_mod <- cosinor.glmm(
+mixed_mod <- cglmm(
   Y ~ amp_acro(times,
     n_components = 1,
     period = 24
@@ -125,7 +125,7 @@ data.frame(pred = predict(mixed_mod)) |>
 This looks like a good model fit for these data. We can highlight the importance of using a mixed model in this situation rather than a fixed effects only model by creating that (bad) model and comparing the two by using the Akaike information criterion using `AIC()`.
 
 ```{r}
-fixed_effects_mod <- cosinor.glmm(
+fixed_effects_mod <- cglmm(
   Y ~ amp_acro(times, n_components = 1, period = 24),
   data = dat_mixed
 )

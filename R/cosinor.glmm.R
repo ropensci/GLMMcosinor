@@ -21,7 +21,7 @@
 #' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
 #'
-#' @return Returns a fitted cosinor model as a `cosinor.glmm` object.
+#' @return Returns a fitted cosinor model as a `cglmm` object.
 #'
 #' @srrstats {G2.14}
 #' @srrstats {G2.14a}
@@ -32,7 +32,7 @@
 #'
 #' @examples
 #' # Single component cosinor model
-#' cosinor.glmm(
+#' cglmm(
 #'   Y ~ amp_acro(time_col = time, group = "X", period = 12),
 #'   data = vitamind
 #' )
@@ -52,7 +52,7 @@
 #'   beta.group = TRUE,
 #' )
 #'
-#' cosinor.glmm(
+#' cglmm(
 #'   Y ~ group + amp_acro(times,
 #'     n_components = 2,
 #'     group = "group",
@@ -66,7 +66,7 @@
 #'
 #'
 #' @export
-cosinor.glmm <- function(formula,
+cglmm <- function(formula,
                          data,
                          family = stats::gaussian(),
                          quietly = TRUE,
@@ -82,8 +82,8 @@ cosinor.glmm <- function(formula,
     ziformula = ziformula
   )
 
-  cosinor.glmm.calls <- list(
-    cosinor.glmm = match.call(),
+  cglmm.calls <- list(
+    cglmm = match.call(),
     update_formula_and_data = updated_df_and_formula$Call
   )
   updated_df_and_formula$Call <- NULL
@@ -92,7 +92,7 @@ cosinor.glmm <- function(formula,
     data_processor,
     c(
       updated_df_and_formula,
-      cosinor.glmm.calls = list(cosinor.glmm.calls),
+      cglmm.calls = list(cglmm.calls),
       ...
     )
   )

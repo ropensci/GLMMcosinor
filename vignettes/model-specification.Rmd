@@ -76,13 +76,13 @@ withr::with_seed(
 )
 ```
 
-## `cosinor.glmm()`
+## `cglmm()`
 
-`cosinor.glmm()` wrangles the data appropriately to fit the cosinor
+`cglmm()` wrangles the data appropriately to fit the cosinor
 model given the formula specified by the user. It provides estimates of
 amplitude, acrophase, and MESOR (Midline Statistic Of Rhythm).
 
-The formula argument for `cosinor.glmm()` is specified using the
+The formula argument for `cglmm()` is specified using the
 `{lme4}` style (for details see `vignette("lmer", package = "lme4")`).
 The only difference is that it allows for use of an `amp_acro()` call
 within the formula that is used to identify the circadian components and
@@ -96,7 +96,7 @@ and
 [multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
 vignettes.
 
-## Using cosinor.glmm()
+## Using cglmm()
 
 The following examples use data simulated by the the `simulate_cosinor`
 function.
@@ -108,7 +108,7 @@ data from a Poisson distribution loaded in this vignette. In this
 example, there is no grouping variable.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ amp_acro(times,
     period = 12
   ),
@@ -150,7 +150,7 @@ Now, we can add a grouping variable by adding the name of the group in
 the `amp_acro()` function:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ amp_acro(times,
     period = 12,
     group = "group"
@@ -189,7 +189,7 @@ can add a term for the group in the model so that we can estimate the
 **difference in MESOR** between the two groups.
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(times,
     period = 12,
     group = "group"
@@ -227,7 +227,7 @@ separately, rather than the difference between groups. To achieve this,
 we can remove the intercept term by using `0 +`.
 
 ```{r, message=F, warning=F}
-cosinor.glmm(
+cglmm(
   Y ~ 0 + group + amp_acro(times,
     period = 12,
     group = "group"
@@ -261,7 +261,7 @@ value of `n_components` will need to match the length of the `group` and
 For example:
 
 ```{r, message=F, warning=F}
-cosinor.glmm(
+cglmm(
   Y ~ group + amp_acro(
     time_col = times,
     n_components = 2,
@@ -305,7 +305,7 @@ For a detailed explanation of how to specify multi-component models, see
 
 ### Dispersion and zero-inflation model specification
 
-The `cosinor.glmm()` function allows users to specify formulas for
+The `cglmm()` function allows users to specify formulas for
 dispersion and zero-inflation models. These formulas are independent of
 the main formula specification:
 
@@ -322,7 +322,7 @@ testdata_disp_zi <- simulate_cosinor(1000,
   period = c(12, 6, 8),
   n_components = 3
 )
-object_disp_zi <- cosinor.glmm(
+object_disp_zi <- cglmm(
   Y ~ group + amp_acro(times,
     n_components = 3,
     period = c(12, 6, 8),
@@ -353,9 +353,9 @@ models will not be generated in the output.
 number of components in the dispersion and zero-inflation formulas were
 chosen arbitrarily and purely for demonstration.*
 
-## Using: 'summary.cosinor.glmm.R'
+## Using: 'summary(cglmm)'
 
-The `summary()` method for `cosinor.glmm` objects provides a more
+The `summary()` method for `cglmm` objects provides a more
 detailed summary of the model and its parameter estimates and
 uncertainty. It outputs the estimates, standard errors, confidence
 intervals, and $p$-values for both the raw model parameters and the
@@ -366,7 +366,7 @@ role of the `test_cosinor()` function.
 Here is an example of how to use `summary()`:
 
 ```{r, message=F, warning=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(times,
     period = 12,
     group = "group"
@@ -378,8 +378,8 @@ summary(object)
 ```
 
 The summary statistics for dispersion and zero-inflation models will
-also be provided by the `summary.cosinor.glmm()` function, if the
-original `cosinor.glmm` object being analysed contains them. The
+also be provided by the `summary()` function, if the
+original `cglmm` object being analysed contains them. The
 following demonstration uses the model specified in the **Dispersion and
 Zero-inflation model specification** section of this vignette:
 

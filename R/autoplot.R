@@ -4,18 +4,18 @@ ggplot2::autoplot
 
 #' Plot a cosinor model
 #'
-#' Given a cosinor.glmm model fit, generate a plot of the data with the fitted
+#' Given a cglmm model fit, generate a plot of the data with the fitted
 #' values.
 #' Optionally allows for plotting by covariates
 #'
 #'
-#' @param object An \code{cosinor.glmm} object.
+#' @param object An \code{cglmm} object.
 #' @param ci_level The level for calculated confidence intervals. Defaults to
 #' \code{0.95}.
 #' @param x_str A \code{character} vector naming variable(s) to be plotted.
 #' Default has no value and plots all groups.
 #' @param type A \code{character} that will be passed as an argument to
-#' \code{predict.cosinor.glmm()}, specifying the type of prediction
+#' \code{predict.cglmm()}, specifying the type of prediction
 #' (e.g, "response", or "link"). See \code{?glmmTMB::predict.glmmTMB} for full
 #' list of possible inputs.
 #' @param xlims A vector of length two containing the limits for the x-axis.
@@ -47,13 +47,13 @@ ggplot2::autoplot
 #'
 #' @return Returns a `ggplot` object.
 #' @examples
-#' model <- cosinor.glmm(
+#' model <- cglmm(
 #'   Y ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
 #' )
 #' autoplot(model, x_str = "X")
 #' @export
-autoplot.cosinor.glmm <- function(object,
+autoplot.cglmm <- function(object,
                                   ci_level = 0.95,
                                   x_str,
                                   type = "response",
@@ -66,8 +66,8 @@ autoplot.cosinor.glmm <- function(object,
                                   ranef_plot = NULL,
                                   ...) {
   # Validating user inputs
-  assertthat::assert_that(inherits(object, "cosinor.glmm"),
-    msg = "'object' must be of class 'cosinor.glmm'"
+  assertthat::assert_that(inherits(object, "cglmm"),
+    msg = "'object' must be of class 'cglmm'"
   )
 
 
@@ -77,7 +77,7 @@ autoplot.cosinor.glmm <- function(object,
     for (i in x_str) {
       assertthat::assert_that(i %in% names(object$group_stats),
         msg = paste("'x_str' must be string corresponding to a group name",
-                    "in cosinor.glmm object")
+                    "in cglmm object")
       )
     }
   }
@@ -173,12 +173,12 @@ autoplot.cosinor.glmm <- function(object,
       ref_level <- unlist(x$group_stats[j])[[1]]
       newdata[, j] <- factor(ref_level)
     }
-    # process the data. This step mimics the first step of a cosinor.glmm() call
+    # process the data. This step mimics the first step of a cglmm() call
     newdata <- update_formula_and_data(
       # pass new dataset that's being used for prediction in this function
       data = newdata,
-      # get the formula that was originally to cosinor.glmm()
-      formula = eval(x$cosinor.glmm.calls$cosinor.glmm$formula)
+      # get the formula that was originally to cglmm()
+      formula = eval(x$cglmm.calls$cglmm$formula)
     )$newdata
     # only keep the newdata that's returned from update_formula_and_data()
 
@@ -278,9 +278,9 @@ autoplot.cosinor.glmm <- function(object,
   colnames(newdata)[1] <- object$time_name
   newdata_processed <- data_processor_plot(object, newdata, x_str)
 
-  # get the response data from the cosinor.glmm object
+  # get the response data from the cglmm object
   y_name <- object$response_var
-  # get the predicted response values using the predict.cosinor.glmm() function
+  # get the predicted response values using the predict.cglmm() function
   pred_obj <- stats::predict(
     object,
     newdata = newdata_processed,
@@ -297,7 +297,7 @@ autoplot.cosinor.glmm <- function(object,
   y_min <- pred_obj$fit - zt * pred_obj$se.fit
   y_max <- pred_obj$fit + zt * pred_obj$se.fit
 
-  # get the original data from the cosinor.glmm object to be superimposed
+  # get the original data from the cglmm object to be superimposed
 
 
 ##
@@ -548,7 +548,7 @@ if(!is.null(ranef_plot)) {
     }
   }
 
-  # superimpose original data from cosinor.glmm() object
+  # superimpose original data from cglmm() object
   if (superimpose.data) {
     if (missing(x_str) || is.null(x_str)) {
       plot_object <- ggplot2::ggplot(

@@ -16,7 +16,7 @@ model (maybe with random effects) or other covariates found in the data.}
 \item{...}{Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.}
 }
 \value{
-Returns a fitted cosinor model as a \code{cosinor.glmm} object.
+Returns a fitted cosinor model as a \code{cglmm} object.
 }
 \description{
 Fit the cosinorGLMM model using the output from update_formula_and_data() and
@@ -30,7 +30,7 @@ vitamind2$patient <- sample(
   size = nrow(vitamind2), replace = TRUE
 )
 
-# Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+# Use update_formula_and_data() to perform wrangling steps of cglmm()
 # without yet fitting the model
 data_and_formula <- update_formula_and_data(
   data = vitamind2,

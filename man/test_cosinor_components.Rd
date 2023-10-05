@@ -15,7 +15,7 @@ test_cosinor_components(
 )
 }
 \arguments{
-\item{x}{An \code{cosinor.glmm} object.}
+\item{x}{An \code{cglmm} object.}
 
 \item{x_str}{A \code{character}. The name of the grouping variable within
 which differences in the selected cosinor characteristic (amplitude or
@@ -63,7 +63,7 @@ data_2_component <- simulate_cosinor(
   period = c(10, 12),
   beta.group = TRUE
 )
-mod_2_component <- cosinor.glmm(
+mod_2_component <- cglmm(
   Y ~ group + amp_acro(times,
     n_components = 2, group = "group",
     period = c(10, 12)

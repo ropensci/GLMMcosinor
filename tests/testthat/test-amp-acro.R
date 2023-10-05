@@ -22,7 +22,7 @@ test_that("multiplication works", {
 
   f <- Y ~ X + amp_acro(time, n_components = 2, group = c(NA, "X"))
 
-  cosinor.glmm(
+  cglmm(
     Y ~ X + amp_acro(time,
       n_components = 2,
       group = c(NA, "X"),
@@ -299,7 +299,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
         })
       ) |>
         mutate(subject = as.factor(subject))
-      mixed_mod <- cosinor.glmm(
+      mixed_mod <- cglmm(
         Y ~ amp_acro(times,
           n_components = 1,
           period = 24

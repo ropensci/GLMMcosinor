@@ -34,7 +34,7 @@
 #' @export
 #' @examples
 #' # Single component cosinor model
-#' cosinor.glmm(
+#' cglmm(
 #'   Y ~ amp_acro(time_col = time, group = "X", period = 12),
 #'   data = vitamind
 #' )
@@ -54,7 +54,7 @@
 #'   beta.group = TRUE,
 #' )
 #'
-#' cosinor.glmm(
+#' cglmm(
 #'   Y ~ group + amp_acro(times,
 #'     n_components = 2,
 #'     group = "group",
@@ -80,8 +80,8 @@ amp_acro <- function(time_col,
 #' within the \code{data.frame()} passed by via the \code{data} arg).
 #' @param period A \code{numeric} value or vector containing the period.
 #' The number of values should be equal to \code{n_components}.
-#' @param .data The dataframe from the original \code{cosinor.glmm()} call.
-#' @param .formula The formula from the original \code{cosinor.glmm()} call.
+#' @param .data The dataframe from the original \code{cglmm()} call.
+#' @param .formula The formula from the original \code{cglmm()} call.
 #' @param .quietly controls whether messages from \code{amp_acro()} are
 #' displayed. Defaults to \code{TRUE}.
 #' @param .amp_acro_ind The index of the portion of the formula containing
@@ -216,7 +216,7 @@ amp_acro <- function(time_col,
       }
     }
 
-    # "group_check" variable is passed to cosinor.glmm to indicate if there is a
+    # "group_check" variable is passed to cglmm to indicate if there is a
     # group argument present in amp_acro()
 
     # ensure the length of the grouping variable matches the value of

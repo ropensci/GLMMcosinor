@@ -31,7 +31,7 @@ data_2_component <- simulate_cosinor(
   period = c(10, 12),
   beta.group = TRUE
 )
-mod_2_component <- cosinor.glmm(
+mod_2_component <- cglmm(
   Y ~ group + amp_acro(times,
     n_components = 2, group = "group",
     period = c(10, 12)

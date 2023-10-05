@@ -25,7 +25,7 @@ polar_plot(
 )
 }
 \arguments{
-\item{x}{An object of class \code{cosinor.glmm}}
+\item{x}{An object of class \code{cglmm}}
 
 \item{ci_level}{The level for calculated confidence ellipses.
 Defaults to 0.95.}
@@ -39,7 +39,7 @@ to result in the sequence: 0, 2, 4, 6, 8. See \code{?scales::breaks_pretty}
 for more details.}
 
 \item{component_index}{A number that corresponds to a particular component
-from the \code{cosinor.glmm()} object that will be used to create polar plot.
+from the \code{cglmm()} object that will be used to create polar plot.
 If missing (default), then plots for all components will be arranged in the
 returned plot. If a single or multiple values are provided, then these
 components will be returned. (for example \code{component_index = 1},
@@ -113,7 +113,7 @@ Returns a \code{ggplot} object.
 Generates a polar plot with elliptical confidence intervals
 }
 \examples{
-model <- cosinor.glmm(
+model <- cglmm(
   Y ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )

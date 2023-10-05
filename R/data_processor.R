@@ -6,7 +6,7 @@
 #' model (maybe with random effects) or other covariates found in the data.
 #' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
-#' @return Returns a fitted cosinor model as a \code{cosinor.glmm} object.
+#' @return Returns a fitted cosinor model as a \code{cglmm} object.
 #' @srrstats {G1.4}
 #' @export
 #'
@@ -18,7 +18,7 @@
 #'   size = nrow(vitamind2), replace = TRUE
 #' )
 #'
-#' # Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+#' # Use update_formula_and_data() to perform wrangling steps of cglmm()
 #' # without yet fitting the model
 #' data_and_formula <- update_formula_and_data(
 #'   data = vitamind2,
@@ -65,7 +65,7 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @param group_check A \code{logical}. Whether a grouping argument is present.
 #' @param period A vector of values for the period of each component.
 #' @param family The \code{family} for fitting the model.
-#' @param Terms A \code{terms} object from the original \code{cosinor.glmm()}
+#' @param Terms A \code{terms} object from the original \code{cglmm()}
 #' call.
 #' @param ... Optional additional arguments passed to \code{glmmTMB::glmmTMB()}.
 #'
@@ -101,7 +101,7 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' @srrstats {G2.15}
 #' @srrstats {G2.16}
 #'
-#' @return A \code{cosinor.glmm} model.
+#' @return A \code{cglmm} model.
 #' @noRd
 data_processor <- function(newdata,
                            newformula,
@@ -115,7 +115,7 @@ data_processor <- function(newdata,
                            time_name,
                            family,
                            Terms,
-                           cosinor.glmm.calls,
+                           cglmm.calls,
                            dispformula,
                            dispformula_check,
                            ziformula,
@@ -216,17 +216,17 @@ data_processor <- function(newdata,
   }
 
   # update calls
-  if (missing(cosinor.glmm.calls)) {
-    cosinor.glmm.calls <- list()
+  if (missing(cglmm.calls)) {
+    cglmm.calls <- list()
   }
-  cosinor.glmm.calls$data_processor <- match.call()
+  cglmm.calls$data_processor <- match.call()
 
   # Arrange the output
   structure(
     list(
       formula = newformula,
       fit = fit,
-      cosinor.glmm.calls = cosinor.glmm.calls,
+      cglmm.calls = cglmm.calls,
       Terms = Terms,
       coefficients = conditional_model,
       raw_coefficients = main_coefs,
@@ -247,6 +247,6 @@ data_processor <- function(newdata,
       group_original = group_original,
       ranef_groups = ranef_groups
     ),
-    class = "cosinor.glmm"
+    class = "cglmm"
   )
 }

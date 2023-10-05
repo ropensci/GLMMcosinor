@@ -54,7 +54,7 @@ library(GLMMcosinor)
 
 ``` r
 data(vitamind)
-model <- cosinor.glmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
+model <- cglmm(Y ~ X + amp_acro(time, group = "X", period = 12), data = vitamind)
 summary(model)
 #> 
 #>  Conditional Model 

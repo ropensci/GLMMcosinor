@@ -67,10 +67,10 @@ testdata <- simulate_cosinor(
 testdata
 ```
 
-Now, let's fit a `cosinor.glmm()` model to this simulated dataset to see how it matches with our original parameters:
+Now, let's fit a `cglmm()` model to this simulated dataset to see how it matches with our original parameters:
 
 ```{r, message=F, warning=F, eval=F}
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ amp_acro(times,
     n_components = 1,
     period = 12
@@ -132,7 +132,7 @@ testdata <- simulate_cosinor(
 )
 
 DT::datatable(testdata)
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ group + amp_acro(times,
     n_components = 1,
     period = 12,
@@ -162,7 +162,7 @@ testdata <- simulate_cosinor(
 )
 
 testdata
-object <- cosinor.glmm(
+object <- cglmm(
   Y ~ amp_acro(times,
     n_components = 2,
     period = c(12, 6)
@@ -204,7 +204,7 @@ testdata <- simulate_cosinor(100,
   n_components = 3
 )
 
-object <- cosinor.glmm(Y ~ group + amp_acro(times,
+object <- cglmm(Y ~ group + amp_acro(times,
   n_components = 3,
   period = c(12, 6, 8),
   group = "group"
@@ -233,7 +233,7 @@ testdata <- simulate_cosinor(500,
   n_components = 3
 )
 
-object <- cosinor.glmm(Y ~ group + amp_acro(times,
+object <- cglmm(Y ~ group + amp_acro(times,
   n_components = 3,
   period = c(12, 6, 8),
   group = "group"
