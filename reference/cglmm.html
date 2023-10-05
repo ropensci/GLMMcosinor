@@ -56,7 +56,7 @@ covariate effects."><meta property="og:image" content="https://rwparsons.github.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Fit cosinor model with <code>{glmmTMB}</code></h1>
-      <small class="dont-index">Source: <a href="https://github.com/RWParsons/GLMMcosinor/blob/HEAD/R/cosinor.glmm.R" class="external-link"><code>R/cosinor.glmm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RWParsons/GLMMcosinor/blob/HEAD/R/cglmm.R" class="external-link"><code>R/cglmm.R</code></a></small>
       <div class="d-none name"><code>cglmm.Rd</code></div>
     </div>
 
@@ -133,14 +133,14 @@ Rhythms, Biometrics (1976). 32(1):85--94.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Single component cosinor model</span></span></span>
 <span class="r-in"><span><span class="fu">cglmm</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">vit_d</span> <span class="op">~</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw formula: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X:main_rrr1 + X:main_sss1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vit_d ~ X:main_rrr1 + X:main_sss1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate</span>
@@ -190,29 +190,29 @@ Rhythms, Biometrics (1976). 32(1):85--94.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       5.06525</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -3.06958</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  1.01750</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  0.98029</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1  1.69382</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1  1.62350</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2  0.14993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.08208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2  0.96237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2  0.90520</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       4.98318</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -3.01754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  0.93256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  1.06529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1  1.70372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1  1.81075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2  0.05168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.01215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2  0.97373</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2  0.95838</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     5.06525</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -3.06958</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  1.97594</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  1.89651</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  0.97398</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  0.90892</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  1.02985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  1.02758</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.41624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.48036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     4.98318</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -3.01754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  1.94225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  2.10087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  0.97510</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  0.95846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  1.06998</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  1.03901</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.51777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.55812</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

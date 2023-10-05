@@ -8,7 +8,7 @@
 <meta name="description" content="Fit the cosinor model using the glmmTMB framework, allowing
     for a wide range of link functions and capacity of heirachical
     structures.">
-<title>Fit a cosinor model using a generalised mixed modelling framework • GLMMcosinor</title>
+<title>Fit A Cosinor Model Using A Generalised Mixed Modelling Framework • GLMMcosinor</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -19,7 +19,7 @@
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Fit a cosinor model using a generalised mixed modelling framework">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Fit A Cosinor Model Using A Generalised Mixed Modelling Framework">
 <meta property="og:description" content="Fit the cosinor model using the glmmTMB framework, allowing
     for a wide range of link functions and capacity of heirachical
     structures.">
@@ -111,7 +111,10 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cglmm.html">cglmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">vitamind</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
+<span>  <span class="va">vit_d</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">vitamind</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
@@ -151,16 +154,16 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To cite package 'GLMMcosinor' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Parsons R, Jayasinghe O, White N (2023). _GLMMcosinor: Fit a cosinor</span></span>
-<span><span class="co">#&gt;   model using a generalised mixed modelling framework_.</span></span>
+<span><span class="co">#&gt;   Parsons R, Jayasinghe O, White N (2023). _GLMMcosinor: Fit A Cosinor</span></span>
+<span><span class="co">#&gt;   Model Using A Generalised Mixed Modelling Framework_.</span></span>
 <span><span class="co">#&gt;   https://github.com/RWParsons/GLMMcosinor,</span></span>
 <span><span class="co">#&gt;   https://rwparsons.github.io/GLMMcosinor/.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   @Manual{,</span></span>
-<span><span class="co">#&gt;     title = {GLMMcosinor: Fit a cosinor model using a generalised mixed modelling</span></span>
-<span><span class="co">#&gt; framework},</span></span>
+<span><span class="co">#&gt;     title = {GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling</span></span>
+<span><span class="co">#&gt; Framework},</span></span>
 <span><span class="co">#&gt;     author = {Rex Parsons and Oliver Jayasinghe and Nicole White},</span></span>
 <span><span class="co">#&gt;     year = {2023},</span></span>
 <span><span class="co">#&gt;     note = {https://github.com/RWParsons/GLMMcosinor,</span></span>

@@ -107,7 +107,7 @@ The number of values should be equal to <code>n_components</code>.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Single component cosinor model</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="cglmm.html">cglmm</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">Y</span> <span class="op">~</span> <span class="fu">amp_acro</span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">vit_d</span> <span class="op">~</span> <span class="fu">amp_acro</span><span class="op">(</span>time_col <span class="op">=</span> <span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">vitamind</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Package version inconsistency detected.</span>
@@ -118,7 +118,7 @@ The number of values should be equal to <code>n_components</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Conditional Model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw formula: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Y ~ X:main_rrr1 + X:main_sss1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vit_d ~ X:main_rrr1 + X:main_sss1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate</span>
@@ -168,29 +168,29 @@ The number of values should be equal to <code>n_components</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Raw Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       4.98044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -2.88727</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  1.14154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  1.06686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1  1.68558</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1  1.62644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2  0.07592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.09246</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2  0.96622</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2  1.02197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       4.92120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1           -2.92235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr1  1.16222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr1  1.16813</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss1  1.67437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss1  1.77983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_rrr2  0.07875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_rrr2  0.07564</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group0:main_sss2  1.08678</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1:main_sss2  0.90173</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Transformed Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     4.98044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -2.88727</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  2.03575</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  1.94512</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  0.96920</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  1.02614</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  0.97551</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  0.99025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.49239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.48057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     4.92120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]      -2.92235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp1  2.03820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp1  2.12893</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:amp2  1.08963</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:amp2  0.90490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr1  0.96403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr1  0.98999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=0]:acr2  1.49846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [group=1]:acr2  1.48711</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -84,7 +84,7 @@ and for the mean, amplitude, and acrophase parameters. If the model includes
 covariates, the function returns the estimates of the mean, amplitude, and
 acrophase for the group with covariates equal to 1 and equal to 0. This may
 not be the desired result for continuous covariates.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RWParsons/GLMMcosinor/blob/HEAD/R/summary.cosinor.glmm.R" class="external-link"><code>R/summary.cosinor.glmm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RWParsons/GLMMcosinor/blob/HEAD/R/summary.R" class="external-link"><code>R/summary.R</code></a></small>
       <div class="d-none name"><code>summary.cglmm.Rd</code></div>
     </div>
 
@@ -131,7 +131,7 @@ a <code>cglmmSummary</code> object.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="cglmm.html">cglmm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="cglmm.html">cglmm</a></span><span class="op">(</span><span class="va">vit_d</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>,</span></span>
 <span class="r-in"><span>  group <span class="op">=</span> <span class="st">"X"</span>,</span></span>
 <span class="r-in"><span>  n_components <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  period <span class="op">=</span> <span class="fl">12</span></span></span>

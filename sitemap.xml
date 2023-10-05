@@ -70,13 +70,13 @@
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cglmm.html</loc>
   </url>
   <url>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cglmmSubTest.html</loc>
+  </url>
+  <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cglmmSummary.html</loc>
   </url>
   <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.sub_test_cosinor.html</loc>
-  </url>
-  <url>
-    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.test_cosinor.html</loc>
+    <loc>https://rwparsons.github.io/GLMMcosinor/reference/print.cglmmTest.html</loc>
   </url>
   <url>
     <loc>https://rwparsons.github.io/GLMMcosinor/reference/reexports.html</loc>
