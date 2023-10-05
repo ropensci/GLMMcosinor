@@ -6,7 +6,7 @@
 #' acrophase for the group with covariates equal to 1 and equal to 0. This may
 #' not be the desired result for continuous covariates.
 #'
-#' @param object An object of class \code{cosinor.glmm}
+#' @param object An object of class \code{cglmm}
 #' @param ci_level The level for calculated confidence intervals. Defaults to
 #' 0.95.
 #' @param ... Currently unused
@@ -14,12 +14,12 @@
 #' @srrstats {G1.4}
 #' @srrstats {RE4.18}
 #'
-#' @return Returns a summary of the `cosinor.glmm` model as
-#' a `summary.cosinor.glmm` object.
+#' @return Returns a summary of the `cglmm` model as
+#' a `cglmmSummary` object.
 #' @examples
 #'
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
+#' fit <- cglmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12
@@ -28,8 +28,8 @@
 #'
 #' @export
 
-summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
-  # get the fitted model from the cosinor.glmm() output, along with
+summary.cglmm <- function(object, ci_level = 0.95, ...) {
+  # get the fitted model from the cglmm() output, along with
   # n_components, vec_rrr, and vec_sss
   mf <- object$fit
   n_components <- object$n_components
@@ -41,7 +41,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 
   # this function can be looped if there is disp or zi formula present.
   # note that 'model_index' is a string: 'cond', 'disp', or 'zi'
-  sub_summary.cosinor.glmm <- function(model_index) {
+  cglmmSubSummary <- function(model_index) {
     if (model_index == "disp") {
       n_components <- object$disp_list$n_components_disp
     }
@@ -203,23 +203,23 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
         transformed.covariance = cov.trans,
         raw.covariance = vmat
       ),
-      class = "sub_summary.cosinor.glmm"
+      class = "cglmmSubSummary"
     )
   }
 
   # store the output from the conditional model
-  main_output <- sub_summary.cosinor.glmm(model_index = "cond")
+  main_output <- cglmmSubSummary(model_index = "cond")
 
   # store the output from the dispersion model (if present)
   if (object$dispformula_check) {
-    output_disp <- sub_summary.cosinor.glmm(model_index = "disp")
+    output_disp <- cglmmSubSummary(model_index = "disp")
   } else {
     output_disp <- NULL
   }
 
   # store the output from the zero-inflation model (if present)
   if (object$ziformula_check) {
-    output_zi <- sub_summary.cosinor.glmm(model_index = "zi")
+    output_zi <- cglmmSubSummary(model_index = "zi")
   } else {
     output_zi <- NULL
   }
@@ -235,13 +235,13 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
     output_disp = output_disp,
     output_zi = output_zi,
     object = object
-  ), class = "summary.cosinor.glmm")
+  ), class = "cglmmSummary")
 }
 
 
 #' Print the summary of a cosinor model
 #'
-#' @param x An object of class \code{summary.cosinor.glmm}
+#' @param x An object of class \code{cglmmSummary}
 #' @param digits Controls the number of digits displayed in the summary output
 #' @param ... Currently unused
 #'
@@ -249,7 +249,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #' @return `print` returns `x` invisibly.
 #' @examples
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
+#' fit <- cglmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12
@@ -260,7 +260,7 @@ summary.cosinor.glmm <- function(object, ci_level = 0.95, ...) {
 #'
 
 # check if there is dispersion or zi (as opposed to default) then print
-print.summary.cosinor.glmm <- function(x,
+print.cglmmSummary <- function(x,
                                        digits = getOption("digits"), ...) {
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")

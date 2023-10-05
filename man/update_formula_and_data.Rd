@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_utils.R
 \name{update_formula_and_data}
 \alias{update_formula_and_data}
-\title{Update data and formula for fitting cosinor.glmm model}
+\title{Update data and formula for fitting cglmm model}
 \usage{
 update_formula_and_data(
   data,
@@ -14,7 +14,7 @@ update_formula_and_data(
 )
 }
 \arguments{
-\item{data}{input data for fitting cosinor.glmm model.}
+\item{data}{input data for fitting cglmm model.}
 
 \item{formula}{model formula, specified by user including \code{amp_acro()}.}
 
@@ -31,7 +31,7 @@ TRUE by default}
 Returns a \code{list}.
 }
 \description{
-Update data and formula for fitting cosinor.glmm model
+Update data and formula for fitting cglmm model
 }
 \examples{
 # Use vitamind data but add a "patient" identifier used as a random effect
@@ -41,7 +41,7 @@ vitamind2$patient <- sample(
   size = nrow(vitamind2), replace = TRUE
 )
 
-# Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+# Use update_formula_and_data() to perform wrangling steps of cglmm()
 # without yet fitting the model
 data_and_formula <- update_formula_and_data(
   data = vitamind2,

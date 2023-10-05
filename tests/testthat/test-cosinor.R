@@ -43,7 +43,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod,
         beta.group = TRUE
       )
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ group + amp_acro(times,
           n_components = 1,
           group = "group",
@@ -91,7 +91,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod,
         beta.group = TRUE
       )
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ group + amp_acro(times,
           n_components = 1,
           group = "group",
@@ -122,7 +122,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod,
         beta.group = TRUE
       )
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ group + amp_acro(times,
           n_components = 1,
           group = "group",
@@ -154,7 +154,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod,
         beta.group = TRUE
       )
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ group + amp_acro(times,
           n_components = 1,
           group = "group",
@@ -187,7 +187,7 @@ test_that("model returns accurate parameters", {
         period = TruePeriod,
         beta.group = TRUE
       )
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ group + amp_acro(times,
           n_components = 1,
           group = "group",
@@ -203,18 +203,18 @@ test_that("model returns accurate parameters", {
     c(0.9773, -0.4527, 1.9399, 1.0482, 3.0007, 0.2849)
   ))
 })
-test_that("model output is class cosinor.glmm", {
+test_that("model output is class cglmm", {
   withr::with_seed(
     50,
     {
       data(vitamind)
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ X + amp_acro(time, group = "X", period = 12),
         data = vitamind
       )
-      expect_true(inherits(object, "cosinor.glmm"))
+      expect_true(inherits(object, "cglmm"))
 
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ X + amp_acro(time,
           group = "X",
           period = 12
@@ -225,7 +225,7 @@ test_that("model output is class cosinor.glmm", {
       )
       testthat::expect_no_error(object)
       testthat::expect_snapshot_output(print(object, digits = 2))
-      testthat::expect_true(inherits(object, "cosinor.glmm"))
+      testthat::expect_true(inherits(object, "cglmm"))
 
       #' @srrstats {RE7.2}
       #' @srrstats {RE7.3}
@@ -241,7 +241,7 @@ test_that("model output is class cosinor.glmm", {
 
       # testing mixed model specification
       f <- function() {
-        cosinor.glmm(Y ~ X + amp_acro(time,
+        cglmm(Y ~ X + amp_acro(time,
           n_components = 1,
           group = "X",
           period = TruePeriod
@@ -264,7 +264,7 @@ test_that("model output is class cosinor.glmm", {
       )
 
       suppressWarnings({
-        object <- cosinor.glmm(
+        object <- cglmm(
           Y ~ group + amp_acro(times,
             n_components = 2,
             group = "group",
@@ -318,7 +318,7 @@ test_that("mixed model estimates parameters well", {
   })
 
   f <- function() {
-    object <- cosinor.glmm(
+    object <- cglmm(
       Y ~ amp_acro(times,
         n_components = 2,
         period = c(6, 12)
@@ -334,7 +334,7 @@ test_that("mixed model estimates parameters well", {
   })
 
   f <- function() {
-    object <- cosinor.glmm(
+    object <- cglmm(
       Y ~ amp_acro(times,
         n_components = 2,
         period = c(12, 6)
@@ -345,16 +345,16 @@ test_that("mixed model estimates parameters well", {
     )
   }
 
-  expect_s3_class(f(), "cosinor.glmm")
+  expect_s3_class(f(), "cglmm")
 })
 
 
 test_that("alternative inputs work", {
-  testthat::expect_no_error(cosinor.glmm(
+  testthat::expect_no_error(cglmm(
     Y ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   ))
-  testthat::expect_no_error(cosinor.glmm(
+  testthat::expect_no_error(cglmm(
     Y ~ amp_acro(time, group = X, period = 12),
     data = vitamind
   ))

@@ -4,7 +4,7 @@
 #' a cosinor fit. Default prediction is the mean value, optionally can predict
 #' at a given month
 #'
-#' @param object An object of class \code{cosinor.glmm}.
+#' @param object An object of class \code{cglmm}.
 #' @param newdata Optional new data.
 #' @param ... other arguments passed to \code{glmmTMB:::predict.glmmTMB}.
 #'
@@ -15,7 +15,7 @@
 #'
 #' @examples
 #'
-#' fit <- cosinor.glmm(Y ~ X + amp_acro(time,
+#' fit <- cglmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12
@@ -26,7 +26,7 @@
 #'
 
 
-predict.cosinor.glmm <- function(object, newdata, ...) {
+predict.cglmm <- function(object, newdata, ...) {
   if (missing(newdata)) {
     return(stats::predict(object$fit, ...))
   }
@@ -40,8 +40,8 @@ predict.cosinor.glmm <- function(object, newdata, ...) {
   # pass new dataset that's being used for prediction in this function
   nd <- update_formula_and_data(
     data = newdata,
-    # get the formula that was originally to cosinor.glmm()
-    formula = eval(object$cosinor.glmm.calls$cosinor.glmm$formula)
+    # get the formula that was originally to cglmm()
+    formula = eval(object$cglmm.calls$cglmm$formula)
   )$newdata
   # only keep the newdata that's returned from update_formula_and_data()
 

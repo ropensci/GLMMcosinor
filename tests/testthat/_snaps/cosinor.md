@@ -1,4 +1,4 @@
-# model output is class cosinor.glmm
+# model output is class cglmm
 
     
      Conditional Model 

@@ -3,7 +3,7 @@ test_that("summary print works", {
     50,
     {
       data(vitamind)
-      object <- cosinor.glmm(
+      object <- cglmm(
         Y ~ amp_acro(time,
           group = "X",
           period = 12
@@ -14,7 +14,7 @@ test_that("summary print works", {
       testthat::expect_no_error(print_obj)
       testthat::expect_snapshot_output(print(print_obj, digits = 2))
 
-      testthat::expect_true(inherits(print_obj, "summary.cosinor.glmm"))
+      testthat::expect_true(inherits(print_obj, "cglmmSummary"))
     }
   )
 })

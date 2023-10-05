@@ -7,7 +7,7 @@
 #' continuous covariates.
 #'
 #'
-#' @param x An \code{cosinor.glmm} object.
+#' @param x An \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
@@ -42,7 +42,7 @@
 #'   period = c(10, 12),
 #'   beta.group = TRUE
 #' )
-#' mod_2_component <- cosinor.glmm(
+#' mod_2_component <- cglmm(
 #'   Y ~ group + amp_acro(times,
 #'     n_components = 2, group = "group",
 #'     period = c(10, 12)
@@ -69,8 +69,8 @@ test_cosinor_components <- function(x,
   validate_ci_level(ci_level)
 
   assertthat::assert_that(
-    inherits(x, "cosinor.glmm"),
-    msg = "'x' must be of class 'cosinor.glmm'"
+    inherits(x, "cglmm"),
+    msg = "'x' must be of class 'cglmm'"
   )
 
   stopifnot(is.character(x_str))
@@ -118,7 +118,7 @@ test_cosinor_components <- function(x,
 #' group with covariates equal to 0. This may not be the desired result for
 #' continuous covariates.
 #'
-#' @param x An \code{cosinor.glmm} object.
+#' @param x An \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
@@ -156,7 +156,7 @@ test_cosinor_components <- function(x,
 #'   period = c(10, 12),
 #'   beta.group = TRUE
 #' )
-#' mod_2_component <- cosinor.glmm(
+#' mod_2_component <- cglmm(
 #'   Y ~ group + amp_acro(times,
 #'     n_components = 2, group = "group",
 #'     period = c(10, 12)
@@ -182,8 +182,8 @@ test_cosinor_levels <- function(x,
   validate_ci_level(ci_level)
 
   assertthat::assert_that(
-    inherits(x, "cosinor.glmm"),
-    msg = "'x' must be of class 'cosinor.glmm'"
+    inherits(x, "cglmm"),
+    msg = "'x' must be of class 'cglmm'"
   )
 
   stopifnot(is.character(x_str))
@@ -249,7 +249,7 @@ test_cosinor_levels <- function(x,
 #' continuous covariates.
 #'
 #'
-#' @param x An \code{cosinor.glmm} object.
+#' @param x An \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
@@ -277,7 +277,7 @@ test_cosinor_levels <- function(x,
 #'
 #' @return Returns a \code{test_cosinor} object.
 #' @examples
-#' mod_grouped <- cosinor.glmm(Y ~ X + amp_acro(time,
+#' mod_grouped <- cglmm(Y ~ X + amp_acro(time,
 #'   group = "X",
 #'   n_components = 1,
 #'   period = 12
@@ -298,7 +298,7 @@ test_cosinor_levels <- function(x,
 #'   period = c(10, 12)
 #' )
 #'
-#' mod_2_component <- cosinor.glmm(
+#' mod_2_component <- cglmm(
 #'   Y ~ group + amp_acro(times,
 #'     n_components = 2, group = "group",
 #'     period = c(10, 12)
@@ -321,7 +321,7 @@ test_cosinor_levels <- function(x,
   # TODO handle the text labels for the factor variable used for grouping - i.e
   # using data made with : sim_data %>% mutate(group = ifelse(group == 1,
   # "control", "treatment"))
-  summary.fit <- summary.cosinor.glmm(x)
+  summary.fit <- summary(x)
   index <- matrix(0, ncol = length(x$coefficients), nrow = length(x_str))
   colnames(index) <- names(x$coefficients)
 
@@ -374,7 +374,7 @@ test_cosinor_levels <- function(x,
     df = dim(diff.var)[1],
     conf.int = NULL,
     p.value = stats::pchisq(glob.chi, df = dim(diff.var)[1], lower.tail = FALSE)
-  ), class = "sub_test_cosinor")
+  ), class = "cglmmSubTest")
 
   ind.test <- structure(list(
     statistic = ind.Z[, ],
@@ -383,7 +383,7 @@ test_cosinor_levels <- function(x,
     ci_level = ci_level,
     p.value = 2 * stats::pnorm(-abs(ind.Z))[, ],
     names = x_str
-  ), class = "sub_test_cosinor")
+  ), class = "cglmmSubTest")
 
   if (comparison_type == "components") {
     test_details <- list(
@@ -417,7 +417,7 @@ test_cosinor_levels <- function(x,
       ind.test = ind.test,
       test_details = test_details
     ),
-    class = "test_cosinor"
+    class = "cglmmTest"
   )
 }
 
@@ -442,7 +442,7 @@ test_cosinor_levels <- function(x,
 #'   period = c(10, 12),
 #'   beta.group = TRUE
 #' )
-#' mod_2_component <- cosinor.glmm(
+#' mod_2_component <- cglmm(
 #'   Y ~ group + amp_acro(times,
 #'                        n_components = 2, group = "group",
 #'                        period = c(10, 12)
@@ -455,7 +455,7 @@ test_cosinor_levels <- function(x,
 #'   x_str = "group"
 #' )
 #' @export
-print.test_cosinor <- function(x, ...) {
+print.cglmmTest <- function(x, ...) {
   cat("Test Details: \n")
   .print_details(x$test_details)
 
@@ -488,7 +488,7 @@ print.test_cosinor <- function(x, ...) {
 #'   period = c(10, 12),
 #'   beta.group = TRUE
 #' )
-#' mod_2_component <- cosinor.glmm(
+#' mod_2_component <- cglmm(
 #'   Y ~ group + amp_acro(times,
 #'     n_components = 2, group = "group",
 #'     period = c(10, 12)
@@ -502,7 +502,7 @@ print.test_cosinor <- function(x, ...) {
 #' )
 #' print(test_output$global.test)
 #' @export
-print.sub_test_cosinor <- function(x, ...) {
+print.cglmmSubTest <- function(x, ...) {
   if (length(x$statistic) == 1) {
     cat("Statistic: \n")
     cat(round(x$statistic, 2))
@@ -563,11 +563,11 @@ print.sub_test_cosinor <- function(x, ...) {
     ))
 
     if (test_details$component_index == "") {
-      cat("\n\ncosinor.glmm model only has a single component and to compare
+      cat("\n\ncglmm model only has a single component and to compare
           between groups.\n")
     } else {
       cat(paste0(
-        "\n\ncosinor.glmm model has", test_details$x$n_components,
+        "\n\ncglmm model has", test_details$x$n_components,
         " components. Component ", test_details$component_index,
         " is being used for comparison between groups.\n"
       ))

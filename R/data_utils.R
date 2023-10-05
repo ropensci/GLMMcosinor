@@ -1,6 +1,6 @@
-#' Update data and formula for fitting cosinor.glmm model
+#' Update data and formula for fitting cglmm model
 #'
-#' @param data input data for fitting cosinor.glmm model.
+#' @param data input data for fitting cglmm model.
 #' @param formula model formula, specified by user including \code{amp_acro()}.
 #' @param family the model family.
 #' @param quietly controls whether messages from amp_acro are displayed.
@@ -29,7 +29,7 @@
 #'   size = nrow(vitamind2), replace = TRUE
 #' )
 #'
-#' # Use update_formula_and_data() to perform wrangling steps of cosinor.glmm()
+#' # Use update_formula_and_data() to perform wrangling steps of cglmm()
 #' # without yet fitting the model
 #' data_and_formula <- update_formula_and_data(
 #'   data = vitamind2,
@@ -161,7 +161,7 @@ update_formula_and_data <- function(data,
 #' Checks that the group names supplied by the user are in the dataframe
 #'
 #' @param .data dataframe
-#' @param group group argument specified in the cosinor.glmm call
+#' @param group group argument specified in the cglmm call
 #' @srrstats {G1.4a}
 #'
 #' @return nothing if successful, an error message if not

@@ -1,7 +1,7 @@
 test_that("polar_plot input checks work", {
   # Test 1
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -20,7 +20,7 @@ test_that("polar_plot input checks work", {
 
   # Test 2
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -38,7 +38,7 @@ test_that("polar_plot input checks work", {
 
   # Test 3
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -55,7 +55,7 @@ test_that("polar_plot input checks work", {
 
   # Test 4
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -73,7 +73,7 @@ test_that("polar_plot input checks work", {
 
   # Test 5
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -90,7 +90,7 @@ test_that("polar_plot input checks work", {
 
   # Test 6
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -108,7 +108,7 @@ test_that("polar_plot input checks work", {
 
   # Test 7
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -126,7 +126,7 @@ test_that("polar_plot input checks work", {
 
   # Test 8
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -145,7 +145,7 @@ test_that("polar_plot input checks work", {
 
   # Test 9
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -174,7 +174,7 @@ test_that("polar_plot input checks work", {
 
   # Test 19
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -191,7 +191,7 @@ test_that("polar_plot input checks work", {
 
   # Test 20
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -208,7 +208,7 @@ test_that("polar_plot input checks work", {
 
   # Test 21
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12
@@ -230,7 +230,7 @@ test_that("polar_plot input checks work", {
 test_that("polar_plot messages work", {
   # Test 22
   data(vitamind)
-  object <- cosinor.glmm(
+  object <- cglmm(
     Y ~ amp_acro(time,
       group = "X",
       period = 12

@@ -30,7 +30,7 @@ and associated modifications to the \code{data.frame}.
 }
 \examples{
 # Single component cosinor model
-cosinor.glmm(
+cglmm(
   Y ~ amp_acro(time_col = time, group = "X", period = 12),
   data = vitamind
 )
@@ -50,7 +50,7 @@ sim_data <- simulate_cosinor(
   beta.group = TRUE,
 )
 
-cosinor.glmm(
+cglmm(
   Y ~ group + amp_acro(times,
     n_components = 2,
     group = "group",

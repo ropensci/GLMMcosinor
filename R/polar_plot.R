@@ -1,6 +1,6 @@
 #' Generates a polar plot with elliptical confidence intervals
 #'
-#' @param x An object of class \code{cosinor.glmm}
+#' @param x An object of class \code{cglmm}
 #' @param ci_level The level for calculated confidence ellipses.
 #' Defaults to 0.95.
 #' @param n_breaks The number of concentric circles that will be plotted using
@@ -11,7 +11,7 @@
 #' to result in the sequence: 0, 2, 4, 6, 8. See \code{?scales::breaks_pretty}
 #' for more details.
 #' @param component_index A number that corresponds to a particular component
-#' from the \code{cosinor.glmm()} object that will be used to create polar plot.
+#' from the \code{cglmm()} object that will be used to create polar plot.
 #' If missing (default), then plots for all components will be arranged in the
 #' returned plot. If a single or multiple values are provided, then these
 #' components will be returned. (for example \code{component_index = 1},
@@ -71,7 +71,7 @@
 #' @export
 #'
 #' @examples
-#' model <- cosinor.glmm(
+#' model <- cglmm(
 #'   Y ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
 #' )
@@ -98,7 +98,7 @@ polar_plot <- function(x,
 
 #' Generates a polar plot with elliptical confidence intervals
 #'
-#' @param x An object of class \code{cosinor.glmm}
+#' @param x An object of class \code{cglmm}
 #' @param ci_level The level for calculated confidence ellipses.
 #' Defaults to 0.95.
 #' @param n_breaks The number of concentric circles that will be plotted using
@@ -109,7 +109,7 @@ polar_plot <- function(x,
 #' to result in the sequence: 0, 2, 4, 6, 8. See \code{?scales::breaks_pretty}
 #' for more details.
 #' @param component_index A number that corresponds to a particular component
-#' from the \code{cosinor.glmm()} object that will be used to create polar plot.
+#' from the \code{cglmm()} object that will be used to create polar plot.
 #' If missing (default), then plots for all components will be arranged in the
 #' returned plot. If a single or multiple values are provided, then these
 #' components will be returned. (for example \code{component_index = 1},
@@ -169,12 +169,12 @@ polar_plot <- function(x,
 #' @export
 #'
 #' @examples
-#' model <- cosinor.glmm(
+#' model <- cglmm(
 #'   Y ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
 #' )
 #' polar_plot(model)
-polar_plot.cosinor.glmm <- function(x,
+polar_plot.cglmm <- function(x,
                                     ci_level = 0.95,
                                     n_breaks = 5,
                                     component_index,
@@ -205,8 +205,8 @@ polar_plot.cosinor.glmm <- function(x,
                                     quietly = TRUE,
                                     ...) {
   # checking the quality of inputs
-  assertthat::assert_that(inherits(x, "cosinor.glmm"),
-    msg = "'x' must be of class cosinor.glmm"
+  assertthat::assert_that(inherits(x, "cglmm"),
+    msg = "'x' must be of class cglmm"
   )
 
   validate_ci_level(ci_level)
@@ -256,7 +256,7 @@ polar_plot.cosinor.glmm <- function(x,
                 "either TRUE or FALSE")
   )
 
-  # get summary statistics of cosinor.glmm object
+  # get summary statistics of cglmm object
   sum <- summary(x, ci_level = ci_level)
 
 
@@ -309,7 +309,7 @@ polar_plot.cosinor.glmm <- function(x,
 
   # get ggplot for a single component. Function will then be looped for
   # multiple components
-  sub_ggplot.cosinor.glmm.polar <- function(comp, ...) {
+  sub_ggplot.cglmm.polar <- function(comp, ...) {
     # get the component that is going to plotted
     component_index <- comp
     # get the arguments from the function wrapping this function
@@ -640,8 +640,8 @@ polar_plot.cosinor.glmm <- function(x,
   if (make_cowplot == TRUE & n_components > 1) {
     plot_list <- NULL
     for (i in 1:n_components) {
-      assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
-      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cosinor.glmm.polar(i))
+      assign(paste0("plot_obj", i), sub_ggplot.cglmm.polar(i))
+      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cglmm.polar(i))
     }
     final_obj <- cowplot::plot_grid(
       plotlist = plot_list,
@@ -652,8 +652,8 @@ polar_plot.cosinor.glmm <- function(x,
   if (make_cowplot == TRUE & n_components == 1) {
     plot_list <- NULL
     for (i in 1:n_components) {
-      assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
-      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cosinor.glmm.polar(i))
+      assign(paste0("plot_obj", i), sub_ggplot.cglmm.polar(i))
+      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cglmm.polar(i))
     }
     final_obj <- cowplot::plot_grid(
       plotlist = plot_list
@@ -664,8 +664,8 @@ polar_plot.cosinor.glmm <- function(x,
   else {
     plot_list <- NULL
     for (i in component_index) {
-      assign(paste0("plot_obj", i), sub_ggplot.cosinor.glmm.polar(i))
-      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cosinor.glmm.polar(i))
+      assign(paste0("plot_obj", i), sub_ggplot.cglmm.polar(i))
+      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cglmm.polar(i))
     }
     final_obj <- cowplot::plot_grid(
       plotlist = plot_list,

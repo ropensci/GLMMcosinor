@@ -1,6 +1,6 @@
-#' Print a brief summary of the \code{cosinor.glmm} model.
+#' Print a brief summary of the \code{cglmm} model.
 #'
-#' @param x A \code{cosinor.glmm} object.
+#' @param x A \code{cglmm} object.
 #' @param digits Controls the number of digits displayed in the summary output.
 #' @param ... Additional, ignored arguments.
 #'
@@ -11,12 +11,12 @@
 #'
 #' @examples
 #' # Single component cosinor model
-#' cosinor.glmm(
+#' cglmm(
 #'   Y ~ amp_acro(time_col = time, group = "X", period = 12),
 #'   data = vitamind
 #' )
 #' @export
-print.cosinor.glmm <- function(x, digits = getOption("digits"), ...) {
+print.cglmm <- function(x, digits = getOption("digits"), ...) {
   coef_list <- as.data.frame(x$raw_coefficients)
   colnames(coef_list) <- "Estimate"
   cat("\n Conditional Model \n")
