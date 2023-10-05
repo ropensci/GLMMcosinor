@@ -41,7 +41,7 @@ mod_2_component <- cglmm(
 test_output <- test_cosinor_levels(
   mod_2_component,
   param = "amp",
-   x_str = "group"
+  x_str = "group"
 )
 print(test_output$global.test)
 }

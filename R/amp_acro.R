@@ -1,5 +1,3 @@
-
-
 #' Used to specify a cosinor component in the model formula.
 #'
 #' Checks the validity of user inputs before creating an updated formula
