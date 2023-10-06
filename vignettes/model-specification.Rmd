@@ -178,7 +178,7 @@ autoplot(object)
 ```
 
 However, the groups in this dataset were simulated with two different
-MESORS, and so it would be more appropriate to specify an intercept term
+MESORs, and so it would be more appropriate to specify an intercept term
 in the formula, as this will estimate the MESOR for both `group = 0` and
 `group = 1`:
 
@@ -282,10 +282,10 @@ represents its component:
 -   `[group=1]:amp1 = 2.00645` represents the estimate for amplitude of
     `group 1` for the first component
 
--   `[group=0]:amp2 = 0.39776` represnts the estimate for amplitude of
+-   `[group=0]:amp2 = 0.39776` represents the estimate for amplitude of
     `group 0` for the second component
 
--   `[group=1]:amp2 = 1.00162` represnts the estimate for amplitude of
+-   `[group=1]:amp2 = 1.00162` represents the estimate for amplitude of
     `group 1` for the second component
 
 -   *Similarly for acrophase estimates*

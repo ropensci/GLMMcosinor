@@ -2,13 +2,13 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "GLMMcosinor",
-  "description": "Fit the cosinor model using the glmmTMB framework, allowing for a wide range of link functions and capacity of heirachical structures.",
-  "name": "GLMMcosinor: Fit a cosinor model using a generalised mixed modelling framework",
+  "description": "Fit the cosinor model using the glmmTMB framework, allowing for a wide range of link functions and capacity of hierarchical structures.",
+  "name": "GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling Framework",
   "relatedLink": "https://rwparsons.github.io/GLMMcosinor/",
   "codeRepository": "https://github.com/RWParsons/GLMMcosinor",
   "issueTracker": "https://github.com/RWParsons/GLMMcosinor/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.0",
+  "version": "0.1.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -281,10 +281,13 @@
       "identifier": "stats",
       "name": "stats"
     },
+    "10": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 2.10"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "625.596KB",
-  "releaseNotes": "https://github.com/RWParsons/GLMMcosinor/blob/master/NEWS.md",
-  "readme": "https://github.com/RWParsons/GLMMcosinor/blob/main/README.md",
-  "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main"]
+  "fileSize": "714.779KB"
 }

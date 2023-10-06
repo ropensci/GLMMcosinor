@@ -224,7 +224,7 @@ polar_plot(model, radial_units = "degrees")
 ```
 
 By default, the function creates creates polar plots for all components
-and stiches them together using the `make_cowplot = TRUE` argument. If
+and stitches them together using the `make_cowplot = TRUE` argument. If
 the user wishes to plot just one component, they can specify this by
 using `component_index`, though the `make_cowplot` argument must be
 `FALSE` for this to register.
@@ -273,7 +273,7 @@ polar_plot(model,
 ```
 
 If the user wishes to zoom into the confidence ellipses to show
-releveant information, they can adjust the view from the default `full`
+relevant information, they can adjust the view from the default `full`
 (which plots a full view of the polar plot) to `zoom` (which enlarges
 the smallest view window containing all confidence ellipses), or
 `zoom_origin` (which enlarges the smallest view window containing all

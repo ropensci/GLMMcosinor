@@ -7,7 +7,7 @@
 #'
 #' @param n The sample size. An \code{integer} greater than 0.
 #' @param mesor A \code{numeric}. The MESOR (midline estimating statistic of
-#' rhythm) for \code{group = 0}. The mesor is independent of the cosinor
+#' rhythm) for \code{group = 0}. The MESOR is independent of the cosinor
 #' components, so only one value is allowed even if there are multiple
 #' components in the data being simulated.
 #' @param amp A \code{numeric}. The amplitude value (for \code{group = 0} if

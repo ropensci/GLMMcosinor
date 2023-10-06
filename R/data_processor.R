@@ -1,5 +1,5 @@
-#' Fit the cosinorGLMM model using the output from update_formula_and_data() and
-#' a new formula
+#' Fit the cosinor GLMM model using the output from
+#' \code{update_formula_and_data()} and a new formula
 #'
 #' @param obj Output from `update_formula_and_data()`.
 #' @param formula A (optionally) new formula to use when fitting the cosinor

@@ -188,7 +188,7 @@ In this example:
 
 To simulate a dataset with more than two components, specify more elements in the vector inputs for these parameters. Ensure that the number of inputs for each parameter corresponds to the number of components specified in `n_components`. For example, if `n_components = 3`, then `amp`, `acro`, `period` must all have 3 elements corresponding to each of the three components.
 
-The following are examples of a multi-component cosinor dataset with mutliple groups. The first one is from a Poisson distribution, and the second is from a Gamma distribution
+The following are examples of a multi-component cosinor dataset with multiple groups. The first one is from a Poisson distribution, and the second is from a Gamma distribution
 
 ```{r, message=F, warning=F, fig.show = "hold"}
 testdata <- simulate_cosinor(100,
