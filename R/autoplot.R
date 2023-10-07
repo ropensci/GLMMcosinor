@@ -83,12 +83,28 @@ autoplot.cglmm <- function(object,
       )
     }
   }
+
+  if (!is.null(ranef_plot)){
+    for (i in ranef_plot) {
+      assertthat::assert_that(i %in% mixed_mod$ranef_groups,
+                              msg = paste(
+                                "'ranef_plot' must be string corresponding to",
+                                "the name of a random effect column in the",
+                                "original dataset from the cglmm object",
+                                "Column(s) with random effect variable:",
+                                mixed_mod$ranef_groups
+                              )
+      )
+    }
+  }
+
   assertthat::assert_that(is.character(type),
     msg = paste(
       "'type' must be a string. See type in ?predict for more",
       "information about valid inputs"
     )
   )
+
   if (!missing(xlims)) {
     assertthat::assert_that(
       length(xlims) == 2 & is.numeric(xlims) & xlims[1] < xlims[2],
@@ -99,6 +115,7 @@ autoplot.cglmm <- function(object,
       )
     )
   }
+
   if (!missing(pred.length.out)) {
     assertthat::assert_that(
       pred.length.out == floor(pred.length.out) & pred.length.out > 0,
