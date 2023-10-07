@@ -2,8 +2,8 @@
 % Please edit documentation in R/data_processor.R
 \name{fit_model_and_process}
 \alias{fit_model_and_process}
-\title{Fit the cosinorGLMM model using the output from update_formula_and_data() and
-a new formula}
+\title{Fit the cosinor GLMM model using the output from
+\code{update_formula_and_data()} and a new formula}
 \usage{
 fit_model_and_process(obj, formula, ...)
 }
@@ -19,8 +19,8 @@ model (maybe with random effects) or other covariates found in the data.}
 Returns a fitted cosinor model as a \code{cglmm} object.
 }
 \description{
-Fit the cosinorGLMM model using the output from update_formula_and_data() and
-a new formula
+Fit the cosinor GLMM model using the output from
+\code{update_formula_and_data()} and a new formula
 }
 \examples{
 # Use vitamind data but add a "patient" identifier used as a random effect

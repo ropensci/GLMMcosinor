@@ -86,7 +86,7 @@ autoplot.cglmm <- function(object,
 
   if (!is.null(ranef_plot)){
     for (i in ranef_plot) {
-      assertthat::assert_that(i %in% mixed_mod$ranef_groups,
+      assertthat::assert_that(i %in% object$ranef_groups,
                               msg = paste(
                                 "'ranef_plot' must be string corresponding to",
                                 "the name of a random effect column in the",

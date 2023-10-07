@@ -227,7 +227,7 @@ test_that("autoplot produces error messages", {
 
   dat_mixed <- do.call(
     "rbind",
-    lapply(1:30, function(x) {
+    lapply(1:5, function(x) {
       f_sample_id(
         id_num = x,
         mesor = rnorm(1, mean = 0, sd = 1),
@@ -297,7 +297,7 @@ test_that("autoplot produces error messages", {
 
   dat_mixed_2 <- do.call(
     "rbind",
-    lapply(1:30, function(x) {
+    lapply(1:5, function(x) {
       f_sample_id_2(
         id_num = x,
         mesor = rnorm(1, mean = 0, sd = 1),
