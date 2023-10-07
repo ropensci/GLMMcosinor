@@ -156,22 +156,6 @@ autoplot.cglmm <- function(object,
   }
 
 
-  # if there are multiple random effects groups, the time vector must be scaled
-  # appropriately. Otherwise, the number of simulated datapoints may be
-  # extremely large. For example, if pred.length.out = 400, and there are two
-  # random effects groups with 30 subjects each, then the final dataframe will
-  # be 400*30*30 = 360000 rows. Instead, this code restricts the number of data
-  # points to 10000. In future versions, this could be set to a variable that
-  # the user can input
-  # ranef_scale <- 1
-  # for (i in object$ranef_groups) {
-  # ranef_scale <- ranef_scale*length(levels(object$newdata[[i]]))
-  # }
-  #
-  # if(ranef_scale*pred.length.out >= 10000) {
-  #  pred.length.out <- 10000 %/% (ranef_scale)
-  # }
-
   # generate the time values for the x-axis
   if (!missing(xlims)) {
     # with multiple periods, largest is used for timeax simulation
@@ -332,48 +316,7 @@ autoplot.cglmm <- function(object,
 
 
   if (any(!is.na(object$ranef_groups))) {
-    # Prompt the user to choose from ranef_groups
-    #   if(length(unique(object$ranef_groups))>1) {
-    #   selected_group <- utils::select.list(
-    #     object$ranef_groups,
-    #     title = "Select a random variable to plot:",
-    #     multiple = FALSE
-    #   )
-    #
-    #   # Check if the selected_group is valid
-    #   if (selected_group %in% object$ranef_groups) {
-    #     cat("You selected:", selected_group, "\n")
-    #
-    #     # Determine the other groups
-    #     other_groups <- setdiff(object$ranef_groups, selected_group)
-    #
-    #     # Create an empty list to store user-defined values for other groups
-    #     other_values <- list()
-    #
-    #     # Prompt the user to input numbers for other groups
-    #     for (group in other_groups) {
-    #       fixed_number <- as.numeric(readline(paste("Enter the desired subject number from", group, ": ")))
-    #       # Check if fixed_number is a valid number within unique elements of ranef_groups
-    #       if (!is.na(fixed_number) && fixed_number %in% levels(object$newdata[[group]])) {
-    #         cat("You entered:", fixed_number, "for", group, "\n")
-    #         other_values[[group]] <- fixed_number
-    #       } else {
-    #         cat("Invalid input. Please enter a valid number within unique elements of ranef_groups.\n")
-    #       }
-    #       newdata_processed <-
-    #         newdata_processed[newdata_processed[[group]] == fixed_number,]
-    #
-    #     }
-    #
-    #     # Your plotting code for the selected group and other_values goes here
-    #   } else {
-    #     cat("Invalid selection. Please choose a valid group.\n")
-    #   }
-    #   } else {
-    #   selected_group <- object$ranef_groups
-    # }
 
-    ##
     if (superimpose.data) {
       original_data <- object$newdata
       original_data_processed <- object$newdata
@@ -394,21 +337,6 @@ autoplot.cglmm <- function(object,
         }
         i <- i + 1
       }
-
-
-      # original_data_processed[[selected_group]] <- paste0(
-      #   original_data_processed[[selected_group]],
-      #
-      #   selected_group,
-      #   "=",
-      #   original_data_processed[, selected_group]
-      # )
-      # # if there are multiple group levels, separate them by "|"
-      # if (i < length(x_str)) {
-      #   original_data_processed$levels <- paste0(
-      #     original_data_processed$levels, " | ")
-      # }
-      # i = i + 1
     }
 
     ## plotting
