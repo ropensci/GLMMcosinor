@@ -200,8 +200,12 @@ test_that("autoplot produces error messages", {
   )
 
   #
-  expect_no_error(autoplot(object))
+  expect_no_error(autoplot(object, predict.ribbon = TRUE))
+  expect_no_error(autoplot(object, x_str = NULL))
   expect_no_error(autoplot(object, x_str = "X", superimpose.data = TRUE))
+  expect_no_error(autoplot(object, x_str = NULL, predict.ribbon = TRUE,
+                           superimpose.data = TRUE))
+
   #
 
   library(dplyr)
