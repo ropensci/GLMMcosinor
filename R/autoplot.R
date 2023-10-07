@@ -92,7 +92,7 @@ autoplot.cglmm <- function(object,
                                 "the name of a random effect column in the",
                                 "original dataset from the cglmm object",
                                 "Column(s) with random effect variable:",
-                                mixed_mod$ranef_groups
+                                object$ranef_groups
                               )
       )
     }
@@ -339,7 +339,7 @@ autoplot.cglmm <- function(object,
       }
     }
 
-    ## plotting
+    #generating the plots
     if (!is.null(ranef_plot)) {
       if (missing(x_str) || is.null(x_str)) {
         plot_object <- ggplot2::ggplot() +
@@ -392,7 +392,8 @@ autoplot.cglmm <- function(object,
             ggplot2::facet_grid(rows = ggplot2::vars(NULL))
         }
       }
-    } else {
+    } else {#if a model has random effects, but no ranef is specified, then
+            #fixed effects will be used to generate the plot
       if (missing(x_str) || is.null(x_str)) {
         plot_object <- ggplot2::ggplot() +
           ggplot2::geom_line(
@@ -441,7 +442,7 @@ autoplot.cglmm <- function(object,
         }
       }
     }
-  } else {
+  } else { #this separates random effect models from fixed effects models
     if (superimpose.data) {
       original_data <- object$newdata
       original_data_processed <- object$newdata

@@ -199,6 +199,11 @@ test_that("autoplot produces error messages", {
     fixed = TRUE
   )
 
+  #
+  expect_no_error(autoplot(object))
+  expect_no_error(autoplot(object, x_str = "X", superimpose.data = TRUE))
+  #
+
   library(dplyr)
   f_sample_id <- function(id_num,
                           n = 30,
@@ -247,8 +252,10 @@ test_that("autoplot produces error messages", {
     data = dat_mixed
   )
   expect_no_error(autoplot(mixed_mod))
+  expect_no_error(autoplot(mixed_mod, x_str = NULL, superimpose.data = TRUE))
   expect_error(autoplot(mixed_mod, ranef_plot = "group"))
-  expect_no_error(autoplot(mixed_mod, ranef_plot = 'subject', superimpose.data = TRUE))
+  expect_no_error(autoplot(mixed_mod, ranef_plot = 'subject',
+                           superimpose.data = TRUE))
 
   #
   f_sample_id_2 <- function(id_num,
@@ -297,7 +304,7 @@ test_that("autoplot produces error messages", {
 
   dat_mixed_2 <- do.call(
     "rbind",
-    lapply(1:5, function(x) {
+    lapply(1:15, function(x) {
       f_sample_id_2(
         id_num = x,
         mesor = rnorm(1, mean = 0, sd = 1),
@@ -323,5 +330,11 @@ test_that("autoplot produces error messages", {
     ) + (1 + amp_acro1 | subject),
     data = dat_mixed_2
   )
-  expect_no_error(autoplot(mixed_mod_2, superimpose.data = TRUE, ranef_plot = 'subject'))
+  expect_no_error(autoplot(mixed_mod_2,
+                           superimpose.data = TRUE, ranef_plot = 'subject'))
+  expect_no_error(autoplot(mixed_mod_2, x_str = 'group',
+                           superimpose.data = TRUE, ranef_plot = 'subject'))
+  expect_no_error(autoplot(mixed_mod_2, x_str = 'group',
+                           superimpose.data = TRUE))
+
 })
