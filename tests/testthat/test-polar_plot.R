@@ -1,4 +1,8 @@
 test_that("polar_plot input checks work", {
+  withr::with_seed(
+    50,
+    {
+
   # Test 1
   data(vitamind)
   object <- cglmm(
@@ -19,7 +23,6 @@ test_that("polar_plot input checks work", {
 
 
   # Test 2
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -37,7 +40,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 3
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -54,7 +56,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 4
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -72,7 +73,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 5
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -89,7 +89,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 6
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -107,7 +106,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 7
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -125,7 +123,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 8
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -146,7 +143,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 9
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -165,19 +161,28 @@ test_that("polar_plot input checks work", {
     ), fixed = TRUE
   )
 
-  expect_no_error(polar_plot(object, ci_level = 0.9))
-  expect_no_error(polar_plot(object, n_breaks = 5))
-  expect_no_error(polar_plot(object, make_cowplot = FALSE))
-  expect_no_error(polar_plot(object, overlay_parameter_info = TRUE))
-  expect_no_error(polar_plot(object, fill_colours = c("blue", "red")))
-  expect_no_error(polar_plot(object, radial_units = "degrees"))
-  expect_no_error(polar_plot(object, radial_units = "period"))
-  expect_no_error(polar_plot(object, view = "zoom"))
-  expect_no_error(polar_plot(object, view = "zoom_origin"))
+
+  vdiffr::expect_doppelganger("test polar plot configuration 1",
+                              polar_plot(object, ci_level = 0.9))
+  vdiffr::expect_doppelganger("test polar plot configuration 2",
+                              polar_plot(object, n_breaks = 5))
+  vdiffr::expect_doppelganger("test polar plot configuration 3",
+                              polar_plot(object, make_cowplot = FALSE))
+  vdiffr::expect_doppelganger("test polar plot configuration 4",
+                              polar_plot(object, overlay_parameter_info = TRUE))
+  vdiffr::expect_doppelganger("test polar plot configuration 5",
+                              polar_plot(object, fill_colours = c("blue", "red")))
+  vdiffr::expect_doppelganger("test polar plot configuration 6",
+                              polar_plot(object, radial_units = "degrees"))
+  vdiffr::expect_doppelganger("test polar plot configuration 7",
+                              polar_plot(object, radial_units = "period"))
+  vdiffr::expect_doppelganger("test polar plot configuration 8",
+                              polar_plot(object, view = "zoom"))
+  vdiffr::expect_doppelganger("test polar plot configuration 9",
+                              polar_plot(object, view = "zoom_origin"))
 
 
   # Test 19
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -194,7 +199,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 20
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -211,7 +215,6 @@ test_that("polar_plot input checks work", {
   )
 
   # Test 21
-  data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
       group = "X",
@@ -228,6 +231,9 @@ test_that("polar_plot input checks work", {
       "'overlay_parameter_info' must be a logical argument,",
       "either TRUE or FALSE"
     ), fixed = TRUE
+  )
+
+    }
   )
 })
 

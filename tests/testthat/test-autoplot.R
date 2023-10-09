@@ -4,8 +4,7 @@
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
 
-
-test_that("autoplot input checks work", {
+test_that("autoplot works with simple inputs", {
   data(vitamind)
   object <- cglmm(
     vit_d ~ amp_acro(time,
@@ -15,14 +14,20 @@ test_that("autoplot input checks work", {
     data = vitamind
   )
 
-  # testing various inputs
-  expect_no_error(autoplot(object, superimpose.data = TRUE))
-  expect_no_error(autoplot(object, predict.ribbon = TRUE))
+  # testing autoplot with a simple model
+  vdiffr::expect_doppelganger("plot with superimposed data",
+                              autoplot(object, superimpose.data = TRUE))
+  vdiffr::expect_doppelganger("plot with predict ribbon enabled",
+                              autoplot(object, predict.ribbon = TRUE))
 })
 
 
 test_that("autoplot produces error messages", {
   data(vitamind)
+
+  #Testing error messages
+
+  # test 'x_str' argument
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
       group = "X",
@@ -31,15 +36,6 @@ test_that("autoplot produces error messages", {
     data = vitamind
   )
 
-  # Test 1
-  data(vitamind)
-  object <- cglmm(
-    vit_d ~ 1 + amp_acro(time,
-      group = "X",
-      period = 12
-    ),
-    data = vitamind
-  )
   f <- function() {
     autoplot(object, x_str = 10)
   }
@@ -52,32 +48,36 @@ test_that("autoplot produces error messages", {
     ), fixed = TRUE
   )
 
-  # Test 2
-  data(vitamind)
-  vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
-  object <- cglmm(
-    vit_d ~ X + amp_acro(time,
-      n_components = 3,
-      group = c("Z", NA, "X"),
-      period = c(12, 10, 8)
-    ),
-    data = vitamind
+  # test plots with different groups on different components
+  withr::with_seed(
+    50,{
+
+      vitamind$Z <- rbinom(length(vitamind$X), 3, prob = 0.5)
+      object <- cglmm(
+        vit_d ~ X + amp_acro(time,
+                             n_components = 3,
+                             group = c("Z", NA, "X"),
+                             period = c(12, 10, 8)
+        ),
+        data = vitamind
+      )
+
+      f <- function() {
+        autoplot(object, x_str = c("X", "Z"), pred.length.out = 200)
+      }
+      vdiffr::expect_doppelganger("check plots with multiple groups",f())
+
+      f <- function() {
+        autoplot(object)
+      }
+
+      vdiffr::expect_doppelganger("check a simple plot command", f())
+
+    }
   )
 
-  f <- function() {
-    autoplot(object, x_str = c("X", "Z"), pred.length.out = 200)
-  }
 
-  expect_no_error(f())
-
-  f <- function() {
-    autoplot(object)
-  }
-
-  # Test 3
-  expect_no_error(f())
-
-  # Test 4
+  # test 'type' argument
   data(vitamind)
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
@@ -98,8 +98,7 @@ test_that("autoplot produces error messages", {
     ), fixed = TRUE
   )
 
-  # Test 5
-  data(vitamind)
+  # test 'xlims' argument
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
       group = "X",
@@ -121,8 +120,7 @@ test_that("autoplot produces error messages", {
     fixed = TRUE
   )
 
-  # Test 6
-  data(vitamind)
+  # test 'pred.length.out' argument
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
       group = "X",
@@ -139,8 +137,7 @@ test_that("autoplot produces error messages", {
     regex = "'pred.length.out' must be an integer greater than 0", fixed = TRUE
   )
 
-  # Test 7
-  data(vitamind)
+  # test 'superimpose.data' argument
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
       group = "X",
@@ -161,8 +158,7 @@ test_that("autoplot produces error messages", {
     fixed = TRUE
   )
 
-  # Test 8
-  data(vitamind)
+  # test 'data_opacity' argument
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
       group = "X",
@@ -180,8 +176,7 @@ test_that("autoplot produces error messages", {
     fixed = TRUE
   )
 
-
-  data(vitamind)
+  #test 'predict.ribbon' argument
   object <- cglmm(
     vit_d ~ 1 + amp_acro(time,
       group = "X",
@@ -199,16 +194,34 @@ test_that("autoplot produces error messages", {
     fixed = TRUE
   )
 
-  #
-  expect_no_error(autoplot(object, predict.ribbon = TRUE))
-  expect_no_error(autoplot(object, x_str = NULL))
-  expect_no_error(autoplot(object, x_str = "X", superimpose.data = TRUE))
-  expect_no_error(autoplot(object, x_str = NULL, predict.ribbon = TRUE,
-                           superimpose.data = TRUE))
+  #check that plots are generated correctly
+  withr::with_seed(
+    50, {
+      vdiffr::expect_doppelganger("check predict.ribbon arg",autoplot(object,
+                                           predict.ribbon = TRUE))
+      vdiffr::expect_doppelganger("check x_str arg",autoplot(object,
+                                           x_str = NULL))
+      vdiffr::expect_doppelganger("check superimpose.data arg",autoplot(object,
+                                           x_str = "X",
+                                           superimpose.data = TRUE))
+      vdiffr::expect_doppelganger("chceck that multiple args work",
+                                  autoplot(object,
+                                           x_str = NULL,
+                                           predict.ribbon = TRUE,
+                                           superimpose.data = TRUE))
 
-  #
+    }
+  )
+
+
+  #test mixed model plots
+  withr::with_seed(
+    50,
+    {
 
   library(dplyr)
+
+  # generate a dataset with a random effect variable comprising 30 subjects
   f_sample_id <- function(id_num,
                           n = 30,
                           mesor,
@@ -255,13 +268,19 @@ test_that("autoplot produces error messages", {
     ) + (1 + amp_acro1 | subject),
     data = dat_mixed
   )
-  expect_no_error(autoplot(mixed_mod))
-  expect_no_error(autoplot(mixed_mod, x_str = NULL, superimpose.data = TRUE))
+
+  #test that the plots return expected figures for different configurations
+  vdiffr::expect_doppelganger("check simple plot",autoplot(mixed_mod))
+  vdiffr::expect_doppelganger("test superimpose",
+                              autoplot(mixed_mod,
+                                       x_str = NULL,
+                                       superimpose.data = TRUE))
   expect_error(autoplot(mixed_mod, ranef_plot = "group"))
-  expect_no_error(autoplot(mixed_mod, ranef_plot = 'subject',
+  vdiffr::expect_doppelganger("test ranef_plot arg",
+                              autoplot(mixed_mod, ranef_plot = 'subject',
                            superimpose.data = TRUE))
 
-  #
+  #testing a more complicated mixed model with multiple groups
   f_sample_id_2 <- function(id_num,
                           n = 30,
                           mesor,
@@ -334,11 +353,16 @@ test_that("autoplot produces error messages", {
     ) + (1 + amp_acro1 | subject),
     data = dat_mixed_2
   )
-  expect_no_error(autoplot(mixed_mod_2,
-                           superimpose.data = TRUE, ranef_plot = 'subject'))
-  expect_no_error(autoplot(mixed_mod_2, x_str = 'group',
-                           superimpose.data = TRUE, ranef_plot = 'subject'))
-  expect_no_error(autoplot(mixed_mod_2, x_str = 'group',
-                           superimpose.data = TRUE))
 
+  #test that the plots return expected figures for different configurations
+  vdiffr::expect_doppelganger("test_complex_mixed_mod",(autoplot(mixed_mod_2,
+                           superimpose.data = TRUE, ranef_plot = 'subject')))
+  vdiffr::expect_doppelganger("test group arg",(autoplot(mixed_mod_2,
+                                                         x_str = 'group',
+                           superimpose.data = TRUE, ranef_plot = 'subject')))
+  vdiffr::expect_doppelganger("test superimpose arg",(autoplot(mixed_mod_2,
+                                                               x_str = 'group',
+                           superimpose.data = TRUE)))
+
+    })
 })
