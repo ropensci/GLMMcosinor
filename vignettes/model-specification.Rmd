@@ -78,18 +78,18 @@ withr::with_seed(
 
 ## `cglmm()`
 
-`cglmm()` wrangles the data appropriately to fit the cosinor
-model given the formula specified by the user. It provides estimates of
-amplitude, acrophase, and MESOR (Midline Statistic Of Rhythm).
+`cglmm()` wrangles the data appropriately to fit the cosinor model given
+the formula specified by the user. It provides estimates of amplitude,
+acrophase, and MESOR (Midline Statistic Of Rhythm).
 
-The formula argument for `cglmm()` is specified using the
-`{lme4}` style (for details see `vignette("lmer", package = "lme4")`).
-The only difference is that it allows for use of an `amp_acro()` call
-within the formula that is used to identify the circadian components and
-relevant variables in the `data.frame`. Any other combination of
-covariates can also be included in the formula as well as random effects
-and zero-inflation (`ziformula`) and dispersion (`dispformula`)
-formulae. For detailed examples of how to specify models, see the
+The formula argument for `cglmm()` is specified using the `{lme4}` style
+(for details see `vignette("lmer", package = "lme4")`). The only
+difference is that it allows for use of an `amp_acro()` call within the
+formula that is used to identify the circadian components and relevant
+variables in the `data.frame`. Any other combination of covariates can
+also be included in the formula as well as random effects and
+zero-inflation (`ziformula`) and dispersion (`dispformula`) formulae.
+For detailed examples of how to specify models, see the
 [mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html),
 [model-specification](https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html)
 and
@@ -120,7 +120,9 @@ object
 
 The output shows the estimates for the raw coefficients in addition to
 the transformed estimates for amplitude (amp) and acrophase (acr) and
-MESOR (`(Intercept)`). The previous section of this vignette: [An overview of the statistical methods used for parameter estimation](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html#an-overview-of-the-statistical-methods-used-for-parameter-estimation)
+MESOR (`(Intercept)`). The previous section of this vignette: [An
+overview of the statistical methods used for parameter
+estimation](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html#an-overview-of-the-statistical-methods-used-for-parameter-estimation)
 outlines the difference between the raw coefficients and the transformed
 coefficients.
 
@@ -132,13 +134,13 @@ We would interpret the output as follows:
 
 -   `Acrophase estimate = 0.99913`
 
-Note that this estimate is in radians to align with conventions. To interpret 
-this, we can express `0.99913 radians` as a fraction of the total $2\pi$ and 
-multiply by the period to get the time when the response is a maximal. Hence,
-$\frac{0.99913}{2\pi} \times 12 = 1.908$ in the units of the `time_col` column
-in the original dataframe. This is saying that the peak response would occur
-after 1.908 time-units and every 12 time-units after this. We can confirm this
-by plotting:
+Note that this estimate is in radians to align with conventions. To
+interpret this, we can express `0.99913 radians` as a fraction of the
+total $2\pi$ and multiply by the period to get the time when the
+response is a maximal. Hence, $\frac{0.99913}{2\pi} \times 12 = 1.908$
+in the units of the `time_col` column in the original dataframe. This is
+saying that the peak response would occur after 1.908 time-units and
+every 12 time-units after this. We can confirm this by plotting:
 
 ```{r}
 autoplot(object, superimpose.data = TRUE)
@@ -297,17 +299,16 @@ represented as `group = NA`.
 
 For example, if we wanted only the first component to have a grouped
 component, we would specify the `group` argument as
-`group = c("group", NA))`. 
-
+`group = c("group", NA))`.
 
 For a detailed explanation of how to specify multi-component models, see
 [multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
 
 ### Dispersion and zero-inflation model specification
 
-The `cglmm()` function allows users to specify formulas for
-dispersion and zero-inflation models. These formulas are independent of
-the main formula specification:
+The `cglmm()` function allows users to specify formulas for dispersion
+and zero-inflation models. These formulas are independent of the main
+formula specification:
 
 ```{r, message=F, warning=F}
 testdata_disp_zi <- simulate_cosinor(1000,
@@ -355,13 +356,13 @@ chosen arbitrarily and purely for demonstration.*
 
 ## Using: 'summary(cglmm)'
 
-The `summary()` method for `cglmm` objects provides a more
-detailed summary of the model and its parameter estimates and
-uncertainty. It outputs the estimates, standard errors, confidence
-intervals, and $p$-values for both the raw model parameters and the
-transformed parameters. The summary statistics do not represent a
-comparison between any groups for the cosinor components - that is the
-role of the `test_cosinor()` function.
+The `summary()` method for `cglmm` objects provides a more detailed
+summary of the model and its parameter estimates and uncertainty. It
+outputs the estimates, standard errors, confidence intervals, and
+$p$-values for both the raw model parameters and the transformed
+parameters. The summary statistics do not represent a comparison between
+any groups for the cosinor components - that is the role of the
+`test_cosinor()` function.
 
 Here is an example of how to use `summary()`:
 
@@ -378,10 +379,10 @@ summary(object)
 ```
 
 The summary statistics for dispersion and zero-inflation models will
-also be provided by the `summary()` function, if the
-original `cglmm` object being analysed contains them. The
-following demonstration uses the model specified in the **Dispersion and
-Zero-inflation model specification** section of this vignette:
+also be provided by the `summary()` function, if the original `cglmm`
+object being analysed contains them. The following demonstration uses
+the model specified in the **Dispersion and Zero-inflation model
+specification** section of this vignette:
 
 ```{r, message=F, warning=F}
 summary(object_disp_zi)
@@ -391,3 +392,58 @@ summary(object_disp_zi)
 dispersion or zero-inflation characteristics, hence the lack of
 significant P-values in the model summary for the dispersion and
 zero-inflation models.*
+
+## Assessing residual diagnostics of `cglmm` regression models using DHARMa
+
+DHARMa is an R package used to assess residual diagnostics of regression
+models, including the generalised linear models generated by `cglmm()`
+[REFERENCE]. This will allow us to evaluate the appropriateness of
+specifying different models.
+
+We will consider an example from a study analysing the circadian
+expression of particular genes [REFERENCE]. In the paper, the data is
+modelled using a Gaussian distribution, but we claim that a mixed Gamma
+distribution with `subject` as a random effect variable would be more
+appropriate. Firstly, we will compare the plots of both models using
+`autoplot()`.
+
+```{r}
+library(GLMMcosinor)
+library(DHARMa)
+library(readr)
+
+mixed_mod_data <- as.data.frame(read_csv("data/mixed_mod_data.csv", 
+                                         show_col_types = FALSE))
+mixed_mod_data$mouse <-as.factor (mixed_mod_data$mouse) #make 'subject' a factor
+
+#Assuming a Normal distribution 
+object_normal_mod <- GLMMcosinor::cglmm(Y ~ group + amp_acro(
+  time, 
+  1, 
+  group = "group", 
+  period = 24), 
+  data = mixed_mod_data)
+
+autoplot(object_normal_mod, predict.ribbon = FALSE, superimpose.data = TRUE)
+
+#Assuming a mixed Gamma distribution. 
+object_gamma_mixed_mod <- suppressWarnings(GLMMcosinor::cglmm(Y ~ group + amp_acro(time, 1, group = "group", period = 24)+ (1 + amp_acro1|mouse), data = mixed_mod_data, family = "Gamma"(link = 'log')))
+autoplot(object_gamma_mixed_mod, superimpose.data = TRUE)
+
+#If we wanted to generate regression fits for each of the subjects, we could use the following code:
+autoplot(object_gamma_mixed_mod, superimpose.data = TRUE, ranef_plot = 'mouse')
+```
+
+Based on these figures, it seems that the Gamma model is a better fit.
+We will now generate residual plots using the DHARMa package:
+
+```{r}
+
+#DHARMa residuals for Gaussian model: 
+simulationOutput_GLMMcosinor <- simulateResiduals(fittedModel = object_normal_mod$fit, plot = T)
+
+#DHARMa residuals for Gamma mixed model: 
+simulationOutput_GLMMcosinor <- simulateResiduals(fittedModel = object_gamma_mixed_mod$fit, plot = T)
+```
+
+Based on these plots, we interpret that: [UNFINISHED]
