@@ -29,6 +29,7 @@ Imports:
 Suggests:
     cosinor,
     covr,
+    DHARMa,
     dplyr,
     DT,
     flextable,
