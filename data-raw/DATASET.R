@@ -66,5 +66,6 @@ withr::with_seed(
 
 })
 
-cosinor_mixed <- dat_mixed
+
+cosinor_mixed <- select(dat_mixed, -group)
 usethis::use_data(cosinor_mixed, overwrite = TRUE)
