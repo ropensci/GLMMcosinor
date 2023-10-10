@@ -219,8 +219,6 @@ test_that("autoplot produces error messages", {
     50,
     {
 
-  library(dplyr)
-
   # generate a dataset with a random effect variable comprising 30 subjects
   f_sample_id <- function(id_num,
                           n = 30,
@@ -260,7 +258,7 @@ test_that("autoplot produces error messages", {
       )
     })
   ) |>
-    mutate(subject = as.factor(subject))
+    dplyr::mutate(subject = as.factor(subject))
   mixed_mod <- cglmm(
     Y ~ amp_acro(times,
       n_components = 1,
@@ -343,7 +341,7 @@ test_that("autoplot produces error messages", {
       )
     })
   ) |>
-    mutate(subject = as.factor(subject))
+    dplyr::mutate(subject = as.factor(subject))
 
   mixed_mod_2 <- cglmm(
     Y ~ group + amp_acro(times,

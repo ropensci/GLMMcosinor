@@ -302,7 +302,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
           )
         })
       ) |>
-        mutate(subject = as.factor(subject))
+        dplyr::mutate(subject = as.factor(subject))
       mixed_mod <- cglmm(
         Y ~ amp_acro(times,
           n_components = 1,
