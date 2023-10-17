@@ -1,7 +1,9 @@
 # GLMMcosinor (development version | rOpenSci review)
 
+* Improve introduction to cosinor modelling in the getting-started vignette.
+
 * Fix small typos in vignettes/docs and make plot legend title consistent across
-`autoplot()` and `polar_plot()`
+`autoplot()` and `polar_plot()`.
 
 * Rename functions to be `snake_case` and all S3 class names to `camelCase`.
 

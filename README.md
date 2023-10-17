@@ -18,16 +18,17 @@ Review](https://badges.ropensci.org/603_status.svg)](https://github.com/ropensci
 <!-- badges: end -->
 
 The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data
-but allow the functionality of a generalised linear (mixed-) model (GLM)
-framework using `{glmmTMB}`. For example, this includes the ability to
-use link functions appropriate for outcome variables that are Gaussian,
-Poisson, Gamma, or Binomial.
+except with all the flexibility and functionality of a generalised
+linear (mixed-) model (GLM) framework using `{glmmTMB}`.
+
+For an introduction to the cosinor model, see the [getting started
+vignette](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html).
 
 Existing statistical software for circadian data analyses (including
-`cosinor` or `circacompare`) allow the user to fit such data using a
-regression model, but many are limited due to the lack being able to
-specify a link function, multiple components, or a hierarchical
-structure. `GLMMcosinor` aims to be comprehensive and flexible and is an
+`cosinor` or `circacompare`) allow the user to fit data using a
+regression model, but many are limited due to their inability to specify
+a link function, multiple components, or a hierarchical structure.
+`GLMMcosinor` aims to be comprehensive and flexible and is an
 improvement on other implementations of the cosinor model in R or
 Python. See table below for features available within currently
 available methods.
@@ -53,11 +54,14 @@ library(GLMMcosinor)
 ```
 
 ``` r
-data(vitamind)
 model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12), 
   data = vitamind
 )
+#> Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
+#> TMB was built with Matrix version 1.6.1.1
+#> Current Matrix version is 1.5.4.1
+#> Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package
 summary(model)
 #> 
 #>  Conditional Model 
