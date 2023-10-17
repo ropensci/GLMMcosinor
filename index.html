@@ -92,8 +92,9 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of <a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a> is to fit a cosinor model to rhythmic data but allow the functionality of a generalised linear (mixed-) model (GLM) framework using <a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a>. For example, this includes the ability to use link functions appropriate for outcome variables that are Gaussian, Poisson, Gamma, or Binomial.</p>
-<p>Existing statistical software for circadian data analyses (including <code>cosinor</code> or <code>circacompare</code>) allow the user to fit such data using a regression model, but many are limited due to the lack being able to specify a link function, multiple components, or a hierarchical structure. <code>GLMMcosinor</code> aims to be comprehensive and flexible and is an improvement on other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.</p>
+<p>The goal of <a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a> is to fit a cosinor model to rhythmic data except with all the flexibility and functionality of a generalised linear (mixed-) model (GLM) framework using <a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a>.</p>
+<p>For an introduction to the cosinor model, see the <a href="https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html">getting started vignette</a>.</p>
+<p>Existing statistical software for circadian data analyses (including <code>cosinor</code> or <code>circacompare</code>) allow the user to fit data using a regression model, but many are limited due to their inability to specify a link function, multiple components, or a hierarchical structure. <code>GLMMcosinor</code> aims to be comprehensive and flexible and is an improvement on other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.</p>
 <p><img src="reference/figures/methods-table.png" width="=900px" alt="flextable formats" align="center"></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -110,11 +111,14 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RWParsons/GLMMcosinor" class="external-link">GLMMcosinor</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vitamind</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cglmm.html">cglmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">vit_d</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="reference/amp_acro.html">amp_acro</a></span><span class="op">(</span><span class="va">time</span>, group <span class="op">=</span> <span class="st">"X"</span>, period <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, </span>
 <span>  data <span class="op">=</span> <span class="va">vitamind</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(): Package version inconsistency detected.</span></span>
+<span><span class="co">#&gt; TMB was built with Matrix version 1.6.1.1</span></span>
+<span><span class="co">#&gt; Current Matrix version is 1.5.4.1</span></span>
+<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Conditional Model </span></span>
