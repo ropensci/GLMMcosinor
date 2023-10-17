@@ -18,54 +18,45 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r, echo=F}
 library(GLMMcosinor)
-data(vitamind)
-
-testdata_simple <- simulate_cosinor(100,
-  n_period = 2,
-  mesor = 5,
-  amp = 2,
-  acro = 1,
-  beta.mesor = 4,
-  beta.amp = 1,
-  beta.acro = 0.5,
-  family = "poisson",
-  period = c(12),
-  n_components = 1
-)
-
-testdata_two_components <- simulate_cosinor(1000,
-  n_period = 2,
-  mesor = 1,
-  amp = c(0.1, 0.4),
-  acro = c(1, 1.5),
-  beta.mesor = 1.1,
-  beta.amp = c(0.4, 0.1),
-  beta.acro = c(1, 1.2),
-  family = "poisson",
-  period = c(12, 6),
-  n_components = 2
-)
-
-testdata_period_diff <- simulate_cosinor(1000,
-  n_period = 1,
-  mesor = 7,
-  amp = c(0.1, 0.4),
-  acro = c(1, 1.5),
-  family = "poisson",
-  period = c(12, 1000),
-  n_components = 2
-)
+withr::with_seed(42, {
+  testdata_two_components <- simulate_cosinor(
+    1000,
+    n_period = 2,
+    mesor = 1,
+    amp = c(0.1, 0.4),
+    acro = c(1, 1.5),
+    beta.mesor = 1.1,
+    beta.amp = c(0.4, 0.1),
+    beta.acro = c(1, 1.2),
+    family = "poisson",
+    period = c(12, 6),
+    n_components = 2
+  )
+  
+  testdata_period_diff <- simulate_cosinor(
+    1000,
+    n_period = 1,
+    mesor = 7,
+    amp = c(0.1, 0.4),
+    acro = c(1, 1.5),
+    family = "poisson",
+    period = c(12, 1000),
+    n_components = 2
+  )
+})
 ```
 
 ## Plotting cglmm objects
 
-The GLMMcosinor package includes two ways to visualise cglmm
-objects. Firstly, the function ggplot.cglmm() creates a
-time-response plot of the fitted model:
+The `GLMMcosinor` package includes two ways to visualise models from `cglmm()`.
+Firstly, the function `autoplot()` creates a time-response plot of the fitted 
+model:
 
 ```{r, message=F, warning=F}
+library(GLMMcosinor)
+
 object <- cglmm(
   vit_d ~ X + amp_acro(time,
     group = "X",
@@ -76,7 +67,7 @@ object <- cglmm(
 autoplot(object, x_str = "X")
 ```
 
-This function also allows users to superimpose the datapoints (that the
+This function also allows users to superimpose the data points (that the
 fit is based on) over the fitted model, using the
 `superimpose.data = TRUE` argument:
 
@@ -101,9 +92,26 @@ The following examples demonstrate how `x_str` can be used to produce
 different plots for the same model. Note how `predict.ribbon` can be set
 to `FALSE` to remove the prediction interval from the plots.
 
+```{r, echo=F}
+testdata_two_components <- simulate_cosinor(
+  1000,
+  n_period = 2,
+  mesor = 1,
+  amp = c(0.1, 0.4),
+  acro = c(1, 1.5),
+  beta.mesor = 1.1,
+  beta.amp = c(0.4, 0.1),
+  beta.acro = c(1, 1.2),
+  family = "poisson",
+  period = c(12, 6),
+  n_components = 2
+)
+```
+
+
 ```{r, message=F, warning=F}
-testdata_two_components_mod <- testdata_two_components
-testdata_two_components_mod$X <- rbinom(length(testdata_two_components$group),
+testdata_two_components <- testdata_two_components
+testdata_two_components$X <- rbinom(length(testdata_two_components$group),
   2,
   prob = 0.5
 )
@@ -113,7 +121,7 @@ object <- cglmm(
     period = c(12, 6),
     group = c("group", "X")
   ),
-  data = testdata_two_components_mod,
+  data = testdata_two_components,
   family = poisson()
 )
 autoplot(object, predict.ribbon = FALSE)
@@ -126,7 +134,7 @@ object <- cglmm(
     period = c(12, 6),
     group = c("group", "X")
   ),
-  data = testdata_two_components_mod,
+  data = testdata_two_components,
   family = poisson()
 )
 autoplot(object, x_str = "X", predict.ribbon = FALSE)
@@ -139,7 +147,7 @@ object <- cglmm(
     period = c(12, 6),
     group = c("group", "X")
   ),
-  data = testdata_two_components_mod,
+  data = testdata_two_components,
   family = poisson()
 )
 autoplot(object, x_str = "group", predict.ribbon = FALSE)
@@ -159,7 +167,7 @@ object <- cglmm(
     period = c(12, 6),
     group = c("group", "X")
   ),
-  data = testdata_two_components_mod,
+  data = testdata_two_components,
   family = poisson()
 )
 autoplot(object, x_str = "group", predict.ribbon = TRUE, xlims = c(13, 15))
@@ -171,6 +179,19 @@ automatically generate an appropriate number of points to plot such that
 the smallest period has sufficient resolution to appreciate cosinor
 behaviour. This can be adjusted using the `points_per_min_cycle_length`
 argument which is 20 by default.
+
+```{r, eval=F}
+testdata_period_diff <- simulate_cosinor(
+    1000,
+    n_period = 1,
+    mesor = 7,
+    amp = c(0.1, 0.4),
+    acro = c(1, 1.5),
+    family = "poisson",
+    period = c(12, 1000),
+    n_components = 2
+  )
+```
 
 ```{r, message=F, warning=F}
 object <- cglmm(
