@@ -237,6 +237,15 @@ test_that("polar_plot input checks work", {
   )
 })
 
+test_that("polar_plot works without grouping", {
+  object <- cglmm(vit_d ~ amp_acro(time, period = 12), data = vitamind)
+  polar_plot(object)
+  vdiffr::expect_doppelganger(
+    "polar_plot-without grouping",
+    polar_plot(object)
+  )
+})
+
 
 
 test_that("polar_plot messages work", {

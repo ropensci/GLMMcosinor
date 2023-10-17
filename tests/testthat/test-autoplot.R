@@ -4,6 +4,19 @@
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
 
+test_that("autoplot works with non-grouped model", {
+  object <- cglmm(
+    vit_d ~ amp_acro(time, period = 12),
+    data = vitamind[vitamind$X == 1,]
+  )
+
+  # testing autoplot with a simple model
+  vdiffr::expect_doppelganger("non-grouped plot with data",
+                              autoplot(object, superimpose.data = TRUE))
+  vdiffr::expect_doppelganger("non-grouped plot with predict ribbon",
+                              autoplot(object, predict.ribbon = TRUE))
+})
+
 test_that("autoplot works with simple inputs", {
   data(vitamind)
   object <- cglmm(
