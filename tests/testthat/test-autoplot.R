@@ -17,6 +17,21 @@ test_that("autoplot works with non-grouped model", {
                               autoplot(object, predict.ribbon = TRUE))
 })
 
+# test_that("autoplot works model that has other covariates", {
+#   test_data <- vitamind[vitamind$X == 1,]
+#
+#   test_data$new_cat_var <- sample(c("a", "b", "c"), size = nrow(test_data), replace = TRUE)
+#   test_data$new_num_var <- rnorm(n = nrow(test_data))
+#
+#   object <- cglmm(
+#     vit_d ~ amp_acro(time, period = 12) + new_cat_var + new_num_var,
+#     data = test_data
+#   )
+#
+#
+#   vdiffr::expect_doppelganger("model-with-covariates", autoplot(object))
+# })
+
 test_that("autoplot works with simple inputs", {
   data(vitamind)
   object <- cglmm(
