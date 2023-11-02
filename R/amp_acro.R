@@ -338,6 +338,13 @@ amp_acro <- function(time_col,
     )
     newformula <- stats::update.formula(newformula, ~.)
 
+    #storing the covariates. If none, then 'covariates' stored as 'NULL'
+    if (is.character(non_acro_formula) && length(non_acro_formula) == 0) {
+      covariates <- NULL
+    } else {
+    covariates <- non_acro_formula
+    }
+
     # update the formula
     time_name <- paste(substitute(time_col, .env))
     # create NULL vectors for group metrics. These will be updated if there is
@@ -361,7 +368,8 @@ amp_acro <- function(time_col,
       group_check = group_check,
       time_name = time_name,
       response_var = left_part,
-      group_original = group_original
+      group_original = group_original,
+      covariates = covariates
     ))
   }
   res <- amp_acro_iteration(

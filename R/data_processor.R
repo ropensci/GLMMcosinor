@@ -123,6 +123,7 @@ data_processor <- function(newdata,
                            response_var,
                            group_original,
                            ranef_groups,
+                           covariates,
                            ...) {
   group_names <- names(group_stats)
   if (dispformula_check) {
@@ -244,7 +245,8 @@ data_processor <- function(newdata,
       response_var = response_var,
       newdata = newdata,
       group_original = group_original,
-      ranef_groups = ranef_groups
+      ranef_groups = ranef_groups,
+      covariates = covariates
     ),
     class = "cglmm"
   )

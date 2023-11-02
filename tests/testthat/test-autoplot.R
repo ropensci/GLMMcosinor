@@ -17,21 +17,42 @@ test_that("autoplot works with non-grouped model", {
                               autoplot(object, predict.ribbon = TRUE))
 })
 
-# test_that("autoplot works model that has other covariates", {
-#   test_data <- vitamind[vitamind$X == 1,]
-#
-#   test_data$new_cat_var <- sample(c("a", "b", "c"), size = nrow(test_data), replace = TRUE)
-#   test_data$new_num_var <- rnorm(n = nrow(test_data))
-#
-#   object <- cglmm(
-#     vit_d ~ amp_acro(time, period = 12) + new_cat_var + new_num_var,
-#     data = test_data
-#   )
-#
-#
-#   vdiffr::expect_doppelganger("model-with-covariates", autoplot(object))
-# })
+###
+test_that("autoplot works model that has other covariates", {
+  withr::with_seed(
+    50,{
 
+  data(vitamind)
+  test_data <- vitamind[vitamind$X == 1,]
+
+  test_data$new_cat_var <- sample(c("a", "b", "c"), size = nrow(test_data), replace = TRUE)
+  test_data$new_num_var <- rnorm(n = nrow(test_data))
+
+  object <- cglmm(
+    vit_d ~ amp_acro(time, period = 12) + new_cat_var + new_num_var,
+    data = test_data
+  )
+
+
+  vdiffr::expect_doppelganger("model-with-covariates",
+                              autoplot(object,
+                                       cov_list = list(new_cat_var = 'a',
+                                                       new_num_var = 1),
+                                       superimpose.data = TRUE))
+
+  vdiffr::expect_doppelganger("model-with-covariates_not_specified",
+                              autoplot(object))
+  expect_message(autoplot(object, quietly = FALSE),
+                 regex = paste0("'cov_list' was not specified, but there are",
+                 " covariates in the original model; the first element of each",
+                 " covariatecolumn from the original dataframe will be used",
+                 " as reference levels:
+cov_list = list(new_cat_var = 'c', new_num_var = -0.540933398827827)"),
+                 fixed = TRUE)
+
+})
+})
+###
 test_that("autoplot works with simple inputs", {
   data(vitamind)
   object <- cglmm(
