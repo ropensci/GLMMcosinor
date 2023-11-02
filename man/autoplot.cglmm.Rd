@@ -16,6 +16,8 @@
   data_opacity = 0.3,
   predict.ribbon = TRUE,
   ranef_plot = NULL,
+  cov_list = NULL,
+  quietly = TRUE,
   ...
 )
 }
@@ -55,9 +57,15 @@ opacity of the superimposed data. (Used as the \code{alpha} when calling
 is plotted.}
 
 \item{ranef_plot}{Specify the random effects variables that you wish to plot.
-If not specified, only the fixed effects will be visualised.
+If not specified, only the fixed effects will be visualised.}
+
+\item{cov_list}{Specify the levels of the covariates that you wish to plot
+If not specified, the reference level of the covariate(s) will be used
 \code{points_per_min_cycle_length} is the number of points plotted per the
 minimum cycle length (period) of all cosinor components in the model.}
+
+\item{quietly}{A \code{logical}. If \code{TRUE}, shows warning messages when
+wrangling data and fitting model. Defaults to \code{TRUE}.}
 
 \item{...}{Additional, ignored arguments.}
 }
