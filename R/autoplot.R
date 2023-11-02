@@ -101,6 +101,35 @@ autoplot.cglmm <- function(object,
                               )
       )
     }
+
+    message_cov_list <- NULL
+    missing_covariates_check <- FALSE
+    for (i in object$covariates){
+      if(!(i %in% names(cov_list))){#
+        missing_covariates_check <- TRUE
+        reference_level <- object$newdata[[i[1]]][1]
+
+        cov_list[[i]] <- reference_level
+
+        #this ensures that the class of the reference level is maintained in
+        #the error message. Consequently, the user can use this 'cov_list' arg
+        #or a modified version in their original autoplot() call if they wish to
+        formatted_reference_level <- ifelse(is.character(reference_level),
+                                            paste0("'", reference_level, "'"),
+                                            as.character(reference_level))
+
+        message_cov_list[[i]] <- paste0(i, " = ", formatted_reference_level)
+      }#
+    }
+    if(!quietly && missing_covariates_check) {
+      message(paste0("Not all covariates from the original model were specified",
+                     " in the 'cov_list' argument. The first element of each",
+                     " unspecified covariate column from the original dataframe",
+                     " will be used as reference levels:", '\n',
+                     "cov_list = list(",
+                     paste(message_cov_list, collapse = ', '), ")"))
+    }
+
   }
 
   #if cov_list isn't specified, the first entry for each covariate will assigned
@@ -124,7 +153,7 @@ autoplot.cglmm <- function(object,
     if(!quietly) {
     message(paste0("'cov_list' was not specified, but there are covariates in ",
                   "the original model; the first element of each covariate",
-                  "column from the original dataframe will be used as ",
+                  " column from the original dataframe will be used as ",
                   "reference levels:", '\n',
                   "cov_list = list(",
                 paste(message_cov_list, collapse = ', '), ")"))

@@ -45,10 +45,17 @@ test_that("autoplot works model that has other covariates", {
   expect_message(autoplot(object, quietly = FALSE),
                  regex = paste0("'cov_list' was not specified, but there are",
                  " covariates in the original model; the first element of each",
-                 " covariatecolumn from the original dataframe will be used",
+                 " covariate column from the original dataframe will be used",
                  " as reference levels:
 cov_list = list(new_cat_var = 'c', new_num_var = -0.540933398827827)"),
                  fixed = TRUE)
+
+  vdiffr::expect_doppelganger("model-with-covariates_some_specified",
+                              autoplot(object,
+                                       cov_list = list(new_cat_var = 'c')))
+
+  expect_message(autoplot(object, cov_list = list(new_cat_var = 'c'), quietly = FALSE))
+
 
 })
 })
