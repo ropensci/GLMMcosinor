@@ -83,6 +83,8 @@ Optionally allows for plotting by covariates</p>
 <span>  data_opacity <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  predict.ribbon <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ranef_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cov_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quietly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -145,9 +147,19 @@ is plotted.</p></dd>
 
 <dt>ranef_plot</dt>
 <dd><p>Specify the random effects variables that you wish to plot.
-If not specified, only the fixed effects will be visualised.
+If not specified, only the fixed effects will be visualised.</p></dd>
+
+
+<dt>cov_list</dt>
+<dd><p>Specify the levels of the covariates that you wish to plot
+If not specified, the reference level of the covariate(s) will be used
 <code>points_per_min_cycle_length</code> is the number of points plotted per the
 minimum cycle length (period) of all cosinor components in the model.</p></dd>
+
+
+<dt>quietly</dt>
+<dd><p>A <code>logical</code>. If <code>TRUE</code>, shows warning messages when
+wrangling data and fitting model. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt>...</dt>
