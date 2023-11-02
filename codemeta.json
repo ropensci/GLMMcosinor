@@ -33,6 +33,34 @@
       "givenName": "Nicole",
       "familyName": "White",
       "@id": "https://orcid.org/0000-0002-9292-0773"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Oliver",
+      "familyName": "Rawashdeh",
+      "@id": "https://orcid.org/0000-0002-7147-4778"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Prasad",
+      "familyName": "Chunduri",
+      "@id": "https://orcid.org/0000-0001-7297-7580"
+    }
+  ],
+  "funder": [
+    {
+      "@type": "Person",
+      "givenName": "Oliver",
+      "familyName": "Rawashdeh",
+      "@id": "https://orcid.org/0000-0002-7147-4778"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Prasad",
+      "familyName": "Chunduri",
+      "@id": "https://orcid.org/0000-0001-7297-7580"
     }
   ],
   "maintainer": [
@@ -68,6 +96,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "DHARMa",
+      "name": "DHARMa",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=DHARMa"
     },
     {
       "@type": "SoftwareApplication",
@@ -289,5 +329,14 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "714.779KB"
+  "fileSize": "2916.288KB",
+  "releaseNotes": "https://github.com/RWParsons/GLMMcosinor/blob/master/NEWS.md",
+  "readme": "https://github.com/RWParsons/GLMMcosinor/blob/main/README.md",
+  "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main"],
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/603",
+    "provider": "https://ropensci.org"
+  }
 }

@@ -36,6 +36,12 @@ Authors:
 \itemize{
   \item Oliver Jayasinghe
   \item Nicole White (\href{https://orcid.org/0000-0002-9292-0773}{ORCID})
+  \item Oliver Rawashdeh (\href{https://orcid.org/0000-0002-7147-4778}{ORCID}) [funder]
+}
+
+Other contributors:
+\itemize{
+  \item Prasad Chunduri (\href{https://orcid.org/0000-0001-7297-7580}{ORCID}) [contributor, funder]
 }
 
 }
