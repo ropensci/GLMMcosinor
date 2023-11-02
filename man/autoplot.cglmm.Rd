@@ -16,6 +16,8 @@
   data_opacity = 0.3,
   predict.ribbon = TRUE,
   ranef_plot = NULL,
+  cov_list = NULL,
+  quietly = TRUE,
   ...
 )
 }
@@ -55,9 +57,19 @@ opacity of the superimposed data. (Used as the \code{alpha} when calling
 is plotted.}
 
 \item{ranef_plot}{Specify the random effects variables that you wish to plot.
-If not specified, only the fixed effects will be visualised.
+If not specified, only the fixed effects will be visualised.}
+
+\item{cov_list}{Specify the levels of the covariates that you wish to plot as
+a list. For example, if you have two covariants: var1, and var 2, you could
+fix the level to be plotted as such \code{cov_list = list(var1 = 'a', var2 = 1)},
+where 'a' is a level in 'var1', and 1 is a level in 'var2'. See the examples
+for a demonstration.
+If not specified, the reference level of the covariate(s) will be used.
 \code{points_per_min_cycle_length} is the number of points plotted per the
 minimum cycle length (period) of all cosinor components in the model.}
+
+\item{quietly}{A \code{logical}. If \code{TRUE}, shows warning messages when
+wrangling data and fitting model. Defaults to \code{TRUE}.}
 
 \item{...}{Additional, ignored arguments.}
 }
@@ -70,9 +82,25 @@ values.
 Optionally allows for plotting by covariates
 }
 \examples{
+#A simple model
 model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )
 autoplot(model, x_str = "X")
+
+
+#Plotting a model with various covariates
+test_data <- vitamind[vitamind$X == 1,]
+test_data$var1 <- sample(c("a", "b", "c"), size = nrow(test_data), replace = TRUE)
+test_data$var2 <- rnorm(n = nrow(test_data))
+
+object <- cglmm(
+  vit_d ~ amp_acro(time, period = 12) + var1 + var2,
+  data = test_data
+)
+autoplot(object,
+         cov_list = list(var1 = 'a',
+                         var2 = 1),
+         superimpose.data = TRUE)
 }
