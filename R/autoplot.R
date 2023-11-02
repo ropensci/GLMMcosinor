@@ -35,6 +35,10 @@ ggplot2::autoplot
 #' to create plot if \code{pred.length.out} is missing.
 #' @param ranef_plot Specify the random effects variables that you wish to plot.
 #'  If not specified, only the fixed effects will be visualised.
+#' @param quietly A \code{logical}. If \code{TRUE}, shows warning messages when
+#' wrangling data and fitting model. Defaults to \code{TRUE}.
+#' @param cov_list Specify the levels of the covariates that you wish to plot
+#'  If not specified, the reference level of the covariate(s) will be used
 #' \code{points_per_min_cycle_length} is the number of points plotted per the
 #' minimum cycle length (period) of all cosinor components in the model.
 #' @param ... Additional, ignored arguments.
@@ -64,12 +68,13 @@ autoplot.cglmm <- function(object,
                            data_opacity = 0.3,
                            predict.ribbon = TRUE,
                            ranef_plot = NULL,
+                           cov_list = NULL,
+                           quietly = TRUE,
                            ...) {
   # Validating user inputs
   assertthat::assert_that(inherits(object, "cglmm"),
     msg = "'object' must be of class 'cglmm'"
   )
-
 
   validate_ci_level(ci_level)
 
@@ -84,6 +89,51 @@ autoplot.cglmm <- function(object,
     }
   }
 
+
+  if (!is.null(cov_list)){
+    for (i in names(cov_list)) {
+      assertthat::assert_that(i %in% colnames(object$newdata) &&
+                                i %in% object$covariates,
+                              msg = paste(
+                                "'cov_list' must be a list corresponding to",
+                                "covariates specified in the cglmm object: ",
+                                paste(object$covariates, collapse = ", ")
+                              )
+      )
+    }
+  }
+
+  #if cov_list isn't specified, the first entry for each covariate will assigned
+  #as the reference level
+  if(is.null(cov_list) && !is.null(object$covariates)) {
+    message_cov_list <- NULL
+    for (i in object$covariates) {
+      reference_level <- object$newdata[[i[1]]][1]
+
+      cov_list[[i]] <- reference_level
+
+      #this ensures that the class of the reference level is maintained in
+      #the error message. Consequently, the user can use this 'cov_list' arg
+      #or a modified version in their original autoplot() call if they wish to.
+      formatted_reference_level <- ifelse(is.character(reference_level),
+                                    paste0("'", reference_level, "'"),
+                                    as.character(reference_level))
+
+      message_cov_list[[i]] <- paste0(i, " = ", formatted_reference_level)
+    }
+    if(!quietly) {
+    message(paste0("'cov_list' was not specified, but there are covariates in ",
+                  "the original model; the first element of each covariate",
+                  "column from the original dataframe will be used as ",
+                  "reference levels:", '\n',
+                  "cov_list = list(",
+                paste(message_cov_list, collapse = ', '), ")"))
+    }
+  }
+
+
+
+
   if (!is.null(ranef_plot)){
     for (i in ranef_plot) {
       assertthat::assert_that(i %in% object$ranef_groups,
@@ -92,7 +142,7 @@ autoplot.cglmm <- function(object,
                                 "the name of a random effect column in the",
                                 "original dataset from the cglmm object",
                                 "Column(s) with random effect variable:",
-                                object$ranef_groups
+                                paste(object$ranef_groups, collapse = ", ")
                               )
       )
     }
@@ -288,6 +338,14 @@ autoplot.cglmm <- function(object,
 
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
+  #
+  #adding covariate columns
+  for (i in names(cov_list)) {
+    fixed_value <- cov_list[[i]]
+    newdata[[i]] <- fixed_value
+  }
+
+  #
   newdata_processed <- data_processor_plot(object, newdata, x_str)
 
   # get the response data from the cglmm object
