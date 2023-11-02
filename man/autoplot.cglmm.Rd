@@ -65,10 +65,6 @@ fix the level to be plotted as such \code{cov_list = list(var1 = 'a', var2 = 1)}
 where 'a' is a level in 'var1', and 1 is a level in 'var2'. See the examples
 for a demonstration.
 If not specified, the reference level of the covariate(s) will be used.
-
-\item{cov_list}{Specify the levels of the covariates that you wish to plot
-If not specified, the reference level of the covariate(s) will be used
-
 \code{points_per_min_cycle_length} is the number of points plotted per the
 minimum cycle length (period) of all cosinor components in the model.}
 
