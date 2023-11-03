@@ -29,7 +29,7 @@ ggplot2::autoplot
 #' @param data_opacity A number between 0 and 1 inclusive that controls the
 #' opacity of the superimposed data. (Used as the \code{alpha} when calling
 #' \code{ggplot2::geom_point()}).
-#' @param predict.ribbon A code{logical}. If \code{TRUE}, a prediction interval
+#' @param predict.ribbon A \code{logical}. If \code{TRUE}, a prediction interval
 #' is plotted.
 #' @param points_per_min_cycle_length Used to determine the number of samples
 #' to create plot if \code{pred.length.out} is missing.
