@@ -53,7 +53,7 @@ over the predicted fit.}
 opacity of the superimposed data. (Used as the \code{alpha} when calling
 \code{ggplot2::geom_point()}).}
 
-\item{predict.ribbon}{A code{logical}. If \code{TRUE}, a prediction interval
+\item{predict.ribbon}{A \code{logical}. If \code{TRUE}, a prediction interval
 is plotted.}
 
 \item{ranef_plot}{Specify the random effects variables that you wish to plot.
