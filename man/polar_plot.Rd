@@ -113,6 +113,7 @@ Returns a \code{ggplot} object.
 Generates a polar plot with elliptical confidence intervals
 }
 \examples{
+data(vitamind)
 model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind

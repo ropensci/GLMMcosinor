@@ -199,9 +199,6 @@ autoplot.cglmm <- function(object,
     #ensure that the random effects groups are factors
     for (i in object$ranef_groups) {
       object$newdata[[i]] <- as.factor(object$newdata[[i]])
-      object$newdata[[i]] <- as.factor(
-        relevel(object$newdata[[i]],
-                ref = levels(object$newdata[[i]])[1]))
     }
   }
 
@@ -351,8 +348,7 @@ autoplot.cglmm <- function(object,
         replicated_dfs <- NULL
         x$newdata[[i]] <- as.factor(x$newdata[[i]])
         #subjects <- as.factor(unique((x$newdata[[i]])))
-        subjects <- as.factor(relevel(x$newdata[[i]],
-                                      ref = levels(x$newdata[[i]])[1]))
+        subjects <- levels(x$newdata[[i]])
         #
         if (!is.null(ranef_plot) && i %in% ranef_plot && i == max_unique_col) {
           for (j in subjects) {
@@ -443,10 +439,6 @@ autoplot.cglmm <- function(object,
       original_data_processed <- object$newdata
       for (i in object$ranef_groups) {
         original_data_processed[[i]] <- as.factor(original_data_processed[[i]])
-
-        original_data_processed[[i]] <- as.factor(
-          relevel(original_data_processed[[i]],
-                  ref = levels(original_data_processed[[i]])[1]))
       }
       original_data_processed$levels <- ""
       i <- 1 # used as a counter for formatting purposes
