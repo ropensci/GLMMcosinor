@@ -71,11 +71,13 @@
 #' @export
 #'
 #' @examples
+#' data(vitamind)
 #' model <- cglmm(
 #'   vit_d ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
 #' )
 #' polar_plot(model)
+
 polar_plot <- function(x,
                        ci_level = 0.95,
                        n_breaks = 5,

@@ -195,6 +195,14 @@ autoplot.cglmm <- function(object,
                               )
       )
     }
+
+    #ensure that the random effects groups are factors
+    for (i in object$ranef_groups) {
+      object$newdata[[i]] <- as.factor(object$newdata[[i]])
+      object$newdata[[i]] <- as.factor(
+        relevel(object$newdata[[i]],
+                ref = levels(object$newdata[[i]])[1]))
+    }
   }
 
   assertthat::assert_that(is.character(type),
@@ -333,21 +341,29 @@ autoplot.cglmm <- function(object,
       # Identify the column with the maximum number of unique values
       max_unique_col <- names(unique_counts)[which.max(unique_counts)]
       # Create a new vector excluding the max_unique_col
+      if(length(names(unique_counts)) > 1) {
       new_ranef_groups <- ranef_plot[ranef_plot != max_unique_col]
+      } else {
+      new_ranef_groups <- NULL
+      }
 
       for (i in x$ranef_groups) {
         replicated_dfs <- NULL
-        subjects <- as.factor(levels(x$newdata[[i]]))
-
+        x$newdata[[i]] <- as.factor(x$newdata[[i]])
+        #subjects <- as.factor(unique((x$newdata[[i]])))
+        subjects <- as.factor(relevel(x$newdata[[i]],
+                                      ref = levels(x$newdata[[i]])[1]))
         #
         if (!is.null(ranef_plot) && i %in% ranef_plot && i == max_unique_col) {
           for (j in subjects) {
             appendvec <- data_ranef
             appendvec[[i]] <- j
+            if (!is.null(new_ranef_groups)) {
             for (k in new_ranef_groups) {
               appendvec[[k]] <- unique(
                 object$newdata[object$newdata[[i]] == j, k]
               )
+            }
             }
             if (!is.null(x_str)) {
               for (d in x_str) {
@@ -364,7 +380,6 @@ autoplot.cglmm <- function(object,
           appendvec[[i]] <- rep(NA, length(ncol(appendvec)))
           replicated_dfs[[i]] <- appendvec
         }
-
 
 
         replicated_dfs_total <- do.call(rbind, replicated_dfs)
@@ -423,10 +438,16 @@ autoplot.cglmm <- function(object,
 
 
   if (any(!is.na(object$ranef_groups))) {
-
     if (superimpose.data) {
       original_data <- object$newdata
       original_data_processed <- object$newdata
+      for (i in object$ranef_groups) {
+        original_data_processed[[i]] <- as.factor(original_data_processed[[i]])
+
+        original_data_processed[[i]] <- as.factor(
+          relevel(original_data_processed[[i]],
+                  ref = levels(original_data_processed[[i]])[1]))
+      }
       original_data_processed$levels <- ""
       i <- 1 # used as a counter for formatting purposes
       for (d in x_str) {
