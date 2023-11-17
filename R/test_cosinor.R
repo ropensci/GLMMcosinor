@@ -10,7 +10,8 @@
 #' @param x An \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
-#' acrophase) will be tested.
+#' acrophase) will be tested. If there is no grouping variable in the model,
+#' then this can be left as NULL (default).
 #' @param param A \code{character}. Either \code{"amp"} or \code{"acr"} for
 #' testing differences in amplitude or acrophase, respectively.
 #' @param comparison_A An \code{integer}. Refers to the component number that is
@@ -51,7 +52,7 @@
 #' )
 #' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
 test_cosinor_components <- function(x,
-                                    x_str,
+                                    x_str = NULL,
                                     param = "amp",
                                     comparison_A = 1,
                                     comparison_B = 2,
@@ -73,12 +74,15 @@ test_cosinor_components <- function(x,
     msg = "'x' must be of class 'cglmm'"
   )
 
-  stopifnot(is.character(x_str))
 
-  assertthat::assert_that(
-    length(grep(x_str, names(x$coefficients))) > 0,
-    msg = "x_str must be the name of a group in object"
-  )
+  if(!is.null(x_str)) {
+  stopifnot(is.character(x_str))
+  }
+
+  # assertthat::assert_that(
+  #   length(grep(x_str, names(x$coefficients))) > 0,
+  #   msg = "x_str must be the name of a group in object"
+  # )
 
 
   assertthat::assert_that(
@@ -88,6 +92,7 @@ test_cosinor_components <- function(x,
       "corresponding to a component in the model"
     )
   )
+  if(!is.null(x_str)) {
   assertthat::assert_that(
     level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
       level_index %in% x$group_stats[[x$group_original[comparison_B]]],
@@ -96,6 +101,7 @@ test_cosinor_components <- function(x,
       "corresponding to a level in the model"
     )
   )
+  }
 
   # passing these inputs into the internal function
 
@@ -330,13 +336,25 @@ test_cosinor_levels <- function(x,
   # using data made with : sim_data %>% mutate(group = ifelse(group == 1,
   # "control", "treatment"))
   summary.fit <- summary(x)
-  index <- matrix(0, ncol = length(x$coefficients), nrow = length(x_str))
+
+  if(is.null(x_str)){
+    x_str_length <- 1
+  } else {
+    x_str_length <- length(x_str)
+  }
+
+  index <- matrix(0, ncol = length(x$coefficients), nrow = x_str_length)
   colnames(index) <- names(x$coefficients)
 
   if (comparison_type == "components") {
+    if(is.null(x_str)){
+      index[1,paste0(param,comparison_A)] <- -1
+      index[1,paste0(param,comparison_B)] <- 1
+    } else {
     for (i in seq_along(x_str)) {
       index[i, paste0(x_str[i], level_index, ":", param, comparison_A)] <- -1
       index[i, paste0(x_str[i], level_index, ":", param, comparison_B)] <- 1
+    }
     }
   }
 

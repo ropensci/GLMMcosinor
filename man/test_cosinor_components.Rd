@@ -6,7 +6,7 @@
 \usage{
 test_cosinor_components(
   x,
-  x_str,
+  x_str = NULL,
   param = "amp",
   comparison_A = 1,
   comparison_B = 2,
@@ -19,7 +19,8 @@ test_cosinor_components(
 
 \item{x_str}{A \code{character}. The name of the grouping variable within
 which differences in the selected cosinor characteristic (amplitude or
-acrophase) will be tested.}
+acrophase) will be tested. If there is no grouping variable in the model,
+then this can be left as NULL (default).}
 
 \item{param}{A \code{character}. Either \code{"amp"} or \code{"acr"} for
 testing differences in amplitude or acrophase, respectively.}
