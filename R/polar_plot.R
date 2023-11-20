@@ -63,6 +63,8 @@
 #' polar plots.
 #' @param quietly Analogous to verbose, this \code{logical} argument controls
 #' whether messages are displayed in the console.
+#' @param show_component_labels Logical argument, TRUE by default. When TRUE,
+#' the polar plots have labels corresponding to their components.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4}
@@ -81,7 +83,7 @@
 polar_plot <- function(x,
                        ci_level = 0.95,
                        n_breaks = 5,
-                       component_index,
+                       component_index = NULL,
                        grid_angle_segments = 8,
                        radial_units = c("radians", "degrees", "period"),
                        clockwise = FALSE,
@@ -94,6 +96,7 @@ polar_plot <- function(x,
                        view = c("full", "zoom", "zoom_origin"),
                        overlay_parameter_info = FALSE,
                        quietly = TRUE,
+                       show_component_labels = TRUE,
                        ...) {
   UseMethod("polar_plot")
 }
@@ -179,7 +182,7 @@ polar_plot <- function(x,
 polar_plot.cglmm <- function(x,
                              ci_level = 0.95,
                              n_breaks = 5,
-                             component_index,
+                             component_index = NULL,
                              grid_angle_segments = 8,
                              radial_units = c(
                                "radians",
@@ -205,10 +208,11 @@ polar_plot.cglmm <- function(x,
                              ),
                              overlay_parameter_info = FALSE,
                              quietly = TRUE,
+                             show_component_labels = TRUE,
                              ...) {
   # checking the quality of inputs
   assertthat::assert_that(inherits(x, "cglmm"),
-    msg = "'x' must be of class cglmm"
+                          msg = "'x' must be of class cglmm"
   )
 
   validate_ci_level(ci_level)
@@ -222,13 +226,19 @@ polar_plot.cglmm <- function(x,
     msg = "'grid_angle_segments' must be an integer greater than 0"
   )
   assertthat::assert_that(is.logical(quietly),
-    msg = "'quietly' must a logical argument, either TRUE or FALSE"
+                          msg = "'quietly' must a logical argument, either TRUE or FALSE"
   )
   assertthat::assert_that(is.logical(clockwise),
-    msg = "'clockwise' must be a logical argument, either TRUE or FALSE "
+                          msg = "'clockwise' must be a logical argument, either TRUE or FALSE "
   )
+
+  assertthat::assert_that(is.logical(show_component_labels),
+                          msg = paste("'show_component_labels' must be a",
+                                      " logical argument, either TRUE or FALSE")
+  )
+
   assertthat::assert_that(is.numeric(text_size) & text_size > 0,
-    msg = "'text_size' must be a number greater than 0"
+                          msg = "'text_size' must be a number greater than 0"
   )
   assertthat::assert_that(
     is.numeric(text_opacity) & text_opacity >= 0 & text_opacity <= 1,
@@ -252,16 +262,16 @@ polar_plot.cglmm <- function(x,
     )
   }
   assertthat::assert_that(is.character(circle_linetype),
-    msg = paste(
-      "'circle_linetype' must be a character. See ?linetype",
-      "for more details"
-    )
+                          msg = paste(
+                            "'circle_linetype' must be a character. See ?linetype",
+                            "for more details"
+                          )
   )
   assertthat::assert_that(is.logical(overlay_parameter_info),
-    msg = paste(
-      "'overlay_parameter_info' must be a logical argument,",
-      "either TRUE or FALSE"
-    )
+                          msg = paste(
+                            "'overlay_parameter_info' must be a logical argument,",
+                            "either TRUE or FALSE"
+                          )
   )
 
   # get summary statistics of cglmm object
@@ -308,7 +318,7 @@ polar_plot.cglmm <- function(x,
     overlay_start <- pi / 2
   }
 
-  if (!missing(component_index)) {
+  if (!is.null(component_index)) {
     make_cowplot <- FALSE
   } else {
     make_cowplot <- TRUE
@@ -644,39 +654,82 @@ polar_plot.cglmm <- function(x,
     plot_obj
   }
 
+
   # plot multiple component plots in cowplot or plot a single component plot
   if (make_cowplot == TRUE & n_components > 1) {
     plot_list <- NULL
     for (i in 1:n_components) {
-      assign(paste0("plot_obj", i), sub_ggplot.cglmm.polar(i))
-      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cglmm.polar(i))
+      plot_obj <- sub_ggplot.cglmm.polar(i)
+      assign(paste0("plot_obj", i), plot_obj)
+
+      #show labels for each component
+      if(show_component_labels) {
+        plot_obj <- plot_obj + ggplot2::ggtitle(paste("component",i))
+      }
+
+      plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
+
+
     }
+
     final_obj <- cowplot::plot_grid(
-      plotlist = plot_list,
-      labels = paste("Component", 1:n_components)
+      plotlist = plot_list
     )
     final_obj
   }
   if (make_cowplot == TRUE & n_components == 1) {
     plot_list <- NULL
     for (i in 1:n_components) {
-      assign(paste0("plot_obj", i), sub_ggplot.cglmm.polar(i))
-      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cglmm.polar(i))
+
+      plot_obj <- sub_ggplot.cglmm.polar(i)
+      assign(paste0("plot_obj", i), plot_obj)
+      #show labels for each component
+      if(show_component_labels) {
+        plot_obj <- plot_obj + ggplot2::ggtitle(paste("component",i))
+      }
+      plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
+
+
     }
     final_obj <- cowplot::plot_grid(
       plotlist = plot_list
     )
     final_obj
-  } else {
-    plot_list <- NULL
-    for (i in component_index) {
-      assign(paste0("plot_obj", i), sub_ggplot.cglmm.polar(i))
-      plot_list[[i]] <- ggplot2::ggplotGrob(sub_ggplot.cglmm.polar(i))
-    }
-    final_obj <- cowplot::plot_grid(
-      plotlist = plot_list,
-      labels = paste("Component", component_index)
-    )
-    final_obj
+
   }
+  if (make_cowplot == FALSE) {
+    if (length(component_index) == 1){
+      plot_obj <- sub_ggplot.cglmm.polar(component_index)
+
+      #show labels
+      if(show_component_labels) {
+        final_obj <- plot_obj + ggplot2::ggtitle(paste("component",component_index))
+      } else {
+        final_obj <- plot_obj
+      }
+      final_obj
+    } else {
+
+      plot_list <- NULL
+      for (i in component_index) {
+        plot_obj <- sub_ggplot.cglmm.polar(i)
+        assign(paste0("plot_obj", i), plot_obj)
+        #show labels for each component
+        if(show_component_labels) {
+          plot_obj <- plot_obj + ggplot2::ggtitle(paste("component",i))
+        }
+
+        plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
+
+      }
+
+      final_obj <- cowplot::plot_grid(
+        plotlist = plot_list,
+        labels = NULL
+      )
+
+      final_obj
+    }
+  }
+  return(final_obj)
 }
