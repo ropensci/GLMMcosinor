@@ -8,7 +8,7 @@
   x,
   ci_level = 0.95,
   n_breaks = 5,
-  component_index,
+  component_index = NULL,
   grid_angle_segments = 8,
   radial_units = c("radians", "degrees", "period"),
   clockwise = FALSE,
@@ -21,6 +21,7 @@
   view = c("full", "zoom", "zoom_origin"),
   overlay_parameter_info = FALSE,
   quietly = TRUE,
+  show_component_labels = TRUE,
   ...
 )
 }
@@ -103,6 +104,9 @@ polar plots.}
 
 \item{quietly}{Analogous to verbose, this \code{logical} argument controls
 whether messages are displayed in the console.}
+
+\item{show_component_labels}{Logical argument, TRUE by default. When TRUE,
+the polar plots have labels corresponding to their components.}
 
 \item{...}{Additional, ignored arguments.}
 }

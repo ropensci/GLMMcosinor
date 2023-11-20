@@ -166,6 +166,8 @@ polar_plot <- function(x,
 #' polar plots.
 #' @param quietly Analogous to verbose, this \code{logical} argument controls
 #' whether messages are displayed in the console.
+#' @param show_component_labels Logical argument, TRUE by default. When TRUE,
+#' the polar plots have labels corresponding to their components.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4}
