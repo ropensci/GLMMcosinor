@@ -117,7 +117,6 @@ test_that("autoplot produces error messages", {
         ),
         data = vitamind
       )
-
       f <- function() {
         autoplot(object, x_str = c("X", "Z"), pred.length.out = 200)
       }
