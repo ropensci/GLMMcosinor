@@ -28,6 +28,9 @@ library(ggplot2)
 To illustrate an example of using a model with random effects on the cosinor components, we will first simulate some data with `id`-level differences in amplitude and acrophase.
 
 ```{r}
+  withr::with_seed(
+    50,
+    {
 f_sample_id <- function(id_num,
                         n = 30,
                         mesor,
@@ -64,8 +67,11 @@ dat_mixed <- do.call(
       n_components = 1
     )
   })
-) |>
-  mutate(subject = as.factor(subject))
+) 
+  dat_mixed$subject <- as.factor(dat_mixed$subject)
+  
+    })
+
 ```
 
 A quick graph shows how there are individual differences in terms of MESOR, amplitude and phase.

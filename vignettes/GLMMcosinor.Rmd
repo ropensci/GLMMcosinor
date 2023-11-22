@@ -27,14 +27,14 @@ knitr::opts_chunk$set(
 
 ## An brief introduction to the cosinor model
 
-A cosinor model aims to model the amplitude ($A$), acrophase ($\phi$), 
+A cosinor model aims to model the amplitude ($A$), acrophase ($\phi$),
 and MESOR ($M$) of a rhythmic dataset.
 
 -   MESOR ($M$) is the Midline Estimating Statistic of Rhythm, and may
     also be referred to as the equilibrium point.
 
--   Amplitude ($A$) is the difference between the MESOR and the maximum height 
-    of the rhythm.
+-   Amplitude ($A$) is the difference between the MESOR and the maximum
+    height of the rhythm.
 
 -   Acrophase ($\phi$) is the phase at which the maximal response
     occurs.
@@ -44,39 +44,41 @@ These could be modelled using a cosine function:
 $$Y(t) = M + Acos(\frac{2\pi t}{\tau} - \phi) + e(t)$$ where $e(t)$ is
 the error term.
 
-However, these cannot be estimated using a linear modelling framework! Other
-packages, including 
-[`{circacompare}`](https://cran.r-project.org/package=circacompare) 
-[@parsons2020circacompare], fit this exact
-nonlinear model but most packages (including this one) decomposes this into 
-linear terms, creating the cosinor model:
+However, these cannot be estimated using a linear modelling framework!
+Other packages, including
+[`{circacompare}`](https://cran.r-project.org/package=circacompare)
+[@parsons2020circacompare], fit this exact nonlinear model but most
+packages (including this one) decomposes this into linear terms,
+creating the cosinor model:
 
 $$Y(t) = M + \beta x + \gamma z + e(t)$$
 
 Where $x =cos(\frac{2\pi t}{τ})$, $z =sin(\frac{2\pi t}{τ})$,
 $\beta = A cos(\phi)$, $\gamma = A sin(\phi)$
 
-These original parameters can be recovered: for amplitude ($A$) and acrophase 
-($\phi$), the estimates for $\hat\beta$ and $\hat\gamma$ must be transformed 
-as per the following equations:
+These original parameters can be recovered: for amplitude ($A$) and
+acrophase ($\phi$), the estimates for $\hat\beta$ and $\hat\gamma$ must
+be transformed as per the following equations:
 
 $$\hat\phi = \arctan(\frac{\hat\gamma}{\hat\beta}) $$
 
-$$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$
-For a more thorough introduction to cosinor modelling, see 
-[here](https://doi.org/10.1186%2F1742-4682-11-16) [@cornelissen2014cosinor].
+$$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$ For a more thorough
+introduction to cosinor modelling, see
+[here](https://doi.org/10.1186%2F1742-4682-11-16)
+[@cornelissen2014cosinor].
 
 ## Introduction
 
-`{GLMMcosinor}` allows the user to fit generalised linear models based on 
-rhythmic data with a cosinor model. It allows users to  summarise, predict, and
-plot these models too. Existing packages have focused primarily on Gaussian
-data. Some circadian regression modelling packages have allowed users to specify
-generalised linear models, but with limited flexibility. `{GLMMcosinor}` takes
-a comprehensive approach to modelling by harnessing the `{glmmTMB}` package, 
-that has a wide range of available link functions, allowing users to model 
-rhythmic data from a wide range of distributions (for full list - see `?family`
-and `?glmmTMB::family_glmmTMB`) including:
+`{GLMMcosinor}` allows the user to fit generalised linear models based
+on rhythmic data with a cosinor model. It allows users to summarise,
+predict, and plot these models too. Existing packages have focused
+primarily on Gaussian data. Some circadian regression modelling packages
+have allowed users to specify generalised linear models, but with
+limited flexibility. `{GLMMcosinor}` takes a comprehensive approach to
+modelling by harnessing the `{glmmTMB}` package, that has a wide range
+of available link functions, allowing users to model rhythmic data from
+a wide range of distributions (for full list - see `?family` and
+`?glmmTMB::family_glmmTMB`) including:
 
 -   Binomial
 -   Guassian
@@ -85,31 +87,30 @@ and `?glmmTMB::family_glmmTMB`) including:
 -   Poisson
 -   Negative Binomial
 
-The table below shows what features are available within `{GLMMcosinor}` and
-other methods.
+The table below shows what features are available within `{GLMMcosinor}`
+and other methods.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 source("fixtures/methods-table.R")
 dat
 ```
 
-
-
 ## `cglmm()`
 
 `cglmm()` wrangles the data appropriately to fit the cosinor model given
-the formula specified by the user. It returns a model, providing estimates of 
-amplitude, acrophase, and MESOR (Midline Statistic Of Rhythm).
+the formula specified by the user. It returns a model, providing
+estimates of amplitude, acrophase, and MESOR (Midline Statistic Of
+Rhythm).
 
 The formula argument for `cglmm()` is specified using the `{lme4}` style
 (for details see `vignette("lmer", package = "lme4")`). The only
-difference is that it allows for use of `amp_acro()` within the
-formula that is used to identify the cosinor (rhythmic) components and relevant
+difference is that it allows for use of `amp_acro()` within the formula
+that is used to identify the cosinor (rhythmic) components and relevant
 variables in the provided data. Any other combination of covariates can
-also be included in the formula as well as random effects. Additionally, 
-zero-inflation (`ziformula`) and dispersion (`dispformula`) formulae can be 
-incorporated if required.
-For detailed examples of how to specify these types of models, see the
+also be included in the formula as well as random effects. Additionally,
+zero-inflation (`ziformula`) and dispersion (`dispformula`) formulae can
+be incorporated if required. For detailed examples of how to specify
+these types of models, see the
 [mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html),
 [model-specification](https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html)
 and
@@ -128,19 +129,20 @@ cosinor_model <- cglmm(
 ```
 
 Notice how both the raw and transformed coefficients are provided as
-output. The adapted `data.frame` that was used to fit the raw model can be 
-accessed  from the model and includes `main_rrr1` and `main_sss1` columns of 
-data:
+output. The adapted `data.frame` that was used to fit the raw model can
+be accessed from the model and includes `main_rrr1` and `main_sss1`
+columns of data:
 
 ```{r, message=F, warning=F}
 head(cosinor_model$newdata)
 ```
+
 In this example, the `main` prefix indicates that this is the data for
 the conditional model, as opposed to (potential) dispersion or
 zero-inflation models, which have the prefixes `disp` and `zi`,
-respectively. The numeric suffix, indicates that this is the data for the first
-(and only) cosinor component. If there are multiple components, the columns of
-data will be named accordingly.
+respectively. The numeric suffix, indicates that this is the data for
+the first (and only) cosinor component. If there are multiple
+components, the columns of data will be named accordingly.
 
 ## A basic overview of `cglmm()`
 
@@ -157,15 +159,16 @@ cglmm(
 
 -   `formula`: A formula specifying the model structure, including the
     response variable and the cosinor components (using `amp_acro()`).
--   `data`: The `data.frame` containing the variables used in the formula.
+-   `data`: The `data.frame` containing the variables used in the
+    formula.
 -   `family`: The family of the distribution for the response variable
     (e.g., poisson, gaussian, or any family found in`?family` and
     `?glmmTMB::family_glmmTMB`)
 
 The `amp_acro()` function is used within the formula to specify the
-cosinor components. It allows you to specify the period of the rhythm and, 
-if necessary, the grouping structure and the number of components. The 
-arguments of `amp_acro()` are:
+cosinor components. It allows you to specify the period of the rhythm
+and, if necessary, the grouping structure and the number of components.
+The arguments of `amp_acro()` are:
 
 -   `group`: The name of the grouping variable in the dataset.
 -   `time_col`: The name of the time column.
@@ -176,14 +179,14 @@ arguments of `amp_acro()` are:
 
 The most relevant output from the `cglmm()` function is likely to be the
 parameter estimates for MESOR, amplitude, and acrophase under the
-'Transformed Coefficients' heading. These are the recovered estimates 
-mentioned at the beginning of this vignette: the amplitude and phase. The 
-'Raw Coefficients' are the coefficients from the cosinor model.
-In this example, the `main_rrr1` and `main_sss1` correspond to $\hat\beta$ and 
-$\hat\gamma$ in the first section, respectively.
+'Transformed Coefficients' heading. These are the recovered estimates
+mentioned at the beginning of this vignette: the amplitude and phase.
+The 'Raw Coefficients' are the coefficients from the cosinor model. In
+this example, the `main_rrr1` and `main_sss1` correspond to $\hat\beta$
+and $\hat\gamma$ in the first section, respectively.
 
-The following example fits a grouped single-component model with a Guassian
-distribution (the default).
+The following example fits a grouped single-component model with a
+Guassian distribution (the default).
 
 ```{r, message=F, warning=F}
 cglmm(
@@ -254,8 +257,8 @@ explanations and examples, see the
 article.
 
 Additionally, the `cglmm()` function provides more advanced
-functionality for multi-component models, and detailed explanations
-can be found in the
+functionality for multi-component models, and detailed explanations can
+be found in the
 [multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
 article.
 
@@ -265,13 +268,14 @@ article for more details.
 
 ## Using `summary()` and testing for differences between estimates
 
-The `summary()` method for the outputs from `cglmm()` provides a more detailed
-summary of the model and its parameter estimates and uncertainty. It
-outputs the estimates, standard errors, confidence intervals, and
-p-values for both the raw model parameters and the transformed
-parameters. The summary statistics do not represent a comparison between
-any groups for the cosinor components - that is the role of the
-`test_cosinor_components()` and `test_cosinor_levels()` functions.
+The `summary()` method for the outputs from `cglmm()` provides a more
+detailed summary of the model and its parameter estimates and
+uncertainty. It outputs the estimates, standard errors, confidence
+intervals, and p-values for both the raw model parameters and the
+transformed parameters. The summary statistics do not represent a
+comparison between any groups for the cosinor components - that is the
+role of the `test_cosinor_components()` and `test_cosinor_levels()`
+functions.
 
 Here is an example of how to use `summary()` with some simulated data:
 
@@ -312,7 +316,6 @@ testdata_simple <- simulate_cosinor(
   beta.group = TRUE
 )
 ```
-
 
 ```{r, message=F, warning=F}
 object <- cglmm(
@@ -398,8 +401,8 @@ comparator group. Also notice how if we are comparing between levels, we
 should keep the component the same, and that is what `component_index`
 sets. Likewise, when we test between components using
 `test_cosinor_components()`, we can indicate which level this comparison
-occurs using `level_index`. There may be multiple `groups`,
-in which case we can fix the `group` using the `x_str` argument.
+occurs using `level_index`. There may be multiple `groups`, in which
+case we can fix the `group` using the `x_str` argument.
 
 As an example of testing the difference between components for the same
 level:
@@ -418,8 +421,8 @@ acrophase for the comparator group between its two components.
 
 ## Using `predict()`
 
-The `predict()` method allows users to get predicted values from the model 
-on either the existing or new data.
+The `predict()` method allows users to get predicted values from the
+model on either the existing or new data.
 
 ```{r, eval=F}
 cbind(predictions = predict(cosinor_model, type = "response"), testdata_poisson)

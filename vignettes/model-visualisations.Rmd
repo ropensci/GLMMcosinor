@@ -50,9 +50,9 @@ withr::with_seed(42, {
 
 ## Plotting cglmm objects
 
-The `GLMMcosinor` package includes two ways to visualise models from `cglmm()`.
-Firstly, the function `autoplot()` creates a time-response plot of the fitted 
-model:
+The `GLMMcosinor` package includes two ways to visualise models from
+`cglmm()`. Firstly, the function `autoplot()` creates a time-response
+plot of the fitted model:
 
 ```{r, message=F, warning=F}
 library(GLMMcosinor)
@@ -107,7 +107,6 @@ testdata_two_components <- simulate_cosinor(
   n_components = 2
 )
 ```
-
 
 ```{r, message=F, warning=F}
 testdata_two_components <- testdata_two_components
@@ -293,10 +292,10 @@ polar_plot(model,
 )
 ```
 
-If the user wishes to zoom into the confidence ellipses to show
-relevant information, they can adjust the view from the default `full`
-(which plots a full view of the polar plot) to `zoom` (which enlarges
-the smallest view window containing all confidence ellipses), or
+If the user wishes to zoom into the confidence ellipses to show relevant
+information, they can adjust the view from the default `full` (which
+plots a full view of the polar plot) to `zoom` (which enlarges the
+smallest view window containing all confidence ellipses), or
 `zoom_origin` (which enlarges the smallest view window containing all
 confidence ellipses AND the origin).
 
