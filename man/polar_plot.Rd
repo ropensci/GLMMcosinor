@@ -78,8 +78,9 @@ length of the default argument (8), colours are generated using
 \item{ellipse_opacity}{A \code{numeric} between 0 and 1 inclusive that
 controls the opacity of the confidence ellipses. Defaults to 0.3.}
 
-\item{circle_linetype}{A \code{character} that determines the \code{linetype}
-of the radial circles in background of the polar plot. See \code{?linetype}
+\item{circle_linetype}{A \code{character} or \code{numeric} that determines
+the \code{linetype} of the radial circles in background of the polar plot.
+See \code{?linetype}
 for more details.}
 
 \item{start}{A \code{character}, within
