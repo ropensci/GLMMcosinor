@@ -151,12 +151,12 @@ test_that("polar_plot input checks work", {
     data = vitamind
   )
   f <- function() {
-    polar_plot(object, circle_linetype = 2)
+    polar_plot(object, circle_linetype = as.factor(2))
   }
   expect_error(
     f(),
     regex = paste(
-      "'circle_linetype' must be a character.",
+      "'circle_linetype' must be a character or numeric.",
       "See ?linetype for more details"
     ), fixed = TRUE
   )

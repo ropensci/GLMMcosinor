@@ -41,8 +41,9 @@
 #' \code{rainbow()}.
 #' @param ellipse_opacity A \code{numeric} between 0 and 1 inclusive that
 #' controls the opacity of the confidence ellipses. Defaults to 0.3.
-#' @param circle_linetype A \code{character} that determines the \code{linetype}
-#' of the radial circles in background of the polar plot. See \code{?linetype}
+#' @param circle_linetype A \code{character} or \code{numeric} that determines
+#' the \code{linetype} of the radial circles in background of the polar plot.
+#' See \code{?linetype}
 #' for more details.
 #' @param start A \code{character}, within
 #' \code{c("right", "left", "top", "bottom")} that determines where angle 0 is
@@ -144,8 +145,9 @@ polar_plot <- function(x,
 #' \code{rainbow()}.
 #' @param ellipse_opacity A \code{numeric} between 0 and 1 inclusive that
 #' controls the opacity of the confidence ellipses. Defaults to 0.3.
-#' @param circle_linetype A \code{character} that determines the \code{linetype}
-#' of the radial circles in background of the polar plot. See \code{?linetype}
+#' @param circle_linetype A \code{character} or \code{numeric} that determines
+#' the \code{linetype} of the radial circles in background of the polar plot.
+#' See \code{?linetype}
 #' for more details.
 #' @param start A \code{character}, within
 #' \code{c("right", "left", "top", "bottom")} that determines where angle 0 is
@@ -263,9 +265,9 @@ polar_plot.cglmm <- function(x,
       )
     )
   }
-  assertthat::assert_that(is.character(circle_linetype),
+  assertthat::assert_that(is.character(circle_linetype) || is.numeric(circle_linetype),
     msg = paste(
-      "'circle_linetype' must be a character. See ?linetype",
+      "'circle_linetype' must be a character or numeric. See ?linetype",
       "for more details"
     )
   )
@@ -411,10 +413,10 @@ polar_plot.cglmm <- function(x,
       conversion_factor <- 1
     } else if (radial_units == "degrees") {
       max_period <- 360
-      conversion_factor <- (1 / 2 * pi) * 360
+      conversion_factor <- (1 / (2 * pi)) * 360
     } else if (radial_units == "period") {
       max_period <- max_period
-      conversion_factor <- (1 / 2 * pi) * max_period
+      conversion_factor <- (1 / (2 * pi)) * max_period
     }
 
     # create a sequence of labels for time (to be inserted around
@@ -480,10 +482,13 @@ polar_plot.cglmm <- function(x,
       )
     } else if (radial_units == "degrees") {
       time_labels <- paste0(time_labels, "\U00B0")
-      conversion_factor * est_acr
       acr_overlay <- paste0(
-        signif(conversion_factor * est_acr / 360, 2),
+        signif(conversion_factor * est_acr, 2),
         "\U00B0"
+      )
+    }  else if (radial_units == "period") {
+      acr_overlay <- paste0(
+        signif(conversion_factor * est_acr, 2)
       )
     }
 
@@ -502,10 +507,10 @@ polar_plot.cglmm <- function(x,
         ggplot2::aes(
           x0 = 0,
           y0 = 0,
-          r = scales::breaks_pretty(n = 5)(c(0, max_plot_radius))
+          r = scales::breaks_pretty(n = n_breaks)(c(0, max_plot_radius))
         ),
         alpha = 0.01,
-        linetype = 20
+        linetype = circle_linetype
       ) +
       ggforce::geom_ellipse(
         ggplot2::aes(
