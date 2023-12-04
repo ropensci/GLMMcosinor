@@ -56,15 +56,30 @@ $$Y(t) = M + \beta x + \gamma z + e(t)$$
 Where $x =cos(\frac{2\pi t}{τ})$, $z =sin(\frac{2\pi t}{τ})$,
 $\beta = A cos(\phi)$, $\gamma = A sin(\phi)$
 
-These original parameters can be recovered: for amplitude ($A$) and
-acrophase ($\phi$), the estimates for $\hat\beta$ and $\hat\gamma$ must
-be transformed as per the following equations:
+This linear model is passed to the package
+[`{glmmTMB}`](https://cran.r-project.org/web/packages/glmmTMB/index.html)
+[@brooks2023glmmTMB] in `lme4` syntax. If the model has no random
+effects, `glmmTMB` uses maximum likelihood estimation to estimate the
+linear coefficients of the model. For models with random effects, a
+Laplace approximation is used to integrate over the random effects. This
+approximation is handled by the
+[`{TMB}`](https://cran.r-project.org/web/packages/TMB/index.html)[@Kristensen2023TMB]
+package which uses automatic differentiation of the joint likelihood
+function to provide fast computations of parameter estimates. A detailed
+explanation of this process is described
+[here](https://doi.org/10.18637/jss.v070.i05) [@Kristensen2016TMB]
+
+`glmmTMB` returns the estimates of the linear coefficients from the
+linear model. To recover the estimates of the original parameters for
+amplitude ($A$) and acrophase ($\phi$), the estimates for $\hat\beta$
+and $\hat\gamma$ must be transformed as per the following equations:
 
 $$\hat\phi = \arctan(\frac{\hat\gamma}{\hat\beta}) $$
 
-$$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$ For a more thorough
-introduction to cosinor modelling, see
-[here](https://doi.org/10.1186%2F1742-4682-11-16)
+$$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$ These transformed
+parameters for acrophase and amplitude, along with MESOR are returned as
+part of the `cglmm` output. For a more thorough introduction to cosinor
+modelling, see [here](https://doi.org/10.1186%2F1742-4682-11-16)
 [@cornelissen2014cosinor].
 
 ## Introduction
