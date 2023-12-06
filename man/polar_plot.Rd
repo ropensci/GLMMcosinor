@@ -22,6 +22,8 @@ polar_plot(
   overlay_parameter_info = FALSE,
   quietly = TRUE,
   show_component_labels = TRUE,
+  xlims,
+  ylims,
   ...
 )
 }
@@ -108,6 +110,10 @@ whether messages are displayed in the console.}
 
 \item{show_component_labels}{Logical argument, TRUE by default. When TRUE,
 the polar plots have labels corresponding to their components.}
+
+\item{xlims}{A vector of length two containing the limits for the x-axis.}
+
+\item{ylims}{A vector of length two containing the limits for the y-axis.}
 
 \item{...}{Additional, ignored arguments.}
 }
