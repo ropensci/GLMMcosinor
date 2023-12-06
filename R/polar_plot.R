@@ -45,6 +45,8 @@
 #' the \code{linetype} of the radial circles in background of the polar plot.
 #' See \code{?linetype}
 #' for more details.
+#' @param xlims A vector of length two containing the limits for the x-axis.
+#' @param ylims A vector of length two containing the limits for the y-axis.
 #' @param start A \code{character}, within
 #' \code{c("right", "left", "top", "bottom")} that determines where angle 0 is
 #' located. If \code{start = "top"}, and \code{clockwise = TRUE}, the angle
@@ -98,6 +100,8 @@ polar_plot <- function(x,
                        overlay_parameter_info = FALSE,
                        quietly = TRUE,
                        show_component_labels = TRUE,
+                       xlims,
+                       ylims,
                        ...) {
   UseMethod("polar_plot")
 }
