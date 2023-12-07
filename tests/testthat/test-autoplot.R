@@ -56,6 +56,19 @@ cov_list = list(new_cat_var = 'c', new_num_var = -0.540933398827827)"),
 
   expect_message(autoplot(object, cov_list = list(new_cat_var = 'c'), quietly = FALSE))
 
+  #test for when time is a covariate
+  object_with_time_covariate <- cglmm(
+    vit_d ~ time + amp_acro(time, period = 12) + new_cat_var + new_num_var,
+    data = test_data
+  )
+  vdiffr::expect_doppelganger("plot_with_time_as_covariate",
+                              autoplot(object_with_time_covariate))
+
+  object_with_time_covariate_2 <- cglmm(
+    vit_d ~ time+ X + amp_acro(time, period = 12), data = vitamind
+  )
+  vdiffr::expect_doppelganger("plot_with_time_as_covariate_2",
+                              autoplot(object_with_time_covariate_2))
 
 })
 })

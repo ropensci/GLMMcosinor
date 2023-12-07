@@ -272,7 +272,6 @@ autoplot.cglmm <- function(object,
     )
   }
 
-
   # this is the function that generates the plots and can be looped iteratively
   # for different x_str
   data_processor_plot <- function(x, newdata, x_str) {
@@ -400,9 +399,12 @@ autoplot.cglmm <- function(object,
   colnames(newdata)[1] <- object$time_name
   #
   #adding covariate columns
+
   for (i in names(cov_list)) {
+    if(!(i %in% object$time_name)){
     fixed_value <- cov_list[[i]]
     newdata[[i]] <- fixed_value
+    }
   }
 
   #
