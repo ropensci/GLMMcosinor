@@ -39,6 +39,17 @@ For an introduction to the cosinor model, see the [getting started vignette](htt
 
 Existing statistical software for circadian data analyses (including `cosinor` or `circacompare`) allow the user to fit data using a regression model, but many are limited due to their inability to specify a link function, multiple components, or a hierarchical structure. `GLMMcosinor` aims to be comprehensive and flexible and is an improvement on other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.
 
+`GLMMcosinor` makes use of the `glmmTMB` package framework for estimation of 
+linear cosinor coefficients. If the model has no random effects, `glmmTMB` uses 
+maximum likelihood estimation to estimate the linear coefficients of the model. 
+For models with random effects, a Laplace approximation is used to integrate 
+over the random effects. This approximation is handled by the
+[`{TMB}`](https://cran.r-project.org/web/packages/TMB/index.html)[@Kristensen2023TMB]
+package which uses automatic differentiation of the joint likelihood function to 
+efficiently compute parameter estimates. A detailed explanation of this process 
+is described [here](https://doi.org/10.18637/jss.v070.i05) [@Kristensen2016TMB].
+
+
 ```{r, include=FALSE}
 source("vignettes/fixtures/methods-table.R")
 flextable::save_as_image(
