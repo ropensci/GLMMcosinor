@@ -77,8 +77,7 @@ dat_mixed <- do.call(
 A quick graph shows how there are individual differences in terms of MESOR, amplitude and phase.
 
 ```{r}
-dat_mixed |>
-  ggplot(aes(times, Y, col = subject)) +
+ggplot(dat_mixed, aes(times, Y, col = subject)) +
   geom_point() +
   geom_line() +
   theme_bw()
@@ -121,9 +120,7 @@ summary(mixed_mod)
 We can see that the predicted values from the model closely resemble the patterns we see in the input data.
 
 ```{r}
-data.frame(pred = predict(mixed_mod)) |>
-  cbind(dat_mixed) |>
-  ggplot() +
+ggplot(cbind(dat_mixed, pred = predict(mixed_mod))) +
   geom_point(aes(x = times, y = Y, col = subject)) +
   geom_line(aes(x = times, y = pred, col = subject))
 ```

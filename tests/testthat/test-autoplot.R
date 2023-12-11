@@ -325,8 +325,9 @@ test_that("autoplot produces error messages", {
         n_components = 1
       )
     })
-  ) |>
-    dplyr::mutate(subject = as.factor(subject))
+  )
+  dat_mixed$subject <- as.factor(dat_mixed$subject)
+
   mixed_mod <- cglmm(
     Y ~ amp_acro(times,
       n_components = 1,
@@ -408,8 +409,9 @@ test_that("autoplot produces error messages", {
         beta.sd = 0.2
       )
     })
-  ) |>
-    dplyr::mutate(subject = as.factor(subject))
+  )
+
+  dat_mixed_2$subject <- as.factor(dat_mixed_2$subject)
 
   mixed_mod_2 <- cglmm(
     Y ~ group + amp_acro(times,
