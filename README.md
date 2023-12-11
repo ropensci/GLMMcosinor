@@ -25,13 +25,25 @@ For an introduction to the cosinor model, see the [getting started
 vignette](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html).
 
 Existing statistical software for circadian data analyses (including
-`cosinor` or `circacompare`) allow the user to fit data using a
-regression model, but many are limited due to their inability to specify
-a link function, multiple components, or a hierarchical structure.
-`GLMMcosinor` aims to be comprehensive and flexible and is an
-improvement on other implementations of the cosinor model in R or
-Python. See table below for features available within currently
-available methods.
+`cosinor` (Sachs 2023) or `circacompare` (Parsons et al. 2020)) allow
+the user to fit data using a regression model, but many are limited due
+to their inability to specify a link function, multiple components, or a
+hierarchical structure. `GLMMcosinor` aims to be comprehensive and
+flexible and is an improvement on other implementations of the cosinor
+model in R or Python. See table below for features available within
+currently available methods.
+
+`GLMMcosinor` makes use of the `glmmTMB` package framework for
+estimation of linear cosinor coefficients. If the model has no random
+effects, `glmmTMB` uses maximum likelihood estimation to estimate the
+linear coefficients of the model. For models with random effects, a
+Laplace approximation is used to integrate over the random effects. This
+approximation is handled by the
+[`TMB`](https://cran.r-project.org/web/packages/TMB/index.html) package
+which uses automatic differentiation of the joint likelihood function to
+efficiently compute parameter estimates. A detailed explanation of this
+process is described [here](https://doi.org/10.18637/jss.v070.i05)
+(Kristensen et al. 2016).
 
 <img src="man/figures/methods-table.png" width="=900px" alt="flextable formats" align="center" />
 
@@ -58,10 +70,6 @@ model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12), 
   data = vitamind
 )
-#> Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
-#> TMB was built with Matrix version 1.6.1.1
-#> Current Matrix version is 1.5.4.1
-#> Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package
 summary(model)
 #> 
 #>  Conditional Model 
@@ -99,13 +107,10 @@ polar_plot(model)
 
 ``` r
 citation("GLMMcosinor")
-#> Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of
-#> package 'GLMMcosinor'
-#> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
-#>   Parsons R, Jayasinghe O, White N (2023). _GLMMcosinor: Fit A Cosinor
-#>   Model Using A Generalised Mixed Modelling Framework_.
+#>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2023). _GLMMcosinor:
+#>   Fit A Cosinor Model Using A Generalised Mixed Modelling Framework_.
 #>   https://github.com/RWParsons/GLMMcosinor,
 #>   https://rwparsons.github.io/GLMMcosinor/.
 #> 
@@ -114,9 +119,40 @@ citation("GLMMcosinor")
 #>   @Manual{,
 #>     title = {GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling
 #> Framework},
-#>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White},
+#>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
 #>     year = {2023},
 #>     note = {https://github.com/RWParsons/GLMMcosinor,
 #> https://rwparsons.github.io/GLMMcosinor/},
 #>   }
 ```
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-Kristensen2016TMB" class="csl-entry">
+
+Kristensen, Kasper, Anders Nielsen, Casper W. Berg, Hans Skaug, and
+Bradley M. Bell. 2016. “TMB: Automatic Differentiation and Laplace
+Approximation.” *Journal of Statistical Software* 70 (5): 1–21.
+<https://doi.org/10.18637/jss.v070.i05>.
+
+</div>
+
+<div id="ref-parsons2020circacompare" class="csl-entry">
+
+Parsons, Rex, Richard Parsons, Nicholas Garner, Henrik Oster, and Oliver
+Rawashdeh. 2020. “CircaCompare: A Method to Estimate and Statistically
+Support Differences in Mesor, Amplitude and Phase, Between Circadian
+Rhythms.” *Bioinformatics* 36 (4): 1208–12.
+
+</div>
+
+<div id="ref-sachs2023cosinor" class="csl-entry">
+
+Sachs, Michael. 2023. *Cosinor: Tools for Estimating and Predicting the
+Cosinor Model*. <https://CRAN.R-project.org/package=cosinor>.
+
+</div>
+
+</div>

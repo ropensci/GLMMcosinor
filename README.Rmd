@@ -1,6 +1,7 @@
 ---
 output: 
   github_document
+bibliography: vignettes/REFERENCES.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -37,14 +38,14 @@ The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data except wi
 
 For an introduction to the cosinor model, see the [getting started vignette](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html).
 
-Existing statistical software for circadian data analyses (including `cosinor` or `circacompare`) allow the user to fit data using a regression model, but many are limited due to their inability to specify a link function, multiple components, or a hierarchical structure. `GLMMcosinor` aims to be comprehensive and flexible and is an improvement on other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.
+Existing statistical software for circadian data analyses (including `cosinor` [@sachs2023cosinor] or `circacompare` [@parsons2020circacompare]) allow the user to fit data using a regression model, but many are limited due to their inability to specify a link function, multiple components, or a hierarchical structure. `GLMMcosinor` aims to be comprehensive and flexible and is an improvement on other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.
 
 `GLMMcosinor` makes use of the `glmmTMB` package framework for estimation of 
 linear cosinor coefficients. If the model has no random effects, `glmmTMB` uses 
 maximum likelihood estimation to estimate the linear coefficients of the model. 
 For models with random effects, a Laplace approximation is used to integrate 
 over the random effects. This approximation is handled by the
-[`{TMB}`](https://cran.r-project.org/web/packages/TMB/index.html)[@Kristensen2023TMB]
+[`TMB`](https://cran.r-project.org/web/packages/TMB/index.html)
 package which uses automatic differentiation of the joint likelihood function to 
 efficiently compute parameter estimates. A detailed explanation of this process 
 is described [here](https://doi.org/10.18637/jss.v070.i05) [@Kristensen2016TMB].
@@ -103,3 +104,5 @@ cowplot::plot_grid(p1, p2, nrow = 1, rel_widths = c(0.4, 0.6))
 ```{r}
 citation("GLMMcosinor")
 ```
+
+## References
