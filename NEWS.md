@@ -1,5 +1,8 @@
 # GLMMcosinor (development version | rOpenSci review)
 
+* Create a `sigma()` function which gets the dispersion parameter from a given
+  `cglmm` model (by calling `glmmTMB::sigma()`).
+
 * Improve introduction to cosinor modelling in the getting-started vignette.
 
 * Fix small typos in vignettes/docs and make plot legend title consistent across
