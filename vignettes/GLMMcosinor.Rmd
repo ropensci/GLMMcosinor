@@ -3,7 +3,7 @@ title: "GLMMcosinor"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction-to-GLMMcosinor}
+  %\VignetteIndexEntry{GLMMcosinor}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: REFERENCES.bib
@@ -58,12 +58,12 @@ $\beta = A cos(\phi)$, $\gamma = A sin(\phi)$
 
 This linear model is passed to the package
 [`{glmmTMB}`](https://cran.r-project.org/web/packages/glmmTMB/index.html)
-[@brooks2023glmmTMB] in `lme4` syntax. If the model has no random
+[@brooks2017glmmTMB] in `lme4` syntax. If the model has no random
 effects, `glmmTMB` uses maximum likelihood estimation to estimate the
 linear coefficients of the model. For models with random effects, a
 Laplace approximation is used to integrate over the random effects. This
 approximation is handled by the
-[`{TMB}`](https://cran.r-project.org/web/packages/TMB/index.html)[@Kristensen2023TMB]
+[`{TMB}`](https://cran.r-project.org/web/packages/TMB/index.html)[@Kristensen2016TMB]
 package which uses automatic differentiation of the joint likelihood
 function to provide fast computations of parameter estimates. A detailed
 explanation of this process is described
