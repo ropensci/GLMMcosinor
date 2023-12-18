@@ -138,7 +138,7 @@ For example, consider the following model and its output:
 library(GLMMcosinor)
 
 cosinor_model <- cglmm(
-  vit_d ~ X + amp_acro(time, period = 12, group = "X"), 
+  vit_d ~ X + amp_acro(time, period = 12, group = "X"),
   data = vitamind
 )
 ```
@@ -166,8 +166,8 @@ distributions using the `glmmTMB()` function.
 
 ```{r, warning=F, message=F}
 cglmm(
-  formula = vit_d ~ amp_acro(time, period = 12), 
-  data = vitamind, 
+  formula = vit_d ~ amp_acro(time, period = 12),
+  data = vitamind,
   family = gaussian
 )
 ```
@@ -205,7 +205,7 @@ Guassian distribution (the default).
 
 ```{r, message=F, warning=F}
 cglmm(
-  vit_d ~ X + amp_acro(time, period = 12, group = "X"), 
+  vit_d ~ X + amp_acro(time, period = 12, group = "X"),
   data = vitamind
 )
 ```
@@ -296,7 +296,8 @@ Here is an example of how to use `summary()` with some simulated data:
 
 ```{r, echo=F}
 withr::with_seed(
-  50, {
+  50,
+  {
     testdata_simple <- simulate_cosinor(
       1000,
       n_period = 2,
@@ -378,18 +379,18 @@ withr::with_seed(
 
 ```{r, eval=F}
 testdata_poisson <- simulate_cosinor(100,
-      n_period = 2,
-      mesor = 7,
-      amp = c(0.1, 0.5),
-      acro = c(1, 1),
-      beta.mesor = 4.4,
-      beta.amp = c(0.1, 0.46),
-      beta.acro = c(0.5, -1.5),
-      family = "poisson",
-      period = c(12, 6),
-      n_components = 2,
-      beta.group = TRUE
-    )
+  n_period = 2,
+  mesor = 7,
+  amp = c(0.1, 0.5),
+  acro = c(1, 1),
+  beta.mesor = 4.4,
+  beta.amp = c(0.1, 0.46),
+  beta.acro = c(0.5, -1.5),
+  family = "poisson",
+  period = c(12, 6),
+  n_components = 2,
+  beta.group = TRUE
+)
 ```
 
 ```{r}
@@ -403,8 +404,8 @@ cosinor_model <- cglmm(
   family = poisson()
 )
 test_cosinor_levels(
-  cosinor_model, 
-  x_str = "group", 
+  cosinor_model,
+  x_str = "group",
   param = "amp",
   component_index = 1
 )
@@ -424,7 +425,7 @@ level:
 
 ```{r}
 test_cosinor_components(
-  cosinor_model, 
+  cosinor_model,
   x_str = "group",
   param = "acr",
   level_index = 1
