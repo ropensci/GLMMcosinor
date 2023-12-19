@@ -88,9 +88,9 @@
     },
     "TMB": {
       "Package": "TMB",
-      "Version": "1.9.4",
+      "Version": "1.9.10",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "Matrix",
         "R",
@@ -238,14 +238,14 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.31",
+      "Version": "0.6.33",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "8b708f296afd9ae69f450f9640be8990"
+      "Hash": "b18a9cf3c003977b0cc49d5e76ebe48d"
     },
     "evaluate": {
       "Package": "evaluate",
@@ -344,7 +344,7 @@
     },
     "glmmTMB": {
       "Package": "glmmTMB",
-      "Version": "1.1.7",
+      "Version": "1.1.8",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -354,10 +354,11 @@
         "TMB",
         "lme4",
         "methods",
+        "mgcv",
         "nlme",
         "numDeriv"
       ],
-      "Hash": "1f05010509ced5b0f1a55cc46a67b1ef"
+      "Hash": "ddc0099666aba16c7db48556ff1bc2f6"
     },
     "glue": {
       "Package": "glue",
@@ -447,7 +448,7 @@
     },
     "lme4": {
       "Package": "lme4",
-      "Version": "1.1-33",
+      "Version": "1.1-35.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -469,7 +470,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "2fa7b59feca0d767533fd0c8a7a2bf4b"
+      "Hash": "07fb0c5b727b15b0ce40feb641498e4e"
     },
     "magrittr": {
       "Package": "magrittr",
