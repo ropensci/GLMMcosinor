@@ -120,7 +120,6 @@ amp_acro <- function(time_col,
                       .env) {
   # checking dataframe
 
-
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
     inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(
@@ -157,30 +156,25 @@ amp_acro <- function(time_col,
     # check that .formula is of class 'formula'
     stopifnot(inherits(.formula, "formula"))
 
+    # ensure time_col is of the right class (most likely a character) (tested)
+    if (is.character(substitute(time_col, .env))) {
+      time_col <- noquote(substitute(time_col, .env))
+    }
 
+    # ensure time_col is within the dataframe
     assertthat::assert_that(
       (paste(substitute(time_col, .env)) %in% colnames(.data)),
       msg = "time_col must be the name of a column in dataframe"
     )
 
-    # the time_vector ttt is extracted based on the class of time_col argument
-    if (is.character(substitute(time_col, .env))) {
-
-      time_col <- noquote(substitute(time_col, .env))
-
-      # extract the time vector
-      ttt <- .data[[time_col]]
-
-    } else {
-      # ensure time_col is within the dataframe
-      if (!inherits(substitute(time_col, .env), "name")) {
-        stop("time_col must be name of column in data.")
-      }
-
-      # extract the time vector
-      ttt <- eval(substitute(time_col, .env), envir = .data)
+    # ensure time_col is within the dataframe
+    if (!inherits(substitute(time_col, .env), "name")) {
+      stop("time_col must be name of column in data.")
     }
 
+    # extract the time vector
+    # extract vector of "time" values from .data
+    ttt <- eval(substitute(time_col, .env), envir = .data)
 
     # ensure ttt contains numeric values only (tested)
     if (!assertthat::assert_that(is.numeric(ttt))) {
