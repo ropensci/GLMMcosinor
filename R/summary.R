@@ -137,19 +137,6 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
       new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
     }
 
-    # create empty index arrays and calculate standard errors for each parameter
-    # index.s <- matrix(0, nrow = length(groups.r), ncol = length(groups.r))
-    # index.r <- matrix(0, nrow = length(groups.s), ncol = length(groups.s))
-    #
-    # index.r[, 1] <- index.s[, 1] <- 1
-    # diag(index.r) <- diag(index.s) <- 1
-    # indexmat <- rbind(
-    #   cbind(index.r, index.s * 0),
-    #   cbind(index.r * 0, index.s)
-    # )
-    #
-    # indVmat <- indexmat %*% vmat %*% t(indexmat)
-
     # determine the partial derivatives of amplitude and acrophase
 
     # a_r is the partial derivative of amp with respect to r.
