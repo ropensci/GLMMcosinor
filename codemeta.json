@@ -3,12 +3,12 @@
   "@type": "SoftwareSourceCode",
   "identifier": "GLMMcosinor",
   "description": "Fit the cosinor model using the glmmTMB framework, allowing for a wide range of link functions and capacity of hierarchical structures.",
-  "name": "GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling Framework",
+  "name": "GLMMcosinor: Fit a Cosinor Model Using a Generalised Mixed Modelling Framework",
   "relatedLink": "https://ropensci.github.io/GLMMcosinor/",
   "codeRepository": "https://github.com/ropensci/GLMMcosinor",
   "issueTracker": "https://github.com/ropensci/GLMMcosinor/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.0.9000",
+  "version": "0.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -329,7 +329,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3088.572KB",
+  "fileSize": "3094.061KB",
   "releaseNotes": "https://github.com/ropensci/GLMMcosinor/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/GLMMcosinor/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main"],

@@ -55,6 +55,9 @@ You can install the development version of GLMMcosinor from
 ``` r
 # install.packages("remotes")
 remotes::install_github("ropensci/GLMMcosinor")
+
+# or, equivalently
+install.packages("GLMMcosinor", repos = "https://ropensci.r-universe.dev")
 ```
 
 ## Example
@@ -67,7 +70,7 @@ library(GLMMcosinor)
 
 ``` r
 model <- cglmm(
-  vit_d ~ X + amp_acro(time, group = "X", period = 12), 
+  vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )
 summary(model)
@@ -110,18 +113,18 @@ citation("GLMMcosinor")
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
 #>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2024). _GLMMcosinor:
-#>   Fit A Cosinor Model Using A Generalised Mixed Modelling Framework_. R
-#>   package version 0.1.0.9000, https://ropensci.github.io/GLMMcosinor/,
+#>   Fit a Cosinor Model Using a Generalised Mixed Modelling Framework_. R
+#>   package version 0.2.0, https://ropensci.github.io/GLMMcosinor/,
 #>   <https://github.com/ropensci/GLMMcosinor>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling
+#>     title = {GLMMcosinor: Fit a Cosinor Model Using a Generalised Mixed Modelling
 #> Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
 #>     year = {2024},
-#>     note = {R package version 0.1.0.9000, 
+#>     note = {R package version 0.2.0, 
 #> https://ropensci.github.io/GLMMcosinor/},
 #>     url = {https://github.com/ropensci/GLMMcosinor},
 #>   }

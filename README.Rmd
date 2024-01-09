@@ -68,6 +68,9 @@ You can install the development version of GLMMcosinor from [GitHub](https://git
 ``` r
 # install.packages("remotes")
 remotes::install_github("ropensci/GLMMcosinor")
+
+# or, equivalently
+install.packages("GLMMcosinor", repos = "https://ropensci.r-universe.dev")
 ```
 
 ## Example

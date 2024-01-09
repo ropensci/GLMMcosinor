@@ -1,4 +1,4 @@
-# GLMMcosinor (development version | rOpenSci review)
+# GLMMcosinor 0.2.0
 
 * Successful peer review from rOpenSci!
 
