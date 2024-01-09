@@ -82,7 +82,7 @@ values.
 Optionally allows for plotting by covariates
 }
 \examples{
-#A simple model
+# A simple model
 model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
@@ -90,8 +90,8 @@ model <- cglmm(
 autoplot(model, x_str = "X")
 
 
-#Plotting a model with various covariates
-test_data <- vitamind[vitamind$X == 1,]
+# Plotting a model with various covariates
+test_data <- vitamind[vitamind$X == 1, ]
 test_data$var1 <- sample(c("a", "b", "c"), size = nrow(test_data), replace = TRUE)
 test_data$var2 <- rnorm(n = nrow(test_data))
 
@@ -100,7 +100,10 @@ object <- cglmm(
   data = test_data
 )
 autoplot(object,
-         cov_list = list(var1 = 'a',
-                         var2 = 1),
-         superimpose.data = TRUE)
+  cov_list = list(
+    var1 = "a",
+    var2 = 1
+  ),
+  superimpose.data = TRUE
+)
 }

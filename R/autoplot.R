@@ -55,7 +55,7 @@ ggplot2::autoplot
 #'
 #' @return Returns a `ggplot` object.
 #' @examples
-#' #A simple model
+#' # A simple model
 #' model <- cglmm(
 #'   vit_d ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
@@ -63,8 +63,8 @@ ggplot2::autoplot
 #' autoplot(model, x_str = "X")
 #'
 #'
-#' #Plotting a model with various covariates
-#' test_data <- vitamind[vitamind$X == 1,]
+#' # Plotting a model with various covariates
+#' test_data <- vitamind[vitamind$X == 1, ]
 #' test_data$var1 <- sample(c("a", "b", "c"), size = nrow(test_data), replace = TRUE)
 #' test_data$var2 <- rnorm(n = nrow(test_data))
 #'
@@ -73,9 +73,12 @@ ggplot2::autoplot
 #'   data = test_data
 #' )
 #' autoplot(object,
-#'          cov_list = list(var1 = 'a',
-#'                          var2 = 1),
-#'          superimpose.data = TRUE)
+#'   cov_list = list(
+#'     var1 = "a",
+#'     var2 = 1
+#'   ),
+#'   superimpose.data = TRUE
+#' )
 #' @export
 autoplot.cglmm <- function(object,
                            ci_level = 0.95,
@@ -110,93 +113,99 @@ autoplot.cglmm <- function(object,
   }
 
 
-  if (!is.null(cov_list)){
+  if (!is.null(cov_list)) {
     for (i in names(cov_list)) {
-      assertthat::assert_that(i %in% colnames(object$newdata) &&
-                                i %in% object$covariates,
-                              msg = paste(
-                                "'cov_list' must be a list corresponding to",
-                                "covariates specified in the cglmm object: ",
-                                paste(object$covariates, collapse = ", ")
-                              )
+      assertthat::assert_that(
+        i %in% colnames(object$newdata) &&
+          i %in% object$covariates,
+        msg = paste(
+          "'cov_list' must be a list corresponding to",
+          "covariates specified in the cglmm object: ",
+          paste(object$covariates, collapse = ", ")
+        )
       )
     }
 
     message_cov_list <- NULL
     missing_covariates_check <- FALSE
-    for (i in object$covariates){
-      if(!(i %in% names(cov_list))){#
+    for (i in object$covariates) {
+      if (!(i %in% names(cov_list))) { #
         missing_covariates_check <- TRUE
         reference_level <- object$newdata[[i[1]]][1]
 
         cov_list[[i]] <- reference_level
 
-        #this ensures that the class of the reference level is maintained in
-        #the error message. Consequently, the user can use this 'cov_list' arg
-        #or a modified version in their original autoplot() call if they wish to
+        # this ensures that the class of the reference level is maintained in
+        # the error message. Consequently, the user can use this 'cov_list' arg
+        # or a modified version in their original autoplot() call if they wish to
         formatted_reference_level <- ifelse(is.character(reference_level),
-                                            paste0("'", reference_level, "'"),
-                                            as.character(reference_level))
+          paste0("'", reference_level, "'"),
+          as.character(reference_level)
+        )
 
         message_cov_list[[i]] <- paste0(i, " = ", formatted_reference_level)
-      }#
+      } #
     }
-    if(!quietly && missing_covariates_check) {
-      message(paste0("Not all covariates from the original model were specified",
-                     " in the 'cov_list' argument. The first element of each",
-                     " unspecified covariate column from the original dataframe",
-                     " will be used as reference levels:", '\n',
-                     "cov_list = list(",
-                     paste(message_cov_list, collapse = ', '), ")"))
+    if (!quietly && missing_covariates_check) {
+      message(paste0(
+        "Not all covariates from the original model were specified",
+        " in the 'cov_list' argument. The first element of each",
+        " unspecified covariate column from the original dataframe",
+        " will be used as reference levels:", "\n",
+        "cov_list = list(",
+        paste(message_cov_list, collapse = ", "), ")"
+      ))
     }
-
   }
 
-  #if cov_list isn't specified, the first entry for each covariate will assigned
-  #as the reference level
-  if(is.null(cov_list) && !is.null(object$covariates)) {
+  # if cov_list isn't specified, the first entry for each covariate will assigned
+  # as the reference level
+  if (is.null(cov_list) && !is.null(object$covariates)) {
     message_cov_list <- NULL
     for (i in object$covariates) {
       reference_level <- object$newdata[[i[1]]][1]
 
       cov_list[[i]] <- reference_level
 
-      #this ensures that the class of the reference level is maintained in
-      #the error message. Consequently, the user can use this 'cov_list' arg
-      #or a modified version in their original autoplot() call if they wish to.
+      # this ensures that the class of the reference level is maintained in
+      # the error message. Consequently, the user can use this 'cov_list' arg
+      # or a modified version in their original autoplot() call if they wish to.
       formatted_reference_level <- ifelse(is.character(reference_level),
-                                    paste0("'", reference_level, "'"),
-                                    as.character(reference_level))
+        paste0("'", reference_level, "'"),
+        as.character(reference_level)
+      )
 
       message_cov_list[[i]] <- paste0(i, " = ", formatted_reference_level)
     }
-    if(!quietly) {
-    message(paste0("'cov_list' was not specified, but there are covariates in ",
-                  "the original model; the first element of each covariate",
-                  " column from the original dataframe will be used as ",
-                  "reference levels:", '\n',
-                  "cov_list = list(",
-                paste(message_cov_list, collapse = ', '), ")"))
+    if (!quietly) {
+      message(paste0(
+        "'cov_list' was not specified, but there are covariates in ",
+        "the original model; the first element of each covariate",
+        " column from the original dataframe will be used as ",
+        "reference levels:", "\n",
+        "cov_list = list(",
+        paste(message_cov_list, collapse = ", "), ")"
+      ))
     }
   }
 
 
 
 
-  if (!is.null(ranef_plot)){
+  if (!is.null(ranef_plot)) {
     for (i in ranef_plot) {
       assertthat::assert_that(i %in% object$ranef_groups,
-                              msg = paste(
-                                "'ranef_plot' must be string corresponding to",
-                                "the name of a random effect column in the",
-                                "original dataset from the cglmm object",
-                                "Column(s) with random effect variable:",
-                                paste(object$ranef_groups, collapse = ", ")
-                              )
+        msg = paste(
+          "'ranef_plot' must be string corresponding to",
+          "the name of a random effect column in the",
+          "original dataset from the cglmm object",
+          "Column(s) with random effect variable:",
+          paste(object$ranef_groups, collapse = ", ")
+        )
       )
     }
 
-    #ensure that the random effects groups are factors
+    # ensure that the random effects groups are factors
     for (i in object$ranef_groups) {
       object$newdata[[i]] <- as.factor(object$newdata[[i]])
     }
@@ -337,16 +346,16 @@ autoplot.cglmm <- function(object,
       # Identify the column with the maximum number of unique values
       max_unique_col <- names(unique_counts)[which.max(unique_counts)]
       # Create a new vector excluding the max_unique_col
-      if(length(names(unique_counts)) > 1) {
-      new_ranef_groups <- ranef_plot[ranef_plot != max_unique_col]
+      if (length(names(unique_counts)) > 1) {
+        new_ranef_groups <- ranef_plot[ranef_plot != max_unique_col]
       } else {
-      new_ranef_groups <- NULL
+        new_ranef_groups <- NULL
       }
 
       for (i in x$ranef_groups) {
         replicated_dfs <- NULL
         x$newdata[[i]] <- as.factor(x$newdata[[i]])
-        #subjects <- as.factor(unique((x$newdata[[i]])))
+        # subjects <- as.factor(unique((x$newdata[[i]])))
         subjects <- levels(x$newdata[[i]])
         #
         if (!is.null(ranef_plot) && i %in% ranef_plot && i == max_unique_col) {
@@ -354,11 +363,11 @@ autoplot.cglmm <- function(object,
             appendvec <- data_ranef
             appendvec[[i]] <- j
             if (!is.null(new_ranef_groups)) {
-            for (k in new_ranef_groups) {
-              appendvec[[k]] <- unique(
-                object$newdata[object$newdata[[i]] == j, k]
-              )
-            }
+              for (k in new_ranef_groups) {
+                appendvec[[k]] <- unique(
+                  object$newdata[object$newdata[[i]] == j, k]
+                )
+              }
             }
             if (!is.null(x_str)) {
               for (d in x_str) {
@@ -398,12 +407,12 @@ autoplot.cglmm <- function(object,
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
   #
-  #adding covariate columns
+  # adding covariate columns
 
   for (i in names(cov_list)) {
-    if(!(i %in% object$time_name)){
-    fixed_value <- cov_list[[i]]
-    newdata[[i]] <- fixed_value
+    if (!(i %in% object$time_name)) {
+      fixed_value <- cov_list[[i]]
+      newdata[[i]] <- fixed_value
     }
   }
 
@@ -461,7 +470,7 @@ autoplot.cglmm <- function(object,
       }
     }
 
-    #generating the plots
+    # generating the plots
     if (!is.null(ranef_plot)) {
       if (missing(x_str) || is.null(x_str)) {
         plot_object <- ggplot2::ggplot() +
@@ -514,8 +523,8 @@ autoplot.cglmm <- function(object,
             ggplot2::facet_grid(rows = ggplot2::vars(NULL))
         }
       }
-    } else {#if a model has random effects, but no ranef is specified, then
-            #fixed effects will be used to generate the plot
+    } else { # if a model has random effects, but no ranef is specified, then
+      # fixed effects will be used to generate the plot
       if (missing(x_str) || is.null(x_str)) {
         plot_object <- ggplot2::ggplot() +
           ggplot2::geom_line(
@@ -564,7 +573,7 @@ autoplot.cglmm <- function(object,
         }
       }
     }
-  } else { #this separates random effect models from fixed effects models
+  } else { # this separates random effect models from fixed effects models
     if (superimpose.data) {
       original_data <- object$newdata
       original_data_processed <- object$newdata

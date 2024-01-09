@@ -63,9 +63,10 @@ test_that("model returns accurate parameters", {
     }
   )
 
-  testthat::expect_true(all.equal(SE_sum_glm,
-                                  SE_sum_lm
-                                  ))
+  testthat::expect_true(all.equal(
+    SE_sum_glm,
+    SE_sum_lm
+  ))
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
     c(1.0030, -0.4966, 2.0122, 0.9948, 3.0115, 0.3175)
@@ -369,9 +370,7 @@ test_that("alternative inputs work", {
   ))
 
   testthat::expect_no_error(cglmm(
-    vit_d ~ amp_acro('time', group = X, period = 12),
+    vit_d ~ amp_acro("time", group = X, period = 12),
     data = vitamind
   ))
 })
-
-

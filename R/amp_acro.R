@@ -165,12 +165,10 @@ amp_acro <- function(time_col,
 
     # the time_vector ttt is extracted based on the class of time_col argument
     if (is.character(substitute(time_col, .env))) {
-
       time_col <- noquote(substitute(time_col, .env))
 
       # extract the time vector
       ttt <- .data[[time_col]]
-
     } else {
       # ensure time_col is within the dataframe
       if (!inherits(substitute(time_col, .env), "name")) {
@@ -341,11 +339,11 @@ amp_acro <- function(time_col,
     )
     newformula <- stats::update.formula(newformula, ~.)
 
-    #storing the covariates. If none, then 'covariates' stored as 'NULL'
+    # storing the covariates. If none, then 'covariates' stored as 'NULL'
     if (is.character(non_acro_formula) && length(non_acro_formula) == 0) {
       covariates <- NULL
     } else {
-    covariates <- non_acro_formula
+      covariates <- non_acro_formula
     }
 
     # update the formula

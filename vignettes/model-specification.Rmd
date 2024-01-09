@@ -130,8 +130,6 @@ testdata_simple <- simulate_cosinor(
 ```
 
 ```{r, message=F, warning=F}
-
-
 object <- cglmm(
   Y ~ amp_acro(times,
     period = 12
@@ -193,8 +191,6 @@ testdata_simple_gaussian <- simulate_cosinor(
 ```
 
 ```{r, message=F, warning=F}
-
-
 object <- cglmm(
   Y ~ amp_acro(times,
     period = 12,

@@ -129,5 +129,5 @@ model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )
-polar_plot(model)
+polar_plot(model, radial_units = "period")
 }

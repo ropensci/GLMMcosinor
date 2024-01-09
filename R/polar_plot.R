@@ -81,8 +81,7 @@
 #'   vit_d ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
 #' )
-#' polar_plot(model)
-
+#' polar_plot(model, radial_units = "period")
 polar_plot <- function(x,
                        ci_level = 0.95,
                        n_breaks = 5,
@@ -188,7 +187,7 @@ polar_plot <- function(x,
 #'   vit_d ~ X + amp_acro(time, group = "X", period = 12),
 #'   data = vitamind
 #' )
-#' polar_plot(model)
+#' polar_plot(model, radial_units = "period")
 polar_plot.cglmm <- function(x,
                              ci_level = 0.95,
                              n_breaks = 5,
@@ -245,8 +244,10 @@ polar_plot.cglmm <- function(x,
   )
 
   assertthat::assert_that(is.logical(show_component_labels),
-                          msg = paste("'show_component_labels' must be a",
-                                      " logical argument, either TRUE or FALSE")
+    msg = paste(
+      "'show_component_labels' must be a",
+      " logical argument, either TRUE or FALSE"
+    )
   )
 
   assertthat::assert_that(is.numeric(text_size) & text_size > 0,
@@ -523,7 +524,7 @@ polar_plot.cglmm <- function(x,
         signif(conversion_factor * est_acr, 2),
         "\U00B0"
       )
-    }  else if (radial_units == "period") {
+    } else if (radial_units == "period") {
       acr_overlay <- paste0(
         signif(conversion_factor * est_acr, 2)
       )
@@ -548,10 +549,9 @@ polar_plot.cglmm <- function(x,
                                     text_size,
                                     text_opacity,
                                     contour_labels,
-                                    grid_angle_segments
-                                    ){
+                                    grid_angle_segments) {
       plot_background <- ggplot2::ggplot() +
-        ggforce::geom_circle( #plots the background circles
+        ggforce::geom_circle( # plots the background circles
           ggplot2::aes(
             x0 = 0,
             y0 = 0,
@@ -560,7 +560,7 @@ polar_plot.cglmm <- function(x,
           alpha = 0.01,
           linetype = circle_linetype
         ) +
-        ggplot2::geom_segment( #plots the background grid
+        ggplot2::geom_segment( # plots the background grid
           ggplot2::aes(
             x = dial_pos_full_x,
             y = dial_pos_full_y,
@@ -570,14 +570,14 @@ polar_plot.cglmm <- function(x,
           linetype = 10,
           alpha = 0.4
         ) +
-        ggplot2::geom_text( #adds the radial labels (amplitude)
+        ggplot2::geom_text( # adds the radial labels (amplitude)
           ggplot2::aes(label = time_labels[-length(time_labels)]),
           x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)],
           y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)],
           size = text_size,
           alpha = text_opacity
         ) +
-        ggplot2::geom_text( #adds the angle labels (acrophase)
+        ggplot2::geom_text( # adds the angle labels (acrophase)
           ggplot2::aes(
             label = contour_labels,
             x = contour_labels * (cos(pi / grid_angle_segments)),
@@ -600,34 +600,35 @@ polar_plot.cglmm <- function(x,
     }
 
     # get the plot background
-    plot_background <- get_background_grid(n_breaks,
-                        max_plot_radius,
-                        circle_linetype,
-                        dial_pos_full_x,
-                        dial_pos_full_y,
-                        time_labels,
-                        text_size,
-                        text_opacity,
-                        contour_labels,
-                        grid_angle_segments
+    plot_background <- get_background_grid(
+      n_breaks,
+      max_plot_radius,
+      circle_linetype,
+      dial_pos_full_x,
+      dial_pos_full_y,
+      time_labels,
+      text_size,
+      text_opacity,
+      contour_labels,
+      grid_angle_segments
     )
 
     # generates the point estimates and confidence ellipses. If you wish to add
     # multiple estimates and ellipses on the same plot, run this function with
     # the appropriate inputs, with 'plot_background' being set to the plot
     # you wish to layer upon.
-    get_point_estimate_plot <- function(est_rrr, #the rrr estimate
-                                        est_sss, #the sss estimate
-                                        a_trans, #ellipse long dimension
-                                        b_trans, #ellipse short dimension
-                                        offset, #determines where angle starts
+    get_point_estimate_plot <- function(est_rrr, # the rrr estimate
+                                        est_sss, # the sss estimate
+                                        a_trans, # ellipse long dimension
+                                        b_trans, # ellipse short dimension
+                                        offset, # determines where angle starts
                                         direction, #-1 for clockwise, 1 for anti
-                                        est_acr, #acrophase estimate
-                                        group_level, #a vector of group levels
-                                        ellipse_opacity, #0 to 1, alpha value
-                                        plot_background #the plot to layer upon
-                                        ){
-      plot_estimate <- plot_background + ggforce::geom_ellipse( #plots the confidence ellipse
+                                        est_acr, # acrophase estimate
+                                        group_level, # a vector of group levels
+                                        ellipse_opacity, # 0 to 1, alpha value
+                                        plot_background # the plot to layer upon
+    ) {
+      plot_estimate <- plot_background + ggforce::geom_ellipse( # plots the confidence ellipse
         ggplot2::aes(
           x0 = est_rrr,
           y0 = est_sss,
@@ -639,21 +640,23 @@ polar_plot.cglmm <- function(x,
         ),
         alpha = ellipse_opacity
       ) +
-        ggplot2::geom_point( #plots the parameter estimates
+        ggplot2::geom_point( # plots the parameter estimates
           ggplot2::aes(x = est_rrr, y = est_sss)
         )
       return(plot_estimate)
     }
-    plot_obj <- get_point_estimate_plot(est_rrr,
-                                        est_sss,
-                                        a_trans,
-                                        b_trans,
-                                        offset,
-                                        direction,
-                                        est_acr,
-                                        group_level,
-                                        ellipse_opacity,
-                                        plot_background)
+    plot_obj <- get_point_estimate_plot(
+      est_rrr,
+      est_sss,
+      a_trans,
+      b_trans,
+      offset,
+      direction,
+      est_acr,
+      group_level,
+      ellipse_opacity,
+      plot_background
+    )
 
 
     if (x$group_check) {
@@ -739,19 +742,21 @@ polar_plot.cglmm <- function(x,
       # plot full polar plot if view = "full"
       plot_obj <- plot_obj + ggplot2::coord_fixed()
       # if an xlims argument was passed, set the xlims accordingly
-      if(xlims_check && !ylims_check) {
+      if (xlims_check && !ylims_check) {
         plot_obj <- plot_obj + ggplot2::coord_fixed(xlim = c(xlims[1], xlims[2]))
       }
 
       # if a ylims argument was passed, set the xlims accordingly
-      if(ylims_check && !xlims_check){
+      if (ylims_check && !xlims_check) {
         plot_obj <- plot_obj + ggplot2::coord_fixed(ylim = c(ylims[1], ylims[2]))
       }
 
       # if both xlims and ylims are passed, set coordinate accordingly
-      if(ylims_check && xlims_check){
-        plot_obj <- plot_obj + ggplot2::coord_fixed(xlim = c(xlims[1], xlims[2]),
-                                                    ylim = c(ylims[1], ylims[2]))
+      if (ylims_check && xlims_check) {
+        plot_obj <- plot_obj + ggplot2::coord_fixed(
+          xlim = c(xlims[1], xlims[2]),
+          ylim = c(ylims[1], ylims[2])
+        )
       }
     }
 
@@ -777,14 +782,12 @@ polar_plot.cglmm <- function(x,
       plot_obj <- sub_ggplot.cglmm.polar(i)
       assign(paste0("plot_obj", i), plot_obj)
 
-      #show labels for each component
-      if(show_component_labels) {
-        plot_obj <- plot_obj + ggplot2::ggtitle(paste("Component",i))
+      # show labels for each component
+      if (show_component_labels) {
+        plot_obj <- plot_obj + ggplot2::ggtitle(paste("Component", i))
       }
 
       plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
-
-
     }
 
     final_obj <- cowplot::plot_grid(
@@ -795,55 +798,49 @@ polar_plot.cglmm <- function(x,
   if (make_cowplot == TRUE & n_components == 1) {
     plot_list <- NULL
     for (i in 1:n_components) {
-
       plot_obj <- sub_ggplot.cglmm.polar(i)
       assign(paste0("plot_obj", i), plot_obj)
-      #show labels for each component
-      if(show_component_labels) {
-        plot_obj <- plot_obj + ggplot2::ggtitle(paste("Component",i))
+      # show labels for each component
+      if (show_component_labels) {
+        plot_obj <- plot_obj + ggplot2::ggtitle(paste("Component", i))
       }
       plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
-
-
     }
     final_obj <- cowplot::plot_grid(
       plotlist = plot_list
     )
     final_obj
-
   }
   if (make_cowplot == FALSE) {
-    if (length(component_index) == 1){
+    if (length(component_index) == 1) {
       plot_obj <- sub_ggplot.cglmm.polar(component_index)
 
-      #show labels
-      if(show_component_labels) {
-        final_obj <- plot_obj + ggplot2::ggtitle(paste("Component",component_index))
+      # show labels
+      if (show_component_labels) {
+        final_obj <- plot_obj + ggplot2::ggtitle(paste("Component", component_index))
       } else {
         final_obj <- plot_obj
       }
       final_obj
     } else {
+      plot_list <- NULL
+      for (i in component_index) {
+        plot_obj <- sub_ggplot.cglmm.polar(i)
+        assign(paste0("plot_obj", i), plot_obj)
+        # show labels for each component
+        if (show_component_labels) {
+          plot_obj <- plot_obj + ggplot2::ggtitle(paste("Component", i))
+        }
 
-    plot_list <- NULL
-    for (i in component_index) {
-      plot_obj <- sub_ggplot.cglmm.polar(i)
-      assign(paste0("plot_obj", i), plot_obj)
-      #show labels for each component
-      if(show_component_labels) {
-        plot_obj <- plot_obj + ggplot2::ggtitle(paste("Component",i))
+        plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
       }
 
-      plot_list[[i]] <- ggplot2::ggplotGrob(plot_obj)
+      final_obj <- cowplot::plot_grid(
+        plotlist = plot_list,
+        labels = NULL
+      )
 
-    }
-
-    final_obj <- cowplot::plot_grid(
-      plotlist = plot_list,
-      labels = NULL
-    )
-
-    final_obj
+      final_obj
     }
   }
 

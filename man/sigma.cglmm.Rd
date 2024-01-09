@@ -34,9 +34,10 @@ testdata_poisson <- simulate_cosinor(100,
 
 mod <- cosinor_model <- cglmm(
   Y ~ group + amp_acro(times,
-                     period = c(12, 6),
-                     n_components = 2,
-                     group = "group"),
+    period = c(12, 6),
+    n_components = 2,
+    group = "group"
+  ),
   data = testdata_poisson,
   family = glmmTMB::nbinom1()
 )
