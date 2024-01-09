@@ -38,7 +38,7 @@ ggplot2::autoplot
 #' @param quietly A \code{logical}. If \code{TRUE}, shows warning messages when
 #' wrangling data and fitting model. Defaults to \code{TRUE}.
 #' @param cov_list Specify the levels of the covariates that you wish to plot as
-#' a list. For example, if you have two covariants: var1, and var 2, you could
+#' a list. For example, if you have two covariates: var1, and var 2, you could
 #' fix the level to be plotted as such `cov_list = list(var1 = 'a', var2 = 1)`,
 #' where 'a' is a level in 'var1', and 1 is a level in 'var2'. See the examples
 #' for a demonstration.
