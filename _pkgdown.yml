@@ -1,4 +1,5 @@
 url: https://ropensci.github.io/GLMMcosinor/
 template:
   bootstrap: 5
-
+  params:
+    mathjax: true
