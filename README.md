@@ -39,8 +39,8 @@ effects, `glmmTMB` uses maximum likelihood estimation to estimate the
 linear coefficients of the model. For models with random effects, a
 Laplace approximation is used to integrate over the random effects. This
 approximation is handled by the
-[`TMB`](https://cran.r-project.org/web/packages/TMB/index.html) package
-which uses automatic differentiation of the joint likelihood function to
+[`TMB`](https://cran.r-project.org/package=TMB) package which uses
+automatic differentiation of the joint likelihood function to
 efficiently compute parameter estimates. A detailed explanation of this
 process is described [here](https://doi.org/10.18637/jss.v070.i05)
 (Kristensen et al. 2016).
