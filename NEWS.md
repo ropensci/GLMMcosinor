@@ -1,5 +1,7 @@
 # GLMMcosinor (development version | rOpenSci review)
 
+* Successful peer review from rOpenSci!
+
 * Create a `sigma()` function which gets the dispersion parameter from a given
   `cglmm` model (by calling `glmmTMB::sigma()`).
 

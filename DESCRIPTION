@@ -15,7 +15,7 @@ Authors@R: c(
     person("Michael", "Sachs", role = "rev",
            comment = c(ORCID = "0000-0002-1279-8676")),
     person("Joaquin", "Cavieres", role = "rev",
-           comment = c(ORCID = "0000-0001-8443-572X")),
+           comment = c(ORCID = "0000-0001-8443-572X"))
   )
 Description: Fit the cosinor model using the glmmTMB framework, allowing
     for a wide range of link functions and capacity of hierarchical
