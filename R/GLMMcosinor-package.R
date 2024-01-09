@@ -10,7 +10,7 @@
 #' This package provides functions for fitting generalized linear mixed-effects
 #' models with cosinor terms. Cosinor terms can be used to model periodic
 #' variations in time series data, and are particularly useful in chronobiology
-#' and sleep research. The package uses the flexible GLMMtmb framework that
+#' and sleep research. The package uses the flexible glmmTMB framework that
 #' allows users to specify a wide range of data families, and provides tools
 #' for visualization.
 #' @keywords internal

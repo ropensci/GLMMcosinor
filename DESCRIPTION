@@ -1,10 +1,10 @@
 Type: Package
 Package: GLMMcosinor
-Title: Fit A Cosinor Model Using A Generalised Mixed Modelling Framework
+Title: Fit a Cosinor Model Using a Generalised Mixed Modelling Framework
 Version: 0.1.0.9000
 Authors@R: c(
-    person("Rex", "Parsons", , "rex.parsons94@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-6053-8174")),
+    person("Rex", "Parsons", , "rex.parsons94@gmail.com", 
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6053-8174")),
     person("Oliver", "Jayasinghe", role = "aut"),
     person("Nicole", "White", role = "aut",
            comment = c(ORCID = "0000-0002-9292-0773")),
@@ -57,3 +57,4 @@ Roxygen: list(markdown = TRUE, roclets = c ("namespace", "rd",
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)
+Language: en-US
