@@ -126,10 +126,10 @@ also be included in the formula as well as random effects. Additionally,
 zero-inflation (`ziformula`) and dispersion (`dispformula`) formulae can
 be incorporated if required. For detailed examples of how to specify
 these types of models, see the
-[mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html),
-[model-specification](https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html)
+[mixed-models](https://ropensci.github.io/GLMMcosinor/articles/mixed-models.html),
+[model-specification](https://ropensci.github.io/GLMMcosinor/articles/model-specification.html)
 and
-[multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
+[multiple-components](https://ropensci.github.io/GLMMcosinor/articles/multiple-components.html)
 vignettes.
 
 For example, consider the following model and its output:
@@ -268,17 +268,17 @@ The `cglmm()` function allows you to specify different types of cosinor
 models with or without grouping variables. The function can also
 generate dispersion models and zero-inflation models. For more detailed
 explanations and examples, see the
-[model-specification](https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html)
+[model-specification](https://ropensci.github.io/GLMMcosinor/articles/model-specification.html)
 article.
 
 Additionally, the `cglmm()` function provides more advanced
 functionality for multi-component models, and detailed explanations can
 be found in the
-[multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
+[multiple-components](https://ropensci.github.io/GLMMcosinor/articles/multiple-components.html)
 article.
 
 The `cglmm()` function also allows mixed model specification. See the
-[mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html)
+[mixed-models](https://ropensci.github.io/GLMMcosinor/articles/mixed-models.html)
 article for more details.
 
 ## Using `summary()` and testing for differences between estimates
@@ -468,7 +468,7 @@ generated plot will have x-limits corresponding to the minimum and
 maximum values of the time-vector in the original dataframe, although
 the x-limits can be manually defined by the user using the `xlims`
 argument. The details of using the `autoplot` function are found in the
-[model-visualisations](https://rwparsons.github.io/GLMMcosinor/articles/model-visualisations.html)
+[model-visualisations](https://ropensci.github.io/GLMMcosinor/articles/model-visualisations.html)
 vignette.
 
 ## References

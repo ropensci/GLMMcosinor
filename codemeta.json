@@ -4,9 +4,9 @@
   "identifier": "GLMMcosinor",
   "description": "Fit the cosinor model using the glmmTMB framework, allowing for a wide range of link functions and capacity of hierarchical structures.",
   "name": "GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling Framework",
-  "relatedLink": "https://rwparsons.github.io/GLMMcosinor/",
-  "codeRepository": "https://github.com/RWParsons/GLMMcosinor",
-  "issueTracker": "https://github.com/RWParsons/GLMMcosinor/issues",
+  "relatedLink": "https://ropensci.github.io/GLMMcosinor/",
+  "codeRepository": "https://github.com/ropensci/GLMMcosinor",
+  "issueTracker": "https://github.com/ropensci/GLMMcosinor/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.1.0.9000",
   "programmingLanguage": {
@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31 ucrt)",
+  "runtimePlatform": "R version 4.3.2 (2023-10-31 ucrt)",
   "author": [
     {
       "@type": "Person",
@@ -329,10 +329,10 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "2916.288KB",
-  "releaseNotes": "https://github.com/RWParsons/GLMMcosinor/blob/master/NEWS.md",
-  "readme": "https://github.com/RWParsons/GLMMcosinor/blob/main/README.md",
-  "contIntegration": ["https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main"],
+  "fileSize": "3088.572KB",
+  "releaseNotes": "https://github.com/ropensci/GLMMcosinor/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/GLMMcosinor/blob/main/README.md",
+  "contIntegration": ["https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",

@@ -8,7 +8,7 @@
 models with cosinor terms}
 \description{
 To learn more about how to use GLMMcosinor, see the vignettes at the
-\href{https://rwparsons.github.io/GLMMcosinor/}{website} or using
+\href{https://ropensci.github.io/GLMMcosinor/}{website} or using
 the following code:
 
 \code{browseVignettes(package = "GLMMcosinor")}
@@ -23,9 +23,9 @@ for visualization.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/RWParsons/GLMMcosinor}
-  \item \url{https://rwparsons.github.io/GLMMcosinor/}
-  \item Report bugs at \url{https://github.com/RWParsons/GLMMcosinor/issues}
+  \item \url{https://github.com/ropensci/GLMMcosinor}
+  \item \url{https://ropensci.github.io/GLMMcosinor/}
+  \item Report bugs at \url{https://github.com/ropensci/GLMMcosinor/issues}
 }
 
 }

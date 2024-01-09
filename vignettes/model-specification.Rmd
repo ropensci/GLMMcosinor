@@ -95,10 +95,10 @@ variables in the `data.frame`. Any other combination of covariates can
 also be included in the formula as well as random effects and
 zero-inflation (`ziformula`) and dispersion (`dispformula`) formulae.
 For detailed examples of how to specify models, see the
-[mixed-models](https://rwparsons.github.io/GLMMcosinor/articles/mixed-models.html),
-[model-specification](https://rwparsons.github.io/GLMMcosinor/articles/model-specification.html)
+[mixed-models](https://ropensci.github.io/GLMMcosinor/articles/mixed-models.html),
+[model-specification](https://ropensci.github.io/GLMMcosinor/articles/model-specification.html)
 and
-[multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
+[multiple-components](https://ropensci.github.io/GLMMcosinor/articles/multiple-components.html)
 vignettes.
 
 ## Using cglmm()
@@ -146,7 +146,7 @@ The output shows the estimates for the raw coefficients in addition to
 the transformed estimates for amplitude (amp) and acrophase (acr) and
 MESOR (`(Intercept)`). The previous section of this vignette: [An
 overview of the statistical methods used for parameter
-estimation](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html#an-overview-of-the-statistical-methods-used-for-parameter-estimation)
+estimation](https://ropensci.github.io/GLMMcosinor/articles/GLMMcosinor.html#an-overview-of-the-statistical-methods-used-for-parameter-estimation)
 outlines the difference between the raw coefficients and the transformed
 coefficients.
 
@@ -362,7 +362,7 @@ component, we would specify the `group` argument as
 `group = c("group", NA))`.
 
 For a detailed explanation of how to specify multi-component models, see
-[multiple-components](https://rwparsons.github.io/GLMMcosinor/articles/multiple-components.html)
+[multiple-components](https://ropensci.github.io/GLMMcosinor/articles/multiple-components.html)
 
 ### Dispersion and zero-inflation model specification
 

@@ -1,13 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GLMMcosinor <a href='https://rwparsons.github.io/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# GLMMcosinor <a href='https://ropensci.github.io/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RWParsons/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/RWParsons/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RWParsons/GLMMcosinor?branch=main)
+coverage](https://codecov.io/gh/ropensci/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Project Status: Active – The project has reached a stable, usable
@@ -22,7 +22,7 @@ except with all the flexibility and functionality of a generalised
 linear (mixed-) model (GLM) framework using `{glmmTMB}`.
 
 For an introduction to the cosinor model, see the [getting started
-vignette](https://rwparsons.github.io/GLMMcosinor/articles/GLMMcosinor.html).
+vignette](https://ropensci.github.io/GLMMcosinor/articles/GLMMcosinor.html).
 
 Existing statistical software for circadian data analyses (including
 `cosinor` (Sachs 2023) or `circacompare` (Parsons et al. 2020)) allow
@@ -54,7 +54,7 @@ You can install the development version of GLMMcosinor from
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("RWParsons/GLMMcosinor")
+remotes::install_github("ropensci/GLMMcosinor")
 ```
 
 ## Example
@@ -85,13 +85,13 @@ summary(model)
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Transformed coefficients:
-#>               estimate standard.error   lower.CI upper.CI    p.value    
-#> (Intercept) 29.6897959      0.4583696 28.7914079 30.58818 < 2.22e-16 ***
-#> [X=1]        1.9018623      0.7919688  0.3496320  3.45409   0.016331 *  
-#> [X=0]:amp1   6.2704576      0.6696564  4.9579551  7.58296 < 2.22e-16 ***
-#> [X=1]:amp1   8.0994722      1.1028357  5.9379540 10.26099 2.0696e-13 ***
-#> [X=0]:acr1   1.4218056      0.1000725  1.2256670  1.61794 < 2.22e-16 ***
-#> [X=1]:acr1   0.6371544      0.1360809  0.3704408  0.90387 2.8385e-06 ***
+#>                estimate standard.error    lower.CI upper.CI    p.value    
+#> (Intercept) 29.68979587     0.45836964 28.79140787 30.58818 < 2.22e-16 ***
+#> [X=1]        1.90186227     0.79196879  0.34963197  3.45409   0.016331 *  
+#> [X=0]:amp1   6.27045757     0.66965642  4.95795510  7.58296 < 2.22e-16 ***
+#> [X=1]:amp1   8.09947222     0.89570576  6.34392119  9.85502 < 2.22e-16 ***
+#> [X=0]:acr1   1.42180558     0.09993559  1.22593542  1.61768 < 2.22e-16 ***
+#> [X=1]:acr1   0.63715441     0.11493853  0.41187902  0.86243 2.9659e-08 ***
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -109,10 +109,10 @@ polar_plot(model)
 citation("GLMMcosinor")
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
-#>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2023). _GLMMcosinor:
-#>   Fit A Cosinor Model Using A Generalised Mixed Modelling Framework_.
-#>   https://github.com/RWParsons/GLMMcosinor,
-#>   https://rwparsons.github.io/GLMMcosinor/.
+#>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2024). _GLMMcosinor:
+#>   Fit A Cosinor Model Using A Generalised Mixed Modelling Framework_. R
+#>   package version 0.1.0.9000, https://ropensci.github.io/GLMMcosinor/,
+#>   <https://github.com/ropensci/GLMMcosinor>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -120,9 +120,10 @@ citation("GLMMcosinor")
 #>     title = {GLMMcosinor: Fit A Cosinor Model Using A Generalised Mixed Modelling
 #> Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
-#>     year = {2023},
-#>     note = {https://github.com/RWParsons/GLMMcosinor,
-#> https://rwparsons.github.io/GLMMcosinor/},
+#>     year = {2024},
+#>     note = {R package version 0.1.0.9000, 
+#> https://ropensci.github.io/GLMMcosinor/},
+#>     url = {https://github.com/ropensci/GLMMcosinor},
 #>   }
 ```
 
