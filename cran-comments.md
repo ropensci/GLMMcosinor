@@ -4,6 +4,9 @@
 
 * This is a new release.
 
+This resubmission includes changes to the 'description' in the DESCRIPTION file
+as requested.
+
 GLMMcosinor can be used to fit a cosinor model with the glmmTMB modelling 
 framework.
 

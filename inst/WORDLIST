@@ -7,6 +7,7 @@ CMD
 Casper
 CircaCompare
 Codecov
+Cornelissen
 Cosinor
 DHARMa
 GLMM
@@ -34,10 +35,12 @@ arg
 behaviour
 cglmm
 chronobiology
+circacompare
 colours
 comparator
 cosinor
 customised
+doi
 et
 frac
 funder
