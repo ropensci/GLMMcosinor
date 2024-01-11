@@ -1,5 +1,5 @@
 ---
-title: "model-specification"
+title: "Model specification"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 #' @srrstats {RE1.1}
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(GLMMcosinor)
 library(dplyr)
 ```
@@ -410,7 +410,7 @@ models will not be generated in the output.
 number of components in the dispersion and zero-inflation formulas were
 chosen arbitrarily and purely for demonstration.*
 
-## Using: 'summary(cglmm)'
+## Using `summary(cglmm)`
 
 The `summary()` method for `cglmm` objects provides a more detailed
 summary of the model and its parameter estimates and uncertainty. It

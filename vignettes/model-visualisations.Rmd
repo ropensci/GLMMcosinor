@@ -1,5 +1,5 @@
 ---
-title: "model-visualisations"
+title: "Visualising models"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,10 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, echo=F}
-library(GLMMcosinor)
+```{r, echo=F, message=FALSE}
 withr::with_seed(42, {
-  testdata_two_components <- simulate_cosinor(
+  testdata_two_components <- GLMMcosinor::simulate_cosinor(
     1000,
     n_period = 2,
     mesor = 1,
@@ -35,7 +34,7 @@ withr::with_seed(42, {
     n_components = 2
   )
 
-  testdata_period_diff <- simulate_cosinor(
+  testdata_period_diff <- GLMMcosinor::simulate_cosinor(
     1000,
     n_period = 1,
     mesor = 7,
@@ -48,7 +47,7 @@ withr::with_seed(42, {
 })
 ```
 
-## Plotting cglmm objects
+## Visualising `cglmm` models
 
 The `GLMMcosinor` package includes two ways to visualise models from
 `cglmm()`. Firstly, the function `autoplot()` creates a time-response
@@ -92,7 +91,7 @@ The following examples demonstrate how `x_str` can be used to produce
 different plots for the same model. Note how `predict.ribbon` can be set
 to `FALSE` to remove the prediction interval from the plots.
 
-```{r, echo=F}
+```{r, echo=F, message=F}
 testdata_two_components <- simulate_cosinor(
   1000,
   n_period = 2,

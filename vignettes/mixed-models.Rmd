@@ -1,5 +1,5 @@
 ---
-title: "mixed-models"
+title: "Mixed models"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(GLMMcosinor)
 library(dplyr)
 library(ggplot2)
