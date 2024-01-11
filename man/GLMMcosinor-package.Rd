@@ -42,6 +42,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Prasad Chunduri (\href{https://orcid.org/0000-0001-7297-7580}{ORCID}) [contributor, funder]
+  \item Margaret Doyle [contributor]
   \item Michael Sachs (\href{https://orcid.org/0000-0002-1279-8676}{ORCID}) [reviewer]
   \item Joaquin Cavieres (\href{https://orcid.org/0000-0001-8443-572X}{ORCID}) [reviewer]
 }
