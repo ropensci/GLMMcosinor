@@ -2,7 +2,7 @@
 #' models with cosinor terms
 #' @description
 #' To learn more about how to use GLMMcosinor, see the vignettes at the
-#' \href{https://ropensci.github.io/GLMMcosinor/}{website} or using
+#' \href{https://docs.ropensci.org/GLMMcosinor/}{website} or using
 #' the following code:
 #'
 #' `browseVignettes(package = "GLMMcosinor")`

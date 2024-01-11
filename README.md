@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GLMMcosinor <a href='https://ropensci.github.io/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# GLMMcosinor <a href='https://docs.ropensci.org/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -22,7 +22,7 @@ except with all the flexibility and functionality of a generalised
 linear (mixed-) model (GLM) framework using `{glmmTMB}`.
 
 For an introduction to the cosinor model, see the [getting started
-vignette](https://ropensci.github.io/GLMMcosinor/articles/GLMMcosinor.html).
+vignette](https://docs.ropensci.org/GLMMcosinor/articles/GLMMcosinor.html).
 
 Existing statistical software for circadian data analyses (including
 `cosinor` (Sachs 2023) or `circacompare` (Parsons et al. 2020)) allow
@@ -114,7 +114,7 @@ citation("GLMMcosinor")
 #> 
 #>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2024). _GLMMcosinor:
 #>   Fit a Cosinor Model Using a Generalised Mixed Modelling Framework_. R
-#>   package version 0.2.0, https://ropensci.github.io/GLMMcosinor/,
+#>   package version 0.2.0.9000, https://docs.ropensci.org/GLMMcosinor/,
 #>   <https://github.com/ropensci/GLMMcosinor>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -124,8 +124,8 @@ citation("GLMMcosinor")
 #> Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
 #>     year = {2024},
-#>     note = {R package version 0.2.0, 
-#> https://ropensci.github.io/GLMMcosinor/},
+#>     note = {R package version 0.2.0.9000, 
+#> https://docs.ropensci.org/GLMMcosinor/},
 #>     url = {https://github.com/ropensci/GLMMcosinor},
 #>   }
 ```

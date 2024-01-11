@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 ```
 
 
-# GLMMcosinor <a href='https://ropensci.github.io/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# GLMMcosinor <a href='https://docs.ropensci.org/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 
 The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data except with all the flexibility and functionality of a generalised linear (mixed-) model (GLM) framework using `{glmmTMB}`. 
 
-For an introduction to the cosinor model, see the [getting started vignette](https://ropensci.github.io/GLMMcosinor/articles/GLMMcosinor.html).
+For an introduction to the cosinor model, see the [getting started vignette](https://docs.ropensci.org/GLMMcosinor/articles/GLMMcosinor.html).
 
 Existing statistical software for circadian data analyses (including `cosinor` [@sachs2023cosinor] or `circacompare` [@parsons2020circacompare]) allow the user to fit data using a regression model, but many are limited due to their inability to specify a link function, multiple components, or a hierarchical structure. `GLMMcosinor` aims to be comprehensive and flexible and is an improvement on other implementations of the cosinor model in R or Python. See table below for features available within currently available methods.
 
