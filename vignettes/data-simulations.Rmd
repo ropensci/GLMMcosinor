@@ -1,5 +1,5 @@
 ---
-title: "data-simulations"
+title: "Simulating data"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 library(GLMMcosinor)
 ```
 
-## Using: 'simulate_cosinor.R'
+## Simulating rhythmic data
 
 `simulate_cosinor` allows users to simulate circadian data from Gaussian, Gamma, Binomial, or Poisson distributions. It also supports generation of multi-component data, as well as simulation of grouped data with two levels.
 

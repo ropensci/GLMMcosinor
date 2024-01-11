@@ -1,7 +1,7 @@
 Type: Package
 Package: GLMMcosinor
 Title: Fit a Cosinor Model Using a Generalised Mixed Modelling Framework
-Version: 0.2.0
+Version: 0.2.0.9000
 Authors@R: c(
     person("Rex", "Parsons", , "rex.parsons94@gmail.com", 
            role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6053-8174")),
@@ -12,6 +12,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-7147-4778")),
     person("Prasad", "Chunduri", role = c("ctb", "fnd"),
            comment = c(ORCID = "0000-0001-7297-7580")),
+    person("Margaret", "Doyle", role = "ctb"),
     person("Michael", "Sachs", role = "rev",
            comment = c(ORCID = "0000-0002-1279-8676")),
     person("Joaquin", "Cavieres", role = "rev",
@@ -24,7 +25,7 @@ Description: Allows users to fit a cosinor model using the 'glmmTMB' framework.
     Cornelissen (2014) <doi:10.1186/1742-4682-11-16>.
 License: GPL (>= 3)
 URL: https://github.com/ropensci/GLMMcosinor,
-    https://ropensci.github.io/GLMMcosinor/
+    https://docs.ropensci.org/GLMMcosinor/
 BugReports: https://github.com/ropensci/GLMMcosinor/issues
 Imports:
     assertthat,

@@ -1,5 +1,5 @@
 ---
-title: "multiple-components"
+title: "Multicomponent cosinor modelling"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
