@@ -51,12 +51,22 @@ test_that("model returns accurate parameters", {
         ),
         data = comod
       )
+      sum_glm <- summary(object)
+      SE_sum_glm <- round(sum_glm$transformed.table$standard.error, digits = 4)
+
       cosinor_lm_mod <- cosinor::cosinor.lm(
         Y ~ time(times) + group + amp.acro(group),
         data = comod
       )
+      sum_lm <- summary(cosinor_lm_mod)
+      SE_sum_lm <- round(sum_lm$transformed.table$standard.error, digits = 4)
     }
   )
+
+  testthat::expect_true(all.equal(
+    SE_sum_glm,
+    SE_sum_lm
+  ))
   testthat::expect_true(all.equal(
     f_round(object$coefficients),
     c(1.0030, -0.4966, 2.0122, 0.9948, 3.0115, 0.3175)
@@ -356,6 +366,11 @@ test_that("alternative inputs work", {
   ))
   testthat::expect_no_error(cglmm(
     vit_d ~ amp_acro(time, group = X, period = 12),
+    data = vitamind
+  ))
+
+  testthat::expect_no_error(cglmm(
+    vit_d ~ amp_acro("time", group = X, period = 12),
     data = vitamind
   ))
 })

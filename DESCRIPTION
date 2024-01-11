@@ -1,25 +1,31 @@
 Type: Package
 Package: GLMMcosinor
-Title: Fit A Cosinor Model Using A Generalised Mixed Modelling Framework
-Version: 0.1.0.9000
+Title: Fit a Cosinor Model Using a Generalised Mixed Modelling Framework
+Version: 0.2.0
 Authors@R: c(
-    person("Rex", "Parsons", , "rex.parsons94@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-6053-8174")),
+    person("Rex", "Parsons", , "rex.parsons94@gmail.com", 
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6053-8174")),
     person("Oliver", "Jayasinghe", role = "aut"),
     person("Nicole", "White", role = "aut",
            comment = c(ORCID = "0000-0002-9292-0773")),
     person("Oliver", "Rawashdeh", role = c("aut", "fnd"),
            comment = c(ORCID = "0000-0002-7147-4778")),
     person("Prasad", "Chunduri", role = c("ctb", "fnd"),
-           comment = c(ORCID = "0000-0001-7297-7580"))
+           comment = c(ORCID = "0000-0001-7297-7580")),
+    person("Michael", "Sachs", role = "rev",
+           comment = c(ORCID = "0000-0002-1279-8676")),
+    person("Joaquin", "Cavieres", role = "rev",
+           comment = c(ORCID = "0000-0001-8443-572X"))
   )
-Description: Fit the cosinor model using the glmmTMB framework, allowing
-    for a wide range of link functions and capacity of hierarchical
-    structures.
+Description: Allows users to fit a cosinor model using the 'glmmTMB' framework. 
+    This extends on existing cosinor modelling packages, including 'cosinor' 
+    and 'circacompare', by including a wide range of available link functions 
+    and the capability to fit mixed models. The cosinor model is described by 
+    Cornelissen (2014) <doi:10.1186/1742-4682-11-16>.
 License: GPL (>= 3)
-URL: https://github.com/RWParsons/GLMMcosinor,
-    https://rwparsons.github.io/GLMMcosinor/
-BugReports: https://github.com/RWParsons/GLMMcosinor/issues
+URL: https://github.com/ropensci/GLMMcosinor,
+    https://ropensci.github.io/GLMMcosinor/
+BugReports: https://github.com/ropensci/GLMMcosinor/issues
 Imports:
     assertthat,
     cowplot,
@@ -53,3 +59,4 @@ Roxygen: list(markdown = TRUE, roclets = c ("namespace", "rd",
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)
+Language: en-US

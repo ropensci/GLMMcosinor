@@ -75,8 +75,8 @@ test_cosinor_components <- function(x,
   )
 
 
-  if(!is.null(x_str)) {
-  stopifnot(is.character(x_str))
+  if (!is.null(x_str)) {
+    stopifnot(is.character(x_str))
   }
 
   # assertthat::assert_that(
@@ -92,15 +92,15 @@ test_cosinor_components <- function(x,
       "corresponding to a component in the model"
     )
   )
-  if(!is.null(x_str)) {
-  assertthat::assert_that(
-    level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
-      level_index %in% x$group_stats[[x$group_original[comparison_B]]],
-    msg = paste(
-      "'level_index' must be supplied and it must be a number",
-      "corresponding to a level in the model"
+  if (!is.null(x_str)) {
+    assertthat::assert_that(
+      level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
+        level_index %in% x$group_stats[[x$group_original[comparison_B]]],
+      msg = paste(
+        "'level_index' must be supplied and it must be a number",
+        "corresponding to a level in the model"
+      )
     )
-  )
   }
 
   # passing these inputs into the internal function
@@ -337,7 +337,7 @@ test_cosinor_levels <- function(x,
   # "control", "treatment"))
   summary.fit <- summary(x)
 
-  if(is.null(x_str)){
+  if (is.null(x_str)) {
     x_str_length <- 1
   } else {
     x_str_length <- length(x_str)
@@ -347,14 +347,14 @@ test_cosinor_levels <- function(x,
   colnames(index) <- names(x$coefficients)
 
   if (comparison_type == "components") {
-    if(is.null(x_str)){
-      index[1,paste0(param,comparison_A)] <- -1
-      index[1,paste0(param,comparison_B)] <- 1
+    if (is.null(x_str)) {
+      index[1, paste0(param, comparison_A)] <- -1
+      index[1, paste0(param, comparison_B)] <- 1
     } else {
-    for (i in seq_along(x_str)) {
-      index[i, paste0(x_str[i], level_index, ":", param, comparison_A)] <- -1
-      index[i, paste0(x_str[i], level_index, ":", param, comparison_B)] <- 1
-    }
+      for (i in seq_along(x_str)) {
+        index[i, paste0(x_str[i], level_index, ":", param, comparison_A)] <- -1
+        index[i, paste0(x_str[i], level_index, ":", param, comparison_B)] <- 1
+      }
     }
   }
 

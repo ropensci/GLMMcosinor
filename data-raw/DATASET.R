@@ -1,5 +1,3 @@
-
-
 vitamind <- read.csv("data-raw/vitamind.csv") |>
   dplyr::rename(vit_d = Y) |>
   dplyr::select(vit_d, time, X)
@@ -10,7 +8,6 @@ usethis::use_data(vitamind, overwrite = TRUE)
 withr::with_seed(
   50,
   {
-
     library(dplyr)
 
     # generate a dataset with a random effect variable comprising 30 subjects
@@ -23,8 +20,7 @@ withr::with_seed(
                             sd = 0.2,
                             period,
                             n_components,
-                            beta.group = TRUE
-    ) {
+                            beta.group = TRUE) {
       data <- simulate_cosinor(
         n = n,
         mesor = mesor,
@@ -55,7 +51,7 @@ withr::with_seed(
       mutate(subject = as.factor(subject))
 
 
-    #An example of a model for this data
+    # An example of a model for this data
     # mixed_mod <- cglmm(
     #   Y ~ amp_acro(times,
     #                n_components = 1,
@@ -63,8 +59,8 @@ withr::with_seed(
     #   ) + (1 + amp_acro1 | subject),
     #   data = dat_mixed
     # )
-
-})
+  }
+)
 
 
 cosinor_mixed <- select(dat_mixed, -group)

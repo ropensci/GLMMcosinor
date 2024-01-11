@@ -137,25 +137,22 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
       new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
     }
 
-    # create empty index arrays and calculate standard errors for each parameter
-    index.s <- matrix(0, nrow = length(groups.r), ncol = length(groups.r))
-    index.r <- matrix(0, nrow = length(groups.s), ncol = length(groups.s))
+    # determine the partial derivatives of amplitude and acrophase
 
-    index.r[, 1] <- index.s[, 1] <- 1
-    diag(index.r) <- diag(index.s) <- 1
-    indexmat <- rbind(
-      cbind(index.r, index.s * 0),
-      cbind(index.r * 0, index.s)
-    )
-
-    indVmat <- indexmat %*% vmat %*% t(indexmat)
+    # a_r is the partial derivative of amp with respect to r.
+    # hence, a_r = d(amp)/d(groups.r),
+    # where amp = sqrt(groups.r^2 + groups.s^2). Likewise for a_s
 
     a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
     a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
 
-    b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (groups.s / groups.r^2)
+    # b_r is the partial derivative of acr with respect to r.
+    # hence, b_r = d(acr)/d(groups.r),
+    # where acr = arctan(s/r). Likewise for b_s
+    b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
     b_s <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
 
+    # jac is the jacobian matrix, a matrix of partial derivatives
     if (length(groups.r) == 1) {
       jac <- matrix(c(a_r, a_s, b_r, b_s), byrow = TRUE, nrow = 2)
     } else {
@@ -165,7 +162,8 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
       )
     }
 
-    cov.trans <- jac %*% indVmat %*% t(jac)
+    # apply the delta method
+    cov.trans <- (jac) %*% vmat %*% t(jac)
     se.trans <- sqrt(diag(cov.trans))
 
     # assemble summary matrix

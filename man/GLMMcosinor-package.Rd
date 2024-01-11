@@ -8,7 +8,7 @@
 models with cosinor terms}
 \description{
 To learn more about how to use GLMMcosinor, see the vignettes at the
-\href{https://rwparsons.github.io/GLMMcosinor/}{website} or using
+\href{https://ropensci.github.io/GLMMcosinor/}{website} or using
 the following code:
 
 \code{browseVignettes(package = "GLMMcosinor")}
@@ -16,16 +16,16 @@ the following code:
 This package provides functions for fitting generalized linear mixed-effects
 models with cosinor terms. Cosinor terms can be used to model periodic
 variations in time series data, and are particularly useful in chronobiology
-and sleep research. The package uses the flexible GLMMtmb framework that
+and sleep research. The package uses the flexible glmmTMB framework that
 allows users to specify a wide range of data families, and provides tools
 for visualization.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/RWParsons/GLMMcosinor}
-  \item \url{https://rwparsons.github.io/GLMMcosinor/}
-  \item Report bugs at \url{https://github.com/RWParsons/GLMMcosinor/issues}
+  \item \url{https://github.com/ropensci/GLMMcosinor}
+  \item \url{https://ropensci.github.io/GLMMcosinor/}
+  \item Report bugs at \url{https://github.com/ropensci/GLMMcosinor/issues}
 }
 
 }
@@ -42,6 +42,8 @@ Authors:
 Other contributors:
 \itemize{
   \item Prasad Chunduri (\href{https://orcid.org/0000-0001-7297-7580}{ORCID}) [contributor, funder]
+  \item Michael Sachs (\href{https://orcid.org/0000-0002-1279-8676}{ORCID}) [reviewer]
+  \item Joaquin Cavieres (\href{https://orcid.org/0000-0001-8443-572X}{ORCID}) [reviewer]
 }
 
 }

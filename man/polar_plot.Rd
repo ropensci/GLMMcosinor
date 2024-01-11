@@ -22,6 +22,8 @@ polar_plot(
   overlay_parameter_info = FALSE,
   quietly = TRUE,
   show_component_labels = TRUE,
+  xlims,
+  ylims,
   ...
 )
 }
@@ -78,8 +80,9 @@ length of the default argument (8), colours are generated using
 \item{ellipse_opacity}{A \code{numeric} between 0 and 1 inclusive that
 controls the opacity of the confidence ellipses. Defaults to 0.3.}
 
-\item{circle_linetype}{A \code{character} that determines the \code{linetype}
-of the radial circles in background of the polar plot. See \code{?linetype}
+\item{circle_linetype}{A \code{character} or \code{numeric} that determines
+the \code{linetype} of the radial circles in background of the polar plot.
+See \code{?linetype}
 for more details.}
 
 \item{start}{A \code{character}, within
@@ -108,6 +111,10 @@ whether messages are displayed in the console.}
 \item{show_component_labels}{Logical argument, TRUE by default. When TRUE,
 the polar plots have labels corresponding to their components.}
 
+\item{xlims}{A vector of length two containing the limits for the x-axis.}
+
+\item{ylims}{A vector of length two containing the limits for the y-axis.}
+
 \item{...}{Additional, ignored arguments.}
 }
 \value{
@@ -122,5 +129,5 @@ model <- cglmm(
   vit_d ~ X + amp_acro(time, group = "X", period = 12),
   data = vitamind
 )
-polar_plot(model)
+polar_plot(model, radial_units = "period")
 }

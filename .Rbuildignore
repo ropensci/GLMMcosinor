@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
@@ -9,3 +11,5 @@
 ^pkgdown$
 ^codemeta\.json$
 ^data-raw$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
