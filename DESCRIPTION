@@ -1,7 +1,7 @@
 Type: Package
 Package: GLMMcosinor
 Title: Fit a Cosinor Model Using a Generalised Mixed Modelling Framework
-Version: 0.2.0
+Version: 0.2.0.9000
 Authors@R: c(
     person("Rex", "Parsons", , "rex.parsons94@gmail.com", 
            role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6053-8174")),
