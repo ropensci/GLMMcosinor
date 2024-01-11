@@ -18,26 +18,26 @@ Review](https://badges.ropensci.org/603_status.svg)](https://github.com/ropensci
 <!-- badges: end -->
 
 The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data
-except with all the flexibility and functionality of a generalised
-linear (mixed-) model (GLM) framework using `{glmmTMB}`.
+with all the flexibility and functionality of a generalised linear
+(mixed-) model (GLM) framework using `{glmmTMB}`.
 
 For an introduction to the cosinor model, see the [getting started
 vignette](https://docs.ropensci.org/GLMMcosinor/articles/GLMMcosinor.html).
 
 Existing statistical software for circadian data analyses (including
-`cosinor` (Sachs 2023) or `circacompare` (Parsons et al. 2020)) allow
-the user to fit data using a regression model, but many are limited due
-to their inability to specify a link function, multiple components, or a
-hierarchical structure. `GLMMcosinor` aims to be comprehensive and
-flexible and is an improvement on other implementations of the cosinor
-model in R or Python. See table below for features available within
+`cosinor` (Sachs 2023) or `circacompare` (Parsons et al. 2020)) allows
+users to fit regression models to rhythmic data, but many are limited
+due to their inability to specify a link function, multiple components,
+or a hierarchical structure. `GLMMcosinor` aims to be comprehensive and
+flexible and is an improvement on other implementations of cosinor model
+fitting in R or Python. See table below for features available within
 currently available methods.
 
 `GLMMcosinor` makes use of the `glmmTMB` package framework for
-estimation of linear cosinor coefficients. If the model has no random
-effects, `glmmTMB` uses maximum likelihood estimation to estimate the
-linear coefficients of the model. For models with random effects, a
-Laplace approximation is used to integrate over the random effects. This
+estimation of the cosinor model. If the model has no random effects,
+`glmmTMB` uses maximum likelihood estimation to estimate the linear
+coefficients of the model. For models with random effects, a Laplace
+approximation is used to integrate over the random effects. This
 approximation is handled by the
 [`TMB`](https://cran.r-project.org/package=TMB) package which uses
 automatic differentiation of the joint likelihood function to
