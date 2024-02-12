@@ -318,7 +318,7 @@ autoplot.cglmm <- function(object,
       }
 
       newdata$levels <- ""
-      if(length(x_str) == 1){
+      if (length(x_str) == 1) {
         newdata$levels <- paste0(
           newdata$levels,
           newdata[, x_str]
@@ -326,7 +326,7 @@ autoplot.cglmm <- function(object,
       }
 
       i <- 1 # used as a counter for formatting purposess
-      if(length(x_str) > 1){
+      if (length(x_str) > 1) {
         for (d in x_str) {
           newdata$levels <- paste0(
             newdata$levels,
@@ -449,13 +449,12 @@ autoplot.cglmm <- function(object,
   y_min <- pred_obj$fit - zt * pred_obj$se.fit
   y_max <- pred_obj$fit + zt * pred_obj$se.fit
 
-  if(!is.null(x_str)){
-  if(length(x_str) == 1){
-    x_str_label = x_str
-  }
-  else{
-    x_str_label = "Groups"
-  }
+  if (!is.null(x_str)) {
+    if (length(x_str) == 1) {
+      x_str_label <- x_str
+    } else {
+      x_str_label <- "Groups"
+    }
   }
   # get the original data from the cglmm object to be superimposed
 
@@ -702,7 +701,7 @@ autoplot.cglmm <- function(object,
             ),
             alpha = 0.5
           ) +
-          ggplot2::labs(fill =  x_str_label) +
+          ggplot2::labs(fill = x_str_label) +
           ggplot2::labs(col = x_str_label) +
           ggplot2::facet_grid(rows = ggplot2::vars(NULL))
       }
