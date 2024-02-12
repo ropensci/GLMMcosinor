@@ -423,7 +423,7 @@ polar_plot.cglmm <- function(x,
     if (group_check) {
       for (i in level) {
         group_ind <- paste0(group, "=", i)
-        group_level[which(grepl(group_ind, name_index))] <- paste(group, "=", i)
+        group_level[which(grepl(group_ind, name_index))] <- paste(i)
       }
     }
 
@@ -660,7 +660,7 @@ polar_plot.cglmm <- function(x,
 
 
     if (x$group_check) {
-      plot_obj <- plot_obj + ggplot2::labs(fill = "levels", colour = NULL)
+      plot_obj <- plot_obj + ggplot2::labs(fill = x_str, colour = NULL)
     }
     # OPTIONAL: overlays lines connecting the parameter estimates to the
     # origin, and displays estimates in plot

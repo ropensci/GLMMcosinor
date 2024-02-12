@@ -318,17 +318,28 @@ autoplot.cglmm <- function(object,
       }
 
       newdata$levels <- ""
-      i <- 1 # used as a counter for formatting purposes
-      for (d in x_str) {
+      if(length(x_str) == 1){
         newdata$levels <- paste0(
           newdata$levels,
-          d, "=", newdata[, d]
+          newdata[, x_str]
         )
-        # if there are multiple group levels, separate them by "|"
-        if (i < length(x_str)) {
-          newdata$levels <- paste0(newdata$levels, " | ")
+      }
+
+      i <- 1 # used as a counter for formatting purposess
+      if(length(x_str) > 1){
+        for (d in x_str) {
+          newdata$levels <- paste0(
+            newdata$levels,
+            d,
+            "=",
+            newdata[, d]
+          )
+          # if there are multiple group levels, separate them by "|"
+          if (i < length(x_str)) {
+            newdata$levels <- paste0(newdata$levels, " | ")
+          }
+          i <- i + 1
         }
-        i <- i + 1
       }
     }
 
@@ -438,12 +449,17 @@ autoplot.cglmm <- function(object,
   y_min <- pred_obj$fit - zt * pred_obj$se.fit
   y_max <- pred_obj$fit + zt * pred_obj$se.fit
 
+  if(!is.null(x_str)){
+  if(length(x_str) == 1){
+    x_str_label = x_str
+  }
+  else{
+    x_str_label = "Groups"
+  }
+  }
   # get the original data from the cglmm object to be superimposed
 
-
   ##
-
-
   if (any(!is.na(object$ranef_groups))) {
     if (superimpose.data) {
       original_data <- object$newdata
@@ -456,8 +472,6 @@ autoplot.cglmm <- function(object,
       for (d in x_str) {
         original_data_processed$levels <- paste0(
           original_data_processed$levels,
-          d,
-          "=",
           original_data_processed[, d]
         )
         # if there are multiple group levels, separate them by "|"
@@ -469,7 +483,6 @@ autoplot.cglmm <- function(object,
         i <- i + 1
       }
     }
-
     # generating the plots
     if (!is.null(ranef_plot)) {
       if (missing(x_str) || is.null(x_str)) {
@@ -582,8 +595,6 @@ autoplot.cglmm <- function(object,
       for (d in x_str) {
         original_data_processed$levels <- paste0(
           original_data_processed$levels,
-          d,
-          "=",
           original_data_processed[, d]
         )
         # if there are multiple group levels, separate them by "|"
@@ -615,7 +626,8 @@ autoplot.cglmm <- function(object,
               y = !!rlang::sym(y_name),
               col = levels
             )
-          )
+          ) +
+          ggplot2::labs(col = x_str_label)
       }
     }
 
@@ -658,6 +670,7 @@ autoplot.cglmm <- function(object,
             ),
             alpha = data_opacity
           ) +
+          ggplot2::labs(col = x_str_label) +
           ggplot2::facet_grid(rows = ggplot2::vars(NULL))
       }
     }
@@ -689,6 +702,8 @@ autoplot.cglmm <- function(object,
             ),
             alpha = 0.5
           ) +
+          ggplot2::labs(fill =  x_str_label) +
+          ggplot2::labs(col = x_str_label) +
           ggplot2::facet_grid(rows = ggplot2::vars(NULL))
       }
     }

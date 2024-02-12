@@ -81,7 +81,7 @@
 <text x='337.55' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='20.78px' lengthAdjust='spacingAndGlyphs'>time</text>
 <text transform='translate(13.05,283.95) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='23.24px' lengthAdjust='spacingAndGlyphs'>vit_d</text>
 <rect x='653.26' y='207.16' width='61.26' height='153.57' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<text x='653.26' y='215.87' style='font-size: 11.00px; font-family: sans;' textLength='28.13px' lengthAdjust='spacingAndGlyphs'>levels</text>
+<text x='653.26' y='215.87' style='font-size: 11.00px; font-family: sans;' textLength='36.08px' lengthAdjust='spacingAndGlyphs'>Groups</text>
 <rect x='653.26' y='222.49' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='654.99' y1='231.13' x2='668.82' y2='231.13' style='stroke-width: 1.07; stroke: #F8766D; stroke-linecap: butt;' />
 <rect x='653.97' y='223.20' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: #F8766D; stroke-linecap: butt; stroke-linejoin: miter; fill: #F8766D; fill-opacity: 0.50;' />
