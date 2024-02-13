@@ -1,5 +1,11 @@
 # GLMMcosinor (development version)
 
+* Plot labels now correspond to the name of the group(s), and they are more 
+  concise.  
+  
+* Component labels have been removed from `polar_plot()` when there is only 
+  one component in the model.
+
 # GLMMcosinor 0.2.0
 
 * Successful peer review from rOpenSci!
