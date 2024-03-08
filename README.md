@@ -21,6 +21,10 @@ The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data
 with all the flexibility and functionality of a generalised linear
 (mixed-) model (GLM) framework using `{glmmTMB}`.
 
+The package is also accessible via a [web
+app](https://aushsi.shinyapps.io/GLMMcosinor-shinyapp) developed using
+shiny.
+
 For an introduction to the cosinor model, see the [getting started
 vignette](https://docs.ropensci.org/GLMMcosinor/articles/GLMMcosinor.html).
 
