@@ -367,8 +367,8 @@ polar_plot.cglmm <- function(x,
   }
 
   # remove component labels if there is only one component
-  if(n_components == 1){
-   show_component_labels = FALSE
+  if (n_components == 1) {
+    show_component_labels <- FALSE
   }
 
   # get ggplot for a single component. Function will then be looped for
