@@ -632,21 +632,39 @@ polar_plot.cglmm <- function(x,
                                         ellipse_opacity, # 0 to 1, alpha value
                                         plot_background # the plot to layer upon
     ) {
-      plot_estimate <- plot_background + ggforce::geom_ellipse( # plots the confidence ellipse
-        ggplot2::aes(
-          x0 = est_rrr,
-          y0 = est_sss,
-          a = a_trans,
-          b = b_trans,
-          angle = offset + direction * est_acr,
-          fill = group_level,
-          colour = group_level
-        ),
-        alpha = ellipse_opacity
-      ) +
-        ggplot2::geom_point( # plots the parameter estimates
-          ggplot2::aes(x = est_rrr, y = est_sss)
-        )
+      if (group_check) {
+        plot_estimate <- plot_background + ggforce::geom_ellipse( # plots the confidence ellipse
+          ggplot2::aes(
+            x0 = est_rrr,
+            y0 = est_sss,
+            a = a_trans,
+            b = b_trans,
+            angle = offset + direction * est_acr,
+            fill = group_level,
+            colour = group_level
+          ),
+          alpha = ellipse_opacity
+        ) +
+          ggplot2::geom_point( # plots the parameter estimates
+            ggplot2::aes(x = est_rrr, y = est_sss)
+          )
+      } else {
+        plot_estimate <- plot_background + ggforce::geom_ellipse( # plots the confidence ellipse
+          ggplot2::aes(
+            x0 = est_rrr,
+            y0 = est_sss,
+            a = a_trans,
+            b = b_trans,
+            angle = offset + direction * est_acr,
+            fill = grDevices::rainbow(group_level_colour_index),
+            colour = grDevices::rainbow(group_level_colour_index)
+          ),
+          alpha = ellipse_opacity
+        ) + ggplot2::theme(legend.position = "none") +
+          ggplot2::geom_point( # plots the parameter estimates
+            ggplot2::aes(x = est_rrr, y = est_sss)
+          )
+      }
       return(plot_estimate)
     }
     plot_obj <- get_point_estimate_plot(
@@ -661,7 +679,6 @@ polar_plot.cglmm <- function(x,
       ellipse_opacity,
       plot_background
     )
-
 
     if (x$group_check) {
       plot_obj <- plot_obj + ggplot2::labs(fill = x_str, colour = NULL)
