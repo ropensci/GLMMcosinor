@@ -105,10 +105,8 @@ a wide range of distributions (for full list - see `?family` and
 The table below shows what features are available within `{GLMMcosinor}`
 and other methods.
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-source("fixtures/methods-table.R")
-dat
-```
+
+![flextable methods](../man/figures/methods-table.png){width=100%}
 
 ## `cglmm()`
 
