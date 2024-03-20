@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![cranlogs](https://www.r-pkg.org/badges/version/GLMMcosinor)](https://CRAN.R-project.org/package=GLMMcosinor)
 [![R-CMD-check](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main)
