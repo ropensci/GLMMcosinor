@@ -288,3 +288,11 @@ test_that("alternative inputs work", {
     data = vitamind
   ))
 })
+
+test_that("specifying no amp_acro term works", {
+testthat::expect_no_error(cglmm(
+  vit_d ~ X + amp_acro(time, group = "X", period = 12),
+  data = vitamind,
+  dispformula = ~ X + amp_acro(time, group = "X", no_amp_acro = TRUE)
+))
+})

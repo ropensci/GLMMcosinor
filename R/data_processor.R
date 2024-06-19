@@ -124,6 +124,7 @@ data_processor <- function(newdata,
                            group_original,
                            ranef_groups,
                            covariates,
+                           no_amp_acro_vector,
                            ...) {
   group_names <- names(group_stats)
   if (dispformula_check) {
@@ -152,6 +153,9 @@ data_processor <- function(newdata,
   mf <- fit
 
   main_coefs <- glmmTMB::fixef(mf)$cond
+  if(no_amp_acro_vector[["main_"]]){
+  conditional_model <- main_coefs
+  }else{
   conditional_model <- get_new_coefs(
     main_coefs,
     vec_rrr,
@@ -167,9 +171,21 @@ data_processor <- function(newdata,
     "group_stats",
     "group_check"
   )
+}
 
   if (dispformula_check) {
     disp_coefs <- glmmTMB::fixef(mf)$disp
+    if(no_amp_acro_vector[["disp_"]]){
+      dispersion_model <- disp_coefs
+
+      disp_list <- c(
+        list(
+          coefficients = dispersion_model,
+          raw_coefficients = disp_coefs,
+          group = dispformula$group_disp # currently not being used
+        )
+      )
+    } else {
     dispersion_model <- get_new_coefs(
       disp_coefs,
       dispformula$vec_rrr,
@@ -177,8 +193,6 @@ data_processor <- function(newdata,
       dispformula$n_components,
       period
     )
-
-
     disp_list <- c(
       dispformula[items_keep],
       list(
@@ -187,6 +201,9 @@ data_processor <- function(newdata,
         group = dispformula$group_disp # currently not being used
       )
     )
+    }
+
+
     names(disp_list) <- paste0(names(disp_list), "_disp")
   } else {
     disp_list <- NULL
@@ -194,6 +211,17 @@ data_processor <- function(newdata,
 
   if (ziformula_check) {
     zi_coefs <- glmmTMB::fixef(mf)$zi
+    if(no_amp_acro_vector[["zi_"]]){
+      zi_model <- zi_coefs
+      ziformula[items_keep] <- NULL
+      zi_list <- c(
+        list(
+          coefficients = zi_model,
+          raw_coefficients = zi_coefs,
+          group = ziformula$group_zi # currently not being used
+        )
+      )
+    } else {
     zi_model <- get_new_coefs(
       zi_coefs,
       ziformula$vec_rrr,
@@ -201,7 +229,6 @@ data_processor <- function(newdata,
       ziformula$n_components,
       period
     )
-
     zi_list <- c(
       ziformula[items_keep],
       list(
@@ -210,6 +237,8 @@ data_processor <- function(newdata,
         group = ziformula$group_zi # currently not being used
       )
     )
+    }
+
     names(zi_list) <- paste0(names(zi_list), "_zi")
   } else {
     zi_list <- NULL
