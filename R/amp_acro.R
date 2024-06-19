@@ -112,15 +112,59 @@ amp_acro <- function(time_col,
                       n_components = 1,
                       group,
                       period,
+                      no_amp_acro = FALSE,
+                      no_amp_acro_vector,
                       .data,
                       .formula,
                       .quietly = TRUE,
                       .amp_acro_ind = -1,
                       .data_prefix = "main_",
                       .env) {
+  if(missing(no_amp_acro_vector)){
+    no_amp_acro_vector = NULL
+  }
+  no_amp_acro_vector <- no_amp_acro_vector
   # checking dataframe
 
-
+    # # allow the user to not have any grouping structure
+    # if (missing(group)) {
+    #   group <- 0
+    #   group_check <- FALSE
+    # } else {
+    #   if (all(is.na(group)) | all(is.null(group))) {
+    #     group <- 0
+    #     group_check <- FALSE
+    #   } else {
+    #     group_check <- TRUE
+    #     check_group_var(.data = .data, group = group)
+    #   }
+    # }
+    #
+    # group_stats <- NULL
+    # if (group_check == TRUE) {
+    #   for (i in group_names) {
+    #     single_group_level <- levels(as.factor(.data[[i]]))
+    #     group_stats[[i]] <- as.array(single_group_level)
+    #   }
+    # }
+    #
+    #
+    # return(list(
+    #   newdata = .data,
+    #   newformula = .formula,
+    #   vec_rrr = NULL,
+    #   vec_sss = NULL,
+    #   n_components = NULL,
+    #   period = NULL,
+    #   group_stats = group_stats,
+    #   group = group,
+    #   group_check = group_check,
+    #   time_name = time_col,
+    #   response_var = left_part,
+    #   group_original = group_original,
+    #   covariates = covariates
+    # ))
+    #
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
     inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(
@@ -146,8 +190,20 @@ amp_acro <- function(time_col,
                                  period,
                                  .quietly = TRUE,
                                  .data,
-                                 .amp_acro_ind = -1) {
+                                 .amp_acro_ind = -1,
+                                 no_amp_acro,
+                                 no_amp_acro_vector) {
+
     # assess the quality of the inputs
+
+    if(no_amp_acro){
+      no_amp_acro_vector[[.data_prefix]] = TRUE
+    } else {
+      no_amp_acro_vector[[.data_prefix]] = FALSE
+    }
+
+
+    if(!no_amp_acro){
     # Ensure n_components is an integer > 0
     stopifnot(assertthat::is.count(n_components))
     # ensure period is numeric
@@ -156,8 +212,9 @@ amp_acro <- function(time_col,
     stopifnot(all(period > 0))
     # check that .formula is of class 'formula'
     stopifnot(inherits(.formula, "formula"))
+    }
 
-
+    if(!no_amp_acro){
     assertthat::assert_that(
       (paste(substitute(time_col, .env)) %in% colnames(.data)),
       msg = "time_col must be the name of a column in dataframe"
@@ -199,7 +256,7 @@ amp_acro <- function(time_col,
         group <- group_change
       }
     }
-
+}
 
     # allow the user to not have any grouping structure
     if (missing(group)) {
@@ -222,6 +279,7 @@ amp_acro <- function(time_col,
     # n_components. (tested) if one grouping variable is supplied but
     # n_components > 1, then the one grouping variable is repeated to match the
     # value of n_components
+    if(!no_amp_acro){
     if (length(group) != n_components) {
       if (length(group) == 1) {
         group <- rep(group, n_components)
@@ -232,6 +290,7 @@ amp_acro <- function(time_col,
         ))
       }
     }
+  }
     group_original <- group
     # show error message if user uses 'rrr' or 'sss' in their grouping variable
     # name (tested)
@@ -243,6 +302,7 @@ amp_acro <- function(time_col,
     # if one period is supplied but n_components > 1, then the period is
     # repeated to match the value of n_components
 
+    if(!no_amp_acro){
     if (length(period) != n_components) {
       if (length(period) == 1) {
         period <- rep(period, n_components)
@@ -253,6 +313,7 @@ amp_acro <- function(time_col,
         ))
       }
     }
+  }
 
     # check for NA group values supplied by the user and replaces with zeroes.
     # this is important when creating the formula: 'newformula'.
@@ -280,6 +341,7 @@ amp_acro <- function(time_col,
     non_acro_formula <- attr(Terms, "term.labels")[-spec_dex]
 
 
+    if(!no_amp_acro) {
     # generate 'n_components' number of rrr and sss vectors
     n_count <- 1:n_components
     vec_rrr <- (paste0(.data_prefix, "rrr", n_count)) # vector of rrr names
@@ -315,12 +377,20 @@ amp_acro <- function(time_col,
         formula_expr <- paste(formula_expr, "+", rrr_names, "+", sss_names)
       }
     }
+    }
 
     if (.amp_acro_ind == -1) {
       left_part <- all.vars(.formula, max.names = 1)
     } else {
       left_part <- NULL
     }
+
+    if(no_amp_acro){
+      formula_expr = NULL
+      vec_rrr = NULL
+      vec_sss = NULL
+    }
+
     newformula <- stats::as.formula(
       paste(left_part,
         paste(
@@ -369,10 +439,16 @@ amp_acro <- function(time_col,
       group_check = group_check,
       time_name = time_name,
       response_var = left_part,
-      group_original = group_original,
-      covariates = covariates
+      group_original = group,
+      covariates = covariates,
+      no_amp_acro_vector = no_amp_acro_vector
     ))
   }
+  if(no_amp_acro){
+    n_components = 1
+    period = NULL
+  }
+
   res <- amp_acro_iteration(
     time_col = time_col,
     n_components = n_components,
@@ -381,7 +457,9 @@ amp_acro <- function(time_col,
     period = period,
     .quietly = .quietly,
     .data = .data,
-    .amp_acro_ind = .amp_acro_ind
+    .amp_acro_ind = .amp_acro_ind,
+    no_amp_acro = no_amp_acro,
+    no_amp_acro_vector = no_amp_acro_vector
   )
 
   # if a mixed model is specified, handle formula accordingly
@@ -451,5 +529,6 @@ amp_acro <- function(time_col,
   } else {
     res$ranef_groups <- NA
   }
+
   res
 }

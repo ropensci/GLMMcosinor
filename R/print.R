@@ -45,6 +45,9 @@ print.cglmm <- function(x, digits = getOption("digits"), ...) {
     stats::printCoefmat(coef_list, digits = digits)
     cat("\n Transformed  Coefficients: \n")
     td.x <- x$disp_list$coefficients_disp
+    if(is.null(x$disp_list$group_check_disp)){
+      x$disp_list$group_check_disp <- FALSE
+    }
     if (x$disp_list$group_check_disp == TRUE) {
       names(td.x) <- update_covnames(
         names(td.x),
@@ -69,6 +72,9 @@ print.cglmm <- function(x, digits = getOption("digits"), ...) {
     cat("\n Transformed  Coefficients: \n")
     tzi.x <- x$zi_list$coefficients_zi
 
+    if(is.null(x$zi_list$group_check_zi)){
+      x$zi_list$group_check_zi == FALSE
+    }
     if (x$zi_list$group_check_zi == TRUE) {
       names(tzi.x) <- update_covnames(
         names(tzi.x),
