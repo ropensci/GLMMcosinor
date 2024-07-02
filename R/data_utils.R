@@ -83,7 +83,8 @@ update_formula_and_data <- function(data,
                            data_prefix = "main_",
                            dispformula_check = FALSE,
                            ziformula_check = FALSE,
-                           no_amp_acro_vector = no_amp_acro_vector) {
+                           no_amp_acro_vector = no_amp_acro_vector,
+                           cond_period = NULL) {
     Terms <- stats::terms(formula, specials = c("amp_acro"))
     amp_acro_text <- attr(
       Terms, "term.labels"
@@ -99,6 +100,7 @@ update_formula_and_data <- function(data,
     e$.amp_acro_ind <- amp_acro_ind
     e$.data_prefix <- data_prefix
     e$no_amp_acro_vector = no_amp_acro_vector
+    e$cond_period = cond_period
     #
 
     ranef_part <- lapply(lme4::findbars(formula), deparse1)
@@ -142,8 +144,8 @@ update_formula_and_data <- function(data,
       quietly = quietly,
       amp_acro_ind = 0,
       data_prefix = "disp_",
-      no_amp_acro_vector = main_output$no_amp_acro_vector
-    )
+      no_amp_acro_vector = main_output$no_amp_acro_vector,
+      cond_period = main_output$period)
     main_output$newdata <- dispformula$newdata
     main_output$no_amp_acro_vector <- dispformula$no_amp_acro_vector
 
@@ -155,17 +157,18 @@ update_formula_and_data <- function(data,
   if (ziformula_check) {
     data <- main_output$newdata
 
-    if(dispformula_check){
-      no_amp_acro_vector <- main_output$no_amp_acro_vector
-    }
+    # if(dispformula_check){
+    #   no_amp_acro_vector <- main_output$no_amp_acro_vector
+    # }
     ziformula <- formula_eval(
       formula = ziformula,
       data = data,
       quietly = quietly,
       amp_acro_ind = 0,
       data_prefix = "zi_",
-      no_amp_acro_vector = no_amp_acro_vector
-    )
+      no_amp_acro_vector = main_output$no_amp_acro_vector,
+      cond_period = main_output$period)
+
     main_output$newdata <- ziformula$newdata
     main_output$no_amp_acro_vector <- ziformula$no_amp_acro_vector
 
