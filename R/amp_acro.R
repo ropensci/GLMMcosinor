@@ -114,6 +114,7 @@ amp_acro <- function(time_col,
                       period,
                       no_amp_acro = FALSE,
                       no_amp_acro_vector,
+                      cond_period,
                       .data,
                       .formula,
                       .quietly = TRUE,
@@ -192,15 +193,38 @@ amp_acro <- function(time_col,
                                  .data,
                                  .amp_acro_ind = -1,
                                  no_amp_acro,
-                                 no_amp_acro_vector) {
+                                 no_amp_acro_vector,
+                                 cond_period) {
 
     # assess the quality of the inputs
 
-    if(no_amp_acro){
-      no_amp_acro_vector[[.data_prefix]] = TRUE
-    } else {
-      no_amp_acro_vector[[.data_prefix]] = FALSE
-    }
+
+    # Function to check if 'amp_acro' is in the formula
+     check_amp_acro <- function(.formula) {
+       # Convert formula to character and check for presence of 'amp_acro'
+       formula_str <- as.character(.formula)
+       if (any(grepl("amp_acro", formula_str))) {
+         return(TRUE)
+       } else {
+         return(FALSE)
+       }
+     }
+
+     # Check if 'amp_acro' is in the formula
+     has_amp_acro <- check_amp_acro(.formula)
+     if(!has_amp_acro){
+       no_amp_acro_vector[[.data_prefix]] = TRUE
+     } else {
+       no_amp_acro_vector[[.data_prefix]] = FALSE
+
+     }
+
+
+     # if(no_amp_acro){
+     #   no_amp_acro_vector[[.data_prefix]] = TRUE
+     # } else {
+     #   no_amp_acro_vector[[.data_prefix]] = FALSE
+     # }
 
 
     if(!no_amp_acro){

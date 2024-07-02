@@ -73,7 +73,7 @@ print.cglmm <- function(x, digits = getOption("digits"), ...) {
     tzi.x <- x$zi_list$coefficients_zi
 
     if(is.null(x$zi_list$group_check_zi)){
-      x$zi_list$group_check_zi == FALSE
+      x$zi_list$group_check_zi <- FALSE
     }
     if (x$zi_list$group_check_zi == TRUE) {
       names(tzi.x) <- update_covnames(
