@@ -12,7 +12,7 @@ test_that("summary print works", {
   testthat::expect_no_error(print_obj)
   testthat::expect_snapshot_output(print(print_obj, digits = 2))
 
-  testthat::expect_true(inherits(print_obj, "cglmmSummary"))
+  testthat::expect_s3_class(print_obj, "cglmmSummary")
 
   # test the dispersion and zeroinflation summaries
   object_2 <- cglmm(
