@@ -15,6 +15,8 @@
 
 
 test_that("model returns accurate parameters", {
+  withr::local_seed(50)
+
   f_round <- function(x) {
     unname(round(x, digits = 4))
   }
@@ -28,49 +30,37 @@ test_that("model returns accurate parameters", {
   TruePeriod <- 12
 
   # test parameter estimation of Gaussian simulated data
-  withr::with_seed(
-    50,
-    {
-      comod <- simulate_cosinor(
-        n = 10000,
-        mesor = TrueMesor_a,
-        amp = TrueAmp_a,
-        acro = TrueAcr_a,
-        beta.mesor = TrueMesor_b,
-        beta.amp = TrueAmp_b,
-        beta.acro = TrueAcr_b,
-        family = "gaussian",
-        period = TruePeriod,
-        beta.group = TRUE
-      )
-      object <- cglmm(
-        Y ~ group + amp_acro(times,
-          n_components = 1,
-          group = "group",
-          period = 12
-        ),
-        data = comod
-      )
-      sum_glm <- summary(object)
-      SE_sum_glm <- round(sum_glm$transformed.table$standard.error, digits = 4)
-
-      cosinor_lm_mod <- cosinor::cosinor.lm(
-        Y ~ time(times) + group + amp.acro(group),
-        data = comod
-      )
-      sum_lm <- summary(cosinor_lm_mod)
-      SE_sum_lm <- round(sum_lm$transformed.table$standard.error, digits = 4)
-    }
+  comod <- simulate_cosinor(
+    n = 10000,
+    mesor = TrueMesor_a,
+    amp = TrueAmp_a,
+    acro = TrueAcr_a,
+    beta.mesor = TrueMesor_b,
+    beta.amp = TrueAmp_b,
+    beta.acro = TrueAcr_b,
+    family = "gaussian",
+    period = TruePeriod,
+    beta.group = TRUE
   )
+  object <- cglmm(
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+    data = comod
+  )
+  sum_glm <- summary(object)
+  SE_sum_glm <- round(sum_glm$transformed.table$standard.error, digits = 4)
 
-  testthat::expect_true(all.equal(
+  cosinor_lm_mod <- cosinor::cosinor.lm(
+    Y ~ time(times) + group + amp.acro(group),
+    data = comod
+  )
+  sum_lm <- summary(cosinor_lm_mod)
+  SE_sum_lm <- round(sum_lm$transformed.table$standard.error, digits = 4)
+
+  expect_true(all.equal(
     SE_sum_glm,
     SE_sum_lm
   ))
-  testthat::expect_true(all.equal(
-    f_round(object$coefficients),
-    c(1.0030, -0.4966, 2.0122, 0.9948, 3.0115, 0.3175)
-  ))
+  expect_snapshot(f_round(object$coefficients))
 
   # test similarity to cosinor::cosinor.lm()
   comparison_df <- cbind(
@@ -86,219 +76,165 @@ test_that("model returns accurate parameters", {
 
 
   # test another parameter estimation of Gaussian simulated data
-  withr::with_seed(
-    100,
-    {
-      comod <- simulate_cosinor(
-        n = 10000,
-        mesor = TrueMesor_a,
-        amp = TrueAmp_a,
-        acro = TrueAcr_a,
-        beta.mesor = TrueMesor_b,
-        beta.amp = TrueAmp_b,
-        beta.acro = TrueAcr_b,
-        family = "gaussian",
-        period = TruePeriod,
-        beta.group = TRUE
-      )
-      object <- cglmm(
-        Y ~ group + amp_acro(times,
-          n_components = 1,
-          group = "group",
-          period = 12
-        ),
-        data = comod
-      )
-    }
+  comod <- simulate_cosinor(
+    n = 10000,
+    mesor = TrueMesor_a,
+    amp = TrueAmp_a,
+    acro = TrueAcr_a,
+    beta.mesor = TrueMesor_b,
+    beta.amp = TrueAmp_b,
+    beta.acro = TrueAcr_b,
+    family = "gaussian",
+    period = TruePeriod,
+    beta.group = TRUE
   )
-  testthat::expect_true(all.equal(
-    f_round(object$coefficients),
-    c(0.9905, -0.4932, 1.9737, 1.0221, 3.0066, 0.2965)
-  ))
+  object <- cglmm(
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+    data = comod
+  )
+
+  expect_snapshot(f_round(object$coefficients))
 
   # test parameter estimation of poisson simulated data
-  withr::with_seed(
-    50,
-    {
-      comod <- simulate_cosinor(
-        n = 10000,
-        mesor = TrueMesor_a,
-        amp = TrueAmp_a,
-        acro = TrueAcr_a,
-        beta.mesor = TrueMesor_b,
-        beta.amp = TrueAmp_b,
-        beta.acro = TrueAcr_b,
-        family = "poisson",
-        period = TruePeriod,
-        beta.group = TRUE
-      )
-      object <- cglmm(
-        Y ~ group + amp_acro(times,
-          n_components = 1,
-          group = "group",
-          period = 12
-        ),
-        data = comod,
-        family = poisson
-      )
-    }
+  comod <- simulate_cosinor(
+    n = 10000,
+    mesor = TrueMesor_a,
+    amp = TrueAmp_a,
+    acro = TrueAcr_a,
+    beta.mesor = TrueMesor_b,
+    beta.amp = TrueAmp_b,
+    beta.acro = TrueAcr_b,
+    family = "poisson",
+    period = TruePeriod,
+    beta.group = TRUE
   )
-  testthat::expect_true(all.equal(
-    f_round(object$coefficients),
-    c(1.0032, -0.4886, 1.9980, 0.9941, 3.0031, 0.2965)
-  ))
+  object <- cglmm(
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+    data = comod,
+    family = poisson
+  )
+
+  expect_snapshot(f_round(object$coefficients))
 
   # test parameter estimation of Gamma(link="log") simulated data
-  withr::with_seed(
-    50,
-    {
-      comod <- simulate_cosinor(
-        n = 10000,
-        mesor = TrueMesor_a,
-        amp = TrueAmp_a,
-        acro = TrueAcr_a,
-        beta.mesor = TrueMesor_b,
-        beta.amp = TrueAmp_b,
-        beta.acro = TrueAcr_b,
-        family = "gamma",
-        period = TruePeriod,
-        beta.group = TRUE
-      )
-      object <- cglmm(
-        Y ~ group + amp_acro(times,
-          n_components = 1,
-          group = "group",
-          period = 12
-        ),
-        data = comod,
-        family = Gamma(link = "log")
-      )
-    }
+  comod <- simulate_cosinor(
+    n = 10000,
+    mesor = TrueMesor_a,
+    amp = TrueAmp_a,
+    acro = TrueAcr_a,
+    beta.mesor = TrueMesor_b,
+    beta.amp = TrueAmp_b,
+    beta.acro = TrueAcr_b,
+    family = "gamma",
+    period = TruePeriod,
+    beta.group = TRUE
   )
-  testthat::expect_true(all.equal(
-    f_round(object$coefficients),
-    c(1.0002, -0.4996, 2.0156, 0.9755, 2.9891, 0.3179)
-  ))
-
+  object <- cglmm(
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+    data = comod,
+    family = Gamma(link = "log")
+  )
+  expect_snapshot(f_round(object$coefficients))
 
   # test parameter estimation of binomial simulated data
-  withr::with_seed(
-    50,
-    {
-      comod <- simulate_cosinor(
-        n = 10000,
-        mesor = TrueMesor_a,
-        amp = TrueAmp_a,
-        acro = TrueAcr_a,
-        beta.mesor = TrueMesor_b,
-        beta.amp = TrueAmp_b,
-        beta.acro = TrueAcr_b,
-        family = "binomial",
-        period = TruePeriod,
-        beta.group = TRUE
-      )
-      object <- cglmm(
-        Y ~ group + amp_acro(times,
-          n_components = 1,
-          group = "group",
-          period = 12
-        ),
-        data = comod,
-        family = binomial
-      )
-    }
+  comod <- simulate_cosinor(
+    n = 10000,
+    mesor = TrueMesor_a,
+    amp = TrueAmp_a,
+    acro = TrueAcr_a,
+    beta.mesor = TrueMesor_b,
+    beta.amp = TrueAmp_b,
+    beta.acro = TrueAcr_b,
+    family = "binomial",
+    period = TruePeriod,
+    beta.group = TRUE
   )
-  testthat::expect_true(all.equal(
-    f_round(object$coefficients),
-    c(0.9773, -0.4527, 1.9399, 1.0482, 3.0007, 0.2849)
-  ))
+  object <- cglmm(
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
+    data = comod,
+    family = binomial
+  )
+
+  expect_snapshot(f_round(object$coefficients))
 })
 test_that("model output is class cglmm", {
-  withr::with_seed(
-    50,
-    {
-      data(vitamind)
-      object <- cglmm(
-        vit_d ~ X + amp_acro(time, group = "X", period = 12),
-        data = vitamind
-      )
-      expect_true(inherits(object, "cglmm"))
+  withr::local_seed(50)
 
-      object <- cglmm(
-        vit_d ~ X + amp_acro(time,
-          group = "X",
-          period = 12
-        ),
-        data = vitamind,
-        dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
-        ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
-      )
-      testthat::expect_no_error(object)
-      testthat::expect_snapshot_output(print(object, digits = 2))
-      testthat::expect_true(inherits(object, "cglmm"))
-
-      #' @srrstats {RE7.2}
-      #' @srrstats {RE7.3}
-
-      # check if the column names from vitamind are present in object_cols
-      vitamind_cols <- colnames(vitamind)
-      object_cols <- colnames(object$newdata)
-      testthat::expect_true(all(vitamind_cols %in% object_cols))
-
-      # test that coefficients and formula can be accessed from object
-      testthat::expect_no_error(coefficients(object))
-      testthat::expect_no_error(formula(object))
-
-      # testing mixed model specification
-      f <- function() {
-        cglmm(vit_d ~ X + amp_acro(time,
-          n_components = 1,
-          group = "X",
-          period = TruePeriod
-        ) + (1 | X) + (0 + amp_acro1 | X), data = vitamind)
-      }
-      testthat::expect_no_error(f)
-
-      sim_data <- simulate_cosinor(
-        n = 500,
-        mesor = 5,
-        amp = c(2, 1),
-        acro = c(1, 1.5),
-        beta.mesor = 2,
-        beta.amp = c(2, 1),
-        beta.acro = c(1, 1.5),
-        family = "gaussian",
-        period = c(12, 6),
-        n_components = 2,
-        beta.group = TRUE,
-      )
-
-      suppressWarnings({
-        object <- cglmm(
-          Y ~ group + amp_acro(times,
-            n_components = 2,
-            group = "group",
-            period = c(6, 12)
-          ) +
-            (0 + amp_acro2 | group),
-          data = sim_data,
-          family = gaussian
-        )
-      })
-
-      testthat::expect_equal(
-        ignore_attr = TRUE,
-        object$formula,
-        Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +
-          group:main_sss2 + (0 + main_rrr2 + main_sss2 | group)
-      )
-      testthat::expect_snapshot_output(print(object, digits = 2))
-    }
+  object <- cglmm(
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
+    data = vitamind
   )
+  expect_true(inherits(object, "cglmm"))
+
+  object <- cglmm(
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
+    ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
+  )
+  expect_no_error(object)
+  expect_snapshot_output(print(object, digits = 2))
+  expect_true(inherits(object, "cglmm"))
+
+  #' @srrstats {RE7.2}
+  #' @srrstats {RE7.3}
+
+  # check if the column names from vitamind are present in object_cols
+  vitamind_cols <- colnames(vitamind)
+  object_cols <- colnames(object$newdata)
+  expect_true(all(vitamind_cols %in% object_cols))
+
+  # test that coefficients and formula can be accessed from object
+  expect_no_error(coefficients(object))
+  expect_no_error(formula(object))
+
+  # testing mixed model specification
+  f <- function() {
+    cglmm(
+      vit_d ~ X +
+        amp_acro(time, n_components = 1, group = "X", period = TruePeriod) +
+        (1 | X) + (0 + amp_acro1 | X),
+      data = vitamind
+    )
+  }
+  expect_no_error(f)
+
+  sim_data <- simulate_cosinor(
+    n = 500,
+    mesor = 5,
+    amp = c(2, 1),
+    acro = c(1, 1.5),
+    beta.mesor = 2,
+    beta.amp = c(2, 1),
+    beta.acro = c(1, 1.5),
+    family = "gaussian",
+    period = c(12, 6),
+    n_components = 2,
+    beta.group = TRUE,
+  )
+
+  suppressWarnings({
+    object <- cglmm(
+      Y ~ group +
+        amp_acro(times, n_components = 2, group = "group", period = c(6, 12)) +
+        (0 + amp_acro2 | group),
+      data = sim_data,
+      family = gaussian
+    )
+  })
+
+  expect_equal(
+    ignore_attr = TRUE,
+    object$formula,
+    Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +
+      group:main_sss2 + (0 + main_rrr2 + main_sss2 | group)
+  )
+  expect_snapshot_output(print(object, digits = 2))
 })
 
 
 test_that("mixed model estimates parameters well", {
+  withr::local_seed(42)
   f_sample_id <- function(id_num,
                           n = 30,
                           mesor = rnorm(1),
@@ -323,32 +259,22 @@ test_that("mixed model estimates parameters well", {
     data$id <- id_num
     data
   }
-  withr::with_seed(42, {
-    df_mixed <- do.call("rbind", lapply(1:10, f_sample_id))
-  })
+  df_mixed <- dplyr::bind_rows(lapply(1:10, f_sample_id))
 
   f <- function() {
     object <- cglmm(
-      Y ~ amp_acro(times,
-        n_components = 2,
-        period = c(6, 12)
-      ) +
+      Y ~ amp_acro(times, n_components = 2, period = c(6, 12)) +
         (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
     )
   }
 
-  withr::with_seed(42, {
-    df_mixed <- do.call("rbind", lapply(1:75, f_sample_id))
-  })
+  df_mixed <- dplyr::bind_rows(lapply(1:75, f_sample_id))
 
   f <- function() {
     object <- cglmm(
-      Y ~ amp_acro(times,
-        n_components = 2,
-        period = c(12, 6)
-      ) +
+      Y ~ amp_acro(times, n_components = 2, period = c(12, 6)) +
         (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
@@ -360,16 +286,16 @@ test_that("mixed model estimates parameters well", {
 
 
 test_that("alternative inputs work", {
-  testthat::expect_no_error(cglmm(
+  expect_no_error(cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   ))
-  testthat::expect_no_error(cglmm(
+  expect_no_error(cglmm(
     vit_d ~ amp_acro(time, group = X, period = 12),
     data = vitamind
   ))
 
-  testthat::expect_no_error(cglmm(
+  expect_no_error(cglmm(
     vit_d ~ amp_acro("time", group = X, period = 12),
     data = vitamind
   ))

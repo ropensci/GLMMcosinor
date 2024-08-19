@@ -1,3 +1,38 @@
+# model returns accurate parameters
+
+    Code
+      f_round(object$coefficients)
+    Output
+      [1]  1.0030 -0.4966  2.0122  0.9948  3.0115  0.3175
+
+---
+
+    Code
+      f_round(object$coefficients)
+    Output
+      [1]  1.0089 -0.5004  1.9969  1.0107  3.0064  0.2923
+
+---
+
+    Code
+      f_round(object$coefficients)
+    Output
+      [1]  1.0029 -0.5142  2.0043  0.9982  2.9990  0.2893
+
+---
+
+    Code
+      f_round(object$coefficients)
+    Output
+      [1]  1.0115 -0.5103  2.0101  1.0149  2.9986  0.2806
+
+---
+
+    Code
+      f_round(object$coefficients)
+    Output
+      [1]  0.9411 -0.4453  1.9462  1.0356  3.0154  0.3083
+
 # model output is class cglmm
 
     
@@ -33,14 +68,14 @@
     
      Raw  Coefficients: 
                  Estimate
-    X0:disp_rrr1      0.5
+    X0:disp_rrr1      0.3
     X1:disp_rrr1     -0.1
     X0:disp_sss1      0.0
-    X1:disp_sss1     -0.1
+    X1:disp_sss1      0.0
     
      Transformed  Coefficients: 
               Estimate
-    [X=0]:amp      0.5
+    [X=0]:amp      0.3
     [X=1]:amp      0.1
     [X=0]:acr      0.0
     [X=1]:acr     -2.6
