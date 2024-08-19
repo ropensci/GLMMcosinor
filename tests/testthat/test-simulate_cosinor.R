@@ -20,7 +20,7 @@ test_that("simulation works", {
 
 test_that("assess error messaging", {
   # bad 'n'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100.1,
       mesor = 1,
@@ -28,15 +28,12 @@ test_that("assess error messaging", {
       acro = 1,
       period = 24,
       family = "gaussian"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = "n must be an integer greater than 0", fixed = TRUE
   )
 
   # bad 'n_components'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -45,15 +42,12 @@ test_that("assess error messaging", {
       period = 24,
       n_components = 0,
       family = "gaussian"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = "n_components must be an integer greater than 0", fixed = TRUE
   )
 
   # bad 'mesor'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = c(1, 2),
@@ -62,15 +56,12 @@ test_that("assess error messaging", {
       period = 24,
       n_components = 1,
       family = "gaussian"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = "mesor must a single number", fixed = TRUE
   )
 
   # bad 'amp'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -79,10 +70,7 @@ test_that("assess error messaging", {
       period = 24,
       n_components = 1,
       family = "gaussian"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = paste(
       "amp must be a vector containing numbers, with",
       "length equal to n_components"
@@ -90,7 +78,7 @@ test_that("assess error messaging", {
   )
 
   # bad 'acro'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -99,10 +87,7 @@ test_that("assess error messaging", {
       period = 24,
       n_components = 1,
       family = "gaussian"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = paste(
       "acro must be a vector containing numbers, with",
       "length equal to n_components"
@@ -110,7 +95,7 @@ test_that("assess error messaging", {
   )
 
   # bad 'period'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -119,10 +104,7 @@ test_that("assess error messaging", {
       period = c(24, 12),
       n_components = 1,
       family = "gaussian"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = paste(
       "period must be a vector containing numbers, with",
       "length equal to n_components"
@@ -130,7 +112,7 @@ test_that("assess error messaging", {
   )
 
   # bad 'family'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -139,10 +121,7 @@ test_that("assess error messaging", {
       period = 24,
       n_components = 1,
       family = "bad family"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = paste(
       '\'arg\' should be one of "gaussian", "poisson",',
       '"binomial", "gamma"'
@@ -150,7 +129,7 @@ test_that("assess error messaging", {
   )
 
   # bad 'beta.mesor'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -163,15 +142,12 @@ test_that("assess error messaging", {
       beta.mesor = "2",
       beta.amp = 2,
       beta.acro = 2
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = "beta.mesor must be a single number", fixed = TRUE
   )
 
   # bad 'beta.amp'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -184,10 +160,7 @@ test_that("assess error messaging", {
       beta.mesor = 2,
       beta.amp = "2",
       beta.acro = 2
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = paste(
       "beta.amp must be a vector containing numbers,",
       "with length equal to n_components"
@@ -195,7 +168,7 @@ test_that("assess error messaging", {
   )
 
   # bad 'beta.acro'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -208,10 +181,7 @@ test_that("assess error messaging", {
       beta.mesor = 2,
       beta.amp = 2,
       beta.acro = "2"
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = paste(
       "beta.acro must be a vector containing numbers,",
       "with length equal to n_components"
@@ -219,7 +189,7 @@ test_that("assess error messaging", {
   )
 
   # bad 'beta.group'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -232,15 +202,12 @@ test_that("assess error messaging", {
       beta.mesor = 2,
       beta.amp = 2,
       beta.acro = 2
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = "beta.group argument must be logical", fixed = TRUE
   )
 
   # missing 'beta.acro'
-  f <- function() {
+  expect_error(
     simulate_cosinor(
       n = 100,
       mesor = 1,
@@ -252,10 +219,7 @@ test_that("assess error messaging", {
       beta.group = TRUE,
       beta.mesor = 2,
       beta.amp = 2
-    )
-  }
-  expect_error(
-    f(),
+    ),
     regex = '"beta.acro" is missing, with no default', fixed = TRUE
   )
 })

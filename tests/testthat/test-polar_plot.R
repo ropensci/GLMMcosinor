@@ -193,10 +193,7 @@ test_that("polar_plot works without grouping", {
 
 test_that("polar_plot messages work", {
   object <- cglmm(
-    vit_d ~ amp_acro(time,
-      group = "X",
-      period = 12
-    ),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 

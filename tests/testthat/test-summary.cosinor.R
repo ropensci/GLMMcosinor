@@ -18,7 +18,7 @@ test_that("summary print works", {
 
   print_obj <- summary(simple_model)
   expect_snapshot(print(print_obj, digits = 2))
-  expect_true(inherits(print_obj, "cglmmSummary"))
+  expect_s3_class(print_obj, "cglmmSummary")
 
   print_obj <- summary(multi_model)
   expect_snapshot(print(print_obj, digits = 1))

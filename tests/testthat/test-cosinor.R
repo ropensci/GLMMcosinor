@@ -189,15 +189,14 @@ test_that("model output is class cglmm", {
   expect_no_error(formula(object))
 
   # testing mixed model specification
-  f <- function() {
+  expect_warning(
     cglmm(
       vit_d ~ X +
-        amp_acro(time, n_components = 1, group = "X", period = TruePeriod) +
+        amp_acro(time, n_components = 1, group = "X", period = 12) +
         (1 | X) + (0 + amp_acro1 | X),
       data = vitamind
     )
-  }
-  expect_no_error(f)
+  )
 
   sim_data <- simulate_cosinor(
     n = 500,
@@ -259,29 +258,17 @@ test_that("mixed model estimates parameters well", {
     data$id <- id_num
     data
   }
-  df_mixed <- dplyr::bind_rows(lapply(1:10, f_sample_id))
-
-  f <- function() {
-    object <- cglmm(
-      Y ~ amp_acro(times, n_components = 2, period = c(6, 12)) +
-        (0 + amp_acro2 | id),
-      data = dplyr::mutate(df_mixed, id = as.factor(id)),
-      family = gaussian
-    )
-  }
 
   df_mixed <- dplyr::bind_rows(lapply(1:75, f_sample_id))
 
-  f <- function() {
-    object <- cglmm(
-      Y ~ amp_acro(times, n_components = 2, period = c(12, 6)) +
-        (0 + amp_acro2 | id),
-      data = dplyr::mutate(df_mixed, id = as.factor(id)),
-      family = gaussian
-    )
-  }
+  object <- cglmm(
+    Y ~ amp_acro(times, n_components = 2, period = c(12, 6)) +
+      (0 + amp_acro2 | id),
+    data = dplyr::mutate(df_mixed, id = as.factor(id)),
+    family = gaussian
+  )
 
-  expect_s3_class(f(), "cglmm")
+  expect_s3_class(object, "cglmm")
 })
 
 
