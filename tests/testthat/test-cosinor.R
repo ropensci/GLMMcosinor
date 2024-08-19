@@ -164,7 +164,7 @@ test_that("model output is class cglmm", {
     vit_d ~ X + amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
-  expect_true(inherits(object, "cglmm"))
+  expect_s3_class(object, "cglmm")
 
   object <- cglmm(
     vit_d ~ X + amp_acro(time, group = "X", period = 12),
@@ -173,7 +173,8 @@ test_that("model output is class cglmm", {
     ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
   )
   expect_no_error(object)
-  expect_snapshot_output(print(object, digits = 2))
+  expect_snapshot(print(object, digits = 2))
+  expect_s3_class(object, "cglmm")
   expect_true(inherits(object, "cglmm"))
 
   #' @srrstats {RE7.2}
@@ -228,7 +229,7 @@ test_that("model output is class cglmm", {
     Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +
       group:main_sss2 + (0 + main_rrr2 + main_sss2 | group)
   )
-  expect_snapshot_output(print(object, digits = 2))
+  expect_snapshot(print(object, digits = 2))
 })
 
 
