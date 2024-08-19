@@ -2,7 +2,7 @@ test_that("polar_plot input checks work", {
   withr::local_seed(50)
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
   object_bad <- lm(vit_d ~ X, data = vitamind)
@@ -14,7 +14,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -25,7 +25,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -35,7 +35,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -46,7 +46,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -56,7 +56,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -67,7 +67,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -78,7 +78,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -93,7 +93,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -144,7 +144,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -156,7 +156,7 @@ test_that("polar_plot input checks work", {
 
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 
@@ -167,7 +167,7 @@ test_that("polar_plot input checks work", {
   )
 
   object <- cglmm(
-    vit_d ~ amp_acro(time,group = "X",period = 12),
+    vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
   )
 

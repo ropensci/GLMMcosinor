@@ -43,11 +43,7 @@ test_that("model returns accurate parameters", {
     beta.group = TRUE
   )
   object <- cglmm(
-    Y ~ group + amp_acro(times,
-                         n_components = 1,
-                         group = "group",
-                         period = 12
-    ),
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
     data = comod
   )
   sum_glm <- summary(object)
@@ -93,11 +89,7 @@ test_that("model returns accurate parameters", {
     beta.group = TRUE
   )
   object <- cglmm(
-    Y ~ group + amp_acro(times,
-                         n_components = 1,
-                         group = "group",
-                         period = 12
-    ),
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
     data = comod
   )
 
@@ -117,11 +109,7 @@ test_that("model returns accurate parameters", {
     beta.group = TRUE
   )
   object <- cglmm(
-    Y ~ group + amp_acro(times,
-                         n_components = 1,
-                         group = "group",
-                         period = 12
-    ),
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
     data = comod,
     family = poisson
   )
@@ -142,11 +130,7 @@ test_that("model returns accurate parameters", {
     beta.group = TRUE
   )
   object <- cglmm(
-    Y ~ group + amp_acro(times,
-                         n_components = 1,
-                         group = "group",
-                         period = 12
-    ),
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
     data = comod,
     family = Gamma(link = "log")
   )
@@ -166,11 +150,7 @@ test_that("model returns accurate parameters", {
     beta.group = TRUE
   )
   object <- cglmm(
-    Y ~ group + amp_acro(times,
-                         n_components = 1,
-                         group = "group",
-                         period = 12
-    ),
+    Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 12),
     data = comod,
     family = binomial
   )
@@ -187,10 +167,7 @@ test_that("model output is class cglmm", {
   expect_true(inherits(object, "cglmm"))
 
   object <- cglmm(
-    vit_d ~ X + amp_acro(time,
-                         group = "X",
-                         period = 12
-    ),
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
     data = vitamind,
     dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
     ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
@@ -213,11 +190,12 @@ test_that("model output is class cglmm", {
 
   # testing mixed model specification
   f <- function() {
-    cglmm(vit_d ~ X + amp_acro(time,
-                               n_components = 1,
-                               group = "X",
-                               period = TruePeriod
-    ) + (1 | X) + (0 + amp_acro1 | X), data = vitamind)
+    cglmm(
+      vit_d ~ X +
+        amp_acro(time, n_components = 1, group = "X", period = TruePeriod) +
+        (1 | X) + (0 + amp_acro1 | X),
+      data = vitamind
+    )
   }
   expect_no_error(f)
 
@@ -237,11 +215,8 @@ test_that("model output is class cglmm", {
 
   suppressWarnings({
     object <- cglmm(
-      Y ~ group + amp_acro(times,
-                           n_components = 2,
-                           group = "group",
-                           period = c(6, 12)
-      ) +
+      Y ~ group +
+        amp_acro(times, n_components = 2, group = "group", period = c(6, 12)) +
         (0 + amp_acro2 | group),
       data = sim_data,
       family = gaussian
@@ -288,10 +263,7 @@ test_that("mixed model estimates parameters well", {
 
   f <- function() {
     object <- cglmm(
-      Y ~ amp_acro(times,
-        n_components = 2,
-        period = c(6, 12)
-      ) +
+      Y ~ amp_acro(times, n_components = 2, period = c(6, 12)) +
         (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
@@ -302,10 +274,7 @@ test_that("mixed model estimates parameters well", {
 
   f <- function() {
     object <- cglmm(
-      Y ~ amp_acro(times,
-        n_components = 2,
-        period = c(12, 6)
-      ) +
+      Y ~ amp_acro(times, n_components = 2, period = c(12, 6)) +
         (0 + amp_acro2 | id),
       data = dplyr::mutate(df_mixed, id = as.factor(id)),
       family = gaussian
