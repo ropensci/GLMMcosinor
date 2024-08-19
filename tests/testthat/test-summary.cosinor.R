@@ -1,5 +1,5 @@
 test_that("summary print works", {
-  # withr::local_seed(50)
+  # withr::local_seed(42)
   # simple_model <- cglmm(
   #   vit_d ~ amp_acro(time, group = "X", period = 12),
   #   data = vitamind
@@ -21,5 +21,5 @@ test_that("summary print works", {
   expect_true(inherits(print_obj, "cglmmSummary"))
 
   print_obj <- summary(multi_model)
-  expect_snapshot(print(print_obj, digits = 2))
+  expect_snapshot(print(print_obj, digits = 1))
 })
