@@ -216,3 +216,36 @@ test_that("multi-component comparison works, print functions work", {
   )
   expect_snapshot(print(object, digits = 2))
 })
+
+
+test_that("acrophase differences are within (-pi, pi)", {
+  # test parameter estimation of guassian simulated data
+  withr::local_seed(50)
+
+  acr_estimates <- lapply(1:50, \(...) {
+    comod <- simulate_cosinor(
+      100,
+      mesor = 1,
+      amp = 5,
+      acro = 0,
+      beta.mesor = 2,
+      beta.amp = 2,
+      beta.acro = pi,
+      family = "gaussian",
+      n_components = 1,
+      period = 24,
+      beta.group = TRUE
+    )
+    object <- cglmm(
+      Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 24),
+      data = comod
+    )
+
+    test_res <- test_cosinor_levels(object, x_str = "group", param = "acr")
+
+    test_res$ind.test$conf.int[1, 1] # return acr difference estimates
+  }) |>
+    unlist()
+
+  expect_true(all(acr_estimates < pi & acr_estimates > -pi))
+})
