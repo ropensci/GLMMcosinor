@@ -298,6 +298,15 @@
     Code
       obj
     Output
+      $main_
+      [1] FALSE
+      
+
+---
+
+    Code
+      obj
+    Output
       [1] NA
 
 # matrix, or tibble inputs are converted to dataframe 
