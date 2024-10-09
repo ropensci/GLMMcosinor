@@ -86,7 +86,7 @@ test_cosinor_components <- function(x,
 
 
   assertthat::assert_that(
-    comparison_A %in% 1:x$n_components & comparison_B %in% 1:x$n_components,
+    comparison_A %in% seq_len(x$n_components) & comparison_B %in% seq_len(x$n_components),
     msg = paste(
       "'comparison_A' and 'comparison_B' must be numbers",
       "corresponding to a component in the model"

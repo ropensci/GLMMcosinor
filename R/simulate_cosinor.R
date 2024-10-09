@@ -378,7 +378,7 @@ simulate_cosinor <- function(n,
 #' @noRd
 .get_params <- function(amp, acro, n_components, ttt, period) {
   param <- 0
-  for (i in 1:n_components) {
+  for (i in seq_len(n_components)) {
     B <- amp[i] * cos(acro[i])
     G <- amp[i] * sin(acro[i])
     rrr <- cos(2 * pi * (ttt) / period[i])

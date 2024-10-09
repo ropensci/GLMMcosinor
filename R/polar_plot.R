@@ -799,7 +799,7 @@ polar_plot.cglmm <- function(x,
   # plot multiple component plots in cowplot or plot a single component plot
   if (make_cowplot == TRUE & n_components > 1) {
     plot_list <- NULL
-    for (i in 1:n_components) {
+    for (i in seq_len(n_components)) {
       plot_obj <- sub_ggplot.cglmm.polar(i)
       assign(paste0("plot_obj", i), plot_obj)
 
@@ -818,7 +818,7 @@ polar_plot.cglmm <- function(x,
   }
   if (make_cowplot == TRUE & n_components == 1) {
     plot_list <- NULL
-    for (i in 1:n_components) {
+    for (i in seq_len(n_components)) {
       plot_obj <- sub_ggplot.cglmm.polar(i)
       assign(paste0("plot_obj", i), plot_obj)
       # show labels for each component
