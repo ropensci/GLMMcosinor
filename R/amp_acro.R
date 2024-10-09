@@ -367,12 +367,12 @@ amp_acro <- function(time_col,
 
     if(!no_amp_acro) {
     # generate 'n_components' number of rrr and sss vectors
-    n_count <- 1:n_components
+    n_count <- seq_len(n_components)
     vec_rrr <- (paste0(.data_prefix, "rrr", n_count)) # vector of rrr names
     vec_sss <- (paste0(.data_prefix, "sss", n_count)) # vector of sss names
     formula_expr <- NULL
     # adding the rrr and sss columns to the dataframe
-    for (i in 1:n_components) {
+    for (i in seq_len(n_components)) {
       #
       rrr_names <- eval(vec_rrr[i])
       sss_names <- eval(vec_sss[i])

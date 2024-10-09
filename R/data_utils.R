@@ -61,7 +61,6 @@ update_formula_and_data <- function(data,
                                     ziformula = ~0) {
   # Extract only the amp_acro function from the call
   # check for missing data
-
   if (!quietly) {
     if (any(is.na(data))) {
       message("\n Missing data in the following dataframe columns: \n")
@@ -230,7 +229,7 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
 
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
-  for (i in 1:n_components) {
+  for (i in seq_len(n_components)) {
     r.coef[[i]] <- grepl(paste0(vec_rrr[i]), names(coefs))
     s.coef[[i]] <- grepl(paste0(vec_sss[i]), names(coefs))
 
@@ -251,7 +250,7 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
   amp <- NULL
   acr <- NULL
   acr_adjusted <- NULL
-  for (i in 1:n_components) {
+  for (i in seq_len(n_components)) {
     beta.s <- coefs[s.coef[i, ]]
     beta.r <- coefs[r.coef[i, ]]
 
