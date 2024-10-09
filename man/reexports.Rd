@@ -3,7 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{checkDepPackageVersion}
+\alias{bell}
 \alias{autoplot}
 \alias{sigma}
 \title{Objects exported from other packages}
@@ -15,7 +15,7 @@ below to see their documentation.
 \describe{
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
-  \item{glmmTMB}{\code{\link[glmmTMB]{checkDepPackageVersion}}}
+  \item{glmmTMB}{\code{\link[glmmTMB:nbinom2]{bell}}}
 
   \item{stats}{\code{\link[stats]{sigma}}}
 }}

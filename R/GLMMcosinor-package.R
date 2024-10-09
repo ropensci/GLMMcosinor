@@ -23,6 +23,6 @@
 ## usethis namespace: end
 NULL
 
-#' @importFrom glmmTMB checkDepPackageVersion
+#' @importFrom glmmTMB bell
 #' @export
-glmmTMB::checkDepPackageVersion
+glmmTMB::bell

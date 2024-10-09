@@ -1,5 +1,7 @@
 # GLMMcosinor (development version)
 
+* Update import from glmmTMB which previously failed with released version.
+
 * Perform the glmmTMB's `.onLoad()` when GLMMcosinor is loaded by including an
   `@importFrom` glmmTMB in pkg documentation.
 

@@ -26,6 +26,7 @@ knitr::opts_chunk$set(
 # GLMMcosinor <a href='https://docs.ropensci.org/GLMMcosinor/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
+[![cranlogs](https://www.r-pkg.org/badges/version/GLMMcosinor)](https://CRAN.R-project.org/package=GLMMcosinor)
 [![R-CMD-check](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -64,10 +65,10 @@ is described [here](https://doi.org/10.18637/jss.v070.i05) [@Kristensen2016TMB].
 
 ```{r, include=FALSE}
 source("vignettes/fixtures/methods-table.R")
-flextable::save_as_image(
-  dat,
-  file.path("man", "figures", "methods-table.png")
-)
+# flextable::save_as_image(
+#   dat,
+#   file.path("man", "figures", "methods-table.png")
+# )
 ```
 
 <img src="man/figures/methods-table.png" width="=900px" alt="flextable formats" align="center" /> 
