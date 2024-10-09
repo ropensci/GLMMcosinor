@@ -109,7 +109,7 @@ amp_acro <- function(time_col,
 #' @return A \code{data.frame} and \code{formula} appropriate for use by
 #' \code{data_processor()}.
 .amp_acro <- function(time_col,
-                      n_components = 1,
+                      n_components,
                       group,
                       period,
                       no_amp_acro = FALSE,
@@ -195,6 +195,9 @@ amp_acro <- function(time_col,
                                  no_amp_acro,
                                  no_amp_acro_vector,
                                  cond_period) {
+    if(n_components == 0) {
+      no_amp_acro = TRUE
+    }
 
     # assess the quality of the inputs
 
@@ -469,7 +472,7 @@ amp_acro <- function(time_col,
     ))
   }
   if(no_amp_acro){
-    n_components = 1
+    n_components = 0
     period = NULL
   }
 

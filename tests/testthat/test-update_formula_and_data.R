@@ -4,6 +4,21 @@
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
 
+test_that("variants of formulas work", {
+  # standard formula
+  update_formula_and_data(
+    formula = Y ~ X +
+      amp_acro(time, n_components = 1, group = "X", period = 12),
+    data = vitamind
+  )
+
+  update_formula_and_data(
+    formula = Y ~ X +
+      amp_acro(time, n_components = 2, group = "X", period = c(12, 10)),
+    data = vitamind
+  )
+})
+
 
 test_that("assess formula manipulation", {
   res <- update_formula_and_data(
