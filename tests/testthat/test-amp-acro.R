@@ -5,6 +5,13 @@
 #' @srrstats {G5.2b}
 #' @srrstats {G2.12}
 
+test_that("example without amp_acro works", {
+  cglmm(
+    vit_d ~ group,
+    data = vitamind
+  )
+})
+
 test_that("example amp_acro object", {
   multi_component_amp_acro <- amp_acro(
     time_col = time,
