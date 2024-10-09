@@ -13,6 +13,15 @@
 #' @srrstats {G5.9b}
 #' @srrstats {G2.11}
 
+test_that("simplest model",{
+  object <- cglmm(
+    vit_d ~ X + amp_acro(time, n_components = 1, group = "X", period = 12),
+    data = vitamind
+  )
+
+  expect_s3_class(object, "cglmm")
+})
+
 
 test_that("model returns accurate parameters", {
   withr::local_seed(50)

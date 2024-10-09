@@ -70,11 +70,6 @@ update_formula_and_data <- function(data,
   }
 
   # formatting data to be evaluated in amp_acro()
-  # check for dispformula and/or ziformula argument
-  dispformula_check <- !missing(dispformula) & dispformula != ~1
-  ziformula_check <- !missing(ziformula) & ziformula != ~0
-
-
   formula_eval <- function(formula,
                            data,
                            quietly,
@@ -92,7 +87,9 @@ update_formula_and_data <- function(data,
       e <- str2lang(amp_acro_text)
     } else {
       e <- str2lang("amp_acro(no_amp_acro = TRUE)")
+      e$n_components <- 0
     }
+
     e$.data <- data # add data that will be called to amp_acro()
     e$.formula <- formula # add formula that will be called to amp_acro()
     e$.quietly <- quietly
@@ -100,19 +97,21 @@ update_formula_and_data <- function(data,
     e$.data_prefix <- data_prefix
     e$no_amp_acro_vector = no_amp_acro_vector
     e$cond_period = cond_period
-    #
+
 
     ranef_part <- lapply(lme4::findbars(formula), deparse1)
     ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
-    #
     # e$subject <- ranef_part_group
 
-    updated_df_and_formula <- eval(e) # evaluate amp_acro call
-    c(updated_df_and_formula, list(
-      Terms = Terms, family = family,
-      dispformula_check = dispformula_check,
-      ziformula_check = ziformula_check
-    ))
+    c(
+      eval(e), # evaluate amp_acro call: updated_df_and_formula
+      list(
+        Terms = Terms,
+        family = family,
+        dispformula_check = dispformula_check,
+        ziformula_check = ziformula_check
+      )
+    )
   }
 
   main_output <- formula_eval(
@@ -135,48 +134,45 @@ update_formula_and_data <- function(data,
     "group"
   )
 
-  if (dispformula_check) {
-    data <- main_output$newdata
-    dispformula <- formula_eval(
-      formula = dispformula,
-      data = data,
-      quietly = quietly,
-      amp_acro_ind = 0,
-      data_prefix = "disp_",
-      no_amp_acro_vector = main_output$no_amp_acro_vector,
-      cond_period = main_output$period)
-    main_output$newdata <- dispformula$newdata
-    main_output$no_amp_acro_vector <- dispformula$no_amp_acro_vector
+  # disp formula
+  data <- main_output$newdata
+  dispformula_eval <- formula_eval(
+    formula = dispformula,
+    data = data,
+    quietly = quietly,
+    amp_acro_ind = 0,
+    data_prefix = "disp_",
+    no_amp_acro_vector = main_output$no_amp_acro_vector,
+    cond_period = main_output$period)
+  main_output$newdata <- dispformula_eval$newdata
+  main_output$no_amp_acro_vector <- dispformula_eval$no_amp_acro_vector
 
-    dispformula <- dispformula[items_keep]
-    names(dispformula)[names(dispformula) == "newformula"] <- "formula"
-    main_output$dispformula <- dispformula
-    main_output$dispformula_check <- TRUE
-  }
-  if (ziformula_check) {
-    data <- main_output$newdata
+  dispformula_eval <- dispformula_eval[items_keep]
+  names(dispformula_eval)[names(dispformula_eval) == "newformula"] <- "formula"
+  main_output$dispformula <- dispformula_eval
+  main_output$dispformula_check <- dispformula_eval$n_components != 0
 
-    # if(dispformula_check){
-    #   no_amp_acro_vector <- main_output$no_amp_acro_vector
-    # }
-    ziformula <- formula_eval(
-      formula = ziformula,
-      data = data,
-      quietly = quietly,
-      amp_acro_ind = 0,
-      data_prefix = "zi_",
-      no_amp_acro_vector = main_output$no_amp_acro_vector,
-      cond_period = main_output$period)
+  # zero-inflated formula
+  data <- main_output$newdata
 
-    main_output$newdata <- ziformula$newdata
-    main_output$no_amp_acro_vector <- ziformula$no_amp_acro_vector
+  ziformula_eval <- formula_eval(
+    formula = ziformula,
+    data = data,
+    quietly = quietly,
+    amp_acro_ind = 0,
+    data_prefix = "zi_",
+    no_amp_acro_vector = main_output$no_amp_acro_vector,
+    cond_period = main_output$period)
+
+  main_output$newdata <- ziformula_eval$newdata
+  main_output$no_amp_acro_vector <- ziformula_eval$no_amp_acro_vector
 
 
-    ziformula <- ziformula[items_keep]
-    names(ziformula)[names(ziformula) == "newformula"] <- "formula"
-    main_output$ziformula <- ziformula
-    main_output$ziformula_check <- TRUE
-  }
+  ziformula_eval <- ziformula_eval[items_keep]
+  names(ziformula_eval)[names(ziformula_eval) == "newformula"] <- "formula"
+  main_output$ziformula <- ziformula_eval
+  main_output$ziformula_check <- ziformula_eval$n_components != 0
+
   main_output
 }
 
