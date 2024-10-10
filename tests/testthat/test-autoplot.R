@@ -3,6 +3,29 @@
 #' @srrstats {G5.2}
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
+#'
+test_that("autoplot works with simple inputs and ziformula and dispformula", {
+  object_zi <- cglmm(
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
+  )
+
+  object_disp <- cglmm(
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
+  )
+
+  vdiffr::expect_doppelganger(
+    "plot with dispformula",
+    autoplot(object_disp)
+  )
+  vdiffr::expect_doppelganger(
+    "plot with ziformula",
+    autoplot(object_zi)
+  )
+})
 
 test_that("autoplot works with non-grouped model", {
   object <- cglmm(

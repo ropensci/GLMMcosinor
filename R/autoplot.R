@@ -293,12 +293,27 @@ autoplot.cglmm <- function(object,
       newdata[, j] <- factor(ref_level)
     }
     # process the data. This step mimics the first step of a cglmm() call
-    newdata <- update_formula_and_data(
-      # pass new dataset that's being used for prediction in this function
+
+    # add disp/zi formulas if they are used
+    newdata_args <- list(
       data = newdata,
-      # get the formula that was originally to cglmm()
       formula = eval(x$cglmm.calls$cglmm$formula)
-    )$newdata
+    )
+    if (x$dispformula_used) {
+      newdata_args <- c(
+        newdata_args,
+        dispformula = x$cglmm.calls$cglmm$dispformula
+      )
+    }
+    if (x$ziformula_used) {
+      newdata_args <- c(
+        newdata_args,
+        ziformula = x$cglmm.calls$cglmm$ziformula
+      )
+    }
+
+    newdata <- do.call(update_formula_and_data, newdata_args)$newdata
+
     # only keep the newdata that's returned from update_formula_and_data()
 
     if (!is.null(ranef_plot)) {
@@ -427,7 +442,6 @@ autoplot.cglmm <- function(object,
     }
   }
 
-  #
   newdata_processed <- data_processor_plot(object, newdata, x_str)
 
   # get the response data from the cglmm object
