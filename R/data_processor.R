@@ -171,7 +171,7 @@ data_processor <- function(newdata,
     disp_coefs <- glmmTMB::fixef(mf)$disp
     if (no_amp_acro_vector[["disp_"]]) {
       dispersion_model <- disp_coefs
-    }else {
+    } else {
       dispersion_model <- get_new_coefs(
         disp_coefs,
         dispformula$vec_rrr,

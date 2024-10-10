@@ -44,7 +44,7 @@ print.cglmm <- function(x, digits = getOption("digits"), ...) {
     cat("\n Raw  Coefficients: \n")
     stats::printCoefmat(coef_list, digits = digits)
 
-    if(x$dispformula_check) { # if there was an amp_acro() component
+    if (x$dispformula_check) { # if there was an amp_acro() component
       cat("\n Transformed  Coefficients: \n")
       td.x <- x$disp_list$coefficients_disp
       if (is.null(x$disp_list$group_check_disp)) {
@@ -72,7 +72,7 @@ print.cglmm <- function(x, digits = getOption("digits"), ...) {
     cat("\n Raw  Coefficients: \n")
     stats::printCoefmat(coef_list, digits = digits)
 
-    if(x$ziformula_check) {
+    if (x$ziformula_check) {
       cat("\n Transformed  Coefficients: \n")
       tzi.x <- x$zi_list$coefficients_zi
 
