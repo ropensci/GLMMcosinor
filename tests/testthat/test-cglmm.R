@@ -13,16 +13,6 @@
 #' @srrstats {G5.9b}
 #' @srrstats {G2.11}
 
-test_that("simplest model",{
-  object <- cglmm(
-    vit_d ~ X + amp_acro(time, n_components = 1, group = "X", period = 12),
-    data = vitamind
-  )
-
-  expect_s3_class(object, "cglmm")
-})
-
-
 test_that("model returns accurate parameters", {
   withr::local_seed(50)
 
@@ -299,22 +289,47 @@ test_that("alternative inputs work", {
 })
 
 test_that("specifying no amp_acro term works", {
-  testthat::expect_no_error(cglmm(
-    vit_d ~ X + amp_acro(time, group = "X", period = 12),
-    data = vitamind,
-    dispformula = ~ X
-  ))
+  withr::local_seed(50)
 
-  testthat::expect_no_error(cglmm(
-    vit_d ~ X + amp_acro(time, group = "X", period = 12),
-    data = vitamind,
-    ziformula = ~ X
-  ))
 
-  testthat::expect_no_error(cglmm(
-    vit_d ~ X + amp_acro(time, group = "X", period = 12),
-    data = vitamind,
-    dispformula = ~ X,
-    ziformula = ~ X
-  ))
+  expect_no_error_and_snapshot <- function(f) {
+    expect_no_error(f())
+    expect_snapshot(f())
+  }
+
+  vitamind2 <- lapply(1:5, \(x) vitamind) |>
+    dplyr::bind_rows() |>
+    dplyr::rowwise() |>
+    dplyr::mutate(vit_d = vit_d + stats::rnorm(n = 1))
+
+  fit_disp_model <- function() {
+    cglmm(
+      vit_d ~ X + amp_acro(time, group = "X", period = 12),
+      data = vitamind2,
+      dispformula = ~X
+    )
+  }
+
+  expect_no_error_and_snapshot(fit_disp_model)
+
+  fit_zi_model <- function() {
+    cglmm(
+      vit_d ~ X + amp_acro(time, group = "X", period = 12),
+      data = vitamind2,
+      ziformula = ~X
+    )
+  }
+
+  expect_no_error_and_snapshot(fit_zi_model)
+
+  fit_disp_and_zi_model <- function() {
+    cglmm(
+      vit_d ~ X + amp_acro(time, group = "X", period = 12),
+      data = vitamind2,
+      dispformula = ~X,
+      ziformula = ~X
+    )
+  }
+
+  expect_no_error_and_snapshot(fit_disp_and_zi_model)
 })

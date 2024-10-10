@@ -141,3 +141,138 @@
       [group=0]:acr2      1.0
       [group=1]:acr2      1.0
 
+# specifying no amp_acro term works
+
+    Code
+      f()
+    Output
+      
+       Conditional Model 
+      
+       Raw formula: 
+      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      
+       Raw Coefficients: 
+                   Estimate
+      (Intercept)  29.69639
+      X1            1.86497
+      X0:main_rrr1  0.96645
+      X1:main_rrr1  6.43236
+      X0:main_sss1  6.27112
+      X1:main_sss1  4.79989
+      
+       Transformed Coefficients: 
+                  Estimate
+      (Intercept) 29.69639
+      [X=1]        1.86497
+      [X=0]:amp    6.34516
+      [X=1]:amp    8.02584
+      [X=0]:acr    1.41789
+      [X=1]:acr    0.64107
+      
+      ***********************
+      
+       Dispersion Model 
+      
+       Raw  Formula: 
+      ~X 
+      
+       Raw  Coefficients: 
+                  Estimate
+      (Intercept)  1.63602
+      X1           0.09579
+
+---
+
+    Code
+      f()
+    Output
+      
+       Conditional Model 
+      
+       Raw formula: 
+      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      
+       Raw Coefficients: 
+                   Estimate
+      (Intercept)  29.69639
+      X1            1.86497
+      X0:main_rrr1  0.96645
+      X1:main_rrr1  6.43236
+      X0:main_sss1  6.27114
+      X1:main_sss1  4.79989
+      
+       Transformed Coefficients: 
+                  Estimate
+      (Intercept) 29.69639
+      [X=1]        1.86497
+      [X=0]:amp    6.34517
+      [X=1]:amp    8.02585
+      [X=0]:acr    1.41789
+      [X=1]:acr    0.64107
+      
+      ***********************
+      
+       Zero-Inflation Model 
+      
+       Raw  Formula: 
+      NULL 
+      
+       Raw  Coefficients: 
+                   Estimate
+      (Intercept) -15.07683
+      X1           -1.30260
+
+---
+
+    Code
+      f()
+    Output
+      
+       Conditional Model 
+      
+       Raw formula: 
+      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      
+       Raw Coefficients: 
+                   Estimate
+      (Intercept)  29.69639
+      X1            1.86498
+      X0:main_rrr1  0.96645
+      X1:main_rrr1  6.43236
+      X0:main_sss1  6.27113
+      X1:main_sss1  4.79989
+      
+       Transformed Coefficients: 
+                  Estimate
+      (Intercept) 29.69639
+      [X=1]        1.86498
+      [X=0]:amp    6.34517
+      [X=1]:amp    8.02584
+      [X=0]:acr    1.41789
+      [X=1]:acr    0.64107
+      
+      ***********************
+      
+       Dispersion Model 
+      
+       Raw  Formula: 
+      ~X 
+      
+       Raw  Coefficients: 
+                  Estimate
+      (Intercept)  1.63602
+      X1           0.09579
+      
+      ***********************
+      
+       Zero-Inflation Model 
+      
+       Raw  Formula: 
+      NULL 
+      
+       Raw  Coefficients: 
+                   Estimate
+      (Intercept) -21.51196
+      X1          -13.25923
+
