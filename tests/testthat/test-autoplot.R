@@ -21,6 +21,36 @@ test_that("autoplot works with non-grouped model", {
   )
 })
 
+test_that("autoplot works model including ziformula", {
+  # TODO: come up with some better examples with data that are actually zero-inflated!
+  object <- cglmm(
+    vit_d ~ amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    ziformula = ~X
+  )
+
+  # testing autoplot with a simple model
+  vdiffr::expect_doppelganger(
+    "simple-ziformula-model",
+    autoplot(object, superimpose.data = TRUE, predict.ribbon = FALSE)
+  )
+})
+
+test_that("autoplot works model including dispformula", {
+  # TODO: come up with some better examples with data that are actually overdispersed!
+  object <- cglmm(
+    vit_d ~ amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    dispformula = ~X
+  )
+
+  # testing autoplot with a simple model
+  vdiffr::expect_doppelganger(
+    "simple-dispformula-model",
+    autoplot(object, superimpose.data = TRUE, predict.ribbon = FALSE)
+  )
+})
+
 
 test_that("autoplot works model that has other covariates", {
   withr::local_seed(50)

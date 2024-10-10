@@ -13,9 +13,9 @@ test_that("example amp_acro object", {
     period = c(24, 12),
     .data = vitamind,
     .formula = vit_d ~ X + amp_acro("time",
-                                    n_components = 2,
-                                    group = "X",
-                                    period = c(24, 12)
+      n_components = 2,
+      group = "X",
+      period = c(24, 12)
     )
   )
 
@@ -168,11 +168,11 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
     )
   }
   suppressMessages(expect_message(f(),
-                                  regexp = "main_rrr1 and main_sss1 have been added to dataframe"
+    regexp = "main_rrr1 and main_sss1 have been added to dataframe"
   ))
 
   suppressMessages(expect_message(f(),
-                                  regexp = "Data has been reformatted as dataframe"
+    regexp = "Data has been reformatted as dataframe"
   ))
 
   f_sample_id <- function(id_num,
@@ -217,8 +217,8 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
 
   mixed_mod <- cglmm(
     Y ~ amp_acro(times,
-                 n_components = 1,
-                 period = 24
+      n_components = 1,
+      period = 24
     ) + (1 + amp_acro1 | subject),
     data = dat_mixed
   )
@@ -250,7 +250,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
     update_formula_and_data(
       formula = Y ~ amp_acro(times, n_components = 2, period = c(12, 6)) +
         (amp_acro1 * treatment * hospital:patient + 1 +
-           amp_acro2 * treatment | subject),
+          amp_acro2 * treatment | subject),
       data = dat_mixed
     )
   )
