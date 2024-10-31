@@ -2,6 +2,10 @@
 
 0 errors | 0 warnings | 0 note
 
+* This is a resubmission. I had forgotten to push local commits to GitHub 
+  to trigger the change to the GitHub pages and led to the dead link
+  seen in the last submission.
+
 Has been checked using GitHub actions on:
 - {os: macos-latest, r: 'release'}
 - {os: windows-latest, r: 'release'}
