@@ -1,5 +1,8 @@
 # GLMMcosinor (development version)
 
+* Fixed issues #14 and #15 relating to handling model formulas without 
+  `amp_acro()` components.
+
 * Update import from glmmTMB which previously failed with released version.
 
 * Perform the glmmTMB's `.onLoad()` when GLMMcosinor is loaded by including an
