@@ -1,14 +1,14 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* This is a new release.
+Has been checked using GitHub actions on:
+- {os: macos-latest, r: 'release'}
+- {os: windows-latest, r: 'release'}
+- {os: ubuntu-latest, r: 'devel', http-user-agent: 'release'}
+- {os: ubuntu-latest, r: 'release'}
+- {os: ubuntu-latest, r: 'oldrel-1'}
 
-This resubmission includes changes to the 'description' in the DESCRIPTION file
-as requested.
-
-GLMMcosinor can be used to fit a cosinor model with the glmmTMB modelling 
-framework.
 
 The software has been peer reviewed through rOpenSci
 <https://github.com/ropensci/software-review/issues/603>.
