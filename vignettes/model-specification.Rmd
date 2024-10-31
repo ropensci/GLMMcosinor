@@ -436,7 +436,7 @@ summary(object)
 
 The summary statistics for dispersion and zero-inflation models will
 also be provided by the `summary()` function, if the original `cglmm`
-object being analysed contains them. The following demonstration uses
+object being analyzed contains them. The following demonstration uses
 the model specified in the **Dispersion and Zero-inflation model
 specification** section of this vignette:
 

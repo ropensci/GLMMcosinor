@@ -21,7 +21,7 @@
 #' create quadrants around the origin. Defaults to 8.
 #' @param radial_units A \code{character} specifying the angular units of the
 #' plot. Possible values are one of \code{c('radians', 'degrees', 'period')}.
-#' These units relate to the period of the component being visualised.
+#' These units relate to the period of the component being visualized.
 #' \describe{
 #'   \item{\code{'radians'}: \eqn{[0, 2\pi]}}{}
 #'   \item{\code{'degrees'}: \eqn{[0, 360]}}{}
@@ -33,11 +33,11 @@
 #' Defaults to 3.
 #' @param text_opacity A \code{numeric} between 0 and 1 inclusive that
 #' controls the opacity of the text labels.
-#' @param fill_colours A \code{character} vector containing colours that will
+#' @param fill_colors A \code{character} vector containing colors that will
 #' be mapped to levels within a group. If the model has components with
 #' different number of levels per factor, the length of this input should match
 #' the greatest number of levels. If not, or if the number of levels exceeds the
-#' length of the default argument (8), colours are generated using
+#' length of the default argument (8), colors are generated using
 #' \code{rainbow()}.
 #' @param ellipse_opacity A \code{numeric} between 0 and 1 inclusive that
 #' controls the opacity of the confidence ellipses. Defaults to 0.3.
@@ -91,7 +91,7 @@ polar_plot <- function(x,
                        clockwise = FALSE,
                        text_size = 3,
                        text_opacity = 0.5,
-                       fill_colours,
+                       fill_colors,
                        ellipse_opacity = 0.3,
                        circle_linetype = "dotted",
                        start = c("right", "left", "top", "bottom"),
@@ -128,7 +128,7 @@ polar_plot <- function(x,
 #' create quadrants around the origin. Defaults to 8.
 #' @param radial_units A \code{character} specifying the angular units of the
 #' plot. Possible values are one of \code{c('radians', 'degrees', 'period')}.
-#' These units relate to the period of the component being visualised.
+#' These units relate to the period of the component being visualized.
 #' \describe{
 #'   \item{\code{'radians'}: \eqn{[0, 2\pi]}}{}
 #'   \item{\code{'degrees'}: \eqn{[0, 360]}}{}
@@ -140,11 +140,11 @@ polar_plot <- function(x,
 #' Defaults to 3.
 #' @param text_opacity A \code{numeric} between 0 and 1 inclusive that
 #' controls the opacity of the text labels.
-#' @param fill_colours A \code{character} vector containing colours that will
+#' @param fill_colors A \code{character} vector containing colors that will
 #' be mapped to levels within a group. If the model has components with
 #' different number of levels per factor, the length of this input should match
 #' the greatest number of levels. If not, or if the number of levels exceeds the
-#' length of the default argument (8), colours are generated using
+#' length of the default argument (8), colors are generated using
 #' \code{rainbow()}.
 #' @param ellipse_opacity A \code{numeric} between 0 and 1 inclusive that
 #' controls the opacity of the confidence ellipses. Defaults to 0.3.
@@ -201,7 +201,7 @@ polar_plot.cglmm <- function(x,
                              clockwise = FALSE,
                              text_size = 3.5,
                              text_opacity = 1,
-                             fill_colours,
+                             fill_colors,
                              ellipse_opacity = 0.3,
                              circle_linetype = "dotted",
                              start = c(
@@ -335,7 +335,7 @@ polar_plot.cglmm <- function(x,
   # check if there is a contour argument & store this check in local environment
   n_components <- x$n_components
 
-  fill_colours_check <- !missing(fill_colours)
+  fill_colors_check <- !missing(fill_colors)
   # set direction of increasing angle based on user input of clockwise argument
   direction <- ifelse(clockwise, -1, 1)
 
@@ -726,11 +726,11 @@ polar_plot.cglmm <- function(x,
     }
 
 
-    # apply colours chosen by user input to the fill and colour aesthetics
-    if (fill_colours_check) {
+    # apply colors chosen by user input to the fill and colour aesthetics
+    if (fill_colors_check) {
       plot_obj <- plot_obj +
         ggplot2::scale_fill_manual(
-          values = fill_colours,
+          values = fill_colors,
           aesthetics = c("fill", "colour")
         )
     } else {

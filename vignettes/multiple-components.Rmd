@@ -1,5 +1,5 @@
 ---
-title: "Multicomponent cosinor modelling"
+title: "Multicomponent cosinor modeling"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
@@ -114,9 +114,9 @@ In the output, the suffix on the estimates for amplitude and acrophase represent
 
 -   `[group=1]:amp1 = 1.99964`represents the estimate for amplitude of `group 1` for the first component
 
--   `[group=0]:amp2 = 0.40175`represnts the estimate for amplitude of `group 0` for the second component
+-   `[group=0]:amp2 = 0.40175`represents the estimate for amplitude of `group 0` for the second component
 
--   `[group=1]:amp2 = 1.00057`represnts the estimate for amplitude of `group 1` for the second component
+-   `[group=1]:amp2 = 1.00057`represents the estimate for amplitude of `group 1` for the second component
 
 -   *Similarly for acrophase estimates*
 

@@ -1,5 +1,5 @@
 ---
-title: "Visualising models"
+title: "Visualizing models"
 author: "Oliver Jayasinghe and Rex Parsons"
 output: rmarkdown::html_vignette
 vignette: >
@@ -47,9 +47,9 @@ withr::with_seed(42, {
 })
 ```
 
-## Visualising `cglmm` models
+## Visualizing `cglmm` models
 
-The `GLMMcosinor` package includes two ways to visualise models from
+The `GLMMcosinor` package includes two ways to visualize models from
 `cglmm()`. Firstly, the function `autoplot()` creates a time-response
 plot of the fitted model:
 
@@ -255,7 +255,7 @@ create a polar plot that resembles a clock, this can be done by
 specifying `clockwise = TRUE` and `start = "top"`.
 
 The argument: `overlay_parameter_info` can be used to create a line
-extending from the origin to the parameter estimate (to visualise the
+extending from the origin to the parameter estimate (to visualize the
 amplitude estimate), and a circular arc extending from the angle
 starting position (at 0) to the acrophase estimate.
 
@@ -270,7 +270,7 @@ model <- cglmm(
 polar_plot(model, overlay_parameter_info = TRUE)
 ```
 
-The background grid can also be customised. The argument
+The background grid can also be customized. The argument
 `grid_angle_segments` is used to specify how many sectors the polar grid
 has, and the `n_breaks` argument can be used to specify the number of
 concentric circles.

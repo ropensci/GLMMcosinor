@@ -124,7 +124,7 @@ test_that("polar_plot input checks work", {
   )
   vdiffr::expect_doppelganger(
     "test polar plot configuration 5",
-    polar_plot(object, fill_colours = c("blue", "red"))
+    polar_plot(object, fill_colors = c("blue", "red"))
   )
   vdiffr::expect_doppelganger(
     "test polar plot configuration 6",

@@ -19,7 +19,7 @@ Review](https://badges.ropensci.org/603_status.svg)](https://github.com/ropensci
 <!-- badges: end -->
 
 The goal of `{GLMMcosinor}` is to fit a cosinor model to rhythmic data
-with all the flexibility and functionality of a generalised linear
+with all the flexibility and functionality of a generalized linear
 (mixed-) model (GLM) framework using `{glmmTMB}`.
 
 The package is also accessible via a [web
@@ -118,14 +118,14 @@ citation("GLMMcosinor")
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
 #>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2024). _GLMMcosinor:
-#>   Fit a Cosinor Model Using a Generalised Mixed Modelling Framework_. R
+#>   Fit a Cosinor Model Using a Generalized Mixed Modeling Framework_. R
 #>   package version 0.2.0.9000, https://docs.ropensci.org/GLMMcosinor/,
 #>   <https://github.com/ropensci/GLMMcosinor>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {GLMMcosinor: Fit a Cosinor Model Using a Generalised Mixed Modelling
+#>     title = {GLMMcosinor: Fit a Cosinor Model Using a Generalized Mixed Modeling
 #> Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
 #>     year = {2024},

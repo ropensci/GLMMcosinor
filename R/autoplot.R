@@ -34,7 +34,7 @@ ggplot2::autoplot
 #' @param points_per_min_cycle_length Used to determine the number of samples
 #' to create plot if \code{pred.length.out} is missing.
 #' @param ranef_plot Specify the random effects variables that you wish to plot.
-#'  If not specified, only the fixed effects will be visualised.
+#'  If not specified, only the fixed effects will be visualized.
 #' @param quietly A \code{logical}. If \code{TRUE}, shows warning messages when
 #' wrangling data and fitting model. Defaults to \code{TRUE}.
 #' @param cov_list Specify the levels of the covariates that you wish to plot as

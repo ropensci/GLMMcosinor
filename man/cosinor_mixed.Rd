@@ -3,7 +3,7 @@
 \docType{data}
 \name{cosinor_mixed}
 \alias{cosinor_mixed}
-\title{cosinor_mixed dataset for cosinor modelling examples.}
+\title{cosinor_mixed dataset for cosinor modeling examples.}
 \format{
 A \code{data.frame} with 3 variables: \code{Y}, \code{times}, and
 \code{subject}.

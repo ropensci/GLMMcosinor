@@ -39,12 +39,12 @@ and MESOR ($M$) of a rhythmic dataset.
 -   Acrophase ($\phi$) is the phase at which the maximal response
     occurs.
 
-These could be modelled using a cosine function:
+These could be modeled using a cosine function:
 
 $$Y(t) = M + Acos(\frac{2\pi t}{\tau} - \phi) + e(t)$$ where $e(t)$ is
 the error term.
 
-However, these cannot be estimated using a linear modelling framework!
+However, these cannot be estimated using a linear modeling framework!
 Other packages, including
 [`{circacompare}`](https://cran.r-project.org/package=circacompare)
 [@parsons2020circacompare], fit this exact nonlinear model but most
@@ -79,18 +79,18 @@ $$\hat\phi = \arctan(\frac{\hat\gamma}{\hat\beta}) $$
 $$\hat A = \sqrt{\hat\beta ^2 + \hat\gamma ^ 2}$$ These transformed
 parameters for acrophase and amplitude, along with MESOR are returned as
 part of the `cglmm` output. For a more thorough introduction to cosinor
-modelling, see [here](https://doi.org/10.1186%2F1742-4682-11-16)
+modeling, see [here](https://doi.org/10.1186%2F1742-4682-11-16)
 [@cornelissen2014cosinor].
 
 ## Introduction
 
-`{GLMMcosinor}` allows the user to fit generalised linear models based
-on rhythmic data with a cosinor model. It allows users to summarise,
+`{GLMMcosinor}` allows the user to fit generalized linear models based
+on rhythmic data with a cosinor model. It allows users to summarize,
 predict, and plot these models too. Existing packages have focused
-primarily on Gaussian data. Some circadian regression modelling packages
-have allowed users to specify generalised linear models, but with
+primarily on Gaussian data. Some circadian regression modeling packages
+have allowed users to specify generalized linear models, but with
 limited flexibility. `{GLMMcosinor}` takes a comprehensive approach to
-modelling by harnessing the `{glmmTMB}` package, that has a wide range
+modeling by harnessing the `{glmmTMB}` package, that has a wide range
 of available link functions, allowing users to model rhythmic data from
 a wide range of distributions (for full list - see `?family` and
 `?glmmTMB::family_glmmTMB`) including:
@@ -451,7 +451,7 @@ head(cbind(
 
 ## Plotting `cglmm` objects
 
-The `{GLMMcosinor}` package includes two ways to visualise `cglmm()`
+The `{GLMMcosinor}` package includes two ways to visualize `cglmm()`
 objects. Firstly, the `autoplot()` method creates a time-response plot
 of the fitted model for all groups:
 
@@ -466,7 +466,7 @@ generated plot will have x-limits corresponding to the minimum and
 maximum values of the time-vector in the original dataframe, although
 the x-limits can be manually defined by the user using the `xlims`
 argument. The details of using the `autoplot` function are found in the
-[model-visualisations](https://docs.ropensci.org/GLMMcosinor/articles/model-visualisations.html)
+[model-visualization](https://docs.ropensci.org/GLMMcosinor/articles/model-visualizations.html)
 vignette.
 
 ## References

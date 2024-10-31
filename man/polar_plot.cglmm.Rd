@@ -14,7 +14,7 @@
   clockwise = FALSE,
   text_size = 3.5,
   text_opacity = 1,
-  fill_colours,
+  fill_colors,
   ellipse_opacity = 0.3,
   circle_linetype = "dotted",
   start = c("right", "left", "top", "bottom"),
@@ -54,7 +54,7 @@ create quadrants around the origin. Defaults to 8.}
 
 \item{radial_units}{A \code{character} specifying the angular units of the
 plot. Possible values are one of \code{c('radians', 'degrees', 'period')}.
-These units relate to the period of the component being visualised.
+These units relate to the period of the component being visualized.
 \describe{
 \item{\code{'radians'}: \eqn{[0, 2\pi]}}{}
 \item{\code{'degrees'}: \eqn{[0, 360]}}{}
@@ -70,11 +70,11 @@ Defaults to 3.}
 \item{text_opacity}{A \code{numeric} between 0 and 1 inclusive that
 controls the opacity of the text labels.}
 
-\item{fill_colours}{A \code{character} vector containing colours that will
+\item{fill_colors}{A \code{character} vector containing colors that will
 be mapped to levels within a group. If the model has components with
 different number of levels per factor, the length of this input should match
 the greatest number of levels. If not, or if the number of levels exceeds the
-length of the default argument (8), colours are generated using
+length of the default argument (8), colors are generated using
 \code{rainbow()}.}
 
 \item{ellipse_opacity}{A \code{numeric} between 0 and 1 inclusive that

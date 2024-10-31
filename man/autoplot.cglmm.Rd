@@ -57,7 +57,7 @@ opacity of the superimposed data. (Used as the \code{alpha} when calling
 is plotted.}
 
 \item{ranef_plot}{Specify the random effects variables that you wish to plot.
-If not specified, only the fixed effects will be visualised.}
+If not specified, only the fixed effects will be visualized.}
 
 \item{cov_list}{Specify the levels of the covariates that you wish to plot as
 a list. For example, if you have two covariates: var1, and var 2, you could
