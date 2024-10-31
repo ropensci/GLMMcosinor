@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ropensci/GLMMcosinor",
   "issueTracker": "https://github.com/ropensci/GLMMcosinor/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.0.9000",
+  "version": "0.2.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -336,11 +336,11 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 2.10"
+      "version": ">= 4.1.0"
     },
     "SystemRequirements": null
   },
-  "fileSize": "3792.763KB",
+  "fileSize": "3792.745KB",
   "releaseNotes": "https://github.com/ropensci/GLMMcosinor/blob/main/NEWS.md",
   "readme": "https://github.com/ropensci/GLMMcosinor/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main"],
