@@ -13,7 +13,6 @@
 #' @srrstats {G5.9b}
 #' @srrstats {G2.11}
 
-
 test_that("model returns accurate parameters", {
   withr::local_seed(50)
 
@@ -287,4 +286,50 @@ test_that("alternative inputs work", {
     vit_d ~ amp_acro("time", group = X, period = 12),
     data = vitamind
   ))
+})
+
+test_that("specifying no amp_acro term works", {
+  withr::local_seed(50)
+
+
+  expect_no_error_and_snapshot <- function(f) {
+    expect_no_error(f())
+    expect_snapshot(f())
+  }
+
+  vitamind2 <- lapply(1:5, \(x) vitamind) |>
+    dplyr::bind_rows() |>
+    dplyr::rowwise() |>
+    dplyr::mutate(vit_d = vit_d + stats::rnorm(n = 1))
+
+  fit_disp_model <- function() {
+    cglmm(
+      vit_d ~ X + amp_acro(time, group = "X", period = 12),
+      data = vitamind2,
+      dispformula = ~X
+    )
+  }
+
+  expect_no_error_and_snapshot(fit_disp_model)
+
+  fit_zi_model <- function() {
+    cglmm(
+      vit_d ~ X + amp_acro(time, group = "X", period = 12),
+      data = vitamind2,
+      ziformula = ~X
+    )
+  }
+
+  expect_no_error_and_snapshot(fit_zi_model)
+
+  fit_disp_and_zi_model <- function() {
+    cglmm(
+      vit_d ~ X + amp_acro(time, group = "X", period = 12),
+      data = vitamind2,
+      dispformula = ~X,
+      ziformula = ~X
+    )
+  }
+
+  expect_no_error_and_snapshot(fit_disp_and_zi_model)
 })

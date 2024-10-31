@@ -118,25 +118,20 @@ data_processor <- function(newdata,
                            cglmm.calls,
                            dispformula,
                            dispformula_check,
+                           dispformula_used,
                            ziformula,
                            ziformula_check,
+                           ziformula_used,
                            response_var,
                            group_original,
                            ranef_groups,
                            covariates,
+                           no_amp_acro_vector,
                            ...) {
   group_names <- names(group_stats)
-  if (dispformula_check) {
-    dispformula_val <- dispformula$formula
-  } else {
-    dispformula_val <- ~1
-  }
 
-  if (ziformula_check) {
-    ziformula_val <- ziformula$formula
-  } else {
-    ziformula_val <- ~0
-  }
+  dispformula_val <- dispformula$formula
+  ziformula_val <- ziformula$formula
 
   # Fit the data and formula to a model
   fit <- glmmTMB::glmmTMB(
@@ -152,33 +147,39 @@ data_processor <- function(newdata,
   mf <- fit
 
   main_coefs <- glmmTMB::fixef(mf)$cond
-  conditional_model <- get_new_coefs(
-    main_coefs,
-    vec_rrr,
-    vec_sss,
-    n_components,
-    period
-  )
-  items_keep <- c(
-    "formula",
-    "vec_rrr",
-    "vec_sss",
-    "n_components",
-    "group_stats",
-    "group_check"
-  )
-
-  if (dispformula_check) {
-    disp_coefs <- glmmTMB::fixef(mf)$disp
-    dispersion_model <- get_new_coefs(
-      disp_coefs,
-      dispformula$vec_rrr,
-      dispformula$vec_sss,
-      dispformula$n_components,
+  if (no_amp_acro_vector[["main_"]]) {
+    conditional_model <- main_coefs
+  } else {
+    conditional_model <- get_new_coefs(
+      main_coefs,
+      vec_rrr,
+      vec_sss,
+      n_components,
       period
     )
+    items_keep <- c(
+      "formula",
+      "vec_rrr",
+      "vec_sss",
+      "n_components",
+      "group_stats",
+      "group_check"
+    )
+  }
 
-
+  if (dispformula_used) {
+    disp_coefs <- glmmTMB::fixef(mf)$disp
+    if (no_amp_acro_vector[["disp_"]]) {
+      dispersion_model <- disp_coefs
+    } else {
+      dispersion_model <- get_new_coefs(
+        disp_coefs,
+        dispformula$vec_rrr,
+        dispformula$vec_sss,
+        dispformula$n_components,
+        period
+      )
+    }
     disp_list <- c(
       dispformula[items_keep],
       list(
@@ -187,29 +188,42 @@ data_processor <- function(newdata,
         group = dispformula$group_disp # currently not being used
       )
     )
+
     names(disp_list) <- paste0(names(disp_list), "_disp")
   } else {
     disp_list <- NULL
   }
 
-  if (ziformula_check) {
+  if (ziformula_used) {
     zi_coefs <- glmmTMB::fixef(mf)$zi
-    zi_model <- get_new_coefs(
-      zi_coefs,
-      ziformula$vec_rrr,
-      ziformula$vec_sss,
-      ziformula$n_components,
-      period
-    )
-
-    zi_list <- c(
-      ziformula[items_keep],
-      list(
-        coefficients = zi_model,
-        raw_coefficients = zi_coefs,
-        group = ziformula$group_zi # currently not being used
+    if (no_amp_acro_vector[["zi_"]]) {
+      zi_model <- zi_coefs
+      ziformula[items_keep] <- NULL
+      zi_list <- c(
+        list(
+          coefficients = zi_model,
+          raw_coefficients = zi_coefs,
+          group = ziformula$group_zi # currently not being used
+        )
       )
-    )
+    } else {
+      zi_model <- get_new_coefs(
+        zi_coefs,
+        ziformula$vec_rrr,
+        ziformula$vec_sss,
+        ziformula$n_components,
+        period
+      )
+      zi_list <- c(
+        ziformula[items_keep],
+        list(
+          coefficients = zi_model,
+          raw_coefficients = zi_coefs,
+          group = ziformula$group_zi # currently not being used
+        )
+      )
+    }
+
     names(zi_list) <- paste0(names(zi_list), "_zi")
   } else {
     zi_list <- NULL
@@ -239,7 +253,9 @@ data_processor <- function(newdata,
       group = group,
       group_check = group_check,
       dispformula_check = dispformula_check,
+      dispformula_used = dispformula_used,
       ziformula_check = ziformula_check,
+      ziformula_used = ziformula_used,
       disp_list = disp_list,
       zi_list = zi_list,
       response_var = response_var,

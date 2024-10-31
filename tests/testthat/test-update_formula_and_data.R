@@ -4,7 +4,6 @@
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
 
-
 test_that("assess formula manipulation", {
   res <- update_formula_and_data(
     formula = Y ~ X +

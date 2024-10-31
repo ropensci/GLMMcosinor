@@ -3,6 +3,29 @@
 #' @srrstats {G5.2}
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
+#'
+test_that("autoplot works with simple inputs and ziformula and dispformula", {
+  object_zi <- cglmm(
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    ziformula = ~ 0 + amp_acro(time, group = "X", period = 12)
+  )
+
+  object_disp <- cglmm(
+    vit_d ~ X + amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    dispformula = ~ 0 + amp_acro(time, group = "X", period = 12),
+  )
+
+  vdiffr::expect_doppelganger(
+    "plot with dispformula",
+    autoplot(object_disp)
+  )
+  vdiffr::expect_doppelganger(
+    "plot with ziformula",
+    autoplot(object_zi)
+  )
+})
 
 test_that("autoplot works with non-grouped model", {
   object <- cglmm(
@@ -18,6 +41,36 @@ test_that("autoplot works with non-grouped model", {
   vdiffr::expect_doppelganger(
     "non-grouped plot with predict ribbon",
     autoplot(object, predict.ribbon = TRUE)
+  )
+})
+
+test_that("autoplot works model including ziformula", {
+  # TODO: come up with some better examples with data that are actually zero-inflated!
+  object <- cglmm(
+    vit_d ~ amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    ziformula = ~X
+  )
+
+  # testing autoplot with a simple model
+  vdiffr::expect_doppelganger(
+    "simple-ziformula-model",
+    autoplot(object, superimpose.data = TRUE, predict.ribbon = FALSE)
+  )
+})
+
+test_that("autoplot works model including dispformula", {
+  # TODO: come up with some better examples with data that are actually overdispersed!
+  object <- cglmm(
+    vit_d ~ amp_acro(time, group = "X", period = 12),
+    data = vitamind,
+    dispformula = ~X
+  )
+
+  # testing autoplot with a simple model
+  vdiffr::expect_doppelganger(
+    "simple-dispformula-model",
+    autoplot(object, superimpose.data = TRUE, predict.ribbon = FALSE)
   )
 })
 

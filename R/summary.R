@@ -119,7 +119,7 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 
 
     # rename the vectors amp and acr
-    for (i in 1:n_components) {
+    for (i in seq_len(n_components)) {
       names(amp) <- gsub(vec_rrr[i], paste0("amp", i), names(amp))
       names(acr) <- gsub(vec_sss[i], paste0("acr", i), names(acr))
     }
