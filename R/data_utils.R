@@ -61,7 +61,6 @@ update_formula_and_data <- function(data,
                                     ziformula = ~0) {
   # Extract only the amp_acro function from the call
   # check for missing data
-
   if (!quietly) {
     if (any(is.na(data))) {
       message("\n Missing data in the following dataframe columns: \n")
@@ -71,37 +70,48 @@ update_formula_and_data <- function(data,
   }
 
   # formatting data to be evaluated in amp_acro()
-  # check for dispformula and/or ziformula argument
-  dispformula_check <- !missing(dispformula) & dispformula != ~1
-  ziformula_check <- !missing(ziformula) & ziformula != ~0
-
-
   formula_eval <- function(formula,
                            data,
                            quietly,
                            amp_acro_ind = -1,
-                           data_prefix = "main_") {
+                           data_prefix = "main_",
+                           dispformula_check = FALSE,
+                           ziformula_check = FALSE,
+                           no_amp_acro_vector = no_amp_acro_vector,
+                           cond_period = NULL) {
     Terms <- stats::terms(formula, specials = c("amp_acro"))
     amp_acro_text <- attr(
       Terms, "term.labels"
     )[attr(Terms, "special")$amp_acro + amp_acro_ind]
-    e <- str2lang(amp_acro_text)
+    if (!length(amp_acro_text) == 0) {
+      e <- str2lang(amp_acro_text)
+    } else {
+      e <- str2lang("amp_acro(no_amp_acro = TRUE)")
+      e$n_components <- 0
+    }
+
     e$.data <- data # add data that will be called to amp_acro()
     e$.formula <- formula # add formula that will be called to amp_acro()
     e$.quietly <- quietly
     e$.amp_acro_ind <- amp_acro_ind
     e$.data_prefix <- data_prefix
-    #
+    e$no_amp_acro_vector <- no_amp_acro_vector
+    e$cond_period <- cond_period
+
+
     ranef_part <- lapply(lme4::findbars(formula), deparse1)
     ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
-    #
     # e$subject <- ranef_part_group
-    updated_df_and_formula <- eval(e) # evaluate amp_acro call
-    c(updated_df_and_formula, list(
-      Terms = Terms, family = family,
-      dispformula_check = dispformula_check,
-      ziformula_check = ziformula_check
-    ))
+
+    c(
+      eval(e), # evaluate amp_acro call: updated_df_and_formula
+      list(
+        Terms = Terms,
+        family = family,
+        dispformula_check = dispformula_check,
+        ziformula_check = ziformula_check
+      )
+    )
   }
 
   main_output <- formula_eval(
@@ -109,9 +119,9 @@ update_formula_and_data <- function(data,
     data,
     quietly,
     amp_acro_ind = -1,
-    data_prefix = "main_"
+    data_prefix = "main_",
+    no_amp_acro_vector = FALSE
   )
-
 
   items_keep <- c(
     "newformula",
@@ -124,36 +134,49 @@ update_formula_and_data <- function(data,
     "group"
   )
 
-  if (dispformula_check) {
-    data <- main_output$newdata
-    dispformula <- formula_eval(
-      formula = dispformula,
-      data = data,
-      quietly = quietly,
-      amp_acro_ind = 0,
-      data_prefix = "disp_"
-    )
-    main_output$newdata <- dispformula$newdata
+  # disp formula
+  data <- main_output$newdata
+  dispformula_eval <- formula_eval(
+    formula = dispformula,
+    data = data,
+    quietly = quietly,
+    amp_acro_ind = 0,
+    data_prefix = "disp_",
+    no_amp_acro_vector = main_output$no_amp_acro_vector,
+    cond_period = main_output$period
+  )
+  main_output$newdata <- dispformula_eval$newdata
+  main_output$no_amp_acro_vector <- dispformula_eval$no_amp_acro_vector
 
-    dispformula <- dispformula[items_keep]
-    names(dispformula)[names(dispformula) == "newformula"] <- "formula"
-    main_output$dispformula <- dispformula
-  }
-  if (ziformula_check) {
-    data <- main_output$newdata
-    ziformula <- formula_eval(
-      formula = ziformula,
-      data = data,
-      quietly = quietly,
-      amp_acro_ind = 0,
-      data_prefix = "zi_"
-    )
-    main_output$newdata <- ziformula$newdata
+  dispformula_eval <- dispformula_eval[items_keep]
+  names(dispformula_eval)[names(dispformula_eval) == "newformula"] <- "formula"
+  main_output$dispformula <- dispformula_eval
+  main_output$dispformula_check <- dispformula_eval$n_components != 0
+  main_output$dispformula_used <- dispformula != ~1
 
-    ziformula <- ziformula[items_keep]
-    names(ziformula)[names(ziformula) == "newformula"] <- "formula"
-    main_output$ziformula <- ziformula
-  }
+  # zero-inflated formula
+  data <- main_output$newdata
+
+  ziformula_eval <- formula_eval(
+    formula = ziformula,
+    data = data,
+    quietly = quietly,
+    amp_acro_ind = 0,
+    data_prefix = "zi_",
+    no_amp_acro_vector = main_output$no_amp_acro_vector,
+    cond_period = main_output$period
+  )
+
+  main_output$newdata <- ziformula_eval$newdata
+  main_output$no_amp_acro_vector <- ziformula_eval$no_amp_acro_vector
+
+
+  ziformula_eval <- ziformula_eval[items_keep]
+  names(ziformula_eval)[names(ziformula_eval) == "newformula"] <- "formula"
+  main_output$ziformula <- ziformula_eval
+  main_output$ziformula_check <- ziformula_eval$n_components != 0
+  main_output$ziformula_used <- ziformula != ~0
+
   main_output
 }
 
@@ -206,7 +229,7 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
 
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
-  for (i in 1:n_components) {
+  for (i in seq_len(n_components)) {
     r.coef[[i]] <- grepl(paste0(vec_rrr[i]), names(coefs))
     s.coef[[i]] <- grepl(paste0(vec_sss[i]), names(coefs))
 
@@ -227,7 +250,7 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
   amp <- NULL
   acr <- NULL
   acr_adjusted <- NULL
-  for (i in 1:n_components) {
+  for (i in seq_len(n_components)) {
     beta.s <- coefs[s.coef[i, ]]
     beta.r <- coefs[r.coef[i, ]]
 
