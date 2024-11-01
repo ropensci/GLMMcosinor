@@ -1,3 +1,5 @@
+# GLMMcosinor (development version)
+
 # GLMMcosinor 0.2.1
 
 * Fixed issues #14 and #15 relating to handling model formulas without 

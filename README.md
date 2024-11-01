@@ -119,7 +119,7 @@ citation("GLMMcosinor")
 #> 
 #>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2024). _GLMMcosinor:
 #>   Fit a Cosinor Model Using a Generalized Mixed Modeling Framework_. R
-#>   package version 0.2.1, https://docs.ropensci.org/GLMMcosinor/,
+#>   package version 0.2.1.9000, https://docs.ropensci.org/GLMMcosinor/,
 #>   <https://github.com/ropensci/GLMMcosinor>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -128,7 +128,7 @@ citation("GLMMcosinor")
 #>     title = {GLMMcosinor: Fit a Cosinor Model Using a Generalized Mixed Modeling Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
 #>     year = {2024},
-#>     note = {R package version 0.2.1, 
+#>     note = {R package version 0.2.1.9000, 
 #> https://docs.ropensci.org/GLMMcosinor/},
 #>     url = {https://github.com/ropensci/GLMMcosinor},
 #>   }

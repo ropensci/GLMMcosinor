@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/GLMMcosinor",
   "issueTracker": "https://github.com/ropensci/GLMMcosinor/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.1",
+  "version": "0.2.1.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.3 (2024-02-29 ucrt)",
+  "runtimePlatform": "R version 4.4.1 (2024-06-14 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -340,7 +340,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3792.745KB",
+  "fileSize": "3792.792KB",
   "releaseNotes": "https://github.com/ropensci/GLMMcosinor/blob/main/NEWS.md",
   "readme": "https://github.com/ropensci/GLMMcosinor/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main"],
