@@ -8,7 +8,7 @@
 [![cranlogs](https://www.r-pkg.org/badges/version/GLMMcosinor)](https://CRAN.R-project.org/package=GLMMcosinor)
 [![R-CMD-check](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/GLMMcosinor/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/ropensci/GLMMcosinor/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/GLMMcosinor?branch=main)
+coverage](https://codecov.io/gh/ropensci/GLMMcosinor/graph/badge.svg)](https://app.codecov.io/gh/ropensci/GLMMcosinor)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Project Status: Active – The project has reached a stable, usable
