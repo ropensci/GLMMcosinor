@@ -6,28 +6,30 @@
 #' @srrstats {G2.12}
 
 test_that("multiple components with same period", {
-
   vitamind_multi <- vitamind
   vitamind_multi$X2 <- sample(0:1, size = nrow(vitamind_multi), replace = TRUE)
 
-  multi_component_amp_acro <- amp_acro(
-    time_col = time,
-    n_components = 2,
-    group = "X",
-    period = c(12, 12),
-    .data = vitamind,
-    .formula = vit_d ~ X + amp_acro("time",n_components = 2,group = "X",period = c(12, 12)
-    )
+  data_and_formula <- update_formula_and_data(
+    data = vitamind_multi,
+    formula = vit_d ~ X + amp_acro(time, n_components = 2, group = c("X", "X2"), period = c(12, 12))
   )
+
+  # should not have main_rrr2 or main_sss2 since both components have the same period (12)
+  expect_snapshot(names(data_and_formula$newdata))
+
+  data_and_formula <- update_formula_and_data(
+    data = vitamind2,
+    formula = vit_d ~ X + amp_acro(time, n_components = 1, group = c("X"), period = 12)
+  )
+
+  expect_snapshot(names(data_and_formula$newdata))
 
   # other tests to add:
   # - should only have main_rrr1 and main_sss1 (no rrr2/sss2)
   # - other visualisations etc should work with it
-    # - perhaps those tests can later move to other test scripts
-    # - test of fitting a model and then put that into cglmm() test script
-
-  expect_amp_acro(multi_component_amp_acro)
-  })
+  # - perhaps those tests can later move to other test scripts
+  # - test of fitting a model and then put that into cglmm() test script
+})
 
 test_that("example amp_acro object", {
   multi_component_amp_acro <- amp_acro(

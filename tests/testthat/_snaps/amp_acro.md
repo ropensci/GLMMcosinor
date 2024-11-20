@@ -1,3 +1,17 @@
+# multiple components with same period
+
+    Code
+      names(data_and_formula$newdata)
+    Output
+      [1] "vit_d"     "time"      "X"         "X2"        "main_rrr1" "main_sss1"
+
+---
+
+    Code
+      names(data_and_formula$newdata)
+    Output
+      [1] "vit_d"     "time"      "X"         "patient"   "main_rrr1" "main_sss1"
+
 # example amp_acro object
 
     Code
@@ -234,6 +248,40 @@
       obj
     Output
       [1] 2
+
+---
+
+    Code
+      obj
+    Output
+      [[1]]
+      [[1]]$component_idx
+      [1] 1
+      
+      [[1]]$period
+      [1] 24
+      
+      [[1]]$period_idx
+      [1] 1
+      
+      [[1]]$group
+      [1] "X"
+      
+      
+      [[2]]
+      [[2]]$component_idx
+      [1] 2
+      
+      [[2]]$period
+      [1] 12
+      
+      [[2]]$period_idx
+      [1] 2
+      
+      [[2]]$group
+      [1] "X"
+      
+      
 
 ---
 
