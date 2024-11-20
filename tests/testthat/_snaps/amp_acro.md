@@ -10,7 +10,7 @@
     Code
       names(data_and_formula$newdata)
     Output
-      [1] "vit_d"     "time"      "X"         "patient"   "main_rrr1" "main_sss1"
+      [1] "vit_d"     "time"      "X"         "main_rrr1" "main_sss1"
 
 # example amp_acro object
 

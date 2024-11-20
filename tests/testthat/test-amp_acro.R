@@ -18,8 +18,8 @@ test_that("multiple components with same period", {
   expect_snapshot(names(data_and_formula$newdata))
 
   data_and_formula <- update_formula_and_data(
-    data = vitamind2,
-    formula = vit_d ~ X + amp_acro(time, n_components = 1, group = c("X"), period = 12)
+    data = vitamind,
+    formula = vit_d ~ X + amp_acro(time, n_components = 1, group = "X", period = 12)
   )
 
   expect_snapshot(names(data_and_formula$newdata))
