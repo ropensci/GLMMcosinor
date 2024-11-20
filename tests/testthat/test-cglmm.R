@@ -232,6 +232,20 @@ test_that("model output is class cglmm", {
 })
 
 
+test_that("multicomponent with same period works", {
+  d_multi_grp <- readRDS(test_path("fixtures", "d_multi_grp.rds"))
+
+  object <- cglmm(
+    response ~ g2 * g1 +
+      amp_acro(time_col = "hour", n_components = 2, group = c("g1", "g2"), period = c(24, 24)) +
+      (1 | id),
+    data = d_multi_grp
+  )
+
+  expect_snapshot(print(object, digits = 2))
+})
+
+
 test_that("mixed model estimates parameters well", {
   withr::local_seed(42)
   f_sample_id <- function(id_num,

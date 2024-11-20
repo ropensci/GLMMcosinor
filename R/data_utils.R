@@ -128,6 +128,7 @@ update_formula_and_data <- function(data,
     "vec_rrr",
     "vec_sss",
     "n_components",
+    "components",
     "period",
     "group_stats",
     "group_check",
@@ -220,7 +221,11 @@ validate_ci_level <- function(ci_level) {
 }
 
 # calculate the parameters from the raw estimates
-get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
+get_new_coefs <- function(coefs,
+                          vec_rrr,
+                          vec_sss,
+                          n_components,
+                          components) {
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
@@ -230,12 +235,14 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
   for (i in seq_len(n_components)) {
-    r.coef[[i]] <- grepl(paste0(vec_rrr[i]), names(coefs))
-    s.coef[[i]] <- grepl(paste0(vec_sss[i]), names(coefs))
+    period_idx <- components[[i]]$period_idx
+
+    r.coef[[i]] <- grepl(paste0(vec_rrr[period_idx]), names(coefs))
+    s.coef[[i]] <- grepl(paste0(vec_sss[period_idx]), names(coefs))
 
     # Keep track of non-mesor terms
     mu_inv_carry <- r.coef[[i]] + s.coef[[i]]
-    # Ultimately,every non-mesor term will be true
+    # Ultimately, every non-mesor term will be true
     mu_inv <- mu_inv_carry + mu_inv
   }
 
@@ -251,6 +258,8 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
   acr <- NULL
   acr_adjusted <- NULL
   for (i in seq_len(n_components)) {
+    period_idx <- components[[i]]$period_idx
+
     beta.s <- coefs[s.coef[i, ]]
     beta.r <- coefs[r.coef[i, ]]
 
@@ -258,10 +267,10 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, period) {
     groups.s <- c(beta.s[1], beta.s[which(names(beta.s) != names(beta.s[1]))])
 
     amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
-    names(amp[[i]]) <- gsub(vec_rrr[i], paste0("amp", i), names(beta.r))
+    names(amp[[i]]) <- gsub(vec_rrr[period_idx], paste0("amp", i), names(beta.r))
 
     acr[[i]] <- atan2(groups.s, groups.r)
-    names(acr[[i]]) <- gsub(vec_sss[i], paste0("acr", i), names(beta.s))
+    names(acr[[i]]) <- gsub(vec_sss[period_idx], paste0("acr", i), names(beta.s))
   }
   new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
