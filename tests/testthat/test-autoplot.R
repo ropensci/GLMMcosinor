@@ -114,7 +114,7 @@ test_that("autoplot works model that has other covariates", {
       " covariates in the original model; the first element of each",
       " covariate column from the original dataframe will be used",
       " as reference levels:
-cov_list = list(new_cat_var = 'c', new_num_var = -0.540933398827827)"
+cov_list = list(new_cat_var = 'a', new_num_var = -0.183834718715238)"
     ),
     fixed = TRUE
   )
