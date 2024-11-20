@@ -173,15 +173,9 @@
       [g2=1]:[g1=1]     15.3
       [g1=0]:amp1        8.3
       [g1=1]:amp1       20.0
-      [g2=1]:amp1       11.8
-      [g1=0]:amp2        8.3
-      [g1=1]:amp2       20.0
       [g2=1]:amp2       11.8
       [g1=0]:acr1        2.7
       [g1=1]:acr1        0.1
-      [g2=1]:acr1       -0.6
-      [g1=0]:acr2        2.7
-      [g1=1]:acr2        0.1
       [g2=1]:acr2       -0.6
 
 # specifying no amp_acro term works

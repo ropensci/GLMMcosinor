@@ -231,14 +231,19 @@ get_new_coefs <- function(coefs,
   mu.coef <- NULL
   mu_inv <- rep(0, length(names(coefs)))
 
-
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
   for (i in seq_len(n_components)) {
     period_idx <- components[[i]]$period_idx
 
-    r.coef[[i]] <- grepl(paste0(vec_rrr[period_idx]), names(coefs))
-    s.coef[[i]] <- grepl(paste0(vec_sss[period_idx]), names(coefs))
+    group <- components[[i]]$group
+    if(components[[i]]$group != 0) {
+      r.coef[[i]] <- grepl(paste0(components[[i]]$group, ".*:", vec_rrr[period_idx]), names(coefs))
+      s.coef[[i]] <- grepl(paste0(components[[i]]$group, ".*:", vec_sss[period_idx]), names(coefs))
+    } else {
+      r.coef[[i]] <- grepl(paste0(vec_rrr[period_idx]), names(coefs))
+      s.coef[[i]] <- grepl(paste0(vec_sss[period_idx]), names(coefs))
+    }
 
     # Keep track of non-mesor terms
     mu_inv_carry <- r.coef[[i]] + s.coef[[i]]
