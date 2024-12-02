@@ -75,16 +75,21 @@ source("vignettes/fixtures/methods-table.R")
 
 ## Installation
 
-You can install the development version of GLMMcosinor from 
+You can install GLMMcosinor from 
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("ropensci/GLMMcosinor")
+# dev version
+# install.packages("pak")
+pak::pkg_install("ropensci/GLMMcosinor")
 
 # or, equivalently
 install.packages("GLMMcosinor", repos = "https://ropensci.r-universe.dev")
+
+# latest release version
+pak::pkg_install("ropensci/GLMMcosinor@*release") 
 ```
+
 
 ## Example
 
