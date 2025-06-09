@@ -237,7 +237,7 @@ get_new_coefs <- function(coefs,
     period_idx <- components[[i]]$period_idx
 
     group <- components[[i]]$group
-    if(components[[i]]$group != 0) {
+    if (components[[i]]$group != 0) {
       r.coef[[i]] <- grepl(paste0(components[[i]]$group, ".*:", vec_rrr[period_idx]), names(coefs))
       s.coef[[i]] <- grepl(paste0(components[[i]]$group, ".*:", vec_sss[period_idx]), names(coefs))
     } else {

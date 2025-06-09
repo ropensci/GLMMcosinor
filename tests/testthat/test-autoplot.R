@@ -3,7 +3,8 @@
 #' @srrstats {G5.2}
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
-#'
+
+
 test_that("autoplot works with simple inputs and ziformula and dispformula", {
   object_zi <- cglmm(
     vit_d ~ X + amp_acro(time, group = "X", period = 12),
@@ -45,10 +46,20 @@ test_that("autoplot works with non-grouped model", {
 })
 
 test_that("autoplot works model including ziformula", {
-  # TODO: come up with some better examples with data that are actually zero-inflated!
+  withr::with_seed(42, {
+    zivitamind <- vitamind |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        vit_d = ifelse(
+          X == 1, sample(c(0, vit_d), prob = c(0.2, 0.8)), vit_d
+        )
+      )
+  })
+
+
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
-    data = vitamind,
+    data = zivitamind,
     ziformula = ~X
   )
 
@@ -60,10 +71,18 @@ test_that("autoplot works model including ziformula", {
 })
 
 test_that("autoplot works model including dispformula", {
-  # TODO: come up with some better examples with data that are actually overdispersed!
+  withr::with_seed(42, {
+    odvitamind <- vitamind |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        od_vitd = rnbinom(n = 1, size = 0.05, mu = exp(vit_d))
+      )
+  })
+
+
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
-    data = vitamind,
+    data = odvitamind,
     dispformula = ~X
   )
 
