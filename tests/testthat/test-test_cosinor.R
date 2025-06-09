@@ -13,6 +13,15 @@ test_that("script works and warnings are displayed appropriately", {
   test_object <- test_cosinor_levels(object, x_str = "X")
   expect_s3_class(test_object, "cglmmTest")
 
+
+  # test use of labels in factor grouping variable
+  object <- cglmm(
+    vit_d ~ amp_acro(time, group = "X", period = 12),
+    data = dplyr::mutate(vitamind, X = as.factor(ifelse(X == 1, "test", "control")))
+  )
+  test_object <- test_cosinor_levels(object, x_str = "X")
+  expect_snapshot(test_object)
+
   # Test the comparison_type variable, and test the print output
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", n_components = 2, period = c(12, 11)),
