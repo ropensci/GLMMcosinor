@@ -48,8 +48,8 @@ However, these cannot be estimated using a linear modeling framework!
 Other packages, including
 [`{circacompare}`](https://cran.r-project.org/package=circacompare)
 [@parsons2020circacompare], fit this exact nonlinear model but most
-packages (including this one) decomposes this into linear terms,
-creating the cosinor model:
+packages (including this one) require the user to specify a known period 
+($\tau$) and decomposes this into linear terms, creating the cosinor model:
 
 $$Y(t) = M + \beta x + \gamma z + e(t)$$
 
@@ -81,6 +81,10 @@ parameters for acrophase and amplitude, along with MESOR are returned as
 part of the `cglmm` output. For a more thorough introduction to cosinor
 modeling, see [here](https://doi.org/10.1186%2F1742-4682-11-16)
 [@cornelissen2014cosinor].
+
+The period of a rhythmic component cannot be directly estimated using
+`GLMMcosinor.` To estimate the period, a nonlinear regression model must be fit, 
+which can be done by `circacompare` or a similar package.
 
 ## Introduction
 
@@ -285,9 +289,11 @@ The `summary()` method for the outputs from `cglmm()` provides a more
 detailed summary of the model and its parameter estimates and
 uncertainty. It outputs the estimates, standard errors, confidence
 intervals, and p-values for both the raw model parameters and the
-transformed parameters. The summary statistics do not represent a
-comparison between any groups for the cosinor components - that is the
-role of the `test_cosinor_components()` and `test_cosinor_levels()`
+transformed parameters. Note that the p-values represent differences for that
+parameter from zero, something which may not be particularly relevant in all 
+cases (i.e. differences in acrophase from zero). The summary statistics do not
+represent a comparison between any groups for the cosinor components - that is
+the role of the `test_cosinor_components()` and `test_cosinor_levels()`
 functions.
 
 Here is an example of how to use `summary()` with some simulated data:
@@ -468,5 +474,42 @@ the x-limits can be manually defined by the user using the `xlims`
 argument. The details of using the `autoplot` function are found in the
 [model-visualization](https://docs.ropensci.org/GLMMcosinor/articles/model-visualizations.html)
 vignette.
+
+## Large datasets
+
+`glmmTMB` is an excellent package which can efficiently handle fitting models to large datasets. This may be particularly relevant to those using large biological datasets with very high frequency data collection. Here we show the time required to fit a the same model as above (Poisson cosinor model with a comparison between two groups) but with 100,000 observations from each group.
+
+```{r, message=F, warning=F}
+d_large <- simulate_cosinor(100000,
+  n_period = 2,
+  mesor = 7,
+  amp = c(0.1, 0.5),
+  acro = c(1, 1),
+  beta.mesor = 4.4,
+  beta.amp = c(0.1, 0.46),
+  beta.acro = c(0.5, -1.5),
+  family = "poisson",
+  period = c(12, 6),
+  n_components = 2,
+  beta.group = TRUE
+)
+```
+
+```{r}
+start <- Sys.time()
+cosinor_model <- cglmm(
+  Y ~ group + amp_acro(times,
+    period = c(12, 6),
+    n_components = 2,
+    group = "group"
+  ),
+  data = d_large,
+  family = poisson()
+)
+end <- Sys.time()
+print(end - start)
+```
+
+
 
 ## References
