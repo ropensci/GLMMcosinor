@@ -48,8 +48,8 @@ However, these cannot be estimated using a linear modeling framework!
 Other packages, including
 [`{circacompare}`](https://cran.r-project.org/package=circacompare)
 [@parsons2020circacompare], fit this exact nonlinear model but most
-packages (including this one) decomposes this into linear terms,
-creating the cosinor model:
+packages (including this one) require the user to specify a known period 
+($\tau$) and decomposes this into linear terms, creating the cosinor model:
 
 $$Y(t) = M + \beta x + \gamma z + e(t)$$
 
@@ -81,6 +81,10 @@ parameters for acrophase and amplitude, along with MESOR are returned as
 part of the `cglmm` output. For a more thorough introduction to cosinor
 modeling, see [here](https://doi.org/10.1186%2F1742-4682-11-16)
 [@cornelissen2014cosinor].
+
+The period of a rhythmic component cannot be directly estimated using
+`GLMMcosinor.` To estimate the period, a nonlinear regression model must be fit, 
+which can be done by `circacompare` or a similar package.
 
 ## Introduction
 
