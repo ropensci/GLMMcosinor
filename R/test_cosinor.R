@@ -332,9 +332,6 @@ test_cosinor_levels <- function(x,
                           component_index,
                           level_index,
                           ci_level) {
-  # TODO handle the text labels for the factor variable used for grouping - i.e
-  # using data made with : sim_data %>% mutate(group = ifelse(group == 1,
-  # "control", "treatment"))
   summary.fit <- summary(x)
 
   if (is.null(x_str)) {

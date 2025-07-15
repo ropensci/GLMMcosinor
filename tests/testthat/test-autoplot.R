@@ -3,7 +3,20 @@
 #' @srrstats {G5.2}
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
-#'
+
+test_that("simple multicomponent model", {
+  d_multi_comp <- readRDS(test_path("fixtures", "d_multi_comp.rds"))
+
+  object <- cglmm(
+    Y ~ group + amp_acro(time_col = "times", n_components = 2, group = "group", period = c(12, 24)),
+    data = d_multi_comp
+  )
+  vdiffr::expect_doppelganger(
+    "plot with multi-component",
+    autoplot(object)
+  )
+})
+
 test_that("autoplot works with simple inputs and ziformula and dispformula", {
   object_zi <- cglmm(
     vit_d ~ X + amp_acro(time, group = "X", period = 12),
@@ -45,10 +58,20 @@ test_that("autoplot works with non-grouped model", {
 })
 
 test_that("autoplot works model including ziformula", {
-  # TODO: come up with some better examples with data that are actually zero-inflated!
+  withr::with_seed(42, {
+    zivitamind <- vitamind |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        vit_d = ifelse(
+          X == 1, sample(c(0, vit_d), prob = c(0.2, 0.8)), vit_d
+        )
+      )
+  })
+
+
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
-    data = vitamind,
+    data = zivitamind,
     ziformula = ~X
   )
 
@@ -60,10 +83,18 @@ test_that("autoplot works model including ziformula", {
 })
 
 test_that("autoplot works model including dispformula", {
-  # TODO: come up with some better examples with data that are actually overdispersed!
+  withr::with_seed(42, {
+    odvitamind <- vitamind |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        od_vitd = rnbinom(n = 1, size = 0.05, mu = exp(vit_d))
+      )
+  })
+
+
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
-    data = vitamind,
+    data = odvitamind,
     dispformula = ~X
   )
 
@@ -467,3 +498,22 @@ test_that("autoplot works mixed models", {
     autoplot(mixed_mod_2, x_str = "group", superimpose.data = TRUE)
   )
 })
+
+# TODO: this would be the test to assess whether the (non-implemented) ability
+# to fit a model with two groups interacting on the same component works
+# test_that("simple multigroup (same period) model", {
+#
+#   d_multi_grp_same_period <- readRDS(test_path("fixtures", "d_multi_grp_same_period.rds"))
+#
+#   object <- cglmm(
+#     Y ~ group +
+#       amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+#       amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
+#     data = d_multi_grp_same_period
+#   )
+#
+#   vdiffr::expect_doppelganger(
+#     "plot with multi-grp on same component",
+#     autoplot(object)
+#   )
+# })
