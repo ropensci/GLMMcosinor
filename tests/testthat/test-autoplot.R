@@ -4,6 +4,18 @@
 #' @srrstats {G5.2a}
 #' @srrstats {G5.2b}
 
+test_that("simple multicomponent model", {
+  d_multi_comp <- readRDS(test_path("fixtures", "d_multi_comp.rds"))
+
+  object <- cglmm(
+    Y ~ group + amp_acro(time_col = "times", n_components = 2, group = "group", period = c(12, 24)),
+    data = d_multi_comp
+  )
+  vdiffr::expect_doppelganger(
+    "plot with multi-component",
+    autoplot(object)
+  )
+})
 
 test_that("autoplot works with simple inputs and ziformula and dispformula", {
   object_zi <- cglmm(
@@ -486,3 +498,22 @@ test_that("autoplot works mixed models", {
     autoplot(mixed_mod_2, x_str = "group", superimpose.data = TRUE)
   )
 })
+
+# TODO: this would be the test to assess whether the (non-implemented) ability
+# to fit a model with two groups interacting on the same component works
+# test_that("simple multigroup (same period) model", {
+#
+#   d_multi_grp_same_period <- readRDS(test_path("fixtures", "d_multi_grp_same_period.rds"))
+#
+#   object <- cglmm(
+#     Y ~ group +
+#       amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+#       amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
+#     data = d_multi_grp_same_period
+#   )
+#
+#   vdiffr::expect_doppelganger(
+#     "plot with multi-grp on same component",
+#     autoplot(object)
+#   )
+# })

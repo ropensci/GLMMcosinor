@@ -156,6 +156,7 @@ test_that("model returns accurate parameters", {
 
   expect_snapshot(f_round(object$coefficients))
 })
+
 test_that("model output is class cglmm", {
   withr::local_seed(50)
 
@@ -230,21 +231,6 @@ test_that("model output is class cglmm", {
   )
   expect_snapshot(print(object, digits = 2))
 })
-
-
-test_that("multicomponent with same period works", {
-  d_multi_grp <- readRDS(test_path("fixtures", "d_multi_grp.rds"))
-
-  object <- cglmm(
-    response ~ g2 * g1 +
-      amp_acro(time_col = "hour", n_components = 2, group = c("g1", "g2"), period = c(24, 24)) +
-      (1 | id),
-    data = d_multi_grp
-  )
-
-  expect_snapshot(print(object, digits = 2))
-})
-
 
 test_that("mixed model estimates parameters well", {
   withr::local_seed(42)
@@ -347,3 +333,18 @@ test_that("specifying no amp_acro term works", {
 
   expect_no_error_and_snapshot(fit_disp_and_zi_model)
 })
+
+# TODO: this would be the test to assess whether the (non-implemented) ability
+# to fit a model with two groups interacting on the same component works
+# test_that("simple multigroup (same period) model", {
+#
+#   d_multi_grp_same_period <- readRDS(test_path("fixtures", "d_multi_grp_same_period.rds"))
+#
+#   object <- cglmm(
+#     Y ~ group +
+#       amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+#       amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
+#     data = d_multi_grp_same_period
+#   )
+#   expect_no_error_and_snapshot(object)
+# })

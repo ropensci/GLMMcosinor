@@ -181,6 +181,19 @@ test_that("polar_plot input checks work", {
   )
 })
 
+test_that("simple multicomponent model", {
+  d_multi_comp <- readRDS(test_path("fixtures", "d_multi_comp.rds"))
+
+  object <- cglmm(
+    Y ~ group + amp_acro(time_col = "times", n_components = 2, group = "group", period = c(12, 24)),
+    data = d_multi_comp
+  )
+  vdiffr::expect_doppelganger(
+    "plot with multi-component",
+    polar_plot(object)
+  )
+})
+
 test_that("polar_plot works without grouping", {
   object <- cglmm(vit_d ~ amp_acro(time, period = 12), data = vitamind)
   polar_plot(object)
@@ -202,3 +215,22 @@ test_that("polar_plot messages work", {
     regex = "Angle in units of radians", fixed = TRUE
   ))
 })
+
+# TODO: this would be the test to assess whether the (non-implemented) ability
+# to fit a model with two groups interacting on the same component works
+# test_that("simple multigroup (same period) model", {
+#
+#   d_multi_grp_same_period <- readRDS(test_path("fixtures", "d_multi_grp_same_period.rds"))
+#
+#   object <- cglmm(
+#     Y ~ group +
+#       amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+#       amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
+#     data = d_multi_grp_same_period
+#   )
+#
+#   vdiffr::expect_doppelganger(
+#     "plot with multi-grp on same component",
+#     polar_plot(object)
+#   )
+# })

@@ -12,6 +12,7 @@ multi_model <- cglmm(
 )
 saveRDS(multi_model, test_path("fixtures", "multi_model.rds"))
 
+
 d_multi_grp <- structure(
   list(
     id = c(
@@ -82,3 +83,39 @@ d_multi_grp <- structure(
 )
 
 saveRDS(d_multi_grp, test_path("fixtures", "d_multi_grp.rds"))
+
+
+d_multi_comp <- simulate_cosinor(
+  n = 100, mesor = 0, amp = c(2, 4), acr = c(0, 1), period = c(12, 24),
+  n_components = 2, beta.group = TRUE, beta.mesor = 1, beta.amp = c(0.5, 2),
+  beta.acro = c(0.5, 2)
+)
+
+saveRDS(d_multi_comp, test_path("fixtures", "d_multi_comp.rds"))
+
+
+# fixture to replicate the issue that @MilaSMayor was having on GitHub issue #29
+# want to have two groups/factors which influence the amp/acro in a single
+# component model
+
+g1_amp <- 1
+g2_amp <- 2
+g1_acr <- 1
+g2_acr <- 0.5
+
+base_amp <- 1
+base_acr <- 1
+
+d_base <- simulate_cosinor(n = 100, mesor = 0, amp = base_amp, acr = base_acr, period = 24) |>
+  mutate(g1 = 0, g2 = 0)
+d_g1 <- simulate_cosinor(n = 100, mesor = 0, amp = base_amp + g1_amp, acr = base_acr + g1_acr, period = 24) |>
+  mutate(g1 = 1, g2 = 0)
+d_g2 <- simulate_cosinor(n = 100, mesor = 0, amp = base_amp + g2_amp, acr = base_acr + g2_acr, period = 24) |>
+  mutate(g1 = 0, g2 = 1)
+d_g1_g2 <- simulate_cosinor(n = 100, mesor = 0, amp = base_amp + g1_amp + g2_amp, acr = base_acr + g1_acr + g2_acr, period = 24) |>
+  mutate(g1 = 1, g2 = 1)
+
+d_multi_grp_same_period <- bind_rows(d_base, d_g1, d_g2, d_g1_g2) |> select(-group)
+
+
+saveRDS(d_multi_grp_same_period, test_path("fixtures", "d_multi_grp_same_period.rds"))
