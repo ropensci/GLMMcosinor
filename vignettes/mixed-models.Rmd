@@ -163,3 +163,33 @@ AIC(mixed_mod$fit)
 ```
 
 Aside from not being able to be useful to see the differences between subjects from the model, we end up with much worse model fit and likely biased and/or imprecise estimates of our fixed effects that we are interested in!
+
+# REML
+
+For mixed models, it may be most appropriate for them to be fit using Restricted Maximum Likelihood (REML). GLMMcosinor does not automatically use REML for mixed models but leaves it to the user to specify this when calling `cglmm()`, the same as is done by `glmmTMB::glmmTMB()`. Arguments passed to `cglmm(...)` are used when calling `glmmTMB::glmmTMB(...)`. This means that the user can control whether REML is used by using specifying `REML = TRUE`. See `?glmmTMB::glmmTMB` for more details and what other aspects fo the model fitting can be controlled. Below is the same example as above, but fit using REML, and shows that the model was fit using REML by inspecting the modelInfo within the glmmTMB fit object.
+
+```r
+mixed_mod <- cglmm(
+    Y ~ amp_acro(times, n_components = 1, period = 24) + 
+      (1 + amp_acro1 | subject),
+    data = dat_mixed, REML = TRUE
+  )
+```
+
+```{r echo=FALSE}
+withr::with_seed(42, {
+  mixed_mod_reml <- cglmm(
+    Y ~ amp_acro(times, n_components = 1, period = 24) +
+      (1 + amp_acro1 | subject),
+    data = dat_mixed, REML = TRUE
+  )
+})
+```
+
+```{r}
+mixed_mod_reml$fit
+
+mixed_mod_reml$fit$modelInfo$REML
+
+mixed_mod$fit$modelInfo$REML
+```
