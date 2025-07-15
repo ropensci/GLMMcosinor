@@ -209,8 +209,8 @@ autoplot(object, points_per_min_cycle_length = 40)
 In addition to time-response plots, the `GLMMcosinor` package also
 allows users to create polar plots. In these plots, the plotted point
 represents the acrophase estimate, and the radius represents the
-amplitude estimate for a given component. The ellipses represent
-confidence regions.
+amplitude estimate for a given component or group. The ellipses represent
+confidence regions.  
 
 ------------------------------------------------------------------------
 
@@ -224,6 +224,19 @@ model <- cglmm(
 )
 polar_plot(model)
 ```
+
+There is no function to directly assess differential rhythmicity, the overall 
+difference between two rhythms in terms of both amplitude and phase combined. 
+However, this can be determined by visually inspecting the `polar_plot()` and 
+seeing whether the ellipses exclude each others poles. For example, in the plot 
+above, both ellipses exclude the center point (black dot) of the other ellipses.
+These two rhythms differ primarily by their phase, and not their amplitude, but
+this visual assessment determines that there statistically significant (p<0.05 
+since these are 95% confidence regions) differences in their overall 
+rhythmicity.  To estimate the differences in the rhythmic parameters (amplitude
+and phase) individually, see the usage of `test_cosinor_levels()` or 
+`test_cosinor_components()`.
+
 
 The angle units in the plot can be specified with the `radial_units`
 argument. By default, the units are in radians where a complete

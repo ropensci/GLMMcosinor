@@ -10,6 +10,7 @@ Codecov
 Cornelissen
 Cosinor
 DHARMa
+GHA
 GLMM
 Guassian
 Kasper
@@ -47,8 +48,10 @@ glmmTMB's
 lme
 midline
 multicomponent
+newdata
 poisson
 rOpenSci
+rhythmicity
 testdata
 th
 vitamind
