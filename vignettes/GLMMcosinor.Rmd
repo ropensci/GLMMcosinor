@@ -289,9 +289,11 @@ The `summary()` method for the outputs from `cglmm()` provides a more
 detailed summary of the model and its parameter estimates and
 uncertainty. It outputs the estimates, standard errors, confidence
 intervals, and p-values for both the raw model parameters and the
-transformed parameters. The summary statistics do not represent a
-comparison between any groups for the cosinor components - that is the
-role of the `test_cosinor_components()` and `test_cosinor_levels()`
+transformed parameters. Note that the p-values represent differences for that
+parameter from zero, something which may not be particularly relevant in all 
+cases (i.e. differences in acrophase from zero). The summary statistics do not
+represent a comparison between any groups for the cosinor components - that is
+the role of the `test_cosinor_components()` and `test_cosinor_levels()`
 functions.
 
 Here is an example of how to use `summary()` with some simulated data:
