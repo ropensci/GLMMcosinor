@@ -47,6 +47,7 @@ glmmTMB
 glmmTMB's
 lme
 midline
+modelInfo
 multicomponent
 newdata
 poisson
