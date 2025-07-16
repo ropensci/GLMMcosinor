@@ -262,7 +262,6 @@ test_cosinor_levels <- function(x,
 #' group with covariates equal to 0. This may not be the desired result for
 #' continuous covariates.
 #'
-#'
 #' @param x An \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
@@ -290,38 +289,6 @@ test_cosinor_levels <- function(x,
 #' \code{0.95}.
 #'
 #' @return Returns a \code{test_cosinor} object.
-#' @examples
-#' mod_grouped <- cglmm(vit_d ~ X + amp_acro(time,
-#'   group = "X",
-#'   n_components = 1,
-#'   period = 12
-#' ), data = vitamind)
-#'
-#' test_cosinor(mod_grouped, "X", "amp")
-#'
-#' data_2_component <- simulate_cosinor(
-#'   n = 10000,
-#'   mesor = 5,
-#'   amp = c(2, 5),
-#'   acro = c(0, pi),
-#'   beta.mesor = 4,
-#'   beta.amp = c(3, 4),
-#'   beta.acro = c(0, pi / 2),
-#'   family = "gaussian",
-#'   n_components = 2,
-#'   period = c(10, 12)
-#' )
-#'
-#' mod_2_component <- cglmm(
-#'   Y ~ group + amp_acro(times,
-#'     n_components = 2, group = "group",
-#'     period = c(10, 12)
-#'   ),
-#'   data = data_2_component
-#' )
-#'
-#' test_cosinor(mod_2_component, param = "amp", comparison_type = "components")
-#'
 #' @noRd
 .test_cosinor <- function(x,
                           x_str,
@@ -332,9 +299,6 @@ test_cosinor_levels <- function(x,
                           component_index,
                           level_index,
                           ci_level) {
-  # TODO handle the text labels for the factor variable used for grouping - i.e
-  # using data made with : sim_data %>% mutate(group = ifelse(group == 1,
-  # "control", "treatment"))
   summary.fit <- summary(x)
 
   if (is.null(x_str)) {

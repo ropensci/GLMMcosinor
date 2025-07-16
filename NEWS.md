@@ -1,5 +1,8 @@
 # GLMMcosinor (development version)
 
+* Use the mean of continuous variables as the reference level, and the 
+  first level for factors when creating newdata within `autoplot()`.
+
 * Fix test-coverage GHA.
 
 # GLMMcosinor 0.2.1

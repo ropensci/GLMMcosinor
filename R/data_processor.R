@@ -108,6 +108,7 @@ data_processor <- function(newdata,
                            vec_sss,
                            vec_rrr,
                            n_components,
+                           components,
                            group_stats,
                            group,
                            group_check,
@@ -146,24 +147,26 @@ data_processor <- function(newdata,
   # in preparation for transforming the raw coefficients
   mf <- fit
 
+  items_keep <- c(
+    "formula",
+    "vec_rrr",
+    "vec_sss",
+    "n_components",
+    "components",
+    "group_stats",
+    "group_check"
+  )
+
   main_coefs <- glmmTMB::fixef(mf)$cond
   if (no_amp_acro_vector[["main_"]]) {
     conditional_model <- main_coefs
   } else {
     conditional_model <- get_new_coefs(
-      main_coefs,
-      vec_rrr,
-      vec_sss,
-      n_components,
-      period
-    )
-    items_keep <- c(
-      "formula",
-      "vec_rrr",
-      "vec_sss",
-      "n_components",
-      "group_stats",
-      "group_check"
+      coefs = main_coefs,
+      vec_rrr = vec_rrr,
+      vec_sss = vec_sss,
+      n_components = n_components,
+      components = components
     )
   }
 
@@ -173,11 +176,11 @@ data_processor <- function(newdata,
       dispersion_model <- disp_coefs
     } else {
       dispersion_model <- get_new_coefs(
-        disp_coefs,
-        dispformula$vec_rrr,
-        dispformula$vec_sss,
-        dispformula$n_components,
-        period
+        coefs = disp_coefs,
+        vec_rrr = dispformula$vec_rrr,
+        vec_sss = dispformula$vec_sss,
+        n_components = dispformula$n_components,
+        components = dispformula$components
       )
     }
     disp_list <- c(
@@ -185,7 +188,7 @@ data_processor <- function(newdata,
       list(
         coefficients = dispersion_model,
         raw_coefficients = disp_coefs,
-        group = dispformula$group_disp # currently not being used
+        group = dispformula$group_disp
       )
     )
 
@@ -203,23 +206,23 @@ data_processor <- function(newdata,
         list(
           coefficients = zi_model,
           raw_coefficients = zi_coefs,
-          group = ziformula$group_zi # currently not being used
+          group = ziformula$group_zi
         )
       )
     } else {
       zi_model <- get_new_coefs(
-        zi_coefs,
-        ziformula$vec_rrr,
-        ziformula$vec_sss,
-        ziformula$n_components,
-        period
+        coefs = zi_coefs,
+        vec_rrr = ziformula$vec_rrr,
+        vec_sss = ziformula$vec_sss,
+        n_components = ziformula$n_components,
+        components = ziformula$components
       )
       zi_list <- c(
         ziformula[items_keep],
         list(
           coefficients = zi_model,
           raw_coefficients = zi_coefs,
-          group = ziformula$group_zi # currently not being used
+          group = ziformula$group_zi
         )
       )
     }

@@ -54,15 +54,18 @@ process is described [here](https://doi.org/10.18637/jss.v070.i05)
 
 ## Installation
 
-You can install the development version of GLMMcosinor from
-[GitHub](https://github.com/) with:
+You can install GLMMcosinor from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("ropensci/GLMMcosinor")
+# dev version
+# install.packages("pak")
+pak::pkg_install("ropensci/GLMMcosinor")
 
 # or, equivalently
 install.packages("GLMMcosinor", repos = "https://ropensci.r-universe.dev")
+
+# latest release version
+pak::pkg_install("ropensci/GLMMcosinor@*release") 
 ```
 
 ## Example
@@ -115,12 +118,15 @@ polar_plot(model)
 
 ``` r
 citation("GLMMcosinor")
+#> Warning in citation("GLMMcosinor"): no date field in DESCRIPTION file of
+#> package 'GLMMcosinor'
+#> 
 #> To cite package 'GLMMcosinor' in publications use:
 #> 
 #>   Parsons R, Jayasinghe O, White N, Rawashdeh O (2024). _GLMMcosinor:
-#>   Fit a Cosinor Model Using a Generalized Mixed Modeling Framework_. R
-#>   package version 0.2.1.9000, https://docs.ropensci.org/GLMMcosinor/,
-#>   <https://github.com/ropensci/GLMMcosinor>.
+#>   Fit a Cosinor Model Using a Generalized Mixed Modeling Framework_.
+#>   https://github.com/ropensci/GLMMcosinor,
+#>   https://docs.ropensci.org/GLMMcosinor/.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -128,9 +134,8 @@ citation("GLMMcosinor")
 #>     title = {GLMMcosinor: Fit a Cosinor Model Using a Generalized Mixed Modeling Framework},
 #>     author = {Rex Parsons and Oliver Jayasinghe and Nicole White and Oliver Rawashdeh},
 #>     year = {2024},
-#>     note = {R package version 0.2.1.9000, 
+#>     note = {https://github.com/ropensci/GLMMcosinor,
 #> https://docs.ropensci.org/GLMMcosinor/},
-#>     url = {https://github.com/ropensci/GLMMcosinor},
 #>   }
 ```
 

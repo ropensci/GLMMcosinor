@@ -1,3 +1,42 @@
+# script works and warnings are displayed appropriately
+
+    Code
+      test_object
+    Output
+      Test Details: 
+      Parameter being tested:
+      Amplitude
+      
+      Comparison type:
+      levels
+      
+      Grouping variable used for comparison between groups: X
+      Reference group: control
+      Comparator group: test
+      
+      cglmm model only has a single component and to compare
+                between groups.
+      
+      
+      
+      Global test: 
+      Statistic: 
+      2.19
+      
+      P-value: 
+      0.1385
+      
+      
+      Individual tests:
+      Statistic: 
+      1.48
+      
+      P-value: 
+      0.1385
+      
+      Estimate and 95% confidence interval:
+      1.68 (-0.54 to 3.9)
+
 # multi-component comparison works, print functions work
 
     Code

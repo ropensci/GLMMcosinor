@@ -163,7 +163,11 @@ autoplot.cglmm <- function(object,
   if (is.null(cov_list) && !is.null(object$covariates)) {
     message_cov_list <- NULL
     for (i in object$covariates) {
-      reference_level <- object$newdata[[i[1]]][1]
+      if (is.numeric(object$newdata[[i[1]]])) {
+        reference_level <- mean(object$newdata[[i[1]]], na.rm = TRUE)
+      } else {
+        reference_level <- sort(object$newdata[[i[1]]])[1]
+      }
 
       cov_list[[i]] <- reference_level
 
@@ -432,9 +436,8 @@ autoplot.cglmm <- function(object,
 
   newdata <- data.frame(time = timeax, stringsAsFactors = FALSE)
   colnames(newdata)[1] <- object$time_name
-  #
-  # adding covariate columns
 
+  # adding covariate columns
   for (i in names(cov_list)) {
     if (!(i %in% object$time_name)) {
       fixed_value <- cov_list[[i]]
@@ -447,6 +450,7 @@ autoplot.cglmm <- function(object,
   # get the response data from the cglmm object
   y_name <- object$response_var
   # get the predicted response values using the predict.cglmm() function
+
   pred_obj <- stats::predict(
     object,
     newdata = newdata_processed,
