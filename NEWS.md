@@ -1,5 +1,7 @@
 # GLMMcosinor (development version)
 
+* Add example of using likelihood-ratio test to assess differential rhythmicity.
+
 * Use the mean of continuous variables as the reference level, and the 
   first level for factors when creating newdata within `autoplot()`.
 
