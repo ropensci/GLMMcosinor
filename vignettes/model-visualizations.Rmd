@@ -225,10 +225,12 @@ model <- cglmm(
 polar_plot(model)
 ```
 
-There is no function to directly assess differential rhythmicity, the overall 
-difference between two rhythms in terms of both amplitude and phase combined. 
-However, this can be determined by visually inspecting the `polar_plot()` and 
-seeing whether the ellipses exclude each others poles. For example, in the plot 
+There is in built method to directly assess differential rhythmicity, the 
+overall difference between two rhythms in terms of both amplitude and phase 
+combined. It can be done using a likelihood ratio and is demonstrated as part 
+of the [Getting started](https://docs.ropensci.org/GLMMcosinor/articles/GLMMcosinor.html)
+vignette. It can also be assessed by visually inspecting the `polar_plot()` and 
+seeing whether the ellipses exclude each others poles. For example, in the plot
 above, both ellipses exclude the center point (black dot) of the other ellipses.
 These two rhythms differ primarily by their phase, and not their amplitude, but
 this visual assessment determines that there statistically significant (p<0.05 

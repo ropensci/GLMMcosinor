@@ -5,7 +5,7 @@ dat_list <- list(
     multicomponent = TRUE,
     disp = TRUE,
     zi = TRUE,
-    rhythmdiff = FALSE,
+    rhythmdiff = TRUE,
     diff_est = TRUE,
     family = "n > 15 \nAny family avilable in {glmmTMB}:
     Gaussian, gamma, binomial, Poisson, ...",
