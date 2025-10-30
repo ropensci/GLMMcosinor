@@ -448,18 +448,3 @@ summary(object_disp_zi)
 dispersion or zero-inflation characteristics, hence the lack of
 significant P-values in the model summary for the dispersion and
 zero-inflation models.*
-
-## Assessing residual diagnostics of `cglmm` regression models using DHARMa
-
-`{DHARMa}` is an R package used to assess residual diagnostics of
-regression models fit using `{glmmTMB}` (which is what is used by
-`cglmm()`).
-
-For example, we can apply the functions from `DHARMa` on the `glmmTMB`
-model within by accessing it with `$fit`.
-
-```{r}
-library(DHARMa)
-plotResiduals(simulateResiduals(object$fit))
-plotQQunif(simulateResiduals(object$fit))
-```

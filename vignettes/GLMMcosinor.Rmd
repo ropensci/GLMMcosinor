@@ -138,6 +138,7 @@ For example, consider the following model and its output:
 
 ```{r, message=F, warning=F}
 library(GLMMcosinor)
+library(ggplot2)
 
 cosinor_model <- cglmm(
   vit_d ~ X + amp_acro(time, period = 12, group = "X"),
@@ -510,6 +511,109 @@ end <- Sys.time()
 print(end - start)
 ```
 
+
+## Assessing residual diagnostics of `cglmm` regression models using DHARMa
+
+`{DHARMa}` is an R package used to assess residual diagnostics of
+regression models fit using `{glmmTMB}` (which is what is used by
+`cglmm()`).
+
+For example, we can apply the functions from `DHARMa` on the `glmmTMB`
+model within by accessing it with `$fit`.
+
+```{r}
+library(DHARMa)
+cosinor_model <- cglmm(
+  vit_d ~ X + amp_acro(time, period = 12, group = "X"),
+  data = vitamind
+)
+
+plotResiduals(simulateResiduals(cosinor_model$fit))
+plotQQunif(simulateResiduals(cosinor_model$fit))
+```
+
+
+## Differential rhythmicity
+
+Researchers may be interested to know whether two rhythms are different from each other, overall, rather than regarding a single rhythmic parameter. To assess this, two models can be fit, one with the parameterisation for the grouping variable and one without. By performing the comparison at the model level, it is up to the user to exactly control the parameterisation. For example, they may want to test for differential fit regarding only the amplitude/acrophase collectively but still include grouping as an interaction to other covariates. 
+
+To perform the test, fit two models: one with the grouping structure and one without.
+
+```{r}
+cosinor_model_unpooled <- cglmm(
+  vit_d ~ X + amp_acro(time, period = 12, group = "X"),
+  data = vitamind
+)
+
+cosinor_model_pooled <- cglmm(
+  vit_d ~ amp_acro(time, period = 12),
+  data = vitamind
+)
+
+anova(cosinor_model_pooled$fit, cosinor_model_unpooled$fit)
+```
+
+The AIC for the unpooled model is lower than the pooled model, and the difference in the fit is statistically significant, supporting a differential fit between the two levels of the grouping.
+
+
+If we use simulated data with no difference in the underlying rhythm, this test does not support a differential fit.
+
+```{r, echo=F}
+withr::with_seed(
+  50,
+  {
+    testdata_no_difference <- simulate_cosinor(
+      100,
+      n_period = 2,
+      mesor = 7,
+      amp = 5,
+      acro = 1,
+      beta.mesor = 7,
+      beta.amp = 5,
+      beta.acro = 1,
+      period = 24,
+      n_components = 1,
+      beta.group = TRUE
+    )
+  }
+)
+```
+
+```{r, eval=F}
+testdata_no_difference <- simulate_cosinor(
+  100,
+  n_period = 2,
+  mesor = 7,
+  amp = 5,
+  acro = 1,
+  beta.mesor = 7,
+  beta.amp = 5,
+  beta.acro = 1,
+  period = 24,
+  n_components = 1,
+  beta.group = TRUE
+)
+```
+
+```{r}
+testdata_no_difference$group <- as.factor(testdata_no_difference$group)
+
+testdata_no_difference |>
+  ggplot(aes(x = times, y = Y, col = group)) +
+  geom_point()
+
+cosinor_model_unpooled <- cglmm(
+  Y ~ group + amp_acro(times, period = 24, group = "group"),
+  data = testdata_no_difference
+)
+
+cosinor_model_pooled <- cglmm(
+  Y ~ amp_acro(times, period = 24),
+  data = testdata_no_difference
+)
+
+anova(cosinor_model_pooled$fit, cosinor_model_unpooled$fit)
+```
 
 
 ## References
