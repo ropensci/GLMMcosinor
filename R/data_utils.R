@@ -53,12 +53,14 @@
 #' mod
 #' mod$fit # printing the `glmmTMB` model within shows Std.Dev. of random effect
 #' @export
-update_formula_and_data <- function(data,
-                                    formula,
-                                    family = "gaussian",
-                                    quietly = TRUE,
-                                    dispformula = ~1,
-                                    ziformula = ~0) {
+update_formula_and_data <- function(
+  data,
+  formula,
+  family = "gaussian",
+  quietly = TRUE,
+  dispformula = ~1,
+  ziformula = ~0
+) {
   # Extract only the amp_acro function from the call
   # check for missing data
   if (!quietly) {
@@ -70,18 +72,21 @@ update_formula_and_data <- function(data,
   }
 
   # formatting data to be evaluated in amp_acro()
-  formula_eval <- function(formula,
-                           data,
-                           quietly,
-                           amp_acro_ind = -1,
-                           data_prefix = "main_",
-                           dispformula_check = FALSE,
-                           ziformula_check = FALSE,
-                           no_amp_acro_vector = no_amp_acro_vector,
-                           cond_period = NULL) {
+  formula_eval <- function(
+    formula,
+    data,
+    quietly,
+    amp_acro_ind = -1,
+    data_prefix = "main_",
+    dispformula_check = FALSE,
+    ziformula_check = FALSE,
+    no_amp_acro_vector = no_amp_acro_vector,
+    cond_period = NULL
+  ) {
     Terms <- stats::terms(formula, specials = c("amp_acro"))
     amp_acro_text <- attr(
-      Terms, "term.labels"
+      Terms,
+      "term.labels"
     )[attr(Terms, "special")$amp_acro + amp_acro_ind]
     if (!length(amp_acro_text) == 0) {
       e <- str2lang(amp_acro_text)
@@ -97,7 +102,6 @@ update_formula_and_data <- function(data,
     e$.data_prefix <- data_prefix
     e$no_amp_acro_vector <- no_amp_acro_vector
     e$cond_period <- cond_period
-
 
     ranef_part <- lapply(lme4::findbars(formula), deparse1)
     ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
@@ -171,7 +175,6 @@ update_formula_and_data <- function(data,
   main_output$newdata <- ziformula_eval$newdata
   main_output$no_amp_acro_vector <- ziformula_eval$no_amp_acro_vector
 
-
   ziformula_eval <- ziformula_eval[items_keep]
   names(ziformula_eval)[names(ziformula_eval) == "newformula"] <- "formula"
   main_output$ziformula <- ziformula_eval
@@ -190,7 +193,6 @@ update_formula_and_data <- function(data,
 #'
 #' @return nothing if successful, an error message if not
 #' @noRd
-
 
 # check the group inputs
 check_group_var <- function(.data, group) {
@@ -221,11 +223,7 @@ validate_ci_level <- function(ci_level) {
 }
 
 # calculate the parameters from the raw estimates
-get_new_coefs <- function(coefs,
-                          vec_rrr,
-                          vec_sss,
-                          n_components,
-                          components) {
+get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
@@ -238,8 +236,14 @@ get_new_coefs <- function(coefs,
 
     group <- components[[i]]$group
     if (components[[i]]$group != 0) {
-      r.coef[[i]] <- grepl(paste0(components[[i]]$group, ".*:", vec_rrr[period_idx]), names(coefs))
-      s.coef[[i]] <- grepl(paste0(components[[i]]$group, ".*:", vec_sss[period_idx]), names(coefs))
+      r.coef[[i]] <- grepl(
+        paste0(components[[i]]$group, ".*:", vec_rrr[period_idx]),
+        names(coefs)
+      )
+      s.coef[[i]] <- grepl(
+        paste0(components[[i]]$group, ".*:", vec_sss[period_idx]),
+        names(coefs)
+      )
     } else {
       r.coef[[i]] <- grepl(paste0(vec_rrr[period_idx]), names(coefs))
       s.coef[[i]] <- grepl(paste0(vec_sss[period_idx]), names(coefs))
@@ -272,10 +276,18 @@ get_new_coefs <- function(coefs,
     groups.s <- c(beta.s[1], beta.s[which(names(beta.s) != names(beta.s[1]))])
 
     amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
-    names(amp[[i]]) <- gsub(vec_rrr[period_idx], paste0("amp", i), names(beta.r))
+    names(amp[[i]]) <- gsub(
+      vec_rrr[period_idx],
+      paste0("amp", i),
+      names(beta.r)
+    )
 
     acr[[i]] <- atan2(groups.s, groups.r)
-    names(acr[[i]]) <- gsub(vec_sss[period_idx], paste0("acr", i), names(beta.s))
+    names(acr[[i]]) <- gsub(
+      vec_sss[period_idx],
+      paste0("acr", i),
+      names(beta.s)
+    )
   }
   new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"

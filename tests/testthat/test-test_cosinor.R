@@ -13,11 +13,13 @@ test_that("script works and warnings are displayed appropriately", {
   test_object <- test_cosinor_levels(object, x_str = "X")
   expect_s3_class(test_object, "cglmmTest")
 
-
   # test use of labels in factor grouping variable
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
-    data = dplyr::mutate(vitamind, X = as.factor(ifelse(X == 1, "test", "control")))
+    data = dplyr::mutate(
+      vitamind,
+      X = as.factor(ifelse(X == 1, "test", "control"))
+    )
   )
   test_object <- test_cosinor_levels(object, x_str = "X")
   expect_snapshot(test_object)
@@ -49,7 +51,6 @@ test_that("script works and warnings are displayed appropriately", {
       )
     )
   )
-
 
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
@@ -179,7 +180,6 @@ test_that("script works and warnings are displayed appropriately", {
     fixed = TRUE
   )
 
-
   # Error message test 10
   obj <- test_cosinor_levels(object, x_str = "X")
   expect_s3_class(obj, "cglmmTest")
@@ -246,7 +246,8 @@ test_that("acrophase differences are within (-pi, pi)", {
       beta.group = TRUE
     )
     object <- cglmm(
-      Y ~ group + amp_acro(times, n_components = 1, group = "group", period = 24),
+      Y ~ group +
+        amp_acro(times, n_components = 1, group = "group", period = 24),
       data = comod
     )
 

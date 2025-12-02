@@ -38,7 +38,6 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 
   validate_ci_level(ci_level)
 
-
   # this function can be looped if there is disp or zi formula present.
   # note that 'model_index' is a string: 'cond', 'disp', or 'zi'
   cglmmSubSummary <- function(model_index) {
@@ -107,7 +106,6 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     beta.s <- coefs[s.coef]
     beta.r <- coefs[r.coef]
 
-
     # convert beta.s and beta.r to groups
     groups.r <- c(beta.r, beta.r[which(names(beta.r) != names(beta.r))])
     groups.s <- c(beta.s, beta.s[which(names(beta.s) != names(beta.s))])
@@ -116,7 +114,6 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     amp <- sqrt(groups.r^2 + groups.s^2)
     # acr <- -atan2(groups.s, groups.r)
     acr <- atan2(groups.s, groups.r)
-
 
     # rename the vectors amp and acr
     for (i in seq_len(n_components)) {
@@ -169,7 +166,6 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     # assemble summary matrix
     coef <- c(coefs[mu.coef], unlist(amp), unlist(acr))
     se <- c(sqrt(diag(stats::vcov(mf)[[model_index]]))[mu.coef], se.trans)
-
 
     zt <- stats::qnorm((1 - ci_level) / 2, lower.tail = F)
     raw.se <- sqrt(diag(stats::vcov(mf)[[model_index]]))
@@ -224,16 +220,19 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 
   # here, the outputs from main_output are renamed to remove the main_output tag
   # this was done to remain cohesive with other parts of the package.
-  structure(list(
-    transformed.table = main_output$transformed.table,
-    raw.table = main_output$raw.table,
-    transformed.covariance = main_output$transformed.covariance,
-    raw.covariance = main_output$raw.covariance,
-    main_output = main_output,
-    output_disp = output_disp,
-    output_zi = output_zi,
-    object = object
-  ), class = "cglmmSummary")
+  structure(
+    list(
+      transformed.table = main_output$transformed.table,
+      raw.table = main_output$raw.table,
+      transformed.covariance = main_output$transformed.covariance,
+      raw.covariance = main_output$raw.covariance,
+      main_output = main_output,
+      output_disp = output_disp,
+      output_zi = output_zi,
+      object = object
+    ),
+    class = "cglmmSummary"
+  )
 }
 
 
@@ -258,17 +257,18 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 #'
 
 # check if there is dispersion or zi (as opposed to default) then print
-print.cglmmSummary <- function(x,
-                               digits = getOption("digits"), ...) {
+print.cglmmSummary <- function(x, digits = getOption("digits"), ...) {
   cat("\n Conditional Model \n")
   cat("Raw model coefficients:\n")
-  stats::printCoefmat(x$main_output$raw.table,
+  stats::printCoefmat(
+    x$main_output$raw.table,
     digits = digits,
     has.Pvalue = TRUE
   )
   cat("\n")
   cat("Transformed coefficients:\n")
-  stats::printCoefmat(x$main_output$transformed.table,
+  stats::printCoefmat(
+    x$main_output$transformed.table,
     digits = digits,
     has.Pvalue = TRUE
   )
@@ -279,13 +279,15 @@ print.cglmmSummary <- function(x,
     cat("\n***********************\n")
     cat("\n Dispersion Model \n")
     cat("Raw model coefficients:\n")
-    stats::printCoefmat(x$output_disp$raw.table,
+    stats::printCoefmat(
+      x$output_disp$raw.table,
       digits = digits,
       has.Pvalue = TRUE
     )
     cat("\n")
     cat("Transformed coefficients:\n")
-    stats::printCoefmat(x$output_disp$transformed.table,
+    stats::printCoefmat(
+      x$output_disp$transformed.table,
       digits = digits,
       has.Pvalue = TRUE
     )
@@ -295,13 +297,15 @@ print.cglmmSummary <- function(x,
     cat("\n***********************\n")
     cat("\n Zero-Inflation Model \n")
     cat("Raw model coefficients:\n")
-    stats::printCoefmat(x$output_zi$raw.table,
+    stats::printCoefmat(
+      x$output_zi$raw.table,
       digits = digits,
       has.Pvalue = TRUE
     )
     cat("\n")
     cat("Transformed coefficients:\n")
-    stats::printCoefmat(x$output_zi$transformed.table,
+    stats::printCoefmat(
+      x$output_zi$transformed.table,
       digits = digits,
       has.Pvalue = TRUE
     )

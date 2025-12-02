@@ -10,7 +10,6 @@
 #' @srrstatsVerbose TRUE
 #'
 
-
 #' @srrstats {G1.0}
 #' @srrstats {G1.1}
 #' @srrstats {G1.2}
