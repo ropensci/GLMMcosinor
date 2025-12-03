@@ -9,7 +9,7 @@ ggplot2::autoplot
 #' Optionally allows for plotting by covariates
 #'
 #'
-#' @param object An \code{cglmm} object.
+#' @param object A \code{cglmm} object.
 #' @param ci_level The level for calculated confidence intervals. Defaults to
 #' \code{0.95}.
 #' @param x_str A \code{character} vector naming variable(s) to be plotted.
@@ -294,7 +294,7 @@ autoplot.cglmm <- function(
     )
   }
 
-  # format the newdata dataframe before passing to data_processor_plot()
+  # format the newdata dataframe before passing to autoplot_data_processor()
   unique_counts <- sapply(
     object$newdata[ranef_plot],
     function(col) length(unique(col))
@@ -314,7 +314,7 @@ autoplot.cglmm <- function(
     }
   }
 
-  newdata_processed <- data_processor_plot(
+  newdata_processed <- autoplot_data_processor(
     object,
     newdata,
     x_str,
@@ -608,9 +608,31 @@ autoplot.cglmm <- function(
 }
 
 
-# this is the function that generates the plots and can be looped iteratively
-# for different x_str
-data_processor_plot <- function(x, newdata, x_str, ranef_plot = NULL) {
+#' Process data for autoplot
+#'
+#' @param x cglmm object.
+#' @param newdata new dataset (if used).
+#' @param x_str A \code{character} vector naming variable(s) to be plotted.
+#' Default has no value and plots all groups.
+#' @param ranef_plot Specify the random effects variables that you wish to plot.
+#' If not specified, only the fixed effects will be visualized.
+#'
+#' @returns a \code{data.frame}.
+#'
+#' @examples
+#' object <- cglmm(
+#'   vit_d ~ amp_acro(time_col = time, group = "X", period = 12),
+#'   data = vitamind
+#' )
+#' autoplot_data_processor(
+#'   object,
+#'   vitamind[ "time"],
+#'   x_str = "X"
+#' )
+autoplot_data_processor <- function(x, newdata, x_str, ranef_plot = NULL) {
+  # this is the function that generates the plots and can be looped iteratively
+  # for different x_str
+
   # get the names of the covariates (factors)
   covars <- names(x$group_stats)
 

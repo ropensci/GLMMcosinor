@@ -7,7 +7,7 @@
 #' continuous covariates.
 #'
 #'
-#' @param x An \code{cglmm} object.
+#' @param x A \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested. If there is no grouping variable in the model,
@@ -129,7 +129,7 @@ test_cosinor_components <- function(
 #' group with covariates equal to 0. This may not be the desired result for
 #' continuous covariates.
 #'
-#' @param x An \code{cglmm} object.
+#' @param x A \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
@@ -259,7 +259,7 @@ test_cosinor_levels <- function(
 #' group with covariates equal to 0. This may not be the desired result for
 #' continuous covariates.
 #'
-#' @param x An \code{cglmm} object.
+#' @param x A \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
