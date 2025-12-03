@@ -1,5 +1,8 @@
 # GLMMcosinor (development version)
 
+* Refactor polar_plot() and autoplot() to avoid functions that are defined 
+  within other functions. Separate out into separate scripts where necessary.
+
 * Add example of using likelihood-ratio test to assess differential rhythmicity.
 
 * Use the mean of continuous variables as the reference level, and the 
