@@ -624,7 +624,7 @@ autoplot.cglmm <- function(
 #'   vit_d ~ amp_acro(time_col = time, group = "X", period = 12),
 #'   data = vitamind
 #' )
-#' autoplot_data_processor(
+#' GLMMcosinor:::autoplot_data_processor(
 #'   object,
 #'   vitamind[ "time"],
 #'   x_str = "X"

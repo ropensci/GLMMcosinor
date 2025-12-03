@@ -549,73 +549,6 @@ polar_plot.cglmm <- function(
       group_level_colour_index <- length(group_level)
     }
 
-    # generates the background grid for the polar plot
-    get_background_grid <- function(
-      n_breaks,
-      max_plot_radius,
-      circle_linetype,
-      dial_pos_full_x,
-      dial_pos_full_y,
-      time_labels,
-      text_size,
-      text_opacity,
-      contour_labels,
-      grid_angle_segments
-    ) {
-      plot_background <- ggplot2::ggplot() +
-        ggforce::geom_circle(
-          # plots the background circles
-          ggplot2::aes(
-            x0 = 0,
-            y0 = 0,
-            r = scales::breaks_pretty(n = n_breaks)(c(0, max_plot_radius))
-          ),
-          alpha = 0.01,
-          linetype = circle_linetype
-        ) +
-        ggplot2::geom_segment(
-          # plots the background grid
-          ggplot2::aes(
-            x = dial_pos_full_x,
-            y = dial_pos_full_y,
-            xend = -dial_pos_full_x,
-            yend = -dial_pos_full_y
-          ),
-          linetype = 10,
-          alpha = 0.4
-        ) +
-        ggplot2::geom_text(
-          # adds the radial labels (amplitude)
-          ggplot2::aes(label = time_labels[-length(time_labels)]),
-          x = 1.05 * dial_pos_full_x[-length(dial_pos_full_x)],
-          y = 1.05 * dial_pos_full_y[-length(dial_pos_full_y)],
-          size = text_size,
-          alpha = text_opacity
-        ) +
-        ggplot2::geom_text(
-          # adds the angle labels (acrophase)
-          ggplot2::aes(
-            label = contour_labels,
-            x = contour_labels * (cos(pi / grid_angle_segments)),
-            y = contour_labels * (sin(pi / grid_angle_segments))
-          ),
-          size = text_size,
-          alpha = text_opacity
-        ) +
-        ggplot2::guides(colour = "none") +
-        ggplot2::theme(
-          axis.title.x = ggplot2::element_blank(),
-          axis.title.y = ggplot2::element_blank(),
-          axis.text.x = ggplot2::element_blank(),
-          axis.text.y = ggplot2::element_blank(),
-          axis.ticks = ggplot2::element_blank(),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank()
-        )
-
-      return(plot_background)
-    }
-
     # get the plot background
     plot_background <- get_background_grid(
       n_breaks,
@@ -630,64 +563,6 @@ polar_plot.cglmm <- function(
       grid_angle_segments
     )
 
-    # generates the point estimates and confidence ellipses. If you wish to add
-    # multiple estimates and ellipses on the same plot, run this function with
-    # the appropriate inputs, with 'plot_background' being set to the plot
-    # you wish to layer upon.
-    get_point_estimate_plot <- function(
-      est_rrr, # the rrr estimate
-      est_sss, # the sss estimate
-      a_trans, # ellipse long dimension
-      b_trans, # ellipse short dimension
-      offset, # determines where angle starts
-      direction, #-1 for clockwise, 1 for anti
-      est_acr, # acrophase estimate
-      group_level, # a vector of group levels
-      ellipse_opacity, # 0 to 1, alpha value
-      plot_background # the plot to layer upon
-    ) {
-      if (group_check) {
-        plot_estimate <- plot_background +
-          ggforce::geom_ellipse(
-            # plots the confidence ellipse
-            ggplot2::aes(
-              x0 = est_rrr,
-              y0 = est_sss,
-              a = a_trans,
-              b = b_trans,
-              angle = offset + direction * est_acr,
-              fill = group_level,
-              colour = group_level
-            ),
-            alpha = ellipse_opacity
-          ) +
-          ggplot2::geom_point(
-            # plots the parameter estimates
-            ggplot2::aes(x = est_rrr, y = est_sss)
-          )
-      } else {
-        plot_estimate <- plot_background +
-          ggforce::geom_ellipse(
-            # plots the confidence ellipse
-            ggplot2::aes(
-              x0 = est_rrr,
-              y0 = est_sss,
-              a = a_trans,
-              b = b_trans,
-              angle = offset + direction * est_acr,
-              fill = grDevices::rainbow(group_level_colour_index),
-              colour = grDevices::rainbow(group_level_colour_index)
-            ),
-            alpha = ellipse_opacity
-          ) +
-          ggplot2::theme(legend.position = "none") +
-          ggplot2::geom_point(
-            # plots the parameter estimates
-            ggplot2::aes(x = est_rrr, y = est_sss)
-          )
-      }
-      return(plot_estimate)
-    }
     plot_obj <- get_point_estimate_plot(
       est_rrr,
       est_sss,
@@ -697,6 +572,8 @@ polar_plot.cglmm <- function(
       direction,
       est_acr,
       group_level,
+      group_level_colour_index,
+      group_check,
       ellipse_opacity,
       plot_background
     )
@@ -890,5 +767,5 @@ polar_plot.cglmm <- function(
     }
   }
 
-  return(final_obj)
+  final_obj
 }
