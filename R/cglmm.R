@@ -66,13 +66,15 @@
 #'
 #'
 #' @export
-cglmm <- function(formula,
-                  data,
-                  family = stats::gaussian(),
-                  quietly = TRUE,
-                  dispformula = ~1,
-                  ziformula = ~0,
-                  ...) {
+cglmm <- function(
+  formula,
+  data,
+  family = stats::gaussian(),
+  quietly = TRUE,
+  dispformula = ~1,
+  ziformula = ~0,
+  ...
+) {
   updated_df_and_formula <- update_formula_and_data(
     data = data,
     formula = formula,
@@ -155,9 +157,8 @@ update_covnames <- function(names, group_stats) {
   covnames_inv <- grep(
     paste0(
       "(Intercept|",
-      paste(covnames,
-        collapse = "|"
-      ), ")"
+      paste(covnames, collapse = "|"),
+      ")"
     ),
     invert = TRUE,
     names,

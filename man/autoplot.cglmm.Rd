@@ -22,7 +22,7 @@
 )
 }
 \arguments{
-\item{object}{An \code{cglmm} object.}
+\item{object}{A \code{cglmm} object.}
 
 \item{ci_level}{The level for calculated confidence intervals. Defaults to
 \code{0.95}.}

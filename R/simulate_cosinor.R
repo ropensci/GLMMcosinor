@@ -63,24 +63,26 @@
 #' @srrstats {G5.1}
 #'
 #' @export
-simulate_cosinor <- function(n,
-                             mesor,
-                             amp,
-                             acro,
-                             period = 24,
-                             n_components,
-                             beta.group = FALSE,
-                             beta.mesor,
-                             beta.amp,
-                             beta.acro,
-                             n_period = 1,
-                             family = c(
-                               "gaussian",
-                               "poisson",
-                               "binomial",
-                               "gamma"
-                             ),
-                             ...) {
+simulate_cosinor <- function(
+  n,
+  mesor,
+  amp,
+  acro,
+  period = 24,
+  n_components,
+  beta.group = FALSE,
+  beta.mesor,
+  beta.amp,
+  beta.acro,
+  n_period = 1,
+  family = c(
+    "gaussian",
+    "poisson",
+    "binomial",
+    "gamma"
+  ),
+  ...
+) {
   # attempt to infer n_components if missing
   if (missing(n_components)) {
     if (length(amp) == length(acro)) {
@@ -93,8 +95,12 @@ simulate_cosinor <- function(n,
     msg = "beta.group argument must be logical"
   )
 
-  if (!beta.group & !missing(beta.mesor) &
-    !missing(beta.amp) & !missing(beta.acro)) {
+  if (
+    !beta.group &
+      !missing(beta.mesor) &
+      !missing(beta.amp) &
+      !missing(beta.acro)
+  ) {
     beta.group <- TRUE
     message(paste(
       "all betas were present but beta.group was FALSE.",
@@ -184,7 +190,6 @@ simulate_cosinor <- function(n,
       beta.alpha_val <- list(...)$beta.alpha
     }
 
-
     data_B <- .get_dataset(
       family = family,
       amp = beta.amp,
@@ -221,17 +226,19 @@ simulate_cosinor <- function(n,
 #' @return \code{NULL}
 #'
 #' @noRd
-.validate_simulate_cosinor_inputs <- function(n,
-                                              mesor,
-                                              amp,
-                                              acro,
-                                              period,
-                                              n_components,
-                                              beta.group,
-                                              beta.mesor,
-                                              beta.amp,
-                                              beta.acro,
-                                              n_period) {
+.validate_simulate_cosinor_inputs <- function(
+  n,
+  mesor,
+  amp,
+  acro,
+  period,
+  n_components,
+  beta.group,
+  beta.mesor,
+  beta.amp,
+  beta.acro,
+  n_period
+) {
   # validating inputs
   assertthat::assert_that(
     assertthat::is.count(n),
@@ -312,15 +319,17 @@ simulate_cosinor <- function(n,
 #'
 #' @return A \code{data.frame}.
 #' @noRd
-.get_dataset <- function(family,
-                         amp,
-                         acro,
-                         ttt,
-                         mesor,
-                         n_components,
-                         period,
-                         sd_val,
-                         alpha_val) {
+.get_dataset <- function(
+  family,
+  amp,
+  acro,
+  ttt,
+  mesor,
+  n_components,
+  period,
+  sd_val,
+  alpha_val
+) {
   d_params <- .get_params(
     amp = amp,
     acro = acro,
@@ -347,7 +356,8 @@ simulate_cosinor <- function(n,
   if (family == "binomial") {
     d_params$param <- exp(
       mesor + d_params$param
-    ) / (1 + exp(mesor + d_params$param))
+    ) /
+      (1 + exp(mesor + d_params$param))
     d_params$Y <- stats::rbinom(
       n = length(ttt),
       size = 1,

@@ -7,7 +7,7 @@
 #' continuous covariates.
 #'
 #'
-#' @param x An \code{cglmm} object.
+#' @param x A \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested. If there is no grouping variable in the model,
@@ -51,18 +51,18 @@
 #'   data = data_2_component
 #' )
 #' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
-test_cosinor_components <- function(x,
-                                    x_str = NULL,
-                                    param = "amp",
-                                    comparison_A = 1,
-                                    comparison_B = 2,
-                                    level_index = 0,
-                                    ci_level = 0.95) {
+test_cosinor_components <- function(
+  x,
+  x_str = NULL,
+  param = "amp",
+  comparison_A = 1,
+  comparison_B = 2,
+  level_index = 0,
+  ci_level = 0.95
+) {
   # Validating the inputs
 
-
-  if (param == "amp" | param == "acr") {
-  } else {
+  if (param == "amp" | param == "acr") {} else {
     # Display an error message if the parameter is invalid
     stop("Invalid parameter. Expected 'amp' or 'acro'.")
   }
@@ -74,7 +74,6 @@ test_cosinor_components <- function(x,
     msg = "'x' must be of class 'cglmm'"
   )
 
-
   if (!is.null(x_str)) {
     stopifnot(is.character(x_str))
   }
@@ -84,9 +83,10 @@ test_cosinor_components <- function(x,
   #   msg = "x_str must be the name of a group in object"
   # )
 
-
   assertthat::assert_that(
-    comparison_A %in% seq_len(x$n_components) & comparison_B %in% seq_len(x$n_components),
+    comparison_A %in%
+      seq_len(x$n_components) &
+      comparison_B %in% seq_len(x$n_components),
     msg = paste(
       "'comparison_A' and 'comparison_B' must be numbers",
       "corresponding to a component in the model"
@@ -94,7 +94,8 @@ test_cosinor_components <- function(x,
   )
   if (!is.null(x_str)) {
     assertthat::assert_that(
-      level_index %in% x$group_stats[[x$group_original[comparison_A]]] &
+      level_index %in%
+        x$group_stats[[x$group_original[comparison_A]]] &
         level_index %in% x$group_stats[[x$group_original[comparison_B]]],
       msg = paste(
         "'level_index' must be supplied and it must be a number",
@@ -128,7 +129,7 @@ test_cosinor_components <- function(x,
 #' group with covariates equal to 0. This may not be the desired result for
 #' continuous covariates.
 #'
-#' @param x An \code{cglmm} object.
+#' @param x A \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
@@ -174,17 +175,18 @@ test_cosinor_components <- function(x,
 #'   data = data_2_component
 #' )
 #' test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
-test_cosinor_levels <- function(x,
-                                x_str,
-                                param = "amp",
-                                comparison_A,
-                                comparison_B,
-                                component_index = 1,
-                                ci_level = 0.95) {
+test_cosinor_levels <- function(
+  x,
+  x_str,
+  param = "amp",
+  comparison_A,
+  comparison_B,
+  component_index = 1,
+  ci_level = 0.95
+) {
   # Validating the inputs
 
-  if (param == "amp" | param == "acr") {
-  } else {
+  if (param == "amp" | param == "acr") {} else {
     # Display an error message if the parameter is invalid
     stop("Invalid parameter. Expected 'amp' or 'acr'.")
   }
@@ -202,8 +204,6 @@ test_cosinor_levels <- function(x,
     length(grep(x_str, names(x$coefficients))) > 0,
     msg = "x_str must be the name of a group in object"
   )
-
-
 
   # If there are no levels supplied, the first two levels will be compared
   if (missing(comparison_A) & missing(comparison_B)) {
@@ -225,7 +225,6 @@ test_cosinor_levels <- function(x,
     )
   )
 
-
   assertthat::assert_that(
     component_index %in% 1:x$n_components,
     msg = paste(
@@ -233,7 +232,6 @@ test_cosinor_levels <- function(x,
       "number corresponding to a component in the model"
     )
   )
-
 
   # passing these inputs into the internal function
   test_obj <- .test_cosinor(
@@ -250,7 +248,6 @@ test_cosinor_levels <- function(x,
 }
 
 
-
 #' Test for differences in a cosinor model. This function has been replaced
 #' with a more user-friendly and intuitive way of specifying comparisons:
 #' \code{test_cosinor_components} and \code{test_cosinor_levels}.
@@ -262,7 +259,7 @@ test_cosinor_levels <- function(x,
 #' group with covariates equal to 0. This may not be the desired result for
 #' continuous covariates.
 #'
-#' @param x An \code{cglmm} object.
+#' @param x A \code{cglmm} object.
 #' @param x_str A \code{character}. The name of the grouping variable within
 #' which differences in the selected cosinor characteristic (amplitude or
 #' acrophase) will be tested.
@@ -290,15 +287,17 @@ test_cosinor_levels <- function(x,
 #'
 #' @return Returns a \code{test_cosinor} object.
 #' @noRd
-.test_cosinor <- function(x,
-                          x_str,
-                          param,
-                          comparison_A,
-                          comparison_B,
-                          comparison_type,
-                          component_index,
-                          level_index,
-                          ci_level) {
+.test_cosinor <- function(
+  x,
+  x_str,
+  param,
+  comparison_A,
+  comparison_B,
+  comparison_type,
+  component_index,
+  level_index,
+  ci_level
+) {
   summary.fit <- summary(x)
 
   if (is.null(x_str)) {
@@ -328,14 +327,26 @@ test_cosinor_levels <- function(x,
     }
 
     for (i in seq_along(x_str)) {
-      index[i, paste0(
-        x_str[i],
-        comparison_A, ":", param, component_index
-      )] <- -1
-      index[i, paste0(
-        x_str[i],
-        comparison_B, ":", param, component_index
-      )] <- 1
+      index[
+        i,
+        paste0(
+          x_str[i],
+          comparison_A,
+          ":",
+          param,
+          component_index
+        )
+      ] <- -1
+      index[
+        i,
+        paste0(
+          x_str[i],
+          comparison_B,
+          ":",
+          param,
+          component_index
+        )
+      ] <- 1
     }
   }
 
@@ -343,15 +354,19 @@ test_cosinor_levels <- function(x,
     # get the smallest valid difference between estimates for acrophase
     # (ie, -pi, and pi should have a difference of 0, not 2*pi)
     diff_raw <- index %*% x$coefficients
-    diff.est_c <- c(abs(diff_raw), abs(diff_raw + 2 * pi), abs(diff_raw - 2 * pi))
+    diff.est_c <- c(
+      abs(diff_raw),
+      abs(diff_raw + 2 * pi),
+      abs(diff_raw - 2 * pi)
+    )
     min_index <- which.min(diff.est_c)
     diff.est <- as.matrix(diff.est_c[min_index])
   } else {
     diff.est <- index %*% x$coefficients
   }
 
-  diff.var <- index[
-    , grep("(amp|acr)", names(x$coefficients)),
+  diff.var <- index[,
+    grep("(amp|acr)", names(x$coefficients)),
     drop = FALSE
   ] %*%
     summary.fit$transformed.covariance %*%
@@ -369,21 +384,31 @@ test_cosinor_levels <- function(x,
     diff.est + zt * sqrt(diag(diff.var))
   )
 
-  global.test <- structure(list(
-    statistic = glob.chi,
-    df = dim(diff.var)[1],
-    conf.int = NULL,
-    p.value = stats::pchisq(glob.chi, df = dim(diff.var)[1], lower.tail = FALSE)
-  ), class = "cglmmSubTest")
+  global.test <- structure(
+    list(
+      statistic = glob.chi,
+      df = dim(diff.var)[1],
+      conf.int = NULL,
+      p.value = stats::pchisq(
+        glob.chi,
+        df = dim(diff.var)[1],
+        lower.tail = FALSE
+      )
+    ),
+    class = "cglmmSubTest"
+  )
 
-  ind.test <- structure(list(
-    statistic = ind.Z[, ],
-    df = NULL,
-    conf.int = interval,
-    ci_level = ci_level,
-    p.value = 2 * stats::pnorm(-abs(ind.Z))[, ],
-    names = x_str
-  ), class = "cglmmSubTest")
+  ind.test <- structure(
+    list(
+      statistic = ind.Z[,],
+      df = NULL,
+      conf.int = interval,
+      ci_level = ci_level,
+      p.value = 2 * stats::pnorm(-abs(ind.Z))[,],
+      names = x_str
+    ),
+    class = "cglmmSubTest"
+  )
 
   if (comparison_type == "components") {
     test_details <- list(
@@ -512,7 +537,9 @@ print.cglmmSubTest <- function(x, ...) {
     if (!is.null(x$conf.int)) {
       ci <- round(x$conf.int, 2)
       cat(paste0(
-        "\n\nEstimate and ", x$ci_level * 100, "% confidence interval:\n"
+        "\n\nEstimate and ",
+        x$ci_level * 100,
+        "% confidence interval:\n"
       ))
       cat(paste0(ci[1], " (", ci[2], " to ", ci[3], ")"))
     }
@@ -540,10 +567,7 @@ print.cglmmSubTest <- function(x, ...) {
   # Print parameter being assessed
   cat(paste0(
     "Parameter being tested:\n",
-    switch(test_details$param,
-      amp = "Amplitude",
-      acr = "Acrophase"
-    )
+    switch(test_details$param, amp = "Amplitude", acr = "Acrophase")
   ))
 
   # Print type of comparison
@@ -558,17 +582,23 @@ print.cglmmSubTest <- function(x, ...) {
     cat(paste0(
       "\n\nGrouping variable used for comparison between groups: ",
       test_details$x_str,
-      "\nReference group: ", test_details$comparison_A,
-      "\nComparator group: ", test_details$comparison_B
+      "\nReference group: ",
+      test_details$comparison_A,
+      "\nComparator group: ",
+      test_details$comparison_B
     ))
 
     if (test_details$component_index == "") {
-      cat("\n\ncglmm model only has a single component and to compare
-          between groups.\n")
+      cat(
+        "\n\ncglmm model only has a single component and to compare
+          between groups.\n"
+      )
     } else {
       cat(paste0(
-        "\n\ncglmm model has", test_details$x$n_components,
-        " components. Component ", test_details$component_index,
+        "\n\ncglmm model has",
+        test_details$x$n_components,
+        " components. Component ",
+        test_details$component_index,
         " is being used for comparison between groups.\n"
       ))
     }
@@ -582,8 +612,10 @@ print.cglmmSubTest <- function(x, ...) {
     cat(paste0(
       "\n\nComponent indices used for comparison between groups: ",
       test_details$x_str,
-      "\nReference component: ", test_details$comparison_A,
-      "\nComparator component: ", test_details$comparison_B
+      "\nReference component: ",
+      test_details$comparison_A,
+      "\nComparator component: ",
+      test_details$comparison_B
     ))
   }
 

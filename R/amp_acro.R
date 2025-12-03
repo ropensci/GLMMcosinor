@@ -61,11 +61,7 @@
 #'   data = sim_data,
 #'   family = gaussian
 #' )
-amp_acro <- function(time_col,
-                     n_components = 1,
-                     group,
-                     period,
-                     ...) {
+amp_acro <- function(time_col, n_components = 1, group, period, ...) {
   .amp_acro(time_col, n_components, group, period, .env = environment(), ...)
 }
 
@@ -108,19 +104,21 @@ amp_acro <- function(time_col,
 #' @noRd
 #' @return A \code{data.frame} and \code{formula} appropriate for use by
 #' \code{data_processor()}.
-.amp_acro <- function(time_col,
-                      n_components,
-                      group,
-                      period,
-                      no_amp_acro = FALSE,
-                      no_amp_acro_vector,
-                      cond_period,
-                      .data,
-                      .formula,
-                      .quietly = TRUE,
-                      .amp_acro_ind = -1,
-                      .data_prefix = "main_",
-                      .env) {
+.amp_acro <- function(
+  time_col,
+  n_components,
+  group,
+  period,
+  no_amp_acro = FALSE,
+  no_amp_acro_vector,
+  cond_period,
+  .data,
+  .formula,
+  .quietly = TRUE,
+  .amp_acro_ind = -1,
+  .data_prefix = "main_",
+  .env
+) {
   if (missing(no_amp_acro_vector)) {
     no_amp_acro_vector <- NULL
   }
@@ -128,10 +126,12 @@ amp_acro <- function(time_col,
 
   # ensure .data argument is a dataframe, matrix, or tibble (tested)
   assertthat::assert_that(
-    inherits(.data, "data.frame") | inherits(.data, "matrix") | inherits(
-      .data,
-      "tbl"
-    ),
+    inherits(.data, "data.frame") |
+      inherits(.data, "matrix") |
+      inherits(
+        .data,
+        "tbl"
+      ),
     msg = "'data' must be of class 'data.frame', 'matrix', or 'tibble'"
   )
 
@@ -169,14 +169,17 @@ amp_acro <- function(time_col,
     ranef_part <- lapply(lme4::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
       component_num <- regmatches(
-        x, gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE)
+        x,
+        gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE)
       )[[1]]
       if (length(component_num) == 0) {
         return(x)
       } else {
         for (i in seq_len(length(component_num))) {
           string_match <- paste0(
-            ".*amp_acro", component_num[i], "\\s([^+|]*).*"
+            ".*amp_acro",
+            component_num[i],
+            "\\s([^+|]*).*"
           )
           ranef_part_addition <- gsub(string_match, "\\1", x)
           ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", x)
@@ -217,9 +220,11 @@ amp_acro <- function(time_col,
       collapse = "+"
     )
 
-    main_part <- paste(paste(deparse(res$newformula), collapse = ""),
+    main_part <- paste(
+      paste(deparse(res$newformula), collapse = ""),
       ranef_part_updated,
-      collapse = "", sep = "+"
+      collapse = "",
+      sep = "+"
     )
     res$newformula <- stats::as.formula(main_part)
     res$ranef_groups <- ranef_groups
@@ -231,25 +236,26 @@ amp_acro <- function(time_col,
 }
 
 
-amp_acro_iteration <- function(time_col,
-                               n_components,
-                               group,
-                               period,
-                               no_amp_acro,
-                               no_amp_acro_vector,
-                               cond_period,
-                               .formula,
-                               .quietly = TRUE,
-                               .data,
-                               .amp_acro_ind = -1,
-                               .data_prefix,
-                               .env) {
+amp_acro_iteration <- function(
+  time_col,
+  n_components,
+  group,
+  period,
+  no_amp_acro,
+  no_amp_acro_vector,
+  cond_period,
+  .formula,
+  .quietly = TRUE,
+  .data,
+  .amp_acro_ind = -1,
+  .data_prefix,
+  .env
+) {
   if (n_components == 0) {
     no_amp_acro <- TRUE
   }
 
   # assess the quality of the inputs
-
 
   # Function to check if 'amp_acro' is in the formula
   check_amp_acro <- function(.formula) {
@@ -303,16 +309,13 @@ amp_acro_iteration <- function(time_col,
       ttt <- eval(substitute(time_col, .env), envir = .data)
     }
 
-
     # ensure ttt contains numeric values only (tested)
     if (!assertthat::assert_that(is.numeric(ttt))) {
       stop("time column in dataframe must contain numeric values")
     }
 
     # ensure time_col is univariate (tested)
-    assertthat::assert_that(is.vector(ttt),
-      msg = "time_col must be univariate"
-    )
+    assertthat::assert_that(is.vector(ttt), msg = "time_col must be univariate")
 
     # Check if 'group' is a non-string and convert it to a string if necessary
     if (all(!is.character(substitute(group, .env))) & !missing(group)) {
@@ -440,7 +443,10 @@ amp_acro_iteration <- function(time_col,
       # add a warning message that columns have been added to the dataframe
       if (!.quietly) {
         message(paste(
-          rrr_names, "and", sss_names, "have been added to dataframe"
+          rrr_names,
+          "and",
+          sss_names,
+          "have been added to dataframe"
         ))
       }
     }
@@ -462,12 +468,22 @@ amp_acro_iteration <- function(time_col,
       cperiod_idx <- component$period_idx
 
       if (cgroup != 0) {
-        acpart <- paste((rep(cgroup, 2)), c(vec_rrr[cperiod_idx], vec_sss[cperiod_idx]), sep = ":")
+        acpart <- paste(
+          (rep(cgroup, 2)),
+          c(vec_rrr[cperiod_idx], vec_sss[cperiod_idx]),
+          sep = ":"
+        )
         acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
         formula_expr <- paste(formula_expr, "+", acpart_combined)
       } else {
         acpart_combined <- NULL
-        formula_expr <- paste(formula_expr, "+", vec_rrr[cperiod_idx], "+", vec_sss[cperiod_idx])
+        formula_expr <- paste(
+          formula_expr,
+          "+",
+          vec_rrr[cperiod_idx],
+          "+",
+          vec_sss[cperiod_idx]
+        )
       }
     }
   }
@@ -485,7 +501,8 @@ amp_acro_iteration <- function(time_col,
   }
 
   newformula <- stats::as.formula(
-    paste(left_part,
+    paste(
+      left_part,
       paste(
         c(
           attr(

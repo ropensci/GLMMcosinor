@@ -11,16 +11,18 @@ withr::with_seed(
     library(dplyr)
 
     # generate a dataset with a random effect variable comprising 30 subjects
-    f_sample_id <- function(id_num,
-                            n = 30,
-                            mesor,
-                            amp,
-                            acro,
-                            family = "gamma",
-                            sd = 0.2,
-                            period,
-                            n_components,
-                            beta.group = TRUE) {
+    f_sample_id <- function(
+      id_num,
+      n = 30,
+      mesor,
+      amp,
+      acro,
+      family = "gamma",
+      sd = 0.2,
+      period,
+      n_components,
+      beta.group = TRUE
+    ) {
       data <- simulate_cosinor(
         n = n,
         mesor = mesor,
@@ -49,7 +51,6 @@ withr::with_seed(
       })
     ) |>
       mutate(subject = as.factor(subject))
-
 
     # An example of a model for this data
     # mixed_mod <- cglmm(

@@ -15,7 +15,7 @@ test_cosinor_components(
 )
 }
 \arguments{
-\item{x}{An \code{cglmm} object.}
+\item{x}{A \code{cglmm} object.}
 
 \item{x_str}{A \code{character}. The name of the grouping variable within
 which differences in the selected cosinor characteristic (amplitude or

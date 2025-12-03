@@ -29,7 +29,8 @@ test_that("assess error messaging", {
       period = 24,
       family = "gaussian"
     ),
-    regex = "n must be an integer greater than 0", fixed = TRUE
+    regex = "n must be an integer greater than 0",
+    fixed = TRUE
   )
 
   # bad 'n_components'
@@ -43,7 +44,8 @@ test_that("assess error messaging", {
       n_components = 0,
       family = "gaussian"
     ),
-    regex = "n_components must be an integer greater than 0", fixed = TRUE
+    regex = "n_components must be an integer greater than 0",
+    fixed = TRUE
   )
 
   # bad 'mesor'
@@ -57,7 +59,8 @@ test_that("assess error messaging", {
       n_components = 1,
       family = "gaussian"
     ),
-    regex = "mesor must a single number", fixed = TRUE
+    regex = "mesor must a single number",
+    fixed = TRUE
   )
 
   # bad 'amp'
@@ -74,7 +77,8 @@ test_that("assess error messaging", {
     regex = paste(
       "amp must be a vector containing numbers, with",
       "length equal to n_components"
-    ), fixed = TRUE
+    ),
+    fixed = TRUE
   )
 
   # bad 'acro'
@@ -91,7 +95,8 @@ test_that("assess error messaging", {
     regex = paste(
       "acro must be a vector containing numbers, with",
       "length equal to n_components"
-    ), fixed = TRUE
+    ),
+    fixed = TRUE
   )
 
   # bad 'period'
@@ -108,7 +113,8 @@ test_that("assess error messaging", {
     regex = paste(
       "period must be a vector containing numbers, with",
       "length equal to n_components"
-    ), fixed = TRUE
+    ),
+    fixed = TRUE
   )
 
   # bad 'family'
@@ -125,7 +131,8 @@ test_that("assess error messaging", {
     regex = paste(
       '\'arg\' should be one of "gaussian", "poisson",',
       '"binomial", "gamma"'
-    ), fixed = TRUE
+    ),
+    fixed = TRUE
   )
 
   # bad 'beta.mesor'
@@ -143,7 +150,8 @@ test_that("assess error messaging", {
       beta.amp = 2,
       beta.acro = 2
     ),
-    regex = "beta.mesor must be a single number", fixed = TRUE
+    regex = "beta.mesor must be a single number",
+    fixed = TRUE
   )
 
   # bad 'beta.amp'
@@ -164,7 +172,8 @@ test_that("assess error messaging", {
     regex = paste(
       "beta.amp must be a vector containing numbers,",
       "with length equal to n_components"
-    ), fixed = TRUE
+    ),
+    fixed = TRUE
   )
 
   # bad 'beta.acro'
@@ -185,7 +194,8 @@ test_that("assess error messaging", {
     regex = paste(
       "beta.acro must be a vector containing numbers,",
       "with length equal to n_components"
-    ), fixed = TRUE
+    ),
+    fixed = TRUE
   )
 
   # bad 'beta.group'
@@ -203,7 +213,8 @@ test_that("assess error messaging", {
       beta.amp = 2,
       beta.acro = 2
     ),
-    regex = "beta.group argument must be logical", fixed = TRUE
+    regex = "beta.group argument must be logical",
+    fixed = TRUE
   )
 
   # missing 'beta.acro'
@@ -220,6 +231,7 @@ test_that("assess error messaging", {
       beta.mesor = 2,
       beta.amp = 2
     ),
-    regex = '"beta.acro" is missing, with no default', fixed = TRUE
+    regex = '"beta.acro" is missing, with no default',
+    fixed = TRUE
   )
 })
