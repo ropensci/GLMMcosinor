@@ -8,7 +8,13 @@ test_that("simple multicomponent model", {
   d_multi_comp <- readRDS(test_path("fixtures", "d_multi_comp.rds"))
 
   object <- cglmm(
-    Y ~ group + amp_acro(time_col = "times", n_components = 2, group = "group", period = c(12, 24)),
+    Y ~ group +
+      amp_acro(
+        time_col = "times",
+        n_components = 2,
+        group = "group",
+        period = c(12, 24)
+      ),
     data = d_multi_comp
   )
   vdiffr::expect_doppelganger(
@@ -63,11 +69,12 @@ test_that("autoplot works model including ziformula", {
       dplyr::rowwise() |>
       dplyr::mutate(
         vit_d = ifelse(
-          X == 1, sample(c(0, vit_d), prob = c(0.2, 0.8)), vit_d
+          X == 1,
+          sample(c(0, vit_d), prob = c(0.2, 0.8)),
+          vit_d
         )
       )
   })
-
 
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
@@ -90,7 +97,6 @@ test_that("autoplot works model including dispformula", {
         od_vitd = rnbinom(n = 1, size = 0.05, mu = exp(vit_d))
       )
   })
-
 
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
@@ -139,7 +145,8 @@ test_that("autoplot works model that has other covariates", {
     "model-with-covariates_not_specified",
     autoplot(object)
   )
-  expect_message(autoplot(object, quietly = FALSE),
+  expect_message(
+    autoplot(object, quietly = FALSE),
     regex = paste0(
       "'cov_list' was not specified, but there are",
       " covariates in the original model; the first element of each",
@@ -152,12 +159,14 @@ cov_list = list(new_cat_var = 'a', new_num_var = -0.183834718715238)"
 
   vdiffr::expect_doppelganger(
     "model-with-covariates_some_specified",
-    autoplot(object,
-      cov_list = list(new_cat_var = "c")
-    )
+    autoplot(object, cov_list = list(new_cat_var = "c"))
   )
 
-  expect_message(autoplot(object, cov_list = list(new_cat_var = "c"), quietly = FALSE))
+  expect_message(autoplot(
+    object,
+    cov_list = list(new_cat_var = "c"),
+    quietly = FALSE
+  ))
 
   # test for when time is a covariate
   object_with_time_covariate <- cglmm(
@@ -219,12 +228,13 @@ test_that("autoplot produces error messages", {
   test_vitamind <- vitamind
   test_vitamind$Z <- rbinom(length(test_vitamind$X), 3, prob = 0.5)
   object <- cglmm(
-    vit_d ~ X + amp_acro(
-      time,
-      n_components = 3,
-      group = c("Z", NA, "X"),
-      period = c(12, 10, 8)
-    ),
+    vit_d ~ X +
+      amp_acro(
+        time,
+        n_components = 3,
+        group = c("Z", NA, "X"),
+        period = c(12, 10, 8)
+      ),
     data = test_vitamind
   )
 
@@ -277,7 +287,8 @@ test_that("autoplot produces error messages", {
 
   expect_error(
     autoplot(object, pred.length.out = 100.5),
-    regex = "'pred.length.out' must be an integer greater than 0", fixed = TRUE
+    regex = "'pred.length.out' must be an integer greater than 0",
+    fixed = TRUE
   )
 
   # test 'superimpose.data' argument
@@ -334,7 +345,12 @@ test_that("autoplot produces error messages", {
 
   vdiffr::expect_doppelganger(
     "chceck that multiple args work",
-    autoplot(object, x_str = NULL, predict.ribbon = TRUE, superimpose.data = TRUE)
+    autoplot(
+      object,
+      x_str = NULL,
+      predict.ribbon = TRUE,
+      superimpose.data = TRUE
+    )
   )
 })
 
@@ -342,16 +358,18 @@ test_that("autoplot works mixed models", {
   withr::local_seed(50)
 
   # test mixed model plots
-  f_sample_id <- function(id_num,
-                          n = 30,
-                          mesor,
-                          amp,
-                          acro,
-                          family = "gaussian",
-                          sd = 0.2,
-                          period,
-                          n_components,
-                          beta.group = TRUE) {
+  f_sample_id <- function(
+    id_num,
+    n = 30,
+    mesor,
+    amp,
+    acro,
+    family = "gaussian",
+    sd = 0.2,
+    period,
+    n_components,
+    beta.group = TRUE
+  ) {
     data <- simulate_cosinor(
       n = n,
       mesor = mesor,
@@ -383,10 +401,8 @@ test_that("autoplot works mixed models", {
   dat_mixed$subject <- as.factor(dat_mixed$subject)
 
   mixed_mod <- cglmm(
-    Y ~ amp_acro(times,
-      n_components = 1,
-      period = 24
-    ) + (1 + amp_acro1 | subject),
+    Y ~ amp_acro(times, n_components = 1, period = 24) +
+      (1 + amp_acro1 | subject),
     data = dat_mixed
   )
 
@@ -394,35 +410,31 @@ test_that("autoplot works mixed models", {
   vdiffr::expect_doppelganger("check simple plot", autoplot(mixed_mod))
   vdiffr::expect_doppelganger(
     "test superimpose",
-    autoplot(mixed_mod,
-      x_str = NULL,
-      superimpose.data = TRUE
-    )
+    autoplot(mixed_mod, x_str = NULL, superimpose.data = TRUE)
   )
   expect_error(autoplot(mixed_mod, ranef_plot = "group"))
   vdiffr::expect_doppelganger(
     "test ranef_plot arg",
-    autoplot(mixed_mod,
-      ranef_plot = "subject",
-      superimpose.data = TRUE
-    )
+    autoplot(mixed_mod, ranef_plot = "subject", superimpose.data = TRUE)
   )
 
   # testing a more complicated mixed model with multiple groups
-  f_sample_id_2 <- function(id_num,
-                            n = 30,
-                            mesor,
-                            amp,
-                            acro,
-                            family = "gaussian",
-                            sd,
-                            beta.sd,
-                            period,
-                            n_components,
-                            beta.mesor,
-                            beta.amp,
-                            beta.acro,
-                            beta.group = TRUE) {
+  f_sample_id_2 <- function(
+    id_num,
+    n = 30,
+    mesor,
+    amp,
+    acro,
+    family = "gaussian",
+    sd,
+    beta.sd,
+    period,
+    n_components,
+    beta.mesor,
+    beta.amp,
+    beta.acro,
+    beta.group = TRUE
+  ) {
     data <- simulate_cosinor(
       n = n,
       mesor = mesor,
@@ -473,7 +485,8 @@ test_that("autoplot works mixed models", {
   dat_mixed_2$subject <- as.factor(dat_mixed_2$subject)
 
   mixed_mod_2 <- cglmm(
-    Y ~ group + amp_acro(times, n_components = 1, period = 24, group = "group") +
+    Y ~ group +
+      amp_acro(times, n_components = 1, period = 24, group = "group") +
       (1 + amp_acro1 | subject),
     data = dat_mixed_2
   )

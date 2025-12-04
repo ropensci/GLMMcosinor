@@ -72,8 +72,6 @@ test_that("model returns accurate parameters", {
   )
   expect_equal(comparison_df$V1, comparison_df$V2, tolerance = 0.1)
 
-
-
   # test another parameter estimation of Gaussian simulated data
   comod <- simulate_cosinor(
     n = 10000,
@@ -194,7 +192,8 @@ test_that("model output is class cglmm", {
     cglmm(
       vit_d ~ X +
         amp_acro(time, n_components = 1, group = "X", period = 12) +
-        (1 | X) + (0 + amp_acro1 | X),
+        (1 | X) +
+        (0 + amp_acro1 | X),
       data = vitamind
     )
   )
@@ -226,24 +225,30 @@ test_that("model output is class cglmm", {
   expect_equal(
     ignore_attr = TRUE,
     object$formula,
-    Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +
-      group:main_sss2 + (0 + main_rrr2 + main_sss2 | group)
+    Y ~ group +
+      group:main_rrr1 +
+      group:main_sss1 +
+      group:main_rrr2 +
+      group:main_sss2 +
+      (0 + main_rrr2 + main_sss2 | group)
   )
   expect_snapshot(print(object, digits = 2))
 })
 
 test_that("mixed model estimates parameters well", {
   withr::local_seed(42)
-  f_sample_id <- function(id_num,
-                          n = 30,
-                          mesor = rnorm(1),
-                          amp = c(1, rnorm(n = 1, mean = 5, sd = 1)),
-                          acro = c(1, rnorm(n = 1, mean = pi, sd = 1)),
-                          family = "gaussian",
-                          sd = 0.2,
-                          period = c(12, 6),
-                          n_components = 2,
-                          beta.group = TRUE) {
+  f_sample_id <- function(
+    id_num,
+    n = 30,
+    mesor = rnorm(1),
+    amp = c(1, rnorm(n = 1, mean = 5, sd = 1)),
+    acro = c(1, rnorm(n = 1, mean = pi, sd = 1)),
+    family = "gaussian",
+    sd = 0.2,
+    period = c(12, 6),
+    n_components = 2,
+    beta.group = TRUE
+  ) {
     data <- simulate_cosinor(
       n = n,
       mesor = mesor,
@@ -290,7 +295,6 @@ test_that("alternative inputs work", {
 
 test_that("specifying no amp_acro term works", {
   withr::local_seed(50)
-
 
   expect_no_error_and_snapshot <- function(f) {
     expect_no_error(f())

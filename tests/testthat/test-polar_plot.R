@@ -31,7 +31,8 @@ test_that("polar_plot input checks work", {
 
   expect_error(
     polar_plot(object, radial_units = "angle"),
-    regex = 'should be one of "radians", "degrees", "period"', fixed = TRUE
+    regex = 'should be one of "radians", "degrees", "period"',
+    fixed = TRUE
   )
 
   object <- cglmm(
@@ -52,7 +53,8 @@ test_that("polar_plot input checks work", {
 
   expect_error(
     polar_plot(object, text_size = -1),
-    regex = "'text_size' must be a number greater than 0", fixed = TRUE
+    regex = "'text_size' must be a number greater than 0",
+    fixed = TRUE
   )
 
   object <- cglmm(
@@ -154,7 +156,6 @@ test_that("polar_plot input checks work", {
     fixed = TRUE
   )
 
-
   object <- cglmm(
     vit_d ~ amp_acro(time, group = "X", period = 12),
     data = vitamind
@@ -185,7 +186,13 @@ test_that("simple multicomponent model", {
   d_multi_comp <- readRDS(test_path("fixtures", "d_multi_comp.rds"))
 
   object <- cglmm(
-    Y ~ group + amp_acro(time_col = "times", n_components = 2, group = "group", period = c(12, 24)),
+    Y ~ group +
+      amp_acro(
+        time_col = "times",
+        n_components = 2,
+        group = "group",
+        period = c(12, 24)
+      ),
     data = d_multi_comp
   )
   vdiffr::expect_doppelganger(
@@ -212,7 +219,8 @@ test_that("polar_plot messages work", {
 
   suppressMessages(expect_message(
     polar_plot(object, quietly = FALSE),
-    regex = "Angle in units of radians", fixed = TRUE
+    regex = "Angle in units of radians",
+    fixed = TRUE
   ))
 })
 

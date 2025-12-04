@@ -25,7 +25,6 @@
 #' @export
 #'
 
-
 predict.cglmm <- function(object, newdata, ...) {
   if (missing(newdata)) {
     return(stats::predict(object$fit, ...))
