@@ -166,67 +166,35 @@ amp_acro <- function(time_col, n_components = 1, group, period, ...) {
 
   # if a mixed model is specified, handle formula accordingly
   if (!is.null(lme4::findbars(.formula))) {
-    ranef_part <- lapply(lme4::findbars(.formula), deparse1)
-    ranef_parts_replaced <- lapply(ranef_part, function(x) {
-      component_num <- regmatches(
-        x,
-        gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE)
-      )[[1]]
-      if (length(component_num) == 0) {
-        return(x)
-      } else {
-        for (i in seq_len(length(component_num))) {
-          string_match <- paste0(
-            ".*amp_acro",
-            component_num[i],
-            "\\s([^+|]*).*"
-          )
-          ranef_part_addition <- gsub(string_match, "\\1", x)
-          ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", x)
+    bars <- lme4::findbars(.formula)
 
-          rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
-          sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
-
-          x <- gsub(
-            paste0(
-              "amp_acro",
-              component_num[i],
-              " ",
-              ranef_part_addition
-            ),
-            paste0(
-              rrr_part,
-              "+",
-              sss_part
-            ),
-            x,
-            fixed = TRUE
-          )
-        }
-        return(x)
-      }
+    # replace any amp_acroN placeholder within each bar term's left-hand
+    # side with its rrr/sss expansion, operating on the parsed call tree
+    # rather than deparsed text
+    new_bars <- lapply(bars, function(bar) {
+      new_lhs <- .substitute_amp_acro_terms(bar[[2]], .data_prefix)
+      call("|", new_lhs, bar[[3]])
     })
 
     # ranef_groups is stored, and will be part of the eventual output. This is
     # a vector containing the names of the variables with mixed effects.
+    ranef_groups <- unique(vapply(bars, function(bar) deparse1(bar[[3]]), character(1)))
 
-    ranef_groups <- unique(gsub(".*\\|\\s*", "", ranef_parts_replaced))
+    wrapped_bars <- lapply(new_bars, function(b) call("(", b))
 
-    ranef_part_updated <- paste(
-      sprintf(
-        "(%s)",
-        ranef_parts_replaced
-      ),
-      collapse = "+"
-    )
+    # res$newformula is two-sided for the main formula, one-sided for
+    # dispformula/ziformula
+    n <- length(res$newformula)
+    lhs <- if (n == 3) res$newformula[[2]] else NULL
+    rhs <- res$newformula[[n]]
 
-    main_part <- paste(
-      paste(deparse(res$newformula), collapse = ""),
-      ranef_part_updated,
-      collapse = "",
-      sep = "+"
-    )
-    res$newformula <- stats::as.formula(main_part)
+    combined_rhs <- Reduce(function(a, b) call("+", a, b), c(list(rhs), wrapped_bars))
+
+    res$newformula <- if (is.null(lhs)) {
+      stats::as.formula(call("~", combined_rhs))
+    } else {
+      stats::as.formula(call("~", lhs, combined_rhs))
+    }
     res$ranef_groups <- ranef_groups
   } else {
     res$ranef_groups <- NA
@@ -432,7 +400,6 @@ amp_acro_iteration <- function(
     n_periods <- seq_len(length(unique_periods))
     vec_rrr <- paste0(.data_prefix, "rrr", n_periods) # vector of rrr names
     vec_sss <- paste0(.data_prefix, "sss", n_periods) # vector of sss names
-    formula_expr <- NULL
     # adding the rrr and sss columns to the dataframe
     for (i in n_periods) {
       rrr_names <- eval(vec_rrr[i])
@@ -463,29 +430,19 @@ amp_acro_iteration <- function(
       }
     )
 
-    for (component in components) {
-      cgroup <- component$group
-      cperiod_idx <- component$period_idx
-
-      if (cgroup != 0) {
-        acpart <- paste(
-          (rep(cgroup, 2)),
-          c(vec_rrr[cperiod_idx], vec_sss[cperiod_idx]),
-          sep = ":"
-        )
-        acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
-        formula_expr <- paste(formula_expr, "+", acpart_combined)
-      } else {
-        acpart_combined <- NULL
-        formula_expr <- paste(
-          formula_expr,
-          "+",
-          vec_rrr[cperiod_idx],
-          "+",
-          vec_sss[cperiod_idx]
-        )
-      }
-    }
+    acro_term_labels <- unlist(
+      lapply(components, function(component) {
+        cgroup <- component$group
+        cperiod_idx <- component$period_idx
+        rrr_sss <- c(vec_rrr[cperiod_idx], vec_sss[cperiod_idx])
+        if (cgroup != 0) {
+          paste(cgroup, rrr_sss, sep = ":")
+        } else {
+          rrr_sss
+        }
+      }),
+      use.names = FALSE
+    )
   }
 
   if (.amp_acro_ind == -1) {
@@ -495,30 +452,27 @@ amp_acro_iteration <- function(
   }
 
   if (no_amp_acro) {
-    formula_expr <- NULL
+    acro_term_labels <- character(0)
     vec_rrr <- NULL
     vec_sss <- NULL
   }
 
-  newformula <- stats::as.formula(
-    paste(
-      left_part,
-      paste(
-        c(
-          attr(
-            stats::terms(.formula),
-            "intercept"
-          ),
-          non_acro_formula,
-          formula_expr
-        ),
-        collapse = " + "
-      ),
-      sep = " ~ "
-    )
-  )
+  term_labels <- c(non_acro_formula, acro_term_labels)
 
-  newformula <- stats::update.formula(newformula, ~.)
+  # reformulate() errors on a zero-length termlabels vector regardless of
+  # `intercept`; "1" plus the intercept flag below reproduces exactly what
+  # this function previously produced for the "no terms at all" case (e.g.
+  # the default dispformula = ~1 / ziformula = ~0).
+  if (length(term_labels) == 0) {
+    term_labels <- "1"
+  }
+
+  intercept <- as.logical(attr(stats::terms(.formula), "intercept"))
+  newformula <- stats::reformulate(
+    term_labels,
+    response = left_part,
+    intercept = intercept
+  )
 
   # storing the covariates. If none, then 'covariates' stored as 'NULL'
   if (is.character(non_acro_formula) && length(non_acro_formula) == 0) {

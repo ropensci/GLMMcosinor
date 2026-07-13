@@ -1,5 +1,10 @@
 # GLMMcosinor (development version)
 
+* Refactor internal formula construction (`amp_acro()`'s expansion of model
+  formulas, including random-effects terms) to use `stats::reformulate()` and
+  proper call-tree substitution instead of concatenating and re-parsing
+  formula text. No user-facing behavior change is expected.
+
 * Refactor polar_plot() and autoplot() to avoid functions that are defined 
   within other functions. Separate out into separate scripts where necessary.
 
