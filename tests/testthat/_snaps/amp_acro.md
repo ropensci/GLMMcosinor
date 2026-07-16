@@ -3,21 +3,22 @@
     Code
       names(data_and_formula$newdata)
     Output
-      [1] "vit_d"     "time"      "X"         "X2"        "main_rrr1" "main_sss1"
+      [1] "vit_d"      "time"       "X"          "X2"         ".main_cos1"
+      [6] ".main_sin1"
 
 ---
 
     Code
       names(data_and_formula$newdata)
     Output
-      [1] "vit_d"     "time"      "X"         "main_rrr1" "main_sss1"
+      [1] "vit_d"      "time"       "X"          ".main_cos1" ".main_sin1"
 
 # example amp_acro object
 
     Code
       obj
     Output
-             vit_d       time X   main_rrr1  main_sss1   main_rrr2   main_sss2
+             vit_d       time X  .main_cos1 .main_sin1  .main_cos2  .main_sin2
       1   16.12091 11.4395249 0 -0.98925416 0.14620607  0.95724757 -0.28926992
       2   29.90624  5.8071039 0  0.05047861 0.99872514 -0.99490382  0.10082851
       3   39.17572  1.0454920 1  0.96277492 0.27030439  0.85387107  0.52048457
@@ -224,23 +225,23 @@
     Code
       obj
     Output
-      [1] "~"                                                        
-      [2] "vit_d"                                                    
-      [3] "X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2"
+      [1] "~"                                                            
+      [2] "vit_d"                                                        
+      [3] "X + X:.main_cos1 + X:.main_sin1 + X:.main_cos2 + X:.main_sin2"
 
 ---
 
     Code
       obj
     Output
-      [1] "main_rrr1" "main_rrr2"
+      [1] ".main_cos1" ".main_cos2"
 
 ---
 
     Code
       obj
     Output
-      [1] "main_sss1" "main_sss2"
+      [1] ".main_sin1" ".main_sin2"
 
 ---
 

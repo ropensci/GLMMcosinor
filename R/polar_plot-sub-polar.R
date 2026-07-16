@@ -137,9 +137,9 @@ sub_ggplot.cglmm.polar <- function(
     }
   }
 
-  # determine the estimated rrr and sss used parameter estimates
-  est_rrr <- est_amp * cos(direction * (est_acr) + offset)
-  est_sss <- est_amp * sin(direction * (est_acr) + offset)
+  # determine the estimated cos and sin used parameter estimates
+  est_cos <- est_amp * cos(direction * (est_acr) + offset)
+  est_sin <- est_amp * sin(direction * (est_acr) + offset)
 
   # for confidence ellipses, get the long_axis width "a_trans" (amplitude),
   # and the short-axis height "b_trans" (acrophase)
@@ -200,10 +200,10 @@ sub_ggplot.cglmm.polar <- function(
   # designed to find the minimum plot window that contains
   # all confidence ellipses.
   if (zoom) {
-    xmax_zoom <- max(est_rrr) + max(max(a_trans), max(b_trans))
-    xmin_zoom <- min(est_rrr) - max(max(a_trans), max(b_trans))
-    ymax_zoom <- max(est_sss) + max(max(a_trans), max(b_trans))
-    ymin_zoom <- min(est_sss) - max(max(a_trans), max(b_trans))
+    xmax_zoom <- max(est_cos) + max(max(a_trans), max(b_trans))
+    xmin_zoom <- min(est_cos) - max(max(a_trans), max(b_trans))
+    ymax_zoom <- max(est_sin) + max(max(a_trans), max(b_trans))
+    ymin_zoom <- min(est_sin) - max(max(a_trans), max(b_trans))
 
     # if view = "zoom_origin", anchor the view window to the origin
     if (zoom_origin) {
@@ -261,8 +261,8 @@ sub_ggplot.cglmm.polar <- function(
   )
 
   plot_obj <- get_point_estimate_plot(
-    est_rrr,
-    est_sss,
+    est_cos,
+    est_sin,
     a_trans,
     b_trans,
     offset,
@@ -296,8 +296,8 @@ sub_ggplot.cglmm.polar <- function(
         ggplot2::aes(
           x = 0,
           y = 0,
-          xend = est_rrr,
-          yend = est_sss,
+          xend = est_cos,
+          yend = est_sin,
           colour = group_level
         )
       ) +
@@ -314,8 +314,8 @@ sub_ggplot.cglmm.polar <- function(
       ggplot2::geom_text(
         ggplot2::aes(
           label = overlay_labels,
-          est_rrr,
-          y = est_sss
+          est_cos,
+          y = est_sin
         ),
         size = text_size,
         alpha = text_opacity

@@ -5,8 +5,8 @@
 #' the appropriate inputs, with 'plot_background' being set to the plot
 #' you wish to layer upon.
 #'
-#' @param est_rrr The rrr estimate.
-#' @param est_sss The sss estimate.
+#' @param est_cos The cos estimate.
+#' @param est_sin The sin estimate.
 #' @param a_trans Ellipse long dimension.
 #' @param b_trans Ellipse short dimension.
 #' @param offset Determines where angle starts.
@@ -35,8 +35,8 @@
 #' )
 #'
 #' GLMMcosinor:::get_point_estimate_plot(
-#'   est_rrr = c(0.86, 6.47),
-#'   est_sss = c(6.24, 4.66),
+#'   est_cos = c(0.86, 6.47),
+#'   est_sin = c(6.24, 4.66),
 #'   a_trans = c(1.33, 1.77),
 #'   b_trans = c(1.26, 1.88),
 #'   offset = 0,
@@ -49,8 +49,8 @@
 #'   plot_background = plot_bground
 #' )
 get_point_estimate_plot <- function(
-  est_rrr,
-  est_sss,
+  est_cos,
+  est_sin,
   a_trans,
   b_trans,
   offset,
@@ -67,8 +67,8 @@ get_point_estimate_plot <- function(
       ggforce::geom_ellipse(
         # plots the confidence ellipse
         ggplot2::aes(
-          x0 = est_rrr,
-          y0 = est_sss,
+          x0 = est_cos,
+          y0 = est_sin,
           a = a_trans,
           b = b_trans,
           angle = offset + direction * est_acr,
@@ -79,15 +79,15 @@ get_point_estimate_plot <- function(
       ) +
       ggplot2::geom_point(
         # plots the parameter estimates
-        ggplot2::aes(x = est_rrr, y = est_sss)
+        ggplot2::aes(x = est_cos, y = est_sin)
       )
   } else {
     plot_estimate <- plot_background +
       ggforce::geom_ellipse(
         # plots the confidence ellipse
         ggplot2::aes(
-          x0 = est_rrr,
-          y0 = est_sss,
+          x0 = est_cos,
+          y0 = est_sin,
           a = a_trans,
           b = b_trans,
           angle = offset + direction * est_acr,
@@ -99,7 +99,7 @@ get_point_estimate_plot <- function(
       ggplot2::theme(legend.position = "none") +
       ggplot2::geom_point(
         # plots the parameter estimates
-        ggplot2::aes(x = est_rrr, y = est_sss)
+        ggplot2::aes(x = est_cos, y = est_sin)
       )
   }
   plot_estimate

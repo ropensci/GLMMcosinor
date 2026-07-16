@@ -46,20 +46,20 @@
        Conditional Model 
       
        Raw formula: 
-      Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +      group:main_sss2 
+      Y ~ group + group:.main_cos1 + group:.main_sin1 + group:.main_cos2 +      group:.main_sin2 
       
        Raw Coefficients: 
-                       Estimate
-      (Intercept)           1.0
-      group1               -0.5
-      group0:main_rrr1     -2.0
-      group1:main_rrr1      0.9
-      group0:main_sss1      0.3
-      group1:main_sss1      0.3
-      group0:main_rrr2     -2.1
-      group1:main_rrr2      1.0
-      group0:main_sss2      0.2
-      group1:main_sss2      0.3
+                        Estimate
+      (Intercept)            1.0
+      group1                -0.5
+      group0:.main_cos1     -2.0
+      group1:.main_cos1      0.9
+      group0:.main_sin1      0.3
+      group1:.main_sin1      0.3
+      group0:.main_cos2     -2.1
+      group1:.main_cos2      1.0
+      group0:.main_sin2      0.2
+      group1:.main_sin2      0.3
       
        Transformed Coefficients: 
                      Estimate

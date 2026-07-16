@@ -169,7 +169,7 @@ amp_acro <- function(time_col, n_components = 1, group, period, ...) {
     bars <- lme4::findbars(.formula)
 
     # replace any amp_acroN placeholder within each bar term's left-hand
-    # side with its rrr/sss expansion, operating on the parsed call tree
+    # side with its cos/sin expansion, operating on the parsed call tree
     # rather than deparsed text
     new_bars <- lapply(bars, function(bar) {
       new_lhs <- .substitute_amp_acro_terms(bar[[2]], .data_prefix)
@@ -330,10 +330,10 @@ amp_acro_iteration <- function(
     }
   }
   group_original <- group
-  # show error message if user uses 'rrr' or 'sss' in their grouping variable
+  # show error message if user uses 'cos' or 'sin' in their grouping variable
   # name (tested)
-  if (any(grepl("rrr", group) == TRUE) | any(grepl("sss", group) == TRUE)) {
-    stop("Group variable names cannot contain 'rrr' or 'sss'")
+  if (any(grepl("cos", group) == TRUE) | any(grepl("sin", group) == TRUE)) {
+    stop("Group variable names cannot contain 'cos' or 'sin'")
   }
 
   # ensure the length of the period matches the value of n_components (tested)
@@ -394,25 +394,25 @@ amp_acro_iteration <- function(
   components <- list()
 
   if (!no_amp_acro) {
-    # generate 'n_periods' number of rrr and sss vectors
+    # generate 'n_periods' number of cos and sin vectors
     # (one for each unique period)
     unique_periods <- unique(period)
     n_periods <- seq_len(length(unique_periods))
-    vec_rrr <- paste0(.data_prefix, "rrr", n_periods) # vector of rrr names
-    vec_sss <- paste0(.data_prefix, "sss", n_periods) # vector of sss names
-    # adding the rrr and sss columns to the dataframe
+    vec_cos <- paste0(".", .data_prefix, "cos", n_periods) # vector of cos names
+    vec_sin <- paste0(".", .data_prefix, "sin", n_periods) # vector of sin names
+    # adding the cos and sin columns to the dataframe
     for (i in n_periods) {
-      rrr_names <- eval(vec_rrr[i])
-      sss_names <- eval(vec_sss[i])
-      .data[[rrr_names]] <- cos(2 * pi * ttt / unique_periods[i])
-      .data[[sss_names]] <- sin(2 * pi * ttt / unique_periods[i])
+      cos_names <- eval(vec_cos[i])
+      sin_names <- eval(vec_sin[i])
+      .data[[cos_names]] <- cos(2 * pi * ttt / unique_periods[i])
+      .data[[sin_names]] <- sin(2 * pi * ttt / unique_periods[i])
 
       # add a warning message that columns have been added to the dataframe
       if (!.quietly) {
         message(paste(
-          rrr_names,
+          cos_names,
           "and",
-          sss_names,
+          sin_names,
           "have been added to dataframe"
         ))
       }
@@ -434,11 +434,11 @@ amp_acro_iteration <- function(
       lapply(components, function(component) {
         cgroup <- component$group
         cperiod_idx <- component$period_idx
-        rrr_sss <- c(vec_rrr[cperiod_idx], vec_sss[cperiod_idx])
+        cos_sin <- c(vec_cos[cperiod_idx], vec_sin[cperiod_idx])
         if (cgroup != 0) {
-          paste(cgroup, rrr_sss, sep = ":")
+          paste(cgroup, cos_sin, sep = ":")
         } else {
-          rrr_sss
+          cos_sin
         }
       }),
       use.names = FALSE
@@ -453,8 +453,8 @@ amp_acro_iteration <- function(
 
   if (no_amp_acro) {
     acro_term_labels <- character(0)
-    vec_rrr <- NULL
-    vec_sss <- NULL
+    vec_cos <- NULL
+    vec_sin <- NULL
   }
 
   term_labels <- c(non_acro_formula, acro_term_labels)
@@ -495,8 +495,8 @@ amp_acro_iteration <- function(
   list(
     newdata = .data,
     newformula = newformula,
-    vec_rrr = vec_rrr,
-    vec_sss = vec_sss,
+    vec_cos = vec_cos,
+    vec_sin = vec_sin,
     n_components = n_components,
     components = components,
     period = period,

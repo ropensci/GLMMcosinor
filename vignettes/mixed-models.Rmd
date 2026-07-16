@@ -124,7 +124,7 @@ withr::with_seed(42, {
 })
 ```
 
-This works by replacing the amp_acro1 with the relevant cosinor components when the data is rearranged and the formula created. The formula created can be accessed using `.$formula`, and shows the `amp_acro1` is replaced by the `main_rrr1` and `main_sss1` (the cosine and sine components of time that also appear in the fixed effects).
+This works by replacing the amp_acro1 with the relevant cosinor components when the data is rearranged and the formula created. The formula created can be accessed using `.$formula`, and shows the `amp_acro1` is replaced by the `.main_cos1` and `.main_sin1` (the cosine and sine components of time that also appear in the fixed effects).
 
 ```{r}
 mixed_mod$formula

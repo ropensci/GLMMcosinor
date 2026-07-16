@@ -226,11 +226,11 @@ test_that("model output is class cglmm", {
     ignore_attr = TRUE,
     object$formula,
     Y ~ group +
-      group:main_rrr1 +
-      group:main_sss1 +
-      group:main_rrr2 +
-      group:main_sss2 +
-      (0 + main_rrr2 + main_sss2 | group)
+      group:.main_cos1 +
+      group:.main_sin1 +
+      group:.main_cos2 +
+      group:.main_sin2 +
+      (0 + .main_cos2 + .main_sin2 | group)
   )
   expect_snapshot(print(object, digits = 2))
 })

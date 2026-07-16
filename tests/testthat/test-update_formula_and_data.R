@@ -13,7 +13,7 @@ test_that("assess formula manipulation", {
 
   expect_true(all.equal(
     res$newformula,
-    Y ~ X + X:main_rrr1 + X:main_sss1 + X:main_rrr2 + X:main_sss2
+    Y ~ X + X:.main_cos1 + X:.main_sin1 + X:.main_cos2 + X:.main_sin2
   ))
 })
 

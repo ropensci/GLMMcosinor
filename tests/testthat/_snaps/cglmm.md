@@ -42,16 +42,16 @@
        Conditional Model 
       
        Raw formula: 
-      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      vit_d ~ X + X:.main_cos1 + X:.main_sin1 
       
        Raw Coefficients: 
-                   Estimate
-      (Intercept)      29.7
-      X1                1.9
-      X0:main_rrr1      0.8
-      X1:main_rrr1      6.5
-      X0:main_sss1      6.1
-      X1:main_sss1      4.8
+                    Estimate
+      (Intercept)       29.7
+      X1                 1.9
+      X0:.main_cos1      0.8
+      X1:.main_cos1      6.5
+      X0:.main_sin1      6.1
+      X1:.main_sin1      4.8
       
        Transformed Coefficients: 
                   Estimate
@@ -67,14 +67,14 @@
        Dispersion Model 
       
        Raw  Formula: 
-      ~X:disp_rrr1 + X:disp_sss1 - 1 
+      ~X:.disp_cos1 + X:.disp_sin1 - 1 
       
        Raw  Coefficients: 
-                   Estimate
-      X0:disp_rrr1      0.3
-      X1:disp_rrr1     -0.1
-      X0:disp_sss1      0.0
-      X1:disp_sss1      0.0
+                    Estimate
+      X0:.disp_cos1      0.3
+      X1:.disp_cos1     -0.1
+      X0:.disp_sin1      0.0
+      X1:.disp_sin1      0.0
       
        Transformed  Coefficients: 
                 Estimate
@@ -88,14 +88,14 @@
        Zero-Inflation Model 
       
        Raw  Formula: 
-      ~X:zi_rrr1 + X:zi_sss1 - 1 
+      ~X:.zi_cos1 + X:.zi_sin1 - 1 
       
        Raw  Coefficients: 
-                 Estimate
-      X0:zi_rrr1     -0.2
-      X1:zi_rrr1      0.1
-      X0:zi_sss1      0.1
-      X1:zi_sss1      0.2
+                  Estimate
+      X0:.zi_cos1     -0.2
+      X1:.zi_cos1      0.1
+      X0:.zi_sin1      0.1
+      X1:.zi_sin1      0.2
       
        Transformed  Coefficients: 
                 Estimate
@@ -113,20 +113,20 @@
        Conditional Model 
       
        Raw formula: 
-      Y ~ group + group:main_rrr1 + group:main_sss1 + group:main_rrr2 +      group:main_sss2 + (0 + main_rrr2 + main_sss2 | group) 
+      Y ~ group + group:.main_cos1 + group:.main_sin1 + group:.main_cos2 +      group:.main_sin2 + (0 + .main_cos2 + .main_sin2 | group) 
       
        Raw Coefficients: 
-                       Estimate
-      (Intercept)           5.0
-      group1               -3.0
-      group0:main_rrr1      0.1
-      group1:main_rrr1      0.0
-      group0:main_sss1      0.9
-      group1:main_sss1      1.0
-      group0:main_rrr2      1.1
-      group1:main_rrr2      1.1
-      group0:main_sss2      1.7
-      group1:main_sss2      1.7
+                        Estimate
+      (Intercept)            5.0
+      group1                -3.0
+      group0:.main_cos1      0.1
+      group1:.main_cos1      0.0
+      group0:.main_sin1      0.9
+      group1:.main_sin1      1.0
+      group0:.main_cos2      1.1
+      group1:.main_cos2      1.1
+      group0:.main_sin2      1.7
+      group1:.main_sin2      1.7
       
        Transformed Coefficients: 
                      Estimate
@@ -150,16 +150,16 @@
        Conditional Model 
       
        Raw formula: 
-      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      vit_d ~ X + X:.main_cos1 + X:.main_sin1 
       
        Raw Coefficients: 
-                   Estimate
-      (Intercept)  29.69639
-      X1            1.86497
-      X0:main_rrr1  0.96645
-      X1:main_rrr1  6.43236
-      X0:main_sss1  6.27112
-      X1:main_sss1  4.79989
+                    Estimate
+      (Intercept)   29.69639
+      X1             1.86497
+      X0:.main_cos1  0.96645
+      X1:.main_cos1  6.43236
+      X0:.main_sin1  6.27112
+      X1:.main_sin1  4.79989
       
        Transformed Coefficients: 
                   Estimate
@@ -191,16 +191,16 @@
        Conditional Model 
       
        Raw formula: 
-      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      vit_d ~ X + X:.main_cos1 + X:.main_sin1 
       
        Raw Coefficients: 
-                   Estimate
-      (Intercept)  29.69639
-      X1            1.86497
-      X0:main_rrr1  0.96645
-      X1:main_rrr1  6.43236
-      X0:main_sss1  6.27114
-      X1:main_sss1  4.79989
+                    Estimate
+      (Intercept)   29.69639
+      X1             1.86497
+      X0:.main_cos1  0.96645
+      X1:.main_cos1  6.43236
+      X0:.main_sin1  6.27114
+      X1:.main_sin1  4.79989
       
        Transformed Coefficients: 
                   Estimate
@@ -232,16 +232,16 @@
        Conditional Model 
       
        Raw formula: 
-      vit_d ~ X + X:main_rrr1 + X:main_sss1 
+      vit_d ~ X + X:.main_cos1 + X:.main_sin1 
       
        Raw Coefficients: 
-                   Estimate
-      (Intercept)  29.69639
-      X1            1.86498
-      X0:main_rrr1  0.96645
-      X1:main_rrr1  6.43236
-      X0:main_sss1  6.27113
-      X1:main_sss1  4.79989
+                    Estimate
+      (Intercept)   29.69639
+      X1             1.86498
+      X0:.main_cos1  0.96645
+      X1:.main_cos1  6.43236
+      X0:.main_sin1  6.27113
+      X1:.main_sin1  4.79989
       
        Transformed Coefficients: 
                   Estimate

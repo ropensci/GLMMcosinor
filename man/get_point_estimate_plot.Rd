@@ -5,8 +5,8 @@
 \title{Add a ellipses layer to a polar plot.}
 \usage{
 get_point_estimate_plot(
-  est_rrr,
-  est_sss,
+  est_cos,
+  est_sin,
   a_trans,
   b_trans,
   offset,
@@ -20,9 +20,9 @@ get_point_estimate_plot(
 )
 }
 \arguments{
-\item{est_rrr}{The rrr estimate.}
+\item{est_cos}{The cos estimate.}
 
-\item{est_sss}{The sss estimate.}
+\item{est_sin}{The sin estimate.}
 
 \item{a_trans}{Ellipse long dimension.}
 
@@ -68,8 +68,8 @@ plot_bground <- GLMMcosinor:::get_background_grid(
 )
 
 GLMMcosinor:::get_point_estimate_plot(
-  est_rrr = c(0.86, 6.47),
-  est_sss = c(6.24, 4.66),
+  est_cos = c(0.86, 6.47),
+  est_sin = c(6.24, 4.66),
   a_trans = c(1.33, 1.77),
   b_trans = c(1.26, 1.88),
   offset = 0,

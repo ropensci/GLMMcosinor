@@ -391,9 +391,9 @@ simulate_cosinor <- function(
   for (i in seq_len(n_components)) {
     B <- amp[i] * cos(acro[i])
     G <- amp[i] * sin(acro[i])
-    rrr <- cos(2 * pi * (ttt) / period[i])
-    sss <- sin(2 * pi * (ttt) / period[i])
-    param <- param + B * rrr + G * sss
+    cos_term <- cos(2 * pi * (ttt) / period[i])
+    sin_term <- sin(2 * pi * (ttt) / period[i])
+    param <- param + B * cos_term + G * sin_term
   }
   data.frame(ttt, param)
 }

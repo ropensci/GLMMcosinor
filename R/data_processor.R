@@ -52,12 +52,12 @@ fit_model_and_process <- function(obj, formula, ...) {
 #' Process and fit the data using glmmTMB after initial processing
 #' by data_utils.R.
 #'
-#' @param newdata A processed \code{data.frame} with rrr and sss columns added.
-#' @param newformula A processed \code{formula} with rrr and sss components.
-#' @param vec_sss A vector of sss for each component.
-#' (eg, \code{c("sss1, sss2")}).
-#' @param vec_rrr A vector of sss for each component.
-#' (eg, \code{c("sss1, sss2")}).
+#' @param newdata A processed \code{data.frame} with cos and sin columns added.
+#' @param newformula A processed \code{formula} with cos and sin components.
+#' @param vec_sin A vector of sin for each component.
+#' (eg, \code{c("sin1, sin2")}).
+#' @param vec_cos A vector of cos for each component.
+#' (eg, \code{c("cos1, cos2")}).
 #' @param n_components The number of components specified in the model formula.
 #' @param group_stats A vector containing the number of levels per grouping
 #' variable.
@@ -106,8 +106,8 @@ fit_model_and_process <- function(obj, formula, ...) {
 data_processor <- function(
   newdata,
   newformula,
-  vec_sss,
-  vec_rrr,
+  vec_sin,
+  vec_cos,
   n_components,
   components,
   group_stats,
@@ -151,8 +151,8 @@ data_processor <- function(
 
   items_keep <- c(
     "formula",
-    "vec_rrr",
-    "vec_sss",
+    "vec_cos",
+    "vec_sin",
     "n_components",
     "components",
     "group_stats",
@@ -165,8 +165,8 @@ data_processor <- function(
   } else {
     conditional_model <- get_new_coefs(
       coefs = main_coefs,
-      vec_rrr = vec_rrr,
-      vec_sss = vec_sss,
+      vec_cos = vec_cos,
+      vec_sin = vec_sin,
       n_components = n_components,
       components = components
     )
@@ -179,8 +179,8 @@ data_processor <- function(
     } else {
       dispersion_model <- get_new_coefs(
         coefs = disp_coefs,
-        vec_rrr = dispformula$vec_rrr,
-        vec_sss = dispformula$vec_sss,
+        vec_cos = dispformula$vec_cos,
+        vec_sin = dispformula$vec_sin,
         n_components = dispformula$n_components,
         components = dispformula$components
       )
@@ -214,8 +214,8 @@ data_processor <- function(
     } else {
       zi_model <- get_new_coefs(
         coefs = zi_coefs,
-        vec_rrr = ziformula$vec_rrr,
-        vec_sss = ziformula$vec_sss,
+        vec_cos = ziformula$vec_cos,
+        vec_sin = ziformula$vec_sin,
         n_components = ziformula$n_components,
         components = ziformula$components
       )
@@ -249,8 +249,8 @@ data_processor <- function(
       Terms = Terms,
       coefficients = conditional_model,
       raw_coefficients = main_coefs,
-      vec_sss = vec_sss,
-      vec_rrr = vec_rrr,
+      vec_sin = vec_sin,
+      vec_cos = vec_cos,
       period = period,
       time_name = time_name,
       n_components = n_components,

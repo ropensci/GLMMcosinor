@@ -30,11 +30,11 @@
 
 summary.cglmm <- function(object, ci_level = 0.95, ...) {
   # get the fitted model from the cglmm() output, along with
-  # n_components, vec_rrr, and vec_sss
+  # n_components, vec_cos, and vec_sin
   mf <- object$fit
   n_components <- object$n_components
-  vec_rrr <- object$vec_rrr
-  vec_sss <- object$vec_sss
+  vec_cos <- object$vec_cos
+  vec_sin <- object$vec_sin
 
   validate_ci_level(ci_level)
 
@@ -52,16 +52,16 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     args <- match.call()[-1]
     coefs <- glmmTMB::fixef(mf)[[model_index]]
 
-    # reassign vec_rrr and vec_sss to those in the disp or zi model, if
+    # reassign vec_cos and vec_sin to those in the disp or zi model, if
     # necessary
     if (model_index == "disp") {
-      vec_rrr <- object$disp_list$vec_rrr_disp
-      vec_sss <- object$disp_list$vec_sss_disp
+      vec_cos <- object$disp_list$vec_cos_disp
+      vec_sin <- object$disp_list$vec_sin_disp
     }
 
     if (model_index == "zi") {
-      vec_rrr <- object$zi_list$vec_rrr_zi
-      vec_sss <- object$zi_list$vec_sss_zi
+      vec_cos <- object$zi_list$vec_cos_zi
+      vec_sin <- object$zi_list$vec_sin_zi
     }
 
     # create objects r.coef, s.coef, and mu.coef. This will be Boolean vectors
@@ -71,38 +71,38 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     mu.coef <- NULL
     mu_inv <- rep(0, length(names(coefs)))
 
-    # put a '|' between adjecent elements of vec_rrr and vec_sss, used for
+    # put a '|' between adjecent elements of vec_cos and vec_sin, used for
     # indexing.
-    if (length(vec_rrr) > 1) {
-      vec_rrr_spec <- vec_rrr[1]
-      vec_sss_spec <- vec_sss[1]
-      for (i in 2:length(vec_rrr)) {
-        vec_rrr_spec <- paste0(vec_rrr_spec, "|", vec_rrr[i])
-        vec_sss_spec <- paste0(vec_sss_spec, "|", vec_sss[i])
+    if (length(vec_cos) > 1) {
+      vec_cos_spec <- vec_cos[1]
+      vec_sin_spec <- vec_sin[1]
+      for (i in 2:length(vec_cos)) {
+        vec_cos_spec <- paste0(vec_cos_spec, "|", vec_cos[i])
+        vec_sin_spec <- paste0(vec_sin_spec, "|", vec_sin[i])
       }
     } else {
-      vec_rrr_spec <- vec_rrr
-      vec_sss_spec <- vec_sss
+      vec_cos_spec <- vec_cos
+      vec_sin_spec <- vec_sin
     }
 
-    # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
+    # Get a Boolean vector for cos, sin, and mu. This will be used to extract
     # the relevant raw parameters from the raw coefficient model output
-    r.coef <- grepl(vec_rrr_spec, names(coefs))
-    s.coef <- grepl(vec_sss_spec, names(coefs))
+    r.coef <- grepl(vec_cos_spec, names(coefs))
+    s.coef <- grepl(vec_sin_spec, names(coefs))
 
     # Keep track of non-mesor terms
     mu_inv_carry <- r.coef + s.coef
     # Ultimately, every non-mesor term will be true
     mu_inv <- mu_inv_carry + mu_inv
 
-    # invert 'mu_inv' to get a Boolean vector for mesor terms a matrix of rrr
+    # invert 'mu_inv' to get a Boolean vector for mesor terms a matrix of cos
     # coefficients
     mu.coef <- c(!mu_inv)
     r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
-    # a matrix of sss coefficients
+    # a matrix of sin coefficients
     s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
 
-    # generate coefs containing sss, and rrr, respectively
+    # generate coefs containing sin, and cos, respectively
     beta.s <- coefs[s.coef]
     beta.r <- coefs[r.coef]
 
@@ -117,8 +117,8 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 
     # rename the vectors amp and acr
     for (i in seq_len(n_components)) {
-      names(amp) <- gsub(vec_rrr[i], paste0("amp", i), names(amp))
-      names(acr) <- gsub(vec_sss[i], paste0("acr", i), names(acr))
+      names(amp) <- gsub(vec_cos[i], paste0("amp", i), names(amp))
+      names(acr) <- gsub(vec_sin[i], paste0("acr", i), names(acr))
     }
 
     # calculate the variance-covariance matrix
@@ -129,8 +129,8 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
 
     # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
     if (n_components == 1) {
-      names(amp) <- gsub(vec_rrr, "amp", names(amp))
-      names(acr) <- gsub(vec_sss, "acr", names(acr))
+      names(amp) <- gsub(vec_cos, "amp", names(amp))
+      names(acr) <- gsub(vec_sin, "acr", names(acr))
       new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
     }
 

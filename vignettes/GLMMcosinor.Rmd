@@ -148,7 +148,7 @@ cosinor_model <- cglmm(
 
 Notice how both the raw and transformed coefficients are provided as
 output. The adapted `data.frame` that was used to fit the raw model can
-be accessed from the model and includes `main_rrr1` and `main_sss1`
+be accessed from the model and includes `.main_cos1` and `.main_sin1`
 columns of data:
 
 ```{r, message=F, warning=F}
@@ -200,7 +200,7 @@ parameter estimates for MESOR, amplitude, and acrophase under the
 'Transformed Coefficients' heading. These are the recovered estimates
 mentioned at the beginning of this vignette: the amplitude and phase.
 The 'Raw Coefficients' are the coefficients from the cosinor model. In
-this example, the `main_rrr1` and `main_sss1` correspond to $\hat\beta$
+this example, the `.main_cos1` and `.main_sin1` correspond to $\hat\beta$
 and $\hat\gamma$ in the first section, respectively.
 
 The following example fits a grouped single-component model with a

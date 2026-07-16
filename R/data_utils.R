@@ -125,8 +125,8 @@ update_formula_and_data <- function(
 
   items_keep <- c(
     "newformula",
-    "vec_rrr",
-    "vec_sss",
+    "vec_cos",
+    "vec_sin",
     "n_components",
     "components",
     "period",
@@ -219,13 +219,13 @@ validate_ci_level <- function(ci_level) {
 }
 
 # calculate the parameters from the raw estimates
-get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
+get_new_coefs <- function(coefs, vec_cos, vec_sin, n_components, components) {
   r.coef <- NULL
   s.coef <- NULL
   mu.coef <- NULL
   mu_inv <- rep(0, length(names(coefs)))
 
-  # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
+  # Get a Boolean vector for cos, sin, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
   for (i in seq_len(n_components)) {
     period_idx <- components[[i]]$period_idx
@@ -233,16 +233,16 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
     group <- components[[i]]$group
     if (components[[i]]$group != 0) {
       r.coef[[i]] <- grepl(
-        paste0(components[[i]]$group, ".*:", vec_rrr[period_idx]),
+        paste0(components[[i]]$group, ".*:", vec_cos[period_idx]),
         names(coefs)
       )
       s.coef[[i]] <- grepl(
-        paste0(components[[i]]$group, ".*:", vec_sss[period_idx]),
+        paste0(components[[i]]$group, ".*:", vec_sin[period_idx]),
         names(coefs)
       )
     } else {
-      r.coef[[i]] <- grepl(paste0(vec_rrr[period_idx]), names(coefs))
-      s.coef[[i]] <- grepl(paste0(vec_sss[period_idx]), names(coefs))
+      r.coef[[i]] <- grepl(paste0(vec_cos[period_idx]), names(coefs))
+      s.coef[[i]] <- grepl(paste0(vec_sin[period_idx]), names(coefs))
     }
 
     # Keep track of non-mesor terms
@@ -253,9 +253,9 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
 
   # invert 'mu_inv' to get a Boolean vector for mesor terms
   mu.coef <- c(!mu_inv)
-  # a matrix of rrr coefficients
+  # a matrix of cos coefficients
   r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
-  # a matrix of sss coefficients
+  # a matrix of sin coefficients
   s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
 
   # Calculate the parameter estimates for all components
@@ -273,14 +273,14 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
 
     amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
     names(amp[[i]]) <- gsub(
-      vec_rrr[period_idx],
+      vec_cos[period_idx],
       paste0("amp", i),
       names(beta.r)
     )
 
     acr[[i]] <- atan2(groups.s, groups.r)
     names(acr[[i]]) <- gsub(
-      vec_sss[period_idx],
+      vec_sin[period_idx],
       paste0("acr", i),
       names(beta.s)
     )
@@ -288,8 +288,8 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
   new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
   if (n_components == 1) {
-    names(amp[[1]]) <- gsub(vec_rrr[1], "amp", names(beta.r))
-    names(acr[[1]]) <- gsub(vec_sss[1], "acr", names(beta.s))
+    names(amp[[1]]) <- gsub(vec_cos[1], "amp", names(beta.r))
+    names(acr[[1]]) <- gsub(vec_sin[1], "acr", names(beta.s))
     new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
   }
   new_coefs

@@ -16,14 +16,14 @@
   }
 }
 
-#' Recursively replace an \code{amp_acroN} symbol with its rrr/sss expansion.
+#' Recursively replace an \code{amp_acroN} symbol with its cos/sin expansion.
 #'
 #' Walks the call tree of \code{term} and replaces any symbol node named
-#' \code{amp_acroN} with the call \code{{prefix}rrrN + {prefix}sssN}, leaving
+#' \code{amp_acroN} with the call \code{.{prefix}cosN + .{prefix}sinN}, leaving
 #' every other symbol, operator, or grouping untouched.
 #'
 #' @param term A language object (call or symbol).
-#' @param .data_prefix Prefix used for the rrr/sss column names (e.g.
+#' @param .data_prefix Prefix used for the cos/sin column names (e.g.
 #' \code{"main_"}).
 #'
 #' @return A language object with any \code{amp_acroN} symbols replaced.
@@ -36,8 +36,8 @@
       n <- m[2]
       return(call(
         "+",
-        as.name(paste0(.data_prefix, "rrr", n)),
-        as.name(paste0(.data_prefix, "sss", n))
+        as.name(paste0(".", .data_prefix, "cos", n)),
+        as.name(paste0(".", .data_prefix, "sin", n))
       ))
     }
     return(term)
@@ -64,7 +64,7 @@
 #'
 #' @param expr A language object representing the left-hand side of an
 #' \code{lme4}-style bar term (e.g. \code{lme4::findbars(formula)[[1]][[2]]}).
-#' @param .data_prefix Prefix used for the rrr/sss column names (e.g.
+#' @param .data_prefix Prefix used for the cos/sin column names (e.g.
 #' \code{"main_"}).
 #'
 #' @return A language object with any \code{amp_acroN} symbols replaced.

@@ -15,7 +15,7 @@ test_that("multiple components with same period", {
       amp_acro(time, n_components = 2, group = c("X", "X2"), period = c(12, 12))
   )
 
-  # should not have main_rrr2 or main_sss2 since both components have the same period (12)
+  # should not have .main_cos2 or .main_sin2 since both components have the same period (12)
   expect_snapshot(names(data_and_formula$newdata))
 
   data_and_formula <- update_formula_and_data(
@@ -27,7 +27,7 @@ test_that("multiple components with same period", {
   expect_snapshot(names(data_and_formula$newdata))
 
   # other tests to add:
-  # - should only have main_rrr1 and main_sss1 (no rrr2/sss2)
+  # - should only have .main_cos1 and .main_sin1 (no cos2/sin2)
   # - other visualisations etc should work with it
   # - perhaps those tests can later move to other test scripts
   # - test of fitting a model and then put that into cglmm() test script
@@ -141,18 +141,18 @@ test_that("bad inputs return useful errors", {
 
   # conflicting variable name with internals
   vitamind_mod <- vitamind
-  colnames(vitamind_mod)[1] <- "rrr2"
+  colnames(vitamind_mod)[1] <- "cos2"
   expect_error(
     amp_acro(
       time_col = time,
       n_components = 1,
-      group = "rrr2",
+      group = "cos2",
       period = 12,
       .data = vitamind_mod,
       .formula = vit_d ~ X +
-        amp_acro(time, n_components = 1, group = "rrr2", period = 12)
+        amp_acro(time, n_components = 1, group = "cos2", period = 12)
     ),
-    regexp = "Group variable names cannot contain 'rrr' or 'sss'"
+    regexp = "Group variable names cannot contain 'cos' or 'sin'"
   )
 
   # can't have two grouping vars and a single component
@@ -227,7 +227,7 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
   }
   suppressMessages(expect_message(
     f(),
-    regexp = "main_rrr1 and main_sss1 have been added to dataframe"
+    regexp = ".main_cos1 and .main_sin1 have been added to dataframe"
   ))
 
   suppressMessages(expect_message(
