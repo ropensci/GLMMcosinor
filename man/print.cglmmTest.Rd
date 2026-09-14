@@ -18,6 +18,7 @@
 Print results of test of cosinor model
 }
 \examples{
+\donttest{
 data_2_component <- simulate_cosinor(
   n = 10000,
   mesor = 5,
@@ -43,4 +44,5 @@ test_cosinor_levels(
   param = "amp",
   x_str = "group"
 )
+}
 }
