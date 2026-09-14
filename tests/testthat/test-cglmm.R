@@ -188,7 +188,7 @@ test_that("model output is class cglmm", {
   expect_no_error(formula(object))
 
   # testing mixed model specification
-  expect_warning(
+  expect_no_error(
     cglmm(
       vit_d ~ X +
         amp_acro(time, n_components = 1, group = "X", period = 12) +

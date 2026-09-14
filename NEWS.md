@@ -10,6 +10,11 @@
 
 * Fix test-coverage GHA.
 
+* Use `reformulas::findbars()`/`nobars()` instead of the now-deprecated
+  `lme4::findbars()`/`nobars()`, which were moved to the `reformulas`
+  package and emitted a one-off deprecation warning that made
+  `test-cglmm.R` order-dependent and flaky on R-devel.
+
 # GLMMcosinor 0.2.1
 
 * Fixed issues #14 and #15 relating to handling model formulas without 

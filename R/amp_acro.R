@@ -156,7 +156,7 @@ amp_acro <- function(time_col, n_components = 1, group, period, ...) {
     period = period,
     no_amp_acro = no_amp_acro,
     no_amp_acro_vector = no_amp_acro_vector,
-    .formula = lme4::nobars(.formula),
+    .formula = reformulas::nobars(.formula),
     .quietly = .quietly,
     .data = .data,
     .amp_acro_ind = .amp_acro_ind,
@@ -165,8 +165,8 @@ amp_acro <- function(time_col, n_components = 1, group, period, ...) {
   )
 
   # if a mixed model is specified, handle formula accordingly
-  if (!is.null(lme4::findbars(.formula))) {
-    ranef_part <- lapply(lme4::findbars(.formula), deparse1)
+  if (!is.null(reformulas::findbars(.formula))) {
+    ranef_part <- lapply(reformulas::findbars(.formula), deparse1)
     ranef_parts_replaced <- lapply(ranef_part, function(x) {
       component_num <- regmatches(
         x,
