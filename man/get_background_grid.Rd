@@ -38,7 +38,7 @@ for more details.}
 
 \item{text_size}{Size of label size.}
 
-\item{text_opacity}{Opactiy of labels.}
+\item{text_opacity}{Opacity of labels.}
 
 \item{contour_labels}{Labels to use for the concentric rings (amplitude).}
 

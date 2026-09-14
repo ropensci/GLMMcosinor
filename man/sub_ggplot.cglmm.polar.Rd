@@ -43,7 +43,7 @@ sub_ggplot.cglmm.polar(
 
 \item{radial_units}{Units for phase.}
 
-\item{grid_angle_segments}{Number of sugments.}
+\item{grid_angle_segments}{Number of segments.}
 
 \item{n_breaks}{Number of breaks for amplitude.}
 

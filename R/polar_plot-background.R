@@ -14,7 +14,7 @@
 #' @param dial_pos_full_y Dimensions of the background.
 #' @param time_labels Labels for the tick marks (time).
 #' @param text_size Size of label size.
-#' @param text_opacity Opactiy of labels.
+#' @param text_opacity Opacity of labels.
 #' @param contour_labels Labels to use for the concentric rings (amplitude).
 #' @param grid_angle_segments How many segments to split the plot into.
 #'
