@@ -1,5 +1,7 @@
 # GLMMcosinor (development version)
 
+# GLMMcosinor 0.2.2
+
 * Refactor polar_plot() and autoplot() to avoid functions that are defined 
   within other functions. Separate out into separate scripts where necessary.
 
@@ -13,7 +15,13 @@
 * Use `reformulas::findbars()`/`nobars()` instead of the now-deprecated
   `lme4::findbars()`/`nobars()`, which were moved to the `reformulas`
   package and emitted a one-off deprecation warning that made
-  `test-cglmm.R` order-dependent and flaky on R-devel.
+  `test-cglmm.R` order-dependent and flaky on R-devel. This was the cause
+  of the CRAN archival on 2026-08-22.
+
+* Fix `autoplot()` legends being shown in the wrong order (colour before
+  linetype/shape) when both `ranef_plot` and a grouping variable are
+  plotted together, caused by a ggplot2 4.0 change to default guide
+  ordering.
 
 # GLMMcosinor 0.2.1
 
