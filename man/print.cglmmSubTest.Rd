@@ -18,6 +18,7 @@
 Print test of model
 }
 \examples{
+\donttest{
 data_2_component <- simulate_cosinor(
   n = 10000,
   mesor = 5,
@@ -44,4 +45,5 @@ test_output <- test_cosinor_levels(
   x_str = "group"
 )
 print(test_output$global.test)
+}
 }

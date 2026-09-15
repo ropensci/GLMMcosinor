@@ -30,6 +30,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data_2_component <- simulate_cosinor(
 #'   n = 10000,
 #'   mesor = 5,
@@ -51,6 +52,7 @@
 #'   data = data_2_component
 #' )
 #' test_cosinor_components(mod_2_component, param = "amp", x_str = "group")
+#' }
 test_cosinor_components <- function(
   x,
   x_str = NULL,
@@ -154,6 +156,7 @@ test_cosinor_components <- function(
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data_2_component <- simulate_cosinor(
 #'   n = 10000,
 #'   mesor = 5,
@@ -175,6 +178,7 @@ test_cosinor_components <- function(
 #'   data = data_2_component
 #' )
 #' test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
+#' }
 test_cosinor_levels <- function(
   x,
   x_str,
@@ -454,6 +458,7 @@ test_cosinor_levels <- function(
 #'
 #' @return \code{print(x)} returns \code{x} invisibly.
 #' @examples
+#' \donttest{
 #' data_2_component <- simulate_cosinor(
 #'   n = 10000,
 #'   mesor = 5,
@@ -479,6 +484,7 @@ test_cosinor_levels <- function(
 #'   param = "amp",
 #'   x_str = "group"
 #' )
+#' }
 #' @export
 print.cglmmTest <- function(x, ...) {
   cat("Test Details: \n")
@@ -500,6 +506,7 @@ print.cglmmTest <- function(x, ...) {
 #' @return \code{print(x)} returns \code{x} invisibly.
 #'
 #' @examples
+#' \donttest{
 #' data_2_component <- simulate_cosinor(
 #'   n = 10000,
 #'   mesor = 5,
@@ -526,6 +533,7 @@ print.cglmmTest <- function(x, ...) {
 #'   x_str = "group"
 #' )
 #' print(test_output$global.test)
+#' }
 #' @export
 print.cglmmSubTest <- function(x, ...) {
   if (length(x$statistic) == 1) {

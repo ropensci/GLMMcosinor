@@ -103,7 +103,7 @@ update_formula_and_data <- function(
     e$no_amp_acro_vector <- no_amp_acro_vector
     e$cond_period <- cond_period
 
-    ranef_part <- lapply(lme4::findbars(formula), deparse1)
+    ranef_part <- lapply(reformulas::findbars(formula), deparse1)
     ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", ranef_part)
     # e$subject <- ranef_part_group
 

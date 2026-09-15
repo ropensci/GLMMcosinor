@@ -6,7 +6,7 @@
 #' @param direction \code{ifelse(clockwise, -1, 1)}.
 #' @param offset Applied to start position of phase angle.
 #' @param radial_units Units for phase.
-#' @param grid_angle_segments Number of sugments.
+#' @param grid_angle_segments Number of segments.
 #' @param n_breaks Number of breaks for amplitude.
 #' @param zoom Whether or not it is zoomed in.
 #' @param circle_linetype linetype for concentric circles.

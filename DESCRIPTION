@@ -33,7 +33,7 @@ Imports:
     ggforce,
     ggplot2,
     glmmTMB,
-    lme4,
+    reformulas,
     rlang,
     scales,
     stats

@@ -427,6 +427,16 @@ autoplot.cglmm <- function(
             ) +
             ggplot2::facet_grid(rows = ggplot2::vars(NULL))
         }
+
+        # explicitly order the legends (colour before linetype/shape) so
+        # the stacking order stays stable across ggplot2 versions, rather
+        # than relying on ggplot2's internal default guide ordering
+        plot_object <- plot_object +
+          ggplot2::guides(
+            colour = ggplot2::guide_legend(order = 1),
+            linetype = ggplot2::guide_legend(order = 2),
+            shape = ggplot2::guide_legend(order = 2)
+          )
       }
     } else {
       # if a model has random effects, but no ranef is specified, then

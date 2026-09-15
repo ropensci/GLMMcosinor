@@ -53,6 +53,7 @@ group with covariates equal to 0. This may not be the desired result for
 continuous covariates.
 }
 \examples{
+\donttest{
 data_2_component <- simulate_cosinor(
   n = 10000,
   mesor = 5,
@@ -74,4 +75,5 @@ mod_2_component <- cglmm(
   data = data_2_component
 )
 test_cosinor_levels(mod_2_component, param = "amp", x_str = "group")
+}
 }
