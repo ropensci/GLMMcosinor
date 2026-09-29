@@ -165,74 +165,102 @@ amp_acro <- function(time_col, n_components = 1, group, period, ...) {
   )
 
   # if a mixed model is specified, handle formula accordingly
-  if (!is.null(reformulas::findbars(.formula))) {
-    ranef_part <- lapply(reformulas::findbars(.formula), deparse1)
-    ranef_parts_replaced <- lapply(ranef_part, function(x) {
-      component_num <- regmatches(
-        x,
-        gregexpr("(?<=amp_acro)\\d+", x, perl = TRUE)
-      )[[1]]
+  bar_terms <- reformulas::findbars(.formula)
+  if (!is.null(bar_terms)) {
+    # for each random-effects term, substitute any amp_acroN placeholder
+    # symbols with the corresponding pair of cosinor component columns
+    # (main_rrrN + main_sssN). This operates on the parsed language object
+    # rather than deparsed text, so surrounding operators (e.g. `*`, `:`),
+    # spacing, and multi-digit component numbers are all handled correctly
+    # by R's own formula algebra instead of ad hoc regex matching.
+    ranef_terms <- lapply(bar_terms, function(bar_expr) {
+      vars_in_bar <- all.vars(bar_expr)
+      is_amp_acro_var <- grepl("^amp_acro\\d+$", vars_in_bar)
+      component_num <- unique(sub(
+        "^amp_acro",
+        "",
+        vars_in_bar[is_amp_acro_var]
+      ))
+
       if (length(component_num) == 0) {
-        return(x)
-      } else {
-        for (i in seq_len(length(component_num))) {
-          string_match <- paste0(
-            ".*amp_acro",
-            component_num[i],
-            "\\s([^+|]*).*"
-          )
-          ranef_part_addition <- gsub(string_match, "\\1", x)
-          ranef_part_group <- gsub(".*\\|\\s*(.*)", "\\1", x)
-
-          rrr_part <- paste0("main_rrr", component_num[i], ranef_part_addition)
-          sss_part <- paste0("main_sss", component_num[i], ranef_part_addition)
-
-          x <- gsub(
-            paste0(
-              "amp_acro",
-              component_num[i],
-              " ",
-              ranef_part_addition
-            ),
-            paste0(
-              rrr_part,
-              "+",
-              sss_part
-            ),
-            x,
-            fixed = TRUE
-          )
-        }
-        return(x)
+        return(bar_expr)
       }
+
+      subst_list <- setNames(
+        lapply(component_num, function(n) {
+          call(
+            "+",
+            as.name(paste0("main_rrr", n)),
+            as.name(paste0("main_sss", n))
+          )
+        }),
+        paste0("amp_acro", component_num)
+      )
+
+      bar_expr <- do.call(substitute, list(bar_expr, subst_list))
+
+      # substituting a symbol for `main_rrrN + main_sssN` nests it as a
+      # subtree (e.g. `0 + (main_rrrN + main_sssN)`); flatten back into a
+      # single left-associative `+` chain so the resulting formula matches
+      # the plain additive form a user would have written by hand.
+      call("|", flatten_plus(bar_expr[[2]]), bar_expr[[3]])
     })
 
     # ranef_groups is stored, and will be part of the eventual output. This is
     # a vector containing the names of the variables with mixed effects.
+    ranef_groups <- unique(vapply(
+      ranef_terms,
+      function(x) deparse1(x[[3]]),
+      character(1)
+    ))
 
-    ranef_groups <- unique(gsub(".*\\|\\s*", "", ranef_parts_replaced))
+    if (length(res$newformula) == 3) {
+      lhs <- res$newformula[[2]]
+      old_rhs <- res$newformula[[3]]
+    } else {
+      lhs <- NULL
+      old_rhs <- res$newformula[[2]]
+    }
 
-    ranef_part_updated <- paste(
-      sprintf(
-        "(%s)",
-        ranef_parts_replaced
-      ),
-      collapse = "+"
+    new_rhs <- Reduce(
+      function(acc, term) call("+", acc, call("(", term)),
+      ranef_terms,
+      init = old_rhs
     )
 
-    main_part <- paste(
-      paste(deparse(res$newformula), collapse = ""),
-      ranef_part_updated,
-      collapse = "",
-      sep = "+"
-    )
-    res$newformula <- stats::as.formula(main_part)
+    new_formula <- if (is.null(lhs)) {
+      call("~", new_rhs)
+    } else {
+      call("~", lhs, new_rhs)
+    }
+    class(new_formula) <- "formula"
+    environment(new_formula) <- environment()
+
+    res$newformula <- new_formula
     res$ranef_groups <- ranef_groups
   } else {
     res$ranef_groups <- NA
   }
 
   res
+}
+
+#' Collapse a (possibly nested) chain of `+` calls into a single
+#' left-associative chain of the same leaves, in left-to-right order.
+#' @param x A language object.
+#' @noRd
+flatten_plus_terms <- function(x) {
+  if (is.call(x) && identical(x[[1]], quote(`+`))) {
+    c(flatten_plus_terms(x[[2]]), flatten_plus_terms(x[[3]]))
+  } else {
+    list(x)
+  }
+}
+
+#' @param x A language object.
+#' @noRd
+flatten_plus <- function(x) {
+  Reduce(function(a, b) call("+", a, b), flatten_plus_terms(x))
 }
 
 
@@ -463,27 +491,31 @@ amp_acro_iteration <- function(
       }
     )
 
+    # build the rrr/sss terms for each component as language objects (rather
+    # than pasting strings together) so that group/column names requiring
+    # backticks (spaces, special characters, etc.) are handled correctly.
+    formula_expr <- list()
     for (component in components) {
       cgroup <- component$group
       cperiod_idx <- component$period_idx
+      rrr_name <- as.name(vec_rrr[cperiod_idx])
+      sss_name <- as.name(vec_sss[cperiod_idx])
 
       if (cgroup != 0) {
-        acpart <- paste(
-          (rep(cgroup, 2)),
-          c(vec_rrr[cperiod_idx], vec_sss[cperiod_idx]),
-          sep = ":"
+        cgroup_name <- as.name(cgroup)
+        formula_expr[[length(formula_expr) + 1]] <- call(
+          ":",
+          cgroup_name,
+          rrr_name
         )
-        acpart_combined <- paste(acpart[1], acpart[2], sep = " + ")
-        formula_expr <- paste(formula_expr, "+", acpart_combined)
+        formula_expr[[length(formula_expr) + 1]] <- call(
+          ":",
+          cgroup_name,
+          sss_name
+        )
       } else {
-        acpart_combined <- NULL
-        formula_expr <- paste(
-          formula_expr,
-          "+",
-          vec_rrr[cperiod_idx],
-          "+",
-          vec_sss[cperiod_idx]
-        )
+        formula_expr[[length(formula_expr) + 1]] <- rrr_name
+        formula_expr[[length(formula_expr) + 1]] <- sss_name
       }
     }
   }
@@ -500,23 +532,21 @@ amp_acro_iteration <- function(
     vec_sss <- NULL
   }
 
-  newformula <- stats::as.formula(
-    paste(
-      left_part,
-      paste(
-        c(
-          attr(
-            stats::terms(.formula),
-            "intercept"
-          ),
-          non_acro_formula,
-          formula_expr
-        ),
-        collapse = " + "
-      ),
-      sep = " ~ "
-    )
-  )
+  # build the formula from language objects rather than pasting term-label
+  # strings together and reparsing, so that terms containing arbitrary
+  # syntax (e.g. `bs(x, df = 3)`, backtick-quoted names) round-trip exactly.
+  intercept_term <- attr(stats::terms(.formula), "intercept")
+  non_acro_terms <- lapply(non_acro_formula, str2lang)
+  rhs_terms <- c(list(intercept_term), non_acro_terms, formula_expr)
+  rhs <- Reduce(function(a, b) call("+", a, b), rhs_terms)
+
+  newformula <- if (length(left_part) == 1) {
+    call("~", as.name(left_part), rhs)
+  } else {
+    call("~", rhs)
+  }
+  class(newformula) <- "formula"
+  environment(newformula) <- environment()
 
   newformula <- stats::update.formula(newformula, ~.)
 

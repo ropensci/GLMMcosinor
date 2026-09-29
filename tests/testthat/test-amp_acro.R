@@ -320,3 +320,60 @@ test_that("matrix, or tibble inputs are converted to dataframe ", {
 
   expect_snapshot(f_round(mixed_mod$coefficients))
 })
+
+test_that("non-time covariates using specials (e.g. splines) are handled correctly", {
+  withr::local_seed(1)
+  vitamind_bs <- vitamind
+  vitamind_bs$z <- runif(nrow(vitamind_bs), 0, 10)
+
+  # fixed-effects formula construction should round-trip a covariate term
+  # containing a namespaced function call with commas/named args, rather
+  # than mangling it via string concatenation.
+  data_and_formula <- update_formula_and_data(
+    data = vitamind_bs,
+    formula = vit_d ~ splines::bs(z, df = 3) +
+      amp_acro(time, n_components = 1, group = "X", period = 12)
+  )
+
+  expect_true(all(
+    c("main_rrr1", "main_sss1") %in% names(data_and_formula$newdata)
+  ))
+  expect_true(grepl(
+    "splines::bs(z, df = 3)",
+    deparse1(data_and_formula$newformula),
+    fixed = TRUE
+  ))
+
+  # end-to-end: the model should fit without error using the spline term
+  # alongside the cosinor component(s)
+  expect_no_error(
+    cglmm(
+      vit_d ~ splines::bs(z, df = 3) +
+        amp_acro(time, n_components = 1, group = "X", period = 12),
+      data = vitamind_bs
+    )
+  )
+
+  # multiple components, each with its own group interaction, combined with
+  # a multi-term spline covariate
+  data_and_formula <- update_formula_and_data(
+    data = vitamind_bs,
+    formula = vit_d ~ splines::bs(z, df = 3) +
+      amp_acro(
+        time,
+        n_components = 2,
+        group = c("X", "X"),
+        period = c(12, 6)
+      )
+  )
+
+  expect_true(all(
+    c("main_rrr1", "main_sss1", "main_rrr2", "main_sss2") %in%
+      names(data_and_formula$newdata)
+  ))
+  expect_true(grepl(
+    "splines::bs(z, df = 3)",
+    deparse1(data_and_formula$newformula),
+    fixed = TRUE
+  ))
+})
