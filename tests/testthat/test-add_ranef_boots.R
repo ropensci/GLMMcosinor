@@ -44,7 +44,9 @@ test_that("add_ranef_boots() attaches bootstrap estimates and errors sensibly (#
   )
   expect_equal(object$ranef_boots$ranef_group, "subject")
   expect_equal(object$ranef_boots$nsim, 25)
-  expect_true(object$ranef_boots$n_success > 0)
+  # add_ranef_boots() keeps retrying until nsim replicates actually succeed,
+  # so n_success should always equal nsim on return (never less)
+  expect_equal(object$ranef_boots$n_success, 25)
   expect_setequal(
     names(object$ranef_boots$estimates),
     c("subject", "component", "amp", "acr", "mesor", ".rep")
@@ -53,6 +55,13 @@ test_that("add_ranef_boots() attaches bootstrap estimates and errors sensibly (#
     length(unique(object$ranef_boots$estimates$.rep)),
     object$ranef_boots$n_success
   )
+  # each replicate's draw should differ (guards against a seed-reuse bug
+  # where every retry produces an identical simulated response)
+  amp1_draws <- object$ranef_boots$estimates$amp[
+    object$ranef_boots$estimates$subject == "1" &
+      object$ranef_boots$estimates$component == "1"
+  ]
+  expect_equal(length(unique(amp1_draws)), 25)
 
   # error: no random effects
   object_no_ranef <- cglmm(
@@ -74,6 +83,16 @@ test_that("add_ranef_boots() attaches bootstrap estimates and errors sensibly (#
     regexp = "'nsim' must be a positive integer"
   )
 
+  # error: max_attempts must be at least nsim
+  expect_error(
+    add_ranef_boots(object, nsim = 25, max_attempts = 5),
+    regexp = "'max_attempts' must be a positive integer, at least 'nsim'"
+  )
+  # the boundary (max_attempts == nsim) is valid and succeeds when every
+  # attempt converges (as is the case for this well-behaved model)
+  boundary_object <- add_ranef_boots(object, nsim = 10, max_attempts = 10)
+  expect_equal(boundary_object$ranef_boots$n_success, 10)
+
   # error: multiple ranef groups, none specified
   dat2 <- simulate_cosinor(n = 100, mesor = 1, amp = 2, acro = 1, period = 24)
   dat2$id1 <- factor(sample(1:5, 100, replace = TRUE))
@@ -89,6 +108,15 @@ test_that("add_ranef_boots() attaches bootstrap estimates and errors sensibly (#
     regexp = "more than one random-effect grouping variable"
   )
   expect_no_error(add_ranef_boots(object_multi, nsim = 5, ranef_group = "id1"))
+
+  # reproducible when a seed is supplied, even though simulate() is now
+  # called once per attempt internally (rather than once for all nsim)
+  boot_a <- add_ranef_boots(object, nsim = 5, seed = 999)
+  boot_b <- add_ranef_boots(object, nsim = 5, seed = 999)
+  expect_equal(
+    boot_a$ranef_boots$estimates$amp,
+    boot_b$ranef_boots$estimates$amp
+  )
 })
 
 test_that("ranef_ci = TRUE works across ranef_estimates/polar_plot/autoplot (#37)", {

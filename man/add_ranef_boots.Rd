@@ -4,12 +4,20 @@
 \alias{add_ranef_boots}
 \title{Add parametric-bootstrap uncertainty for random-effect rhythm estimates}
 \usage{
-add_ranef_boots(object, nsim = 500, ranef_group = NULL, quietly = TRUE, ...)
+add_ranef_boots(
+  object,
+  nsim = 500,
+  ranef_group = NULL,
+  quietly = TRUE,
+  max_attempts = 10 * nsim,
+  ...
+)
 }
 \arguments{
 \item{object}{A \code{cglmm} object with at least one random effect.}
 
-\item{nsim}{The number of bootstrap replicates. Defaults to \code{500}.}
+\item{nsim}{The number of successful bootstrap replicates to obtain.
+Defaults to \code{500}.}
 
 \item{ranef_group}{A \code{character} naming the random-effect grouping
 variable to bootstrap. Required if \code{object} has more than one
@@ -17,6 +25,10 @@ random-effect grouping variable; otherwise inferred automatically.}
 
 \item{quietly}{A \code{logical}. If \code{FALSE}, prints progress
 messages. Defaults to \code{TRUE}.}
+
+\item{max_attempts}{The maximum number of simulate-and-refit attempts
+before giving up on reaching \code{nsim} successful replicates. Defaults
+to \code{10 * nsim}.}
 
 \item{...}{Additional arguments passed to \code{stats::simulate()}.}
 }
@@ -46,14 +58,17 @@ recomputes \code{ranef_estimates()} each time. The resulting empirical
 distribution is used to form percentile confidence intervals wherever
 \code{ranef_ci = TRUE} is used.
 
-Because this involves refitting the model \code{nsim} times, it can be
-slow for larger datasets or models - this is why it's a separate,
-explicit step rather than happening automatically: run it once, and
-reuse the result for as many tables/plots as you like.
+Because this involves refitting the model (at least) \code{nsim} times,
+it can be slow for larger datasets or models - this is why it's a
+separate, explicit step rather than happening automatically: run it
+once, and reuse the result for as many tables/plots as you like.
 
 Any replicate whose refit fails to converge (either raising an error, or
-a warning - e.g. a singular fit) is dropped; at least one replicate must
-succeed.
+a warning - e.g. a singular fit) is dropped and re-tried with a new
+simulated dataset, so the function keeps simulating until \code{nsim}
+replicates have actually succeeded (up to \code{max_attempts} total
+tries, to avoid looping indefinitely if the model rarely converges on
+simulated data).
 }
 \examples{
 \donttest{
