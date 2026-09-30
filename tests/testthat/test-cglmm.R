@@ -187,16 +187,42 @@ test_that("model output is class cglmm", {
   expect_no_error(coefficients(object))
   expect_no_error(formula(object))
 
-  # testing mixed model specification
-  expect_no_error(
-    cglmm(
-      vit_d ~ X +
-        amp_acro(time, n_components = 1, group = "X", period = 12) +
-        (1 | X) +
-        (0 + amp_acro1 | X),
-      data = vitamind
+  # testing mixed model specification. Uses simulated data with genuine
+  # per-subject random effects, rather than vitamind (which has no true
+  # random structure and produces a singular/boundary Hessian warning for
+  # any random-effects fit, regardless of the grouping factor used).
+  # Uses its own seed (rather than the local_seed(50) above) so it doesn't
+  # shift the random draws consumed by the rest of this test.
+  withr::with_seed(50, {
+    mixed_spec_data <- do.call(
+      "rbind",
+      lapply(1:20, function(id) {
+        d <- simulate_cosinor(
+          n = 20,
+          mesor = rnorm(1),
+          amp = rnorm(1, mean = 3, sd = 0.5),
+          acro = rnorm(1, mean = 1.5, sd = 0.2),
+          family = "gaussian",
+          period = 12,
+          n_components = 1
+        )
+        d$subject <- id
+        d
+      })
     )
-  )
+    mixed_spec_data$subject <- as.factor(mixed_spec_data$subject)
+    mixed_spec_data$X <- sample(0:1, size = nrow(mixed_spec_data), replace = TRUE)
+
+    expect_no_error(
+      cglmm(
+        Y ~ X +
+          amp_acro(times, n_components = 1, group = "X", period = 12) +
+          (1 | subject) +
+          (0 + amp_acro1 | subject),
+        data = mixed_spec_data
+      )
+    )
+  })
 
   sim_data <- simulate_cosinor(
     n = 500,
@@ -369,17 +395,26 @@ test_that("group names that are substrings of each other are not conflated", {
   expect_false(any(grepl("^\\[X2=1\\]:amp1$", rownames(smat))))
 })
 
-# TODO: this would be the test to assess whether the (non-implemented) ability
-# to fit a model with two groups interacting on the same component works
-# test_that("simple multigroup (same period) model", {
-#
-#   d_multi_grp_same_period <- readRDS(test_path("fixtures", "d_multi_grp_same_period.rds"))
-#
-#   object <- cglmm(
-#     Y ~ group +
-#       amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
-#       amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
-#     data = d_multi_grp_same_period
-#   )
-#   expect_no_error_and_snapshot(object)
-# })
+test_that("grouping spread over two amp_acro() calls (same period) works (#32)", {
+  d_multi_grp_same_period <- readRDS(
+    test_path("fixtures", "d_multi_grp_same_period.rds")
+  )
+
+  fit_object <- function() {
+    cglmm(
+      Y ~ g1 +
+        g2 +
+        amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+        amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
+      data = d_multi_grp_same_period
+    )
+  }
+
+  expect_no_error(fit_object())
+  object <- fit_object()
+  expect_snapshot(object)
+
+  expect_false(anyNA(object$coefficients))
+  expect_no_error(summary(object))
+  expect_false(anyNA(summary(object)$main_output$transformed.table$estimate))
+})
