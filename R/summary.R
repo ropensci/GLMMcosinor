@@ -78,23 +78,23 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     s.coef <- NULL
     mu_inv <- rep(0, length(names(coefs)))
 
+    all_groups <- vapply(components, function(cmp) as.character(cmp$group), "")
+
     for (i in seq_len(n_components)) {
       period_idx <- components[[i]]$period_idx
       group <- components[[i]]$group
+      other_groups <- all_groups[-i]
 
-      if (group != 0) {
-        r.coef[[i]] <- grepl(
-          paste0(group, ".*:", vec_rrr[period_idx]),
-          names(coefs)
-        )
-        s.coef[[i]] <- grepl(
-          paste0(group, ".*:", vec_sss[period_idx]),
-          names(coefs)
-        )
-      } else {
-        r.coef[[i]] <- grepl(vec_rrr[period_idx], names(coefs))
-        s.coef[[i]] <- grepl(vec_sss[period_idx], names(coefs))
-      }
+      r.coef[[i]] <- grepl(
+        group_coef_regex(group, other_groups, vec_rrr[period_idx]),
+        names(coefs),
+        perl = TRUE
+      )
+      s.coef[[i]] <- grepl(
+        group_coef_regex(group, other_groups, vec_sss[period_idx]),
+        names(coefs),
+        perl = TRUE
+      )
 
       # Keep track of non-mesor terms
       mu_inv_carry <- r.coef[[i]] + s.coef[[i]]

@@ -338,6 +338,37 @@ test_that("specifying no amp_acro term works", {
   expect_no_error_and_snapshot(fit_disp_and_zi_model)
 })
 
+test_that("group names that are substrings of each other are not conflated", {
+  withr::local_seed(42)
+  vitamind_multi <- vitamind
+  vitamind_multi$X2 <- sample(0:1, size = nrow(vitamind_multi), replace = TRUE)
+
+  # "X" is a prefix of "X2"; coefficient names concatenate group name and
+  # level with no separator (e.g. group "X2" at level "1" becomes "X21"),
+  # so an unanchored match built from group "X" could incorrectly also
+  # match "X21" (which belongs to "X2").
+  object <- cglmm(
+    vit_d ~ X + X2 + amp_acro(time, n_components = 2, group = c("X", "X2"), period = c(12, 12)),
+    data = vitamind_multi
+  )
+
+  # component 1 (group X) must not pick up X2's "X21" coefficient, and
+  # component 2 (group X2) should have its own distinct, non-duplicated
+  # amp/acr estimate
+  expect_false(any(grepl("^X21:amp1$", names(object$coefficients))))
+  expect_true(any(grepl("^X21:amp2$", names(object$coefficients))))
+  expect_false(identical(
+    unname(object$coefficients["X21:amp2"]),
+    unname(object$coefficients["X1:amp1"])
+  ))
+
+  print_obj <- summary(object)
+  smat <- print_obj$main_output$transformed.table
+  expect_false(anyNA(smat$estimate))
+  expect_true(any(grepl("^\\[X2=1\\]:amp2$", rownames(smat))))
+  expect_false(any(grepl("^\\[X2=1\\]:amp1$", rownames(smat))))
+})
+
 # TODO: this would be the test to assess whether the (non-implemented) ability
 # to fit a model with two groups interacting on the same component works
 # test_that("simple multigroup (same period) model", {
