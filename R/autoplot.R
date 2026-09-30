@@ -40,7 +40,13 @@ ggplot2::autoplot
 #' each level's fitted rhythm curve (computed from \code{ranef_estimates()})
 #' is added as a \code{geom_line()} layer, colored by grouping level.
 #' Defaults to \code{NULL} (no curves added). Only point estimates are
-#' used - see \code{ranef_estimates()} for why no uncertainty is shown.
+#' used unless \code{ranef_ci = TRUE} - see \code{ranef_estimates()} for
+#' why no uncertainty is shown by default.
+#' @param ranef_ci A \code{logical}. If \code{TRUE}, a bootstrap percentile
+#' band (at \code{ci_level}) is added around each \code{ranef_lines} curve,
+#' using bootstrap replicates added via \code{add_ranef_boots()}. Requires
+#' \code{ranef_lines} to also be specified, and \code{object} to have had
+#' \code{add_ranef_boots()} run on it already. Defaults to \code{FALSE}.
 #' @param quietly A \code{logical}. If \code{TRUE}, shows warning messages when
 #' wrangling data and fitting model. Defaults to \code{TRUE}.
 #' @param cov_list Specify the levels of the covariates that you wish to plot as
@@ -99,6 +105,7 @@ autoplot.cglmm <- function(
   predict.ribbon = TRUE,
   ranef_plot = NULL,
   ranef_lines = NULL,
+  ranef_ci = FALSE,
   cov_list = NULL,
   quietly = TRUE,
   ...
@@ -246,6 +253,17 @@ autoplot.cglmm <- function(
         "Available grouping variable(s):",
         paste(object$ranef_groups, collapse = ", ")
       )
+    )
+  }
+
+  assertthat::assert_that(
+    is.logical(ranef_ci),
+    msg = "'ranef_ci' must be a logical argument, either TRUE or FALSE"
+  )
+  if (ranef_ci) {
+    assertthat::assert_that(
+      !is.null(ranef_lines),
+      msg = "'ranef_ci' requires 'ranef_lines' to also be specified"
     )
   }
 
@@ -645,6 +663,23 @@ autoplot.cglmm <- function(
   # OPTIONAL: overlay each random-effect grouping level's fitted rhythm
   # curve, computed independently from the population-level curve above
   if (!is.null(ranef_lines)) {
+    if (ranef_ci) {
+      ranef_ribbon <- ranef_ci_ribbon_data(object, ranef_lines, timeax, ci_level)
+      plot_object <- plot_object +
+        ggplot2::geom_ribbon(
+          data = ranef_ribbon,
+          ggplot2::aes(
+            x = time,
+            ymin = lower,
+            ymax = upper,
+            group = !!rlang::sym(ranef_lines),
+            fill = !!rlang::sym(ranef_lines)
+          ),
+          alpha = 0.15,
+          inherit.aes = FALSE
+        )
+    }
+
     ranef_curves <- ranef_curve_data(object, ranef_lines, timeax)
     plot_object <- plot_object +
       ggplot2::geom_line(

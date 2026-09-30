@@ -7,11 +7,15 @@
 #' point estimate of the rhythm, complementing the population-level
 #' estimates returned by \code{summary()}.
 #'
-#' No standard errors are returned. \code{glmmTMB} does not provide a
-#' method to obtain the joint uncertainty of the conditional modes (random
-#' effects) together with the fixed effects, so a fully correct confidence
-#' interval for these estimates isn't currently available. See
-#' \code{vignette("mixed-models")} for a discussion of possible approaches.
+#' By default, no standard errors are returned. \code{glmmTMB} does not
+#' provide a method to obtain the joint uncertainty of the conditional
+#' modes (random effects) together with the fixed effects, so a fully
+#' correct delta-method confidence interval for these estimates isn't
+#' available the way it is for \code{summary()}'s population-level
+#' estimates. Instead, set \code{ranef_ci = TRUE} to add percentile
+#' bootstrap confidence intervals, computed from replicates added via
+#' \code{add_ranef_boots()} (run that first). See \code{vignette(
+#' "mixed-models")} for a worked example and further discussion.
 #'
 #' This function assumes a common, simple random-effects structure: a
 #' single grouping variable (\code{ranef_group}), with random terms
@@ -27,11 +31,19 @@
 #' variable to compute estimates for. Required if \code{object} has more
 #' than one random-effect grouping variable; otherwise inferred
 #' automatically.
+#' @param ranef_ci A \code{logical}. If \code{TRUE}, adds percentile
+#' bootstrap confidence interval columns using replicates added via
+#' \code{add_ranef_boots()}. Requires \code{add_ranef_boots()} to have
+#' been run on \code{object} already. Defaults to \code{FALSE}.
+#' @param ci_level Confidence level used when \code{ranef_ci = TRUE}.
+#' Defaults to \code{0.95}.
 #'
 #' @return A \code{data.frame} with one row per component per level of
 #' \code{ranef_group}, and columns for the grouping level, the component
 #' index, amplitude, and acrophase (mesor is included in a separate
 #' \code{component = "mesor"} block, since it doesn't vary by component).
+#' If \code{ranef_ci = TRUE}, lower/upper confidence bound columns are
+#' also included for amplitude, acrophase, and mesor.
 #'
 #' @examples
 #' set.seed(1)
@@ -62,7 +74,12 @@
 #'
 #' ranef_estimates(mixed_mod)
 #' @export
-ranef_estimates <- function(object, ranef_group = NULL) {
+ranef_estimates <- function(
+  object,
+  ranef_group = NULL,
+  ranef_ci = FALSE,
+  ci_level = 0.95
+) {
   assertthat::assert_that(
     inherits(object, "cglmm"),
     msg = "'object' must be of class 'cglmm'"
@@ -71,9 +88,13 @@ ranef_estimates <- function(object, ranef_group = NULL) {
     !all(is.na(object$ranef_groups)),
     msg = "'object' does not have any random effects."
   )
+  assertthat::assert_that(
+    is.logical(ranef_ci),
+    msg = "'ranef_ci' must be a logical argument, either TRUE or FALSE"
+  )
   ranef_group <- resolve_ranef_group(object, ranef_group)
 
-  ranef_estimates_core(
+  out <- ranef_estimates_core(
     fit = object$fit,
     raw_coefs = object$raw_coefficients,
     components = object$components,
@@ -83,6 +104,14 @@ ranef_estimates <- function(object, ranef_group = NULL) {
     newdata = object$newdata,
     ranef_group = ranef_group
   )
+
+  if (ranef_ci) {
+    validate_ci_level(ci_level)
+    boots <- get_ranef_boots(object, ranef_group)
+    out <- add_ranef_ci_columns(out, boots$estimates, ranef_group, ci_level)
+  }
+
+  out
 }
 
 #' Resolve and validate the random-effect grouping variable to use,
@@ -110,6 +139,44 @@ resolve_ranef_group <- function(object, ranef_group) {
     )
   )
   ranef_group
+}
+
+#' Add percentile bootstrap CI columns to a \code{ranef_estimates()}-shaped
+#' table, using stored bootstrap replicate estimates.
+#' @noRd
+add_ranef_ci_columns <- function(est, boot_estimates, ranef_group, ci_level) {
+  alpha <- 1 - ci_level
+  probs <- c(alpha / 2, 1 - alpha / 2)
+
+  ci_bounds <- function(param) {
+    t(vapply(
+      seq_len(nrow(est)),
+      function(i) {
+        lv <- est[[ranef_group]][i]
+        comp <- est$component[i]
+        vals <- boot_estimates[[param]][
+          boot_estimates[[ranef_group]] == lv & boot_estimates$component == comp
+        ]
+        if (length(vals) == 0 || all(is.na(vals))) {
+          return(c(NA_real_, NA_real_))
+        }
+        stats::quantile(vals, probs = probs, na.rm = TRUE, names = FALSE)
+      },
+      numeric(2)
+    ))
+  }
+
+  amp_ci <- ci_bounds("amp")
+  acr_ci <- ci_bounds("acr")
+  mesor_ci <- ci_bounds("mesor")
+
+  est$amp_lower <- amp_ci[, 1]
+  est$amp_upper <- amp_ci[, 2]
+  est$acr_lower <- acr_ci[, 1]
+  est$acr_upper <- acr_ci[, 2]
+  est$mesor_lower <- mesor_ci[, 1]
+  est$mesor_upper <- mesor_ci[, 2]
+  est
 }
 
 #' Core computation shared by \code{ranef_estimates()} and
@@ -297,6 +364,142 @@ curve_from_estimates <- function(est, ranef_group, periods, linkinv, time_vec) {
   })
 
   out <- do.call(rbind, curves)
+  names(out)[names(out) == "ranef_group"] <- ranef_group
+  out
+}
+
+#' Compute bootstrap confidence-ellipse parameters for each level of a
+#' random-effect grouping variable, for a given component, in the same
+#' rrr/sss (x, y) coordinates used to plot the point estimate.
+#'
+#' Uses the empirical covariance of each level's bootstrap (rrr, sss) draws
+#' (converted from the amplitude/acrophase replicates via the same
+#' \code{direction}/\code{offset} transform used for the point estimate),
+#' via a standard bivariate-normal confidence ellipse (eigendecomposition
+#' of the covariance matrix, scaled by the chi-squared quantile for 2
+#' degrees of freedom). The ellipse is centred on the point estimate
+#' itself (not the bootstrap mean), so it lines up with the point already
+#' plotted.
+#'
+#' @param object A \code{cglmm} object with bootstrap estimates attached
+#' via \code{add_ranef_boots()}.
+#' @param ranef_group A \code{character} naming the random-effect grouping
+#' variable.
+#' @param component_index Which component to compute ellipses for.
+#' @param direction,offset Passed through from the calling plot function,
+#' to match the point estimate's coordinate transform.
+#' @param ci_level Confidence level for the ellipse.
+#'
+#' @return A \code{data.frame} with one row per grouping level, and
+#' columns \code{x0}, \code{y0} (centre), \code{a}, \code{b} (semi-axis
+#' lengths), and \code{angle} (radians), suitable for
+#' \code{ggforce::geom_ellipse()}.
+#' @noRd
+ranef_ci_ellipse_data <- function(
+  object,
+  ranef_group,
+  component_index,
+  direction,
+  offset,
+  ci_level = 0.95
+) {
+  est <- ranef_estimates(object, ranef_group = ranef_group)
+  est <- est[est$component == as.character(component_index), ]
+
+  boots <- get_ranef_boots(object, ranef_group)$estimates
+  boots <- boots[boots$component == as.character(component_index), ]
+
+  chisq_val <- stats::qchisq(ci_level, df = 2)
+  levels_ranef <- est[[ranef_group]]
+
+  rows <- lapply(levels_ranef, function(lv) {
+    lv_boots <- boots[boots[[ranef_group]] == lv, ]
+    rrr_rep <- lv_boots$amp * cos(direction * lv_boots$acr + offset)
+    sss_rep <- lv_boots$amp * sin(direction * lv_boots$acr + offset)
+
+    lv_est <- est[est[[ranef_group]] == lv, ]
+    x0 <- lv_est$amp * cos(direction * lv_est$acr + offset)
+    y0 <- lv_est$amp * sin(direction * lv_est$acr + offset)
+
+    if (length(rrr_rep) < 3 || stats::sd(rrr_rep) == 0 || stats::sd(sss_rep) == 0) {
+      return(data.frame(x0 = x0, y0 = y0, a = 0, b = 0, angle = 0))
+    }
+
+    eig <- eigen(stats::cov(cbind(rrr_rep, sss_rep)))
+    axes <- sqrt(pmax(eig$values, 0) * chisq_val)
+
+    data.frame(
+      x0 = x0,
+      y0 = y0,
+      a = axes[1],
+      b = axes[2],
+      angle = atan2(eig$vectors[2, 1], eig$vectors[1, 1])
+    )
+  })
+
+  do.call(rbind, rows)
+}
+
+#' Compute pointwise bootstrap percentile bands for each level's fitted
+#' rhythm curve, evaluating every bootstrap replicate's curve across
+#' \code{time_vec} and taking quantiles across replicates at each time
+#' point. This reflects the joint uncertainty in amplitude, acrophase, and
+#' mesor together, since each replicate's curve is one coherent draw.
+#'
+#' @param object A \code{cglmm} object with bootstrap estimates attached
+#' via \code{add_ranef_boots()}.
+#' @param ranef_group A \code{character} naming the random-effect grouping
+#' variable.
+#' @param time_vec A numeric vector of time values at which to evaluate.
+#' @param ci_level Confidence level for the band.
+#'
+#' @return A long-format \code{data.frame} with one row per grouping level
+#' per element of \code{time_vec}, and columns for the grouping level,
+#' time, and lower/upper fitted response bounds.
+#' @noRd
+ranef_ci_ribbon_data <- function(object, ranef_group, time_vec, ci_level = 0.95) {
+  boots <- get_ranef_boots(object, ranef_group)$estimates
+  periods <- vapply(object$components, function(cmp) cmp$period, numeric(1))
+  linkinv <- stats::family(object$fit)$linkinv
+
+  alpha <- 1 - ci_level
+  probs <- c(alpha / 2, 1 - alpha / 2)
+
+  rep_curves <- lapply(unique(boots$.rep), function(r) {
+    curve_from_estimates(
+      boots[boots$.rep == r, ],
+      ranef_group,
+      periods,
+      linkinv,
+      time_vec
+    )
+  })
+  all_curves <- do.call(rbind, rep_curves)
+
+  levels_ranef <- unique(all_curves[[ranef_group]])
+  bands <- lapply(levels_ranef, function(lv) {
+    lv_curves <- all_curves[all_curves[[ranef_group]] == lv, ]
+    bounds <- vapply(
+      time_vec,
+      function(t) {
+        stats::quantile(
+          lv_curves$fitted[lv_curves$time == t],
+          probs = probs,
+          na.rm = TRUE,
+          names = FALSE
+        )
+      },
+      numeric(2)
+    )
+    data.frame(
+      ranef_group = lv,
+      time = time_vec,
+      lower = bounds[1, ],
+      upper = bounds[2, ]
+    )
+  })
+
+  out <- do.call(rbind, bands)
   names(out)[names(out) == "ranef_group"] <- ranef_group
   out
 }

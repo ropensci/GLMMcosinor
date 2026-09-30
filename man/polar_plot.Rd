@@ -25,6 +25,7 @@ polar_plot(
   xlims,
   ylims,
   ranef_plot = NULL,
+  ranef_ci = FALSE,
   ...
 )
 }
@@ -120,8 +121,15 @@ the polar plots have labels corresponding to their components.}
 variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
 level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
 on the plot as points. Defaults to \code{NULL} (no overlay). Only
-point estimates are shown - see \code{ranef_estimates()} for why no
-uncertainty is displayed.}
+point estimates are shown unless \code{ranef_ci = TRUE} - see
+\code{ranef_estimates()} for why no uncertainty is displayed by default.}
+
+\item{ranef_ci}{A \code{logical}. If \code{TRUE}, a bootstrap confidence
+ellipse (at \code{ci_level}) is drawn around each \code{ranef_plot}
+point, using bootstrap replicates added via \code{add_ranef_boots()}.
+Requires \code{ranef_plot} to also be specified, and \code{x} to have
+had \code{add_ranef_boots()} run on it already. Defaults to
+\code{FALSE}.}
 
 \item{...}{Additional, ignored arguments.}
 }

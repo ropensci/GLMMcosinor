@@ -229,7 +229,55 @@ polar_plot(mixed_mod, ranef_plot = "subject")
 autoplot(mixed_mod, ranef_lines = "subject")
 ```
 
-Note that these are point estimates only - `glmmTMB` doesn't provide the
+## Uncertainty of random-effect estimates
+
+Unlike the population-level estimates from `summary()`, `ranef_estimates()`
+doesn't report any uncertainty by default. `glmmTMB` doesn't provide the
 joint uncertainty of the conditional modes (random effects) together with
 the fixed effects, so the delta-method approach used for the population-level
 confidence intervals isn't available here.
+
+Instead, `{GLMMcosinor}` supports a **parametric bootstrap**: simulate new
+response data from the fitted model, refit the model to each simulated
+dataset, and use the resulting distribution of subject-level estimates to
+form percentile confidence intervals. Because this means refitting the model
+many times, it can be slow - so it's a deliberate, explicit step
+(`add_ranef_boots()`) rather than something that happens automatically. Run
+it once, and the result can be reused by every subsequent table or plot that
+asks for it, by adding `ranef_ci = TRUE`.
+
+```{r}
+# nsim is small here to keep the vignette fast to build - for real analyses,
+# prefer the default (nsim = 500) or higher
+mixed_mod <- add_ranef_boots(mixed_mod, nsim = 100)
+```
+
+`mixed_mod` now carries the bootstrap replicates alongside the rest of the
+model, so it can be passed straight into the same functions as before, with
+`ranef_ci = TRUE`:
+
+```{r}
+ranef_estimates(mixed_mod, ranef_ci = TRUE)
+```
+
+This adds `_lower`/`_upper` columns (at the `ci_level` you specify, `0.95`
+by default) for amplitude, acrophase, and mesor. The same flag adds a
+bootstrap confidence ellipse to `polar_plot()`, and a bootstrap percentile
+band to `autoplot()`'s curves:
+
+```{r}
+polar_plot(mixed_mod, ranef_plot = "subject", ranef_ci = TRUE)
+autoplot(mixed_mod, ranef_lines = "subject", ranef_ci = TRUE)
+```
+
+If you try to use `ranef_ci = TRUE` before running `add_ranef_boots()`,
+you'll get a message telling you to add it first, e.g.:
+
+```{r, error=TRUE}
+mixed_mod_no_boots <- cglmm(
+  Y ~ amp_acro(times, n_components = 1, period = 24) +
+    (1 + amp_acro1 | subject),
+  data = dat_mixed
+)
+ranef_estimates(mixed_mod_no_boots, ranef_ci = TRUE)
+```

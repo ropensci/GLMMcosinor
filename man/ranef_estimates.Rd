@@ -4,7 +4,7 @@
 \alias{ranef_estimates}
 \title{Extract rhythm parameter estimates at the random-effect level}
 \usage{
-ranef_estimates(object, ranef_group = NULL)
+ranef_estimates(object, ranef_group = NULL, ranef_ci = FALSE, ci_level = 0.95)
 }
 \arguments{
 \item{object}{A \code{cglmm} object with at least one random effect.}
@@ -13,12 +13,22 @@ ranef_estimates(object, ranef_group = NULL)
 variable to compute estimates for. Required if \code{object} has more
 than one random-effect grouping variable; otherwise inferred
 automatically.}
+
+\item{ranef_ci}{A \code{logical}. If \code{TRUE}, adds percentile
+bootstrap confidence interval columns using replicates added via
+\code{add_ranef_boots()}. Requires \code{add_ranef_boots()} to have
+been run on \code{object} already. Defaults to \code{FALSE}.}
+
+\item{ci_level}{Confidence level used when \code{ranef_ci = TRUE}.
+Defaults to \code{0.95}.}
 }
 \value{
 A \code{data.frame} with one row per component per level of
 \code{ranef_group}, and columns for the grouping level, the component
 index, amplitude, and acrophase (mesor is included in a separate
 \code{component = "mesor"} block, since it doesn't vary by component).
+If \code{ranef_ci = TRUE}, lower/upper confidence bound columns are
+also included for amplitude, acrophase, and mesor.
 }
 \description{
 For a mixed \code{cglmm} model, computes the amplitude, acrophase, and
@@ -29,11 +39,15 @@ point estimate of the rhythm, complementing the population-level
 estimates returned by \code{summary()}.
 }
 \details{
-No standard errors are returned. \code{glmmTMB} does not provide a
-method to obtain the joint uncertainty of the conditional modes (random
-effects) together with the fixed effects, so a fully correct confidence
-interval for these estimates isn't currently available. See
-\code{vignette("mixed-models")} for a discussion of possible approaches.
+By default, no standard errors are returned. \code{glmmTMB} does not
+provide a method to obtain the joint uncertainty of the conditional
+modes (random effects) together with the fixed effects, so a fully
+correct delta-method confidence interval for these estimates isn't
+available the way it is for \code{summary()}'s population-level
+estimates. Instead, set \code{ranef_ci = TRUE} to add percentile
+bootstrap confidence intervals, computed from replicates added via
+\code{add_ranef_boots()} (run that first). See \code{vignette(
+"mixed-models")} for a worked example and further discussion.
 
 This function assumes a common, simple random-effects structure: a
 single grouping variable (\code{ranef_group}), with random terms
