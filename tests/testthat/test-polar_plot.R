@@ -242,3 +242,51 @@ test_that("grouping spread over two amp_acro() calls (same period) works (#32)",
     polar_plot(object)
   )
 })
+
+test_that("ranef_plot overlays random-effect estimates (#37)", {
+  withr::local_seed(42)
+  dat_mixed <- do.call(
+    "rbind",
+    lapply(1:15, function(id) {
+      d <- simulate_cosinor(
+        n = 20,
+        mesor = rnorm(1),
+        amp = rnorm(1, mean = 3, sd = 0.5),
+        acro = rnorm(1, mean = 1.5, sd = 0.2),
+        family = "gaussian",
+        period = 24,
+        n_components = 1
+      )
+      d$subject <- id
+      d
+    })
+  )
+  dat_mixed$subject <- as.factor(dat_mixed$subject)
+
+  object <- cglmm(
+    Y ~ amp_acro(times, n_components = 1, period = 24) +
+      (1 + amp_acro1 | subject),
+    data = dat_mixed
+  )
+
+  expect_no_error(polar_plot(object, ranef_plot = "subject"))
+
+  vdiffr::expect_doppelganger(
+    "polar plot with ranef_plot overlay",
+    polar_plot(object, ranef_plot = "subject")
+  )
+
+  expect_error(
+    polar_plot(object, ranef_plot = "bogus"),
+    regexp = "must be a string corresponding to the name of a"
+  )
+
+  object_no_ranef <- cglmm(
+    vit_d ~ amp_acro(time, group = "X", period = 12),
+    data = vitamind
+  )
+  expect_error(
+    polar_plot(object_no_ranef, ranef_plot = "X"),
+    regexp = "does not have any random effects"
+  )
+})

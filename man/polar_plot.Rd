@@ -24,6 +24,7 @@ polar_plot(
   show_component_labels = TRUE,
   xlims,
   ylims,
+  ranef_plot = NULL,
   ...
 )
 }
@@ -114,6 +115,13 @@ the polar plots have labels corresponding to their components.}
 \item{xlims}{A vector of length two containing the limits for the x-axis.}
 
 \item{ylims}{A vector of length two containing the limits for the y-axis.}
+
+\item{ranef_plot}{A \code{character} naming a random-effect grouping
+variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
+level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
+on the plot as points. Defaults to \code{NULL} (no overlay). Only
+point estimates are shown - see \code{ranef_estimates()} for why no
+uncertainty is displayed.}
 
 \item{...}{Additional, ignored arguments.}
 }

@@ -16,6 +16,7 @@
   data_opacity = 0.3,
   predict.ribbon = TRUE,
   ranef_plot = NULL,
+  ranef_lines = NULL,
   cov_list = NULL,
   quietly = TRUE,
   ...
@@ -58,6 +59,13 @@ is plotted.}
 
 \item{ranef_plot}{Specify the random effects variables that you wish to plot.
 If not specified, only the fixed effects will be visualized.}
+
+\item{ranef_lines}{A \code{character} naming a random-effect grouping
+variable in \code{object} (see \code{object$ranef_groups}). If supplied,
+each level's fitted rhythm curve (computed from \code{ranef_estimates()})
+is added as a \code{geom_line()} layer, colored by grouping level.
+Defaults to \code{NULL} (no curves added). Only point estimates are
+used - see \code{ranef_estimates()} for why no uncertainty is shown.}
 
 \item{cov_list}{Specify the levels of the covariates that you wish to plot as
 a list. For example, if you have two covariates: var1, and var 2, you could

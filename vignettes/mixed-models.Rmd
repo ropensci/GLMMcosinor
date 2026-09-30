@@ -203,3 +203,33 @@ mixed_mod_reml$fit$modelInfo$REML
 
 mixed_mod$fit$modelInfo$REML
 ```
+
+# Rhythm estimates at the random-effect level
+
+So far, everything we've looked at (`summary()`, `autoplot()`, `polar_plot()`)
+describes the **population-level** (fixed-effect) rhythm. Often we also want
+to know the rhythm parameters (amplitude, acrophase, mesor) for each
+individual subject - `ranef_estimates()` extracts these by combining each
+subject's conditional mode (BLUP) with the population-level estimate.
+
+```{r}
+ranef_estimates(mixed_mod)
+```
+
+Each component gets its own amplitude/acrophase row per subject; mesor is
+reported separately (in a `component = "mesor"` block) since it doesn't vary
+by component.
+
+These per-subject estimates can also be overlaid directly on `polar_plot()`
+(as points) and `autoplot()` (as fitted curves), via the `ranef_plot` and
+`ranef_lines` arguments respectively:
+
+```{r}
+polar_plot(mixed_mod, ranef_plot = "subject")
+autoplot(mixed_mod, ranef_lines = "subject")
+```
+
+Note that these are point estimates only - `glmmTMB` doesn't provide the
+joint uncertainty of the conditional modes (random effects) together with
+the fixed effects, so the delta-method approach used for the population-level
+confidence intervals isn't available here.

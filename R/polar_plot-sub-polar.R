@@ -24,6 +24,10 @@
 #' @param overlay_start background axes positioning.
 #' @param fill_colors Colours for ellipses.
 #' @param zoom_origin Zoom position if used.
+#' @param ranef_plot A \code{character} naming a random-effect grouping
+#' variable in \code{x}, whose level estimates (from
+#' \code{ranef_estimates()}) will be overlaid as points. \code{NULL}
+#' (default) for no overlay.
 #'
 #' @returns A \code{ggplot2} object.
 #'
@@ -78,7 +82,8 @@ sub_ggplot.cglmm.polar <- function(
   quietly,
   overlay_start,
   fill_colors,
-  zoom_origin
+  zoom_origin,
+  ranef_plot = NULL
 ) {
   # get the component that is going to plotted
   component_index <- comp
@@ -282,6 +287,25 @@ sub_ggplot.cglmm.polar <- function(
   if (x$group_check) {
     plot_obj <- plot_obj + ggplot2::labs(fill = x_str, colour = NULL)
   }
+
+  # OPTIONAL: overlay each random-effect grouping level's point estimate
+  # (amplitude/acrophase), converted to the same rrr/sss coordinates used
+  # for the population-level estimate above
+  if (!is.null(ranef_plot)) {
+    ranef_df <- ranef_estimates(x, ranef_group = ranef_plot)
+    ranef_df <- ranef_df[ranef_df$component == as.character(component_index), ]
+
+    ranef_rrr <- ranef_df$amp * cos(direction * ranef_df$acr + offset)
+    ranef_sss <- ranef_df$amp * sin(direction * ranef_df$acr + offset)
+
+    plot_obj <- plot_obj +
+      ggplot2::geom_point(
+        ggplot2::aes(x = ranef_rrr, y = ranef_sss),
+        alpha = 0.5,
+        shape = 4
+      )
+  }
+
   # OPTIONAL: overlays lines connecting the parameter estimates to the
   # origin, and displays estimates in plot
   if (overlay_parameter_info) {
