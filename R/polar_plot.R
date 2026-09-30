@@ -72,14 +72,14 @@
 #' variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
 #' level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
 #' on the plot as points. Defaults to \code{NULL} (no overlay). Only
-#' point estimates are shown unless \code{ranef_ci = TRUE} - see
+#' point estimates are shown unless \code{ranef_ci} is set - see
 #' \code{ranef_estimates()} for why no uncertainty is displayed by default.
-#' @param ranef_ci A \code{logical}. If \code{TRUE}, a bootstrap confidence
-#' ellipse (at \code{ci_level}) is drawn around each \code{ranef_plot}
+#' @param ranef_ci \code{NULL} (default) for no confidence ellipse, or a
+#' single number giving the confidence level (e.g. \code{0.95}) at which
+#' to draw a bootstrap confidence ellipse around each \code{ranef_plot}
 #' point, using bootstrap replicates added via \code{add_ranef_boots()}.
 #' Requires \code{ranef_plot} to also be specified, and \code{x} to have
-#' had \code{add_ranef_boots()} run on it already. Defaults to
-#' \code{FALSE}.
+#' had \code{add_ranef_boots()} run on it already.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4}
@@ -115,7 +115,7 @@ polar_plot <- function(
   xlims,
   ylims,
   ranef_plot = NULL,
-  ranef_ci = FALSE,
+  ranef_ci = NULL,
   ...
 ) {
   UseMethod("polar_plot")
@@ -195,14 +195,14 @@ polar_plot <- function(
 #' variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
 #' level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
 #' on the plot as points. Defaults to \code{NULL} (no overlay). Only
-#' point estimates are shown unless \code{ranef_ci = TRUE} - see
+#' point estimates are shown unless \code{ranef_ci} is set - see
 #' \code{ranef_estimates()} for why no uncertainty is displayed by default.
-#' @param ranef_ci A \code{logical}. If \code{TRUE}, a bootstrap confidence
-#' ellipse (at \code{ci_level}) is drawn around each \code{ranef_plot}
+#' @param ranef_ci \code{NULL} (default) for no confidence ellipse, or a
+#' single number giving the confidence level (e.g. \code{0.95}) at which
+#' to draw a bootstrap confidence ellipse around each \code{ranef_plot}
 #' point, using bootstrap replicates added via \code{add_ranef_boots()}.
 #' Requires \code{ranef_plot} to also be specified, and \code{x} to have
-#' had \code{add_ranef_boots()} run on it already. Defaults to
-#' \code{FALSE}.
+#' had \code{add_ranef_boots()} run on it already.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4}
@@ -250,7 +250,7 @@ polar_plot.cglmm <- function(
   xlims,
   ylims,
   ranef_plot = NULL,
-  ranef_ci = FALSE,
+  ranef_ci = NULL,
   ...
 ) {
   # checking the quality of inputs
@@ -366,11 +366,8 @@ polar_plot.cglmm <- function(
       )
     )
   }
-  assertthat::assert_that(
-    is.logical(ranef_ci),
-    msg = "'ranef_ci' must be a logical argument, either TRUE or FALSE"
-  )
-  if (ranef_ci) {
+  validate_ranef_ci(ranef_ci)
+  if (!is.null(ranef_ci)) {
     assertthat::assert_that(
       !is.null(ranef_plot),
       msg = "'ranef_ci' requires 'ranef_plot' to also be specified"
@@ -465,8 +462,7 @@ polar_plot.cglmm <- function(
       fill_colors = fill_colors,
       zoom_origin = zoom_origin,
       ranef_plot = ranef_plot,
-      ranef_ci = ranef_ci,
-      ci_level = ci_level
+      ranef_ci = ranef_ci
     )
   }
 

@@ -12,10 +12,11 @@
 #' modes (random effects) together with the fixed effects, so a fully
 #' correct delta-method confidence interval for these estimates isn't
 #' available the way it is for \code{summary()}'s population-level
-#' estimates. Instead, set \code{ranef_ci = TRUE} to add percentile
-#' bootstrap confidence intervals, computed from replicates added via
-#' \code{add_ranef_boots()} (run that first). See \code{vignette(
-#' "mixed-models")} for a worked example and further discussion.
+#' estimates. Instead, set \code{ranef_ci} to a confidence level (e.g.
+#' \code{0.95}) to add percentile bootstrap confidence intervals, computed
+#' from replicates added via \code{add_ranef_boots()} (run that first).
+#' See \code{vignette("mixed-models")} for a worked example and further
+#' discussion.
 #'
 #' This function assumes a common, simple random-effects structure: a
 #' single grouping variable (\code{ranef_group}), with random terms
@@ -31,19 +32,18 @@
 #' variable to compute estimates for. Required if \code{object} has more
 #' than one random-effect grouping variable; otherwise inferred
 #' automatically.
-#' @param ranef_ci A \code{logical}. If \code{TRUE}, adds percentile
-#' bootstrap confidence interval columns using replicates added via
-#' \code{add_ranef_boots()}. Requires \code{add_ranef_boots()} to have
-#' been run on \code{object} already. Defaults to \code{FALSE}.
-#' @param ci_level Confidence level used when \code{ranef_ci = TRUE}.
-#' Defaults to \code{0.95}.
+#' @param ranef_ci \code{NULL} (default) for no confidence interval, or a
+#' single number giving the confidence level (e.g. \code{0.95}) at which
+#' to add percentile bootstrap confidence interval columns, using
+#' replicates added via \code{add_ranef_boots()}. Requires
+#' \code{add_ranef_boots()} to have been run on \code{object} already.
 #'
 #' @return A \code{data.frame} with one row per component per level of
 #' \code{ranef_group}, and columns for the grouping level, the component
 #' index, amplitude, and acrophase (mesor is included in a separate
 #' \code{component = "mesor"} block, since it doesn't vary by component).
-#' If \code{ranef_ci = TRUE}, lower/upper confidence bound columns are
-#' also included for amplitude, acrophase, and mesor.
+#' If \code{ranef_ci} is not \code{NULL}, lower/upper confidence bound
+#' columns are also included for amplitude, acrophase, and mesor.
 #'
 #' @examples
 #' set.seed(1)
@@ -77,8 +77,7 @@
 ranef_estimates <- function(
   object,
   ranef_group = NULL,
-  ranef_ci = FALSE,
-  ci_level = 0.95
+  ranef_ci = NULL
 ) {
   assertthat::assert_that(
     inherits(object, "cglmm"),
@@ -88,10 +87,7 @@ ranef_estimates <- function(
     !all(is.na(object$ranef_groups)),
     msg = "'object' does not have any random effects."
   )
-  assertthat::assert_that(
-    is.logical(ranef_ci),
-    msg = "'ranef_ci' must be a logical argument, either TRUE or FALSE"
-  )
+  validate_ranef_ci(ranef_ci)
   ranef_group <- resolve_ranef_group(object, ranef_group)
 
   out <- ranef_estimates_core(
@@ -105,10 +101,9 @@ ranef_estimates <- function(
     ranef_group = ranef_group
   )
 
-  if (ranef_ci) {
-    validate_ci_level(ci_level)
+  if (!is.null(ranef_ci)) {
     boots <- get_ranef_boots(object, ranef_group)
-    out <- add_ranef_ci_columns(out, boots$estimates, ranef_group, ci_level)
+    out <- add_ranef_ci_columns(out, boots$estimates, ranef_group, ranef_ci)
   }
 
   out
@@ -139,6 +134,24 @@ resolve_ranef_group <- function(object, ranef_group) {
     )
   )
   ranef_group
+}
+
+#' Validate a \code{ranef_ci} argument: either \code{NULL} (no CI) or a
+#' single number giving the confidence level to use (e.g. \code{0.95}).
+#' @noRd
+validate_ranef_ci <- function(ranef_ci) {
+  if (is.null(ranef_ci)) {
+    return(invisible(NULL))
+  }
+  assertthat::assert_that(
+    is.numeric(ranef_ci) && length(ranef_ci) == 1,
+    msg = paste(
+      "'ranef_ci' must be NULL (no confidence interval), or a single",
+      "number giving the confidence level, e.g. 'ranef_ci = 0.95'"
+    )
+  )
+  validate_ci_level(ranef_ci)
+  invisible(NULL)
 }
 
 #' Add percentile bootstrap CI columns to a \code{ranef_estimates()}-shaped

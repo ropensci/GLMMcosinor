@@ -29,8 +29,7 @@ sub_ggplot.cglmm.polar(
   fill_colors,
   zoom_origin,
   ranef_plot = NULL,
-  ranef_ci = FALSE,
-  ci_level = 0.95
+  ranef_ci = NULL
 )
 }
 \arguments{
@@ -86,10 +85,9 @@ variable in \code{x}, whose level estimates (from
 \code{ranef_estimates()}) will be overlaid as points. \code{NULL}
 (default) for no overlay.}
 
-\item{ranef_ci}{A \code{logical}. If \code{TRUE}, draws a bootstrap
+\item{ranef_ci}{\code{NULL} for no confidence ellipse, or a single
+number giving the confidence level at which to draw a bootstrap
 confidence ellipse around each \code{ranef_plot} point.}
-
-\item{ci_level}{Confidence level used for the \code{ranef_ci} ellipse.}
 }
 \value{
 A \code{ggplot2} object.

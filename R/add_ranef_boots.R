@@ -16,7 +16,8 @@
 #' model (via \code{stats::simulate()}), refits the model to each, and
 #' recomputes \code{ranef_estimates()} each time. The resulting empirical
 #' distribution is used to form percentile confidence intervals wherever
-#' \code{ranef_ci = TRUE} is used.
+#' \code{ranef_ci} is set to a confidence level (e.g. \code{ranef_ci =
+#' 0.95}).
 #'
 #' Because this involves refitting the model (at least) \code{nsim} times,
 #' it can be slow for larger datasets or models - this is why it's a
@@ -77,7 +78,7 @@
 #' )
 #'
 #' mixed_mod <- add_ranef_boots(mixed_mod, nsim = 20)
-#' ranef_estimates(mixed_mod, ranef_ci = TRUE)
+#' ranef_estimates(mixed_mod, ranef_ci = 0.95)
 #' }
 #' @export
 add_ranef_boots <- function(
@@ -240,7 +241,7 @@ get_ranef_boots <- function(object, ranef_group) {
       "No bootstrapped random-effect estimates found on 'object'. ",
       "Run `add_ranef_boots()` first, e.g.:\n\n",
       "  model <- add_ranef_boots(model)\n\n",
-      "then pass `ranef_ci = TRUE` again.",
+      "then pass `ranef_ci = 0.95` (or another confidence level) again.",
       call. = FALSE
     )
   }
@@ -255,7 +256,7 @@ get_ranef_boots <- function(object, ranef_group) {
       "  model <- add_ranef_boots(model, ranef_group = \"",
       ranef_group,
       "\")\n\n",
-      "then pass `ranef_ci = TRUE` again.",
+      "then pass `ranef_ci = 0.95` (or another confidence level) again.",
       call. = FALSE
     )
   }

@@ -244,7 +244,7 @@ form percentile confidence intervals. Because this means refitting the model
 many times, it can be slow - so it's a deliberate, explicit step
 (`add_ranef_boots()`) rather than something that happens automatically. Run
 it once, and the result can be reused by every subsequent table or plot that
-asks for it, by adding `ranef_ci = TRUE`.
+asks for it, by setting `ranef_ci` to a confidence level (e.g. `0.95`).
 
 ```{r}
 # nsim is small here to keep the vignette fast to build - for real analyses,
@@ -254,24 +254,26 @@ mixed_mod <- add_ranef_boots(mixed_mod, nsim = 100)
 
 `mixed_mod` now carries the bootstrap replicates alongside the rest of the
 model, so it can be passed straight into the same functions as before, with
-`ranef_ci = TRUE`:
+`ranef_ci = 0.95`:
 
 ```{r}
-ranef_estimates(mixed_mod, ranef_ci = TRUE)
+ranef_estimates(mixed_mod, ranef_ci = 0.95)
 ```
 
-This adds `_lower`/`_upper` columns (at the `ci_level` you specify, `0.95`
-by default) for amplitude, acrophase, and mesor. The same flag adds a
-bootstrap confidence ellipse to `polar_plot()`, and a bootstrap percentile
-band to `autoplot()`'s curves:
+This adds `_lower`/`_upper` columns (at the confidence level you specify)
+for amplitude, acrophase, and mesor. The same argument adds a bootstrap
+confidence ellipse to `polar_plot()`, and a bootstrap percentile band to
+`autoplot()`'s curves - and each can use a different confidence level if
+you want:
 
 ```{r}
-polar_plot(mixed_mod, ranef_plot = "subject", ranef_ci = TRUE)
-autoplot(mixed_mod, ranef_lines = "subject", ranef_ci = TRUE)
+polar_plot(mixed_mod, ranef_plot = "subject", ranef_ci = 0.95)
+autoplot(mixed_mod, ranef_lines = "subject", ranef_ci = 0.8)
 ```
 
-If you try to use `ranef_ci = TRUE` before running `add_ranef_boots()`,
-you'll get a message telling you to add it first, e.g.:
+`ranef_ci` defaults to `NULL` (no interval shown) everywhere it appears. If
+you try to set it before running `add_ranef_boots()`, you'll get a message
+telling you to add it first, e.g.:
 
 ```{r, error=TRUE}
 mixed_mod_no_boots <- cglmm(
@@ -279,5 +281,5 @@ mixed_mod_no_boots <- cglmm(
     (1 + amp_acro1 | subject),
   data = dat_mixed
 )
-ranef_estimates(mixed_mod_no_boots, ranef_ci = TRUE)
+ranef_estimates(mixed_mod_no_boots, ranef_ci = 0.95)
 ```

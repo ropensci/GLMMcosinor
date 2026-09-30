@@ -28,9 +28,9 @@
 #' variable in \code{x}, whose level estimates (from
 #' \code{ranef_estimates()}) will be overlaid as points. \code{NULL}
 #' (default) for no overlay.
-#' @param ranef_ci A \code{logical}. If \code{TRUE}, draws a bootstrap
+#' @param ranef_ci \code{NULL} for no confidence ellipse, or a single
+#' number giving the confidence level at which to draw a bootstrap
 #' confidence ellipse around each \code{ranef_plot} point.
-#' @param ci_level Confidence level used for the \code{ranef_ci} ellipse.
 #'
 #' @returns A \code{ggplot2} object.
 #'
@@ -87,8 +87,7 @@ sub_ggplot.cglmm.polar <- function(
   fill_colors,
   zoom_origin,
   ranef_plot = NULL,
-  ranef_ci = FALSE,
-  ci_level = 0.95
+  ranef_ci = NULL
 ) {
   # get the component that is going to plotted
   component_index <- comp
@@ -303,14 +302,14 @@ sub_ggplot.cglmm.polar <- function(
     ranef_rrr <- ranef_df$amp * cos(direction * ranef_df$acr + offset)
     ranef_sss <- ranef_df$amp * sin(direction * ranef_df$acr + offset)
 
-    if (ranef_ci) {
+    if (!is.null(ranef_ci)) {
       ellipse_df <- ranef_ci_ellipse_data(
         x,
         ranef_plot,
         component_index,
         direction,
         offset,
-        ci_level
+        ranef_ci
       )
       plot_obj <- plot_obj +
         ggforce::geom_ellipse(

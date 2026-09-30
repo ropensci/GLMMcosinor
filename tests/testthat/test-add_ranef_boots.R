@@ -119,7 +119,7 @@ test_that("add_ranef_boots() attaches bootstrap estimates and errors sensibly (#
   )
 })
 
-test_that("ranef_ci = TRUE works across ranef_estimates/polar_plot/autoplot (#37)", {
+test_that("ranef_ci = 0.95 works across ranef_estimates/polar_plot/autoplot (#37)", {
   withr::local_seed(42)
 
   dat_mixed <- do.call(
@@ -148,21 +148,37 @@ test_that("ranef_ci = TRUE works across ranef_estimates/polar_plot/autoplot (#37
 
   # informative error before bootstrapping, from all three entry points
   expect_error(
+    ranef_estimates(object, ranef_ci = 0.95),
+    regexp = "add_ranef_boots\\(\\)"
+  )
+  expect_error(
+    polar_plot(object, ranef_plot = "subject", ranef_ci = 0.95),
+    regexp = "add_ranef_boots\\(\\)"
+  )
+  expect_error(
+    autoplot(object, ranef_lines = "subject", ranef_ci = 0.95),
+    regexp = "add_ranef_boots\\(\\)"
+  )
+
+  # ranef_ci must be NULL or a single number in (0, 1) - the old
+  # logical TRUE/FALSE API is no longer accepted
+  expect_error(
     ranef_estimates(object, ranef_ci = TRUE),
-    regexp = "add_ranef_boots\\(\\)"
+    regexp = "'ranef_ci' must be NULL"
   )
   expect_error(
-    polar_plot(object, ranef_plot = "subject", ranef_ci = TRUE),
-    regexp = "add_ranef_boots\\(\\)"
+    ranef_estimates(object, ranef_ci = 1.5),
+    regexp = "single numeric value in \\[0, 1\\]"
   )
   expect_error(
-    autoplot(object, ranef_lines = "subject", ranef_ci = TRUE),
-    regexp = "add_ranef_boots\\(\\)"
+    ranef_estimates(object, ranef_ci = c(0.9, 0.95)),
+    regexp = "'ranef_ci' must be NULL"
   )
+  expect_no_error(ranef_estimates(object, ranef_ci = NULL))
 
   object <- add_ranef_boots(object, nsim = 25)
 
-  est_ci <- ranef_estimates(object, ranef_ci = TRUE)
+  est_ci <- ranef_estimates(object, ranef_ci = 0.95)
   expect_true(all(
     c("amp_lower", "amp_upper", "acr_lower", "acr_upper", "mesor_lower", "mesor_upper") %in%
       names(est_ci)
@@ -180,16 +196,29 @@ test_that("ranef_ci = TRUE works across ranef_estimates/polar_plot/autoplot (#37
   expect_false(anyNA(mesor_rows$mesor_lower))
   expect_true(all(mesor_rows$mesor_lower <= mesor_rows$mesor_upper))
 
-  expect_no_error(polar_plot(object, ranef_plot = "subject", ranef_ci = TRUE))
-  expect_no_error(autoplot(object, ranef_lines = "subject", ranef_ci = TRUE))
+  expect_no_error(polar_plot(object, ranef_plot = "subject", ranef_ci = 0.95))
+  expect_no_error(autoplot(object, ranef_lines = "subject", ranef_ci = 0.95))
+  # a different confidence level is also accepted
+  expect_no_error(polar_plot(object, ranef_plot = "subject", ranef_ci = 0.8))
+  expect_no_error(autoplot(object, ranef_lines = "subject", ranef_ci = 0.8))
 
   # ranef_ci requires the matching overlay argument
   expect_error(
-    polar_plot(object, ranef_ci = TRUE),
+    polar_plot(object, ranef_ci = 0.95),
     regexp = "'ranef_ci' requires 'ranef_plot'"
   )
   expect_error(
-    autoplot(object, ranef_ci = TRUE),
+    autoplot(object, ranef_ci = 0.95),
     regexp = "'ranef_ci' requires 'ranef_lines'"
+  )
+
+  # invalid ranef_ci type/range is rejected on both plotting functions too
+  expect_error(
+    polar_plot(object, ranef_plot = "subject", ranef_ci = TRUE),
+    regexp = "'ranef_ci' must be NULL"
+  )
+  expect_error(
+    autoplot(object, ranef_lines = "subject", ranef_ci = TRUE),
+    regexp = "'ranef_ci' must be NULL"
   )
 })
