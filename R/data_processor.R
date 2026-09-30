@@ -254,6 +254,7 @@ data_processor <- function(
       period = period,
       time_name = time_name,
       n_components = n_components,
+      components = components,
       group_stats = group_stats,
       group = group,
       group_check = group_check,
