@@ -313,14 +313,49 @@ test_cosinor_levels <- function(
   index <- matrix(0, ncol = length(x$coefficients), nrow = x_str_length)
   colnames(index) <- names(x$coefficients)
 
+  # assigns `value` to index[row, coef_name], raising an informative error
+  # (rather than a cryptic "subscript out of bounds") when `coef_name`
+  # doesn't correspond to any coefficient in the model. This happens, for
+  # example, when comparing components that are tied to different grouping
+  # variables (e.g. comparison_A's component uses a different `group` than
+  # comparison_B's, or than `x_str`) - a combination not supported by this
+  # comparison.
+  assign_index <- function(index, row, coef_name, value) {
+    if (!coef_name %in% colnames(index)) {
+      stop(
+        "Could not find a coefficient named '",
+        coef_name,
+        "' in the model. This usually means the requested comparison ",
+        "(x_str/comparison_A/comparison_B/level_index/component_index) ",
+        "doesn't correspond to a valid combination for this model - for ",
+        "example, comparing components that are tied to different ",
+        "grouping variables. Coefficient names available: ",
+        paste(colnames(index), collapse = ", "),
+        call. = FALSE
+      )
+    }
+    index[row, coef_name] <- value
+    index
+  }
+
   if (comparison_type == "components") {
     if (is.null(x_str)) {
-      index[1, paste0(param, comparison_A)] <- -1
-      index[1, paste0(param, comparison_B)] <- 1
+      index <- assign_index(index, 1, paste0(param, comparison_A), -1)
+      index <- assign_index(index, 1, paste0(param, comparison_B), 1)
     } else {
       for (i in seq_along(x_str)) {
-        index[i, paste0(x_str[i], level_index, ":", param, comparison_A)] <- -1
-        index[i, paste0(x_str[i], level_index, ":", param, comparison_B)] <- 1
+        index <- assign_index(
+          index,
+          i,
+          paste0(x_str[i], level_index, ":", param, comparison_A),
+          -1
+        )
+        index <- assign_index(
+          index,
+          i,
+          paste0(x_str[i], level_index, ":", param, comparison_B),
+          1
+        )
       }
     }
   }
@@ -331,26 +366,18 @@ test_cosinor_levels <- function(
     }
 
     for (i in seq_along(x_str)) {
-      index[
+      index <- assign_index(
+        index,
         i,
-        paste0(
-          x_str[i],
-          comparison_A,
-          ":",
-          param,
-          component_index
-        )
-      ] <- -1
-      index[
+        paste0(x_str[i], comparison_A, ":", param, component_index),
+        -1
+      )
+      index <- assign_index(
+        index,
         i,
-        paste0(
-          x_str[i],
-          comparison_B,
-          ":",
-          param,
-          component_index
-        )
-      ] <- 1
+        paste0(x_str[i], comparison_B, ":", param, component_index),
+        1
+      )
     }
   }
 

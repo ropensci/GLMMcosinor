@@ -221,6 +221,50 @@ validate_ci_level <- function(ci_level) {
     stop("'ci_level' must be a single numeric value in [0, 1].")
   }
 }
+#' Escape regex metacharacters in a string so it can be used as a literal
+#' match within a larger regex pattern.
+#' @noRd
+escape_regex <- function(x) {
+  # backslash must be escaped first, so escaping later characters doesn't
+  # double-escape the backslashes it introduces
+  specials <- c("\\", ".", "|", "(", ")", "[", "]", "{", "}", "^", "$", "*", "+", "?")
+  for (s in specials) {
+    x <- gsub(s, paste0("\\", s), x, fixed = TRUE)
+  }
+  x
+}
+
+#' Build a regex matching coefficient names for `group`'s interaction with
+#' `rrr_or_sss` (or, if `group` is 0/unused, the bare `rrr_or_sss` term).
+#'
+#' Coefficient names concatenate a group's name and its level with no
+#' separator (e.g. group "X2" at level "1" becomes "X21"). An unanchored
+#' pattern built from another group's name (e.g. "X") would also match this
+#' ("X21" contains "X"). This anchors the match to the start of the
+#' coefficient name and excludes any other group name in `other_groups`
+#' that has `group` as a prefix, so distinct groups are never conflated.
+#' @noRd
+group_coef_regex <- function(group, other_groups, rrr_or_sss) {
+  rrr_or_sss <- escape_regex(rrr_or_sss)
+  if (identical(group, 0) || identical(group, "0")) {
+    return(paste0("^", rrr_or_sss, "$"))
+  }
+
+  group <- escape_regex(as.character(group))
+  other_groups <- as.character(other_groups[other_groups != 0])
+  colliding <- other_groups[
+    other_groups != group & startsWith(other_groups, group)
+  ]
+
+  lookahead <- if (length(colliding) > 0) {
+    suffixes <- escape_regex(substring(colliding, nchar(group) + 1))
+    paste0("(?!", paste(suffixes, collapse = "|"), ")")
+  } else {
+    ""
+  }
+
+  paste0("^", group, lookahead, ".*:", rrr_or_sss, "$")
+}
 
 # calculate the parameters from the raw estimates
 get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
@@ -229,25 +273,26 @@ get_new_coefs <- function(coefs, vec_rrr, vec_sss, n_components, components) {
   mu.coef <- NULL
   mu_inv <- rep(0, length(names(coefs)))
 
+  all_groups <- vapply(components, function(cmp) as.character(cmp$group), "")
+
   # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
   # the relevant raw parameters from the raw coefficient model output
   for (i in seq_len(n_components)) {
     period_idx <- components[[i]]$period_idx
 
     group <- components[[i]]$group
-    if (components[[i]]$group != 0) {
-      r.coef[[i]] <- grepl(
-        paste0(components[[i]]$group, ".*:", vec_rrr[period_idx]),
-        names(coefs)
-      )
-      s.coef[[i]] <- grepl(
-        paste0(components[[i]]$group, ".*:", vec_sss[period_idx]),
-        names(coefs)
-      )
-    } else {
-      r.coef[[i]] <- grepl(paste0(vec_rrr[period_idx]), names(coefs))
-      s.coef[[i]] <- grepl(paste0(vec_sss[period_idx]), names(coefs))
-    }
+    other_groups <- all_groups[-i]
+
+    r.coef[[i]] <- grepl(
+      group_coef_regex(group, other_groups, vec_rrr[period_idx]),
+      names(coefs),
+      perl = TRUE
+    )
+    s.coef[[i]] <- grepl(
+      group_coef_regex(group, other_groups, vec_sss[period_idx]),
+      names(coefs),
+      perl = TRUE
+    )
 
     # Keep track of non-mesor terms
     mu_inv_carry <- r.coef[[i]] + s.coef[[i]]

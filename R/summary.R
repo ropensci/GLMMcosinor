@@ -52,105 +52,127 @@ summary.cglmm <- function(object, ci_level = 0.95, ...) {
     args <- match.call()[-1]
     coefs <- glmmTMB::fixef(mf)[[model_index]]
 
-    # reassign vec_rrr and vec_sss to those in the disp or zi model, if
-    # necessary
+    # reassign vec_rrr, vec_sss and components to those in the disp or zi
+    # model, if necessary
     if (model_index == "disp") {
       vec_rrr <- object$disp_list$vec_rrr_disp
       vec_sss <- object$disp_list$vec_sss_disp
-    }
-
-    if (model_index == "zi") {
+      components <- object$disp_list$components_disp
+    } else if (model_index == "zi") {
       vec_rrr <- object$zi_list$vec_rrr_zi
       vec_sss <- object$zi_list$vec_sss_zi
+      components <- object$zi_list$components_zi
+    } else {
+      components <- object$components
     }
 
     # create objects r.coef, s.coef, and mu.coef. This will be Boolean vectors
-    # that indicate the position of particular coefficients in coefs.
+    # (one per component) that indicate the position of particular
+    # coefficients in coefs. Components are matched via their `period_idx`
+    # (not their component number) since components that share a period
+    # share the same underlying rrr/sss columns, and are matched via their
+    # `group` (when grouped) so that components sharing rrr/sss columns but
+    # belonging to different groups are kept separate. This mirrors
+    # `get_new_coefs()` in data_utils.R, used by `print()`.
     r.coef <- NULL
     s.coef <- NULL
-    mu.coef <- NULL
     mu_inv <- rep(0, length(names(coefs)))
 
-    # put a '|' between adjecent elements of vec_rrr and vec_sss, used for
-    # indexing.
-    if (length(vec_rrr) > 1) {
-      vec_rrr_spec <- vec_rrr[1]
-      vec_sss_spec <- vec_sss[1]
-      for (i in 2:length(vec_rrr)) {
-        vec_rrr_spec <- paste0(vec_rrr_spec, "|", vec_rrr[i])
-        vec_sss_spec <- paste0(vec_sss_spec, "|", vec_sss[i])
-      }
-    } else {
-      vec_rrr_spec <- vec_rrr
-      vec_sss_spec <- vec_sss
-    }
+    all_groups <- vapply(components, function(cmp) as.character(cmp$group), "")
 
-    # Get a Boolean vector for rrr, sss, and mu. This will be used to extract
-    # the relevant raw parameters from the raw coefficient model output
-    r.coef <- grepl(vec_rrr_spec, names(coefs))
-    s.coef <- grepl(vec_sss_spec, names(coefs))
-
-    # Keep track of non-mesor terms
-    mu_inv_carry <- r.coef + s.coef
-    # Ultimately, every non-mesor term will be true
-    mu_inv <- mu_inv_carry + mu_inv
-
-    # invert 'mu_inv' to get a Boolean vector for mesor terms a matrix of rrr
-    # coefficients
-    mu.coef <- c(!mu_inv)
-    r.coef <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
-    # a matrix of sss coefficients
-    s.coef <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
-
-    # generate coefs containing sss, and rrr, respectively
-    beta.s <- coefs[s.coef]
-    beta.r <- coefs[r.coef]
-
-    # convert beta.s and beta.r to groups
-    groups.r <- c(beta.r, beta.r[which(names(beta.r) != names(beta.r))])
-    groups.s <- c(beta.s, beta.s[which(names(beta.s) != names(beta.s))])
-
-    # calculate parameters amp and acr
-    amp <- sqrt(groups.r^2 + groups.s^2)
-    # acr <- -atan2(groups.s, groups.r)
-    acr <- atan2(groups.s, groups.r)
-
-    # rename the vectors amp and acr
     for (i in seq_len(n_components)) {
-      names(amp) <- gsub(vec_rrr[i], paste0("amp", i), names(amp))
-      names(acr) <- gsub(vec_sss[i], paste0("acr", i), names(acr))
+      period_idx <- components[[i]]$period_idx
+      group <- components[[i]]$group
+      other_groups <- all_groups[-i]
+
+      r.coef[[i]] <- grepl(
+        group_coef_regex(group, other_groups, vec_rrr[period_idx]),
+        names(coefs),
+        perl = TRUE
+      )
+      s.coef[[i]] <- grepl(
+        group_coef_regex(group, other_groups, vec_sss[period_idx]),
+        names(coefs),
+        perl = TRUE
+      )
+
+      # Keep track of non-mesor terms
+      mu_inv_carry <- r.coef[[i]] + s.coef[[i]]
+      # Ultimately, every non-mesor term will be true
+      mu_inv <- mu_inv_carry + mu_inv
     }
 
-    # calculate the variance-covariance matrix
+    # invert 'mu_inv' to get a Boolean vector for mesor terms
+    mu.coef <- c(!mu_inv)
+    # a matrix of rrr coefficients (one row per component)
+    r.coef.mat <- (t(matrix(unlist(r.coef), ncol = length(r.coef))))
+    # a matrix of sss coefficients (one row per component)
+    s.coef.mat <- (t(matrix(unlist(s.coef), ncol = length(s.coef))))
+
+    amp <- NULL
+    acr <- NULL
+    a_r <- NULL
+    a_s <- NULL
+    b_r <- NULL
+    b_s <- NULL
+    r_positions <- NULL
+    s_positions <- NULL
+
+    for (i in seq_len(n_components)) {
+      period_idx <- components[[i]]$period_idx
+
+      beta.s <- coefs[s.coef.mat[i, ]]
+      beta.r <- coefs[r.coef.mat[i, ]]
+
+      # convert beta.s and beta.r to groups
+      groups.r <- c(beta.r[1], beta.r[which(names(beta.r) != names(beta.r[1]))])
+      groups.s <- c(beta.s[1], beta.s[which(names(beta.s) != names(beta.s[1]))])
+
+      # calculate parameters amp and acr for this component
+      amp_label <- if (n_components == 1) "amp" else paste0("amp", i)
+      acr_label <- if (n_components == 1) "acr" else paste0("acr", i)
+
+      amp[[i]] <- sqrt(groups.r^2 + groups.s^2)
+      names(amp[[i]]) <- gsub(vec_rrr[period_idx], amp_label, names(beta.r))
+
+      # acr <- -atan2(groups.s, groups.r)
+      acr[[i]] <- atan2(groups.s, groups.r)
+      names(acr[[i]]) <- gsub(vec_sss[period_idx], acr_label, names(beta.s))
+
+      # determine the partial derivatives of amplitude and acrophase
+
+      # a_r is the partial derivative of amp with respect to r.
+      # hence, a_r = d(amp)/d(groups.r),
+      # where amp = sqrt(groups.r^2 + groups.s^2). Likewise for a_s
+      a_r[[i]] <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
+      a_s[[i]] <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
+
+      # b_r is the partial derivative of acr with respect to r.
+      # hence, b_r = d(acr)/d(groups.r),
+      # where acr = arctan(s/r). Likewise for b_s
+      b_r[[i]] <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
+      b_s[[i]] <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
+
+      # track the positions (in `coefs`) used for this component's r/s
+      # coefficients, in the same order as beta.r/beta.s, so the
+      # variance-covariance submatrix can be extracted in matching order
+      r_positions <- c(r_positions, which(r.coef.mat[i, ]))
+      s_positions <- c(s_positions, which(s.coef.mat[i, ]))
+    }
+
+    a_r <- unlist(a_r)
+    a_s <- unlist(a_s)
+    b_r <- unlist(b_r)
+    b_s <- unlist(b_s)
+
+    # calculate the variance-covariance matrix, ordered to match a_r/a_s/b_r/b_s
     vmat <- stats::vcov(mf)[[model_index]][
-      c(which(r.coef), which(s.coef)),
-      c(which(r.coef), which(s.coef))
+      c(r_positions, s_positions),
+      c(r_positions, s_positions)
     ]
 
-    # if n_components = 1, then print "amp" and "acr" rather than "amp1", "acr1"
-    if (n_components == 1) {
-      names(amp) <- gsub(vec_rrr, "amp", names(amp))
-      names(acr) <- gsub(vec_sss, "acr", names(acr))
-      new_coefs <- c(coefs[mu.coef], unlist(amp), unlist(acr))
-    }
-
-    # determine the partial derivatives of amplitude and acrophase
-
-    # a_r is the partial derivative of amp with respect to r.
-    # hence, a_r = d(amp)/d(groups.r),
-    # where amp = sqrt(groups.r^2 + groups.s^2). Likewise for a_s
-
-    a_r <- (groups.r^2 + groups.s^2)^(-0.5) * groups.r
-    a_s <- (groups.r^2 + groups.s^2)^(-0.5) * groups.s
-
-    # b_r is the partial derivative of acr with respect to r.
-    # hence, b_r = d(acr)/d(groups.r),
-    # where acr = arctan(s/r). Likewise for b_s
-    b_r <- (1 / (1 + (groups.s^2 / groups.r^2))) * (-groups.s / groups.r^2)
-    b_s <- (1 / (1 + (groups.s^2 / groups.r^2))) * (1 / groups.r)
-
     # jac is the jacobian matrix, a matrix of partial derivatives
-    if (length(groups.r) == 1) {
+    if (length(a_r) == 1) {
       jac <- matrix(c(a_r, a_s, b_r, b_s), byrow = TRUE, nrow = 2)
     } else {
       jac <- rbind(

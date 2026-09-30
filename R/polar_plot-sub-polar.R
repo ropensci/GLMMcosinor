@@ -103,8 +103,12 @@ sub_ggplot.cglmm.polar <- function(
     string_index_raw <- ""
   }
 
-  amp_index <- paste0("amp", component_index)
-  acr_index <- paste0("acr", component_index)
+  # matches the convention used elsewhere (e.g. get_new_coefs(),
+  # .test_cosinor()): a single-component model's transformed coefficients
+  # are labelled "amp"/"acr" without a trailing component number.
+  component_label <- if (x$n_components == 1) "" else component_index
+  amp_index <- paste0("amp", component_label)
+  acr_index <- paste0("acr", component_label)
 
   # grab and store the summary statistics for amp and acr
   amp_row_idx <- which(

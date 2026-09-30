@@ -259,3 +259,45 @@ test_that("acrophase differences are within (-pi, pi)", {
 
   expect_true(all(acr_estimates < pi & acr_estimates > -pi))
 })
+
+test_that("informative error for unsupported cross-group component comparisons (#29, #32)", {
+  withr::local_seed(42)
+  vitamind_multi <- vitamind
+  vitamind_multi$Z <- sample(0:1, size = nrow(vitamind_multi), replace = TRUE)
+
+  # two components sharing a period (12) but tied to different grouping
+  # variables (X and Z)
+  object <- cglmm(
+    vit_d ~ X + Z + amp_acro(time, n_components = 2, group = c("X", "Z"), period = c(12, 12)),
+    data = vitamind_multi
+  )
+
+  # comparing component 1 (tied to group X) against component 2 (tied to
+  # group Z) using x_str = "X" doesn't correspond to any coefficient for
+  # component 2 - this should fail with an informative message rather than
+  # a cryptic "subscript out of bounds"
+  expect_error(
+    test_cosinor_components(
+      object,
+      param = "amp",
+      x_str = "X",
+      level_index = 0,
+      comparison_A = 1,
+      comparison_B = 2
+    ),
+    regexp = "Could not find a coefficient named"
+  )
+
+  # comparing levels within a single component (which does share a group)
+  # should still work correctly
+  expect_no_error(
+    test_cosinor_levels(
+      object,
+      x_str = "X",
+      param = "amp",
+      comparison_A = 0,
+      comparison_B = 1,
+      component_index = 1
+    )
+  )
+})
