@@ -276,3 +276,38 @@
       (Intercept) -21.51196
       X1          -13.25923
 
+# grouping spread over two amp_acro() calls (same period) works (#32)
+
+    Code
+      object
+    Output
+      
+       Conditional Model 
+      
+       Raw formula: 
+      Y ~ g1 + g2 + g1:main_rrr1 + g1:main_sss1 + g2:main_rrr1 + g2:main_sss1 
+      
+       Raw Coefficients: 
+                    Estimate
+      (Intercept)   -0.07118
+      g11            0.04474
+      g21            0.09968
+      g10:main_rrr1  1.00286
+      g11:main_rrr1 -1.28964
+      g10:main_sss1  1.11054
+      g11:main_sss1  1.41614
+      g21:main_rrr1 -1.19091
+      g21:main_sss1  1.53551
+      
+       Transformed Coefficients: 
+                  Estimate
+      (Intercept) -0.07118
+      [g1=1]       0.04474
+      [g2=1]       0.09968
+      [g1=0]:amp1  1.49633
+      [g1=1]:amp1  1.91536
+      [g2=1]:amp2  1.94321
+      [g1=0]:acr1  0.83631
+      [g1=1]:acr1  2.30948
+      [g2=1]:acr2  2.23047
+

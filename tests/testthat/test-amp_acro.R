@@ -377,3 +377,39 @@ test_that("non-time covariates using specials (e.g. splines) are handled correct
     fixed = TRUE
   ))
 })
+
+test_that("grouping can be spread over multiple amp_acro() calls (#32)", {
+  d_multi_grp_same_period <- readRDS(
+    test_path("fixtures", "d_multi_grp_same_period.rds")
+  )
+
+  data_and_formula <- update_formula_and_data(
+    data = d_multi_grp_same_period,
+    formula = Y ~ g1 +
+      g2 +
+      amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+      amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24)
+  )
+
+  expect_true(all(
+    c("main_rrr1", "main_sss1") %in% names(data_and_formula$newdata)
+  ))
+  # both groups' components share the same period, so should share a single
+  # main_rrr1/main_sss1 pair rather than getting their own main_rrr2/main_sss2
+  expect_false(any(
+    c("main_rrr2", "main_sss2") %in% names(data_and_formula$newdata)
+  ))
+
+  # multiple amp_acro() calls must all reference the same time_col
+  d_multi_grp_same_period$times2 <- d_multi_grp_same_period$times
+  expect_error(
+    cglmm(
+      Y ~ g1 +
+        g2 +
+        amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+        amp_acro(time_col = "times2", n_components = 1, group = "g2", period = 24),
+      data = d_multi_grp_same_period
+    ),
+    regexp = "must all use the same 'time_col'"
+  )
+})

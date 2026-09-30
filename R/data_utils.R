@@ -1,3 +1,63 @@
+#' Combine multiple `amp_acro()` calls (from the same side of a model
+#' formula) into a single, equivalent call.
+#'
+#' Allows the grouping structure to be spread over separate `amp_acro()`
+#' terms (e.g. one per grouping variable) rather than requiring a single
+#' call with a combined `group` vector. Each call's `n_components`,
+#' `group`, and `period` are evaluated and recycled independently, then
+#' concatenated in the order the calls appear in the formula - equivalent
+#' to writing one call with `n_components` set to their sum and `group`/
+#' `period` set to the concatenation of each call's (recycled) vectors.
+#'
+#' @param amp_acro_text A \code{character} vector of `amp_acro()` call text,
+#' one per term (as returned by \code{attr(terms(...), "term.labels")}).
+#' @param env The environment in which to evaluate each call's arguments.
+#' @noRd
+merge_amp_acro_calls <- function(amp_acro_text, env) {
+  matched_calls <- lapply(amp_acro_text, function(text) {
+    match.call(amp_acro, str2lang(text))
+  })
+
+  time_cols <- vapply(matched_calls, function(mc) deparse1(mc$time_col), "")
+  if (length(unique(time_cols)) > 1) {
+    stop(
+      "When a model formula includes multiple amp_acro() terms, they must ",
+      "all use the same 'time_col'."
+    )
+  }
+
+  n_components_list <- lapply(matched_calls, function(mc) {
+    if (is.null(mc$n_components)) 1 else eval(mc$n_components, envir = env)
+  })
+
+  recycle_to_n <- function(x, n) {
+    if (length(x) == 1) rep(x, n) else x
+  }
+
+  group_list <- Map(
+    function(mc, n) {
+      g <- if (is.null(mc$group)) 0 else eval(mc$group, envir = env)
+      recycle_to_n(g, n)
+    },
+    matched_calls,
+    n_components_list
+  )
+
+  period_list <- Map(
+    function(mc, n) recycle_to_n(eval(mc$period, envir = env), n),
+    matched_calls,
+    n_components_list
+  )
+
+  as.call(list(
+    quote(amp_acro),
+    time_col = matched_calls[[1]]$time_col,
+    n_components = sum(unlist(n_components_list)),
+    group = do.call(c, group_list),
+    period = do.call(c, period_list)
+  ))
+}
+
 #' Update data and formula for fitting cglmm model
 #'
 #' @param data input data for fitting cglmm model.
@@ -88,11 +148,16 @@ update_formula_and_data <- function(
       Terms,
       "term.labels"
     )[attr(Terms, "special")$amp_acro + amp_acro_ind]
-    if (!length(amp_acro_text) == 0) {
-      e <- str2lang(amp_acro_text)
-    } else {
+    if (length(amp_acro_text) == 0) {
       e <- str2lang("amp_acro(no_amp_acro = TRUE)")
       e$n_components <- 0
+    } else if (length(amp_acro_text) == 1) {
+      e <- str2lang(amp_acro_text)
+    } else {
+      # more than one amp_acro() term on this side of the formula (e.g. the
+      # grouping structure spread over separate calls) - merge them into a
+      # single equivalent call
+      e <- merge_amp_acro_calls(amp_acro_text, environment())
     }
 
     e$.data <- data # add data that will be called to amp_acro()

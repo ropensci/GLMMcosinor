@@ -224,21 +224,21 @@ test_that("polar_plot messages work", {
   ))
 })
 
-# TODO: this would be the test to assess whether the (non-implemented) ability
-# to fit a model with two groups interacting on the same component works
-# test_that("simple multigroup (same period) model", {
-#
-#   d_multi_grp_same_period <- readRDS(test_path("fixtures", "d_multi_grp_same_period.rds"))
-#
-#   object <- cglmm(
-#     Y ~ group +
-#       amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
-#       amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
-#     data = d_multi_grp_same_period
-#   )
-#
-#   vdiffr::expect_doppelganger(
-#     "plot with multi-grp on same component",
-#     polar_plot(object)
-#   )
-# })
+test_that("grouping spread over two amp_acro() calls (same period) works (#32)", {
+  d_multi_grp_same_period <- readRDS(
+    test_path("fixtures", "d_multi_grp_same_period.rds")
+  )
+
+  object <- cglmm(
+    Y ~ g1 +
+      g2 +
+      amp_acro(time_col = "times", n_components = 1, group = "g1", period = 24) +
+      amp_acro(time_col = "times", n_components = 1, group = "g2", period = 24),
+    data = d_multi_grp_same_period
+  )
+
+  vdiffr::expect_doppelganger(
+    "plot with multi-grp on same component",
+    polar_plot(object)
+  )
+})
