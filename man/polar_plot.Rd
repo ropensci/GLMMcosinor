@@ -24,6 +24,8 @@ polar_plot(
   show_component_labels = TRUE,
   xlims,
   ylims,
+  ranef_plot = NULL,
+  ranef_ci = NULL,
   ...
 )
 }
@@ -114,6 +116,20 @@ the polar plots have labels corresponding to their components.}
 \item{xlims}{A vector of length two containing the limits for the x-axis.}
 
 \item{ylims}{A vector of length two containing the limits for the y-axis.}
+
+\item{ranef_plot}{A \code{character} naming a random-effect grouping
+variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
+level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
+on the plot as points. Defaults to \code{NULL} (no overlay). Only
+point estimates are shown unless \code{ranef_ci} is set - see
+\code{ranef_estimates()} for why no uncertainty is displayed by default.}
+
+\item{ranef_ci}{\code{NULL} (default) for no confidence ellipse, or a
+single number giving the confidence level (e.g. \code{0.95}) at which
+to draw a bootstrap confidence ellipse around each \code{ranef_plot}
+point, using bootstrap replicates added via \code{add_ranef_boots()}.
+Requires \code{ranef_plot} to also be specified, and \code{x} to have
+had \code{add_ranef_boots()} run on it already.}
 
 \item{...}{Additional, ignored arguments.}
 }

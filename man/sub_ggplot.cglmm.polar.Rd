@@ -27,7 +27,9 @@ sub_ggplot.cglmm.polar(
   quietly,
   overlay_start,
   fill_colors,
-  zoom_origin
+  zoom_origin,
+  ranef_plot = NULL,
+  ranef_ci = NULL
 )
 }
 \arguments{
@@ -77,6 +79,15 @@ estimates.}
 \item{fill_colors}{Colours for ellipses.}
 
 \item{zoom_origin}{Zoom position if used.}
+
+\item{ranef_plot}{A \code{character} naming a random-effect grouping
+variable in \code{x}, whose level estimates (from
+\code{ranef_estimates()}) will be overlaid as points. \code{NULL}
+(default) for no overlay.}
+
+\item{ranef_ci}{\code{NULL} for no confidence ellipse, or a single
+number giving the confidence level at which to draw a bootstrap
+confidence ellipse around each \code{ranef_plot} point.}
 }
 \value{
 A \code{ggplot2} object.

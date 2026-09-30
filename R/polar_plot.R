@@ -68,6 +68,18 @@
 #' whether messages are displayed in the console.
 #' @param show_component_labels Logical argument, TRUE by default. When TRUE,
 #' the polar plots have labels corresponding to their components.
+#' @param ranef_plot A \code{character} naming a random-effect grouping
+#' variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
+#' level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
+#' on the plot as points. Defaults to \code{NULL} (no overlay). Only
+#' point estimates are shown unless \code{ranef_ci} is set - see
+#' \code{ranef_estimates()} for why no uncertainty is displayed by default.
+#' @param ranef_ci \code{NULL} (default) for no confidence ellipse, or a
+#' single number giving the confidence level (e.g. \code{0.95}) at which
+#' to draw a bootstrap confidence ellipse around each \code{ranef_plot}
+#' point, using bootstrap replicates added via \code{add_ranef_boots()}.
+#' Requires \code{ranef_plot} to also be specified, and \code{x} to have
+#' had \code{add_ranef_boots()} run on it already.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4}
@@ -102,6 +114,8 @@ polar_plot <- function(
   show_component_labels = TRUE,
   xlims,
   ylims,
+  ranef_plot = NULL,
+  ranef_ci = NULL,
   ...
 ) {
   UseMethod("polar_plot")
@@ -177,6 +191,18 @@ polar_plot <- function(
 #' whether messages are displayed in the console.
 #' @param show_component_labels Logical argument, TRUE by default. When TRUE,
 #' the polar plots have labels corresponding to their components.
+#' @param ranef_plot A \code{character} naming a random-effect grouping
+#' variable in \code{x} (see \code{x$ranef_groups}). If supplied, each
+#' level's rhythm point estimate (from \code{ranef_estimates()}) is overlaid
+#' on the plot as points. Defaults to \code{NULL} (no overlay). Only
+#' point estimates are shown unless \code{ranef_ci} is set - see
+#' \code{ranef_estimates()} for why no uncertainty is displayed by default.
+#' @param ranef_ci \code{NULL} (default) for no confidence ellipse, or a
+#' single number giving the confidence level (e.g. \code{0.95}) at which
+#' to draw a bootstrap confidence ellipse around each \code{ranef_plot}
+#' point, using bootstrap replicates added via \code{add_ranef_boots()}.
+#' Requires \code{ranef_plot} to also be specified, and \code{x} to have
+#' had \code{add_ranef_boots()} run on it already.
 #' @param ... Additional, ignored arguments.
 #'
 #' @srrstats {G1.4}
@@ -223,6 +249,8 @@ polar_plot.cglmm <- function(
   show_component_labels = TRUE,
   xlims,
   ylims,
+  ranef_plot = NULL,
+  ranef_ci = NULL,
   ...
 ) {
   # checking the quality of inputs
@@ -318,6 +346,33 @@ polar_plot.cglmm <- function(
       "for more details"
     )
   )
+
+  if (!is.null(ranef_plot)) {
+    assertthat::assert_that(
+      is.character(ranef_plot) && length(ranef_plot) == 1,
+      msg = "'ranef_plot' must be a single string"
+    )
+    assertthat::assert_that(
+      !all(is.na(x$ranef_groups)),
+      msg = "'ranef_plot' was specified but 'x' does not have any random effects"
+    )
+    assertthat::assert_that(
+      ranef_plot %in% x$ranef_groups,
+      msg = paste(
+        "'ranef_plot' must be a string corresponding to the name of a",
+        "random-effect grouping variable in the cglmm object.",
+        "Available grouping variable(s):",
+        paste(x$ranef_groups, collapse = ", ")
+      )
+    )
+  }
+  validate_ranef_ci(ranef_ci)
+  if (!is.null(ranef_ci)) {
+    assertthat::assert_that(
+      !is.null(ranef_plot),
+      msg = "'ranef_ci' requires 'ranef_plot' to also be specified"
+    )
+  }
   assertthat::assert_that(
     is.logical(overlay_parameter_info),
     msg = paste(
@@ -405,7 +460,9 @@ polar_plot.cglmm <- function(
       quietly = quietly,
       overlay_start = overlay_start,
       fill_colors = fill_colors,
-      zoom_origin = zoom_origin
+      zoom_origin = zoom_origin,
+      ranef_plot = ranef_plot,
+      ranef_ci = ranef_ci
     )
   }
 

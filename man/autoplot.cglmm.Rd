@@ -16,6 +16,8 @@
   data_opacity = 0.3,
   predict.ribbon = TRUE,
   ranef_plot = NULL,
+  ranef_lines = NULL,
+  ranef_ci = NULL,
   cov_list = NULL,
   quietly = TRUE,
   ...
@@ -58,6 +60,21 @@ is plotted.}
 
 \item{ranef_plot}{Specify the random effects variables that you wish to plot.
 If not specified, only the fixed effects will be visualized.}
+
+\item{ranef_lines}{A \code{character} naming a random-effect grouping
+variable in \code{object} (see \code{object$ranef_groups}). If supplied,
+each level's fitted rhythm curve (computed from \code{ranef_estimates()})
+is added as a \code{geom_line()} layer, colored by grouping level.
+Defaults to \code{NULL} (no curves added). Only point estimates are
+used unless \code{ranef_ci} is set - see \code{ranef_estimates()} for
+why no uncertainty is shown by default.}
+
+\item{ranef_ci}{\code{NULL} (default) for no percentile band, or a
+single number giving the confidence level (e.g. \code{0.95}) at which
+to add a bootstrap percentile band around each \code{ranef_lines}
+curve, using bootstrap replicates added via \code{add_ranef_boots()}.
+Requires \code{ranef_lines} to also be specified, and \code{object} to
+have had \code{add_ranef_boots()} run on it already.}
 
 \item{cov_list}{Specify the levels of the covariates that you wish to plot as
 a list. For example, if you have two covariates: var1, and var 2, you could

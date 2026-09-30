@@ -35,6 +35,19 @@ ggplot2::autoplot
 #' to create plot if \code{pred.length.out} is missing.
 #' @param ranef_plot Specify the random effects variables that you wish to plot.
 #'  If not specified, only the fixed effects will be visualized.
+#' @param ranef_lines A \code{character} naming a random-effect grouping
+#' variable in \code{object} (see \code{object$ranef_groups}). If supplied,
+#' each level's fitted rhythm curve (computed from \code{ranef_estimates()})
+#' is added as a \code{geom_line()} layer, colored by grouping level.
+#' Defaults to \code{NULL} (no curves added). Only point estimates are
+#' used unless \code{ranef_ci} is set - see \code{ranef_estimates()} for
+#' why no uncertainty is shown by default.
+#' @param ranef_ci \code{NULL} (default) for no percentile band, or a
+#' single number giving the confidence level (e.g. \code{0.95}) at which
+#' to add a bootstrap percentile band around each \code{ranef_lines}
+#' curve, using bootstrap replicates added via \code{add_ranef_boots()}.
+#' Requires \code{ranef_lines} to also be specified, and \code{object} to
+#' have had \code{add_ranef_boots()} run on it already.
 #' @param quietly A \code{logical}. If \code{TRUE}, shows warning messages when
 #' wrangling data and fitting model. Defaults to \code{TRUE}.
 #' @param cov_list Specify the levels of the covariates that you wish to plot as
@@ -92,6 +105,8 @@ autoplot.cglmm <- function(
   data_opacity = 0.3,
   predict.ribbon = TRUE,
   ranef_plot = NULL,
+  ranef_lines = NULL,
+  ranef_ci = NULL,
   cov_list = NULL,
   quietly = TRUE,
   ...
@@ -220,6 +235,34 @@ autoplot.cglmm <- function(
     for (i in object$ranef_groups) {
       object$newdata[[i]] <- as.factor(object$newdata[[i]])
     }
+  }
+
+  if (!is.null(ranef_lines)) {
+    assertthat::assert_that(
+      is.character(ranef_lines) && length(ranef_lines) == 1,
+      msg = "'ranef_lines' must be a single string"
+    )
+    assertthat::assert_that(
+      !all(is.na(object$ranef_groups)),
+      msg = "'ranef_lines' was specified but 'object' does not have any random effects"
+    )
+    assertthat::assert_that(
+      ranef_lines %in% object$ranef_groups,
+      msg = paste(
+        "'ranef_lines' must be a string corresponding to the name of a",
+        "random-effect grouping variable in the cglmm object.",
+        "Available grouping variable(s):",
+        paste(object$ranef_groups, collapse = ", ")
+      )
+    )
+  }
+
+  validate_ranef_ci(ranef_ci)
+  if (!is.null(ranef_ci)) {
+    assertthat::assert_that(
+      !is.null(ranef_lines),
+      msg = "'ranef_ci' requires 'ranef_lines' to also be specified"
+    )
   }
 
   assertthat::assert_that(
@@ -614,6 +657,42 @@ autoplot.cglmm <- function(
       }
     }
   }
+
+  # OPTIONAL: overlay each random-effect grouping level's fitted rhythm
+  # curve, computed independently from the population-level curve above
+  if (!is.null(ranef_lines)) {
+    if (!is.null(ranef_ci)) {
+      ranef_ribbon <- ranef_ci_ribbon_data(object, ranef_lines, timeax, ranef_ci)
+      plot_object <- plot_object +
+        ggplot2::geom_ribbon(
+          data = ranef_ribbon,
+          ggplot2::aes(
+            x = time,
+            ymin = lower,
+            ymax = upper,
+            group = !!rlang::sym(ranef_lines),
+            fill = !!rlang::sym(ranef_lines)
+          ),
+          alpha = 0.15,
+          inherit.aes = FALSE
+        )
+    }
+
+    ranef_curves <- ranef_curve_data(object, ranef_lines, timeax)
+    plot_object <- plot_object +
+      ggplot2::geom_line(
+        data = ranef_curves,
+        ggplot2::aes(
+          x = time,
+          y = fitted,
+          group = !!rlang::sym(ranef_lines),
+          colour = !!rlang::sym(ranef_lines)
+        ),
+        alpha = 0.6,
+        inherit.aes = FALSE
+      )
+  }
+
   plot_object
 }
 

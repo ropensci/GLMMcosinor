@@ -203,3 +203,83 @@ mixed_mod_reml$fit$modelInfo$REML
 
 mixed_mod$fit$modelInfo$REML
 ```
+
+# Rhythm estimates at the random-effect level
+
+So far, everything we've looked at (`summary()`, `autoplot()`, `polar_plot()`)
+describes the **population-level** (fixed-effect) rhythm. Often we also want
+to know the rhythm parameters (amplitude, acrophase, mesor) for each
+individual subject - `ranef_estimates()` extracts these by combining each
+subject's conditional mode (BLUP) with the population-level estimate.
+
+```{r}
+ranef_estimates(mixed_mod)
+```
+
+Each component gets its own amplitude/acrophase row per subject; mesor is
+reported separately (in a `component = "mesor"` block) since it doesn't vary
+by component.
+
+These per-subject estimates can also be overlaid directly on `polar_plot()`
+(as points) and `autoplot()` (as fitted curves), via the `ranef_plot` and
+`ranef_lines` arguments respectively:
+
+```{r}
+polar_plot(mixed_mod, ranef_plot = "subject")
+autoplot(mixed_mod, ranef_lines = "subject")
+```
+
+## Uncertainty of random-effect estimates
+
+Unlike the population-level estimates from `summary()`, `ranef_estimates()`
+doesn't report any uncertainty by default. `glmmTMB` doesn't provide the
+joint uncertainty of the conditional modes (random effects) together with
+the fixed effects, so the delta-method approach used for the population-level
+confidence intervals isn't available here.
+
+Instead, `{GLMMcosinor}` supports a **parametric bootstrap**: simulate new
+response data from the fitted model, refit the model to each simulated
+dataset, and use the resulting distribution of subject-level estimates to
+form percentile confidence intervals. Because this means refitting the model
+many times, it can be slow - so it's a deliberate, explicit step
+(`add_ranef_boots()`) rather than something that happens automatically. Run
+it once, and the result can be reused by every subsequent table or plot that
+asks for it, by setting `ranef_ci` to a confidence level (e.g. `0.95`).
+
+```{r}
+# nsim is small here to keep the vignette fast to build - for real analyses,
+# prefer the default (nsim = 500) or higher
+mixed_mod <- add_ranef_boots(mixed_mod, nsim = 100)
+```
+
+`mixed_mod` now carries the bootstrap replicates alongside the rest of the
+model, so it can be passed straight into the same functions as before, with
+`ranef_ci = 0.95`:
+
+```{r}
+ranef_estimates(mixed_mod, ranef_ci = 0.95)
+```
+
+This adds `_lower`/`_upper` columns (at the confidence level you specify)
+for amplitude, acrophase, and mesor. The same argument adds a bootstrap
+confidence ellipse to `polar_plot()`, and a bootstrap percentile band to
+`autoplot()`'s curves - and each can use a different confidence level if
+you want:
+
+```{r}
+polar_plot(mixed_mod, ranef_plot = "subject", ranef_ci = 0.95)
+autoplot(mixed_mod, ranef_lines = "subject", ranef_ci = 0.8)
+```
+
+`ranef_ci` defaults to `NULL` (no interval shown) everywhere it appears. If
+you try to set it before running `add_ranef_boots()`, you'll get a message
+telling you to add it first, e.g.:
+
+```{r, error=TRUE}
+mixed_mod_no_boots <- cglmm(
+  Y ~ amp_acro(times, n_components = 1, period = 24) +
+    (1 + amp_acro1 | subject),
+  data = dat_mixed
+)
+ranef_estimates(mixed_mod_no_boots, ranef_ci = 0.95)
+```
